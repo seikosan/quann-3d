@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#000"/>
+    </marker>
+  </defs>
+  <style>
+    text { font-family: Arial, Helvetica, sans-serif; fill: #000; }
+    .box { fill: #fff; stroke: #000; stroke-width: 2; }
+    .pt { fill: #000; }
+    .line { stroke: #000; stroke-width: 1.5; stroke-dasharray: 5 4; }
+    .lbl { font-size: 15px; }
+    .ref { font-size: 17px; font-weight: bold; }
+    .title { font-size: 20px; font-weight: bold; }
+    .arrow { stroke: #000; stroke-width: 2; fill: none; marker-end: url(#arrow); }
+  </style>
+
+  <!-- Panel 1: 1 nokta -->
+  <rect class="box" x="70" y="150" width="300" height="300"/>
+  <circle class="pt" cx="220" cy="300" r="8"/>
+  <text class="lbl" x="220" y="430" text-anchor="middle">1 nokta</text>
+
+  <!-- Panel 2: 2 nokta -->
+  <rect class="box" x="430" y="150" width="300" height="300"/>
+  <circle class="pt" cx="520" cy="280" r="8"/>
+  <circle class="pt" cx="640" cy="340" r="8"/>
+  <line class="line" x1="520" y1="280" x2="640" y2="340"/>
+  <text class="lbl" x="580" y="430" text-anchor="middle">2 nokta</text>
+
+  <!-- Panel 3: 3 nokta -->
+  <rect class="box" x="70" y="520" width="300" height="300"/>
+  <circle class="pt" cx="170" cy="650" r="8"/>
+  <circle class="pt" cx="270" cy="620" r="8"/>
+  <circle class="pt" cx="230" cy="740" r="8"/>
+  <g class="line">
+    <line x1="170" y1="650" x2="270" y2="620"/>
+    <line x1="270" y1="620" x2="230" y2="740"/>
+    <line x1="230" y1="740" x2="170" y2="650"/>
+  </g>
+  <text class="lbl" x="220" y="800" text-anchor="middle">3 nokta</text>
+
+  <!-- Panel 4: 4 nokta -->
+  <rect class="box" x="430" y="520" width="300" height="300"/>
+  <circle class="pt" cx="520" cy="640" r="8"/>
+  <circle class="pt" cx="650" cy="610" r="8"/>
+  <circle class="pt" cx="600" cy="740" r="8"/>
+  <circle class="pt" cx="500" cy="760" r="8"/>
+  <g class="line">
+    <line x1="520" y1="640" x2="650" y2="610"/>
+    <line x1="650" y1="610" x2="600" y2="740"/>
+    <line x1="600" y1="740" x2="500" y2="760"/>
+    <line x1="500" y1="760" x2="520" y2="640"/>
+    <line x1="520" y1="640" x2="600" y2="740"/>
+  </g>
+  <text class="lbl" x="580" y="800" text-anchor="middle">4 nokta</text>
+
+  <!-- arrows between panels -->
+  <line class="arrow" x1="370" y1="300" x2="430" y2="300"/>
+  <line class="arrow" x1="620" y1="450" x2="620" y2="520"/>
+  <line class="arrow" x1="430" y1="670" x2="370" y2="670"/>
+
+  <!-- reference numeral -->
+  <text class="ref" x="220" y="130" text-anchor="middle">300</text>
+
+  <!-- Title -->
+  <text class="title" x="400" y="920" text-anchor="middle">&#350;ekil 3: &#250;retim sırasında bulut evrimi (1&#8594;2&#8594;3&#8594;4 nokta)</text>
+</svg>

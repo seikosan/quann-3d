@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000">
+  <style>
+    text { font-family: Arial, Helvetica, sans-serif; fill: #000; }
+    .box { fill: #fff; stroke: #000; stroke-width: 2; }
+    .pt { fill: #000; }
+    .region { fill: none; stroke: #000; stroke-width: 2; stroke-dasharray: 6 5; }
+    .lbl { font-size: 15px; }
+    .ref { font-size: 17px; font-weight: bold; }
+    .title { font-size: 20px; font-weight: bold; }
+    .axis { stroke: #000; stroke-width: 1.5; }
+  </style>
+
+  <!-- LEFT: 16D, 3 bolge -->
+  <rect class="box" x="70" y="180" width="300" height="420"/>
+  <line class="axis" x1="90" y1="580" x2="350" y2="580"/>
+  <line class="axis" x1="90" y1="580" x2="90" y2="200"/>
+  <text class="lbl" x="220" y="600" text-anchor="middle">PC1</text>
+  <text class="lbl" x="70" y="380" text-anchor="middle" transform="rotate(-90 70 380)">PC2</text>
+
+  <!-- region 1 -->
+  <ellipse class="region" cx="160" cy="320" rx="55" ry="45"/>
+  <circle class="pt" cx="150" cy="310" r="5"/><circle class="pt" cx="175" cy="330" r="5"/><circle class="pt" cx="160" cy="345" r="5"/><circle class="pt" cx="185" cy="305" r="5"/>
+  <!-- region 2 -->
+  <ellipse class="region" cx="280" cy="300" rx="50" ry="45"/>
+  <circle class="pt" cx="270" cy="290" r="5"/><circle class="pt" cx="295" cy="310" r="5"/><circle class="pt" cx="285" cy="325" r="5"/>
+  <!-- region 3 -->
+  <ellipse class="region" cx="230" cy="470" rx="60" ry="50"/>
+  <circle class="pt" cx="215" cy="460" r="5"/><circle class="pt" cx="245" cy="480" r="5"/><circle class="pt" cx="230" cy="495" r="5"/><circle class="pt" cx="255" cy="460" r="5"/>
+
+  <text class="ref" x="80" y="170">400</text>
+  <text class="lbl" x="220" y="630" text-anchor="middle">16D &#8212; 3 b&#246;lge</text>
+
+  <!-- RIGHT: 32D, 5 bolge -->
+  <rect class="box" x="430" y="180" width="300" height="420"/>
+  <line class="axis" x1="450" y1="580" x2="710" y2="580"/>
+  <line class="axis" x1="450" y1="580" x2="450" y2="200"/>
+  <text class="lbl" x="580" y="600" text-anchor="middle">PC1</text>
+  <text class="lbl" x="430" y="380" text-anchor="middle" transform="rotate(-90 430 380)">PC2</text>
+
+  <!-- 5 regions -->
+  <ellipse class="region" cx="510" cy="280" rx="40" ry="35"/>
+  <circle class="pt" cx="500" cy="270" r="5"/><circle class="pt" cx="525" cy="290" r="5"/>
+  <ellipse class="region" cx="630" cy="270" rx="40" ry="35"/>
+  <circle class="pt" cx="620" cy="260" r="5"/><circle class="pt" cx="645" cy="280" r="5"/>
+  <ellipse class="region" cx="500" cy="400" rx="40" ry="35"/>
+  <circle class="pt" cx="490" cy="390" r="5"/><circle class="pt" cx="515" cy="410" r="5"/>
+  <ellipse class="region" cx="640" cy="410" rx="40" ry="35"/>
+  <circle class="pt" cx="630" cy="400" r="5"/><circle class="pt" cx="655" cy="420" r="5"/>
+  <ellipse class="region" cx="570" cy="520" rx="45" ry="35"/>
+  <circle class="pt" cx="560" cy="510" r="5"/><circle class="pt" cx="585" cy="530" r="5"/>
+
+  <text class="ref" x="440" y="170">410</text>
+  <text class="lbl" x="580" y="630" text-anchor="middle">32D &#8212; 5 b&#246;lge</text>
+
+  <!-- Title -->
+  <text class="title" x="400" y="900" text-anchor="middle">&#350;ekil 4: 16D ve 32D b&#246;lge haritalar&#237; (PCA 2D, KMeans)</text>
+</svg>

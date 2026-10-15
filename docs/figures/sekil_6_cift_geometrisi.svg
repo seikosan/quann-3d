@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#000"/>
+    </marker>
+  </defs>
+  <style>
+    text { font-family: Arial, Helvetica, sans-serif; fill: #000; }
+    .vec { stroke: #000; stroke-width: 2.5; fill: none; }
+    .diff { stroke: #000; stroke-width: 3; fill: none; marker-end: url(#arrow); }
+    .arc { stroke: #000; stroke-width: 2; fill: none; }
+    .pt { fill: #000; }
+    .lbl { font-size: 16px; }
+    .ref { font-size: 18px; font-weight: bold; }
+    .title { font-size: 20px; font-weight: bold; }
+  </style>
+
+  <!-- origin -->
+  <circle class="pt" cx="180" cy="720" r="6"/>
+  <text class="lbl" x="150" y="745">O</text>
+
+  <!-- p_i -->
+  <circle class="pt" cx="470" cy="280" r="8"/>
+  <text class="lbl" x="485" y="275">p&#8321;</text>
+  <!-- p_j -->
+  <circle class="pt" cx="620" cy="520" r="8"/>
+  <text class="lbl" x="635" y="525">p&#8340;</text>
+
+  <!-- norm vectors (630) -->
+  <line class="vec" x1="180" y1="720" x2="470" y2="280"/>
+  <line class="vec" x1="180" y1="720" x2="620" y2="520"/>
+  <text class="lbl" x="270" y="450">&#8214;p&#8321;&#8214;  (630)</text>
+  <text class="lbl" x="440" y="665">&#8214;p&#8340;&#8214;  (630)</text>
+
+  <!-- difference vector p_i - p_j (600): from p_j to p_i, with arrow -->
+  <line class="diff" x1="620" y1="520" x2="470" y2="280"/>
+  <text class="lbl" x="560" y="360">600: fark vekt&#246;r&#252;</text>
+
+  <!-- distance (610): label on the same segment, other side -->
+  <text class="lbl" x="410" y="440">610: mesafe</text>
+
+  <!-- angle arc at origin (620) -->
+  <path class="arc" d="M 218 662 A 70 70 0 0 1 244 691"/>
+  <text class="lbl" x="258" y="678">620: a&#231;&#237; &#952;</text>
+
+  <!-- Title -->
+  <text class="title" x="400" y="920" text-anchor="middle">&#350;ekil 6: &#199;ift geometrisi girdi vekt&#246;r&#252; bilesenleri</text>
+  <text class="lbl" x="400" y="950" text-anchor="middle">600: fark vekt&#246;r&#252;, 610: mesafe, 620: a&#231;&#237;, 630: normlar</text>
+</svg>
