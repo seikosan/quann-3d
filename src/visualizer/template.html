@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quann-3D — 3B Çalışma Görünümü</title>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<style>
+:root{
+  --bg:#0a0e17; --panel:#101624; --panel2:#0d1320; --border:#1e293b;
+  --text:#e2e8f0; --muted:#7c8ba1; --accent:#38bdf8; --green:#34d399;
+  --red:#f87171; --amber:#fbbf24; --violet:#a78bfa;
+  --doc:#b8c4d6; --hint:#55657d; --lblbg:rgba(10,14,23,.72); --lbltx:#dbeafe;
+  --box1:#101a2c; --box2:#0d1320; --navon1:#0c2438; --navon2:#0d1320;
+  --hoverbd:#334155; --chipn:#94a3b8;
+}
+:root[data-theme="light"]{
+  --bg:#f2f5f9; --panel:#ffffff; --panel2:#eef2f7; --border:#d5dde8;
+  --text:#1c2634; --muted:#5c6b80; --accent:#0284c7; --green:#059669;
+  --red:#dc2626; --amber:#b45309; --violet:#7c3aed;
+  --doc:#3d4c60; --hint:#8593a6; --lblbg:rgba(255,255,255,.88); --lbltx:#1c2634;
+  --box1:#ffffff; --box2:#f0f4fa; --navon1:#e0f2fe; --navon2:#ffffff;
+  --hoverbd:#b9c6d6; --chipn:#64748b;
+}
+*{box-sizing:border-box; margin:0; padding:0}
+html,body{height:100%}
+body{background:var(--bg); color:var(--text); font:14px/1.5 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; overflow:hidden}
+header{display:flex; align-items:baseline; gap:14px; padding:12px 18px 8px; flex-wrap:wrap}
+header h1{font-size:19px; font-weight:700; letter-spacing:.3px}
+header h1 .c{color:var(--accent)}
+header .sub{color:var(--muted); font-size:12.5px}
+nav{display:flex; gap:6px; padding:0 18px 10px}
+nav button{background:var(--panel); border:1px solid var(--border); color:var(--muted); padding:7px 15px; border-radius:8px; cursor:pointer; font-size:13px}
+nav button:hover{color:var(--text); border-color:var(--hoverbd)}
+nav button.on{background:linear-gradient(135deg,var(--navon1),var(--navon2)); color:var(--accent); border-color:var(--accent)}
+main{position:absolute; top:96px; left:0; right:0; bottom:0}
+section{display:none; position:absolute; inset:0}
+section.on{display:flex}
+.v3d{position:relative; flex:1; min-width:0}
+.v3d canvas{position:absolute; inset:0; width:100%; height:100%; display:block}
+.labels{position:absolute; inset:0; pointer-events:none; overflow:hidden}
+.labels .lbl{position:absolute; transform:translate(-50%,-130%); font-size:11.5px; font-weight:600; color:var(--lbltx); background:var(--lblbg); border:1px solid rgba(56,189,248,.35); padding:1px 7px; border-radius:6px; white-space:nowrap}
+:root[data-theme="light"] .labels .lbl{border-color:rgba(2,132,199,.35)}
+.labels .lbl.tgt{color:var(--amber); border-color:rgba(251,191,36,.5)}
+.labels .lbl.cand{color:var(--red); border-color:rgba(248,113,113,.55)}
+aside{width:340px; min-width:300px; border-left:1px solid var(--border); background:var(--panel2); overflow-y:auto; padding:14px}
+aside h3{font-size:12px; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin:16px 0 8px}
+aside h3:first-child{margin-top:0}
+.selwrap select, .selwrap input[type=text]{width:100%; background:var(--panel); color:var(--text); border:1px solid var(--border); border-radius:8px; padding:8px 10px; font-size:13px; margin-bottom:8px}
+button.ctl{background:var(--panel); border:1px solid var(--border); color:var(--text); border-radius:7px; padding:6px 12px; cursor:pointer; font-size:13px; margin:2px 4px 2px 0}
+button.ctl:hover{border-color:var(--hoverbd)}
+button.ctl.on{color:var(--accent); border-color:var(--accent)}
+.togrow{display:flex; gap:6px; margin:6px 0 10px; flex-wrap:wrap}
+.stat{display:flex; justify-content:space-between; font-size:12.5px; padding:3px 0; color:var(--muted)}
+.stat b{color:var(--text); font-weight:600; font-variant-numeric:tabular-nums}
+.chip{display:inline-block; padding:2px 9px; border-radius:20px; font-size:12px; font-weight:700; margin-right:6px}
+.chip.reward{background:rgba(52,211,153,.15); color:var(--green); border:1px solid rgba(52,211,153,.4)}
+.chip.censure{background:rgba(248,113,113,.15); color:var(--red); border:1px solid rgba(248,113,113,.4)}
+.chip.neutral,.chip.noop,.chip.converged,.chip.start{background:rgba(148,163,184,.14); color:var(--chipn); border:1px solid rgba(148,163,184,.35)}
+input[type=range]{width:100%; accent-color:var(--accent)}
+.note{font-size:12px; color:var(--muted); line-height:1.55; margin-top:8px}
+.rule{font-size:12px; color:var(--muted); padding:5px 0 5px 12px; border-left:2px solid var(--border); margin-bottom:5px}
+table.cmp{width:100%; border-collapse:collapse; font-size:13px; margin:10px 0}
+table.cmp th,table.cmp td{border:1px solid var(--border); padding:7px 10px; text-align:left}
+table.cmp th{background:var(--panel); color:var(--muted); font-size:12px}
+.docwrap{position:absolute; inset:0; overflow-y:auto; padding:24px 4vw; max-width:1100px}
+.docwrap h2{font-size:17px; margin:22px 0 8px; color:var(--accent)}
+.docwrap h2:first-child{margin-top:0}
+.docwrap p{color:var(--doc); font-size:13.5px; margin-bottom:8px}
+.docwrap .kv{color:var(--muted); font-size:12.5px}
+.pipe{margin:18px 0}
+.findings .cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:14px}
+.card{background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:16px}
+.card h4{font-size:13.5px; margin-bottom:10px}
+.card .fnote{font-size:12px; color:var(--muted); margin-top:10px}
+.bar{margin:6px 0}
+.bar .bl{font-size:11.5px; color:var(--muted); display:flex; justify-content:space-between}
+.bar .track{height:14px; background:var(--panel2); border-radius:4px; margin-top:3px; overflow:hidden; display:flex}
+.bar .fill{height:100%; background:linear-gradient(90deg,#0ea5e9,#38bdf8)}
+.bar .fill.g{background:linear-gradient(90deg,#10b981,#34d399)}
+.bar .fill.r{background:linear-gradient(90deg,#ef4444,#f87171)}
+.top5 .row{display:flex; align-items:center; gap:8px; padding:4px 0; font-size:12.5px}
+.top5 .w{min-width:92px; font-weight:600}
+.top5 .t{flex:1; height:8px; background:var(--panel2); border-radius:4px; overflow:hidden}
+.top5 .f{height:100%; background:var(--accent)}
+.top5 .p{color:var(--muted); font-size:11px; width:52px; text-align:right; font-variant-numeric:tabular-nums}
+#hint,#hint-q{position:absolute; bottom:10px; left:14px; font-size:11px; color:var(--hint); pointer-events:none}
+#errbox,#errbox-q{position:absolute; top:10px; left:14px; background:var(--lblbg); border:1px solid var(--border); border-radius:8px; padding:8px 12px; font-size:12px; color:var(--muted)}
+#errbox b,#errbox-q b{color:var(--text)}
+</style>
+</head>
+<body>
+<header>
+  <h1><span class="c">Quann-3D</span> — 3B Çalışma Görünümü</h1>
+  <div class="sub" id="metasub"></div>
+  <button class="ctl" id="theme-btn" style="margin-left:auto">Açık tema</button>
+</header>
+<nav>
+  <button data-tab="mimari" class="on">Mimari</button>
+  <button data-tab="bulut">Bulut (3B)</button>
+  <button data-tab="quann">QUANN (3B)</button>
+  <button data-tab="bulgular">Bulgular</button>
+</nav>
+<main>
+  <section id="tab-mimari" class="on"><div class="docwrap" id="mimari-doc"></div></section>
+  <section id="tab-bulut">
+    <div class="v3d">
+      <canvas id="cv-bulut"></canvas>
+      <div class="labels" id="lb-bulut"></div>
+      <div id="errbox"></div>
+      <div id="hint">sürükle: döndür · tekerlek: yakınlaş · kelimeye tıkla: ayrıntı</div>
+    </div>
+    <aside>
+      <h3>Cümle</h3>
+      <div class="selwrap"><select id="b-sent"></select></div>
+      <div class="togrow">
+        <button class="ctl on" id="b-full">Tam cümle</button>
+        <button class="ctl" id="b-frag">Son kelime gizli → tahmin</button>
+      </div>
+      <h3>Bahset: sonraki kelime</h3>
+      <div class="top5" id="b-top5"></div>
+      <h3>Seçili kelime</h3>
+      <div id="b-wordinfo" class="note">Bir noktaya tıklayın.</div>
+      <h3>Not</h3>
+      <div class="note" id="b-note"></div>
+    </aside>
+  </section>
+  <section id="tab-quann">
+    <div class="v3d">
+      <canvas id="cv-quann"></canvas>
+      <div class="labels" id="lb-quann"></div>
+      <div id="errbox-q"></div>
+      <div id="hint-q">kutu = arama aralığı [alt,üst] · nokta = değer · hayalet = aday</div>
+    </div>
+    <aside>
+      <h3>Demo</h3>
+      <div class="selwrap"><select id="q-demo"></select></div>
+      <div id="q-desc" class="note"></div>
+      <h3>Oynat</h3>
+      <div class="togrow">
+        <button class="ctl" id="q-play">▶ Oynat</button>
+        <button class="ctl" id="q-step-">◀ adım</button>
+        <button class="ctl" id="q-step+">adım ▶</button>
+        <button class="ctl" id="q-reset">⟲</button>
+      </div>
+      <div class="stat"><span>Adım</span><b id="q-step">0</b></div>
+      <input type="range" id="q-scrub" min="0" max="1" value="0">
+      <div class="togrow" style="margin-top:8px">
+        <span style="font-size:12px;color:var(--muted)">Hız:</span>
+        <button class="ctl on" data-sp="1">1×</button>
+        <button class="ctl" data-sp="3">3×</button>
+        <button class="ctl" data-sp="8">8×</button>
+        <button class="ctl" data-sp="20">20×</button>
+      </div>
+      <h3>Durum</h3>
+      <div id="q-state"></div>
+      <h3>Hata eğrisi</h3>
+      <canvas id="q-chart" width="300" height="110" style="width:100%;height:110px;background:var(--panel);border:1px solid var(--border);border-radius:8px"></canvas>
+      <h3>Mekanizma (motor kuralları)</h3>
+      <div id="q-rules"></div>
+    </aside>
+  </section>
+  <section id="tab-bulgular" class="findings"><div class="docwrap"><div class="cards" id="f-cards"></div><p class="note" id="f-note" style="margin-top:14px"></p></div></section>
+</main>
+
+<script>
+const DATA = /*__DATA__*/null;
+
+if(!DATA){
+  document.body.innerHTML = '<div style="padding:40px;font-size:15px;color:#f87171">Önizleme verisi yok. <br><br><code style="background:#111;padding:2px 8px;border-radius:6px">python3 src/visualizer/export_data.py</code> çalıştırıp bu dosyayı yeniden üret.</div>';
+  throw new Error("no data");
+}
+
+const $ = s => document.querySelector(s);
+window.hasGL = (function(){
+  if(typeof THREE === "undefined") return false;
+  try { const c = document.createElement("canvas");
+        return !!(c.getContext("webgl") || c.getContext("experimental-webgl")); }
+  catch(e){ return false; }
+})();
+
+/* ── tema ─────────────────────────────────────────────── */
+window.theme = (function(){
+  try { return localStorage.getItem("quann3d-theme") || "dark"; } catch(e){ return "dark"; }
+})();
+window._themeFns = [];  // 3B sahnelerin tema değişim işleyicileri
+window.applyTheme = function(t){
+  window.theme = t;
+  try { document.documentElement.setAttribute("data-theme", t); } catch(e){}
+  try { localStorage.setItem("quann3d-theme", t); } catch(e){}
+  const b = document.getElementById("theme-btn");
+  if(b) b.textContent = t === "dark" ? "Açık tema" : "Koyu tema";
+  window._themeFns.forEach(f => { try{ f(t); }catch(e){} });
+};
+(function(){ try { document.documentElement.setAttribute("data-theme", window.theme); } catch(e){}
+  const b = document.getElementById("theme-btn");
+  if(b){ b.textContent = window.theme === "dark" ? "Açık tema" : "Koyu tema"; b.onclick = () => window.applyTheme(window.theme === "dark" ? "light" : "dark"); }
+})();
+const C = {
+  accent:0x38bdf8, green:0x34d399, red:0xf87171, neutral:0x94a3b8,
+  amber:0xfbbf24, violet:0xa78bfa, dim:0x334155,
+  palette:["#38bdf8","#f472b6","#a3e635","#fbbf24","#c084fc","#fb7185","#4ade80","#60a5fa","#f97316","#e879f9","#2dd4bf","#facc15","#818cf8","#fca5a5","#5eead4","#fde047","#86efac","#f0abfc"]
+};
+document.getElementById("metasub").textContent =
+  "kelime → ND uzayda nokta · cümle → bulut · anlam → geometri — " +
+  (DATA.cloud ? DATA.cloud.pca + " · " + DATA.cloud.params_M + "M param" : "veri bekleniyor");
+
+/* ── tablar ─────────────────────────────────────────────── */
+document.querySelectorAll("nav button").forEach(b => b.onclick = () => {
+  document.querySelectorAll("nav button").forEach(x => x.classList.toggle("on", x === b));
+  document.querySelectorAll("main section").forEach(s => s.classList.toggle("on", s.id === "tab-" + b.dataset.tab));
+  if(b.dataset.tab === "bulut" && bulut) bulut.resize();
+  if(b.dataset.tab === "quann" && quann) quann.resize();
+});
+
+/* ── ortak 3B yardımcıları ───────────────────────────────── */
+function makeScene(canvas){
+  const r = new THREE.WebGLRenderer({canvas, antialias:true, alpha:false});
+  r.setClearColor(window.theme === "light" ? 0xf2f5f9 : 0x0a0e17);
+  const scene = new THREE.Scene();
+  const cam = new THREE.PerspectiveCamera(50, 1, 0.01, 100);
+  // el yapımı orbit: theta/phi/r
+  const st = {theta:0.8, phi:1.15, r:4.6, lt:0.8, lp:1.15, lr:4.6, drag:false};
+  function upd(){
+    st.theta += (st.lt - st.theta)*.18; st.phi += (st.lp - st.phi)*.18; st.r += (st.lr - st.r)*.18;
+    st.phi = Math.max(.15, Math.min(Math.PI-.15, st.phi));
+    st.r = Math.max(1.2, Math.min(12, st.r));
+    cam.position.setFromSphericalCoords(st.r, st.phi, st.theta);
+    cam.lookAt(0,0,0);
+  }
+  canvas.addEventListener("mousedown", e => st.drag = true);
+  window.addEventListener("mouseup", () => st.drag = false);
+  window.addEventListener("mousemove", e => {
+    if(!st.drag) return;
+    st.lt -= e.movementX*.005; st.lp -= e.movementY*.005;
+  });
+  canvas.addEventListener("wheel", e => { e.preventDefault(); st.lr *= (1 + Math.sign(e.deltaY)*.09); }, {passive:false});
+  return {r, scene, cam, st, upd};
+}
+function fitCanvas(o){
+  const w = o.r.domElement.parentElement.clientWidth, h = o.r.domElement.parentElement.clientHeight;
+  if(!w || !h) return;
+  if(o._w !== w || o._h !== h){
+    o._w = w; o._h = h;
+    o.r.setPixelRatio(Math.min(2, devicePixelRatio));
+    o.r.setSize(w, h, false);
+    o.cam.aspect = w/h; o.cam.updateProjectionMatrix();
+  }
+}
+function toScreen(v, cam, w, h){
+  const p = v.clone().project(cam);
+  return {x:(p.x+1)/2*w, y:(1-p.y)/2*h, behind:p.z > 1};
+}
+function lineBetween(a, b, color, opacity=1, dashed=false){
+  const g = new THREE.BufferGeometry().setFromPoints([a, b]);
+  const m = dashed ? new THREE.LineDashedMaterial({color, transparent:true, opacity, dashSize:.09, gapSize:.07})
+                   : new THREE.LineBasicMaterial({color, transparent:true, opacity});
+  const l = new THREE.Line(g, m);
+  if(dashed) l.computeLineDistances();
+  return l;
+}
+function boxEdges(low, high, color, opacity=.8){
+  const L = low, H = high, V = [];
+  const c = [[0,0,0],[1,0,0],[1,1,0],[0,1,0],[0,0,1],[1,0,1],[1,1,1],[0,1,1]];
+  const e = [[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]];
+  const pos = c.map(p => [L[0]+(H[0]-L[0])*p[0], L[1]+(H[1]-L[1])*p[1], L[2]+(H[2]-L[2])*p[2]]);
+  for(const [a,b] of e){ V.push(...pos[a], ...pos[b]); }
+  const g = new THREE.BufferGeometry();
+  g.setAttribute("position", new THREE.Float32BufferAttribute(V, 3));
+  return new THREE.LineSegments(g, new THREE.LineBasicMaterial({color, transparent:true, opacity}));
+}
+const V3 = a => new THREE.Vector3(a[0], a[1], a[2]);
+
+/* ═════════════════════════════════════════════════════════
+   BULUT paneli — gerçek CloudLM bulutu (32D → 3D PCA)
+   ═════════════════════════════════════════════════════════ */
+ let bulut = null;
+ if(DATA.cloud){ try{ bulut = (function(){
+   const sents = DATA.cloud.sents;
+   // global ölçek: tüm 3D noktaların max normu → 2.1
+   let mx = 0;
+   for(const s of sents) for(const p of s.pts3) mx = Math.max(mx, Math.hypot(...p));
+   const S = 2.1 / Math.max(1e-6, mx);
+
+   const o = window.hasGL ? makeScene($("#cv-bulut")) : null;
+   if(!o) $("#errbox").innerHTML = `<b>3B önizleme kapalı</b><br>Bu ortamda WebGL bağlamı alınamadı — cümleler ve tahminler yan panelden okunabilir.`;
+   const labelHost = $("#lb-bulut");
+   const sel = $("#b-sent");
+   sents.forEach((s, i) => { const op = document.createElement("option"); op.value = i; op.textContent = s.text.length > 62 ? s.text.slice(0,60)+"…" : s.text; sel.appendChild(op); });
+   let idx = 0, mode = "full", selected = -1;
+
+   let cloudGrp = null, ax = null;
+   if(o){
+     cloudGrp = new THREE.Group(); o.scene.add(cloudGrp);
+     ax = new THREE.Group();
+     [[1,0,0],[0,1,0],[0,0,1]].forEach(d => {
+       const a = new THREE.Vector3(...d).multiplyScalar(-2.6);
+       const b = new THREE.Vector3(...d).multiplyScalar(2.6);
+       ax.add(lineBetween(a, b, 0x27324a, .45));
+     });
+     o.scene.add(ax);
+   }
+
+   function clear(){ if(cloudGrp) while(cloudGrp.children.length) cloudGrp.children.pop(); selected = -1; labelHost.innerHTML = ""; window._bulutLbls = []; }
+
+   function build(){
+     clear();
+     const s = sents[idx];
+     const words = mode === "full" ? s.words : s.fragWords;
+     const pts = mode === "full" ? s.pts3 : s.fragPts3;
+     const nextPt = mode === "full" ? s.nextPt3 : s.fragNextPt3;
+     const top5 = mode === "full" ? s.top5 : s.fragTop5;
+     const hiddenWord = mode === "frag" ? s.words[s.words.length-1] : null;
+     const Dm = mode === "full" ? s.distM : s.fragDistM;
+
+     const n = words.length;
+     if(o){
+       const maxD = Math.max(...Dm.flat(), 1e-6);
+       // çift çizgileri (mesafe: yakın=sıcak, uzak=soğuk)
+       for(let i=0;i<n;i++) for(let j=i+1;j<n;j++){
+         const d = Dm[i][j];
+         const t = Math.min(1, d / maxD);
+         const c2 = new THREE.Color().setHSL(0.02*(1-t) + 0.6*t, .75, .5);
+         const a = V3(pts[i]).multiplyScalar(S), b = V3(pts[j]).multiplyScalar(S);
+         cloudGrp.add(lineBetween(a, b, c2.getHex(), .28 + .5*(1-t)));
+       }
+       // noktalar + etiketler
+       for(let i=0;i<n;i++){
+         const p = V3(pts[i]).multiplyScalar(S);
+         const sp = new THREE.Mesh(new THREE.SphereGeometry(.075, 20, 20),
+           new THREE.MeshBasicMaterial({color: new THREE.Color(C.palette[i % C.palette.length])}));
+         sp.position.copy(p); sp.userData.idx = i;
+         cloudGrp.add(sp);
+         const el = document.createElement("div"); el.className = "lbl"; el.textContent = words[i];
+         labelHost.appendChild(el); window._bulutLbls.push({el, p, sp});
+       }
+       // bir sonraki nokta (hayalet) + en yakın kelimeyle kesik çizgi
+       const gp = V3(nextPt).multiplyScalar(S);
+       const ghost = new THREE.Mesh(new THREE.SphereGeometry(.09, 16, 16),
+         new THREE.MeshBasicMaterial({color:0xffffff, wireframe:true, transparent:true, opacity:.85}));
+       ghost.position.copy(gp); cloudGrp.add(ghost);
+       let best = -1, bc = -2;
+       for(let i=0;i<n;i++){ const ni = Math.max(1e-8, Math.hypot(...pts[i])); const nj = Math.max(1e-8, Math.hypot(...nextPt));
+         const c = (pts[i][0]*nextPt[0]+pts[i][1]*nextPt[1]+pts[i][2]*nextPt[2])/(ni*nj);
+         if(c > bc){ bc = c; best = i; } }
+       if(best >= 0){ const lp = V3(pts[best]).multiplyScalar(S); cloudGrp.add(lineBetween(lp, gp, 0xffffff, .7, true)); }
+       const gel = document.createElement("div"); gel.className = "lbl tgt"; gel.textContent = "→ " + (top5[0] ? top5[0].w : "?");
+       labelHost.appendChild(gel); window._bulutLbls.push({el:gel, p:gp, sp:ghost});
+     }
+     // yan panel
+     $("#b-top5").innerHTML = top5.map(t =>
+       `<div class="row"><span class="w">${t.w}</span><span class="t"><span class="f" style="width:${(t.p*100).toFixed(1)}%"></span></span><span class="p">${(t.p*100).toFixed(1)}%</span></div>`).join("");
+     $("#b-note").innerHTML = mode === "full"
+       ? `Bu cümlenin ${DATA.cloud.cfg.d_cloud_dim} boyutlu gerçek bulutu (32D → 3D PCA). Çizgiler kelime çiftleri: <b style="color:#fbbf24">sıcak</b> = yakın (güçlü bağ), <b style="color:#60a5fa">soğuk</b> = uzak. Beyaz kesik nokta = modelin tahmin ettiği <b>sonraki kelimenin</b> buluttaki konumu (point_head).`
+       : `Son kelime gizlendi — kalan buluttan model <b>${top5[0] ? top5[0].w : "?"}</b> diyor (gerçek: <b>${hiddenWord}</b>). Bulut geometrisi (mesafe + açı) tahmini belirler: sıralama değil, <b>konfigürasyon</b>.`;
+   }
+   window._bulutLbls = [];
+   build();
+
+   // tıklama → kelime ayrıntısı (WebGL yoksa pasif)
+   if(o){
+     const ray = new THREE.Raycaster(); const mpt = new THREE.Vector2();
+     o.r.domElement.addEventListener("click", e => {
+       const r = o.r.domElement.getBoundingClientRect();
+       mpt.set(((e.clientX - r.left)/r.width)*2 - 1, -((e.clientY - r.top)/r.height)*2 + 1);
+       ray.setFromCamera(mpt, o.cam);
+       const hit = ray.intersectObjects(cloudGrp.children).find(h => h.object.userData.idx !== undefined);
+       selected = hit ? hit.object.userData.idx : -1;
+       const s = sents[idx];
+       const wi = $("#b-wordinfo");
+       if(selected < 0){ wi.innerHTML = "Bir noktaya tıklayın."; return; }
+       const words = mode === "full" ? s.words : s.fragWords;
+       const Dm = mode === "full" ? s.distM : s.fragDistM;
+       const Cm = mode === "full" ? s.cosM : s.fragCosM;
+       const Pts3 = mode === "full" ? s.pts3 : s.fragPts3;
+       const rows = Dm[selected].map((d, j) => ({j, d, c: Cm[selected][j]}))
+        .filter(r => r.j !== selected).sort((a,b) => a.d - b.d).slice(0,4);
+       wi.innerHTML = `<b style="color:${C.palette[selected % C.palette.length]}">${words[selected]}</b> — konum (${Pts3[selected].map(v=>v.toFixed(2)).join(", ")})<br>` +
+        rows.map(r => `<span style="color:var(--muted)">↔ ${words[r.j]}</span> &nbsp;mesafe ${r.d.toFixed(2)} · açı ${Math.acos(Math.max(-1,Math.min(1,r.c))).toFixed(2)} rad</span>`).join("<br>") +
+        `<br><span class="note">Yakın + küçük açı = güçlü semantik/sözdizimsel bağ.</span>`;
+     });
+   }
+
+   let raf;
+   function loop(){
+     if(!o){ return; }
+     o.upd(); fitCanvas(o);
+     const w = o.r.domElement.clientWidth, h = o.r.domElement.clientHeight;
+     for(const L of (window._bulutLbls || [])){
+       const p = toScreen(L.p, o.cam, w, h);
+       if(p.behind){ L.el.style.display = "none"; continue; }
+       L.el.style.display = ""; L.el.style.left = p.x + "px"; L.el.style.top = p.y + "px";
+       const selOn = L.sp && L.sp.userData.idx === selected;
+        const hl = window.theme === "light" ? "#b45309" : "#fbbf24";
+        L.el.style.borderColor = selOn ? hl : "";
+        L.el.style.boxShadow = selOn ? `0 0 10px ${hl}66` : "";
+     }
+      o.r.render(o.scene, o.cam);
+      raf = requestAnimationFrame(loop);
+    }
+    // tema → sahne renkleri
+    window._themeFns.push(t => {
+      if(!o) return;
+      o.r.setClearColor(t === "light" ? 0xf2f5f9 : 0x0a0e17);
+      if(ax) ax.children.forEach(l => l.material.color.set(t === "light" ? 0xb6c2d4 : 0x27324a));
+      cloudGrp.children.forEach(c => { if(c.isMesh && c.material.wireframe) c.material.color.set(t === "light" ? 0x334155 : 0xffffff); });
+    });
+    loop();
+    return {
+      resize(){ if(!o) return; cancelAnimationFrame(raf); fitCanvas(o); loop(); },
+      setSent(i){ idx = i; window._bulutLbls = []; build(); },
+      setMode(m){ mode = m; window._bulutLbls = []; build(); },
+    };
+  })();}catch(e){ window._lastErr = "bulut: " + e.message; $("#b-note").innerHTML = "⚠ " + e.message; } }
+ if(bulut){
+   $("#b-sent").onchange = e => bulut.setSent(+e.target.value);
+   $("#b-full").onclick = () => { bulut.setMode("full"); $("#b-full").classList.add("on"); $("#b-frag").classList.remove("on"); };
+   $("#b-frag").onclick = () => { bulut.setMode("frag"); $("#b-frag").classList.add("on"); $("#b-full").classList.remove("on"); };
+   if(window.hasGL && DATA.cloud) $("#errbox").innerHTML = `<b>${DATA.cloud.model}</b><br>${DATA.cloud.pca}`;
+ }
+
+/* ═════════════════════════════════════════════════════════
+   QUANN paneli — 0th-order aramanın 3B animasyonu
+   ═════════════════════════════════════════════════════════ */
+ let quann = null;
+ if(DATA.quann){ try{ quann = (function(){
+  const demos = [{key:"clean", name:"Temiz görev: hedef geometri", ...DATA.quann.clean}]
+    .concat(DATA.quann.lm.map((d, i) => ({key:"lm"+i, name:`Gerçek LM: “${d.sentence}” → ${d.targetWord}`, ...d})));
+
+  const o = window.hasGL ? makeScene($("#cv-quann")) : null;
+  if(!o) $("#errbox-q").innerHTML = `<b>3B önizleme kapalı</b><br>Bu ortamda WebGL bağlamı alınamadı — arama dinamikleri yan panelden okunabilir.`;
+  const labelHost = $("#lb-quann");
+  const sel = $("#q-demo");
+  demos.forEach((d, i) => { const op = document.createElement("option"); op.value = i; op.textContent = d.name; sel.appendChild(op); });
+
+  let di = 0, t = 0, playing = false, speed = 1, timer = null;
+  let grp = o ? new THREE.Group() : null;
+  if(grp) o.scene.add(grp);
+  const SC = 1.35; // [-1,1]³ → sahne
+
+  function clear(){ if(grp) while(grp.children.length) grp.children.pop(); labelHost.innerHTML = ""; window._qLbls = []; }
+
+  function buildDemo(){
+    clear(); t = 0; stop();
+    const d = demos[di];
+    $("#q-demo").selectedIndex = di;
+    $("#q-desc").textContent = d.desc || d.model || "";
+    $("#q-rules").innerHTML = DATA.quann.engine.rules.map(r => `<div class="rule">${r}</div>`).join("") +
+      `<div class="note">Kaynak: ${DATA.quann.engine.ref}</div>`;
+    $("#q-scrub").max = d.frames.length - 1;
+    $("#q-scrub").value = 0;
+    applyFrame(true);
+  }
+
+  function applyFrame(reset){
+    const d = demos[di];
+    const f = d.frames[Math.min(t, d.frames.length - 1)];
+    clear();
+    const n = f.pts.length;
+    const lastOut = f.out;
+    // hedefler
+    const targets = d.key === "clean" ? d.target : (d.truePts || null);
+    // kutular + noktalar (yalnız WebGL varsa)
+    const lbls = [];
+    const inactiveBox = window.theme === "light" ? 0xa9b6c9 : 0x475569;
+    if(grp){
+      for(let i=0;i<n;i++){
+        const lo = f.low[i].map(v=>v*SC), hi = f.high[i].map(v=>v*SC);
+        const v = f.pts[i].map(v=>v*SC);
+        let bc = C.neutral;
+        if(f.pi === i) bc = lastOut === "reward" ? C.green : lastOut === "censure" ? C.red : C.neutral;
+        const box = boxEdges(lo, hi, f.pi === i ? bc : inactiveBox, f.pi === i ? .9 : .30);
+        grp.add(box);
+        const sp = new THREE.Mesh(new THREE.SphereGeometry(.085, 20, 20),
+          new THREE.MeshBasicMaterial({color: new THREE.Color(C.palette[i % C.palette.length])}));
+        sp.position.set(...v); grp.add(sp);
+        const el = document.createElement("div"); el.className = "lbl"; el.textContent = d.words[i] || ("p" + i);
+        labelHost.appendChild(el); lbls.push({el, p:new THREE.Vector3(...v)});
+        // aday hayaleti
+        if(f.cand && f.pi === i){
+          const cp = f.cand.map(v=>v*SC);
+          const g = new THREE.Mesh(new THREE.OctahedronGeometry(.07),
+            new THREE.MeshBasicMaterial({color: bc, wireframe:true}));
+          g.position.set(...cp); grp.add(g);
+          const arrow = new THREE.ArrowHelper(
+            new THREE.Vector3(...cp).sub(new THREE.Vector3(...v)).normalize(),
+            new THREE.Vector3(...v), Math.min(.5, new THREE.Vector3(...cp).distanceTo(new THREE.Vector3(...v)) + .05), bc, .16, .09);
+          grp.add(arrow);
+          const ce = document.createElement("div"); ce.className = "lbl cand"; ce.textContent = "aday";
+          labelHost.appendChild(ce); lbls.push({el:ce, p:new THREE.Vector3(...cp)});
+        }
+        // hedef hayalet
+        if(targets && targets[i]){
+          const tp = targets[i].map(v=>v*SC);
+          const g = new THREE.Mesh(new THREE.OctahedronGeometry(.055),
+            new THREE.MeshBasicMaterial({color: window.theme === "light" ? 0xb45309 : 0xfbbf24, wireframe:true, transparent:true, opacity:.85}));
+          g.position.set(...tp); grp.add(g);
+          const el = document.createElement("div"); el.className = "lbl tgt"; el.textContent = "hedef·" + (d.words[i] || i);
+          labelHost.appendChild(el); lbls.push({el, p:new THREE.Vector3(...tp)});
+        }
+      }
+    }
+    // yan panel
+    const outChip = `<span class="chip ${lastOut}">${{reward:"ÖDÜL",censure:"CEZA",neutral:"NÖTR",noop:"— (yön değişti)",converged:"yakınsadı",start:"başlangıç"}[lastOut] || lastOut}</span>`;
+    const sigBar = f.sigma.map((s,i) =>
+      `<div class="stat"><span>${d.words[i] || "p"+i} σ</span><b>${s.toFixed(3)}</b></div>`).join("");
+    const widthBar = f.pts.map((p,i) => {
+      const w = Math.hypot(...f.high[i].map((h,k)=>h-f.low[i][k])).toFixed(3);
+      return `<div class="stat"><span>${d.words[i] || "p"+i} aralık</span><b>${w}</b></div>`;
+    }).join("");
+    const top1 = f.top1 ? `<div class="stat"><span>model top-1</span><b>${f.top1}</b></div>` : "";
+    $("#q-state").innerHTML = outChip +
+      `<div class="stat"><span>hata (CE/uzaklık)</span><b>${f.err.toExponential(2)}</b></div>` + top1 + sigBar + widthBar;
+    $("#q-step").textContent = f.s;
+    $("#q-scrub").value = t;
+    drawChart(d, t);
+    $("#errbox-q").innerHTML = `<b>${d.key === "clean" ? "Hata = hedef konfigürasyona uzaklık" : "Hata = cross-entropy (gerçek forward)"}</b><br>step ${f.s} · ${outChip}`;
+    window._qLbls = lbls;
+  }
+
+  const ch = $("#q-chart").getContext("2d");
+  const chCol = () => window.theme === "light"
+    ? {grid:"#c3cede", line:"#0284c7", dot:"#b45309", txt:"#7d8a9c"}
+    : {grid:"#1e293b", line:"#38bdf8", dot:"#fbbf24", txt:"#55657d"};
+  function drawChart(d, ti){
+    const cc = chCol();
+    const W = 300, H = 110, P = 8;
+    ch.clearRect(0,0,W,H);
+    const errs = d.frames.map(f => Math.log10(Math.max(1e-6, f.err)));
+    const lo = Math.min(...errs), hi = Math.max(...errs);
+    const X = i => P + i/(d.frames.length-1)*(W-2*P);
+    const Y = v => H - P - (v - lo)/Math.max(1e-9, hi - lo)*(H-2*P);
+    ch.strokeStyle = cc.grid; ch.beginPath(); ch.moveTo(0, H-P); ch.lineTo(W, H-P); ch.stroke();
+    ch.strokeStyle = cc.line; ch.lineWidth = 1.5; ch.beginPath();
+    errs.forEach((v,i) => i ? ch.lineTo(X(i), Y(v)) : ch.moveTo(X(i), Y(v)));
+    ch.stroke();
+    ch.fillStyle = cc.dot;
+    ch.beginPath(); ch.arc(X(Math.min(ti, errs.length-1)), Y(errs[Math.min(ti, errs.length-1)]), 3, 0, 7); ch.fill();
+    ch.fillStyle = cc.txt; ch.font = "10px sans-serif";
+    ch.fillText("10^" + hi.toFixed(2), 4, 12); ch.fillText("10^" + lo.toFixed(2), 4, H-4);
+  }
+
+  function stop(){ if(timer){ clearInterval(timer); timer = null; } playing = false; $("#q-play").textContent = "▶ Oynat"; }
+  function play(){
+    if(playing) return stop();
+    const d = demos[di];
+    if(t >= d.frames.length - 1) t = 0;
+    playing = true; $("#q-play").textContent = "❚❚ Durdur";
+    timer = setInterval(() => {
+      t += 1;
+      if(t >= d.frames.length){ t = d.frames.length - 1; stop(); applyFrame(); return; }
+      applyFrame();
+    }, 400/speed);
+  }
+  $("#q-play").onclick = play;
+  document.getElementById("q-step+").onclick = () => { stop(); t = Math.min(t+1, demos[di].frames.length-1); applyFrame(); };
+  $("#q-step-").onclick = () => { stop(); t = Math.max(t-1, 0); applyFrame(); };
+  $("#q-reset").onclick = buildDemo;
+  $("#q-scrub").oninput = e => { stop(); t = +e.target.value; applyFrame(); };
+  sel.onchange = e => { di = +e.target.value; buildDemo(); };
+  document.querySelectorAll("[data-sp]").forEach(b => b.onclick = () => {
+    speed = +b.dataset.sp;
+    document.querySelectorAll("[data-sp]").forEach(x => x.classList.toggle("on", x === b));
+  });
+
+  let raf;
+  function loop(){
+    if(!o){ return; }
+    o.upd(); fitCanvas(o);
+    const w = o.r.domElement.clientWidth, h = o.r.domElement.clientHeight;
+    for(const L of (window._qLbls || [])){
+      const p = toScreen(L.p, o.cam, w, h);
+      if(p.behind){ L.el.style.display = "none"; continue; }
+      L.el.style.display = ""; L.el.style.left = p.x + "px"; L.el.style.top = p.y + "px";
+    }
+    o.r.render(o.scene, o.cam);
+    raf = requestAnimationFrame(loop);
+  }
+  // tema → sahne renkleri (applyFrame kutu renklerini, sonundaki drawChart ise grafiği yeniden tema'ya göre çizer)
+  window._themeFns.push(t => {
+    if(!o) return;
+    o.r.setClearColor(t === "light" ? 0xf2f5f9 : 0x0a0e17);
+    applyFrame();
+  });
+  buildDemo();
+  loop();
+  return { resize(){ if(!o) return; cancelAnimationFrame(raf); fitCanvas(o); loop(); } };
+})();}catch(e){ window._lastErr = "quann: " + e.message; $("#q-desc").textContent = "⚠ " + e.message + " — 3B sahne kurulamadı"; } }
+
+/* ═════════════════════════════════════════════════════════
+   MİMARİ paneli — 2B akış şeması + karşılaştırma
+   ═════════════════════════════════════════════════════════ */
+(function(){
+  const stages = [
+    ["Cümle → token", "BPE/kelime dizisi (sıralı)"],
+    ["Context Encoder", "Transformer — her token'a sıralı bağlam vektörü (d_model)"],
+    ["WordToND", "MLP + Tanh → her kelime D boyutlu uzayda 1 nokta ([-1,1])"],
+    ["Bulut", "Cümle = N noktanın kümesi. Anlam = noktaların BİRLİKTE duruşu"],
+    ["CloudEncoder (PointNet)", "nokta-MLP → max-pool · çift-MLP(mesafe, cos- açı) → mean-pool · füzyon → cloud_state (512D)"],
+    ["Heads", "word_head → bir sonraki kelime · point_head → bir sonraki nokta"],
+  ];
+  const box = (t, sub, i) => `
+    <div class="pbox" style="flex:1;min-width:120px;background:linear-gradient(135deg,var(--box1),var(--box2));border:1px solid ${i===3||i===4 ? "var(--accent)" : "var(--border)"};border-radius:10px;padding:10px;position:relative">
+      <div style="font-size:12.5px;font-weight:700">${t}</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:4px;line-height:1.4">${sub}</div>
+      <div style="position:absolute;top:-7px;right:8px;width:14px;height:14px;border-radius:50%;background:var(--accent);opacity:.9;animation:flow 2.2s ${i*0.28}s infinite"></div>
+    </div>`;
+  const arrow = `<div style="align-self:center;color:var(--accent);padding:0 4px;font-size:15px">→</div>`;
+  $("#mimari-doc").innerHTML = `
+    <h2>CloudLM: bir cümle nasıl buluta dönüşür?</h2>
+    <p>Transformer'ın <b>“tek dev vektör”</b> temsili yerine: her kelime D boyutlu uzayda bir <b>nokta</b>,
+    cümle bir <b>nokta bulutu</b>, anlam ise bulutun <b>geometrisi</b> (mesafe, açı, küme formu). Tahmin, bu konfigürasyondan çıkar.</p>
+    <div class="pipe" style="display:flex;align-items:stretch">${stages.map((s,i) => box(s[0], s[1], i)).join(arrow)}</div>
+    <p class="kv">“Bulut (3B)” sekmesinde tam olarak bu boru hattının çıktısını görürsün: eğitilmiş modelin gerçek noktaları, 32D→3D PCA ile. “QUANN (3B)” sekmesi ise ağırlıkların <b>backprop'suz</b> nasıl öğrenildiğini.</p>
+
+    <h2>Transformer vs CloudLM</h2>
+    <table class="cmp">
+      <tr><th></th><th>Transformer</th><th>CloudLM</th></tr>
+      <tr><td>Temsil</td><td>tek dev vektör (768D)</td><td>nokta bulutu (N×D)</td></tr>
+      <tr><td>Anlam</td><td>vektörün konumu</td><td>noktaların birlikte duruşu</td></tr>
+      <tr><td>Sıralama</td><td>kritik (positional encoding)</td><td>okuma sırasız — küme olarak; sıra, nokta <i>konumuna</i> gömülü</td></tr>
+      <tr><td>“Dikkat”</td><td>Q·K·V matrisi</td><td>geometri: mesafe + açı</td></tr>
+    </table>
+
+    <h2>QUANN-Cloud: backprop'suz ikinci katman</h2>
+    <p>Aynı mimariyi gradyan'suz eğiten 0th-order yöntem: her ağırlık (burada: her nokta koordinatı) için
+    bir <b>arama aralığı [alt, üst]</b> tutulur. Bir adım: aralıktan σ-ölçekli bir <b>aday</b> üret →
+    adayla <b>1 forward</b> → hata düştüysa <b>ödül</b> (kabul, σ küçülür = istismar),
+    arttıysa <b>ceza</b> (geri al, yön çevir, aralığı yarıla, σ büyüsün = keşif).
+    <b>Yakınsama</b> = aralıkların eşik altına inmesi. “QUANN (3B)” sekmesinde bu aralıkların kutuları olarak izlersin.</p>
+    <p class="kv">Dürüst sınır: temiz görevlerde (ör. XOR) %100 çözer; büyük gerçek LLM'de backprop'un gerisinde kalır. Savunulan iddia: <b>küçük/yorumlanabilir</b> modeller için backprop'suz eğitim + geometrinin <i>görülebilir</i> olması.</p>
+    <p class="kv">Detay: cloudlm/model.py (mimari) · quann_cloud/src/qcloud_quann.py (motor) · quann_cloud/FINDINGS.md (bulgular)</p>
+    <style>@keyframes flow{0%{opacity:0;transform:scale(.4)}30%{opacity:1;transform:scale(1.25)}100%{opacity:.15;transform:scale(.7)}}</style>`;
+})();
+
+/* ═════════════════════════════════════════════════════════
+   BULGULAR paneli
+   ═════════════════════════════════════════════════════════ */
+(function(){
+  if(!DATA.findings) return;
+  const bar = (b, max) => {
+    const v = b.pct ? b.v : b.v;
+    const w = b.pct ? b.v : Math.max(2, 100 * v / max);
+    const cls = b.pct && b.v < 50 ? "r" : (b.g ? "g" : "");
+    return `<div class="bar"><div class="bl"><span>${b.label}</span><span>${b.pct ? b.v + "%" + (b.label2 ? " " + b.label2 : "") : b.v}</span></div>
+      <div class="track"><div class="fill ${cls}" style="width:${Math.min(100,w)}%"></div></div></div>`;
+  };
+  $("#f-cards").innerHTML = DATA.findings.cards.map(c => {
+    const max = Math.max(...c.bars.map(b => b.v), 1e-9);
+    return `<div class="card"><h4>${c.title}</h4>${c.bars.map(b => bar(b, c.bars.some(x=>x.pct) ? 100 : max)).join("")}
+      <div class="fnote">${c.note || ""}</div></div>`;
+  }).join("");
+  $("#f-note").textContent = DATA.findings.note || "";
+})();
+</script>
+</body>
+</html>

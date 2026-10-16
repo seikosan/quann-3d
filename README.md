@@ -21,7 +21,8 @@ quann-3d/
 │   ├── cloud_lm.py             #   Temel 3D model + demo (3D varyant kendi kendine yetiyor)
 │   ├── cloud_lm_nd.py          #   ND genelleme + boyut karşılaştırması (3D/7D/14D)
 │   ├── cloud_lm_full.py        #   Tam boyut (16D/32D, 256D model, 512D cloud) + görselleştirme
-│   └── cloud_lm_real.py        #   Gerçek corpus (Bilkent) üzerinde eğitim + analiz
+│   ├── cloud_lm_real.py        #   Gerçek corpus (Bilkent) üzerinde eğitim + analiz
+│   └── visualizer/             #   3B çalışma görünümü (tek dosya web): index.html + export_data.py
 ├── training/                   # DENEMELER / GELİŞTİRMELER — eğitim + karşılaştırma pipeline'ları
 │   ├── train_wiki.py           #   BPE + CloudLM wiki eğitimi (ana pipeline, --resume)
 │   ├── train_baseline.py       #   Causal/Bidir baseline (param-eşleşen) + karşılaştırma (--resume)
@@ -111,6 +112,17 @@ python3 training/test_model.py --checkpoint checkpoints/cloudlm/cloud_lm_final.p
 # QUANN-Cloud (backprop'suz) — paket içi testler
 python3 -m pytest quann_cloud/tests/ -v
 python3 quann_cloud/experiments/real_data_test.py --quick
+```
+
+## 3B Çalışma Görünümü (web)
+
+Quann-3D'nin nasıl çalıştığını etkileşimli 3B olarak gösteren tek-dosya arayüz
+(Mimari şeması · gerçek CloudLM bulutu 32D→3B · QUANN 0th-order araması animasyonu
+· bulgular kartları). Veriler gerçek checkpoint/çalışmalardan üretilir:
+
+```bash
+python3 src/visualizer/export_data.py   # → src/visualizer/index.html
+open src/visualizer/index.html          # tarayıcıda aç (WebGL)
 ```
 
 Python scriptleri `ROOT`'u kendi konumundan çözer — herhangi bir dizinden çalıştırılabilir.
