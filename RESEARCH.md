@@ -5,7 +5,7 @@
 > `geometry`, `paper`) okur, distile sonuç döndürür. Güncelleme protokolü:
 > `AGENTS.md` §5. Boyut bütçesi: **≤150 satır** — taşarsa en eski deney "Son
 > Deneyler" tablosundan çıkarılır (detay `logs/`'da kalır).
-> Son güncelleme: 2026-10-16 (aml/E1, maintenance/E0b)
+> Son güncelleme: 2026-10-17 (E2 figürleri → makale §6.5 gerçek veri; önceki 00:21: matched fraud duels LightGBM SIGSEGV teşhisi)
 
 ## Bir Cümle
 
@@ -14,11 +14,13 @@ uzayda nokta, cümle → nokta bulutu, anlam → bulut geometrisi; tahmin bu
 konfigürasyondan. İkinci katman QUANN-Cloud: aynı mimariyi backprop'suz (0th-order)
 eğiten yöntem.
 
-## Canlı Runlar (2026-10-16 07:54)
+## Canlı Runlar (2026-10-17 00:21)
 
 | Run | Komut | Durum | Log |
 |---|---|---|---|
-| CloudLM 1.5M (ölçek) | `train_wiki.py --corpus turkish_wiki_1500k --d-dim 32 --epochs 20 --resume` | canlı, epoch 5/20; son train PPL 129.55; RSS 58,141,552 KiB, swap yalnızca ~1.3 GB boş | `logs/run_final_pipeline.log` (epoch/PPL); `logs/run_wiki1500k_resume_nohup.log` (yalnız başlık) |
+| CloudLM 1.5M (ölçek) | `train_wiki.py --corpus turkish_wiki_1500k --d-dim 32 --epochs 20 --resume` | canlı, epoch 12/20; son train PPL 91.00 | `logs/run_final_pipeline.log` (epoch/PPL); `logs/run_wiki1500k_resume_nohup.log` (yalnız başlık) |
+| fraud duels (kontrollü retry) | `train_duels.py --split quann --models xgboost,lightgbm,ftt --n-jobs 18` | canlı, CPU; kontrollü eş-ölçek retry | `fraud/logs/run_duels.log` |
+| fraud duels MATCHED (1.02M) | `train_duels.py --split quann --models xgboost,lightgbm,ftt --n-jobs 18` | blocked; LightGBM full QUANN split'te native SIGSEGV, aktif PID yok; XGBoost tamamlandı | `fraud/logs/run_duels_matched.log` |
 
 **Teşhis:** Epoch/PPL aslında kaydedilmiş; resume çıktısı `run_final_pipeline.log`'a yönlenmiş, nohup logunda yalnızca başlatma başlığı var. RSS artışı ~4.5 GB/saat; swap baskısı yüksek. `train_wiki.py` her epoch'ta tüm token pencerelerinden dev `examples` listesi kurup shuffle ediyor; RSS artışının muhtemel nedeni bu geçici tahsislerin allocator'da tutulması (kanıtlanmış kalıcı Python referans sızıntısı değil).
 
@@ -48,17 +50,18 @@ hassasiyet değil. Bulut (10×32=320 sayı), transformer gizli durumunun
 
 | Tarih | Run | Sonuç | Ders | Log |
 |---|---|---|---|---|
-| 10-16 | aml/E1 (bölge haritası + prototip-mesafe → SAR demosu, 2K pencere, CPU) | prototip-mesafe ayrımı: structuring .81/11.5, velocity .59/10.1, normal .019/.027, layering .030/.040 (normalle üst üste); en-yakın-prototip doğruluk %87.8 (400 held-out), argmax %72.8 | bölge haritası açıklanabilir: structuring/velocity net adlandırılıyor; layering prototipi normalle örtüşüyor ama gerekçe metni gözlenen zinciri (10 hop) yine adlandırıyor → E3 çift-kanal şart | `aml/logs/run_e1_smoke.log` |
-| 10-16 | maintenance/E0b denemesi (gerçek C-MAPSS FD001) | 5 public kaynak erişilemedi (NASA→HTML, 3×GitHub 404, S3 403) — E0b koşmadı; sentetik E0 sonucu ayakta | gerçek veri = kapı: Kaggle token veya partner veri kopyası gerekli | `maintenance/logs/run_e0b_smoke.log` |
-| 10-16 | aml/E0 (sentezik tipoloji, 20K işlem / 2K pencere, CPU) | hybrid AUC-ROC .960 / AP .872 (F2 .938; 65/616 nokta yakınsadı); standart tavan 1.000'ye ulaşmadı (kolay sentetik); sınıf recall @1% FPR: structuring .99, velocity .95, layering .04, normal .07 | structuring+velocity pencere özelliklerinde görünür; layering (çok-hop zincir) işlem-bazı özelliklerden görünmez → çift-kanal/zincir tasarımı gerekli | `aml/logs/run_e0_smoke.log` |
-| 10-16 | maintenance/E0 (sentezik turbofan fallback — C-MAPSS'a ulaşılamadı; 48 motor / 2686 pencere, CPU) | ikili RUL≤30: hybrid .947/.831 (F2 .843; 18/24) vs tavan MLP .977/.944; evre: hybrid top-1 .515 vs .584 | hybrid standart tavanın altında ama pure'e (.693/.407) belirgin üstün; gerçek kapı C-MAPSS/CWRU veri erişimi | `maintenance/logs/run_e0_smoke.log` |
+| 10-17 | aml/E2 Elliptic + E2′ (darknet gerçek veri; K10/B8 çift-kanal açı çifti) | aynı config: hybrid .838/.370, fraud@1%FPR .025 vs GBT .943/.758, .625; temel E2 hybrid .542/.140, .050 vs GBT .907/.795, .625; E2 explain (36D base hybrid) held-out nearest-prototype .750 (illicit .450) | gerçek-veri kapısı tamam ✓; en iyi açı varyantı temele göre kaldıraç sağladı ama GBT açığı sürüyor; 2K sampled tx-node proxy, hesap/ham tutar yok ve graf özellikleri transductive — prototip açıklaması karar kanıtı değil | `aml/results/e2p_design.json`; `aml/logs/run_e2p_smoke.log`; `aml/results/e2_explain.json` |
+| 10-16 | maintenance E5 (3-sınıf arıza-tipi: nokta tasarımı gridi — açı-çifti/bucket/K, aynı kayıt-disjoint split) | en iyi hybrid (mixed_angle_B8_K1) .678/.530 (inner .000); en yüksek inner (.889) konfiginde GBT +30.5 ROC önde; açı kaldırağı +9.3 pt, B8 +7.5 pt (Elliptic E2′ ile aynı desen); hybrid–GBT en küçük gap 11.7 pt (≤10 hedefi tutmadı) | 3-sınıf tip görevi bu veride KAPANDI; açı kaldırağı evrensel — **maintenance vaka = ikili tespit + açıklanabilirlik + edge** (ana oturum kararı) | `maintenance/logs/run_e5_smoke.log` |
+| 10-16 | maintenance CWRU genişletme (80 kayıt resmi kaynak, kayıt-disjoint 60/20) + E4 saha-adaptasyon | ikili: hybrid .999/1.000 vs GBT 1.000 (12/6 yakınsadı) — GERÇEK rulman verisinde tavana ≈; 3-sınıf tip: hybrid .572/.406 (inner .000) vs GBT .907/.838 — yetersiz; E4 (RPM A→B): frozen/0th/backprop hepsi 1.000 → kazanç 0, retrain'siz üstünlük KANITLANAMADI (demo dejener: frozen zaten %100) | ikili arıza tespiti (kayıt-disjoint) güçlü ✓; tip ayrımı + E4 adaptasyon iddiası açık borç | `maintenance/logs/run_cwru_exp.log` |
+| 10-16 | aml/E4 (düzenleyici değişikliği 10K→5K; haftalık adaptasyon, sentetik) | frozen 5K-recall hafta 1-4: 0.00; 0th-order adaptasyon: 5K-recall 0.00 — backprop-retrain (1.00) kazanımının **%0'ı** (macro AUC .871/.879/1.000); stabilite: eski 10K 1.00'da kalıyor (normal −.065, velocity −.060); 5K kümesi haritada ayrışmıyor, en yakın prototip normal | 0th-order adaptasyon görülmemiş şekilde BAŞARISIZ (quann_cloud bulgusuyla tutarlı); AML "haftalık uyum" iddiası kanıtlanamadı → AML = yalnız açıklanabilirlik wedge'i | `aml/logs/run_e4_smoke.log` |
 
 ## Sıradaki Aksiyonlar
 
-1. 1.5M CloudLM run'ı canlı: RSS/swap + log takibi, müdahale yok; bitince held-out PPL ölç.
-2. aml/E3: E1'deki prototip örtüşmesi + gerekçe-adlandırma bulgusuyla layering için çift-kanal/zincir özellikleri tasarla.
-3. maintenance: Kaggle token / partner veri kopyası kullanıcı kararı; yoksa CWRU ayna denemesi.
-4. Canlı run varken yeni ağır run başlatma (MPS).
+1. CloudLM 1.5M canlı run'ını izlemeye devam et (MPS'e dokunma); bitince held-out PPL + R1/R2 değerlendirmesi.
+2. CPU fraud-duels kontrollü retry tamamlanınca AUC-PR head-to-head ve eş-ölçek kıyasını güncelle; sonra QUANN zengin nokta adımı (D 8→16/32, K↑).
+3. E2 figürleri üretildi (`aml/figures/e2_elliptic_{region_map,naming_comparison}.png`) ve makale §6.5 gerçek veriye bağlandı. E3′ için daha büyük/bağımsız örnek ve zaman-disjoint doğrulama planla; AML hesap/amount iddiası yok.
+4. `aml/`, `maintenance/`, `fraud/` ve `docs/` dosyaları commit'te değil; commit kararı kullanıcıda (committer).
+5. İstek gelirse `paper` agent'ı §6.6 ile §7 Conclusion arasında tutarlılık geçişi yapsın.
 
 ## Subproje: quann_cloud/
 
@@ -70,26 +73,25 @@ iddia "küçük/yorumlanabilir modeller için backprop'suz eğitim".
 
 ## Subproje: fraud/
 
-IBM kredi kartı fraud verisi (24.4M satır, `~/Downloads/archive`) üzerinde iki
-katman: (1) standart ML baselines (tam veri: LR/RF/GBT/MLP); (2) QUANN nokta-bulut
-(özellik→nokta, tx→bulut, CloudEncoderND geometri) 0th-order vs backprop.
-**Bulgu:** hybrid (QUANN nokta + backprop okuyucu) AUC-ROC 0.9745 ile standart
-tavanını (RF .973/GBT .981) yakalıyor; pure 0th-order ≈random → QUANN küçük/
-yorumlanabilir görevde iş yapar. Detay `fraud/README.md` + `fraud/results/`.
+IBM kredi kartı fraud verisi (`~/Downloads/archive`): tam 4.7M testte standart tavan RF .973/.693, GBT .981/.598 (ROC/PR). QUANN full: hybrid .9581/.258, lift 36×; pure 0th .4502, backprop .8938. Strong-reader (b): sabit 214 yakınsamış D=8 nokta, backprop reader 64/128/256 → PR .383/.411/.462 (ROC .969–.975); reader kapasitesi kaldıraç, D=8 geometri tavanı. Edge: 191 KB fp32 / 53 KB int8, ~75k tx/s; doğal fraud oranında INT8 ΔROC −.014. Duels (a) XGB/LGBM/FT-Transformer vs QUANN AUC-PR karşılaştırması sürüyor. Detay `fraud/README.md` + `fraud/results/`.
 
 ## Market Öncelikleri
 
 `docs/market_priorities.md`: Öncelik 3 dikeyleri (AML tipolojisi, işlem
 fraud/edge, endüstriyel bakım) + 10 ikincil alan. Kazanma mantığı =
 açıklanabilirlik + uyum hızı + boyut, ham doğruluk değil. Kanıt zemini:
-`fraud/` (hybrid AUC-ROC 0.9745).
+`fraud/` (tam veride hybrid AUC-ROC .9581; 191 KB fp32 / 53 KB int8 edge).
 
 ## Subproje: aml/, maintenance/
 
 2026-10-16 açıldı (ticari gerekçe `docs/market_priorities.md`): `aml/` =
-tipoloji tespiti (sentezik structuring/layering/velocity üreteci önce, sonra
-Elliptic); `maintenance/` = C-MAPSS/CWRU (pencere→bulut). Deney kuyruğu +
-eşlemeler README'lerde; run'lar CPU (MPS: 1.5M).
+sentetik E0/E1 sonrası Elliptic E2/E2′ gerçek-veri deneyi tamamlandı; en iyi
+K10/B8 hybrid aynı-split GBT'den geride. E2 açıklanabilirlik probe'u
+`aml/results/e2_explain.json`'da (held-out nearest-prototype %75, illicit %45);
+ham tutar ve hesap kimliği yok, tek-hop proxy/transductive sınırlaması açık.
+Gerçek-veri bölge haritası `viz` işi; E3′ bağımsız/doğrulama örneklemi bekliyor.
+`maintenance/` = C-MAPSS/CWRU (pencere→bulut); alt-proje run'ları CPU (MPS: 1.5M).
+Positioning: `aml/figures/typology_naming_{comparison,layering}.png` + `aml/figures/e2_elliptic_{region_map,naming_comparison}.png` (GBM/SHAP vs bölge-prototip; sentetik + gerçek) + makale `docs/paper_draft.md` §6.5 (isimlendirme boşluğu).
 
 ## Dondurulmuş Kurallar
 
