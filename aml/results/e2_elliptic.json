@@ -1,0 +1,130 @@
+{
+  "data": "elliptic",
+  "kaggle_slug": "ellipticco/elliptic-data-set",
+  "data_validation": {
+    "labels_rows": 203769,
+    "edge_rows": 234355,
+    "feature_rows": 203769,
+    "labeled_fraud_nodes": 4545,
+    "labeled_normal_nodes": 42019,
+    "unknown_nodes": 157205,
+    "sampled_account_proxies": 2000,
+    "sampled_fraud": 200,
+    "sampled_normal": 1800,
+    "K": 10,
+    "feature_source": "/Users/serkankose/Documents/quann-3d/aml/data/elliptic/elliptic_bitcoin_dataset/elliptic_txs_features.csv",
+    "label_source": "/Users/serkankose/Documents/quann-3d/aml/data/elliptic/elliptic_bitcoin_dataset/elliptic_txs_classes.csv",
+    "edge_source": "/Users/serkankose/Documents/quann-3d/aml/data/elliptic/elliptic_bitcoin_dataset/elliptic_txs_edgelist.csv",
+    "raw_transaction_amount_available": false,
+    "chain_family_features": [
+      "observed_hop_count",
+      "hop_completion_ratio",
+      "counterparty_shared_ratio",
+      "max_counterparty_degree",
+      "counterparty_transition_rate",
+      "dwell_time_cv"
+    ],
+    "unavailable_chain_features": [
+      "amount_retention_median",
+      "amount_retention_p10"
+    ],
+    "chain_feature_note": "hop/degree plus coarse transition/dwell proxies from neighbor timesteps; amount retention is unavailable without named amounts and account ledger sequences"
+  },
+  "protocol": {
+    "device": "cpu",
+    "seed": 20261016,
+    "sampled_labeled_nodes": 2000,
+    "account_unit": "labeled transaction-node proxy; original mirror has no account identifiers",
+    "split": "stratified node-level 60/20/20; one-hop graph features are transductive"
+  },
+  "metrics": {
+    "gbt": {
+      "val": {
+        "threshold_f2": 0.10154778405153124,
+        "threshold_at_1pct_fpr": 0.5246589877773772
+      },
+      "test": {
+        "n": 400,
+        "n_fraud": 40,
+        "auc_roc": 0.9073611111111112,
+        "auc_pr": 0.794705938115879,
+        "f2": 0.7209302325581396,
+        "threshold_f2": 0.10154778405153124,
+        "class_recall_at_f2_threshold": {
+          "fraud": 0.775,
+          "normal": 0.9333333333333333
+        },
+        "lift": 5.636363636363636,
+        "fraud_recall_at_1pct_fpr": 0.625,
+        "class_recall_at_1pct_fpr": {
+          "fraud": 0.625,
+          "normal": 0.9944444444444445
+        },
+        "fpr_threshold_from_validation": 0.5246589877773772,
+        "fit_sec": 2.5
+      }
+    },
+    "hybrid": {
+      "val": {
+        "threshold_f2": 0.3014003038406372,
+        "threshold_at_1pct_fpr": 0.506706178188324
+      },
+      "test": {
+        "n": 400,
+        "n_fraud": 40,
+        "auc_roc": 0.5418402777777777,
+        "auc_pr": 0.14003488774031214,
+        "f2": 0.35714285714285715,
+        "threshold_f2": 0.3014003038406372,
+        "class_recall_at_f2_threshold": {
+          "fraud": 1.0,
+          "normal": 0.0
+        },
+        "lift": 1.0,
+        "fraud_recall_at_1pct_fpr": 0.05,
+        "class_recall_at_1pct_fpr": {
+          "fraud": 0.05,
+          "normal": 0.9777777777777777
+        },
+        "fpr_threshold_from_validation": 0.506706178188324,
+        "train_sec": 0.43,
+        "points": 24,
+        "converged": 12,
+        "mean_width": 0.3561826538731097
+      }
+    },
+    "backprop": {
+      "val": {
+        "threshold_f2": 0.7015733540058137,
+        "threshold_at_1pct_fpr": 0.8738355040550232
+      },
+      "test": {
+        "n": 400,
+        "n_fraud": 40,
+        "auc_roc": 0.8665277777777778,
+        "auc_pr": 0.5351800278031301,
+        "f2": 0.5932203389830508,
+        "threshold_f2": 0.7015733540058137,
+        "class_recall_at_f2_threshold": {
+          "fraud": 0.7,
+          "normal": 0.8666666666666667
+        },
+        "lift": 3.684210526315789,
+        "fraud_recall_at_1pct_fpr": 0.375,
+        "class_recall_at_1pct_fpr": {
+          "fraud": 0.375,
+          "normal": 0.9666666666666667
+        },
+        "fpr_threshold_from_validation": 0.8738355040550232,
+        "train_sec": 0.74,
+        "points": 0,
+        "converged": 0,
+        "mean_width": null
+      }
+    }
+  },
+  "outputs": {
+    "figure": "/Users/serkankose/Documents/quann-3d/aml/figures/e2_elliptic_clouds.png",
+    "log": "/Users/serkankose/Documents/quann-3d/aml/logs/run_e2_elliptic.log"
+  }
+}

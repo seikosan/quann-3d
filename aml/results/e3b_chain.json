@@ -1,0 +1,1524 @@
+{
+  "experiment": "AML E3' controlled chain ablation and hard synthetic stress test",
+  "seed": 20261016,
+  "classes": [
+    "normal",
+    "structuring",
+    "layering",
+    "velocity"
+  ],
+  "feature_variants": {
+    "base": {
+      "features": [
+        "amount_median",
+        "amount_p95",
+        "threshold_share",
+        "time_of_day_hour",
+        "inter_tx_interval_min",
+        "counterparty_count",
+        "channel",
+        "window_count",
+        "rate_per_hour",
+        "chain_hops",
+        "window_duration_min"
+      ],
+      "raw_counterparty_id": false
+    },
+    "base+chain": {
+      "features": [
+        "amount_median",
+        "amount_p95",
+        "threshold_share",
+        "time_of_day_hour",
+        "inter_tx_interval_min",
+        "counterparty_count",
+        "channel",
+        "window_count",
+        "rate_per_hour",
+        "chain_hops",
+        "window_duration_min",
+        "observed_hop_count",
+        "hop_completion_ratio",
+        "counterparty_shared_ratio",
+        "max_counterparty_degree",
+        "counterparty_transition_rate",
+        "dwell_time_cv",
+        "amount_retention_median",
+        "amount_retention_p10"
+      ],
+      "raw_counterparty_id": false
+    }
+  },
+  "chain_features": [
+    "observed_hop_count",
+    "hop_completion_ratio",
+    "counterparty_shared_ratio",
+    "max_counterparty_degree",
+    "counterparty_transition_rate",
+    "dwell_time_cv",
+    "amount_retention_median",
+    "amount_retention_p10"
+  ],
+  "datasets": {
+    "easy-v1-idless": {
+      "generator": {
+        "transactions": 20000,
+        "windows": 2000,
+        "window_size": 10,
+        "seed": 20261016,
+        "class_counts": {
+          "normal": 500,
+          "structuring": 500,
+          "layering": 500,
+          "velocity": 500
+        }
+      },
+      "split": {
+        "train": 1200,
+        "val": 400,
+        "test": 400,
+        "method": "stratified account-window split; E0/E3 seeds",
+        "group_key": "window_id",
+        "train_seed": 20261016,
+        "validation_test_seed": 20261017
+      },
+      "regimes": {
+        "gbt": {
+          "base": {
+            "test": {
+              "n": 400,
+              "n_abnormal": 300,
+              "base_rate": 0.75,
+              "threshold": 0.7492279580957144,
+              "auc_roc": 1.0,
+              "auc_pr": 1.0,
+              "f2": 1.0,
+              "lift": 1.3333333333333333,
+              "class_recall_at_1pct_fpr": {
+                "normal": 1.0,
+                "structuring": 1.0,
+                "layering": 1.0,
+                "velocity": 1.0
+              },
+              "class_thresholds_at_1pct_fpr": {
+                "normal": 3.6599298710876297e-06,
+                "structuring": 2.065032567126721e-06,
+                "layering": 2.370562484093213e-06,
+                "velocity": 3.648105102007645e-06
+              },
+              "accuracy": 1.0,
+              "regime": "gbt",
+              "fit_sec": 21.78,
+              "points": 0,
+              "converged": 0
+            },
+            "val": {
+              "n": 400,
+              "n_abnormal": 300,
+              "base_rate": 0.75,
+              "threshold": 0.7492279580957144,
+              "auc_roc": 1.0,
+              "auc_pr": 1.0,
+              "f2": 1.0,
+              "lift": 1.3333333333333333,
+              "class_recall_at_1pct_fpr": {
+                "normal": 1.0,
+                "structuring": 1.0,
+                "layering": 1.0,
+                "velocity": 1.0
+              },
+              "class_thresholds_at_1pct_fpr": {
+                "normal": 3.6599298710876297e-06,
+                "structuring": 2.065032567126721e-06,
+                "layering": 2.370562484093213e-06,
+                "velocity": 3.648105102007645e-06
+              },
+              "accuracy": 1.0
+            }
+          },
+          "base+chain": {
+            "test": {
+              "n": 400,
+              "n_abnormal": 300,
+              "base_rate": 0.75,
+              "threshold": 0.7493877512328541,
+              "auc_roc": 1.0,
+              "auc_pr": 1.0,
+              "f2": 1.0,
+              "lift": 1.3333333333333333,
+              "class_recall_at_1pct_fpr": {
+                "normal": 1.0,
+                "structuring": 1.0,
+                "layering": 1.0,
+                "velocity": 1.0
+              },
+              "class_thresholds_at_1pct_fpr": {
+                "normal": 4.281600768045677e-06,
+                "structuring": 2.402259946379739e-06,
+                "layering": 2.5966791262146034e-06,
+                "velocity": 2.675926854366127e-06
+              },
+              "accuracy": 1.0,
+              "regime": "gbt",
+              "fit_sec": 12.47,
+              "points": 0,
+              "converged": 0
+            },
+            "val": {
+              "n": 400,
+              "n_abnormal": 300,
+              "base_rate": 0.75,
+              "threshold": 0.7493877512328541,
+              "auc_roc": 1.0,
+              "auc_pr": 1.0,
+              "f2": 1.0,
+              "lift": 1.3333333333333333,
+              "class_recall_at_1pct_fpr": {
+                "normal": 1.0,
+                "structuring": 1.0,
+                "layering": 1.0,
+                "velocity": 1.0
+              },
+              "class_thresholds_at_1pct_fpr": {
+                "normal": 4.281600768045677e-06,
+                "structuring": 2.402259946379739e-06,
+                "layering": 2.5966791262146034e-06,
+                "velocity": 2.675926854366127e-06
+              },
+              "accuracy": 1.0
+            }
+          }
+        },
+        "hybrid": {
+          "base": {
+            "test": {
+              "n": 400,
+              "n_abnormal": 300,
+              "base_rate": 0.75,
+              "threshold": 0.9817577451467514,
+              "auc_roc": 1.0,
+              "auc_pr": 1.0,
+              "f2": 1.0,
+              "lift": 1.3333333333333333,
+              "class_recall_at_1pct_fpr": {
+                "normal": 1.0,
+                "structuring": 1.0,
+                "layering": 1.0,
+                "velocity": 1.0
+              },
+              "class_thresholds_at_1pct_fpr": {
+                "normal": 0.010969162918627262,
+                "structuring": 0.7340379953384399,
+                "layering": 0.6614363193511963,
+                "velocity": 0.013482421636581421
+              },
+              "accuracy": 0.88,
+              "regime": "hybrid",
+              "train_sec": 1.32,
+              "train_rows_used": 480,
+              "train_class_counts_after_cap": {
+                "normal": 120,
+                "structuring": 120,
+                "layering": 120,
+                "velocity": 120
+              },
+              "points": 65,
+              "converged": 65,
+              "mean_width": 3.676731676722948e-08,
+              "prototype_distances": {
+                "normal": {
+                  "n_test": 100,
+                  "median_own_distance": 0.8763967752456665,
+                  "median_nearest_other_distance": 7.119654655456543,
+                  "own_to_other_ratio": 0.12309540808200836,
+                  "nearest_prototype_accuracy": 1.0
+                },
+                "structuring": {
+                  "n_test": 100,
+                  "median_own_distance": 0.2524392604827881,
+                  "median_nearest_other_distance": 6.8783979415893555,
+                  "own_to_other_ratio": 0.0367002971470356,
+                  "nearest_prototype_accuracy": 1.0
+                },
+                "layering": {
+                  "n_test": 100,
+                  "median_own_distance": 1.6756341457366943,
+                  "median_nearest_other_distance": 8.461194038391113,
+                  "own_to_other_ratio": 0.1980375498533249,
+                  "nearest_prototype_accuracy": 1.0
+                },
+                "velocity": {
+                  "n_test": 100,
+                  "median_own_distance": 0.8233863115310669,
+                  "median_nearest_other_distance": 11.848081588745117,
+                  "own_to_other_ratio": 0.06949532777070999,
+                  "nearest_prototype_accuracy": 1.0
+                }
+              }
+            },
+            "val": {
+              "n": 400,
+              "n_abnormal": 300,
+              "base_rate": 0.75,
+              "threshold": 0.9817577451467514,
+              "auc_roc": 1.0,
+              "auc_pr": 1.0,
+              "f2": 1.0,
+              "lift": 1.3333333333333333,
+              "class_recall_at_1pct_fpr": {
+                "normal": 1.0,
+                "structuring": 1.0,
+                "layering": 1.0,
+                "velocity": 1.0
+              },
+              "class_thresholds_at_1pct_fpr": {
+                "normal": 0.010969162918627262,
+                "structuring": 0.7340379953384399,
+                "layering": 0.6614363193511963,
+                "velocity": 0.013482421636581421
+              },
+              "accuracy": 0.9075
+            }
+          },
+          "base+chain": {
+            "test": {
+              "n": 400,
+              "n_abnormal": 300,
+              "base_rate": 0.75,
+              "threshold": 0.6901600444316864,
+              "auc_roc": 0.9544583333333334,
+              "auc_pr": 0.869646790871856,
+              "f2": 0.9765625000000001,
+              "lift": 1.1904761904761905,
+              "class_recall_at_1pct_fpr": {
+                "normal": 0.71,
+                "structuring": 0.32,
+                "layering": 1.0,
+                "velocity": 0.19
+              },
+              "class_thresholds_at_1pct_fpr": {
+                "normal": 0.3098028600215912,
+                "structuring": 0.4000129699707031,
+                "layering": 0.020199472084641457,
+                "velocity": 0.2781260311603546
+              },
+              "accuracy": 0.5,
+              "regime": "hybrid",
+              "train_sec": 1.79,
+              "train_rows_used": 480,
+              "train_class_counts_after_cap": {
+                "normal": 120,
+                "structuring": 120,
+                "layering": 120,
+                "velocity": 120
+              },
+              "points": 106,
+              "converged": 106,
+              "mean_width": 3.865098510429544e-08,
+              "prototype_distances": {
+                "normal": {
+                  "n_test": 100,
+                  "median_own_distance": 0.19613371789455414,
+                  "median_nearest_other_distance": 0.257160484790802,
+                  "own_to_other_ratio": 0.7626899480819702,
+                  "nearest_prototype_accuracy": 0.97
+                },
+                "structuring": {
+                  "n_test": 100,
+                  "median_own_distance": 0.09220953285694122,
+                  "median_nearest_other_distance": 0.26980355381965637,
+                  "own_to_other_ratio": 0.34176546335220337,
+                  "nearest_prototype_accuracy": 1.0
+                },
+                "layering": {
+                  "n_test": 100,
+                  "median_own_distance": 0.1253240555524826,
+                  "median_nearest_other_distance": 12.289274215698242,
+                  "own_to_other_ratio": 0.010197840631008148,
+                  "nearest_prototype_accuracy": 1.0
+                },
+                "velocity": {
+                  "n_test": 100,
+                  "median_own_distance": 0.1973549723625183,
+                  "median_nearest_other_distance": 0.1549982875585556,
+                  "own_to_other_ratio": 1.273271918296814,
+                  "nearest_prototype_accuracy": 0.27
+                }
+              }
+            },
+            "val": {
+              "n": 400,
+              "n_abnormal": 300,
+              "base_rate": 0.75,
+              "threshold": 0.6901600444316864,
+              "auc_roc": 0.9626916666666666,
+              "auc_pr": 0.8804504237249096,
+              "f2": 0.9842519685039369,
+              "lift": 1.2345679012345678,
+              "class_recall_at_1pct_fpr": {
+                "normal": 0.82,
+                "structuring": 0.37,
+                "layering": 1.0,
+                "velocity": 0.22
+              },
+              "class_thresholds_at_1pct_fpr": {
+                "normal": 0.3098028600215912,
+                "structuring": 0.4000129699707031,
+                "layering": 0.020199472084641457,
+                "velocity": 0.2781260311603546
+              },
+              "accuracy": 0.5
+            }
+          }
+        },
+        "backprop": {
+          "base": {
+            "test": {
+              "n": 400,
+              "n_abnormal": 300,
+              "base_rate": 0.75,
+              "threshold": 0.5183046567440033,
+              "auc_roc": 0.993375,
+              "auc_pr": 0.9685703899489752,
+              "f2": 0.9859625668449198,
+              "lift": 1.3288288288288288,
+              "class_recall_at_1pct_fpr": {
+                "normal": 0.12,
+                "structuring": 0.96,
+                "layering": 1.0,
+                "velocity": 0.99
+              },
+              "class_thresholds_at_1pct_fpr": {
+                "normal": 0.4857933521270752,
+                "structuring": 0.5024133920669556,
+                "layering": 0.010025386698544025,
+                "velocity": 0.007035907357931137
+              },
+              "accuracy": 0.7475,
+              "regime": "backprop",
+              "train_sec": 0.65,
+              "train_rows_used": 480,
+              "train_class_counts_after_cap": {
+                "normal": 120,
+                "structuring": 120,
+                "layering": 120,
+                "velocity": 120
+              },
+              "points": 0,
+              "converged": 0,
+              "mean_width": null,
+              "prototype_distances": {
+                "normal": {
+                  "n_test": 100,
+                  "median_own_distance": 0.08323922753334045,
+                  "median_nearest_other_distance": 0.20446866750717163,
+                  "own_to_other_ratio": 0.4071001708507538,
+                  "nearest_prototype_accuracy": 0.78
+                },
+                "structuring": {
+                  "n_test": 100,
+                  "median_own_distance": 0.5959244966506958,
+                  "median_nearest_other_distance": 0.5567273497581482,
+                  "own_to_other_ratio": 1.0704063177108765,
+                  "nearest_prototype_accuracy": 0.54
+                },
+                "layering": {
+                  "n_test": 100,
+                  "median_own_distance": 0.1480286866426468,
+                  "median_nearest_other_distance": 0.23095083236694336,
+                  "own_to_other_ratio": 0.6409532427787781,
+                  "nearest_prototype_accuracy": 0.76
+                },
+                "velocity": {
+                  "n_test": 100,
+                  "median_own_distance": 0.22328466176986694,
+                  "median_nearest_other_distance": 0.23663446307182312,
+                  "own_to_other_ratio": 0.9435847401618958,
+                  "nearest_prototype_accuracy": 0.83
+                }
+              }
+            },
+            "val": {
+              "n": 400,
+              "n_abnormal": 300,
+              "base_rate": 0.75,
+              "threshold": 0.5183046567440033,
+              "auc_roc": 0.9923916666666667,
+              "auc_pr": 0.9667260424715243,
+              "f2": 0.9839357429718876,
+              "lift": 1.3333333333333333,
+              "class_recall_at_1pct_fpr": {
+                "normal": 0.14,
+                "structuring": 0.95,
+                "layering": 1.0,
+                "velocity": 0.99
+              },
+              "class_thresholds_at_1pct_fpr": {
+                "normal": 0.4857933521270752,
+                "structuring": 0.5024133920669556,
+                "layering": 0.010025386698544025,
+                "velocity": 0.007035907357931137
+              },
+              "accuracy": 0.7475
+            }
+          },
+          "base+chain": {
+            "test": {
+              "n": 400,
+              "n_abnormal": 300,
+              "base_rate": 0.75,
+              "threshold": 0.7460006028413773,
+              "auc_roc": 1.0,
+              "auc_pr": 1.0,
+              "f2": 1.0,
+              "lift": 1.3333333333333333,
+              "class_recall_at_1pct_fpr": {
+                "normal": 1.0,
+                "structuring": 1.0,
+                "layering": 1.0,
+                "velocity": 1.0
+              },
+              "class_thresholds_at_1pct_fpr": {
+                "normal": 0.013077442534267902,
+                "structuring": 0.0008442665566690266,
+                "layering": 0.022865470498800278,
+                "velocity": 0.0127332778647542
+              },
+              "accuracy": 1.0,
+              "regime": "backprop",
+              "train_sec": 0.72,
+              "train_rows_used": 480,
+              "train_class_counts_after_cap": {
+                "normal": 120,
+                "structuring": 120,
+                "layering": 120,
+                "velocity": 120
+              },
+              "points": 0,
+              "converged": 0,
+              "mean_width": null,
+              "prototype_distances": {
+                "normal": {
+                  "n_test": 100,
+                  "median_own_distance": 2.8318405151367188,
+                  "median_nearest_other_distance": 2.4410018920898438,
+                  "own_to_other_ratio": 1.160114049911499,
+                  "nearest_prototype_accuracy": 0.39
+                },
+                "structuring": {
+                  "n_test": 100,
+                  "median_own_distance": 3.1601786613464355,
+                  "median_nearest_other_distance": 4.212785243988037,
+                  "own_to_other_ratio": 0.7501400113105774,
+                  "nearest_prototype_accuracy": 0.76
+                },
+                "layering": {
+                  "n_test": 100,
+                  "median_own_distance": 4.134537220001221,
+                  "median_nearest_other_distance": 2.2391324043273926,
+                  "own_to_other_ratio": 1.846490740776062,
+                  "nearest_prototype_accuracy": 0.03
+                },
+                "velocity": {
+                  "n_test": 100,
+                  "median_own_distance": 3.618302583694458,
+                  "median_nearest_other_distance": 5.7991533279418945,
+                  "own_to_other_ratio": 0.6239363551139832,
+                  "nearest_prototype_accuracy": 0.51
+                }
+              }
+            },
+            "val": {
+              "n": 400,
+              "n_abnormal": 300,
+              "base_rate": 0.75,
+              "threshold": 0.7460006028413773,
+              "auc_roc": 1.0,
+              "auc_pr": 1.0,
+              "f2": 1.0,
+              "lift": 1.3333333333333333,
+              "class_recall_at_1pct_fpr": {
+                "normal": 1.0,
+                "structuring": 1.0,
+                "layering": 1.0,
+                "velocity": 1.0
+              },
+              "class_thresholds_at_1pct_fpr": {
+                "normal": 0.013077442534267902,
+                "structuring": 0.0008442665566690266,
+                "layering": 0.022865470498800278,
+                "velocity": 0.0127332778647542
+              },
+              "accuracy": 1.0
+            }
+          }
+        }
+      },
+      "base_vs_base_plus_chain": {
+        "gbt": {
+          "class_recall_delta": {
+            "normal": 0.0,
+            "structuring": 0.0,
+            "layering": 0.0,
+            "velocity": 0.0
+          },
+          "auc_roc_delta": 0.0,
+          "auc_pr_delta": 0.0,
+          "f2_delta": 0.0
+        },
+        "hybrid": {
+          "class_recall_delta": {
+            "normal": -0.29000000000000004,
+            "structuring": -0.6799999999999999,
+            "layering": 0.0,
+            "velocity": -0.81
+          },
+          "auc_roc_delta": -0.04554166666666659,
+          "auc_pr_delta": -0.13035320912814397,
+          "f2_delta": -0.02343749999999989
+        },
+        "backprop": {
+          "class_recall_delta": {
+            "normal": 0.88,
+            "structuring": 0.040000000000000036,
+            "layering": 0.0,
+            "velocity": 0.010000000000000009
+          },
+          "auc_roc_delta": 0.006624999999999992,
+          "auc_pr_delta": 0.03142961005102485,
+          "f2_delta": 0.014037433155080214
+        }
+      }
+    },
+    "hard-v2": {
+      "generator": {
+        "transactions": 20000,
+        "windows": 2000,
+        "window_size": 10,
+        "seed": 20261016,
+        "class_counts": {
+          "normal": 1880,
+          "structuring": 40,
+          "layering": 40,
+          "velocity": 40
+        },
+        "class_shares": {
+          "normal": 0.94,
+          "structuring": 0.02,
+          "layering": 0.02,
+          "velocity": 0.02
+        },
+        "proportional_noise_log_sigma": 0.2,
+        "noise_description": "multiplicative lognormal perturbation on amounts and gaps; log-space sigma 0.20 before clipping",
+        "overlap_description": "class signals sampled as mixtures with overlapping amount, timing, channel and observed-hop distributions"
+      },
+      "split": {
+        "train": 1200,
+        "val": 400,
+        "test": 400,
+        "method": "stratified account-window split; E0/E3 seeds",
+        "group_key": "window_id",
+        "train_seed": 20261016,
+        "validation_test_seed": 20261017
+      },
+      "regimes": {
+        "gbt": {
+          "base": {
+            "test": {
+              "n": 400,
+              "n_abnormal": 24,
+              "base_rate": 0.06,
+              "threshold": 0.001566643801369394,
+              "auc_roc": 0.7858816398899986,
+              "auc_pr": 0.49706931206415345,
+              "f2": 0.3395061728395061,
+              "lift": 2.7777777777777777,
+              "class_recall_at_1pct_fpr": {
+                "normal": 0.43351063829787234,
+                "structuring": 0.75,
+                "layering": 0.25,
+                "velocity": 0.25
+              },
+              "class_thresholds_at_1pct_fpr": {
+                "normal": 0.9999706662188386,
+                "structuring": 0.013515207704549838,
+                "layering": 0.019951874927869827,
+                "velocity": 0.04044431143668058
+              },
+              "accuracy": 0.945,
+              "regime": "gbt",
+              "fit_sec": 7.7,
+              "points": 0,
+              "converged": 0
+            },
+            "val": {
+              "n": 400,
+              "n_abnormal": 24,
+              "base_rate": 0.06,
+              "threshold": 0.001566643801369394,
+              "auc_roc": 0.9020995033651759,
+              "auc_pr": 0.5687619174306853,
+              "f2": 0.5521472392638036,
+              "lift": 4.477611940298508,
+              "class_recall_at_1pct_fpr": {
+                "normal": 0.42819148936170215,
+                "structuring": 0.25,
+                "layering": 0.5,
+                "velocity": 0.25
+              },
+              "class_thresholds_at_1pct_fpr": {
+                "normal": 0.9999706662188386,
+                "structuring": 0.013515207704549838,
+                "layering": 0.019951874927869827,
+                "velocity": 0.04044431143668058
+              },
+              "accuracy": 0.945
+            }
+          },
+          "base+chain": {
+            "test": {
+              "n": 400,
+              "n_abnormal": 24,
+              "base_rate": 0.06,
+              "threshold": 0.000612516028987154,
+              "auc_roc": 0.8104176843609784,
+              "auc_pr": 0.5403059003586409,
+              "f2": 0.3488372093023256,
+              "lift": 2.631578947368421,
+              "class_recall_at_1pct_fpr": {
+                "normal": 0.47606382978723405,
+                "structuring": 0.625,
+                "layering": 0.25,
+                "velocity": 0.375
+              },
+              "class_thresholds_at_1pct_fpr": {
+                "normal": 0.9999664162006903,
+                "structuring": 0.02910920604092952,
+                "layering": 0.012453708603234317,
+                "velocity": 0.014058498679498372
+              },
+              "accuracy": 0.955,
+              "regime": "gbt",
+              "fit_sec": 6.44,
+              "points": 0,
+              "converged": 0
+            },
+            "val": {
+              "n": 400,
+              "n_abnormal": 24,
+              "base_rate": 0.06,
+              "threshold": 0.000612516028987154,
+              "auc_roc": 0.9114645525763498,
+              "auc_pr": 0.5326211532366297,
+              "f2": 0.5113636363636364,
+              "lift": 3.7500000000000004,
+              "class_recall_at_1pct_fpr": {
+                "normal": 0.4920212765957447,
+                "structuring": 0.25,
+                "layering": 0.25,
+                "velocity": 0.5
+              },
+              "class_thresholds_at_1pct_fpr": {
+                "normal": 0.9999664162006903,
+                "structuring": 0.02910920604092952,
+                "layering": 0.012453708603234317,
+                "velocity": 0.014058498679498372
+              },
+              "accuracy": 0.945
+            }
+          }
+        },
+        "hybrid": {
+          "base": {
+            "test": {
+              "n": 400,
+              "n_abnormal": 24,
+              "base_rate": 0.06,
+              "threshold": 0.38444530725479126,
+              "auc_roc": 0.7222813992618323,
+              "auc_pr": 0.32723539509651567,
+              "f2": 0.2966101694915254,
+              "lift": 1.6666666666666667,
+              "class_recall_at_1pct_fpr": {
+                "normal": 0.19946808510638298,
+                "structuring": 0.125,
+                "layering": 0.125,
+                "velocity": 0.0
+              },
+              "class_thresholds_at_1pct_fpr": {
+                "normal": 0.6157422065734863,
+                "structuring": 0.11645368486642838,
+                "layering": 0.125521719455719,
+                "velocity": 0.14286810159683228
+              },
+              "accuracy": 0.94,
+              "regime": "hybrid",
+              "train_sec": 0.56,
+              "train_rows_used": 192,
+              "train_class_counts_after_cap": {
+                "normal": 120,
+                "structuring": 24,
+                "layering": 24,
+                "velocity": 24
+              },
+              "points": 68,
+              "converged": 66,
+              "mean_width": 0.00045519506281433515,
+              "prototype_distances": {
+                "normal": {
+                  "n_test": 376,
+                  "median_own_distance": 0.04168087989091873,
+                  "median_nearest_other_distance": 0.03710551559925079,
+                  "own_to_other_ratio": 1.1233068704605103,
+                  "nearest_prototype_accuracy": 0.13829787234042554
+                },
+                "structuring": {
+                  "n_test": 8,
+                  "median_own_distance": 0.04043826460838318,
+                  "median_nearest_other_distance": 0.0400688536465168,
+                  "own_to_other_ratio": 1.0092194080352783,
+                  "nearest_prototype_accuracy": 0.5
+                },
+                "layering": {
+                  "n_test": 8,
+                  "median_own_distance": 0.046454571187496185,
+                  "median_nearest_other_distance": 0.04667462408542633,
+                  "own_to_other_ratio": 0.9952853918075562,
+                  "nearest_prototype_accuracy": 0.25
+                },
+                "velocity": {
+                  "n_test": 8,
+                  "median_own_distance": 0.04816494882106781,
+                  "median_nearest_other_distance": 0.052543945610523224,
+                  "own_to_other_ratio": 0.9166603088378906,
+                  "nearest_prototype_accuracy": 0.5
+                }
+              }
+            },
+            "val": {
+              "n": 400,
+              "n_abnormal": 24,
+              "base_rate": 0.06,
+              "threshold": 0.38444530725479126,
+              "auc_roc": 0.6509817357794182,
+              "auc_pr": 0.27941749037938596,
+              "f2": 0.29279279279279274,
+              "lift": 1.7195767195767195,
+              "class_recall_at_1pct_fpr": {
+                "normal": 0.22606382978723405,
+                "structuring": 0.0,
+                "layering": 0.125,
+                "velocity": 0.0
+              },
+              "class_thresholds_at_1pct_fpr": {
+                "normal": 0.6157422065734863,
+                "structuring": 0.11645368486642838,
+                "layering": 0.125521719455719,
+                "velocity": 0.14286810159683228
+              },
+              "accuracy": 0.94
+            }
+          },
+          "base+chain": {
+            "test": {
+              "n": 400,
+              "n_abnormal": 24,
+              "base_rate": 0.06,
+              "threshold": 0.33427156805992125,
+              "auc_roc": 0.6952028151686206,
+              "auc_pr": 0.31531517903388695,
+              "f2": 0.29535864978902954,
+              "lift": 1.6548463356973997,
+              "class_recall_at_1pct_fpr": {
+                "normal": 0.07180851063829788,
+                "structuring": 0.0,
+                "layering": 0.125,
+                "velocity": 0.0
+              },
+              "class_thresholds_at_1pct_fpr": {
+                "normal": 0.6663423776626587,
+                "structuring": 0.09523732215166092,
+                "layering": 0.11004431545734406,
+                "velocity": 0.12982438504695892
+              },
+              "accuracy": 0.94,
+              "regime": "hybrid",
+              "train_sec": 0.69,
+              "train_rows_used": 192,
+              "train_class_counts_after_cap": {
+                "normal": 120,
+                "structuring": 24,
+                "layering": 24,
+                "velocity": 24
+              },
+              "points": 117,
+              "converged": 113,
+              "mean_width": 0.00038372357793820975,
+              "prototype_distances": {
+                "normal": {
+                  "n_test": 376,
+                  "median_own_distance": 0.04248654097318649,
+                  "median_nearest_other_distance": 0.03979849815368652,
+                  "own_to_other_ratio": 1.0675413608551025,
+                  "nearest_prototype_accuracy": 0.39893617021276595
+                },
+                "structuring": {
+                  "n_test": 8,
+                  "median_own_distance": 0.05490685999393463,
+                  "median_nearest_other_distance": 0.03707427531480789,
+                  "own_to_other_ratio": 1.4809961318969727,
+                  "nearest_prototype_accuracy": 0.125
+                },
+                "layering": {
+                  "n_test": 8,
+                  "median_own_distance": 0.04675411432981491,
+                  "median_nearest_other_distance": 0.02726086974143982,
+                  "own_to_other_ratio": 1.715063214302063,
+                  "nearest_prototype_accuracy": 0.25
+                },
+                "velocity": {
+                  "n_test": 8,
+                  "median_own_distance": 0.04921366274356842,
+                  "median_nearest_other_distance": 0.04134844243526459,
+                  "own_to_other_ratio": 1.1902180910110474,
+                  "nearest_prototype_accuracy": 0.625
+                }
+              }
+            },
+            "val": {
+              "n": 400,
+              "n_abnormal": 24,
+              "base_rate": 0.06,
+              "threshold": 0.33427156805992125,
+              "auc_roc": 0.6790717949413808,
+              "auc_pr": 0.28349190808834007,
+              "f2": 0.3389830508474576,
+              "lift": 1.9047619047619049,
+              "class_recall_at_1pct_fpr": {
+                "normal": 0.06648936170212766,
+                "structuring": 0.0,
+                "layering": 0.0,
+                "velocity": 0.0
+              },
+              "class_thresholds_at_1pct_fpr": {
+                "normal": 0.6663423776626587,
+                "structuring": 0.09523732215166092,
+                "layering": 0.11004431545734406,
+                "velocity": 0.12982438504695892
+              },
+              "accuracy": 0.94
+            }
+          }
+        },
+        "backprop": {
+          "base": {
+            "test": {
+              "n": 400,
+              "n_abnormal": 24,
+              "base_rate": 0.06,
+              "threshold": 0.34688687324523926,
+              "auc_roc": 0.6898435238457085,
+              "auc_pr": 0.27656134204551625,
+              "f2": 0.36649214659685864,
+              "lift": 2.4561403508771926,
+              "class_recall_at_1pct_fpr": {
+                "normal": 0.013297872340425532,
+                "structuring": 0.0,
+                "layering": 0.0,
+                "velocity": 0.0
+              },
+              "class_thresholds_at_1pct_fpr": {
+                "normal": 0.6533265113830566,
+                "structuring": 0.1067352369427681,
+                "layering": 0.11776414513587952,
+                "velocity": 0.12263300269842148
+              },
+              "accuracy": 0.94,
+              "regime": "backprop",
+              "train_sec": 0.25,
+              "train_rows_used": 192,
+              "train_class_counts_after_cap": {
+                "normal": 120,
+                "structuring": 24,
+                "layering": 24,
+                "velocity": 24
+              },
+              "points": 0,
+              "converged": 0,
+              "mean_width": null,
+              "prototype_distances": {
+                "normal": {
+                  "n_test": 376,
+                  "median_own_distance": 0.03091386705636978,
+                  "median_nearest_other_distance": 0.026801370084285736,
+                  "own_to_other_ratio": 1.1534435749053955,
+                  "nearest_prototype_accuracy": 0.5292553191489362
+                },
+                "structuring": {
+                  "n_test": 8,
+                  "median_own_distance": 0.024975840002298355,
+                  "median_nearest_other_distance": 0.023491663858294487,
+                  "own_to_other_ratio": 1.0631788969039917,
+                  "nearest_prototype_accuracy": 0.25
+                },
+                "layering": {
+                  "n_test": 8,
+                  "median_own_distance": 0.035785429179668427,
+                  "median_nearest_other_distance": 0.029943859204649925,
+                  "own_to_other_ratio": 1.1950840950012207,
+                  "nearest_prototype_accuracy": 0.125
+                },
+                "velocity": {
+                  "n_test": 8,
+                  "median_own_distance": 0.02714470587670803,
+                  "median_nearest_other_distance": 0.034657515585422516,
+                  "own_to_other_ratio": 0.7832270860671997,
+                  "nearest_prototype_accuracy": 1.0
+                }
+              }
+            },
+            "val": {
+              "n": 400,
+              "n_abnormal": 24,
+              "base_rate": 0.06,
+              "threshold": 0.34688687324523926,
+              "auc_roc": 0.5175849096287451,
+              "auc_pr": 0.25884799211331777,
+              "f2": 0.3316326530612245,
+              "lift": 2.166666666666667,
+              "class_recall_at_1pct_fpr": {
+                "normal": 0.010638297872340425,
+                "structuring": 0.0,
+                "layering": 0.0,
+                "velocity": 0.0
+              },
+              "class_thresholds_at_1pct_fpr": {
+                "normal": 0.6533265113830566,
+                "structuring": 0.1067352369427681,
+                "layering": 0.11776414513587952,
+                "velocity": 0.12263300269842148
+              },
+              "accuracy": 0.94
+            }
+          },
+          "base+chain": {
+            "test": {
+              "n": 400,
+              "n_abnormal": 24,
+              "base_rate": 0.06,
+              "threshold": 0.3089081001281738,
+              "auc_roc": 0.4068572242726878,
+              "auc_pr": 0.24927040904218148,
+              "f2": 0.12681159420289856,
+              "lift": 0.6481481481481481,
+              "class_recall_at_1pct_fpr": {
+                "normal": 0.023936170212765957,
+                "structuring": 0.0,
+                "layering": 0.0,
+                "velocity": 0.25
+              },
+              "class_thresholds_at_1pct_fpr": {
+                "normal": 0.6928607821464539,
+                "structuring": 0.0880899429321289,
+                "layering": 0.12625420093536377,
+                "velocity": 0.09700832515954971
+              },
+              "accuracy": 0.94,
+              "regime": "backprop",
+              "train_sec": 0.27,
+              "train_rows_used": 192,
+              "train_class_counts_after_cap": {
+                "normal": 120,
+                "structuring": 24,
+                "layering": 24,
+                "velocity": 24
+              },
+              "points": 0,
+              "converged": 0,
+              "mean_width": null,
+              "prototype_distances": {
+                "normal": {
+                  "n_test": 376,
+                  "median_own_distance": 0.03067655861377716,
+                  "median_nearest_other_distance": 0.03094179555773735,
+                  "own_to_other_ratio": 0.9914278984069824,
+                  "nearest_prototype_accuracy": 0.4574468085106383
+                },
+                "structuring": {
+                  "n_test": 8,
+                  "median_own_distance": 0.02101244032382965,
+                  "median_nearest_other_distance": 0.019187992438673973,
+                  "own_to_other_ratio": 1.0950827598571777,
+                  "nearest_prototype_accuracy": 0.0
+                },
+                "layering": {
+                  "n_test": 8,
+                  "median_own_distance": 0.033044517040252686,
+                  "median_nearest_other_distance": 0.0323001854121685,
+                  "own_to_other_ratio": 1.023044228553772,
+                  "nearest_prototype_accuracy": 0.125
+                },
+                "velocity": {
+                  "n_test": 8,
+                  "median_own_distance": 0.021623879671096802,
+                  "median_nearest_other_distance": 0.024052875116467476,
+                  "own_to_other_ratio": 0.8990143537521362,
+                  "nearest_prototype_accuracy": 0.75
+                }
+              }
+            },
+            "val": {
+              "n": 400,
+              "n_abnormal": 24,
+              "base_rate": 0.06,
+              "threshold": 0.3089081001281738,
+              "auc_roc": 0.5242069899768418,
+              "auc_pr": 0.2904678093995313,
+              "f2": 0.2727272727272727,
+              "lift": 1.3966480446927374,
+              "class_recall_at_1pct_fpr": {
+                "normal": 0.013297872340425532,
+                "structuring": 0.0,
+                "layering": 0.0,
+                "velocity": 0.25
+              },
+              "class_thresholds_at_1pct_fpr": {
+                "normal": 0.6928607821464539,
+                "structuring": 0.0880899429321289,
+                "layering": 0.12625420093536377,
+                "velocity": 0.09700832515954971
+              },
+              "accuracy": 0.94
+            }
+          }
+        }
+      },
+      "base_vs_base_plus_chain": {
+        "gbt": {
+          "class_recall_delta": {
+            "normal": 0.04255319148936171,
+            "structuring": -0.125,
+            "layering": 0.0,
+            "velocity": 0.125
+          },
+          "auc_roc_delta": 0.02453604447097979,
+          "auc_pr_delta": 0.043236588294487455,
+          "f2_delta": 0.009331036462819464
+        },
+        "hybrid": {
+          "class_recall_delta": {
+            "normal": -0.1276595744680851,
+            "structuring": -0.125,
+            "layering": 0.0,
+            "velocity": 0.0
+          },
+          "auc_roc_delta": -0.027078584093211733,
+          "auc_pr_delta": -0.011920216062628719,
+          "f2_delta": -0.0012515197024958735
+        },
+        "backprop": {
+          "class_recall_delta": {
+            "normal": 0.010638297872340425,
+            "structuring": 0.0,
+            "layering": 0.0,
+            "velocity": 0.25
+          },
+          "auc_roc_delta": -0.2829862995730207,
+          "auc_pr_delta": -0.027290933003334766,
+          "f2_delta": -0.23968055239396008
+        }
+      },
+      "prototype_probes": {
+        "probe_count": 30,
+        "requested_per_class": {
+          "normal": 12,
+          "structuring": 6,
+          "layering": 6,
+          "velocity": 6
+        },
+        "actual_per_class": {
+          "normal": 12,
+          "structuring": 6,
+          "layering": 6,
+          "velocity": 6
+        },
+        "sanity": {
+          "all_have_evidence_reason": true,
+          "all_include_prototype_distances": true,
+          "all_mark_as_non_determination": true
+        },
+        "probes": [
+          {
+            "window_id": 386,
+            "true_class": "normal",
+            "predicted_class": "normal",
+            "nearest_prototype": "velocity",
+            "nearest_prototype_distance": 0.037426065653562546,
+            "second_prototype": "normal",
+            "second_prototype_distance": 0.04629606381058693,
+            "nearest_prototype_correct": false,
+            "observable_reason": "çok-hop zincir işareti: 7 hop / 7 karşı taraf, medyan aralık=1.9 dk, kanal=digital",
+            "sar_draft": "Geometrik yakınlık: velocity prototipi d=0.037; ikincisi normal d=0.046. Ön inceleme taslağı — çok-hop zincir işareti: 7 hop / 7 karşı taraf, medyan aralık=1.9 dk, kanal=digital. Gözlenen özellikler tipoloji incelemesine adaydır; kaynak işlem kayıtları ve müşteri bağlamı doğrulanmadan SAR kararı değildir."
+          },
+          {
+            "window_id": 482,
+            "true_class": "normal",
+            "predicted_class": "normal",
+            "nearest_prototype": "layering",
+            "nearest_prototype_distance": 0.037289779633283615,
+            "second_prototype": "structuring",
+            "second_prototype_distance": 0.04810480400919914,
+            "nearest_prototype_correct": false,
+            "observable_reason": "çok-hop zincir işareti: 8 hop / 8 karşı taraf, medyan aralık=107.9 dk, kanal=wire",
+            "sar_draft": "Geometrik yakınlık: layering prototipi d=0.037; ikincisi structuring d=0.048. Ön inceleme taslağı — çok-hop zincir işareti: 8 hop / 8 karşı taraf, medyan aralık=107.9 dk, kanal=wire. Gözlenen özellikler tipoloji incelemesine adaydır; kaynak işlem kayıtları ve müşteri bağlamı doğrulanmadan SAR kararı değildir."
+          },
+          {
+            "window_id": 1133,
+            "true_class": "normal",
+            "predicted_class": "normal",
+            "nearest_prototype": "structuring",
+            "nearest_prototype_distance": 0.028721267357468605,
+            "second_prototype": "layering",
+            "second_prototype_distance": 0.030746590346097946,
+            "nearest_prototype_correct": false,
+            "observable_reason": "taban aktivite örüntüsü: p95=1,503, medyan aralık=27.6 dk, 2 karşı taraf",
+            "sar_draft": "Geometrik yakınlık: structuring prototipi d=0.029; ikincisi layering d=0.031. Ön inceleme taslağı — taban aktivite örüntüsü: p95=1,503, medyan aralık=27.6 dk, 2 karşı taraf. Gözlenen özellikler tipoloji incelemesine adaydır; kaynak işlem kayıtları ve müşteri bağlamı doğrulanmadan SAR kararı değildir."
+          },
+          {
+            "window_id": 1170,
+            "true_class": "normal",
+            "predicted_class": "normal",
+            "nearest_prototype": "velocity",
+            "nearest_prototype_distance": 0.0399584099650383,
+            "second_prototype": "normal",
+            "second_prototype_distance": 0.0503951758146286,
+            "nearest_prototype_correct": false,
+            "observable_reason": "taban aktivite örüntüsü: p95=557, medyan aralık=82.8 dk, 2 karşı taraf",
+            "sar_draft": "Geometrik yakınlık: velocity prototipi d=0.040; ikincisi normal d=0.050. Ön inceleme taslağı — taban aktivite örüntüsü: p95=557, medyan aralık=82.8 dk, 2 karşı taraf. Gözlenen özellikler tipoloji incelemesine adaydır; kaynak işlem kayıtları ve müşteri bağlamı doğrulanmadan SAR kararı değildir."
+          },
+          {
+            "window_id": 49,
+            "true_class": "normal",
+            "predicted_class": "normal",
+            "nearest_prototype": "velocity",
+            "nearest_prototype_distance": 0.053447119891643524,
+            "second_prototype": "normal",
+            "second_prototype_distance": 0.05630208179354668,
+            "nearest_prototype_correct": false,
+            "observable_reason": "çok-hop zincir işareti: 10 hop / 10 karşı taraf, medyan aralık=99.0 dk, kanal=card",
+            "sar_draft": "Geometrik yakınlık: velocity prototipi d=0.053; ikincisi normal d=0.056. Ön inceleme taslağı — çok-hop zincir işareti: 10 hop / 10 karşı taraf, medyan aralık=99.0 dk, kanal=card. Gözlenen özellikler tipoloji incelemesine adaydır; kaynak işlem kayıtları ve müşteri bağlamı doğrulanmadan SAR kararı değildir."
+          },
+          {
+            "window_id": 407,
+            "true_class": "normal",
+            "predicted_class": "normal",
+            "nearest_prototype": "normal",
+            "nearest_prototype_distance": 0.040734708309173584,
+            "second_prototype": "velocity",
+            "second_prototype_distance": 0.040951453149318695,
+            "nearest_prototype_correct": true,
+            "observable_reason": "çok-hop zincir işareti: 9 hop / 9 karşı taraf, medyan aralık=88.6 dk, kanal=card",
+            "sar_draft": "Geometrik yakınlık: normal prototipi d=0.041; ikincisi velocity d=0.041. Ön inceleme taslağı — çok-hop zincir işareti: 9 hop / 9 karşı taraf, medyan aralık=88.6 dk, kanal=card. Gözlenen özellikler tipoloji incelemesine adaydır; kaynak işlem kayıtları ve müşteri bağlamı doğrulanmadan SAR kararı değildir."
+          },
+          {
+            "window_id": 1831,
+            "true_class": "normal",
+            "predicted_class": "normal",
+            "nearest_prototype": "structuring",
+            "nearest_prototype_distance": 0.027055252343416214,
+            "second_prototype": "layering",
+            "second_prototype_distance": 0.03504689782857895,
+            "nearest_prototype_correct": false,
+            "observable_reason": "çok-hop zincir işareti: 9 hop / 9 karşı taraf, medyan aralık=47.4 dk, kanal=card",
+            "sar_draft": "Geometrik yakınlık: structuring prototipi d=0.027; ikincisi layering d=0.035. Ön inceleme taslağı — çok-hop zincir işareti: 9 hop / 9 karşı taraf, medyan aralık=47.4 dk, kanal=card. Gözlenen özellikler tipoloji incelemesine adaydır; kaynak işlem kayıtları ve müşteri bağlamı doğrulanmadan SAR kararı değildir."
+          },
+          {
+            "window_id": 901,
+            "true_class": "normal",
+            "predicted_class": "normal",
+            "nearest_prototype": "normal",
+            "nearest_prototype_distance": 0.024630874395370483,
+            "second_prototype": "velocity",
+            "second_prototype_distance": 0.028707409277558327,
+            "nearest_prototype_correct": true,
+            "observable_reason": "çok-hop zincir işareti: 7 hop / 7 karşı taraf, medyan aralık=74.7 dk, kanal=cash",
+            "sar_draft": "Geometrik yakınlık: normal prototipi d=0.025; ikincisi velocity d=0.029. Ön inceleme taslağı — çok-hop zincir işareti: 7 hop / 7 karşı taraf, medyan aralık=74.7 dk, kanal=cash. Gözlenen özellikler tipoloji incelemesine adaydır; kaynak işlem kayıtları ve müşteri bağlamı doğrulanmadan SAR kararı değildir."
+          },
+          {
+            "window_id": 325,
+            "true_class": "normal",
+            "predicted_class": "normal",
+            "nearest_prototype": "layering",
+            "nearest_prototype_distance": 0.04117768257856369,
+            "second_prototype": "structuring",
+            "second_prototype_distance": 0.04676077887415886,
+            "nearest_prototype_correct": false,
+            "observable_reason": "çok-hop zincir işareti: 10 hop / 10 karşı taraf, medyan aralık=68.1 dk, kanal=wire",
+            "sar_draft": "Geometrik yakınlık: layering prototipi d=0.041; ikincisi structuring d=0.047. Ön inceleme taslağı — çok-hop zincir işareti: 10 hop / 10 karşı taraf, medyan aralık=68.1 dk, kanal=wire. Gözlenen özellikler tipoloji incelemesine adaydır; kaynak işlem kayıtları ve müşteri bağlamı doğrulanmadan SAR kararı değildir."
+          },
+          {
+            "window_id": 818,
+            "true_class": "normal",
+            "predicted_class": "normal",
+            "nearest_prototype": "normal",
+            "nearest_prototype_distance": 0.040906574577093124,
+            "second_prototype": "velocity",
+            "second_prototype_distance": 0.042749419808387756,
+            "nearest_prototype_correct": true,
+            "observable_reason": "çok-hop zincir işareti: 4 hop / 4 karşı taraf, medyan aralık=69.3 dk, kanal=card",
+            "sar_draft": "Geometrik yakınlık: normal prototipi d=0.041; ikincisi velocity d=0.043. Ön inceleme taslağı — çok-hop zincir işareti: 4 hop / 4 karşı taraf, medyan aralık=69.3 dk, kanal=card. Gözlenen özellikler tipoloji incelemesine adaydır; kaynak işlem kayıtları ve müşteri bağlamı doğrulanmadan SAR kararı değildir."
+          },
+          {
+            "window_id": 938,
+            "true_class": "normal",
+            "predicted_class": "normal",
+            "nearest_prototype": "structuring",
+            "nearest_prototype_distance": 0.03641815856099129,
+            "second_prototype": "normal",
+            "second_prototype_distance": 0.036449722945690155,
+            "nearest_prototype_correct": false,
+            "observable_reason": "çok-hop zincir işareti: 4 hop / 4 karşı taraf, medyan aralık=54.8 dk, kanal=card",
+            "sar_draft": "Geometrik yakınlık: structuring prototipi d=0.036; ikincisi normal d=0.036. Ön inceleme taslağı — çok-hop zincir işareti: 4 hop / 4 karşı taraf, medyan aralık=54.8 dk, kanal=card. Gözlenen özellikler tipoloji incelemesine adaydır; kaynak işlem kayıtları ve müşteri bağlamı doğrulanmadan SAR kararı değildir."
+          },
+          {
+            "window_id": 1311,
+            "true_class": "normal",
+            "predicted_class": "normal",
+            "nearest_prototype": "normal",
+            "nearest_prototype_distance": 0.06421391665935516,
+            "second_prototype": "velocity",
+            "second_prototype_distance": 0.06647663563489914,
+            "nearest_prototype_correct": true,
+            "observable_reason": "çok-hop zincir işareti: 6 hop / 6 karşı taraf, medyan aralık=8.3 dk, kanal=card",
+            "sar_draft": "Geometrik yakınlık: normal prototipi d=0.064; ikincisi velocity d=0.066. Ön inceleme taslağı — çok-hop zincir işareti: 6 hop / 6 karşı taraf, medyan aralık=8.3 dk, kanal=card. Gözlenen özellikler tipoloji incelemesine adaydır; kaynak işlem kayıtları ve müşteri bağlamı doğrulanmadan SAR kararı değildir."
+          },
+          {
+            "window_id": 1126,
+            "true_class": "structuring",
+            "predicted_class": "normal",
+            "nearest_prototype": "normal",
+            "nearest_prototype_distance": 0.04789759963750839,
+            "second_prototype": "structuring",
+            "second_prototype_distance": 0.05051126703619957,
+            "nearest_prototype_correct": false,
+            "observable_reason": "çok-hop zincir işareti: 7 hop / 7 karşı taraf, medyan aralık=44.0 dk, kanal=digital",
+            "sar_draft": "Geometrik yakınlık: normal prototipi d=0.048; ikincisi structuring d=0.051. Ön inceleme taslağı — çok-hop zincir işareti: 7 hop / 7 karşı taraf, medyan aralık=44.0 dk, kanal=digital. Gözlenen özellikler tipoloji incelemesine adaydır; kaynak işlem kayıtları ve müşteri bağlamı doğrulanmadan SAR kararı değildir."
+          },
+          {
+            "window_id": 109,
+            "true_class": "structuring",
+            "predicted_class": "normal",
+            "nearest_prototype": "normal",
+            "nearest_prototype_distance": 0.03558551147580147,
+            "second_prototype": "velocity",
+            "second_prototype_distance": 0.035612497478723526,
+            "nearest_prototype_correct": false,
+            "observable_reason": "çok-hop zincir işareti: 8 hop / 8 karşı taraf, medyan aralık=61.5 dk, kanal=card",
+            "sar_draft": "Geometrik yakınlık: normal prototipi d=0.036; ikincisi velocity d=0.036. Ön inceleme taslağı — çok-hop zincir işareti: 8 hop / 8 karşı taraf, medyan aralık=61.5 dk, kanal=card. Gözlenen özellikler tipoloji incelemesine adaydır; kaynak işlem kayıtları ve müşteri bağlamı doğrulanmadan SAR kararı değildir."
+          },
+          {
+            "window_id": 1024,
+            "true_class": "structuring",
+            "predicted_class": "normal",
+            "nearest_prototype": "structuring",
+            "nearest_prototype_distance": 0.02918577939271927,
+            "second_prototype": "layering",
+            "second_prototype_distance": 0.03616693615913391,
+            "nearest_prototype_correct": true,
+            "observable_reason": "eşik-kenarı kümesi: tutar p95=10,978 (10K eşiğinin %110'i); işlemlerin %10'i 9.2K–10K bandında, 60 dk işlem sayısı=2",
+            "sar_draft": "Geometrik yakınlık: structuring prototipi d=0.029; ikincisi layering d=0.036. Ön inceleme taslağı — eşik-kenarı kümesi: tutar p95=10,978 (10K eşiğinin %110'i); işlemlerin %10'i 9.2K–10K bandında, 60 dk işlem sayısı=2. Gözlenen özellikler tipoloji incelemesine adaydır; kaynak işlem kayıtları ve müşteri bağlamı doğrulanmadan SAR kararı değildir."
+          },
+          {
+            "window_id": 229,
+            "true_class": "structuring",
+            "predicted_class": "normal",
+            "nearest_prototype": "layering",
+            "nearest_prototype_distance": 0.05362095311284065,
+            "second_prototype": "structuring",
+            "second_prototype_distance": 0.059524014592170715,
+            "nearest_prototype_correct": false,
+            "observable_reason": "çok-hop zincir işareti: 4 hop / 4 karşı taraf, medyan aralık=23.6 dk, kanal=cash",
+            "sar_draft": "Geometrik yakınlık: layering prototipi d=0.054; ikincisi structuring d=0.060. Ön inceleme taslağı — çok-hop zincir işareti: 4 hop / 4 karşı taraf, medyan aralık=23.6 dk, kanal=cash. Gözlenen özellikler tipoloji incelemesine adaydır; kaynak işlem kayıtları ve müşteri bağlamı doğrulanmadan SAR kararı değildir."
+          },
+          {
+            "window_id": 1986,
+            "true_class": "structuring",
+            "predicted_class": "normal",
+            "nearest_prototype": "normal",
+            "nearest_prototype_distance": 0.029369408264756203,
+            "second_prototype": "velocity",
+            "second_prototype_distance": 0.03557761758565903,
+            "nearest_prototype_correct": false,
+            "observable_reason": "çok-hop zincir işareti: 5 hop / 5 karşı taraf, medyan aralık=77.0 dk, kanal=cash",
+            "sar_draft": "Geometrik yakınlık: normal prototipi d=0.029; ikincisi velocity d=0.036. Ön inceleme taslağı — çok-hop zincir işareti: 5 hop / 5 karşı taraf, medyan aralık=77.0 dk, kanal=cash. Gözlenen özellikler tipoloji incelemesine adaydır; kaynak işlem kayıtları ve müşteri bağlamı doğrulanmadan SAR kararı değildir."
+          },
+          {
+            "window_id": 470,
+            "true_class": "structuring",
+            "predicted_class": "normal",
+            "nearest_prototype": "velocity",
+            "nearest_prototype_distance": 0.02867751568555832,
+            "second_prototype": "normal",
+            "second_prototype_distance": 0.031133437529206276,
+            "nearest_prototype_correct": false,
+            "observable_reason": "çok-hop zincir işareti: 4 hop / 4 karşı taraf, medyan aralık=37.2 dk, kanal=cash",
+            "sar_draft": "Geometrik yakınlık: velocity prototipi d=0.029; ikincisi normal d=0.031. Ön inceleme taslağı — çok-hop zincir işareti: 4 hop / 4 karşı taraf, medyan aralık=37.2 dk, kanal=cash. Gözlenen özellikler tipoloji incelemesine adaydır; kaynak işlem kayıtları ve müşteri bağlamı doğrulanmadan SAR kararı değildir."
+          },
+          {
+            "window_id": 1456,
+            "true_class": "layering",
+            "predicted_class": "normal",
+            "nearest_prototype": "structuring",
+            "nearest_prototype_distance": 0.022918464615941048,
+            "second_prototype": "layering",
+            "second_prototype_distance": 0.028774356469511986,
+            "nearest_prototype_correct": false,
+            "observable_reason": "çok-hop zincir işareti: 9 hop / 9 karşı taraf, medyan aralık=62.4 dk, kanal=card",
+            "sar_draft": "Geometrik yakınlık: structuring prototipi d=0.023; ikincisi layering d=0.029. Ön inceleme taslağı — çok-hop zincir işareti: 9 hop / 9 karşı taraf, medyan aralık=62.4 dk, kanal=card. Gözlenen özellikler tipoloji incelemesine adaydır; kaynak işlem kayıtları ve müşteri bağlamı doğrulanmadan SAR kararı değildir."
+          },
+          {
+            "window_id": 465,
+            "true_class": "layering",
+            "predicted_class": "normal",
+            "nearest_prototype": "normal",
+            "nearest_prototype_distance": 0.01934032142162323,
+            "second_prototype": "velocity",
+            "second_prototype_distance": 0.02818395011126995,
+            "nearest_prototype_correct": false,
+            "observable_reason": "çok-hop zincir işareti: 8 hop / 8 karşı taraf, medyan aralık=82.5 dk, kanal=cash",
+            "sar_draft": "Geometrik yakınlık: normal prototipi d=0.019; ikincisi velocity d=0.028. Ön inceleme taslağı — çok-hop zincir işareti: 8 hop / 8 karşı taraf, medyan aralık=82.5 dk, kanal=cash. Gözlenen özellikler tipoloji incelemesine adaydır; kaynak işlem kayıtları ve müşteri bağlamı doğrulanmadan SAR kararı değildir."
+          },
+          {
+            "window_id": 1268,
+            "true_class": "layering",
+            "predicted_class": "normal",
+            "nearest_prototype": "normal",
+            "nearest_prototype_distance": 0.026631491258740425,
+            "second_prototype": "structuring",
+            "second_prototype_distance": 0.03231574967503548,
+            "nearest_prototype_correct": false,
+            "observable_reason": "çok-hop zincir işareti: 7 hop / 7 karşı taraf, medyan aralık=57.2 dk, kanal=card",
+            "sar_draft": "Geometrik yakınlık: normal prototipi d=0.027; ikincisi structuring d=0.032. Ön inceleme taslağı — çok-hop zincir işareti: 7 hop / 7 karşı taraf, medyan aralık=57.2 dk, kanal=card. Gözlenen özellikler tipoloji incelemesine adaydır; kaynak işlem kayıtları ve müşteri bağlamı doğrulanmadan SAR kararı değildir."
+          },
+          {
+            "window_id": 828,
+            "true_class": "layering",
+            "predicted_class": "normal",
+            "nearest_prototype": "normal",
+            "nearest_prototype_distance": 0.025799693539738655,
+            "second_prototype": "velocity",
+            "second_prototype_distance": 0.03065379336476326,
+            "nearest_prototype_correct": false,
+            "observable_reason": "çok-hop zincir işareti: 8 hop / 8 karşı taraf, medyan aralık=24.8 dk, kanal=digital",
+            "sar_draft": "Geometrik yakınlık: normal prototipi d=0.026; ikincisi velocity d=0.031. Ön inceleme taslağı — çok-hop zincir işareti: 8 hop / 8 karşı taraf, medyan aralık=24.8 dk, kanal=digital. Gözlenen özellikler tipoloji incelemesine adaydır; kaynak işlem kayıtları ve müşteri bağlamı doğrulanmadan SAR kararı değildir."
+          },
+          {
+            "window_id": 1866,
+            "true_class": "layering",
+            "predicted_class": "normal",
+            "nearest_prototype": "normal",
+            "nearest_prototype_distance": 0.027890250086784363,
+            "second_prototype": "velocity",
+            "second_prototype_distance": 0.034307364374399185,
+            "nearest_prototype_correct": false,
+            "observable_reason": "çok-hop zincir işareti: 10 hop / 10 karşı taraf, medyan aralık=36.1 dk, kanal=cash",
+            "sar_draft": "Geometrik yakınlık: normal prototipi d=0.028; ikincisi velocity d=0.034. Ön inceleme taslağı — çok-hop zincir işareti: 10 hop / 10 karşı taraf, medyan aralık=36.1 dk, kanal=cash. Gözlenen özellikler tipoloji incelemesine adaydır; kaynak işlem kayıtları ve müşteri bağlamı doğrulanmadan SAR kararı değildir."
+          },
+          {
+            "window_id": 931,
+            "true_class": "layering",
+            "predicted_class": "normal",
+            "nearest_prototype": "layering",
+            "nearest_prototype_distance": 0.07257112860679626,
+            "second_prototype": "structuring",
+            "second_prototype_distance": 0.08283432573080063,
+            "nearest_prototype_correct": true,
+            "observable_reason": "taban aktivite örüntüsü: p95=1,325, medyan aralık=41.3 dk, 3 karşı taraf",
+            "sar_draft": "Geometrik yakınlık: layering prototipi d=0.073; ikincisi structuring d=0.083. Ön inceleme taslağı — taban aktivite örüntüsü: p95=1,325, medyan aralık=41.3 dk, 3 karşı taraf. Gözlenen özellikler tipoloji incelemesine adaydır; kaynak işlem kayıtları ve müşteri bağlamı doğrulanmadan SAR kararı değildir."
+          },
+          {
+            "window_id": 526,
+            "true_class": "velocity",
+            "predicted_class": "normal",
+            "nearest_prototype": "velocity",
+            "nearest_prototype_distance": 0.04557497426867485,
+            "second_prototype": "normal",
+            "second_prototype_distance": 0.061909571290016174,
+            "nearest_prototype_correct": true,
+            "observable_reason": "taban aktivite örüntüsü: p95=359, medyan aralık=2.7 dk, 3 karşı taraf",
+            "sar_draft": "Geometrik yakınlık: velocity prototipi d=0.046; ikincisi normal d=0.062. Ön inceleme taslağı — taban aktivite örüntüsü: p95=359, medyan aralık=2.7 dk, 3 karşı taraf. Gözlenen özellikler tipoloji incelemesine adaydır; kaynak işlem kayıtları ve müşteri bağlamı doğrulanmadan SAR kararı değildir."
+          },
+          {
+            "window_id": 447,
+            "true_class": "velocity",
+            "predicted_class": "normal",
+            "nearest_prototype": "velocity",
+            "nearest_prototype_distance": 0.05825593322515488,
+            "second_prototype": "normal",
+            "second_prototype_distance": 0.0734318271279335,
+            "nearest_prototype_correct": true,
+            "observable_reason": "çok-hop zincir işareti: 4 hop / 4 karşı taraf, medyan aralık=5.0 dk, kanal=card",
+            "sar_draft": "Geometrik yakınlık: velocity prototipi d=0.058; ikincisi normal d=0.073. Ön inceleme taslağı — çok-hop zincir işareti: 4 hop / 4 karşı taraf, medyan aralık=5.0 dk, kanal=card. Gözlenen özellikler tipoloji incelemesine adaydır; kaynak işlem kayıtları ve müşteri bağlamı doğrulanmadan SAR kararı değildir."
+          },
+          {
+            "window_id": 1763,
+            "true_class": "velocity",
+            "predicted_class": "normal",
+            "nearest_prototype": "velocity",
+            "nearest_prototype_distance": 0.026713000610470772,
+            "second_prototype": "normal",
+            "second_prototype_distance": 0.03409988060593605,
+            "nearest_prototype_correct": true,
+            "observable_reason": "taban aktivite örüntüsü: p95=746, medyan aralık=105.6 dk, 2 karşı taraf",
+            "sar_draft": "Geometrik yakınlık: velocity prototipi d=0.027; ikincisi normal d=0.034. Ön inceleme taslağı — taban aktivite örüntüsü: p95=746, medyan aralık=105.6 dk, 2 karşı taraf. Gözlenen özellikler tipoloji incelemesine adaydır; kaynak işlem kayıtları ve müşteri bağlamı doğrulanmadan SAR kararı değildir."
+          },
+          {
+            "window_id": 1269,
+            "true_class": "velocity",
+            "predicted_class": "normal",
+            "nearest_prototype": "velocity",
+            "nearest_prototype_distance": 0.030615447089076042,
+            "second_prototype": "normal",
+            "second_prototype_distance": 0.04121456295251846,
+            "nearest_prototype_correct": true,
+            "observable_reason": "çok-hop zincir işareti: 4 hop / 4 karşı taraf, medyan aralık=3.7 dk, kanal=card",
+            "sar_draft": "Geometrik yakınlık: velocity prototipi d=0.031; ikincisi normal d=0.041. Ön inceleme taslağı — çok-hop zincir işareti: 4 hop / 4 karşı taraf, medyan aralık=3.7 dk, kanal=card. Gözlenen özellikler tipoloji incelemesine adaydır; kaynak işlem kayıtları ve müşteri bağlamı doğrulanmadan SAR kararı değildir."
+          },
+          {
+            "window_id": 371,
+            "true_class": "velocity",
+            "predicted_class": "normal",
+            "nearest_prototype": "layering",
+            "nearest_prototype_distance": 0.04148231819272041,
+            "second_prototype": "structuring",
+            "second_prototype_distance": 0.04221528768539429,
+            "nearest_prototype_correct": false,
+            "observable_reason": "çok-hop zincir işareti: 8 hop / 8 karşı taraf, medyan aralık=3.3 dk, kanal=cash",
+            "sar_draft": "Geometrik yakınlık: layering prototipi d=0.041; ikincisi structuring d=0.042. Ön inceleme taslağı — çok-hop zincir işareti: 8 hop / 8 karşı taraf, medyan aralık=3.3 dk, kanal=cash. Gözlenen özellikler tipoloji incelemesine adaydır; kaynak işlem kayıtları ve müşteri bağlamı doğrulanmadan SAR kararı değildir."
+          },
+          {
+            "window_id": 456,
+            "true_class": "velocity",
+            "predicted_class": "normal",
+            "nearest_prototype": "velocity",
+            "nearest_prototype_distance": 0.047755688428878784,
+            "second_prototype": "normal",
+            "second_prototype_distance": 0.0642625093460083,
+            "nearest_prototype_correct": true,
+            "observable_reason": "taban aktivite örüntüsü: p95=192, medyan aralık=4.3 dk, 2 karşı taraf",
+            "sar_draft": "Geometrik yakınlık: velocity prototipi d=0.048; ikincisi normal d=0.064. Ön inceleme taslağı — taban aktivite örüntüsü: p95=192, medyan aralık=4.3 dk, 2 karşı taraf. Gözlenen özellikler tipoloji incelemesine adaydır; kaynak işlem kayıtları ve müşteri bağlamı doğrulanmadan SAR kararı değildir."
+          }
+        ]
+      }
+    }
+  },
+  "figure": "/Users/serkankose/Documents/quann-3d/aml/figures/e3b_region_map.png",
+  "limitations": [
+    "Both corpora are synthetic and establish neither real-world AML performance nor calibrated deployment thresholds.",
+    "Easy-v1 retains the E0/E3 chain_hops field in the shared base schema; its generator assigns it conditionally by label, so it is a synthetic-label shortcut common to both ablation arms.",
+    "Hard-v2 chain_hops is observed distinct-counterparty count; chain proxies remain within-window summaries and do not represent verified cross-account directed transfers.",
+    "The imbalanced hard test split has few positive examples per typology; recall at 1% FPR has substantial sampling uncertainty.",
+    "Hybrid/backprop retain the E3 cap of at most 120 training rows per class; hard-v2 neural fits therefore downsample normal windows, unlike GBT, and report the actual fit counts.",
+    "SAR text is a fixed feature-based analyst-review draft, not an automated SAR determination."
+  ]
+}
