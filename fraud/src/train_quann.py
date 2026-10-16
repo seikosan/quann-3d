@@ -193,6 +193,12 @@ def main():
     ap.add_argument("--d-model", type=int, default=32)
     ap.add_argument("--smoke", action="store_true", help="tiny run to verify the loop")
     ap.add_argument("--out", default=None)
+    ap.add_argument("--scale", default=None,
+                    help="checkpoint/json scale tag (default: smoke|large; e.g. 'full')")
+    ap.add_argument("--data", choices=["big", "small"], default="big",
+                    help="big=24.4M IBM csv (default); small=bundled User0 20K")
+    ap.add_argument("--n-rows", type=int, default=None,
+                    help="[big only] load first N rows (bounded/RAM-safe dev run)")
     args = ap.parse_args()
 
     if args.smoke:
@@ -205,8 +211,13 @@ def main():
     np.random.seed(config.SEED)
     device = torch.device("cpu")  # MPS held free for the live CloudLM run
 
-    print("Loading full dataset ...")
-    df = datasets.load_big()
+    if args.data == "small":
+        print("Loading bundled small dataset (User0 20K) ...")
+        df = datasets.load_small()
+    else:
+        label = f"full" if args.n_rows is None else f"first {args.n_rows:,} rows"
+        print(f"Loading {label} of the IBM csv ...")
+        df = datasets.load_big(args.n_rows)
     data = build_data(df, args.n_train, args.n_val, args.n_test,
                       args.train_fraud_frac, args.test_fraud_frac)
     fq = data["fq"]; y = data["y"]
@@ -226,6 +237,7 @@ def main():
     os.makedirs(config.RESULTS_DIR, exist_ok=True)
     os.makedirs(config.LOGS_DIR, exist_ok=True)
     results = {}
+    scale = args.scale or ("smoke" if args.smoke else "large")
     for cfg in args.configs:
         print(f"\n{'='*64}\n  CONFIG: {cfg}\n{'='*64}")
         model = QCloudFraudClassifier(vocab_size=fq.vocab_size, d_model=args.d_model,
@@ -237,13 +249,21 @@ def main():
         results[cfg] = {"test": m_te, "val": m_va}
         print(f"  [{cfg}] VAL  : {metrics.format_metrics(m_va)}")
         print(f"  [{cfg}] TEST : {metrics.format_metrics(m_te)}")
-        # save checkpoint
-        cp = os.path.join(config.RESULTS_DIR, f"quann_{cfg}.pt")
-        model.save_quann(cp, extra={"test": {k: v for k, v in m_te.items() if isinstance(v, (int, float))}})
+        # save checkpoint. The quantizer is bundled so the checkpoint is
+        # self-contained (reproducible AUC + a complete deploy artifact).
+        cp = os.path.join(config.RESULTS_DIR, f"quann_{scale}_{cfg}.pt")
+        model.save_quann(cp, extra={
+            "test": {k: v for k, v in m_te.items() if isinstance(v, (int, float))},
+            "quantizer": fq.to_dict(),
+            "scale": scale,
+        })
         print(f"  saved -> {cp}")
+        # compat alias so pre-existing references (quann_{cfg}.pt) keep working
+        import shutil
+        alias = os.path.join(config.RESULTS_DIR, f"quann_{cfg}.pt")
+        shutil.copyfile(cp, alias)
 
-    out = args.out or os.path.join(config.RESULTS_DIR,
-                                   f"quann_{'smoke' if args.smoke else 'large'}.json")
+    out = args.out or os.path.join(config.RESULTS_DIR, f"quann_{scale}.json")
     with open(out, "w") as f:
         json.dump({"configs": results,
                    "split": {"train": int(len(tr_sel)), "val": int(len(va_sel)), "test": int(len(te_sel))},

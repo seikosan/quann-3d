@@ -132,3 +132,35 @@ class FeatureQuantizer:
     @property
     def n_features(self) -> int:
         return len(self.specs)
+
+    # ------------------------------------------------- (de)serialization
+    def to_dict(self) -> dict:
+        """JSON-able snapshot of the fit state (bins / cat maps / offsets).
+
+        A QUANN cloud model is only reproducible & deployable together with the
+        quantizer that produced its token ids — this snapshot is what makes the
+        checkpoint self-contained (see qcloud_fraud.save_quann).
+        """
+        return {
+            "specs": [list(s) for s in self.specs],
+            "feature_order": list(self.feature_order),
+            "offsets": {k: int(v) for k, v in self.offsets.items()},
+            "n_per_feature": {k: int(v) for k, v in self.n_per_feature.items()},
+            "bins": {k: (None if v is None else [float(x) for x in v])
+                     for k, v in self.bins.items()},
+            "cat_map": {k: dict(v) for k, v in self.cat_map.items()},
+            "vocab_size": int(self.vocab_size),
+        }
+
+    @classmethod
+    def from_dict(cls, d: dict) -> "FeatureQuantizer":
+        fq = cls(specs=[tuple(s) for s in d["specs"]])
+        fq.feature_order = list(d["feature_order"])
+        fq.offsets = {k: int(v) for k, v in d["offsets"].items()}
+        fq.n_per_feature = {k: int(v) for k, v in d["n_per_feature"].items()}
+        fq.bins = {k: (None if v is None else np.array(v, dtype=float))
+                   for k, v in d["bins"].items()}
+        fq.cat_map = {k: dict(v) for k, v in d["cat_map"].items()}
+        fq.vocab_size = int(d["vocab_size"])
+        fq._fitted = True
+        return fq

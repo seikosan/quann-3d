@@ -14,6 +14,7 @@ logs/
 *.pt
 *.onnx
 *.onnx.data
+*.joblib
 
 # Experiment result dirs (keep the .py scripts)
 quann_cloud/experiments/control_20k/

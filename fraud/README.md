@@ -113,3 +113,12 @@ separates fraud from normal in 3D (centroid distance 1.95; see
 
 Artifacts: `results/standard_full.json`, `results/quann_large.json`,
 `results/quann_{pure,hybrid,backprop}.pt`, `figures/*.png`.
+
+> **Integrity note (2026-10-16):** the 0.9745 above is the *large* run on a
+> **10K / 5%-fraud** test; that checkpoint was clobbered and is now **lost**
+> (metrics survive in `quann_large.json`). The deployable good model is the
+> *full* run (214 pts, AUC 0.9581 @ 4.7M natural-rate), pinned to
+> `results/quann_hybrid_full.pt`. Checkpoints did not bundle their input
+> quantizer, so recorded AUCs are not yet reproducible from disk — now fixed for
+> future runs. See `results/MANIFEST.md` (provenance) and `REVISION.md`
+> (diagnosis + edge-eval: 53KB INT8, ~13µs/tx, INT8 ΔAUC −1.4).

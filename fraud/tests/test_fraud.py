@@ -23,6 +23,7 @@ import datasets
 import features
 import quantize
 import metrics
+import train_duels
 from qcloud_fraud import QCloudFraudClassifier
 
 
@@ -99,6 +100,114 @@ def test_metrics_shapes_and_threshold():
     assert 0 <= thr <= 1
     assert m["auc_pr"] > 0.5 and m["auc_roc"] > 0.9
     assert m["n"] == 1000 and m["n_fraud"] == 100
+
+
+def test_duels_models_train_and_return_metrics_on_toy_frame():
+    """Exercise all CPU duel trainers and their shared metric/threshold path."""
+    rng = np.random.default_rng(2026)
+    n = 500
+    labels = np.tile(np.array([0, 1]), n // 2)
+    rng.shuffle(labels)
+    amount = rng.lognormal(mean=3.0, sigma=1.0, size=n) + labels * 40
+    frame = pd.DataFrame({
+        "User": np.arange(n) % 20,
+        "Card": np.arange(n) % 50,
+        "Year": np.full(n, 2020),
+        "Month": rng.integers(1, 13, size=n),
+        "Day": rng.integers(1, 29, size=n),
+        "Time": [f"{int(h):02d}:{int(m):02d}" for h, m in
+                 zip(rng.integers(0, 24, n), rng.integers(0, 60, n))],
+        "Amount": [f"${v:.2f}" for v in amount],
+        "Use Chip": rng.choice(["Chip", "Swipe", "Online"], size=n),
+        "Merchant Name": rng.integers(1, 40, size=n),
+        "Merchant City": rng.choice(["A", "B", "C", "D"], size=n),
+        "Merchant State": rng.choice(["CA", "NY", "TX"], size=n),
+        "Zip": rng.choice([94102, 10001, np.nan], size=n),
+        "MCC": rng.integers(1000, 1020, size=n),
+        "Errors?": rng.choice([None, "Bad PIN", "Insufficient Balance"], size=n),
+        "Is Fraud?": np.where(labels == 1, "Yes", "No"),
+    })
+    transformer = features.FeatureTransformer().fit(frame.iloc[:300])
+    Xtr = transformer.transform(frame.iloc[:300])
+    Xva = transformer.transform(frame.iloc[300:400])
+    Xte = transformer.transform(frame.iloc[400:])
+    ytr, yva, yte = labels[:300], labels[300:400], labels[400:]
+    configs = {
+        "xgboost": {"n_estimators": 3, "early_stopping_rounds": 2, "n_jobs": 1,
+                    "max_depth": 2},
+        "lightgbm": {"n_estimators": 3, "early_stopping_rounds": 2, "n_jobs": 1,
+                     "max_depth": 2},
+        "ftt": {"epochs": 1, "batch_size": 64, "d_model": 32,
+                "n_layers": 1, "n_heads": 4, "cat_dim": 8, "ff_dim": 16},
+    }
+    required = {"auc_roc", "auc_pr", "fbeta", "precision", "recall", "lift", "threshold"}
+    for name, options in configs.items():
+        result, _ = train_duels.run_model(
+            name, Xtr, ytr, Xva, yva, Xte, yte, transformer.feature_names,
+            model_options=options,
+        )
+        assert required <= result.keys()
+        assert all(np.isfinite(result[key]) for key in required)
+
+
+def test_quann_duels_smoke_writes_split_sizes_and_all_model_metrics(monkeypatch, tmp_path):
+    """Exercise the QUANN-selected path and serialized metadata on a tiny view."""
+    rng = np.random.default_rng(20261015)
+    sizes = (1200, 400, 400)
+    n = sum(sizes)
+    labels = np.concatenate([
+        np.tile(np.array([0, 1]), size // 2) for size in sizes
+    ])
+    rng.shuffle(labels)
+    amount = rng.lognormal(mean=3.0, sigma=1.0, size=n) + labels * 40
+    frame = pd.DataFrame({
+        "User": np.arange(n) % 100,
+        "Card": np.arange(n) % 250,
+        "Year": np.full(n, 2020),
+        "Month": rng.integers(1, 13, size=n),
+        "Day": rng.integers(1, 29, size=n),
+        "Time": [f"{int(h):02d}:{int(m):02d}" for h, m in
+                 zip(rng.integers(0, 24, n), rng.integers(0, 60, n))],
+        "Amount": [f"${v:.2f}" for v in amount],
+        "Use Chip": rng.choice(["Chip", "Swipe", "Online"], size=n),
+        "Merchant Name": rng.integers(1, 40, size=n),
+        "Merchant City": rng.choice(["A", "B", "C", "D"], size=n),
+        "Merchant State": rng.choice(["CA", "NY", "TX"], size=n),
+        "Zip": rng.choice([94102, 10001, np.nan], size=n),
+        "MCC": rng.integers(1000, 1020, size=n),
+        "Errors?": rng.choice([None, "Bad PIN", "Insufficient Balance"], size=n),
+        "Is Fraud?": np.where(labels == 1, "Yes", "No"),
+    })
+    boundaries = np.cumsum((0, *sizes))
+    split_indices = tuple(np.arange(boundaries[i], boundaries[i + 1])
+                          for i in range(3))
+
+    def tiny_build_data(df, n_train, n_val, n_test, train_frac, test_frac, seed):
+        assert (n_train, n_val, n_test) == (1_020_000, 100_000, 4_700_000)
+        return dict(zip(("tr_sel", "va_sel", "te_sel"), split_indices))
+
+    monkeypatch.setattr(train_duels.datasets, "load_big", lambda: frame)
+    monkeypatch.setattr(train_duels.train_quann, "build_data", tiny_build_data)
+    monkeypatch.setattr(config, "RESULTS_DIR", str(tmp_path / "artifacts"))
+    out_path = tmp_path / "quann_smoke.json"
+    train_duels.main([
+        "--smoke", "--split", "quann", "--models", "xgboost,lightgbm,ftt",
+        "--n-jobs", "1", "--out", str(out_path),
+    ])
+
+    import json
+
+    payload = json.loads(out_path.read_text())
+    assert payload["data"]["split_name"] == "quann"
+    assert payload["data"]["split"] == {"train": 1200, "val": 400, "test": 400}
+    assert payload["data"]["split_full"] == {"train": 1200, "val": 400, "test": 400}
+    assert payload["data"]["fraud_by_split_full"] == {
+        "train": int(labels[split_indices[0]].sum()),
+        "val": int(labels[split_indices[1]].sum()),
+        "test": int(labels[split_indices[2]].sum()),
+    }
+    for name in ("xgboost", "lightgbm", "ftt"):
+        assert set(train_duels.METRIC_KEYS) <= payload["models"][name].keys()
 
 
 # -------------------------------------------------------------------------- qcloud_fraud
