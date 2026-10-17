@@ -5,7 +5,7 @@
 > `geometry`, `paper`) okur, distile sonuç döndürür. Güncelleme protokolü:
 > `AGENTS.md` §5. Boyut bütçesi: **≤150 satır** — taşarsa en eski deney "Son
 > Deneyler" tablosundan çıkarılır (detay `logs/`'da kalır).
-> Son güncelleme: 2026-10-17 09:18 (matched duels tamamlandı + 1.5M ep16 senkron; önceki: LGBM düzeltme)
+> Son güncelleme: 2026-10-17 09:27 (E3′ zaman-disjoint doğrulama tamamlandı; 1.5M post-train kuyruğu aktif)
 
 ## Bir Cümle
 
@@ -48,16 +48,16 @@ hassasiyet değil. Bulut (10×32=320 sayı), transformer gizli durumunun
 
 | Tarih | Run | Sonuç | Ders | Log |
 |---|---|---|---|---|
+| 10-17 | aml E3′ Elliptic (46,564 labeled, timestep-disjoint 60/10/30) | test hybrid .5865/.0972, fraud@1%FPR .018; GBT .8764/.5606, .481; nearest-prototype .617 (illicit .482) | bağımsız zaman testi E2/E2′ hybrid sonucunu doğrulamadı; GBT farkı sürüyor, prototip gerekçesi karar kanıtı değil | `aml/logs/run_e3_prime.log`; `aml/results/e3_prime.json` |
 | 10-17 | fraud matched duels + standard LGBM refresh | QUANN-split matched (1.02M/100K/4.7M): XGB .8047/.9938/.4884, LGBM .7665/.9899/.4455, FTT .6866/.9831/.4897 (test PR/ROC/F2); QUANN strong-reader .462 PR. Standard LGBM .6387 PR/.9364 ROC | matched kontroller QUANN strong-reader PR'ını geçti; LGBM düzeltmesi n_jobs=1, spw=1.0 ile tamamlandı (SIGSEGV/imbalance kaynaklı hatalar giderildi) | `fraud/logs/run_duels_matched.log`; `fraud/results/duels_quann.json`; `fraud/results/duels.json` |
 | 10-17 | aml/E2 Elliptic + E2′ (darknet gerçek veri; K10/B8 çift-kanal açı çifti) | aynı config: hybrid .838/.370, fraud@1%FPR .025 vs GBT .943/.758, .625; temel E2 hybrid .542/.140, .050 vs GBT .907/.795, .625; E2 explain (36D base hybrid) held-out nearest-prototype .750 (illicit .450) | gerçek-veri kapısı tamam ✓; en iyi açı varyantı temele göre kaldıraç sağladı ama GBT açığı sürüyor; 2K sampled tx-node proxy, hesap/ham tutar yok ve graf özellikleri transductive — prototip açıklaması karar kanıtı değil | `aml/results/e2p_design.json`; `aml/logs/run_e2p_smoke.log`; `aml/results/e2_explain.json` |
 | 10-16 | maintenance E5 (3-sınıf arıza-tipi: nokta tasarımı gridi — açı-çifti/bucket/K, aynı kayıt-disjoint split) | en iyi hybrid (mixed_angle_B8_K1) .678/.530 (inner .000); en yüksek inner (.889) konfiginde GBT +30.5 ROC önde; açı kaldırağı +9.3 pt, B8 +7.5 pt (Elliptic E2′ ile aynı desen); hybrid–GBT en küçük gap 11.7 pt (≤10 hedefi tutmadı) | 3-sınıf tip görevi bu veride KAPANDI; açı kaldırağı evrensel — **maintenance vaka = ikili tespit + açıklanabilirlik + edge** (ana oturum kararı) | `maintenance/logs/run_e5_smoke.log` |
-| 10-16 | maintenance CWRU genişletme (80 kayıt resmi kaynak, kayıt-disjoint 60/20) + E4 saha-adaptasyon | ikili: hybrid .999/1.000 vs GBT 1.000 (12/6 yakınsadı) — GERÇEK rulman verisinde tavana ≈; 3-sınıf tip: hybrid .572/.406 (inner .000) vs GBT .907/.838 — yetersiz; E4 (RPM A→B): frozen/0th/backprop hepsi 1.000 → kazanç 0, retrain'siz üstünlük KANITLANAMADI (demo dejener: frozen zaten %100) | ikili arıza tespiti (kayıt-disjoint) güçlü ✓; tip ayrımı + E4 adaptasyon iddiası açık borç | `maintenance/logs/run_cwru_exp.log` |
 
 ## Sıradaki Aksiyonlar
 
-1. CloudLM 1.5M canlı run'ını izle (PID 56169; epoch 16/20, train PPL 75.78; MPS'e dokunma).
-2. Run bitince held-out PPL + R1/R2 değerlendir; ardından QUANN fraud zengin nokta run'ını (D 16/32, K↑, orta ölçekli train) başlatıp AUC-PR karşılaştırmasını tamamla.
-3. E2 figürleri üretildi (`aml/figures/e2_elliptic_{region_map,naming_comparison}.png`) ve makale §6.5 gerçek veriye bağlandı. E3′ için daha büyük/bağımsız örnek ve zaman-disjoint doğrulama planla; AML hesap/amount iddiası yok.
+1. CloudLM 1.5M sonrası kuyruğu aktif (PID 56169); bitince held-out PPL + R1/R2 değerlendirmesi otomatik log'a düşer.
+2. 1.5M compare PPL'ini yorumlamadan önce CloudLM 1.5M ile baseline BPE eşleşmesini doğrula; ardından held-out sonucu/R1-R2 değerlendirip QUANN fraud zengin nokta run'ını (D 16/32, K↑, orta ölçekli train) planla.
+3. ✅ E3′: tüm 46,564 labeled tx-node proxy CPU'da, zaman-disjoint 60/10/30 doğrulandı; sonuç E2/E2′ hybrid'i doğrulamadı. E2 figürleri `aml/figures/e2_elliptic_{region_map,naming_comparison}.png`; AML hesap/amount iddiası yok.
 4. Maintenance vaka ikili tespit + açıklanabilirlik + edge; 3-sınıf tip görevi kapalı, E4 adaptasyon iddiası kanıtlanmadı.
 5. `aml/`, `maintenance/`, `fraud/` ve `docs/` dosyaları commit'te değil; commit kararı kullanıcıda (committer).
 6. ✅ Makale §7 Conclusion tutarlılık: uygulama paragrafı + dürüst sınırlar + "dikey-bağımsız çekirdek" kapanışı eklendi; §6.5/§6.6 değerleri birincil kaynakla doğrulandı (CWRU F2 .996, C-MAPSS %81.7). Abstract/Intro §6.5-§6.6'ya dokunulmadı (15ep/PPL 57/350×, §4.4 ile tutarlı).
