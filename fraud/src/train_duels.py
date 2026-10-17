@@ -221,19 +221,31 @@ def _tree_fit_predict(name: str, Xtr: np.ndarray, ytr: np.ndarray,
     else:
         from lightgbm import LGBMClassifier, early_stopping, log_evaluation
 
+        # LightGBM's native parallel training path segfaulted on the 1.02M-row
+        # QUANN matrix on macOS/ARM (n_jobs=4 and 18); serial training completed
+        # on the same finite, contiguous float32 data, so keep this workaround.
+        lgbm_n_jobs = 1
+        # A 2M-row standard-split sweep selected no positive reweighting:
+        # scale_pos_weight=1 gave val sklearn AP 0.505 (best iter 34), versus
+        # 0.454 at 2 and 0.423 at 5; the raw ~808 ratio had collapsed to base
+        # rate. Keep AP as the stopper because it directly matches our target.
+        lgbm_pos_weight = 1.0
         clf = LGBMClassifier(
             n_estimators=n_estimators, max_depth=max_depth, num_leaves=31,
-            learning_rate=learning_rate, n_jobs=n_jobs, objective="binary",
-            metric="average_precision", scale_pos_weight=scale_pos_weight,
+            learning_rate=learning_rate, n_jobs=lgbm_n_jobs, objective="binary",
+            metric="average_precision", scale_pos_weight=lgbm_pos_weight,
             random_state=seed, verbosity=-1, subsample=0.85, colsample_bytree=0.9,
         )
-        clf.fit(Xtr, ytr, eval_X=Xva, eval_y=yva, eval_metric="average_precision",
+        clf.fit(Xtr, ytr, eval_X=Xva, eval_y=yva,
+                eval_metric="average_precision",
                 callbacks=[early_stopping(early_stopping_rounds, verbose=False),
                            log_evaluation(0)])
         config_data = {"n_estimators": n_estimators,
                        "best_iteration": int(clf.best_iteration_ or n_estimators),
                        "max_depth": max_depth, "learning_rate": learning_rate,
-                       "n_jobs": n_jobs, "scale_pos_weight": scale_pos_weight,
+                       "n_jobs": lgbm_n_jobs, "n_jobs_requested": n_jobs,
+                       "scale_pos_weight": lgbm_pos_weight,
+                       "raw_scale_pos_weight": scale_pos_weight,
                        "early_stopping_rounds": early_stopping_rounds,
                        "eval_metric": "average_precision"}
 
@@ -340,6 +352,8 @@ def main(argv=None):
     parser.add_argument("--artifact-dir", default=config.RESULTS_DIR,
                         help="directory for trained model artifacts")
     parser.add_argument("--n-jobs", type=int, default=18)
+    parser.add_argument("--merge-existing", action="store_true",
+                        help="merge selected model results into a compatible output JSON")
     args = parser.parse_args(argv)
     models = [m.strip().lower() for m in args.models.split(",") if m.strip()]
     unknown = set(models) - set(MODEL_NAMES)
@@ -436,6 +450,25 @@ def main(argv=None):
             ),
         },
     }
+    if args.merge_existing:
+        if not os.path.isfile(out):
+            parser.error(f"cannot merge: output does not exist: {out}")
+        with open(out) as handle:
+            existing = json.load(handle)
+        old_data = existing.get("data", {})
+        new_data = payload["data"]
+        compatible = (
+            old_data.get("split_name", args.split) == args.split
+            and old_data.get("n_rows") == new_data["n_rows"]
+            and old_data.get("split_full") == new_data["split_full"]
+            and old_data.get("smoke", False) == new_data["smoke"]
+        )
+        if not compatible:
+            parser.error(f"cannot merge incompatible split/data into {out}")
+        existing.setdefault("models", {}).update(results)
+        existing.setdefault("validation", {}).update(val_results)
+        existing["data"] = new_data
+        payload = existing
     with open(out, "w") as handle:
         json.dump(payload, handle, indent=2)
     print(f"Saved -> {out}", flush=True)

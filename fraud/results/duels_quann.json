@@ -1,0 +1,165 @@
+{
+  "models": {
+    "xgboost": {
+      "auc_roc": 0.9937759127226926,
+      "auc_pr": 0.8047316774965942,
+      "fbeta": 0.4883863743091428,
+      "precision": 0.1764897852620586,
+      "recall": 0.8749393302054683,
+      "threshold": 0.8815890322054208,
+      "lift": 134.20190757671503,
+      "trained_rows": 1020000,
+      "config": {
+        "n_estimators": 1200,
+        "best_iteration": 968,
+        "max_depth": 8,
+        "learning_rate": 0.05,
+        "tree_method": "hist",
+        "n_jobs": 18,
+        "scale_pos_weight": 49.16228976099144,
+        "early_stopping_rounds": 80,
+        "fit_sec": 93.3
+      },
+      "artifact": "duels_quann_xgboost.joblib"
+    },
+    "lightgbm": {
+      "auc_roc": 0.9899141225844424,
+      "auc_pr": 0.7664818606827701,
+      "fbeta": 0.4455293957539467,
+      "precision": 0.1537874339401057,
+      "recall": 0.8474356900177965,
+      "threshold": 0.40126700556511413,
+      "lift": 116.93915863428197,
+      "trained_rows": 1020000,
+      "config": {
+        "n_estimators": 1200,
+        "best_iteration": 326,
+        "max_depth": 8,
+        "learning_rate": 0.05,
+        "n_jobs": 1,
+        "n_jobs_requested": 18,
+        "scale_pos_weight": 1.0,
+        "raw_scale_pos_weight": 49.16228976099144,
+        "early_stopping_rounds": 80,
+        "eval_metric": "average_precision",
+        "fit_sec": 58.1
+      },
+      "artifact": "duels_quann_lightgbm.joblib"
+    },
+    "ftt": {
+      "auc_roc": 0.9830741739393758,
+      "auc_pr": 0.6865540422625369,
+      "fbeta": 0.48965775127433037,
+      "precision": 0.1907463487560854,
+      "recall": 0.8050477269050316,
+      "threshold": 0.912735076327073,
+      "lift": 145.04252372651698,
+      "trained_rows": 1020000,
+      "config": {
+        "epochs": 3,
+        "batch_size": 2048,
+        "lr": 0.001,
+        "d_model": 128,
+        "layers": 2,
+        "heads": 8,
+        "cat_embedding_dim": 16,
+        "ff_dim": 64,
+        "pos_weight": 20.0,
+        "pos_weight_cap": 20.0,
+        "params": 183137,
+        "continuous_features": 13,
+        "categorical_features": 14,
+        "fit_sec": 1291.2
+      },
+      "artifact": "duels_quann_ftt.pt"
+    }
+  },
+  "validation": {
+    "xgboost": {
+      "auc_roc": 0.9947780892857144,
+      "auc_pr": 0.9296556806912281,
+      "fbeta": 0.8687597503900156,
+      "precision": 0.7898936170212766,
+      "recall": 0.891,
+      "threshold": 0.8815890322054208,
+      "lift_at_threshold": 39.494680851063826
+    },
+    "lightgbm": {
+      "auc_roc": 0.9922779948979592,
+      "auc_pr": 0.9068492206737435,
+      "fbeta": 0.8360959438377535,
+      "precision": 0.7601950354609929,
+      "recall": 0.8575,
+      "threshold": 0.40126700556511413,
+      "lift_at_threshold": 38.00975177304964
+    },
+    "ftt": {
+      "auc_roc": 0.9818168545918368,
+      "auc_pr": 0.8573903823765685,
+      "fbeta": 0.8095952023988006,
+      "precision": 0.8079800498753117,
+      "recall": 0.81,
+      "threshold": 0.912735076327073,
+      "lift_at_threshold": 40.399002493765586
+    }
+  },
+  "data": {
+    "n_rows": 24386900,
+    "fraud": 29757,
+    "split_name": "quann",
+    "split": {
+      "train": 1020000,
+      "val": 100000,
+      "test": 4700000
+    },
+    "split_full": {
+      "train": 1020000,
+      "val": 100000,
+      "test": 4700000
+    },
+    "fraud_by_split": {
+      "train": 20334,
+      "val": 2000,
+      "test": 6181
+    },
+    "fraud_by_split_full": {
+      "train": 20334,
+      "val": 2000,
+      "test": 6181
+    },
+    "test_base_rate": 0.0013151063829787233,
+    "feature_count": 27,
+    "features": [
+      "amount",
+      "amount_abs_log",
+      "amount_neg",
+      "hour",
+      "hour_sin",
+      "hour_cos",
+      "month",
+      "day",
+      "dayofweek",
+      "is_weekend",
+      "year",
+      "zip",
+      "zip_missing",
+      "use_chip=Chip Transaction",
+      "use_chip=Online Transaction",
+      "use_chip=Swipe Transaction",
+      "err_insufficient_balance",
+      "err_technical_glitch",
+      "err_bad_pin",
+      "err_bad_expiration",
+      "err_bad_card_number",
+      "err_bad_cvv",
+      "err_bad_zipcode",
+      "mcc_freq",
+      "merchant_city_freq",
+      "merchant_name_freq",
+      "merchant_state_freq"
+    ],
+    "seed": 20261015,
+    "smoke": false,
+    "sampling": "full QUANN-capped User-group partitions"
+  }
+}

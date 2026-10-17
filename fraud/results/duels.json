@@ -23,24 +23,26 @@
       "artifact": "duels_xgboost.joblib"
     },
     "lightgbm": {
-      "auc_roc": 0.8568236959206483,
-      "auc_pr": 0.13421644969966742,
-      "fbeta": 0.2654339034254251,
-      "precision": 0.14405659129974877,
-      "recall": 0.3362654320987654,
-      "threshold": 0.9999999999999982,
-      "lift": 104.84291990489761,
+      "auc_roc": 0.9364403244701196,
+      "auc_pr": 0.6386681216019218,
+      "fbeta": 0.5944278759144555,
+      "precision": 0.35038689805424084,
+      "recall": 0.7197530864197531,
+      "threshold": 0.028747717533568914,
+      "lift": 255.00801564843334,
       "trained_rows": 14612758,
       "config": {
         "n_estimators": 1200,
-        "best_iteration": 2,
+        "best_iteration": 7,
         "max_depth": 8,
         "learning_rate": 0.05,
-        "n_jobs": 18,
-        "scale_pos_weight": 830.4986912484352,
+        "n_jobs": 1,
+        "n_jobs_requested": 18,
+        "scale_pos_weight": 1.0,
+        "raw_scale_pos_weight": 830.4986912484352,
         "early_stopping_rounds": 80,
         "eval_metric": "average_precision",
-        "fit_sec": 12.4
+        "fit_sec": 55.9
       },
       "artifact": "duels_lightgbm.joblib"
     },
@@ -83,13 +85,13 @@
       "lift_at_threshold": 326.8641515087272
     },
     "lightgbm": {
-      "auc_roc": 0.8473572163672111,
-      "auc_pr": 0.13278618638750256,
-      "fbeta": 0.24926027686780092,
-      "precision": 0.1254654255319149,
-      "recall": 0.3308784850078906,
-      "threshold": 0.9999999999999982,
-      "lift_at_threshold": 111.27689849687175
+      "auc_roc": 0.93569397024794,
+      "auc_pr": 0.6347401661219795,
+      "fbeta": 0.5810709004157482,
+      "precision": 0.3197205803331542,
+      "recall": 0.7303173768192179,
+      "threshold": 0.028747717533568914,
+      "lift_at_threshold": 283.56429202914876
     },
     "ftt": {
       "auc_roc": 0.969695697673616,
@@ -104,6 +106,7 @@
   "data": {
     "n_rows": 24386900,
     "fraud": 29757,
+    "split_name": "standard",
     "split": {
       "train": 14612758,
       "val": 5058064,
@@ -115,6 +118,11 @@
       "test": 4716078
     },
     "fraud_by_split": {
+      "train": 17574,
+      "val": 5703,
+      "test": 6480
+    },
+    "fraud_by_split_full": {
       "train": 17574,
       "val": 5703,
       "test": 6480

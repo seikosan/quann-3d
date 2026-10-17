@@ -1,0 +1,98 @@
+{
+  "models": {
+    "lightgbm": {
+      "auc_roc": 0.9899141225844424,
+      "auc_pr": 0.7664818606827701,
+      "fbeta": 0.4455293957539467,
+      "precision": 0.1537874339401057,
+      "recall": 0.8474356900177965,
+      "threshold": 0.40126700556511413,
+      "lift": 116.93915863428197,
+      "trained_rows": 1020000,
+      "config": {
+        "n_estimators": 1200,
+        "best_iteration": 326,
+        "max_depth": 8,
+        "learning_rate": 0.05,
+        "n_jobs": 1,
+        "n_jobs_requested": 18,
+        "scale_pos_weight": 1.0,
+        "raw_scale_pos_weight": 49.16228976099144,
+        "early_stopping_rounds": 80,
+        "eval_metric": "average_precision",
+        "fit_sec": 57.6
+      },
+      "artifact": "duels_quann_lightgbm.joblib"
+    }
+  },
+  "validation": {
+    "lightgbm": {
+      "auc_roc": 0.9922779948979592,
+      "auc_pr": 0.9068492206737435,
+      "fbeta": 0.8360959438377535,
+      "precision": 0.7601950354609929,
+      "recall": 0.8575,
+      "threshold": 0.40126700556511413,
+      "lift_at_threshold": 38.00975177304964
+    }
+  },
+  "data": {
+    "n_rows": 24386900,
+    "fraud": 29757,
+    "split_name": "quann",
+    "split": {
+      "train": 1020000,
+      "val": 100000,
+      "test": 4700000
+    },
+    "split_full": {
+      "train": 1020000,
+      "val": 100000,
+      "test": 4700000
+    },
+    "fraud_by_split": {
+      "train": 20334,
+      "val": 2000,
+      "test": 6181
+    },
+    "fraud_by_split_full": {
+      "train": 20334,
+      "val": 2000,
+      "test": 6181
+    },
+    "test_base_rate": 0.0013151063829787233,
+    "feature_count": 27,
+    "features": [
+      "amount",
+      "amount_abs_log",
+      "amount_neg",
+      "hour",
+      "hour_sin",
+      "hour_cos",
+      "month",
+      "day",
+      "dayofweek",
+      "is_weekend",
+      "year",
+      "zip",
+      "zip_missing",
+      "use_chip=Chip Transaction",
+      "use_chip=Online Transaction",
+      "use_chip=Swipe Transaction",
+      "err_insufficient_balance",
+      "err_technical_glitch",
+      "err_bad_pin",
+      "err_bad_expiration",
+      "err_bad_card_number",
+      "err_bad_cvv",
+      "err_bad_zipcode",
+      "mcc_freq",
+      "merchant_city_freq",
+      "merchant_name_freq",
+      "merchant_state_freq"
+    ],
+    "seed": 20261015,
+    "smoke": false,
+    "sampling": "full QUANN-capped User-group partitions"
+  }
+}
