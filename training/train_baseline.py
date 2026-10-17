@@ -20,6 +20,11 @@ Kullanım:
       --cloud-ckpt checkpoints/wiki_checkpoints_200k/wiki_cloud_best.pt \
       --base-ckpt checkpoints/baseline_200k/baseline_best.pt \
       --bpe checkpoints/wiki_checkpoints_200k/wiki_bpe.json
+  python3 training/train_baseline.py --step compare \
+      --cloud-ckpt checkpoints/wiki_checkpoints_wiki1500k/wiki_cloud_best.pt \
+      --base-ckpt checkpoints/baseline_200k/baseline_best.pt \
+      --cloud-bpe checkpoints/wiki_checkpoints_wiki1500k/wiki_bpe.json \
+      --base-bpe checkpoints/wiki_checkpoints_200k/wiki_bpe.json
 """
 
 import sys
@@ -321,14 +326,21 @@ def step_compare(args, tok):
     print(f"\n  CloudLM   : {count_params(cloud):,} params (epoch {cckpt['epoch']}, train PPL {cckpt['ppl']:.2f})")
     print(f"  {bcfg['arch']:8s}: {count_params(base):,} params (epoch {bckpt['epoch']}, train PPL {bckpt['ppl']:.2f})")
 
+    cloud_tok = BPETokenizer.load(args.cloud_bpe) if args.cloud_bpe else tok
+    base_tok = BPETokenizer.load(args.base_bpe) if args.base_bpe else tok
+    if cloud_tok is None or base_tok is None:
+        raise SystemExit("--cloud-bpe/--base-bpe eksik tokenizer için --bpe gerekli")
+
     texts = load_txt(args.corpus, args.max_texts)
     print(f"\n  Ortak held-out PPL ({min(args.eval_n, len(texts))} cümle):")
-    c_ppl = evaluate_ppl(cloud, tok, texts, device, args.seq_len, "cloud", args.eval_n)
-    b_ppl = evaluate_ppl(base, tok, texts, device, args.seq_len, bcfg["arch"], args.eval_n)
+    print(f"    Tokenizer: CloudLM={args.cloud_bpe or args.bpe or 'varsayılan'} | Baseline={args.base_bpe or args.bpe or 'varsayılan'}")
+    c_ppl = evaluate_ppl(cloud, cloud_tok, texts, device, args.seq_len, "cloud", args.eval_n)
+    b_ppl = evaluate_ppl(base, base_tok, texts, device, args.seq_len, bcfg["arch"], args.eval_n)
     print(f"    CloudLM  : {c_ppl:.2f}")
     print(f"    Baseline : {b_ppl:.2f}")
 
-    eos_id = tok._tokenizer.token_to_id("<eos>") or 1
+    cloud_eos_id = cloud_tok._tokenizer.token_to_id("<eos>") or 1
+    base_eos_id = base_tok._tokenizer.token_to_id("<eos>") or 1
     prompts = [
         "Türkiye'nin başkenti",
         "bilgisayar bilimlerinde",
@@ -338,9 +350,10 @@ def step_compare(args, tok):
     ]
     print(f"\n  Üretim (aynı promptlar, temp=0.7):")
     for p in prompts:
-        ids = torch.tensor([tok.encode(p)], device=device)
-        c_out = tok.decode(cloud.generate(ids, max_new=12, temperature=0.7, eos_id=eos_id)[0].tolist())
-        b_out = tok.decode(base.generate(ids, max_new=12, temperature=0.7, eos_id=eos_id)[0].tolist())
+        c_ids = torch.tensor([cloud_tok.encode(p)], device=device)
+        b_ids = torch.tensor([base_tok.encode(p)], device=device)
+        c_out = cloud_tok.decode(cloud.generate(c_ids, max_new=12, temperature=0.7, eos_id=cloud_eos_id)[0].tolist())
+        b_out = base_tok.decode(base.generate(b_ids, max_new=12, temperature=0.7, eos_id=base_eos_id)[0].tolist())
         print(f"\n    Prompt: {p!r}")
         print(f"      CloudLM  : {c_out[:80]}")
         print(f"      Baseline : {b_out[:80]}")
@@ -363,6 +376,8 @@ def main():
                     default=os.path.join(ROOT, "data", "turkish_sentences.txt"))
     ap.add_argument("--max-texts", type=int, default=100000)
     ap.add_argument("--bpe", type=str, default=None, help="BPE json yolu (varsayılan: save_dir/wiki_bpe.json)")
+    ap.add_argument("--cloud-bpe", type=str, default=None, help="Compare: CloudLM checkpoint'inin BPE json yolu")
+    ap.add_argument("--base-bpe", type=str, default=None, help="Compare: baseline checkpoint'inin BPE json yolu")
     ap.add_argument("--epochs", type=int, default=20)
     ap.add_argument("--batch", type=int, default=64)
     ap.add_argument("--lr", type=float, default=2e-4)
@@ -382,10 +397,12 @@ def main():
         args.d_model = 256
 
     bpe_path = args.bpe or os.path.join(args.save_dir, "wiki_bpe.json")
-    tok = BPETokenizer.load(bpe_path)
+    separate_bpes = args.step == "compare" and args.cloud_bpe and args.base_bpe and not args.bpe
+    tok = None if separate_bpes else BPETokenizer.load(bpe_path)
 
     print("=" * 60)
-    print(f"  QUANN-3D — BASELINE ({args.arch}) | vocab={tok.num_tokens}")
+    vocab_label = tok.num_tokens if tok is not None else "per-model BPE"
+    print(f"  QUANN-3D — BASELINE ({args.arch}) | vocab={vocab_label}")
     print("=" * 60)
 
     if args.step in ("train", "all"):
