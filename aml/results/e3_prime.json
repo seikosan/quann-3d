@@ -1,0 +1,197 @@
+{
+  "experiment": "E3 prime independent Elliptic validation",
+  "data": "elliptic",
+  "data_validation": {
+    "labels_rows": 203769,
+    "edge_rows": 234355,
+    "feature_rows": 203769,
+    "labeled_fraud_nodes": 4545,
+    "labeled_normal_nodes": 42019,
+    "unknown_nodes": 157205,
+    "sampled_account_proxies": 46564,
+    "sampled_fraud": 4545,
+    "sampled_normal": 42019,
+    "K": 10,
+    "feature_source": "aml/data/elliptic/elliptic_bitcoin_dataset/elliptic_txs_features.csv",
+    "label_source": "aml/data/elliptic/elliptic_bitcoin_dataset/elliptic_txs_classes.csv",
+    "edge_source": "aml/data/elliptic/elliptic_bitcoin_dataset/elliptic_txs_edgelist.csv",
+    "raw_transaction_amount_available": false,
+    "chain_family_features": [
+      "observed_hop_count",
+      "hop_completion_ratio",
+      "counterparty_shared_ratio",
+      "max_counterparty_degree",
+      "counterparty_transition_rate",
+      "dwell_time_cv"
+    ],
+    "unavailable_chain_features": [
+      "amount_retention_median",
+      "amount_retention_p10"
+    ],
+    "chain_feature_note": "hop/degree plus coarse transition/dwell proxies from neighbor timesteps; amount retention is unavailable without named amounts and account ledger sequences",
+    "sample_limit_note": "all 46,564 labeled nodes used; 203,769 total tx nodes include unlabeled nodes excluded from supervised scoring",
+    "timestep_range": [
+      1,
+      49
+    ],
+    "train_timestep_range": [
+      1,
+      30
+    ],
+    "validation_timestep_range": [
+      31,
+      35
+    ],
+    "test_timestep_range": [
+      36,
+      49
+    ]
+  },
+  "protocol": {
+    "device": "cpu",
+    "seed": 20261016,
+    "sampled_labeled_nodes": 46564,
+    "split": "strict chronological timestep-disjoint: first 60% timesteps train, next 10% validation, final 30% test; no timestep shared across splits",
+    "metric_threshold": "threshold and 1% FPR cut selected on validation only",
+    "graph_caveat": "one-hop graph/degree proxy remains transductive; source has tx nodes, not accounts or named amounts"
+  },
+  "metrics": {
+    "gbt": {
+      "val": {
+        "threshold_f2": 0.22949265650966638,
+        "threshold_at_1pct_fpr": 0.5388045460452839
+      },
+      "test": {
+        "n": 15329,
+        "n_fraud": 901,
+        "auc_roc": 0.8763823087860667,
+        "auc_pr": 0.5605716563295463,
+        "f2": 0.5195944628582568,
+        "threshold_f2": 0.22949265650966638,
+        "class_recall_at_f2_threshold": {
+          "fraud": 0.5915649278579356,
+          "normal": 0.9312448017743277
+        },
+        "lift": 5.946294281399537,
+        "fraud_recall_at_1pct_fpr": 0.48057713651498335,
+        "class_recall_at_1pct_fpr": {
+          "fraud": 0.48057713651498335,
+          "normal": 0.9826032714166898
+        },
+        "fpr_threshold_from_validation": 0.5388045460452839,
+        "fit_sec": 0.91
+      }
+    },
+    "hybrid": {
+      "val": {
+        "threshold_f2": 0.8082714676856995,
+        "threshold_at_1pct_fpr": 0.8125783801078796
+      },
+      "test": {
+        "n": 15329,
+        "n_fraud": 901,
+        "auc_roc": 0.5865318607578617,
+        "auc_pr": 0.09723957623932869,
+        "f2": 0.23379153588050658,
+        "threshold_f2": 0.8082714676856995,
+        "class_recall_at_f2_threshold": {
+          "fraud": 0.4794672586015538,
+          "normal": 0.639381757693374
+        },
+        "lift": 1.3043041006394356,
+        "fraud_recall_at_1pct_fpr": 0.017758046614872364,
+        "class_recall_at_1pct_fpr": {
+          "fraud": 0.017758046614872364,
+          "normal": 0.9934155808150817
+        },
+        "fpr_threshold_from_validation": 0.8125783801078796,
+        "train_sec": 0.52,
+        "points": 24,
+        "converged": 16,
+        "mean_width": 0.19010291363849277
+      }
+    },
+    "backprop": {
+      "val": {
+        "threshold_f2": 0.5993785893917085,
+        "threshold_at_1pct_fpr": 0.9642848968505859
+      },
+      "test": {
+        "n": 15329,
+        "n_fraud": 901,
+        "auc_roc": 0.7257759991285905,
+        "auc_pr": 0.24572905160666944,
+        "f2": 0.3267005362686988,
+        "threshold_f2": 0.5993785893917085,
+        "class_recall_at_f2_threshold": {
+          "fraud": 0.5138734739178691,
+          "normal": 0.7907540892708622
+        },
+        "lift": 2.2622534410359028,
+        "fraud_recall_at_1pct_fpr": 0.0876803551609323,
+        "class_recall_at_1pct_fpr": {
+          "fraud": 0.0876803551609323,
+          "normal": 0.9878014970889937
+        },
+        "fpr_threshold_from_validation": 0.9642848968505859,
+        "train_sec": 10.28,
+        "points": 0,
+        "converged": 0,
+        "mean_width": null
+      }
+    },
+    "heldout_nearest_prototype": {
+      "test_n": 15329,
+      "test_fraud_n": 901,
+      "accuracy": 0.6170004566507926,
+      "class_accuracy": {
+        "licit": 0.6254505128915997,
+        "illicit": 0.4816870144284129
+      },
+      "prototype_fit": "class centroid of hybrid CloudEncoderND embeddings from train split only; Euclidean distance",
+      "examples": [
+        {
+          "transaction_node_id": "65879",
+          "true_label": "licit",
+          "nearest_prototype": "licit",
+          "nearest_distance": 2.4690370559692383,
+          "other_prototype_distance": 8.798347473144531,
+          "observable_reason": "time_step=36, observed_hop_count=66, hop_completion_ratio=1.000, max_counterparty_degree=122, counterparty_transition_rate=0.000, dwell_time_cv=0.000; anonymous transaction-node/one-hop proxy features only; no named amount or account ID",
+          "caveat": "descriptive nearest-prototype rationale, not calibrated AML/SAR evidence"
+        },
+        {
+          "transaction_node_id": "4264481",
+          "true_label": "illicit",
+          "nearest_prototype": "licit",
+          "nearest_distance": 2.103264570236206,
+          "other_prototype_distance": 8.54373550415039,
+          "observable_reason": "time_step=36, observed_hop_count=1, hop_completion_ratio=0.111, max_counterparty_degree=18, counterparty_transition_rate=0.000, dwell_time_cv=0.000; anonymous transaction-node/one-hop proxy features only; no named amount or account ID",
+          "caveat": "descriptive nearest-prototype rationale, not calibrated AML/SAR evidence"
+        }
+      ]
+    }
+  },
+  "comparison": {
+    "E2_2000_random_hybrid": {
+      "auc_roc": 0.5418,
+      "auc_pr": 0.14,
+      "fraud_recall_at_1pct_fpr": 0.05,
+      "source": "aml/results/e2_elliptic.json"
+    },
+    "E2prime_best_K10_B8_hybrid": {
+      "auc_roc": 0.838,
+      "auc_pr": 0.3696,
+      "fraud_recall_at_1pct_fpr": 0.025,
+      "source": "aml/results/e2p_design.json"
+    },
+    "E2_explain_random_2000": {
+      "nearest_prototype_accuracy": 0.75,
+      "illicit_accuracy": 0.45,
+      "source": "aml/results/e2_explain.json"
+    }
+  },
+  "outputs": {
+    "figure": "aml/figures/e3_prime_elliptic_clouds.png",
+    "log": "aml/logs/run_e3_prime.log"
+  }
+}
