@@ -335,7 +335,11 @@ We presented CloudLM, a language model that represents sentences as geometric po
 4. **The bottleneck is productive and quantifiable**: 16D→32D increases region count by 67% and cloud spread by 43%
 5. **4,900× improvement** over random baseline with 21M parameters (1/6 of GPT-2 small)
 
-Future work: scaling to 100M+ parameters, adding temporal dimension (4D clouds for discourse), standardized benchmark comparison, and theoretical analysis of the dimension-region relationship.
+Beyond the LM results, the same geometry doubles as an explanation surface in three applied verticals (§6.5-§6.6). On the IBM credit-card corpus (24.4M transactions) the QUANN-hybrid reaches .9745 AUC against GBT's .981 — real-data parity on a tabular task. In AML the contribution is not detection but a *named* explanation: a typology label with a geometric rationale (synthetic structuring: 14× prototype separation; Elliptic darknet: 75% held-out naming, 45% within the illicit class), while the detection gap to GBMs is stated, not hidden (.838 vs .943 AUC). Industrial maintenance is the strongest evidenced vertical: near-ceiling CWRU binary detection (F2 .996, matching GBT), a measured 81.7% nearest-prototype explanation surface on C-MAPSS with a 2.4× operating-shift drift alarm, and CPU/INT8-compatible compact deployment. The unifying proposal: point clouds + 0th-order narrowing form a vertical-independent core — the domain enters only through tokenizer and space choice, while geometry and narrowing are unchanged.
+
+The honest limits are equally specific. QUANN as a *pure* 0th-order optimizer sits at or near random on real tasks; every reported application result uses the hybrid (0th-order point narrowing + backprop-trained reader), and that hybrid — not pure 0th-order training — is the claim. At 200K scale the LM itself shows a representational-capacity gap (PPL 6.45 vs 2.92 for the causal baseline on the shared held-out set), and the in-progress 1.5M run is the standing gate for that claim. AML retraining-free adaptation (E4) recovered 0% of the retraining gain, and fine-grained CWRU fault typing (inner recall .000) is reported as unsuccessful; both are stated as scope boundaries, not omitted.
+
+Future work: closing the capacity gap at scale (1.5M run in progress), standardized benchmark comparison, theoretical analysis of the dimension-region relationship, controlled ablations on richer real-data AML coverage (banking typologies), and adding a temporal dimension (4D clouds for discourse).
 
 ---
 
