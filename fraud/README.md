@@ -36,6 +36,7 @@ fraud/
     train_standard.py, train_quann.py, train_duels.py
     train_strong_reader.py, train_rich_points.py, make_figures.py
     explain_pilot.py     point-ablation attribution + human-readable explanations
+    audit_false_alarms.py  false-alarm population audit (slices + counterfactuals)
   data/              bundled small CSVs
   results/           metrics JSON + model checkpoints
   figures/           plots
@@ -70,6 +71,10 @@ python3 -u fraud/src/explain_pilot.py --n-fraud 27 --n-normal 800 \
 
 # full 4.7M natural test: score all rows, explain a bounded 50K upper slice
 bash fraud/scripts/run_explain_upper_slice.sh
+
+# false-alarm audit: operational-threshold FP population, per-token slices,
+# single-mask + joint counterfactuals (CPU, ~2 min)
+bash fraud/scripts/run_false_alarm_audit.sh
 
 # regenerate the four project figures
 python3 fraud/src/make_figures.py
@@ -215,6 +220,26 @@ recur in true-fraud cases. The high-prob normal population is driven largely by
 fraud-protecting token. The slice’s within-slice AUC is a truncation artifact,
 not an operating metric. Output: `results/explain_upper_slice.json` and
 `logs/run_explain_upper_slice.log`.
+
+**False-alarm audit (2026-10-19; full 4.7M natural test):** `audit_false_alarms.py`
+scores the full test and isolates the operational-threshold false-alarm
+population — **9,942** normal rows at/above the best-F2 threshold 0.9969
+(1,842 TP / 4,268 FN; precision 0.156, recall 0.301) — plus 2,000 top true
+negatives for contrast. Its probabilities are saturated (median 0.999) and the
+population is driven by **generic online-transaction tokens**: `MCC=5311`
+(61% of FPs, signed +3.80), `amount>100` (73%), `Merchant State=ONLINE` /
+`Use Chip=Online` (94%). The single-mask counterfactual (row unflagged if the
+token were absent) fires for 94–100% of each token's rows: the model treats
+the whole online-transaction cloud as fraud-like, not a few rare merchants.
+The upper-slice's per-row candidates — `Merchant City=Rome` (5.6% of FPs,
+signed +8.19), `MCC=5970` and rare merchant-name hashes (1 row each) — push
+hard per row but cover a small share of the FP population. Joint pair masks
+measure the non-additivity directly (n=1, descriptive): with `Merchant
+City=Rome` present, masking the pair (Rome + `MCC=5970`) unflags the row
+(1.00) even though masking `MCC=5970` alone does not (0.00) — which token is
+"decisive" depends on the rest of the cloud; the `MCC=5970` + name-hash pair
+row is not unflagged by any of these masks. Output:
+`results/false_alarm_audit.json` and `logs/run_false_alarm_audit.log`.
 
 ## Figures and result files
 

@@ -52,9 +52,19 @@ reproduce olmuyor.
    `Merchant State=ONLINE`, `Use Chip=Online Transaction`, düşük `zip` bini ve
    `error_type=none`. Nadir merchant isimleri fraud vakalarında tekrar ediyor.
    Bu yorum additif SHAP değil, non-additive point-ablation'dır.
-5. **Sıradaki P1 adımı:** yüksek-olasılık normal popülasyonunun false-alarm
-   kaynağını (`Merchant City=Rome`, `MCC=5970`) audit etmek ve explanation
-   yüzeyini deploy artifact'ına (ONNX + quantizer + token decoder) taşımak.
+5. **P1 false-alarm audit (10-19):** operational threshold (best-F2 0.9969)
+   9.942 normal satırı flag'liyor (1.842 TP / 4.268 FN; P .156 / R .301).
+   Popülasyon generic online tokenlarca sürülüyor (MCC=5311 %61, amount>100
+   %73, ONLINE %94; tek-mask counterfactual 94–100% unflag) — model tüm
+   online-transaction bulutunu fraud-benzeri okuyor. `Merchant City=Rome`
+   (%5.6) ve `MCC=5970`/name-hash (n=1) per-row güçlü (+8.2) ama küçük pay.
+   Joint mask non-additivity'yi ölçüyor: Rome varken (Rome+MCC=5970) çift
+   mask unflag'ler (1.00), tek `MCC=5970` mask etmez (0.00) — baskın token,
+   buluttaki diğer tokenlara bağlı. Çıktı `results/false_alarm_audit.json`,
+   log `logs/run_false_alarm_audit.log`; testler 15/15.
+6. **Sıradaki P1 adımı:** explanation yüzeyini deploy artifact'ına (ONNX +
+   quantizer + token decoder) taşımak; küçük takibi: dominant token çiftleri
+   için (MCC=5311 × ONLINE) joint counterfactual.
 
 ## Edge-eval özeti (10-16, ölçülmüş)
 

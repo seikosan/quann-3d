@@ -23,6 +23,7 @@ import datasets
 import features
 import quantize
 import metrics
+import audit_false_alarms
 import explain_pilot
 import train_duels
 import train_rich_points
@@ -325,6 +326,37 @@ def test_explain_pilot_decode_ablation_aggregate_and_cases():
                                        n_cases=2, top_k=3)
     assert cases
     assert all("text" in c for c in cases)
+
+
+def test_audit_false_alarms_small_smoke():
+    """End-to-end audit on the bundled User0 sample: population, slices, joint, cases."""
+    import json
+    import tempfile
+
+    tmp = tempfile.mkdtemp(prefix="fraud_audit_test_")
+    out = os.path.join(tmp, "false_alarm_audit_dev.json")
+    audit_false_alarms.main([
+        "--data", "small", "--n-fraud", "27", "--n-normal", "300",
+        "--threshold", "0.5", "--tn-n", "100", "--slices", "6",
+        "--pairs", "3", "--cases", "4", "--chunk", "256", "--out", out,
+    ])
+    payload = json.loads(open(out).read())
+    assert {"population", "fp_aggregate", "tn_aggregate",
+            "slices", "joint", "cases", "method"} <= payload.keys()
+    pop = payload["population"]
+    assert pop["n"] > 0 and 0 <= pop["threshold"] <= 1
+    assert pop["tp"] + pop["fp"] + pop["fn"] <= pop["n"]
+    assert pop["fp_population"]["n"] == pop["fp"]
+    for s in payload["slices"]:
+        assert 0 <= s["frac_of_rows"] <= 1
+        if s["mean_prob_with"] is not None:
+            assert 0 <= s["mean_prob_with"] <= 1
+            assert 0 <= s["frac_unflagged_if_absent"] <= 1
+    for j in payload["joint"]:
+        assert j["n_rows_both"] > 0 and 0 <= j["frac_unflagged_joint"] <= 1
+        assert len(j["tokens"]) == 2
+    assert all(np.isfinite(c["p_fraud"]) for c in payload["cases"])
+    assert all(len(c["decoded"]) == 13 for c in payload["cases"])
 
 
 if __name__ == "__main__":

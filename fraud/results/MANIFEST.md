@@ -32,6 +32,7 @@
 | `edge_deploy.onnx` | 10-17 20:26 | 556KB | 8/128/214 | — | — | baked graph | current deploy graph |
 | `explain_pilot.json` | 10-19 11:06 | 75KB | 8/128/214 | sample AUC-PR 0.2555 / ROC 0.8286 | 827 User0 sample | bundled | point-ablation explanation pilot |
 | `explain_upper_slice.json` | 10-19 17:08 | 172KB | 8/128/214 | full AUC-PR 0.2560 / ROC 0.9451 | 4.7M scored / 50K attributed | bundled | full-test upper-slice explanation |
+| `false_alarm_audit.json` | 10-19 19:48 | 41KB | 8/128/214 | full AUC-PR 0.2560 / ROC 0.9451 | 4.7M scored / 9,942 FP + 2,000 TN attributed | bundled | operational-threshold false-alarm audit (slices, single + joint counterfactuals) |
 
 ## The 0.9745 vs 0.9581 question, resolved
 
@@ -47,5 +48,9 @@
 
 `explain_pilot.json` uses the current full hybrid checkpoint and reports:
 decoded tokens, leave-one-point-out logit contributions, class-stratified
-token rankings, and five human-readable cases. It is a bounded development
-pilot on User0 (27 fraud / 800 normal), not a full 4.7M explanation study.
+token rankings, and human-readable cases. `explain_upper_slice.json` extends
+this to the full 4.7M natural test (50K upper slice). `false_alarm_audit.json`
+isolates the operational-threshold false-alarm population (9,942 normals at/
+above the best-F2 threshold 0.9969), adds per-token slices (prevalence,
+probability split, single-mask counterfactual) and joint pair masks, and
+records single-vs-joint unflag rates to document non-additivity.
