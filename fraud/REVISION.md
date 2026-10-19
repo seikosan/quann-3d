@@ -62,9 +62,16 @@ reproduce olmuyor.
    mask unflag'ler (1.00), tek `MCC=5970` mask etmez (0.00) — baskın token,
    buluttaki diğer tokenlara bağlı. Çıktı `results/false_alarm_audit.json`,
    log `logs/run_false_alarm_audit.log`; testler 15/15.
-6. **Sıradaki P1 adımı:** explanation yüzeyini deploy artifact'ına (ONNX +
-   quantizer + token decoder) taşımak; küçük takibi: dominant token çiftleri
-   için (MCC=5311 × ONLINE) joint counterfactual.
+6. **P1 deploy yüzeyi (10-19, tamam):** explanation yüzeyi deploy artifact'ına
+   taşındı — `fraud/results/deploy/` = `model.onnx` (543KB, dynamic batch;
+   gitignored, `run_export_deploy.sh` ile repro; sha256 manifest'te) +
+   `quantizer.json` + `token_decoder.json` (221 = tam sözlük) + `manifest.json`
+   (checkpoint/artifact sha256, config, self-test). 19.96K User0 satırda
+   gerçek-satır torch↔ORT parite **1.5e-6**, ~**45.5k tx/s**.
+7. **Sıradaki P1 adımı (küçük):** `audit_false_alarms.py`'ye `--dom-pairs`
+   eklendi (dominant token çiftlerinin joint'i; non-additivity n=1'den
+   istatistiğe). Küçük örnek'te doğrulandı; tam 4.7M re-run ≥12GB bellek
+   kapısında (şu an 8.8GB).
 
 ## Edge-eval özeti (10-16, ölçülmüş)
 

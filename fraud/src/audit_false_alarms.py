@@ -214,6 +214,8 @@ def main(argv=None):
     ap.add_argument("--tail-frac", type=float, default=0.1)
     ap.add_argument("--slices", type=int, default=12)
     ap.add_argument("--pairs", type=int, default=3)
+    ap.add_argument("--dom-pairs", type=int, default=3,
+                    help="top-impact tokens for the dominant joint counterfactual")
     ap.add_argument("--cases", type=int, default=8)
     ap.add_argument("--top-k", type=int, default=5)
     ap.add_argument("--chunk", type=int, default=None)
@@ -350,7 +352,24 @@ def main(argv=None):
         if len(targets) >= args.pairs:
             break
     joint = joint_counterfactual(model, fq, t, fp_rows, targets, thr,
-                                 chunk=args.chunk) if len(fp_rows) and len(targets) >= 2 else []
+                                  chunk=args.chunk) if len(fp_rows) and len(targets) >= 2 else []
+
+    # dominant (high-population-share) tokens: same non-additivity test at scale.
+    # `targets` above are rare-but-strong tokens (n~1); these drive the FP
+    # population, so their joint carries a meaningful unflag rate.
+    dom_targets = []
+    for r in sorted(fp_aggregate.get("top_positive", []),
+                    key=lambda r: r.get("count", 0), reverse=True):
+        if r["token_id"] < 2:
+            continue
+        j = feature_index_of(fq, r["token_id"])
+        if j is not None:
+            dom_targets.append((j, r["token_id"]))
+        if len(dom_targets) >= args.dom_pairs:
+            break
+    dom_joint = (joint_counterfactual(model, fq, t, fp_rows, dom_targets, thr,
+                                      chunk=args.chunk)
+                 if len(fp_rows) and len(dom_targets) >= 2 else [])
 
     tp = int(np.sum((labels == 1) & flagged))
     fp_tot = int(np.sum((labels == 0) & flagged))
@@ -387,6 +406,7 @@ def main(argv=None):
         "tn_aggregate": tn_aggregate,
         "slices": slices,
         "joint": joint,
+        "dom_joint": dom_joint,
         "cases": audit_cases(fq, tok[rows], contribs, probs_rows, fp_rows,
                              np.asarray(rows[fp_rows]),
                              n=args.cases, top_k=args.top_k) if len(fp_rows) else [],
@@ -395,6 +415,7 @@ def main(argv=None):
             "positive_means": "feature supports the fraud prediction",
             "counterfactual": "single-point mask: sigmoid(base - contrib_j) < threshold => row unflagged",
             "joint": "both points masked in one forward (non-additive; not the sum of singles)",
+            "dom_joint": "same joint test over the dominant (most-populous) positive tokens; statistically meaningful n vs the rare-token joint",
             "caveat": "ablation sensitivity, not SHAP; pair-geometry makes contributions non-additive",
             "population": fp_note,
         },
@@ -412,9 +433,13 @@ def main(argv=None):
             f"{s['label']}(n={s['n_in_rows']},unflag={s['frac_unflagged_if_absent'] or 0:.2f})"
             for s in slices[:5]))
     if joint:
-        print("  joint:", ", ".join(
+        print("  joint (rare-strong):", ", ".join(
             f"{' + '.join(j['tokens'])}(n={j['n_rows_both']},unflag={j['frac_unflagged_joint']:.2f})"
             for j in joint[:3]))
+    if dom_joint:
+        print("  joint (dominant):", ", ".join(
+            f"{' + '.join(j['tokens'])}(n={j['n_rows_both']},unflag={j['frac_unflagged_joint']:.2f})"
+            for j in dom_joint[:3]))
     for case in result["cases"][:3]:
         print(f"  [false-alarm] {case['text']}")
 

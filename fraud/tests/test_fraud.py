@@ -25,6 +25,7 @@ import quantize
 import metrics
 import audit_false_alarms
 import explain_pilot
+import export_deploy
 import train_duels
 import train_rich_points
 from qcloud_fraud import QCloudFraudClassifier
@@ -338,11 +339,12 @@ def test_audit_false_alarms_small_smoke():
     audit_false_alarms.main([
         "--data", "small", "--n-fraud", "27", "--n-normal", "300",
         "--threshold", "0.5", "--tn-n", "100", "--slices", "6",
-        "--pairs", "3", "--cases", "4", "--chunk", "256", "--out", out,
+        "--pairs", "3", "--dom-pairs", "3", "--cases", "4", "--chunk", "256",
+        "--out", out,
     ])
     payload = json.loads(open(out).read())
     assert {"population", "fp_aggregate", "tn_aggregate",
-            "slices", "joint", "cases", "method"} <= payload.keys()
+            "slices", "joint", "dom_joint", "cases", "method"} <= payload.keys()
     pop = payload["population"]
     assert pop["n"] > 0 and 0 <= pop["threshold"] <= 1
     assert pop["tp"] + pop["fp"] + pop["fn"] <= pop["n"]
@@ -352,11 +354,45 @@ def test_audit_false_alarms_small_smoke():
         if s["mean_prob_with"] is not None:
             assert 0 <= s["mean_prob_with"] <= 1
             assert 0 <= s["frac_unflagged_if_absent"] <= 1
-    for j in payload["joint"]:
+    for j in payload["joint"] + payload["dom_joint"]:
         assert j["n_rows_both"] > 0 and 0 <= j["frac_unflagged_joint"] <= 1
         assert len(j["tokens"]) == 2
+        assert 0 <= j["frac_unflagged_single_a"] <= 1
+        assert 0 <= j["frac_unflagged_single_b"] <= 1
     assert all(np.isfinite(c["p_fraud"]) for c in payload["cases"])
     assert all(len(c["decoded"]) == 13 for c in payload["cases"])
+
+
+def test_export_deploy_package_smoke():
+    """ONNX export + decoder coverage + real-row ORT parity on a tiny model."""
+    import tempfile
+
+    base = _small()
+    y = datasets.get_label(base)
+    sel = sorted(set(np.flatnonzero(y == 1)[:16].tolist())
+                 | set(np.flatnonzero(y == 0)[:64].tolist()))
+    d = base.iloc[sel]
+    fq = quantize.FeatureQuantizer(specs=quantize.LEGACY_QUANT_SPECS).fit(d)
+    tok = fq.transform(d)
+    model = QCloudFraudClassifier(vocab_size=fq.vocab_size, d_model=8,
+                                  d_cloud=16, d_cloud_dim=4, hidden=8)
+    t = torch.tensor(tok)
+    mask = (t != 0) & (t != 1)
+    model.points_for(t, mask)
+
+    dec = export_deploy.build_decoder(fq)
+    assert len(dec) == fq.vocab_size
+    assert set(dec) == {str(i) for i in range(fq.vocab_size)}
+    assert all(isinstance(v["label"], str) and v["label"] for v in dec.values())
+
+    tmp = tempfile.mkdtemp(prefix="fraud_deploy_test_")
+    onnx_path = os.path.join(tmp, "model.onnx")
+    exp = export_deploy.export_onnx(model, onnx_path)
+    st = export_deploy.deploy_self_test(model, fq, d, exp["ort"], n_cases=3)
+    assert st["max_abs_diff"] < 1e-5
+    assert st["n_rows"] == len(d) and st["tx_per_s"] > 0
+    assert len(st["cases"]) == 3
+    assert all(len(c["decoded"]) == 13 for c in st["cases"])
 
 
 if __name__ == "__main__":

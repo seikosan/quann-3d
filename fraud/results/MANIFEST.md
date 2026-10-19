@@ -33,6 +33,7 @@
 | `explain_pilot.json` | 10-19 11:06 | 75KB | 8/128/214 | sample AUC-PR 0.2555 / ROC 0.8286 | 827 User0 sample | bundled | point-ablation explanation pilot |
 | `explain_upper_slice.json` | 10-19 17:08 | 172KB | 8/128/214 | full AUC-PR 0.2560 / ROC 0.9451 | 4.7M scored / 50K attributed | bundled | full-test upper-slice explanation |
 | `false_alarm_audit.json` | 10-19 19:48 | 41KB | 8/128/214 | full AUC-PR 0.2560 / ROC 0.9451 | 4.7M scored / 9,942 FP + 2,000 TN attributed | bundled | operational-threshold false-alarm audit (slices, single + joint counterfactuals) |
+| `deploy/` (manifest+quantizer+decoder; `model.onnx` gitignored) | 10-19 20:20 | 3+5+16+543KB | 8/128/214 | — | 19.96K User0 self-test | bundled | current deploy package: ONNX + quantizer + token decoder |
 
 ## The 0.9745 vs 0.9581 question, resolved
 
@@ -54,3 +55,9 @@ isolates the operational-threshold false-alarm population (9,942 normals at/
 above the best-F2 threshold 0.9969), adds per-token slices (prevalence,
 probability split, single-mask counterfactual) and joint pair masks, and
 records single-vs-joint unflag rates to document non-additivity.
+
+The same surface is packaged for deployment in `deploy/` (`export_deploy.py`):
+the `edge_deploy.onnx` graph re-exported + the bundled `FeatureQuantizer`
+(`quantizer.json`) + a full-vocabulary `token_decoder.json`, with a
+`manifest.json` recording the source-checkpoint sha256, each artifact's
+sha256/size, and a 19,963-row real-row torch↔ONNXRuntime parity of 1.5e-6.
