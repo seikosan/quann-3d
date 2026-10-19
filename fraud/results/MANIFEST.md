@@ -1,42 +1,50 @@
 # fraud/results — artifact manifest (provenance)
 
-> Why this file: the `.pt` checkpoints were saved as `quann_{cfg}.pt` (no scale
-> tag) so every run **clobbered** the previous one, while metrics went to
-> `quann_{scale}.json`. The checkpoint and the JSON drifted apart and the
-> recorded AUCs stopped reproducing. See `../REVISION.md`.
+> Why this file: the `.pt` checkpoints were originally saved as `quann_{cfg}.pt`
+> (no scale tag) so runs **clobbered** each other, while metrics went to
+> `quann_{scale}.json`. The checkpoint and the JSON drifted apart and recorded
+> AUCs stopped reproducing. See `../REVISION.md`.
 >
-> All times local. `quantizer=` is whether the input FeatureQuantizer (bin edges,
+> All times local. `quantizer=` means the input FeatureQuantizer (bin edges,
 > category maps, offsets) is bundled in the checkpoint — required for a
-> reproducible AUC and a complete deploy artifact. **Old files predate the fix**
-> and carry `quantizer=no`.
+> reproducible AUC and a complete deploy artifact. **Old 10-16 files predate
+> the fix** and may carry `quantizer=no`.
+
+## Canonical artifacts
 
 | Artifact | Saved | Size | Model (D/d_cloud/points) | Recorded AUC-ROC | Test n | quantizer | Status |
 |---|---|---|---|---|---|---|---|
-| `quann_hybrid_full.pt` | 10-16 19:26 | 294KB | 8/64/**214** | 0.9581 (stored) | 4.7M | no | **PINNED good model** (copy of the "full" run's model) |
-| `quann_hybrid.pt` | 10-16 11:03 | 294KB | 8/64/214 | 0.9581 (stored) | 4.7M | no | **mutable alias** — `train_quann` rewrites it each run; currently = full model |
-| `quann_pure.pt` | 10-16 13:40 | 294KB | 8/64/214 | 0.4502 (stored) | 4.7M | no | pure 0th-order regime (≈ random) — full run |
-| `quann_backprop.pt` | 10-16 11:59 | 227KB | 8/64/0 | 0.8938 (stored) | 4.7M | no | backprop ceiling (learned emb→nd) |
-| `quann_full.json` | 10-16 13:40 | 4KB | — | hybrid 0.9581 / pure 0.45 / bp 0.89 | 4.7M | — | metrics for the "full" run (matches `quann_hybrid_full.pt`) |
-| `quann_large.json` | 10-16 00:45 | 3KB | — | hybrid **0.9745** / bp 0.96 | 10K (5% fraud) | — | metrics for the "large" run — **its `.pt` was clobbered/lost** |
-| `quann_smoke.json` | 10-16 08:43 | 3KB | — | hybrid 0.875 | 400 | — | tiny verify run (D=6/d_cloud=32) |
-| `edge_eval.json` | 10-16 | — | — | — | — | — | edge harness output (footprint/latency/onnx/int8) — newest run |
-| `edge_eval_300k.json` | 10-16 | — | — | — | 300K (natural) | — | edge harness snapshot (300K natural-rate AUC) |
-| `edge_deploy.onnx` | 10-16 | 206KB | 8/64/214 | — | — | n/a | exported deploy graph (gather→PointNet→head) |
-| `standard_full.json` | 10-16 | — | — | RF 0.973 / GBT 0.981 | 4.72M | — | standard-ML baselines (full data) |
-| `strong_reader.json` | 10-16 | — | — | 64/64→0.969, 128/128→0.975 | 4.7M | — | strong-reader (backprop reader) results |
+| `quann_full_hybrid.pt` | 10-17 20:26 | 637KB | 8/128/**214** | 0.9351 stored / **0.9451** edge | 4.7M | yes | **current full-scale hybrid** |
+| `quann_hybrid_full.pt` | 10-17 20:26 | 637KB | 8/128/**214** | 0.9351 stored / **0.9451** edge | 4.7M | yes | pinned alias of current full model |
+| `quann_hybrid.pt` | 10-17 20:26 | 637KB | 8/128/**214** | 0.9351 stored / **0.9451** edge | 4.7M | yes | mutable alias; currently = full model |
+| `quann_pure.pt` | 10-16 13:40 | 294KB | 8/64/214 | 0.4502 (stored) | 4.7M | no | historical pure 0th-order run (≈ random) |
+| `quann_backprop.pt` | 10-16 11:59 | 227KB | 8/64/0 | 0.8938 (stored) | 4.7M | no | historical backprop ceiling |
+| `quann_rich_d16.pt` | 10-17 11:31 | 3.0MB | 16/256/242 | 0.9770 | 4.7M | yes | rich-points D=16, K=20 |
+| `quann_rich_d32.pt` | 10-17 13:41 | 3.2MB | 32/256/242 | **0.9792** | 4.7M | yes | rich-points D=32, K=20 |
+| `quann_full.json` | 10-16 | 4KB | — | hybrid 0.9581 / pure 0.45 / bp 0.89 | 4.7M | — | historical full-run metrics |
+| `quann_large.json` | 10-16 | 4KB | — | hybrid 0.9745 / bp 0.96 | 10K (5% fraud) | — | historical enriched-test metrics; checkpoint lost |
+| `duels_quann.json` | 10-17 | 4KB | — | XGB 0.9938 / LGBM 0.9899 / FTT 0.9831 | 4.7M | — | matched baselines |
+| `strong_reader.json` | 10-16 | 1KB | — | 64/64→0.969, 128/128→0.975, 256/256→0.975 | 4.7M | — | frozen D=8 points + strong readers |
+| `rich_points.json` | 10-17 | 3.6KB | — | D=16 0.9770 / D=32 0.9792 | 4.7M | — | rich-points metrics |
+| `edge_eval.json` | 10-17 20:32 | 1.8KB | 8/128/214 | FP32 0.9451 / INT8-channel 0.9367 | 4.7M | bundled | current edge footprint/latency/ONNX/INT8 |
+| `edge_eval_full_scale.json` | 10-17 20:32 | 1.8KB | 8/128/214 | FP32 0.9451 / INT8-channel 0.9367 | 4.7M | bundled | full-scale edge snapshot |
+| `full_scale_hybrid.json` | 10-17 20:26 | 1.5KB | 8/128/214 | balanced 100K 0.9351 | 100K | — | current full-scale training metrics |
+| `edge_deploy.onnx` | 10-17 20:26 | 556KB | 8/128/214 | — | — | baked graph | current deploy graph |
+| `explain_pilot.json` | 10-19 11:06 | 75KB | 8/128/214 | sample AUC-PR 0.2555 / ROC 0.8286 | 827 User0 sample | bundled | point-ablation explanation pilot |
 
-## The two "good" models and the 0.9745 vs 0.9581 question
+## The 0.9745 vs 0.9581 question, resolved
 
-* **`quann_large` (210 pts, 0.9745)** — the README/RESEARCH headline. Its
-  **checkpoint is lost** (overwritten by a later run). Only its metrics survive
-  here. The 0.9745 was on a **10K test at 5% fraud** (enriched-ish), not the
-  natural base rate.
-* **`quann_full` (214 pts, 0.9581)** — the model actually on disk (pinned to
-  `quann_hybrid_full.pt`). Validated on the **4.7M test at the ~0.13% natural
-  rate**. This is the deployable "good" model.
+* `quann_large` (210 pts, 0.9745) was measured on a **10K, 5%-fraud enriched
+  test**; its checkpoint was clobbered and is lost.
+* The historical `quann_full` 0.9581 reading came from a no-quantizer checkpoint
+  and could not be reproduced bit-for-bit.
+* The current `quann_full_hybrid.pt` (10-17, `d_cloud=128`, 214 points) bundles
+  its trained quantizer and reproduces **0.9451** on the full 4.7M natural-rate
+  test; INT8 channel-wise is **0.9367**.
 
-The 0.9745 > 0.9581 gap is partly the **enriched 5% test** vs natural rate, and
-partly QUANN 0th-order **run-to-run variance** (different points converge to
-different quality). Neither checkpoint can currently reproduce its own recorded
-AUC — see `../REVISION.md` (the bundled-quantizer fix makes *future* checkpoints
-reproducible).
+## Current explanation surface
+
+`explain_pilot.json` uses the current full hybrid checkpoint and reports:
+decoded tokens, leave-one-point-out logit contributions, class-stratified
+token rankings, and five human-readable cases. It is a bounded development
+pilot on User0 (27 fraud / 800 normal), not a full 4.7M explanation study.

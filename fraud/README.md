@@ -35,6 +35,7 @@ fraud/
     qcloud_fraud.py  QCloudFraudClassifier (reuses WordToND+CloudEncoderND+QCloudWeight)
     train_standard.py, train_quann.py, train_duels.py
     train_strong_reader.py, train_rich_points.py, make_figures.py
+    explain_pilot.py     point-ablation attribution + human-readable explanations
   data/              bundled small CSVs
   results/           metrics JSON + model checkpoints
   figures/           plots
@@ -63,6 +64,10 @@ python3 fraud/src/train_strong_reader.py
 python3 -u fraud/src/train_rich_points.py --configs 16,32 --normal-cap 450000 \
   --reader-epochs 3 --out fraud/results/rich_points.json
 
+# point-ablation explanation pilot (small bundled data, CPU)
+python3 -u fraud/src/explain_pilot.py --n-fraud 27 --n-normal 800 \
+  --cases 5 --top-k 5 --out fraud/results/explain_pilot.json
+
 # regenerate the four project figures
 python3 fraud/src/make_figures.py
 
@@ -70,7 +75,7 @@ python3 fraud/src/make_figures.py
 python3 fraud/tests/test_fraud.py
 ```
 
-Runs on **CPU** (MPS is held free for the live CloudLM 1.5M run in this repo).
+Runs on **CPU** (one heavy CloudLM/MPS run is reserved at a time).
 
 ## The point-cloud mapping (QUANN layer)
 
@@ -158,7 +163,7 @@ This is **not SOTA**. The defensible results are narrower:
    versus RF 0.973 and GBT 0.981.
 2. On the full 4.7M natural test, hybrid FP32 ROC is 0.9451 (backprop: 0.8938);
    it remains below the standard RF/GBT ceiling, so there is no parity claim.
-3. There is an edge/explainability wedge: 191 KB FP32, 53 KB INT8, about 75k
+3. There is an edge/explainability wedge: 529 KB FP32, 138 KB INT8, about 63k
    tx/s, and identity-based points that can be inspected.
 
 AUC-PR is the meaningful metric under this class imbalance. The best QUANN
@@ -179,9 +184,21 @@ and lift 29.0×, with 214 converged points. RF 0.973 / GBT 0.981 ROC on the
 same full test remain above hybrid; there is no parity claim. The checkpoint
 bundles its trained quantizer, enabling bit-level AUC reproduction; the old
 0.9581 / 0.9745 readings came from checkpoints without a saved quantizer and
-are not reproducible. Footprint remains 191 KB FP32 / 53 KB INT8, with ONNX
-parity max error 2.5e-6 and about 75k tx/s. Sources: `results/edge_eval_full_scale.json`,
+are not reproducible. The full-scale `D=8/d_cloud=128/d_model=32` artifact is
+**529 KB FP32 / 138 KB INT8**, with ONNX max error `1.0e-7`, about **63k tx/s**
+native (ORT about 39k tx/s). Sources: `results/edge_eval_full_scale.json`,
 `results/full_scale_hybrid.json`, `results/MANIFEST.md`, and `REVISION.md`.
+
+**Explanation pilot (2026-10-19; point ablation):** `explain_pilot.py` loads
+`quann_full_hybrid.pt`, decodes its bundled quantizer, and computes
+leave-one-point-out logit differences for a stratified User0 sample
+(**827 rows: 27 fraud / 800 normal**). The highest-impact tokens in the whole
+sample are mostly fraud-protecting — `Merchant City=other`, a `zip` range,
+`Merchant State=CA`, `error_type=none`, `Use Chip=Swipe` — reflecting the
+normal-majority sample. Among true-fraud rows, positive drivers include rare
+merchant identities, an `amount~[30.79,46.26)` bin, and `hour=16`. This is an
+ablation sensitivity, not SHAP: pair geometry makes contributions non-additive.
+Output: `results/explain_pilot.json` and `logs/run_explain_pilot.log`.
 
 ## Figures and result files
 
@@ -206,5 +223,6 @@ Figures in `figures/` (regenerate with `python3 fraud/src/make_figures.py`):
 | `results/edge_eval.json` | Footprint, latency, ONNX parity, and INT8 evaluation |
 | `results/edge_eval_full_scale.json` | Full 4.7M natural-test FP32 / INT8 AUC with bundled quantizer |
 | `results/full_scale_hybrid.json` | Reproducible full-scale hybrid metrics (bundled quantizer) |
+| `results/explain_pilot.json` | Point-ablation explanation pilot (827 stratified User0 rows) |
 
 Other artifacts and checkpoint provenance: `results/MANIFEST.md`.

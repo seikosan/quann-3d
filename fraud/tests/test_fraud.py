@@ -23,6 +23,7 @@ import datasets
 import features
 import quantize
 import metrics
+import explain_pilot
 import train_duels
 import train_rich_points
 from qcloud_fraud import QCloudFraudClassifier
@@ -280,6 +281,33 @@ def test_rich_points_tiny_d16_train_and_reader_step():
     assert point_result["steps_per_sec"] > 0
     assert reader_result["steps"] == 1
     assert model.D == 16 and model.get_weight(int(t[0, 0])).value.shape == (16,)
+
+
+def test_explain_pilot_decode_ablation_aggregate_and_cases():
+    d = _small().iloc[:16]
+    fq = quantize.FeatureQuantizer(specs=quantize.LEGACY_QUANT_SPECS).fit(d)
+    tok = fq.transform(d)
+    decoded = explain_pilot.decode_row(fq, tok[0])
+    assert len(decoded) == 13
+    assert all(isinstance(s, str) and s for s in decoded)
+
+    model = QCloudFraudClassifier(vocab_size=fq.vocab_size, d_model=8,
+                                  d_cloud=16, d_cloud_dim=4, hidden=8)
+    t = torch.tensor(tok)
+    mask = (t != 0) & (t != 1)
+    contribs = explain_pilot.point_ablation(model, t, mask, chunk=8).numpy()
+    assert contribs.shape == tok.shape
+    assert np.isfinite(contribs).all()
+
+    rng = np.random.default_rng(0)
+    agg = explain_pilot.aggregate(fq, tok, rng.normal(size=tok.shape), top_tokens=3)
+    assert {"features", "top_tokens", "top_positive", "top_negative"} <= agg.keys()
+    labels = datasets.get_label(d)
+    probs = np.clip(1.0 / (1.0 + np.exp(-contribs[:, 0])), 0.0, 1.0)
+    cases = explain_pilot.select_cases(fq, labels, probs, tok, contribs,
+                                       n_cases=2, top_k=3)
+    assert cases
+    assert all("text" in c for c in cases)
 
 
 if __name__ == "__main__":

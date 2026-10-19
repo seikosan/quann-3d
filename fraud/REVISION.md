@@ -34,25 +34,31 @@ reproduce olmuyor.
   yoksa re-fit fallback. Default → `quann_hybrid_full.pt`.
 * `train_strong_reader.py` default → `quann_hybrid_full.pt`.
 * İyi model pinlendi: `results/quann_hybrid_full.pt` (full/214pt).
-* Doğrulama: `fraud/tests/test_fraud.py` **10/10**; quantizer round-trip
+* Doğrulama: `fraud/tests/test_fraud.py` **13/13**; quantizer round-trip
   identical tokens; save/load quantizer taşır.
 
-## Sonraki adımlar
+## Kapanan revizyonlar + P1 durumu
 
-1. **Yeni hybrid (210pt-ereken) yeniden eğit + `--scale full`** → quantizer'lı
-   checkpoint; `edge_eval.py --with-auc` ile **reproducible** AUC + INT8
-   (tensor/channel) tek run'da ölç. Bu, 0.9745/0.9581 tartışmasını kapatır.
-2. Edge iddiasını kapatan set: reproducible FP32 AUC + per-channel INT8 AUC +
-   hedef cihaz latency (şu an laptop CPU alt sınır).
-3. README/RESEARCH: 0.9745 satırına "10K %5-enriched test; checkpoint kayıp;
-   tam testte ~0.77" notu + edge-eval bulgusu (53KB, ~13µs/tx, INT8 −1.4 AUC).
+1. **Kapatıldı (10-17):** yeniden eğitilen `quann_full_hybrid.pt`
+   (`D=8/d_cloud=128/d_model=32`, 214 nokta, gömülü quantizer) tam 4.7M
+   testte **0.9451 FP32** ve **0.9367 INT8 channel** veriyor; 0.9745/0.9581
+   tartışması `results/MANIFEST.md` içinde çözüldü.
+2. **Kapatıldı (10-17):** edge set reproducible: 529KB FP32 / 138KB INT8,
+   ONNX parite `1.0e-7`, ~63k tx/s native.
+3. **P1 explanation pilot (10-19):** `src/explain_pilot.py` mevcut full hybrid
+   checkpoint üzerinde leave-one-point-out logit katkılarını hesaplıyor;
+   küçük User0 örneğinde 827 satır (27 fraud/800 normal) çalıştı. Bu bir
+   ablation sensitivity'idir, SHAP değildir.
+4. **Sıradaki P1 adımı:** daha büyük doğal oranlı bir dilimde explanation
+   üretmek — önerilen ilk hedef, tam 4.7M testin üst olasılık/fraud dilimi —
+   ve çıkan token kanıtlarını AML named-explanation kalıbıyla karşılaştırmak.
 
 ## Edge-eval özeti (10-16, ölçülmüş)
 
 | Eksen | Değer | |
 |---|---|---|
-| Boyut | 47K param → **53KB INT8** / 191KB FP32 | ✅ |
-| Latency | **~13µs/tx** @K=13 (75K tx/s); K=50→0.25ms | ✅ laptop CPU alt sınır |
-| Taşınabilirlik | ONNX temiz, ORT parite 2.5e-6 | ✅ |
-| INT8 | per-channel ΔAUC **−0.018**, per-tensor **−0.059** | ✅ (geometri/LayerNorm fp32) |
-| AUC | tam 4.7M testte FP32 **0.77** (0.9581 reproduce edilemez) | ⚠️ quantizer eksik (yukarı) |
+| Boyut | current full → **138KB INT8** / 529KB FP32 | ✅ |
+| Latency | **~16µs/tx** @K=13 (~63k tx/s); K=50→0.23ms | ✅ laptop CPU alt sınır |
+| Taşınabilirlik | ONNX 556KB, ORT parite `1.0e-7` | ✅ |
+| INT8 | per-channel ΔAUC **−0.0084**, per-tensor **−0.0086** | ✅ (geometri/LayerNorm fp32) |
+| AUC | tam 4.7M testte FP32 **0.9451** / INT8 channel **0.9367** | ✅ quantizer gömülü |
