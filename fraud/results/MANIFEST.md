@@ -31,6 +31,7 @@
 | `full_scale_hybrid.json` | 10-17 20:26 | 1.5KB | 8/128/214 | balanced 100K 0.9351 | 100K | — | current full-scale training metrics |
 | `edge_deploy.onnx` | 10-17 20:26 | 556KB | 8/128/214 | — | — | baked graph | current deploy graph |
 | `explain_pilot.json` | 10-19 11:06 | 75KB | 8/128/214 | sample AUC-PR 0.2555 / ROC 0.8286 | 827 User0 sample | bundled | point-ablation explanation pilot |
+| `explain_upper_slice.json` | 10-19 17:08 | 172KB | 8/128/214 | full AUC-PR 0.2560 / ROC 0.9451 | 4.7M scored / 50K attributed | bundled | full-test upper-slice explanation |
 
 ## The 0.9745 vs 0.9581 question, resolved
 

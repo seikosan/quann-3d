@@ -1,0 +1,4926 @@
+{
+  "checkpoint": "/Users/serkankose/Documents/quann-3d/fraud/results/quann_full_hybrid.pt",
+  "data": "big-test",
+  "seed": 20261015,
+  "sample": {
+    "n": 50000,
+    "n_fraud": 6110,
+    "n_normal": 43890,
+    "sample_base_rate": 0.1222,
+    "strategy": "all fraud + highest-probability normal rows",
+    "note": "upper slice of the full natural-rate test; enriched by construction, not a natural-prevalence estimate"
+  },
+  "full_test": {
+    "n": 4700000,
+    "n_fraud": 6110,
+    "base_rate": 0.0013,
+    "prob_percentiles": {
+      "p50": 0.07103376090526581,
+      "p90": 0.4295996427536011,
+      "p99": 0.9859662652015686,
+      "p999": 0.9988672733306885,
+      "p9999": 0.9999978542327881
+    }
+  },
+  "full_test_metrics": {
+    "n": 4700000,
+    "n_fraud": 6110,
+    "base_rate": 0.0013,
+    "threshold": 0.9969438910484314,
+    "auc_pr": 0.25597829927150795,
+    "auc_roc": 0.9450745850338107,
+    "tp": 1842,
+    "fp": 9942,
+    "fn": 4268,
+    "tn": 4683948,
+    "precision": 0.15631364562118127,
+    "recall": 0.30147299509001635,
+    "f1": 0.20587906560858388,
+    "fbeta": 0.2542513250883392,
+    "beta": 2.0,
+    "predicted_fraud_rate": 0.0025072340425531916,
+    "lift_at_threshold": 120.24126586244714
+  },
+  "model": {
+    "D": 8,
+    "d_cloud": 128,
+    "d_model": 32,
+    "vocab": 221,
+    "K": 13,
+    "quann_points": 214
+  },
+  "method": {
+    "attribution": "leave-one-point-out logit difference (base logit - logit with point j masked)",
+    "positive_means": "feature supports the fraud prediction",
+    "caveat": "ablation sensitivity, not SHAP; pair-geometry makes contributions non-additive",
+    "token_ranking": "impact_score = mean_abs_logit_contrib * sqrt(count)"
+  },
+  "sample_metrics": {
+    "n": 50000,
+    "n_fraud": 6110,
+    "base_rate": 0.1222,
+    "threshold": 0.0,
+    "auc_pr": 0.2908323560616018,
+    "auc_roc": 0.3293314915767323,
+    "tp": 6110,
+    "fp": 43890,
+    "fn": 0,
+    "tn": 0,
+    "precision": 0.1222,
+    "recall": 1.0,
+    "f1": 0.21778649082160043,
+    "fbeta": 0.4103976356797421,
+    "beta": 2.0,
+    "predicted_fraud_rate": 1.0,
+    "lift_at_threshold": 1.0
+  },
+  "aggregate": {
+    "all": {
+      "features": [
+        {
+          "feature": "MCC",
+          "mean_abs_logit_contrib": 2.213523686430454,
+          "mean_signed_logit_contrib": 1.5538636596560478
+        },
+        {
+          "feature": "amount",
+          "mean_abs_logit_contrib": 2.0189989778661728,
+          "mean_signed_logit_contrib": 1.8803937282371521
+        },
+        {
+          "feature": "Merchant State",
+          "mean_abs_logit_contrib": 1.9021090978378057,
+          "mean_signed_logit_contrib": 1.757548803871274
+        },
+        {
+          "feature": "Merchant City",
+          "mean_abs_logit_contrib": 1.7966674725711345,
+          "mean_signed_logit_contrib": 1.5247829405772686
+        },
+        {
+          "feature": "year",
+          "mean_abs_logit_contrib": 1.744352809985876,
+          "mean_signed_logit_contrib": 1.5570117592465877
+        },
+        {
+          "feature": "Use Chip",
+          "mean_abs_logit_contrib": 1.6871504689657688,
+          "mean_signed_logit_contrib": 1.5583347227704525
+        },
+        {
+          "feature": "month",
+          "mean_abs_logit_contrib": 1.6217192558526994,
+          "mean_signed_logit_contrib": 1.3717492138147354
+        },
+        {
+          "feature": "hour",
+          "mean_abs_logit_contrib": 1.610717488321066,
+          "mean_signed_logit_contrib": 1.326581671334505
+        },
+        {
+          "feature": "zip",
+          "mean_abs_logit_contrib": 1.6000733696717024,
+          "mean_signed_logit_contrib": 1.366725538304448
+        },
+        {
+          "feature": "error_type",
+          "mean_abs_logit_contrib": 1.5960466569054126,
+          "mean_signed_logit_contrib": 1.364807722505331
+        },
+        {
+          "feature": "is_weekend",
+          "mean_abs_logit_contrib": 1.5868830894541741,
+          "mean_signed_logit_contrib": 1.3403872099900245
+        },
+        {
+          "feature": "dayofweek",
+          "mean_abs_logit_contrib": 1.5710556656610966,
+          "mean_signed_logit_contrib": 1.3026781742060185
+        },
+        {
+          "feature": "Merchant Name",
+          "mean_abs_logit_contrib": 1.2804089778208732,
+          "mean_signed_logit_contrib": 0.30158885296344756
+        }
+      ],
+      "top_tokens": [
+        {
+          "token_id": 89,
+          "feature": "MCC",
+          "label": "MCC=5311",
+          "count": 27290,
+          "total_abs_logit_contrib": 86385.33501237631,
+          "mean_abs_logit_contrib": 3.1654574940409055,
+          "mean_signed_logit_contrib": 3.1343112561522757,
+          "impact_score": 522.9236140108427
+        },
+        {
+          "token_id": 112,
+          "feature": "Merchant State",
+          "label": "Merchant State=ONLINE",
+          "count": 47077,
+          "total_abs_logit_contrib": 86534.841306746,
+          "mean_abs_logit_contrib": 1.838155390248869,
+          "mean_signed_logit_contrib": 1.7795157846029586,
+          "impact_score": 398.82889187259946
+        },
+        {
+          "token_id": 76,
+          "feature": "Use Chip",
+          "label": "Use Chip=Online Transaction",
+          "count": 47077,
+          "total_abs_logit_contrib": 79168.49557083845,
+          "mean_abs_logit_contrib": 1.6816809816011737,
+          "mean_signed_logit_contrib": 1.6501406666276701,
+          "impact_score": 364.87827195306625
+        },
+        {
+          "token_id": 61,
+          "feature": "zip",
+          "label": "zip~[0.00,8831.00)",
+          "count": 49108,
+          "total_abs_logit_contrib": 77952.0993348062,
+          "mean_abs_logit_contrib": 1.5873604979800888,
+          "mean_signed_logit_contrib": 1.4333274835872225,
+          "impact_score": 351.7642438035613
+        },
+        {
+          "token_id": 218,
+          "feature": "error_type",
+          "label": "error_type=none",
+          "count": 48456,
+          "total_abs_logit_contrib": 77142.2800219655,
+          "mean_abs_logit_contrib": 1.5920067694808797,
+          "mean_signed_logit_contrib": 1.3649235846213683,
+          "impact_score": 350.4440497542492
+        },
+        {
+          "token_id": 145,
+          "feature": "Merchant City",
+          "label": "Merchant City=ONLINE",
+          "count": 47077,
+          "total_abs_logit_contrib": 74583.55143666267,
+          "mean_abs_logit_contrib": 1.5842885365818271,
+          "mean_signed_logit_contrib": 1.4403919078409513,
+          "impact_score": 343.74680443411506
+        },
+        {
+          "token_id": 9,
+          "feature": "amount",
+          "label": "amount>100.00",
+          "count": 22336,
+          "total_abs_logit_contrib": 48699.048513650894,
+          "mean_abs_logit_contrib": 2.1802940774378086,
+          "mean_signed_logit_contrib": 2.1291756335976815,
+          "impact_score": 325.85003767249987
+        },
+        {
+          "token_id": 176,
+          "feature": "Merchant City",
+          "label": "Merchant City=Rome",
+          "count": 1515,
+          "total_abs_logit_contrib": 11728.6183334589,
+          "mean_abs_logit_contrib": 7.741662266309505,
+          "mean_signed_logit_contrib": 7.741662266309505,
+          "impact_score": 301.3287274524031
+        },
+        {
+          "token_id": 53,
+          "feature": "is_weekend",
+          "label": "is_weekend=0",
+          "count": 36082,
+          "total_abs_logit_contrib": 56870.48578995466,
+          "mean_abs_logit_contrib": 1.5761456069495776,
+          "mean_signed_logit_contrib": 1.3437007850732001,
+          "impact_score": 299.39299648275914
+        },
+        {
+          "token_id": 56,
+          "feature": "year",
+          "label": "year~[2008.00,2012.00)",
+          "count": 17262,
+          "total_abs_logit_contrib": 36565.17644661665,
+          "mean_abs_logit_contrib": 2.118246810718147,
+          "mean_signed_logit_contrib": 1.9905055927181974,
+          "impact_score": 278.3057103104283
+        },
+        {
+          "token_id": 199,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=4241336128694185533",
+          "count": 10692,
+          "total_abs_logit_contrib": 22660.431392908096,
+          "mean_abs_logit_contrib": 2.119381911046399,
+          "mean_signed_logit_contrib": 2.11928071774573,
+          "impact_score": 219.14859887901946
+        },
+        {
+          "token_id": 210,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=other",
+          "count": 13904,
+          "total_abs_logit_contrib": 23187.691445946693,
+          "mean_abs_logit_contrib": 1.6676993272401246,
+          "mean_signed_logit_contrib": -1.6118470799387943,
+          "impact_score": 196.64713937572776
+        },
+        {
+          "token_id": 54,
+          "feature": "is_weekend",
+          "label": "is_weekend=1",
+          "count": 13918,
+          "total_abs_logit_contrib": 22473.66868275404,
+          "mean_abs_logit_contrib": 1.6147196926824285,
+          "mean_signed_logit_contrib": 1.3317968653894254,
+          "impact_score": 190.49586711753966
+        },
+        {
+          "token_id": 58,
+          "feature": "year",
+          "label": "year>2016.00",
+          "count": 14786,
+          "total_abs_logit_contrib": 22411.637023210526,
+          "mean_abs_logit_contrib": 1.515733600920501,
+          "mean_signed_logit_contrib": 1.4051633165764033,
+          "impact_score": 184.30971566283233
+        },
+        {
+          "token_id": 57,
+          "feature": "year",
+          "label": "year~[2012.00,2016.00)",
+          "count": 12017,
+          "total_abs_logit_contrib": 19497.709625005722,
+          "mean_abs_logit_contrib": 1.6225105787638947,
+          "mean_signed_logit_contrib": 1.360136379842067,
+          "impact_score": 177.86298133180608
+        },
+        {
+          "token_id": 8,
+          "feature": "amount",
+          "label": "amount~[66.42,100.00)",
+          "count": 6212,
+          "total_abs_logit_contrib": 12001.56420147419,
+          "mean_abs_logit_contrib": 1.9319968128580474,
+          "mean_signed_logit_contrib": 1.7218949731249849,
+          "impact_score": 152.27272830864814
+        },
+        {
+          "token_id": 144,
+          "feature": "Merchant State",
+          "label": "Merchant State=other",
+          "count": 2027,
+          "total_abs_logit_contrib": 6516.2535490095615,
+          "mean_abs_logit_contrib": 3.2147279472173467,
+          "mean_signed_logit_contrib": 3.0377580848273,
+          "impact_score": 144.73417839320211
+        },
+        {
+          "token_id": 45,
+          "feature": "month",
+          "label": "month=11",
+          "count": 7993,
+          "total_abs_logit_contrib": 12867.12286812067,
+          "mean_abs_logit_contrib": 1.6097989325810922,
+          "mean_signed_logit_contrib": 1.305772036936679,
+          "impact_score": 143.9217866012315
+        },
+        {
+          "token_id": 52,
+          "feature": "dayofweek",
+          "label": "dayofweek=6",
+          "count": 7151,
+          "total_abs_logit_contrib": 11890.367724597454,
+          "mean_abs_logit_contrib": 1.662755939672417,
+          "mean_signed_logit_contrib": 1.332309586312317,
+          "impact_score": 140.60860414271815
+        },
+        {
+          "token_id": 49,
+          "feature": "dayofweek",
+          "label": "dayofweek=3",
+          "count": 8190,
+          "total_abs_logit_contrib": 12305.342275440693,
+          "mean_abs_logit_contrib": 1.5024837943151028,
+          "mean_signed_logit_contrib": 1.2709694768410171,
+          "impact_score": 135.9727081158207
+        },
+        {
+          "token_id": 7,
+          "feature": "amount",
+          "label": "amount~[46.26,66.42)",
+          "count": 5056,
+          "total_abs_logit_contrib": 9652.569363296032,
+          "mean_abs_logit_contrib": 1.909131598753171,
+          "mean_signed_logit_contrib": 1.719458511040275,
+          "impact_score": 135.74986254366974
+        },
+        {
+          "token_id": 46,
+          "feature": "dayofweek",
+          "label": "dayofweek=0",
+          "count": 7171,
+          "total_abs_logit_contrib": 11375.566335976124,
+          "mean_abs_logit_contrib": 1.5863291501849288,
+          "mean_signed_logit_contrib": 1.3338008118696483,
+          "impact_score": 134.3331399120161
+        },
+        {
+          "token_id": 50,
+          "feature": "dayofweek",
+          "label": "dayofweek=4",
+          "count": 7143,
+          "total_abs_logit_contrib": 11194.322089970112,
+          "mean_abs_logit_contrib": 1.5671737491208333,
+          "mean_signed_logit_contrib": 1.2570573712753745,
+          "impact_score": 132.4516806937708
+        },
+        {
+          "token_id": 47,
+          "feature": "dayofweek",
+          "label": "dayofweek=1",
+          "count": 6970,
+          "total_abs_logit_contrib": 10919.350682497025,
+          "mean_abs_logit_contrib": 1.5666213317786262,
+          "mean_signed_logit_contrib": 1.292818263647717,
+          "impact_score": 130.79177232674593
+        },
+        {
+          "token_id": 51,
+          "feature": "dayofweek",
+          "label": "dayofweek=5",
+          "count": 6767,
+          "total_abs_logit_contrib": 10674.373725056648,
+          "mean_abs_logit_contrib": 1.5774159487301092,
+          "mean_signed_logit_contrib": 1.3576273562127068,
+          "impact_score": 129.76103944023407
+        },
+        {
+          "token_id": 48,
+          "feature": "dayofweek",
+          "label": "dayofweek=2",
+          "count": 6608,
+          "total_abs_logit_contrib": 10193.460449516773,
+          "mean_abs_logit_contrib": 1.5425938936920056,
+          "mean_signed_logit_contrib": 1.2795806297216086,
+          "impact_score": 125.39684942220654
+        },
+        {
+          "token_id": 84,
+          "feature": "MCC",
+          "label": "MCC=4829",
+          "count": 315,
+          "total_abs_logit_contrib": 2211.4320673942566,
+          "mean_abs_logit_contrib": 7.020419261569068,
+          "mean_signed_logit_contrib": 6.565401372455415,
+          "impact_score": 124.6000813867557
+        },
+        {
+          "token_id": 6,
+          "feature": "amount",
+          "label": "amount~[30.79,46.26)",
+          "count": 4424,
+          "total_abs_logit_contrib": 8195.001248180866,
+          "mean_abs_logit_contrib": 1.8523963038383513,
+          "mean_signed_logit_contrib": 1.6988640072844774,
+          "impact_score": 123.20872542998288
+        },
+        {
+          "token_id": 5,
+          "feature": "amount",
+          "label": "amount~[17.71,30.79)",
+          "count": 4300,
+          "total_abs_logit_contrib": 7914.9485911130905,
+          "mean_abs_logit_contrib": 1.8406857188635095,
+          "mean_signed_logit_contrib": 1.7051570512250411,
+          "impact_score": 120.70183444008099
+        },
+        {
+          "token_id": 35,
+          "feature": "month",
+          "label": "month=1",
+          "count": 5283,
+          "total_abs_logit_contrib": 8613.614522695541,
+          "mean_abs_logit_contrib": 1.6304400005102293,
+          "mean_signed_logit_contrib": 1.509785600442361,
+          "impact_score": 118.50730638563445
+        },
+        {
+          "token_id": 39,
+          "feature": "month",
+          "label": "month=5",
+          "count": 4817,
+          "total_abs_logit_contrib": 8215.737624704838,
+          "mean_abs_logit_contrib": 1.7055714396314796,
+          "mean_signed_logit_contrib": 1.5004117266503711,
+          "impact_score": 118.37452195553882
+        },
+        {
+          "token_id": 178,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-4282466774399734331",
+          "count": 315,
+          "total_abs_logit_contrib": 2069.03316116333,
+          "mean_abs_logit_contrib": 6.568359241788349,
+          "mean_signed_logit_contrib": 6.116949535551525,
+          "impact_score": 116.57681195543874
+        },
+        {
+          "token_id": 55,
+          "feature": "year",
+          "label": "year<2008.00",
+          "count": 5935,
+          "total_abs_logit_contrib": 8743.117404460907,
+          "mean_abs_logit_contrib": 1.473145308249521,
+          "mean_signed_logit_contrib": 1.073121608317953,
+          "impact_score": 113.48956949366014
+        },
+        {
+          "token_id": 4,
+          "feature": "amount",
+          "label": "amount~[9.15,17.71)",
+          "count": 3641,
+          "total_abs_logit_contrib": 6795.559365272522,
+          "mean_abs_logit_contrib": 1.8663991665126398,
+          "mean_signed_logit_contrib": 1.7101602318587457,
+          "impact_score": 112.61983100383253
+        },
+        {
+          "token_id": 38,
+          "feature": "month",
+          "label": "month=4",
+          "count": 4872,
+          "total_abs_logit_contrib": 7821.589691519737,
+          "mean_abs_logit_contrib": 1.6054166033496997,
+          "mean_signed_logit_contrib": 1.4418550989359666,
+          "impact_score": 112.05761890810746
+        },
+        {
+          "token_id": 21,
+          "feature": "hour",
+          "label": "hour=11",
+          "count": 3910,
+          "total_abs_logit_contrib": 6886.443031609058,
+          "mean_abs_logit_contrib": 1.7612386270099893,
+          "mean_signed_logit_contrib": 1.449516346494255,
+          "impact_score": 110.13023867209971
+        },
+        {
+          "token_id": 42,
+          "feature": "month",
+          "label": "month=8",
+          "count": 4098,
+          "total_abs_logit_contrib": 6926.720343947411,
+          "mean_abs_logit_contrib": 1.6902685075518327,
+          "mean_signed_logit_contrib": 1.3913920083064577,
+          "impact_score": 108.20359170560332
+        },
+        {
+          "token_id": 184,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=1913477460590765860",
+          "count": 331,
+          "total_abs_logit_contrib": 1950.297374367714,
+          "mean_abs_logit_contrib": 5.8921370826819155,
+          "mean_signed_logit_contrib": 5.261434217594181,
+          "impact_score": 107.19803860971143
+        },
+        {
+          "token_id": 22,
+          "feature": "hour",
+          "label": "hour=12",
+          "count": 4146,
+          "total_abs_logit_contrib": 6873.83115452528,
+          "mean_abs_logit_contrib": 1.6579428737398167,
+          "mean_signed_logit_contrib": 1.328267573634611,
+          "impact_score": 106.754013404349
+        },
+        {
+          "token_id": 3,
+          "feature": "amount",
+          "label": "amount~[2.52,9.15)",
+          "count": 2857,
+          "total_abs_logit_contrib": 5556.842535912991,
+          "mean_abs_logit_contrib": 1.9449921371764056,
+          "mean_signed_logit_contrib": 1.7053655919012258,
+          "impact_score": 103.96160368077324
+        },
+        {
+          "token_id": 37,
+          "feature": "month",
+          "label": "month=3",
+          "count": 3589,
+          "total_abs_logit_contrib": 6163.1829706430435,
+          "mean_abs_logit_contrib": 1.7172423991761057,
+          "mean_signed_logit_contrib": 1.4015544420432566,
+          "impact_score": 102.87700963319442
+        },
+        {
+          "token_id": 20,
+          "feature": "hour",
+          "label": "hour=10",
+          "count": 3783,
+          "total_abs_logit_contrib": 6317.514621734619,
+          "mean_abs_logit_contrib": 1.6699747876644513,
+          "mean_signed_logit_contrib": 1.3463233933384506,
+          "impact_score": 102.71363170971192
+        },
+        {
+          "token_id": 94,
+          "feature": "MCC",
+          "label": "MCC=4814",
+          "count": 10742,
+          "total_abs_logit_contrib": 10611.492087602615,
+          "mean_abs_logit_contrib": 0.9878506877306474,
+          "mean_signed_logit_contrib": -0.7336622133443218,
+          "impact_score": 102.38442145456781
+        },
+        {
+          "token_id": 85,
+          "feature": "MCC",
+          "label": "MCC=5300",
+          "count": 458,
+          "total_abs_logit_contrib": 2189.9057651758194,
+          "mean_abs_logit_contrib": 4.7814536357550645,
+          "mean_signed_logit_contrib": 3.171646820145403,
+          "impact_score": 102.32757635584309
+        },
+        {
+          "token_id": 44,
+          "feature": "month",
+          "label": "month=10",
+          "count": 3884,
+          "total_abs_logit_contrib": 6344.415538787842,
+          "mean_abs_logit_contrib": 1.63347464953343,
+          "mean_signed_logit_contrib": 1.3179977647307972,
+          "impact_score": 101.80099188473518
+        },
+        {
+          "token_id": 25,
+          "feature": "hour",
+          "label": "hour=15",
+          "count": 4543,
+          "total_abs_logit_contrib": 6826.644423902035,
+          "mean_abs_logit_contrib": 1.5026732167955172,
+          "mean_signed_logit_contrib": 1.2198671478677263,
+          "impact_score": 101.28285015926463
+        },
+        {
+          "token_id": 43,
+          "feature": "month",
+          "label": "month=9",
+          "count": 3757,
+          "total_abs_logit_contrib": 6056.103978931904,
+          "mean_abs_logit_contrib": 1.611952083825367,
+          "mean_signed_logit_contrib": 1.3001838445441343,
+          "impact_score": 98.80359016099759
+        },
+        {
+          "token_id": 41,
+          "feature": "month",
+          "label": "month=7",
+          "count": 4192,
+          "total_abs_logit_contrib": 6326.07097607851,
+          "mean_abs_logit_contrib": 1.5090818168126217,
+          "mean_signed_logit_contrib": 1.3030280312025593,
+          "impact_score": 97.7064925266799
+        },
+        {
+          "token_id": 40,
+          "feature": "month",
+          "label": "month=6",
+          "count": 3731,
+          "total_abs_logit_contrib": 5903.536328315735,
+          "mean_abs_logit_contrib": 1.5822933069728584,
+          "mean_signed_logit_contrib": 1.3112154628086012,
+          "impact_score": 96.64950087695803
+        },
+        {
+          "token_id": 23,
+          "feature": "hour",
+          "label": "hour=13",
+          "count": 3416,
+          "total_abs_logit_contrib": 5616.974208891392,
+          "mean_abs_logit_contrib": 1.644313293000993,
+          "mean_signed_logit_contrib": 1.32379841914431,
+          "impact_score": 96.10445025140018
+        }
+      ],
+      "top_positive": [
+        {
+          "token_id": 93,
+          "feature": "MCC",
+          "label": "MCC=5942",
+          "count": 14,
+          "total_abs_logit_contrib": 135.69326400756836,
+          "mean_abs_logit_contrib": 9.692376000540596,
+          "mean_signed_logit_contrib": 9.692376000540596,
+          "impact_score": 36.265550257813196
+        },
+        {
+          "token_id": 188,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-5475680618560174533",
+          "count": 14,
+          "total_abs_logit_contrib": 124.18609714508057,
+          "mean_abs_logit_contrib": 8.870435510362897,
+          "mean_signed_logit_contrib": 8.870435510362897,
+          "impact_score": 33.19013055125121
+        },
+        {
+          "token_id": 189,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-5467922351692495955",
+          "count": 23,
+          "total_abs_logit_contrib": 215.4194884300232,
+          "mean_abs_logit_contrib": 9.366064714348834,
+          "mean_signed_logit_contrib": 8.376705687978994,
+          "impact_score": 44.918068406461074
+        },
+        {
+          "token_id": 198,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=6135208568923449408",
+          "count": 20,
+          "total_abs_logit_contrib": 163.41192436218262,
+          "mean_abs_logit_contrib": 8.17059621810913,
+          "mean_signed_logit_contrib": 7.744802379608155,
+          "impact_score": 36.54001712078943
+        },
+        {
+          "token_id": 176,
+          "feature": "Merchant City",
+          "label": "Merchant City=Rome",
+          "count": 1515,
+          "total_abs_logit_contrib": 11728.6183334589,
+          "mean_abs_logit_contrib": 7.741662266309505,
+          "mean_signed_logit_contrib": 7.741662266309505,
+          "impact_score": 301.3287274524031
+        },
+        {
+          "token_id": 196,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=5817218446178736267",
+          "count": 23,
+          "total_abs_logit_contrib": 177.09524536132812,
+          "mean_abs_logit_contrib": 7.699793276579483,
+          "mean_signed_logit_contrib": 7.699793276579483,
+          "impact_score": 36.926911318811214
+        },
+        {
+          "token_id": 102,
+          "feature": "MCC",
+          "label": "MCC=9402",
+          "count": 20,
+          "total_abs_logit_contrib": 156.8801507949829,
+          "mean_abs_logit_contrib": 7.844007539749145,
+          "mean_signed_logit_contrib": 7.423119974136353,
+          "impact_score": 35.07946814979994
+        },
+        {
+          "token_id": 84,
+          "feature": "MCC",
+          "label": "MCC=4829",
+          "count": 315,
+          "total_abs_logit_contrib": 2211.4320673942566,
+          "mean_abs_logit_contrib": 7.020419261569068,
+          "mean_signed_logit_contrib": 6.565401372455415,
+          "impact_score": 124.6000813867557
+        },
+        {
+          "token_id": 106,
+          "feature": "MCC",
+          "label": "MCC=5970",
+          "count": 18,
+          "total_abs_logit_contrib": 115.37870025634766,
+          "mean_abs_logit_contrib": 6.409927792019314,
+          "mean_signed_logit_contrib": 6.117780049641927,
+          "impact_score": 27.19502045191782
+        },
+        {
+          "token_id": 178,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-4282466774399734331",
+          "count": 315,
+          "total_abs_logit_contrib": 2069.03316116333,
+          "mean_abs_logit_contrib": 6.568359241788349,
+          "mean_signed_logit_contrib": 6.116949535551525,
+          "impact_score": 116.57681195543874
+        },
+        {
+          "token_id": 207,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-7146670748125200898",
+          "count": 18,
+          "total_abs_logit_contrib": 114.58096599578857,
+          "mean_abs_logit_contrib": 6.3656092219882545,
+          "mean_signed_logit_contrib": 6.094663143157959,
+          "impact_score": 27.006992683509104
+        },
+        {
+          "token_id": 184,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=1913477460590765860",
+          "count": 331,
+          "total_abs_logit_contrib": 1950.297374367714,
+          "mean_abs_logit_contrib": 5.8921370826819155,
+          "mean_signed_logit_contrib": 5.261434217594181,
+          "impact_score": 107.19803860971143
+        },
+        {
+          "token_id": 204,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-727612092139916043",
+          "count": 101,
+          "total_abs_logit_contrib": 515.5078523159027,
+          "mean_abs_logit_contrib": 5.104038141741611,
+          "mean_signed_logit_contrib": 4.544212947977652,
+          "impact_score": 51.29494848996019
+        },
+        {
+          "token_id": 206,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-3220758452254689706",
+          "count": 152,
+          "total_abs_logit_contrib": 743.1505608558655,
+          "mean_abs_logit_contrib": 4.889148426683326,
+          "mean_signed_logit_contrib": 3.99560221559123,
+          "impact_score": 60.27747004808086
+        },
+        {
+          "token_id": 180,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=2027553650310142703",
+          "count": 70,
+          "total_abs_logit_contrib": 303.48666524887085,
+          "mean_abs_logit_contrib": 4.335523789269583,
+          "mean_signed_logit_contrib": 3.4863012109483993,
+          "impact_score": 36.273594485694055
+        },
+        {
+          "token_id": 200,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-245178307025547046",
+          "count": 158,
+          "total_abs_logit_contrib": 662.5099390745163,
+          "mean_abs_logit_contrib": 4.1931008802184575,
+          "mean_signed_logit_contrib": 3.4450536143930655,
+          "impact_score": 52.706460786955056
+        },
+        {
+          "token_id": 85,
+          "feature": "MCC",
+          "label": "MCC=5300",
+          "count": 458,
+          "total_abs_logit_contrib": 2189.9057651758194,
+          "mean_abs_logit_contrib": 4.7814536357550645,
+          "mean_signed_logit_contrib": 3.171646820145403,
+          "impact_score": 102.32757635584309
+        },
+        {
+          "token_id": 89,
+          "feature": "MCC",
+          "label": "MCC=5311",
+          "count": 27290,
+          "total_abs_logit_contrib": 86385.33501237631,
+          "mean_abs_logit_contrib": 3.1654574940409055,
+          "mean_signed_logit_contrib": 3.1343112561522757,
+          "impact_score": 522.9236140108427
+        },
+        {
+          "token_id": 144,
+          "feature": "Merchant State",
+          "label": "Merchant State=other",
+          "count": 2027,
+          "total_abs_logit_contrib": 6516.2535490095615,
+          "mean_abs_logit_contrib": 3.2147279472173467,
+          "mean_signed_logit_contrib": 3.0377580848273,
+          "impact_score": 144.73417839320211
+        },
+        {
+          "token_id": 81,
+          "feature": "MCC",
+          "label": "MCC=5541",
+          "count": 147,
+          "total_abs_logit_contrib": 589.5559723377228,
+          "mean_abs_logit_contrib": 4.010584845834849,
+          "mean_signed_logit_contrib": 2.8676847000511323,
+          "impact_score": 48.62575704736226
+        },
+        {
+          "token_id": 181,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-5162038175624867091",
+          "count": 72,
+          "total_abs_logit_contrib": 261.75167524814606,
+          "mean_abs_logit_contrib": 3.6354399340020285,
+          "mean_signed_logit_contrib": 2.5665438092417188,
+          "impact_score": 30.847730759150508
+        },
+        {
+          "token_id": 179,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=1799189980464955940",
+          "count": 65,
+          "total_abs_logit_contrib": 258.9846626520157,
+          "mean_abs_logit_contrib": 3.984379425415626,
+          "mean_signed_logit_contrib": 2.2819426958377544,
+          "impact_score": 32.12309389471845
+        },
+        {
+          "token_id": 185,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-6571010470072147219",
+          "count": 7,
+          "total_abs_logit_contrib": 15.76677131652832,
+          "mean_abs_logit_contrib": 2.252395902361189,
+          "mean_signed_logit_contrib": 2.252395902361189,
+          "impact_score": 5.959279411708627
+        },
+        {
+          "token_id": 80,
+          "feature": "MCC",
+          "label": "MCC=5499",
+          "count": 118,
+          "total_abs_logit_contrib": 458.1621129512787,
+          "mean_abs_logit_contrib": 3.882729770773548,
+          "mean_signed_logit_contrib": 2.229494500968416,
+          "impact_score": 42.177241206561185
+        },
+        {
+          "token_id": 33,
+          "feature": "hour",
+          "label": "hour=23",
+          "count": 563,
+          "total_abs_logit_contrib": 1264.1388379335403,
+          "mean_abs_logit_contrib": 2.2453620567203205,
+          "mean_signed_logit_contrib": 2.1501897221983644,
+          "impact_score": 53.277099969147066
+        },
+        {
+          "token_id": 9,
+          "feature": "amount",
+          "label": "amount>100.00",
+          "count": 22336,
+          "total_abs_logit_contrib": 48699.048513650894,
+          "mean_abs_logit_contrib": 2.1802940774378086,
+          "mean_signed_logit_contrib": 2.1291756335976815,
+          "impact_score": 325.85003767249987
+        },
+        {
+          "token_id": 199,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=4241336128694185533",
+          "count": 10692,
+          "total_abs_logit_contrib": 22660.431392908096,
+          "mean_abs_logit_contrib": 2.119381911046399,
+          "mean_signed_logit_contrib": 2.11928071774573,
+          "impact_score": 219.14859887901946
+        },
+        {
+          "token_id": 56,
+          "feature": "year",
+          "label": "year~[2008.00,2012.00)",
+          "count": 17262,
+          "total_abs_logit_contrib": 36565.17644661665,
+          "mean_abs_logit_contrib": 2.118246810718147,
+          "mean_signed_logit_contrib": 1.9905055927181974,
+          "impact_score": 278.3057103104283
+        },
+        {
+          "token_id": 83,
+          "feature": "MCC",
+          "label": "MCC=5912",
+          "count": 228,
+          "total_abs_logit_contrib": 693.0746207237244,
+          "mean_abs_logit_contrib": 3.0398009680865106,
+          "mean_signed_logit_contrib": 1.8079574463660257,
+          "impact_score": 45.8999880504578
+        },
+        {
+          "token_id": 112,
+          "feature": "Merchant State",
+          "label": "Merchant State=ONLINE",
+          "count": 47077,
+          "total_abs_logit_contrib": 86534.841306746,
+          "mean_abs_logit_contrib": 1.838155390248869,
+          "mean_signed_logit_contrib": 1.7795157846029586,
+          "impact_score": 398.82889187259946
+        },
+        {
+          "token_id": 31,
+          "feature": "hour",
+          "label": "hour=21",
+          "count": 981,
+          "total_abs_logit_contrib": 1878.122628569603,
+          "mean_abs_logit_contrib": 1.9144980923237542,
+          "mean_signed_logit_contrib": 1.7265487690584376,
+          "impact_score": 59.96384068375357
+        },
+        {
+          "token_id": 8,
+          "feature": "amount",
+          "label": "amount~[66.42,100.00)",
+          "count": 6212,
+          "total_abs_logit_contrib": 12001.56420147419,
+          "mean_abs_logit_contrib": 1.9319968128580474,
+          "mean_signed_logit_contrib": 1.7218949731249849,
+          "impact_score": 152.27272830864814
+        },
+        {
+          "token_id": 7,
+          "feature": "amount",
+          "label": "amount~[46.26,66.42)",
+          "count": 5056,
+          "total_abs_logit_contrib": 9652.569363296032,
+          "mean_abs_logit_contrib": 1.909131598753171,
+          "mean_signed_logit_contrib": 1.719458511040275,
+          "impact_score": 135.74986254366974
+        },
+        {
+          "token_id": 4,
+          "feature": "amount",
+          "label": "amount~[9.15,17.71)",
+          "count": 3641,
+          "total_abs_logit_contrib": 6795.559365272522,
+          "mean_abs_logit_contrib": 1.8663991665126398,
+          "mean_signed_logit_contrib": 1.7101602318587457,
+          "impact_score": 112.61983100383253
+        },
+        {
+          "token_id": 3,
+          "feature": "amount",
+          "label": "amount~[2.52,9.15)",
+          "count": 2857,
+          "total_abs_logit_contrib": 5556.842535912991,
+          "mean_abs_logit_contrib": 1.9449921371764056,
+          "mean_signed_logit_contrib": 1.7053655919012258,
+          "impact_score": 103.96160368077324
+        },
+        {
+          "token_id": 5,
+          "feature": "amount",
+          "label": "amount~[17.71,30.79)",
+          "count": 4300,
+          "total_abs_logit_contrib": 7914.9485911130905,
+          "mean_abs_logit_contrib": 1.8406857188635095,
+          "mean_signed_logit_contrib": 1.7051570512250411,
+          "impact_score": 120.70183444008099
+        },
+        {
+          "token_id": 6,
+          "feature": "amount",
+          "label": "amount~[30.79,46.26)",
+          "count": 4424,
+          "total_abs_logit_contrib": 8195.001248180866,
+          "mean_abs_logit_contrib": 1.8523963038383513,
+          "mean_signed_logit_contrib": 1.6988640072844774,
+          "impact_score": 123.20872542998288
+        },
+        {
+          "token_id": 211,
+          "feature": "error_type",
+          "label": "error_type=bad_card_number",
+          "count": 202,
+          "total_abs_logit_contrib": 381.59700882434845,
+          "mean_abs_logit_contrib": 1.889094103090834,
+          "mean_signed_logit_contrib": 1.6859627354263078,
+          "impact_score": 26.849071848523508
+        },
+        {
+          "token_id": 10,
+          "feature": "hour",
+          "label": "hour=0",
+          "count": 694,
+          "total_abs_logit_contrib": 1236.2006719112396,
+          "mean_abs_logit_contrib": 1.7812689796991925,
+          "mean_signed_logit_contrib": 1.6756083068655272,
+          "impact_score": 46.92553579405131
+        },
+        {
+          "token_id": 182,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-1288082279022882052",
+          "count": 38,
+          "total_abs_logit_contrib": 137.61756420135498,
+          "mean_abs_logit_contrib": 3.6215148474040784,
+          "mean_signed_logit_contrib": 1.6644021335401034,
+          "impact_score": 22.324516837297754
+        },
+        {
+          "token_id": 76,
+          "feature": "Use Chip",
+          "label": "Use Chip=Online Transaction",
+          "count": 47077,
+          "total_abs_logit_contrib": 79168.49557083845,
+          "mean_abs_logit_contrib": 1.6816809816011737,
+          "mean_signed_logit_contrib": 1.6501406666276701,
+          "impact_score": 364.87827195306625
+        },
+        {
+          "token_id": 11,
+          "feature": "hour",
+          "label": "hour=1",
+          "count": 617,
+          "total_abs_logit_contrib": 1036.854301571846,
+          "mean_abs_logit_contrib": 1.6804769879608525,
+          "mean_signed_logit_contrib": 1.546227720027225,
+          "impact_score": 41.74218242569151
+        },
+        {
+          "token_id": 14,
+          "feature": "hour",
+          "label": "hour=4",
+          "count": 710,
+          "total_abs_logit_contrib": 1233.9707633256912,
+          "mean_abs_logit_contrib": 1.737986990599565,
+          "mean_signed_logit_contrib": 1.5416398845927817,
+          "impact_score": 46.31009753218262
+        },
+        {
+          "token_id": 29,
+          "feature": "hour",
+          "label": "hour=19",
+          "count": 1289,
+          "total_abs_logit_contrib": 2383.564210176468,
+          "mean_abs_logit_contrib": 1.849157649477477,
+          "mean_signed_logit_contrib": 1.5328315626844313,
+          "impact_score": 66.38965275002239
+        },
+        {
+          "token_id": 35,
+          "feature": "month",
+          "label": "month=1",
+          "count": 5283,
+          "total_abs_logit_contrib": 8613.614522695541,
+          "mean_abs_logit_contrib": 1.6304400005102293,
+          "mean_signed_logit_contrib": 1.509785600442361,
+          "impact_score": 118.50730638563445
+        },
+        {
+          "token_id": 39,
+          "feature": "month",
+          "label": "month=5",
+          "count": 4817,
+          "total_abs_logit_contrib": 8215.737624704838,
+          "mean_abs_logit_contrib": 1.7055714396314796,
+          "mean_signed_logit_contrib": 1.5004117266503711,
+          "impact_score": 118.37452195553882
+        },
+        {
+          "token_id": 216,
+          "feature": "error_type",
+          "label": "error_type=insufficient_balance",
+          "count": 719,
+          "total_abs_logit_contrib": 1256.5641460418701,
+          "mean_abs_logit_contrib": 1.7476552796131712,
+          "mean_signed_logit_contrib": 1.4699138182426528,
+          "impact_score": 46.86193512865949
+        },
+        {
+          "token_id": 21,
+          "feature": "hour",
+          "label": "hour=11",
+          "count": 3910,
+          "total_abs_logit_contrib": 6886.443031609058,
+          "mean_abs_logit_contrib": 1.7612386270099893,
+          "mean_signed_logit_contrib": 1.449516346494255,
+          "impact_score": 110.13023867209971
+        },
+        {
+          "token_id": 38,
+          "feature": "month",
+          "label": "month=4",
+          "count": 4872,
+          "total_abs_logit_contrib": 7821.589691519737,
+          "mean_abs_logit_contrib": 1.6054166033496997,
+          "mean_signed_logit_contrib": 1.4418550989359666,
+          "impact_score": 112.05761890810746
+        },
+        {
+          "token_id": 145,
+          "feature": "Merchant City",
+          "label": "Merchant City=ONLINE",
+          "count": 47077,
+          "total_abs_logit_contrib": 74583.55143666267,
+          "mean_abs_logit_contrib": 1.5842885365818271,
+          "mean_signed_logit_contrib": 1.4403919078409513,
+          "impact_score": 343.74680443411506
+        }
+      ],
+      "top_negative": [
+        {
+          "token_id": 171,
+          "feature": "Merchant City",
+          "label": "Merchant City=Tucson",
+          "count": 3,
+          "total_abs_logit_contrib": 16.134265899658203,
+          "mean_abs_logit_contrib": 5.378088633219401,
+          "mean_signed_logit_contrib": -5.378088633219401,
+          "impact_score": 9.315122760344662
+        },
+        {
+          "token_id": 166,
+          "feature": "Merchant City",
+          "label": "Merchant City=Louisville",
+          "count": 1,
+          "total_abs_logit_contrib": 5.144069671630859,
+          "mean_abs_logit_contrib": 5.144069671630859,
+          "mean_signed_logit_contrib": -5.144069671630859,
+          "impact_score": 5.144069671630859
+        },
+        {
+          "token_id": 146,
+          "feature": "Merchant City",
+          "label": "Merchant City=Los Angeles",
+          "count": 3,
+          "total_abs_logit_contrib": 14.075055122375488,
+          "mean_abs_logit_contrib": 4.691685040791829,
+          "mean_signed_logit_contrib": -4.691685040791829,
+          "impact_score": 8.126236863762308
+        },
+        {
+          "token_id": 190,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-5841929396161652653",
+          "count": 30,
+          "total_abs_logit_contrib": 138.40361785888672,
+          "mean_abs_logit_contrib": 4.613453928629557,
+          "mean_signed_logit_contrib": -4.613453928629557,
+          "impact_score": 25.26892784721237
+        },
+        {
+          "token_id": 203,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-2744911404133435018",
+          "count": 1,
+          "total_abs_logit_contrib": 4.458474159240723,
+          "mean_abs_logit_contrib": 4.458474159240723,
+          "mean_signed_logit_contrib": -4.458474159240723,
+          "impact_score": 4.458474159240723
+        },
+        {
+          "token_id": 157,
+          "feature": "Merchant City",
+          "label": "Merchant City=San Francisco",
+          "count": 6,
+          "total_abs_logit_contrib": 26.652395963668823,
+          "mean_abs_logit_contrib": 4.442065993944804,
+          "mean_signed_logit_contrib": -4.442065993944804,
+          "impact_score": 10.880795088933759
+        },
+        {
+          "token_id": 107,
+          "feature": "MCC",
+          "label": "MCC=4899",
+          "count": 8,
+          "total_abs_logit_contrib": 34.05380344390869,
+          "mean_abs_logit_contrib": 4.256725430488586,
+          "mean_signed_logit_contrib": -4.256725430488586,
+          "impact_score": 12.039837670190822
+        },
+        {
+          "token_id": 209,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=8878665205966093747",
+          "count": 1,
+          "total_abs_logit_contrib": 4.152859210968018,
+          "mean_abs_logit_contrib": 4.152859210968018,
+          "mean_signed_logit_contrib": -4.152859210968018,
+          "impact_score": 4.152859210968018
+        },
+        {
+          "token_id": 194,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-4334232547381218591",
+          "count": 4,
+          "total_abs_logit_contrib": 16.437699794769287,
+          "mean_abs_logit_contrib": 4.109424948692322,
+          "mean_signed_logit_contrib": -4.109424948692322,
+          "impact_score": 8.218849897384644
+        },
+        {
+          "token_id": 148,
+          "feature": "Merchant City",
+          "label": "Merchant City=Chicago",
+          "count": 1,
+          "total_abs_logit_contrib": 4.036733627319336,
+          "mean_abs_logit_contrib": 4.036733627319336,
+          "mean_signed_logit_contrib": -4.036733627319336,
+          "impact_score": 4.036733627319336
+        },
+        {
+          "token_id": 186,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=97032797689821735",
+          "count": 8,
+          "total_abs_logit_contrib": 31.70299196243286,
+          "mean_abs_logit_contrib": 3.9628739953041077,
+          "mean_signed_logit_contrib": -3.9628739953041077,
+          "impact_score": 11.208700300269445
+        },
+        {
+          "token_id": 155,
+          "feature": "Merchant City",
+          "label": "Merchant City=Indianapolis",
+          "count": 2,
+          "total_abs_logit_contrib": 7.606261253356934,
+          "mean_abs_logit_contrib": 3.803130626678467,
+          "mean_signed_logit_contrib": -3.803130626678467,
+          "impact_score": 5.378438911725176
+        },
+        {
+          "token_id": 149,
+          "feature": "Merchant City",
+          "label": "Merchant City=Brooklyn",
+          "count": 1,
+          "total_abs_logit_contrib": 3.79990816116333,
+          "mean_abs_logit_contrib": 3.79990816116333,
+          "mean_signed_logit_contrib": -3.79990816116333,
+          "impact_score": 3.79990816116333
+        },
+        {
+          "token_id": 161,
+          "feature": "Merchant City",
+          "label": "Merchant City=Philadelphia",
+          "count": 1,
+          "total_abs_logit_contrib": 3.7553038597106934,
+          "mean_abs_logit_contrib": 3.7553038597106934,
+          "mean_signed_logit_contrib": -3.7553038597106934,
+          "impact_score": 3.7553038597106934
+        },
+        {
+          "token_id": 172,
+          "feature": "Merchant City",
+          "label": "Merchant City=Memphis",
+          "count": 1,
+          "total_abs_logit_contrib": 3.4983248710632324,
+          "mean_abs_logit_contrib": 3.4983248710632324,
+          "mean_signed_logit_contrib": -3.4983248710632324,
+          "impact_score": 3.4983248710632324
+        },
+        {
+          "token_id": 158,
+          "feature": "Merchant City",
+          "label": "Merchant City=Oakland",
+          "count": 15,
+          "total_abs_logit_contrib": 50.496432304382324,
+          "mean_abs_logit_contrib": 3.366428820292155,
+          "mean_signed_logit_contrib": -3.366428820292155,
+          "impact_score": 13.038122757184198
+        },
+        {
+          "token_id": 191,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-6160036380778658394",
+          "count": 20,
+          "total_abs_logit_contrib": 65.62612962722778,
+          "mean_abs_logit_contrib": 3.2813064813613892,
+          "mean_signed_logit_contrib": -3.2599568605422973,
+          "impact_score": 14.674448694669426
+        },
+        {
+          "token_id": 142,
+          "feature": "Merchant State",
+          "label": "Merchant State=NV",
+          "count": 9,
+          "total_abs_logit_contrib": 29.187962293624878,
+          "mean_abs_logit_contrib": 3.2431069215138755,
+          "mean_signed_logit_contrib": -3.2431069215138755,
+          "impact_score": 9.729320764541626
+        },
+        {
+          "token_id": 159,
+          "feature": "Merchant City",
+          "label": "Merchant City=Las Vegas",
+          "count": 9,
+          "total_abs_logit_contrib": 28.839669466018677,
+          "mean_abs_logit_contrib": 3.20440771844652,
+          "mean_signed_logit_contrib": -3.20440771844652,
+          "impact_score": 9.61322315533956
+        },
+        {
+          "token_id": 165,
+          "feature": "Merchant City",
+          "label": "Merchant City=Richmond",
+          "count": 12,
+          "total_abs_logit_contrib": 40.290897607803345,
+          "mean_abs_logit_contrib": 3.3575748006502786,
+          "mean_signed_logit_contrib": -3.147725601991018,
+          "impact_score": 11.630980289878453
+        },
+        {
+          "token_id": 134,
+          "feature": "Merchant State",
+          "label": "Merchant State=IA",
+          "count": 12,
+          "total_abs_logit_contrib": 35.38818287849426,
+          "mean_abs_logit_contrib": 2.9490152398745217,
+          "mean_signed_logit_contrib": -2.9490152398745217,
+          "impact_score": 10.215688455515183
+        },
+        {
+          "token_id": 64,
+          "feature": "zip",
+          "label": "zip~[23061.00,30052.00)",
+          "count": 81,
+          "total_abs_logit_contrib": 233.6196266412735,
+          "mean_abs_logit_contrib": 2.8841929214972035,
+          "mean_signed_logit_contrib": -2.8841929214972035,
+          "impact_score": 25.95773629347483
+        },
+        {
+          "token_id": 119,
+          "feature": "Merchant State",
+          "label": "Merchant State=NC",
+          "count": 32,
+          "total_abs_logit_contrib": 89.61689019203186,
+          "mean_abs_logit_contrib": 2.8005278185009956,
+          "mean_signed_logit_contrib": -2.8005278185009956,
+          "impact_score": 15.842177690908983
+        },
+        {
+          "token_id": 116,
+          "feature": "Merchant State",
+          "label": "Merchant State=NY",
+          "count": 35,
+          "total_abs_logit_contrib": 95.13647902011871,
+          "mean_abs_logit_contrib": 2.7181851148605345,
+          "mean_signed_logit_contrib": -2.7181851148605345,
+          "impact_score": 16.081000004748716
+        },
+        {
+          "token_id": 197,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-4500542936415012428",
+          "count": 5,
+          "total_abs_logit_contrib": 13.562361717224121,
+          "mean_abs_logit_contrib": 2.712472343444824,
+          "mean_signed_logit_contrib": -2.712472343444824,
+          "impact_score": 6.065272547030784
+        },
+        {
+          "token_id": 135,
+          "feature": "Merchant State",
+          "label": "Merchant State=SC",
+          "count": 20,
+          "total_abs_logit_contrib": 54.23479640483856,
+          "mean_abs_logit_contrib": 2.7117398202419283,
+          "mean_signed_logit_contrib": -2.7117398202419283,
+          "impact_score": 12.127269150708024
+        },
+        {
+          "token_id": 121,
+          "feature": "Merchant State",
+          "label": "Merchant State=IN",
+          "count": 24,
+          "total_abs_logit_contrib": 63.652716279029846,
+          "mean_abs_logit_contrib": 2.6521965116262436,
+          "mean_signed_logit_contrib": -2.6521965116262436,
+          "impact_score": 12.993056302147618
+        },
+        {
+          "token_id": 73,
+          "feature": "zip",
+          "label": "zip~[91792.00,94901.00)",
+          "count": 119,
+          "total_abs_logit_contrib": 313.90843296051025,
+          "mean_abs_logit_contrib": 2.637885991264792,
+          "mean_signed_logit_contrib": -2.637885991264792,
+          "impact_score": 28.775938869938074
+        },
+        {
+          "token_id": 143,
+          "feature": "Merchant State",
+          "label": "Merchant State=OR",
+          "count": 2,
+          "total_abs_logit_contrib": 5.257361888885498,
+          "mean_abs_logit_contrib": 2.628680944442749,
+          "mean_signed_logit_contrib": -2.628680944442749,
+          "impact_score": 3.7175162427826525
+        },
+        {
+          "token_id": 113,
+          "feature": "Merchant State",
+          "label": "Merchant State=CA",
+          "count": 170,
+          "total_abs_logit_contrib": 439.48517370224,
+          "mean_abs_logit_contrib": 2.5852069041308234,
+          "mean_signed_logit_contrib": -2.5852069041308234,
+          "impact_score": 33.70697413471232
+        },
+        {
+          "token_id": 138,
+          "feature": "Merchant State",
+          "label": "Merchant State=AL",
+          "count": 6,
+          "total_abs_logit_contrib": 15.14117956161499,
+          "mean_abs_logit_contrib": 2.5235299269358316,
+          "mean_signed_logit_contrib": -2.5235299269358316,
+          "impact_score": 6.1813606716357015
+        },
+        {
+          "token_id": 137,
+          "feature": "Merchant State",
+          "label": "Merchant State=LA",
+          "count": 6,
+          "total_abs_logit_contrib": 15.038612127304077,
+          "mean_abs_logit_contrib": 2.5064353545506797,
+          "mean_signed_logit_contrib": -2.5064353545506797,
+          "impact_score": 6.1394876919210075
+        },
+        {
+          "token_id": 68,
+          "feature": "zip",
+          "label": "zip~[46562.00,54302.00)",
+          "count": 67,
+          "total_abs_logit_contrib": 163.84390652179718,
+          "mean_abs_logit_contrib": 2.4454314406238384,
+          "mean_signed_logit_contrib": -2.4454314406238384,
+          "impact_score": 20.016719020934374
+        },
+        {
+          "token_id": 62,
+          "feature": "zip",
+          "label": "zip~[8831.00,14559.00)",
+          "count": 32,
+          "total_abs_logit_contrib": 77.5557861328125,
+          "mean_abs_logit_contrib": 2.4236183166503906,
+          "mean_signed_logit_contrib": -2.4236183166503906,
+          "impact_score": 13.710055573691331
+        },
+        {
+          "token_id": 72,
+          "feature": "zip",
+          "label": "zip~[80122.00,91792.00)",
+          "count": 64,
+          "total_abs_logit_contrib": 154.11777877807617,
+          "mean_abs_logit_contrib": 2.40809029340744,
+          "mean_signed_logit_contrib": -2.40809029340744,
+          "impact_score": 19.26472234725952
+        },
+        {
+          "token_id": 139,
+          "feature": "Merchant State",
+          "label": "Merchant State=AZ",
+          "count": 21,
+          "total_abs_logit_contrib": 50.38085448741913,
+          "mean_abs_logit_contrib": 2.3990883089247204,
+          "mean_signed_logit_contrib": -2.3990883089247204,
+          "impact_score": 10.99400377453113
+        },
+        {
+          "token_id": 124,
+          "feature": "Merchant State",
+          "label": "Merchant State=GA",
+          "count": 16,
+          "total_abs_logit_contrib": 37.974008560180664,
+          "mean_abs_logit_contrib": 2.3733755350112915,
+          "mean_signed_logit_contrib": -2.3733755350112915,
+          "impact_score": 9.493502140045166
+        },
+        {
+          "token_id": 177,
+          "feature": "Merchant City",
+          "label": "Merchant City=other",
+          "count": 1305,
+          "total_abs_logit_contrib": 3289.987397313118,
+          "mean_abs_logit_contrib": 2.521063139703539,
+          "mean_signed_logit_contrib": -2.354205460932063,
+          "impact_score": 91.07286070754164
+        },
+        {
+          "token_id": 123,
+          "feature": "Merchant State",
+          "label": "Merchant State=MI",
+          "count": 54,
+          "total_abs_logit_contrib": 125.73076379299164,
+          "mean_abs_logit_contrib": 2.328347477647993,
+          "mean_signed_logit_contrib": -2.328347477647993,
+          "impact_score": 17.109789792401532
+        },
+        {
+          "token_id": 87,
+          "feature": "MCC",
+          "label": "MCC=7538",
+          "count": 8,
+          "total_abs_logit_contrib": 18.578728437423706,
+          "mean_abs_logit_contrib": 2.3223410546779633,
+          "mean_signed_logit_contrib": -2.3223410546779633,
+          "impact_score": 6.568572431962827
+        },
+        {
+          "token_id": 114,
+          "feature": "Merchant State",
+          "label": "Merchant State=TX",
+          "count": 73,
+          "total_abs_logit_contrib": 169.00265991687775,
+          "mean_abs_logit_contrib": 2.315104930368188,
+          "mean_signed_logit_contrib": -2.315104930368188,
+          "impact_score": 19.78026519586888
+        },
+        {
+          "token_id": 74,
+          "feature": "zip",
+          "label": "zip>94901.00",
+          "count": 72,
+          "total_abs_logit_contrib": 166.29567515850067,
+          "mean_abs_logit_contrib": 2.309662154979176,
+          "mean_signed_logit_contrib": -2.309662154979176,
+          "impact_score": 19.59813326442852
+        },
+        {
+          "token_id": 126,
+          "feature": "Merchant State",
+          "label": "Merchant State=TN",
+          "count": 25,
+          "total_abs_logit_contrib": 57.00619983673096,
+          "mean_abs_logit_contrib": 2.280247993469238,
+          "mean_signed_logit_contrib": -2.280247993469238,
+          "impact_score": 11.401239967346191
+        },
+        {
+          "token_id": 127,
+          "feature": "Merchant State",
+          "label": "Merchant State=VA",
+          "count": 37,
+          "total_abs_logit_contrib": 83.64325165748596,
+          "mean_abs_logit_contrib": 2.260628423175296,
+          "mean_signed_logit_contrib": -2.260628423175296,
+          "impact_score": 13.750865867417838
+        },
+        {
+          "token_id": 125,
+          "feature": "Merchant State",
+          "label": "Merchant State=WA",
+          "count": 35,
+          "total_abs_logit_contrib": 79.11059999465942,
+          "mean_abs_logit_contrib": 2.2603028569902692,
+          "mean_signed_logit_contrib": -2.2603028569902692,
+          "impact_score": 13.372132035922435
+        },
+        {
+          "token_id": 131,
+          "feature": "Merchant State",
+          "label": "Merchant State=MN",
+          "count": 3,
+          "total_abs_logit_contrib": 6.718449592590332,
+          "mean_abs_logit_contrib": 2.239483197530111,
+          "mean_signed_logit_contrib": -2.239483197530111,
+          "impact_score": 3.87889868081896
+        },
+        {
+          "token_id": 70,
+          "feature": "zip",
+          "label": "zip~[62232.00,75050.00)",
+          "count": 62,
+          "total_abs_logit_contrib": 132.00661373138428,
+          "mean_abs_logit_contrib": 2.1291389311513593,
+          "mean_signed_logit_contrib": -2.1291389311513593,
+          "impact_score": 16.764856708750894
+        },
+        {
+          "token_id": 117,
+          "feature": "Merchant State",
+          "label": "Merchant State=IL",
+          "count": 22,
+          "total_abs_logit_contrib": 46.61798810958862,
+          "mean_abs_logit_contrib": 2.1189994595267554,
+          "mean_signed_logit_contrib": -2.1189994595267554,
+          "impact_score": 9.938988460021623
+        },
+        {
+          "token_id": 66,
+          "feature": "zip",
+          "label": "zip~[33309.00,40299.00)",
+          "count": 49,
+          "total_abs_logit_contrib": 103.82960379123688,
+          "mean_abs_logit_contrib": 2.11897150594361,
+          "mean_signed_logit_contrib": -2.11897150594361,
+          "impact_score": 14.83280054160527
+        },
+        {
+          "token_id": 71,
+          "feature": "zip",
+          "label": "zip~[75050.00,80122.00)",
+          "count": 56,
+          "total_abs_logit_contrib": 116.47701728343964,
+          "mean_abs_logit_contrib": 2.079946737204279,
+          "mean_signed_logit_contrib": -2.079946737204279,
+          "impact_score": 15.564896146713497
+        }
+      ]
+    },
+    "true_fraud": {
+      "features": [
+        {
+          "feature": "Merchant City",
+          "mean_abs_logit_contrib": 2.91315604523434,
+          "mean_signed_logit_contrib": 1.3573392314235824
+        },
+        {
+          "feature": "Merchant Name",
+          "mean_abs_logit_contrib": 2.4242503935498614,
+          "mean_signed_logit_contrib": -0.26400997209470906
+        },
+        {
+          "feature": "Merchant State",
+          "mean_abs_logit_contrib": 2.1005505207858968,
+          "mean_signed_logit_contrib": 1.0275172249043631
+        },
+        {
+          "feature": "amount",
+          "mean_abs_logit_contrib": 2.015939195768728,
+          "mean_signed_logit_contrib": 0.8893120394986117
+        },
+        {
+          "feature": "MCC",
+          "mean_abs_logit_contrib": 1.890377368142679,
+          "mean_signed_logit_contrib": 0.4797221208165008
+        },
+        {
+          "feature": "hour",
+          "mean_abs_logit_contrib": 1.833685616609898,
+          "mean_signed_logit_contrib": 0.414746280475451
+        },
+        {
+          "feature": "year",
+          "mean_abs_logit_contrib": 1.8314609903262993,
+          "mean_signed_logit_contrib": 0.6845266891091623
+        },
+        {
+          "feature": "zip",
+          "mean_abs_logit_contrib": 1.8127586659501305,
+          "mean_signed_logit_contrib": 0.610503273143901
+        },
+        {
+          "feature": "month",
+          "mean_abs_logit_contrib": 1.8120575080331531,
+          "mean_signed_logit_contrib": 0.4909018175886813
+        },
+        {
+          "feature": "error_type",
+          "mean_abs_logit_contrib": 1.7994899093519452,
+          "mean_signed_logit_contrib": 0.527524596413692
+        },
+        {
+          "feature": "is_weekend",
+          "mean_abs_logit_contrib": 1.7973342624896873,
+          "mean_signed_logit_contrib": 0.5091172954064539
+        },
+        {
+          "feature": "dayofweek",
+          "mean_abs_logit_contrib": 1.7900870258113561,
+          "mean_signed_logit_contrib": 0.4691875642430763
+        },
+        {
+          "feature": "Use Chip",
+          "mean_abs_logit_contrib": 1.6940488026399658,
+          "mean_signed_logit_contrib": 0.7670680810016033
+        }
+      ],
+      "top_tokens": [
+        {
+          "token_id": 176,
+          "feature": "Merchant City",
+          "label": "Merchant City=Rome",
+          "count": 957,
+          "total_abs_logit_contrib": 7157.328940987587,
+          "mean_abs_logit_contrib": 7.47892261336216,
+          "mean_signed_logit_contrib": 7.47892261336216,
+          "impact_score": 231.36358673746287
+        },
+        {
+          "token_id": 218,
+          "feature": "error_type",
+          "label": "error_type=none",
+          "count": 5835,
+          "total_abs_logit_contrib": 10467.419921219349,
+          "mean_abs_logit_contrib": 1.7939023001232817,
+          "mean_signed_logit_contrib": 0.5337055586195442,
+          "impact_score": 137.03112300872255
+        },
+        {
+          "token_id": 61,
+          "feature": "zip",
+          "label": "zip~[0.00,8831.00)",
+          "count": 5218,
+          "total_abs_logit_contrib": 9024.386300176382,
+          "mean_abs_logit_contrib": 1.7294722691024114,
+          "mean_signed_logit_contrib": 1.1080383571652261,
+          "impact_score": 124.92968362972334
+        },
+        {
+          "token_id": 84,
+          "feature": "MCC",
+          "label": "MCC=4829",
+          "count": 315,
+          "total_abs_logit_contrib": 2211.4320673942566,
+          "mean_abs_logit_contrib": 7.020419261569068,
+          "mean_signed_logit_contrib": 6.565401372455415,
+          "impact_score": 124.6000813867557
+        },
+        {
+          "token_id": 178,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-4282466774399734331",
+          "count": 315,
+          "total_abs_logit_contrib": 2069.03316116333,
+          "mean_abs_logit_contrib": 6.568359241788349,
+          "mean_signed_logit_contrib": 6.116949535551525,
+          "impact_score": 116.57681195543874
+        },
+        {
+          "token_id": 53,
+          "feature": "is_weekend",
+          "label": "is_weekend=0",
+          "count": 4306,
+          "total_abs_logit_contrib": 7636.078114211559,
+          "mean_abs_logit_contrib": 1.7733576670254434,
+          "mean_signed_logit_contrib": 0.5200020659124912,
+          "impact_score": 116.36794090230461
+        },
+        {
+          "token_id": 145,
+          "feature": "Merchant City",
+          "label": "Merchant City=ONLINE",
+          "count": 3784,
+          "total_abs_logit_contrib": 7127.1812953948975,
+          "mean_abs_logit_contrib": 1.8835045706646134,
+          "mean_signed_logit_contrib": 1.171548015912542,
+          "impact_score": 115.86232582609254
+        },
+        {
+          "token_id": 210,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=other",
+          "count": 4750,
+          "total_abs_logit_contrib": 7758.011008381844,
+          "mean_abs_logit_contrib": 1.6332654754488092,
+          "mean_signed_logit_contrib": -1.4893662277020907,
+          "impact_score": 112.56505469346101
+        },
+        {
+          "token_id": 112,
+          "feature": "Merchant State",
+          "label": "Merchant State=ONLINE",
+          "count": 3784,
+          "total_abs_logit_contrib": 6861.169178545475,
+          "mean_abs_logit_contrib": 1.8132053854507069,
+          "mean_signed_logit_contrib": 1.261198130032603,
+          "impact_score": 111.53792585944504
+        },
+        {
+          "token_id": 184,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=1913477460590765860",
+          "count": 331,
+          "total_abs_logit_contrib": 1950.297374367714,
+          "mean_abs_logit_contrib": 5.8921370826819155,
+          "mean_signed_logit_contrib": 5.261434217594181,
+          "impact_score": 107.19803860971143
+        },
+        {
+          "token_id": 144,
+          "feature": "Merchant State",
+          "label": "Merchant State=other",
+          "count": 1430,
+          "total_abs_logit_contrib": 3918.8344673216343,
+          "mean_abs_logit_contrib": 2.7404436834417023,
+          "mean_signed_logit_contrib": 2.489591997382524,
+          "impact_score": 103.63081183907227
+        },
+        {
+          "token_id": 76,
+          "feature": "Use Chip",
+          "label": "Use Chip=Online Transaction",
+          "count": 3784,
+          "total_abs_logit_contrib": 6360.172705590725,
+          "mean_abs_logit_contrib": 1.6808067403780986,
+          "mean_signed_logit_contrib": 1.4720163468988199,
+          "impact_score": 103.39352568476278
+        },
+        {
+          "token_id": 85,
+          "feature": "MCC",
+          "label": "MCC=5300",
+          "count": 458,
+          "total_abs_logit_contrib": 2189.9057651758194,
+          "mean_abs_logit_contrib": 4.7814536357550645,
+          "mean_signed_logit_contrib": 3.171646820145403,
+          "impact_score": 102.32757635584309
+        },
+        {
+          "token_id": 9,
+          "feature": "amount",
+          "label": "amount>100.00",
+          "count": 2403,
+          "total_abs_logit_contrib": 4563.521146535873,
+          "mean_abs_logit_contrib": 1.8990932777927063,
+          "mean_signed_logit_contrib": 1.4277145855634152,
+          "impact_score": 93.09431954985835
+        },
+        {
+          "token_id": 177,
+          "feature": "Merchant City",
+          "label": "Merchant City=other",
+          "count": 1305,
+          "total_abs_logit_contrib": 3289.987397313118,
+          "mean_abs_logit_contrib": 2.521063139703539,
+          "mean_signed_logit_contrib": -2.354205460932063,
+          "impact_score": 91.07286070754164
+        },
+        {
+          "token_id": 58,
+          "feature": "year",
+          "label": "year>2016.00",
+          "count": 1721,
+          "total_abs_logit_contrib": 3608.7011840343475,
+          "mean_abs_logit_contrib": 2.0968629773587146,
+          "mean_signed_logit_contrib": 1.494626815896752,
+          "impact_score": 86.98822856658354
+        },
+        {
+          "token_id": 54,
+          "feature": "is_weekend",
+          "label": "is_weekend=1",
+          "count": 1804,
+          "total_abs_logit_contrib": 3345.6342296004295,
+          "mean_abs_logit_contrib": 1.8545644288250718,
+          "mean_signed_logit_contrib": 0.4831362411941499,
+          "impact_score": 78.76988151620218
+        },
+        {
+          "token_id": 57,
+          "feature": "year",
+          "label": "year~[2012.00,2016.00)",
+          "count": 1562,
+          "total_abs_logit_contrib": 3071.785078763962,
+          "mean_abs_logit_contrib": 1.966571753370014,
+          "mean_signed_logit_contrib": 0.609654565626772,
+          "impact_score": 77.72313534798175
+        },
+        {
+          "token_id": 56,
+          "feature": "year",
+          "label": "year~[2008.00,2012.00)",
+          "count": 1839,
+          "total_abs_logit_contrib": 3145.993059337139,
+          "mean_abs_logit_contrib": 1.7107085695144857,
+          "mean_signed_logit_contrib": 0.6443604167678423,
+          "impact_score": 73.36127920259528
+        },
+        {
+          "token_id": 52,
+          "feature": "dayofweek",
+          "label": "dayofweek=6",
+          "count": 1138,
+          "total_abs_logit_contrib": 2269.4563707709312,
+          "mean_abs_logit_contrib": 1.9942498864419431,
+          "mean_signed_logit_contrib": 0.5570286406050248,
+          "impact_score": 67.274535373311
+        },
+        {
+          "token_id": 8,
+          "feature": "amount",
+          "label": "amount~[66.42,100.00)",
+          "count": 847,
+          "total_abs_logit_contrib": 1898.4351609945297,
+          "mean_abs_logit_contrib": 2.2413638264398226,
+          "mean_signed_logit_contrib": 0.7051892735178383,
+          "impact_score": 65.23100410613499
+        },
+        {
+          "token_id": 45,
+          "feature": "month",
+          "label": "month=11",
+          "count": 1245,
+          "total_abs_logit_contrib": 2161.8672822117805,
+          "mean_abs_logit_contrib": 1.7364395841058478,
+          "mean_signed_logit_contrib": 0.46829504866197885,
+          "impact_score": 61.26950240058968
+        },
+        {
+          "token_id": 206,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-3220758452254689706",
+          "count": 152,
+          "total_abs_logit_contrib": 743.1505608558655,
+          "mean_abs_logit_contrib": 4.889148426683326,
+          "mean_signed_logit_contrib": 3.99560221559123,
+          "impact_score": 60.27747004808086
+        },
+        {
+          "token_id": 77,
+          "feature": "Use Chip",
+          "label": "Use Chip=Swipe Transaction",
+          "count": 1374,
+          "total_abs_logit_contrib": 2210.430346608162,
+          "mean_abs_logit_contrib": 1.6087557107774104,
+          "mean_signed_logit_contrib": -1.304977496898851,
+          "impact_score": 59.63256193877277
+        },
+        {
+          "token_id": 89,
+          "feature": "MCC",
+          "label": "MCC=5311",
+          "count": 1017,
+          "total_abs_logit_contrib": 1845.9221531748772,
+          "mean_abs_logit_contrib": 1.8150660306537632,
+          "mean_signed_logit_contrib": 1.2081451414257376,
+          "impact_score": 57.88324969677301
+        },
+        {
+          "token_id": 75,
+          "feature": "Use Chip",
+          "label": "Use Chip=Chip Transaction",
+          "count": 952,
+          "total_abs_logit_contrib": 1780.035131931305,
+          "mean_abs_logit_contrib": 1.8697848024488497,
+          "mean_signed_logit_contrib": 0.9555831922202551,
+          "impact_score": 57.691270028577
+        },
+        {
+          "token_id": 49,
+          "feature": "dayofweek",
+          "label": "dayofweek=3",
+          "count": 1044,
+          "total_abs_logit_contrib": 1842.83641821146,
+          "mean_abs_logit_contrib": 1.7651689829611688,
+          "mean_signed_logit_contrib": 0.46902764854074896,
+          "impact_score": 57.03435531412734
+        },
+        {
+          "token_id": 47,
+          "feature": "dayofweek",
+          "label": "dayofweek=1",
+          "count": 747,
+          "total_abs_logit_contrib": 1526.4779677391052,
+          "mean_abs_logit_contrib": 2.043477868459311,
+          "mean_signed_logit_contrib": 0.5447704763297575,
+          "impact_score": 55.85090817314977
+        },
+        {
+          "token_id": 50,
+          "feature": "dayofweek",
+          "label": "dayofweek=4",
+          "count": 1107,
+          "total_abs_logit_contrib": 1792.0824449658394,
+          "mean_abs_logit_contrib": 1.6188639972591141,
+          "mean_signed_logit_contrib": 0.40456147110989854,
+          "impact_score": 53.86221078154224
+        },
+        {
+          "token_id": 21,
+          "feature": "hour",
+          "label": "hour=11",
+          "count": 662,
+          "total_abs_logit_contrib": 1358.9593146443367,
+          "mean_abs_logit_contrib": 2.052808632393258,
+          "mean_signed_logit_contrib": 0.7426446650143477,
+          "impact_score": 52.81745366991029
+        },
+        {
+          "token_id": 46,
+          "feature": "dayofweek",
+          "label": "dayofweek=0",
+          "count": 798,
+          "total_abs_logit_contrib": 1486.8441906571388,
+          "mean_abs_logit_contrib": 1.863213271500174,
+          "mean_signed_logit_contrib": 0.711627610569311,
+          "impact_score": 52.63371380289744
+        },
+        {
+          "token_id": 4,
+          "feature": "amount",
+          "label": "amount~[9.15,17.71)",
+          "count": 371,
+          "total_abs_logit_contrib": 1009.9292142391205,
+          "mean_abs_logit_contrib": 2.7221811704558503,
+          "mean_signed_logit_contrib": 1.1919582442774606,
+          "impact_score": 52.432912283173884
+        },
+        {
+          "token_id": 200,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-245178307025547046",
+          "count": 156,
+          "total_abs_logit_contrib": 651.8431099653244,
+          "mean_abs_logit_contrib": 4.178481474136695,
+          "mean_signed_logit_contrib": 3.4208438587494387,
+          "impact_score": 52.189216884656894
+        },
+        {
+          "token_id": 3,
+          "feature": "amount",
+          "label": "amount~[2.52,9.15)",
+          "count": 452,
+          "total_abs_logit_contrib": 1042.1803948283195,
+          "mean_abs_logit_contrib": 2.305708838115751,
+          "mean_signed_logit_contrib": 0.8157387746382604,
+          "impact_score": 49.02004230176286
+        },
+        {
+          "token_id": 42,
+          "feature": "month",
+          "label": "month=8",
+          "count": 617,
+          "total_abs_logit_contrib": 1210.4778584241867,
+          "mean_abs_logit_contrib": 1.9618765938803675,
+          "mean_signed_logit_contrib": 0.5973106421759681,
+          "impact_score": 48.732003630600346
+        },
+        {
+          "token_id": 22,
+          "feature": "hour",
+          "label": "hour=12",
+          "count": 634,
+          "total_abs_logit_contrib": 1225.5873927474022,
+          "mean_abs_logit_contrib": 1.9331031431347037,
+          "mean_signed_logit_contrib": 0.4313492102765887,
+          "impact_score": 48.674293432018814
+        },
+        {
+          "token_id": 7,
+          "feature": "amount",
+          "label": "amount~[46.26,66.42)",
+          "count": 572,
+          "total_abs_logit_contrib": 1137.7889024615288,
+          "mean_abs_logit_contrib": 1.9891414378698056,
+          "mean_signed_logit_contrib": 0.3132682326998744,
+          "impact_score": 47.57334393790953
+        },
+        {
+          "token_id": 83,
+          "feature": "MCC",
+          "label": "MCC=5912",
+          "count": 207,
+          "total_abs_logit_contrib": 668.5227131843567,
+          "mean_abs_logit_contrib": 3.2295783245621097,
+          "mean_signed_logit_contrib": 1.8727651702033148,
+          "impact_score": 46.46554060782733
+        },
+        {
+          "token_id": 2,
+          "feature": "amount",
+          "label": "amount<2.52",
+          "count": 624,
+          "total_abs_logit_contrib": 1125.4760337471962,
+          "mean_abs_logit_contrib": 1.803647489979481,
+          "mean_signed_logit_contrib": 0.2186948587306035,
+          "impact_score": 45.055099858952616
+        },
+        {
+          "token_id": 20,
+          "feature": "hour",
+          "label": "hour=10",
+          "count": 634,
+          "total_abs_logit_contrib": 1132.2368838787079,
+          "mean_abs_logit_contrib": 1.7858625928686245,
+          "mean_signed_logit_contrib": 0.4675162962934572,
+          "impact_score": 44.96687110735103
+        },
+        {
+          "token_id": 189,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-5467922351692495955",
+          "count": 23,
+          "total_abs_logit_contrib": 215.4194884300232,
+          "mean_abs_logit_contrib": 9.366064714348834,
+          "mean_signed_logit_contrib": 8.376705687978994,
+          "impact_score": 44.918068406461074
+        },
+        {
+          "token_id": 23,
+          "feature": "hour",
+          "label": "hour=13",
+          "count": 533,
+          "total_abs_logit_contrib": 1005.4918838143349,
+          "mean_abs_logit_contrib": 1.8864763298580391,
+          "mean_signed_logit_contrib": 0.4645394284774394,
+          "impact_score": 43.55268807639906
+        },
+        {
+          "token_id": 44,
+          "feature": "month",
+          "label": "month=10",
+          "count": 504,
+          "total_abs_logit_contrib": 974.1701483726501,
+          "mean_abs_logit_contrib": 1.932877278517163,
+          "mean_signed_logit_contrib": 0.3637715947060358,
+          "impact_score": 43.39298728134754
+        },
+        {
+          "token_id": 55,
+          "feature": "year",
+          "label": "year<2008.00",
+          "count": 988,
+          "total_abs_logit_contrib": 1363.7473287582397,
+          "mean_abs_logit_contrib": 1.380311061496194,
+          "mean_signed_logit_contrib": -0.5334553822332065,
+          "impact_score": 43.38658229188933
+        },
+        {
+          "token_id": 51,
+          "feature": "dayofweek",
+          "label": "dayofweek=5",
+          "count": 666,
+          "total_abs_logit_contrib": 1080.0312501192093,
+          "mean_abs_logit_contrib": 1.6216685437225364,
+          "mean_signed_logit_contrib": 0.3747995649730121,
+          "impact_score": 41.85036086529779
+        },
+        {
+          "token_id": 40,
+          "feature": "month",
+          "label": "month=6",
+          "count": 457,
+          "total_abs_logit_contrib": 883.9875319004059,
+          "mean_abs_logit_contrib": 1.9343272032831638,
+          "mean_signed_logit_contrib": 0.6576653512875413,
+          "impact_score": 41.35119261058982
+        },
+        {
+          "token_id": 19,
+          "feature": "hour",
+          "label": "hour=9",
+          "count": 426,
+          "total_abs_logit_contrib": 844.7909293174744,
+          "mean_abs_logit_contrib": 1.9830772988673107,
+          "mean_signed_logit_contrib": 0.2480042383704387,
+          "impact_score": 40.93025426525594
+        },
+        {
+          "token_id": 25,
+          "feature": "hour",
+          "label": "hour=15",
+          "count": 453,
+          "total_abs_logit_contrib": 866.9559573531151,
+          "mean_abs_logit_contrib": 1.9138100603821524,
+          "mean_signed_logit_contrib": 0.5850561119073274,
+          "impact_score": 40.73314415915658
+        },
+        {
+          "token_id": 41,
+          "feature": "month",
+          "label": "month=7",
+          "count": 413,
+          "total_abs_logit_contrib": 815.0339182019234,
+          "mean_abs_logit_contrib": 1.9734477438303228,
+          "mean_signed_logit_contrib": 0.5463887235154251,
+          "impact_score": 40.10519725697373
+        },
+        {
+          "token_id": 37,
+          "feature": "month",
+          "label": "month=3",
+          "count": 501,
+          "total_abs_logit_contrib": 896.3991585969925,
+          "mean_abs_logit_contrib": 1.7892198774391068,
+          "mean_signed_logit_contrib": 0.33746632915770935,
+          "impact_score": 40.048160915096084
+        }
+      ],
+      "top_positive": [
+        {
+          "token_id": 93,
+          "feature": "MCC",
+          "label": "MCC=5942",
+          "count": 14,
+          "total_abs_logit_contrib": 135.69326400756836,
+          "mean_abs_logit_contrib": 9.692376000540596,
+          "mean_signed_logit_contrib": 9.692376000540596,
+          "impact_score": 36.265550257813196
+        },
+        {
+          "token_id": 188,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-5475680618560174533",
+          "count": 14,
+          "total_abs_logit_contrib": 124.18609714508057,
+          "mean_abs_logit_contrib": 8.870435510362897,
+          "mean_signed_logit_contrib": 8.870435510362897,
+          "impact_score": 33.19013055125121
+        },
+        {
+          "token_id": 189,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-5467922351692495955",
+          "count": 23,
+          "total_abs_logit_contrib": 215.4194884300232,
+          "mean_abs_logit_contrib": 9.366064714348834,
+          "mean_signed_logit_contrib": 8.376705687978994,
+          "impact_score": 44.918068406461074
+        },
+        {
+          "token_id": 198,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=6135208568923449408",
+          "count": 20,
+          "total_abs_logit_contrib": 163.41192436218262,
+          "mean_abs_logit_contrib": 8.17059621810913,
+          "mean_signed_logit_contrib": 7.744802379608155,
+          "impact_score": 36.54001712078943
+        },
+        {
+          "token_id": 196,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=5817218446178736267",
+          "count": 23,
+          "total_abs_logit_contrib": 177.09524536132812,
+          "mean_abs_logit_contrib": 7.699793276579483,
+          "mean_signed_logit_contrib": 7.699793276579483,
+          "impact_score": 36.926911318811214
+        },
+        {
+          "token_id": 176,
+          "feature": "Merchant City",
+          "label": "Merchant City=Rome",
+          "count": 957,
+          "total_abs_logit_contrib": 7157.328940987587,
+          "mean_abs_logit_contrib": 7.47892261336216,
+          "mean_signed_logit_contrib": 7.47892261336216,
+          "impact_score": 231.36358673746287
+        },
+        {
+          "token_id": 102,
+          "feature": "MCC",
+          "label": "MCC=9402",
+          "count": 20,
+          "total_abs_logit_contrib": 156.8801507949829,
+          "mean_abs_logit_contrib": 7.844007539749145,
+          "mean_signed_logit_contrib": 7.423119974136353,
+          "impact_score": 35.07946814979994
+        },
+        {
+          "token_id": 84,
+          "feature": "MCC",
+          "label": "MCC=4829",
+          "count": 315,
+          "total_abs_logit_contrib": 2211.4320673942566,
+          "mean_abs_logit_contrib": 7.020419261569068,
+          "mean_signed_logit_contrib": 6.565401372455415,
+          "impact_score": 124.6000813867557
+        },
+        {
+          "token_id": 178,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-4282466774399734331",
+          "count": 315,
+          "total_abs_logit_contrib": 2069.03316116333,
+          "mean_abs_logit_contrib": 6.568359241788349,
+          "mean_signed_logit_contrib": 6.116949535551525,
+          "impact_score": 116.57681195543874
+        },
+        {
+          "token_id": 106,
+          "feature": "MCC",
+          "label": "MCC=5970",
+          "count": 17,
+          "total_abs_logit_contrib": 107.31761646270752,
+          "mean_abs_logit_contrib": 6.31280096839456,
+          "mean_signed_logit_contrib": 6.003468064700856,
+          "impact_score": 26.028345186192226
+        },
+        {
+          "token_id": 207,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-7146670748125200898",
+          "count": 17,
+          "total_abs_logit_contrib": 106.56260299682617,
+          "mean_abs_logit_contrib": 6.26838841157801,
+          "mean_signed_logit_contrib": 5.981504328110638,
+          "impact_score": 25.845227523333843
+        },
+        {
+          "token_id": 184,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=1913477460590765860",
+          "count": 331,
+          "total_abs_logit_contrib": 1950.297374367714,
+          "mean_abs_logit_contrib": 5.8921370826819155,
+          "mean_signed_logit_contrib": 5.261434217594181,
+          "impact_score": 107.19803860971143
+        },
+        {
+          "token_id": 206,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-3220758452254689706",
+          "count": 152,
+          "total_abs_logit_contrib": 743.1505608558655,
+          "mean_abs_logit_contrib": 4.889148426683326,
+          "mean_signed_logit_contrib": 3.99560221559123,
+          "impact_score": 60.27747004808086
+        },
+        {
+          "token_id": 200,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-245178307025547046",
+          "count": 156,
+          "total_abs_logit_contrib": 651.8431099653244,
+          "mean_abs_logit_contrib": 4.178481474136695,
+          "mean_signed_logit_contrib": 3.4208438587494387,
+          "impact_score": 52.189216884656894
+        },
+        {
+          "token_id": 85,
+          "feature": "MCC",
+          "label": "MCC=5300",
+          "count": 458,
+          "total_abs_logit_contrib": 2189.9057651758194,
+          "mean_abs_logit_contrib": 4.7814536357550645,
+          "mean_signed_logit_contrib": 3.171646820145403,
+          "impact_score": 102.32757635584309
+        },
+        {
+          "token_id": 204,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-727612092139916043",
+          "count": 52,
+          "total_abs_logit_contrib": 189.0947482585907,
+          "mean_abs_logit_contrib": 3.6364374665113597,
+          "mean_signed_logit_contrib": 2.5490846863159766,
+          "impact_score": 26.22272349105014
+        },
+        {
+          "token_id": 144,
+          "feature": "Merchant State",
+          "label": "Merchant State=other",
+          "count": 1430,
+          "total_abs_logit_contrib": 3918.8344673216343,
+          "mean_abs_logit_contrib": 2.7404436834417023,
+          "mean_signed_logit_contrib": 2.489591997382524,
+          "impact_score": 103.63081183907227
+        },
+        {
+          "token_id": 83,
+          "feature": "MCC",
+          "label": "MCC=5912",
+          "count": 207,
+          "total_abs_logit_contrib": 668.5227131843567,
+          "mean_abs_logit_contrib": 3.2295783245621097,
+          "mean_signed_logit_contrib": 1.8727651702033148,
+          "impact_score": 46.46554060782733
+        },
+        {
+          "token_id": 58,
+          "feature": "year",
+          "label": "year>2016.00",
+          "count": 1721,
+          "total_abs_logit_contrib": 3608.7011840343475,
+          "mean_abs_logit_contrib": 2.0968629773587146,
+          "mean_signed_logit_contrib": 1.494626815896752,
+          "impact_score": 86.98822856658354
+        },
+        {
+          "token_id": 76,
+          "feature": "Use Chip",
+          "label": "Use Chip=Online Transaction",
+          "count": 3784,
+          "total_abs_logit_contrib": 6360.172705590725,
+          "mean_abs_logit_contrib": 1.6808067403780986,
+          "mean_signed_logit_contrib": 1.4720163468988199,
+          "impact_score": 103.39352568476278
+        },
+        {
+          "token_id": 185,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-6571010470072147219",
+          "count": 1,
+          "total_abs_logit_contrib": 1.436929702758789,
+          "mean_abs_logit_contrib": 1.436929702758789,
+          "mean_signed_logit_contrib": 1.436929702758789,
+          "impact_score": 1.436929702758789
+        },
+        {
+          "token_id": 9,
+          "feature": "amount",
+          "label": "amount>100.00",
+          "count": 2403,
+          "total_abs_logit_contrib": 4563.521146535873,
+          "mean_abs_logit_contrib": 1.8990932777927063,
+          "mean_signed_logit_contrib": 1.4277145855634152,
+          "impact_score": 93.09431954985835
+        },
+        {
+          "token_id": 100,
+          "feature": "MCC",
+          "label": "MCC=7230",
+          "count": 4,
+          "total_abs_logit_contrib": 5.548480033874512,
+          "mean_abs_logit_contrib": 1.387120008468628,
+          "mean_signed_logit_contrib": 1.387120008468628,
+          "impact_score": 2.774240016937256
+        },
+        {
+          "token_id": 212,
+          "feature": "error_type",
+          "label": "error_type=bad_cvv",
+          "count": 68,
+          "total_abs_logit_contrib": 141.35418677330017,
+          "mean_abs_logit_contrib": 2.078738040783826,
+          "mean_signed_logit_contrib": 1.29947167634964,
+          "impact_score": 17.141713020282456
+        },
+        {
+          "token_id": 112,
+          "feature": "Merchant State",
+          "label": "Merchant State=ONLINE",
+          "count": 3784,
+          "total_abs_logit_contrib": 6861.169178545475,
+          "mean_abs_logit_contrib": 1.8132053854507069,
+          "mean_signed_logit_contrib": 1.261198130032603,
+          "impact_score": 111.53792585944504
+        },
+        {
+          "token_id": 199,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=4241336128694185533",
+          "count": 14,
+          "total_abs_logit_contrib": 17.312140703201294,
+          "mean_abs_logit_contrib": 1.2365814788000924,
+          "mean_signed_logit_contrib": 1.2365814788000924,
+          "impact_score": 4.62686422450021
+        },
+        {
+          "token_id": 89,
+          "feature": "MCC",
+          "label": "MCC=5311",
+          "count": 1017,
+          "total_abs_logit_contrib": 1845.9221531748772,
+          "mean_abs_logit_contrib": 1.8150660306537632,
+          "mean_signed_logit_contrib": 1.2081451414257376,
+          "impact_score": 57.88324969677301
+        },
+        {
+          "token_id": 4,
+          "feature": "amount",
+          "label": "amount~[9.15,17.71)",
+          "count": 371,
+          "total_abs_logit_contrib": 1009.9292142391205,
+          "mean_abs_logit_contrib": 2.7221811704558503,
+          "mean_signed_logit_contrib": 1.1919582442774606,
+          "impact_score": 52.432912283173884
+        },
+        {
+          "token_id": 145,
+          "feature": "Merchant City",
+          "label": "Merchant City=ONLINE",
+          "count": 3784,
+          "total_abs_logit_contrib": 7127.1812953948975,
+          "mean_abs_logit_contrib": 1.8835045706646134,
+          "mean_signed_logit_contrib": 1.171548015912542,
+          "impact_score": 115.86232582609254
+        },
+        {
+          "token_id": 28,
+          "feature": "hour",
+          "label": "hour=18",
+          "count": 174,
+          "total_abs_logit_contrib": 323.50484013557434,
+          "mean_abs_logit_contrib": 1.8592232191699676,
+          "mean_signed_logit_contrib": 1.1475663609888362,
+          "impact_score": 24.524838639508484
+        },
+        {
+          "token_id": 61,
+          "feature": "zip",
+          "label": "zip~[0.00,8831.00)",
+          "count": 5218,
+          "total_abs_logit_contrib": 9024.386300176382,
+          "mean_abs_logit_contrib": 1.7294722691024114,
+          "mean_signed_logit_contrib": 1.1080383571652261,
+          "impact_score": 124.92968362972334
+        },
+        {
+          "token_id": 216,
+          "feature": "error_type",
+          "label": "error_type=insufficient_balance",
+          "count": 93,
+          "total_abs_logit_contrib": 222.80990648269653,
+          "mean_abs_logit_contrib": 2.3958054460505003,
+          "mean_signed_logit_contrib": 0.9654834142295263,
+          "impact_score": 23.10431101299597
+        },
+        {
+          "token_id": 75,
+          "feature": "Use Chip",
+          "label": "Use Chip=Chip Transaction",
+          "count": 952,
+          "total_abs_logit_contrib": 1780.035131931305,
+          "mean_abs_logit_contrib": 1.8697848024488497,
+          "mean_signed_logit_contrib": 0.9555831922202551,
+          "impact_score": 57.691270028577
+        },
+        {
+          "token_id": 27,
+          "feature": "hour",
+          "label": "hour=17",
+          "count": 205,
+          "total_abs_logit_contrib": 377.9847899675369,
+          "mean_abs_logit_contrib": 1.8438282437440825,
+          "mean_signed_logit_contrib": 0.8451589590165673,
+          "impact_score": 26.39960286534287
+        },
+        {
+          "token_id": 26,
+          "feature": "hour",
+          "label": "hour=16",
+          "count": 323,
+          "total_abs_logit_contrib": 668.943201303482,
+          "mean_abs_logit_contrib": 2.0710315829829167,
+          "mean_signed_logit_contrib": 0.8385669299323493,
+          "impact_score": 37.22099538058071
+        },
+        {
+          "token_id": 3,
+          "feature": "amount",
+          "label": "amount~[2.52,9.15)",
+          "count": 452,
+          "total_abs_logit_contrib": 1042.1803948283195,
+          "mean_abs_logit_contrib": 2.305708838115751,
+          "mean_signed_logit_contrib": 0.8157387746382604,
+          "impact_score": 49.02004230176286
+        },
+        {
+          "token_id": 35,
+          "feature": "month",
+          "label": "month=1",
+          "count": 432,
+          "total_abs_logit_contrib": 801.5635013580322,
+          "mean_abs_logit_contrib": 1.8554710679584079,
+          "mean_signed_logit_contrib": 0.7765933799522894,
+          "impact_score": 38.56524194013657
+        },
+        {
+          "token_id": 21,
+          "feature": "hour",
+          "label": "hour=11",
+          "count": 662,
+          "total_abs_logit_contrib": 1358.9593146443367,
+          "mean_abs_logit_contrib": 2.052808632393258,
+          "mean_signed_logit_contrib": 0.7426446650143477,
+          "impact_score": 52.81745366991029
+        },
+        {
+          "token_id": 46,
+          "feature": "dayofweek",
+          "label": "dayofweek=0",
+          "count": 798,
+          "total_abs_logit_contrib": 1486.8441906571388,
+          "mean_abs_logit_contrib": 1.863213271500174,
+          "mean_signed_logit_contrib": 0.711627610569311,
+          "impact_score": 52.63371380289744
+        },
+        {
+          "token_id": 8,
+          "feature": "amount",
+          "label": "amount~[66.42,100.00)",
+          "count": 847,
+          "total_abs_logit_contrib": 1898.4351609945297,
+          "mean_abs_logit_contrib": 2.2413638264398226,
+          "mean_signed_logit_contrib": 0.7051892735178383,
+          "impact_score": 65.23100410613499
+        },
+        {
+          "token_id": 39,
+          "feature": "month",
+          "label": "month=5",
+          "count": 479,
+          "total_abs_logit_contrib": 859.9683676362038,
+          "mean_abs_logit_contrib": 1.7953410597833064,
+          "mean_signed_logit_contrib": 0.6739958560790299,
+          "impact_score": 39.292957645513304
+        },
+        {
+          "token_id": 40,
+          "feature": "month",
+          "label": "month=6",
+          "count": 457,
+          "total_abs_logit_contrib": 883.9875319004059,
+          "mean_abs_logit_contrib": 1.9343272032831638,
+          "mean_signed_logit_contrib": 0.6576653512875413,
+          "impact_score": 41.35119261058982
+        },
+        {
+          "token_id": 56,
+          "feature": "year",
+          "label": "year~[2008.00,2012.00)",
+          "count": 1839,
+          "total_abs_logit_contrib": 3145.993059337139,
+          "mean_abs_logit_contrib": 1.7107085695144857,
+          "mean_signed_logit_contrib": 0.6443604167678423,
+          "impact_score": 73.36127920259528
+        },
+        {
+          "token_id": 57,
+          "feature": "year",
+          "label": "year~[2012.00,2016.00)",
+          "count": 1562,
+          "total_abs_logit_contrib": 3071.785078763962,
+          "mean_abs_logit_contrib": 1.966571753370014,
+          "mean_signed_logit_contrib": 0.609654565626772,
+          "impact_score": 77.72313534798175
+        },
+        {
+          "token_id": 42,
+          "feature": "month",
+          "label": "month=8",
+          "count": 617,
+          "total_abs_logit_contrib": 1210.4778584241867,
+          "mean_abs_logit_contrib": 1.9618765938803675,
+          "mean_signed_logit_contrib": 0.5973106421759681,
+          "impact_score": 48.732003630600346
+        },
+        {
+          "token_id": 25,
+          "feature": "hour",
+          "label": "hour=15",
+          "count": 453,
+          "total_abs_logit_contrib": 866.9559573531151,
+          "mean_abs_logit_contrib": 1.9138100603821524,
+          "mean_signed_logit_contrib": 0.5850561119073274,
+          "impact_score": 40.73314415915658
+        },
+        {
+          "token_id": 181,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-5162038175624867091",
+          "count": 34,
+          "total_abs_logit_contrib": 94.83403933048248,
+          "mean_abs_logit_contrib": 2.7892364508965435,
+          "mean_signed_logit_contrib": 0.5625329964301166,
+          "impact_score": 16.263903568526782
+        },
+        {
+          "token_id": 52,
+          "feature": "dayofweek",
+          "label": "dayofweek=6",
+          "count": 1138,
+          "total_abs_logit_contrib": 2269.4563707709312,
+          "mean_abs_logit_contrib": 1.9942498864419431,
+          "mean_signed_logit_contrib": 0.5570286406050248,
+          "impact_score": 67.274535373311
+        },
+        {
+          "token_id": 41,
+          "feature": "month",
+          "label": "month=7",
+          "count": 413,
+          "total_abs_logit_contrib": 815.0339182019234,
+          "mean_abs_logit_contrib": 1.9734477438303228,
+          "mean_signed_logit_contrib": 0.5463887235154251,
+          "impact_score": 40.10519725697373
+        },
+        {
+          "token_id": 47,
+          "feature": "dayofweek",
+          "label": "dayofweek=1",
+          "count": 747,
+          "total_abs_logit_contrib": 1526.4779677391052,
+          "mean_abs_logit_contrib": 2.043477868459311,
+          "mean_signed_logit_contrib": 0.5447704763297575,
+          "impact_score": 55.85090817314977
+        }
+      ],
+      "top_negative": [
+        {
+          "token_id": 171,
+          "feature": "Merchant City",
+          "label": "Merchant City=Tucson",
+          "count": 3,
+          "total_abs_logit_contrib": 16.134265899658203,
+          "mean_abs_logit_contrib": 5.378088633219401,
+          "mean_signed_logit_contrib": -5.378088633219401,
+          "impact_score": 9.315122760344662
+        },
+        {
+          "token_id": 166,
+          "feature": "Merchant City",
+          "label": "Merchant City=Louisville",
+          "count": 1,
+          "total_abs_logit_contrib": 5.144069671630859,
+          "mean_abs_logit_contrib": 5.144069671630859,
+          "mean_signed_logit_contrib": -5.144069671630859,
+          "impact_score": 5.144069671630859
+        },
+        {
+          "token_id": 146,
+          "feature": "Merchant City",
+          "label": "Merchant City=Los Angeles",
+          "count": 3,
+          "total_abs_logit_contrib": 14.075055122375488,
+          "mean_abs_logit_contrib": 4.691685040791829,
+          "mean_signed_logit_contrib": -4.691685040791829,
+          "impact_score": 8.126236863762308
+        },
+        {
+          "token_id": 190,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-5841929396161652653",
+          "count": 30,
+          "total_abs_logit_contrib": 138.40361785888672,
+          "mean_abs_logit_contrib": 4.613453928629557,
+          "mean_signed_logit_contrib": -4.613453928629557,
+          "impact_score": 25.26892784721237
+        },
+        {
+          "token_id": 203,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-2744911404133435018",
+          "count": 1,
+          "total_abs_logit_contrib": 4.458474159240723,
+          "mean_abs_logit_contrib": 4.458474159240723,
+          "mean_signed_logit_contrib": -4.458474159240723,
+          "impact_score": 4.458474159240723
+        },
+        {
+          "token_id": 157,
+          "feature": "Merchant City",
+          "label": "Merchant City=San Francisco",
+          "count": 6,
+          "total_abs_logit_contrib": 26.652395963668823,
+          "mean_abs_logit_contrib": 4.442065993944804,
+          "mean_signed_logit_contrib": -4.442065993944804,
+          "impact_score": 10.880795088933759
+        },
+        {
+          "token_id": 107,
+          "feature": "MCC",
+          "label": "MCC=4899",
+          "count": 8,
+          "total_abs_logit_contrib": 34.05380344390869,
+          "mean_abs_logit_contrib": 4.256725430488586,
+          "mean_signed_logit_contrib": -4.256725430488586,
+          "impact_score": 12.039837670190822
+        },
+        {
+          "token_id": 209,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=8878665205966093747",
+          "count": 1,
+          "total_abs_logit_contrib": 4.152859210968018,
+          "mean_abs_logit_contrib": 4.152859210968018,
+          "mean_signed_logit_contrib": -4.152859210968018,
+          "impact_score": 4.152859210968018
+        },
+        {
+          "token_id": 194,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-4334232547381218591",
+          "count": 4,
+          "total_abs_logit_contrib": 16.437699794769287,
+          "mean_abs_logit_contrib": 4.109424948692322,
+          "mean_signed_logit_contrib": -4.109424948692322,
+          "impact_score": 8.218849897384644
+        },
+        {
+          "token_id": 168,
+          "feature": "Merchant City",
+          "label": "Merchant City=San Jose",
+          "count": 2,
+          "total_abs_logit_contrib": 8.154359340667725,
+          "mean_abs_logit_contrib": 4.077179670333862,
+          "mean_signed_logit_contrib": -4.077179670333862,
+          "impact_score": 5.766002786018013
+        },
+        {
+          "token_id": 193,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=4751695835751691036",
+          "count": 2,
+          "total_abs_logit_contrib": 8.136391639709473,
+          "mean_abs_logit_contrib": 4.068195819854736,
+          "mean_signed_logit_contrib": -4.068195819854736,
+          "impact_score": 5.753297702828101
+        },
+        {
+          "token_id": 148,
+          "feature": "Merchant City",
+          "label": "Merchant City=Chicago",
+          "count": 1,
+          "total_abs_logit_contrib": 4.036733627319336,
+          "mean_abs_logit_contrib": 4.036733627319336,
+          "mean_signed_logit_contrib": -4.036733627319336,
+          "impact_score": 4.036733627319336
+        },
+        {
+          "token_id": 186,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=97032797689821735",
+          "count": 8,
+          "total_abs_logit_contrib": 31.70299196243286,
+          "mean_abs_logit_contrib": 3.9628739953041077,
+          "mean_signed_logit_contrib": -3.9628739953041077,
+          "impact_score": 11.208700300269445
+        },
+        {
+          "token_id": 197,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-4500542936415012428",
+          "count": 3,
+          "total_abs_logit_contrib": 11.781852722167969,
+          "mean_abs_logit_contrib": 3.9272842407226562,
+          "mean_signed_logit_contrib": -3.9272842407226562,
+          "impact_score": 6.802255840696201
+        },
+        {
+          "token_id": 165,
+          "feature": "Merchant City",
+          "label": "Merchant City=Richmond",
+          "count": 10,
+          "total_abs_logit_contrib": 39.03180241584778,
+          "mean_abs_logit_contrib": 3.903180241584778,
+          "mean_signed_logit_contrib": -3.903180241584778,
+          "impact_score": 12.342939681574162
+        },
+        {
+          "token_id": 155,
+          "feature": "Merchant City",
+          "label": "Merchant City=Indianapolis",
+          "count": 2,
+          "total_abs_logit_contrib": 7.606261253356934,
+          "mean_abs_logit_contrib": 3.803130626678467,
+          "mean_signed_logit_contrib": -3.803130626678467,
+          "impact_score": 5.378438911725176
+        },
+        {
+          "token_id": 149,
+          "feature": "Merchant City",
+          "label": "Merchant City=Brooklyn",
+          "count": 1,
+          "total_abs_logit_contrib": 3.79990816116333,
+          "mean_abs_logit_contrib": 3.79990816116333,
+          "mean_signed_logit_contrib": -3.79990816116333,
+          "impact_score": 3.79990816116333
+        },
+        {
+          "token_id": 161,
+          "feature": "Merchant City",
+          "label": "Merchant City=Philadelphia",
+          "count": 1,
+          "total_abs_logit_contrib": 3.7553038597106934,
+          "mean_abs_logit_contrib": 3.7553038597106934,
+          "mean_signed_logit_contrib": -3.7553038597106934,
+          "impact_score": 3.7553038597106934
+        },
+        {
+          "token_id": 172,
+          "feature": "Merchant City",
+          "label": "Merchant City=Memphis",
+          "count": 1,
+          "total_abs_logit_contrib": 3.4983248710632324,
+          "mean_abs_logit_contrib": 3.4983248710632324,
+          "mean_signed_logit_contrib": -3.4983248710632324,
+          "impact_score": 3.4983248710632324
+        },
+        {
+          "token_id": 158,
+          "feature": "Merchant City",
+          "label": "Merchant City=Oakland",
+          "count": 15,
+          "total_abs_logit_contrib": 50.496432304382324,
+          "mean_abs_logit_contrib": 3.366428820292155,
+          "mean_signed_logit_contrib": -3.366428820292155,
+          "impact_score": 13.038122757184198
+        },
+        {
+          "token_id": 191,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-6160036380778658394",
+          "count": 20,
+          "total_abs_logit_contrib": 65.62612962722778,
+          "mean_abs_logit_contrib": 3.2813064813613892,
+          "mean_signed_logit_contrib": -3.2599568605422973,
+          "impact_score": 14.674448694669426
+        },
+        {
+          "token_id": 142,
+          "feature": "Merchant State",
+          "label": "Merchant State=NV",
+          "count": 9,
+          "total_abs_logit_contrib": 29.187962293624878,
+          "mean_abs_logit_contrib": 3.2431069215138755,
+          "mean_signed_logit_contrib": -3.2431069215138755,
+          "impact_score": 9.729320764541626
+        },
+        {
+          "token_id": 159,
+          "feature": "Merchant City",
+          "label": "Merchant City=Las Vegas",
+          "count": 9,
+          "total_abs_logit_contrib": 28.839669466018677,
+          "mean_abs_logit_contrib": 3.20440771844652,
+          "mean_signed_logit_contrib": -3.20440771844652,
+          "impact_score": 9.61322315533956
+        },
+        {
+          "token_id": 134,
+          "feature": "Merchant State",
+          "label": "Merchant State=IA",
+          "count": 12,
+          "total_abs_logit_contrib": 35.38818287849426,
+          "mean_abs_logit_contrib": 2.9490152398745217,
+          "mean_signed_logit_contrib": -2.9490152398745217,
+          "impact_score": 10.215688455515183
+        },
+        {
+          "token_id": 64,
+          "feature": "zip",
+          "label": "zip~[23061.00,30052.00)",
+          "count": 81,
+          "total_abs_logit_contrib": 233.6196266412735,
+          "mean_abs_logit_contrib": 2.8841929214972035,
+          "mean_signed_logit_contrib": -2.8841929214972035,
+          "impact_score": 25.95773629347483
+        },
+        {
+          "token_id": 119,
+          "feature": "Merchant State",
+          "label": "Merchant State=NC",
+          "count": 32,
+          "total_abs_logit_contrib": 89.61689019203186,
+          "mean_abs_logit_contrib": 2.8005278185009956,
+          "mean_signed_logit_contrib": -2.8005278185009956,
+          "impact_score": 15.842177690908983
+        },
+        {
+          "token_id": 116,
+          "feature": "Merchant State",
+          "label": "Merchant State=NY",
+          "count": 35,
+          "total_abs_logit_contrib": 95.13647902011871,
+          "mean_abs_logit_contrib": 2.7181851148605345,
+          "mean_signed_logit_contrib": -2.7181851148605345,
+          "impact_score": 16.081000004748716
+        },
+        {
+          "token_id": 135,
+          "feature": "Merchant State",
+          "label": "Merchant State=SC",
+          "count": 20,
+          "total_abs_logit_contrib": 54.23479640483856,
+          "mean_abs_logit_contrib": 2.7117398202419283,
+          "mean_signed_logit_contrib": -2.7117398202419283,
+          "impact_score": 12.127269150708024
+        },
+        {
+          "token_id": 121,
+          "feature": "Merchant State",
+          "label": "Merchant State=IN",
+          "count": 24,
+          "total_abs_logit_contrib": 63.652716279029846,
+          "mean_abs_logit_contrib": 2.6521965116262436,
+          "mean_signed_logit_contrib": -2.6521965116262436,
+          "impact_score": 12.993056302147618
+        },
+        {
+          "token_id": 73,
+          "feature": "zip",
+          "label": "zip~[91792.00,94901.00)",
+          "count": 119,
+          "total_abs_logit_contrib": 313.90843296051025,
+          "mean_abs_logit_contrib": 2.637885991264792,
+          "mean_signed_logit_contrib": -2.637885991264792,
+          "impact_score": 28.775938869938074
+        },
+        {
+          "token_id": 143,
+          "feature": "Merchant State",
+          "label": "Merchant State=OR",
+          "count": 2,
+          "total_abs_logit_contrib": 5.257361888885498,
+          "mean_abs_logit_contrib": 2.628680944442749,
+          "mean_signed_logit_contrib": -2.628680944442749,
+          "impact_score": 3.7175162427826525
+        },
+        {
+          "token_id": 113,
+          "feature": "Merchant State",
+          "label": "Merchant State=CA",
+          "count": 170,
+          "total_abs_logit_contrib": 439.48517370224,
+          "mean_abs_logit_contrib": 2.5852069041308234,
+          "mean_signed_logit_contrib": -2.5852069041308234,
+          "impact_score": 33.70697413471232
+        },
+        {
+          "token_id": 138,
+          "feature": "Merchant State",
+          "label": "Merchant State=AL",
+          "count": 6,
+          "total_abs_logit_contrib": 15.14117956161499,
+          "mean_abs_logit_contrib": 2.5235299269358316,
+          "mean_signed_logit_contrib": -2.5235299269358316,
+          "impact_score": 6.1813606716357015
+        },
+        {
+          "token_id": 137,
+          "feature": "Merchant State",
+          "label": "Merchant State=LA",
+          "count": 6,
+          "total_abs_logit_contrib": 15.038612127304077,
+          "mean_abs_logit_contrib": 2.5064353545506797,
+          "mean_signed_logit_contrib": -2.5064353545506797,
+          "impact_score": 6.1394876919210075
+        },
+        {
+          "token_id": 68,
+          "feature": "zip",
+          "label": "zip~[46562.00,54302.00)",
+          "count": 67,
+          "total_abs_logit_contrib": 163.84390652179718,
+          "mean_abs_logit_contrib": 2.4454314406238384,
+          "mean_signed_logit_contrib": -2.4454314406238384,
+          "impact_score": 20.016719020934374
+        },
+        {
+          "token_id": 62,
+          "feature": "zip",
+          "label": "zip~[8831.00,14559.00)",
+          "count": 32,
+          "total_abs_logit_contrib": 77.5557861328125,
+          "mean_abs_logit_contrib": 2.4236183166503906,
+          "mean_signed_logit_contrib": -2.4236183166503906,
+          "impact_score": 13.710055573691331
+        },
+        {
+          "token_id": 72,
+          "feature": "zip",
+          "label": "zip~[80122.00,91792.00)",
+          "count": 64,
+          "total_abs_logit_contrib": 154.11777877807617,
+          "mean_abs_logit_contrib": 2.40809029340744,
+          "mean_signed_logit_contrib": -2.40809029340744,
+          "impact_score": 19.26472234725952
+        },
+        {
+          "token_id": 139,
+          "feature": "Merchant State",
+          "label": "Merchant State=AZ",
+          "count": 21,
+          "total_abs_logit_contrib": 50.38085448741913,
+          "mean_abs_logit_contrib": 2.3990883089247204,
+          "mean_signed_logit_contrib": -2.3990883089247204,
+          "impact_score": 10.99400377453113
+        },
+        {
+          "token_id": 124,
+          "feature": "Merchant State",
+          "label": "Merchant State=GA",
+          "count": 16,
+          "total_abs_logit_contrib": 37.974008560180664,
+          "mean_abs_logit_contrib": 2.3733755350112915,
+          "mean_signed_logit_contrib": -2.3733755350112915,
+          "impact_score": 9.493502140045166
+        },
+        {
+          "token_id": 177,
+          "feature": "Merchant City",
+          "label": "Merchant City=other",
+          "count": 1305,
+          "total_abs_logit_contrib": 3289.987397313118,
+          "mean_abs_logit_contrib": 2.521063139703539,
+          "mean_signed_logit_contrib": -2.354205460932063,
+          "impact_score": 91.07286070754164
+        },
+        {
+          "token_id": 123,
+          "feature": "Merchant State",
+          "label": "Merchant State=MI",
+          "count": 54,
+          "total_abs_logit_contrib": 125.73076379299164,
+          "mean_abs_logit_contrib": 2.328347477647993,
+          "mean_signed_logit_contrib": -2.328347477647993,
+          "impact_score": 17.109789792401532
+        },
+        {
+          "token_id": 87,
+          "feature": "MCC",
+          "label": "MCC=7538",
+          "count": 8,
+          "total_abs_logit_contrib": 18.578728437423706,
+          "mean_abs_logit_contrib": 2.3223410546779633,
+          "mean_signed_logit_contrib": -2.3223410546779633,
+          "impact_score": 6.568572431962827
+        },
+        {
+          "token_id": 114,
+          "feature": "Merchant State",
+          "label": "Merchant State=TX",
+          "count": 73,
+          "total_abs_logit_contrib": 169.00265991687775,
+          "mean_abs_logit_contrib": 2.315104930368188,
+          "mean_signed_logit_contrib": -2.315104930368188,
+          "impact_score": 19.78026519586888
+        },
+        {
+          "token_id": 74,
+          "feature": "zip",
+          "label": "zip>94901.00",
+          "count": 72,
+          "total_abs_logit_contrib": 166.29567515850067,
+          "mean_abs_logit_contrib": 2.309662154979176,
+          "mean_signed_logit_contrib": -2.309662154979176,
+          "impact_score": 19.59813326442852
+        },
+        {
+          "token_id": 126,
+          "feature": "Merchant State",
+          "label": "Merchant State=TN",
+          "count": 25,
+          "total_abs_logit_contrib": 57.00619983673096,
+          "mean_abs_logit_contrib": 2.280247993469238,
+          "mean_signed_logit_contrib": -2.280247993469238,
+          "impact_score": 11.401239967346191
+        },
+        {
+          "token_id": 127,
+          "feature": "Merchant State",
+          "label": "Merchant State=VA",
+          "count": 37,
+          "total_abs_logit_contrib": 83.64325165748596,
+          "mean_abs_logit_contrib": 2.260628423175296,
+          "mean_signed_logit_contrib": -2.260628423175296,
+          "impact_score": 13.750865867417838
+        },
+        {
+          "token_id": 125,
+          "feature": "Merchant State",
+          "label": "Merchant State=WA",
+          "count": 35,
+          "total_abs_logit_contrib": 79.11059999465942,
+          "mean_abs_logit_contrib": 2.2603028569902692,
+          "mean_signed_logit_contrib": -2.2603028569902692,
+          "impact_score": 13.372132035922435
+        },
+        {
+          "token_id": 131,
+          "feature": "Merchant State",
+          "label": "Merchant State=MN",
+          "count": 3,
+          "total_abs_logit_contrib": 6.718449592590332,
+          "mean_abs_logit_contrib": 2.239483197530111,
+          "mean_signed_logit_contrib": -2.239483197530111,
+          "impact_score": 3.87889868081896
+        },
+        {
+          "token_id": 70,
+          "feature": "zip",
+          "label": "zip~[62232.00,75050.00)",
+          "count": 62,
+          "total_abs_logit_contrib": 132.00661373138428,
+          "mean_abs_logit_contrib": 2.1291389311513593,
+          "mean_signed_logit_contrib": -2.1291389311513593,
+          "impact_score": 16.764856708750894
+        },
+        {
+          "token_id": 117,
+          "feature": "Merchant State",
+          "label": "Merchant State=IL",
+          "count": 22,
+          "total_abs_logit_contrib": 46.61798810958862,
+          "mean_abs_logit_contrib": 2.1189994595267554,
+          "mean_signed_logit_contrib": -2.1189994595267554,
+          "impact_score": 9.938988460021623
+        }
+      ]
+    },
+    "true_normal": {
+      "features": [
+        {
+          "feature": "MCC",
+          "mean_abs_logit_contrib": 2.2585094236083605,
+          "mean_signed_logit_contrib": 1.7033966922901247
+        },
+        {
+          "feature": "amount",
+          "mean_abs_logit_contrib": 2.019424935228109,
+          "mean_signed_logit_contrib": 2.018363860800207
+        },
+        {
+          "feature": "Merchant State",
+          "mean_abs_logit_contrib": 1.874483736839564,
+          "mean_signed_logit_contrib": 1.8591777158668954
+        },
+        {
+          "feature": "year",
+          "mean_abs_logit_contrib": 1.7322263351196199,
+          "mean_signed_logit_contrib": 1.6784718590082572
+        },
+        {
+          "feature": "Use Chip",
+          "mean_abs_logit_contrib": 1.6861901404456197,
+          "mean_signed_logit_contrib": 1.6684882698474102
+        },
+        {
+          "feature": "Merchant City",
+          "mean_abs_logit_contrib": 1.6412392388283188,
+          "mean_signed_logit_contrib": 1.548093058210648
+        },
+        {
+          "feature": "month",
+          "mean_abs_logit_contrib": 1.5952219507530736,
+          "mean_signed_logit_contrib": 1.4943734469188865
+        },
+        {
+          "feature": "hour",
+          "mean_abs_logit_contrib": 1.5796777238224384,
+          "mean_signed_logit_contrib": 1.453519794782872
+        },
+        {
+          "feature": "zip",
+          "mean_abs_logit_contrib": 1.5704650953435821,
+          "mean_signed_logit_contrib": 1.4720004993463927
+        },
+        {
+          "feature": "error_type",
+          "mean_abs_logit_contrib": 1.5677249828920083,
+          "mean_signed_logit_contrib": 1.4813673010065822
+        },
+        {
+          "feature": "is_weekend",
+          "mean_abs_logit_contrib": 1.5575858311436936,
+          "mean_signed_logit_contrib": 1.4561096793020687
+        },
+        {
+          "feature": "dayofweek",
+          "mean_abs_logit_contrib": 1.5405639452118352,
+          "mean_signed_logit_contrib": 1.418709790220454
+        },
+        {
+          "feature": "Merchant Name",
+          "mean_abs_logit_contrib": 1.1211729092379588,
+          "mean_signed_logit_contrib": 0.3803268074201652
+        }
+      ],
+      "top_tokens": [
+        {
+          "token_id": 89,
+          "feature": "MCC",
+          "label": "MCC=5311",
+          "count": 26273,
+          "total_abs_logit_contrib": 84539.41285920143,
+          "mean_abs_logit_contrib": 3.2177297171697723,
+          "mean_signed_logit_contrib": 3.2088711061380746,
+          "impact_score": 521.5601413347619
+        },
+        {
+          "token_id": 112,
+          "feature": "Merchant State",
+          "label": "Merchant State=ONLINE",
+          "count": 43293,
+          "total_abs_logit_contrib": 79673.67212820053,
+          "mean_abs_logit_contrib": 1.840336131203671,
+          "mean_signed_logit_contrib": 1.824819043903405,
+          "impact_score": 382.9181864618111
+        },
+        {
+          "token_id": 76,
+          "feature": "Use Chip",
+          "label": "Use Chip=Online Transaction",
+          "count": 43293,
+          "total_abs_logit_contrib": 72808.32286524773,
+          "mean_abs_logit_contrib": 1.6817573941572015,
+          "mean_signed_logit_contrib": 1.665709521312122,
+          "impact_score": 349.9227562403097
+        },
+        {
+          "token_id": 61,
+          "feature": "zip",
+          "label": "zip~[0.00,8831.00)",
+          "count": 43890,
+          "total_abs_logit_contrib": 68927.71303462982,
+          "mean_abs_logit_contrib": 1.5704650953435821,
+          "mean_signed_logit_contrib": 1.4720004993463927,
+          "impact_score": 329.0115004414663
+        },
+        {
+          "token_id": 145,
+          "feature": "Merchant City",
+          "label": "Merchant City=ONLINE",
+          "count": 43293,
+          "total_abs_logit_contrib": 67456.37014126778,
+          "mean_abs_logit_contrib": 1.5581357295929545,
+          "mean_signed_logit_contrib": 1.463890055048516,
+          "impact_score": 324.2008335981829
+        },
+        {
+          "token_id": 218,
+          "feature": "error_type",
+          "label": "error_type=none",
+          "count": 42621,
+          "total_abs_logit_contrib": 66674.86010074615,
+          "mean_abs_logit_contrib": 1.5643663945178705,
+          "mean_signed_logit_contrib": 1.4787209423023389,
+          "impact_score": 322.96115943064683
+        },
+        {
+          "token_id": 9,
+          "feature": "amount",
+          "label": "amount>100.00",
+          "count": 19933,
+          "total_abs_logit_contrib": 44135.52736711502,
+          "mean_abs_logit_contrib": 2.2141939179809875,
+          "mean_signed_logit_contrib": 2.2137394673621094,
+          "impact_score": 312.609366883255
+        },
+        {
+          "token_id": 53,
+          "feature": "is_weekend",
+          "label": "is_weekend=0",
+          "count": 31776,
+          "total_abs_logit_contrib": 49234.4076757431,
+          "mean_abs_logit_contrib": 1.5494211881842619,
+          "mean_signed_logit_contrib": 1.4553210860772916,
+          "impact_score": 276.1970934685922
+        },
+        {
+          "token_id": 56,
+          "feature": "year",
+          "label": "year~[2008.00,2012.00)",
+          "count": 15423,
+          "total_abs_logit_contrib": 33419.18338727951,
+          "mean_abs_logit_contrib": 2.1668406527445705,
+          "mean_signed_logit_contrib": 2.15101658140864,
+          "impact_score": 269.0985788611364
+        },
+        {
+          "token_id": 199,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=4241336128694185533",
+          "count": 10678,
+          "total_abs_logit_contrib": 22643.119252204895,
+          "mean_abs_logit_contrib": 2.1205393568275794,
+          "mean_signed_logit_contrib": 2.120438030851671,
+          "impact_score": 219.12468034349928
+        },
+        {
+          "token_id": 176,
+          "feature": "Merchant City",
+          "label": "Merchant City=Rome",
+          "count": 558,
+          "total_abs_logit_contrib": 4571.2893924713135,
+          "mean_abs_logit_contrib": 8.192274896901996,
+          "mean_signed_logit_contrib": 8.192274896901996,
+          "impact_score": 193.51811113282682
+        },
+        {
+          "token_id": 54,
+          "feature": "is_weekend",
+          "label": "is_weekend=1",
+          "count": 12114,
+          "total_abs_logit_contrib": 19128.03445315361,
+          "mean_abs_logit_contrib": 1.5790023487826985,
+          "mean_signed_logit_contrib": 1.4581782229961844,
+          "impact_score": 173.790711285517
+        },
+        {
+          "token_id": 58,
+          "feature": "year",
+          "label": "year>2016.00",
+          "count": 13065,
+          "total_abs_logit_contrib": 18802.935839176178,
+          "mean_abs_logit_contrib": 1.4391837611309741,
+          "mean_signed_logit_contrib": 1.3933786489659692,
+          "impact_score": 164.50191464335595
+        },
+        {
+          "token_id": 210,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=other",
+          "count": 9154,
+          "total_abs_logit_contrib": 15429.68043756485,
+          "mean_abs_logit_contrib": 1.6855670130614868,
+          "mean_signed_logit_contrib": -1.675402252336035,
+          "impact_score": 161.2692170491301
+        },
+        {
+          "token_id": 57,
+          "feature": "year",
+          "label": "year~[2012.00,2016.00)",
+          "count": 10455,
+          "total_abs_logit_contrib": 16425.92454624176,
+          "mean_abs_logit_contrib": 1.5711070823760651,
+          "mean_signed_logit_contrib": 1.4722600138740412,
+          "impact_score": 160.64521900503382
+        },
+        {
+          "token_id": 8,
+          "feature": "amount",
+          "label": "amount~[66.42,100.00)",
+          "count": 5365,
+          "total_abs_logit_contrib": 10103.12904047966,
+          "mean_abs_logit_contrib": 1.8831554595488649,
+          "mean_signed_logit_contrib": 1.8824075038924133,
+          "impact_score": 137.93390667673398
+        },
+        {
+          "token_id": 45,
+          "feature": "month",
+          "label": "month=11",
+          "count": 6748,
+          "total_abs_logit_contrib": 10705.25558590889,
+          "mean_abs_logit_contrib": 1.5864338449776068,
+          "mean_signed_logit_contrib": 1.4602857966287361,
+          "impact_score": 130.31952954419933
+        },
+        {
+          "token_id": 7,
+          "feature": "amount",
+          "label": "amount~[46.26,66.42)",
+          "count": 4484,
+          "total_abs_logit_contrib": 8514.780460834503,
+          "mean_abs_logit_contrib": 1.8989251696776324,
+          "mean_signed_logit_contrib": 1.8988387160382028,
+          "impact_score": 127.15711121033675
+        },
+        {
+          "token_id": 52,
+          "feature": "dayofweek",
+          "label": "dayofweek=6",
+          "count": 6013,
+          "total_abs_logit_contrib": 9620.911353826523,
+          "mean_abs_logit_contrib": 1.600018518846919,
+          "mean_signed_logit_contrib": 1.4790366304192353,
+          "impact_score": 124.07109387084091
+        },
+        {
+          "token_id": 46,
+          "feature": "dayofweek",
+          "label": "dayofweek=0",
+          "count": 6373,
+          "total_abs_logit_contrib": 9888.722145318985,
+          "mean_abs_logit_contrib": 1.551658896174327,
+          "mean_signed_logit_contrib": 1.4117066983654383,
+          "impact_score": 123.87059250920001
+        },
+        {
+          "token_id": 49,
+          "feature": "dayofweek",
+          "label": "dayofweek=3",
+          "count": 7146,
+          "total_abs_logit_contrib": 10462.505857229233,
+          "mean_abs_logit_contrib": 1.4641066131023275,
+          "mean_signed_logit_contrib": 1.3881297439478573,
+          "impact_score": 123.76681306065512
+        },
+        {
+          "token_id": 51,
+          "feature": "dayofweek",
+          "label": "dayofweek=5",
+          "count": 6101,
+          "total_abs_logit_contrib": 9594.342474937439,
+          "mean_abs_logit_contrib": 1.5725852278212489,
+          "mean_signed_logit_contrib": 1.464915228523088,
+          "impact_score": 122.83289969199855
+        },
+        {
+          "token_id": 50,
+          "feature": "dayofweek",
+          "label": "dayofweek=4",
+          "count": 6036,
+          "total_abs_logit_contrib": 9402.239645004272,
+          "mean_abs_logit_contrib": 1.557693778165055,
+          "mean_signed_logit_contrib": 1.4134047804011503,
+          "impact_score": 121.01987520998347
+        },
+        {
+          "token_id": 48,
+          "feature": "dayofweek",
+          "label": "dayofweek=2",
+          "count": 5998,
+          "total_abs_logit_contrib": 9253.757364273071,
+          "mean_abs_logit_contrib": 1.5428071630998785,
+          "mean_signed_logit_contrib": 1.397896745515768,
+          "impact_score": 119.48540976700355
+        },
+        {
+          "token_id": 47,
+          "feature": "dayofweek",
+          "label": "dayofweek=1",
+          "count": 6223,
+          "total_abs_logit_contrib": 9392.87271475792,
+          "mean_abs_logit_contrib": 1.509380156637943,
+          "mean_signed_logit_contrib": 1.3826128477914605,
+          "impact_score": 119.06895350796347
+        },
+        {
+          "token_id": 6,
+          "feature": "amount",
+          "label": "amount~[30.79,46.26)",
+          "count": 3993,
+          "total_abs_logit_contrib": 7453.221989631653,
+          "mean_abs_logit_contrib": 1.8665719984051221,
+          "mean_signed_logit_contrib": 1.8664799627432571,
+          "impact_score": 117.94903757023096
+        },
+        {
+          "token_id": 5,
+          "feature": "amount",
+          "label": "amount~[17.71,30.79)",
+          "count": 3890,
+          "total_abs_logit_contrib": 7116.670216321945,
+          "mean_abs_logit_contrib": 1.8294782047100115,
+          "mean_signed_logit_contrib": 1.8293258497218545,
+          "impact_score": 114.10430776649005
+        },
+        {
+          "token_id": 35,
+          "feature": "month",
+          "label": "month=1",
+          "count": 4851,
+          "total_abs_logit_contrib": 7812.051021337509,
+          "mean_abs_logit_contrib": 1.6104001280844176,
+          "mean_signed_logit_contrib": 1.575079156255948,
+          "impact_score": 112.16295273112209
+        },
+        {
+          "token_id": 39,
+          "feature": "month",
+          "label": "month=5",
+          "count": 4338,
+          "total_abs_logit_contrib": 7355.769257068634,
+          "mean_abs_logit_contrib": 1.695659118734125,
+          "mean_signed_logit_contrib": 1.591664193686718,
+          "impact_score": 111.68203622809074
+        },
+        {
+          "token_id": 38,
+          "feature": "month",
+          "label": "month=4",
+          "count": 4420,
+          "total_abs_logit_contrib": 7137.187918186188,
+          "mean_abs_logit_contrib": 1.6147483977796804,
+          "mean_signed_logit_contrib": 1.5518981908780958,
+          "impact_score": 107.35344780464034
+        },
+        {
+          "token_id": 144,
+          "feature": "Merchant State",
+          "label": "Merchant State=other",
+          "count": 597,
+          "total_abs_logit_contrib": 2597.4190816879272,
+          "mean_abs_logit_contrib": 4.350785731470565,
+          "mean_signed_logit_contrib": 4.350785731470565,
+          "impact_score": 106.30528622442635
+        },
+        {
+          "token_id": 55,
+          "feature": "year",
+          "label": "year<2008.00",
+          "count": 4947,
+          "total_abs_logit_contrib": 7379.370075702667,
+          "mean_abs_logit_contrib": 1.491685885527121,
+          "mean_signed_logit_contrib": 1.3939823454646165,
+          "impact_score": 104.91759712272709
+        },
+        {
+          "token_id": 94,
+          "feature": "MCC",
+          "label": "MCC=4814",
+          "count": 10678,
+          "total_abs_logit_contrib": 10485.341475009918,
+          "mean_abs_logit_contrib": 0.9819574335090765,
+          "mean_signed_logit_contrib": -0.7262454470080547,
+          "impact_score": 101.46999065865243
+        },
+        {
+          "token_id": 4,
+          "feature": "amount",
+          "label": "amount~[9.15,17.71)",
+          "count": 3270,
+          "total_abs_logit_contrib": 5785.6301510334015,
+          "mean_abs_logit_contrib": 1.769305856585138,
+          "mean_signed_logit_contrib": 1.7689531790736255,
+          "impact_score": 101.17583362769469
+        },
+        {
+          "token_id": 21,
+          "feature": "hour",
+          "label": "hour=11",
+          "count": 3248,
+          "total_abs_logit_contrib": 5527.483716964722,
+          "mean_abs_logit_contrib": 1.7018114892132763,
+          "mean_signed_logit_contrib": 1.5935893308352955,
+          "impact_score": 96.98832556534765
+        },
+        {
+          "token_id": 42,
+          "feature": "month",
+          "label": "month=8",
+          "count": 3481,
+          "total_abs_logit_contrib": 5716.242485523224,
+          "mean_abs_logit_contrib": 1.6421265399377258,
+          "mean_signed_logit_contrib": 1.532141276592155,
+          "impact_score": 96.88546585632582
+        },
+        {
+          "token_id": 22,
+          "feature": "hour",
+          "label": "hour=12",
+          "count": 3512,
+          "total_abs_logit_contrib": 5648.243761777878,
+          "mean_abs_logit_contrib": 1.6082698638319697,
+          "mean_signed_logit_contrib": 1.4901827907100624,
+          "impact_score": 95.30949703804065
+        },
+        {
+          "token_id": 37,
+          "feature": "month",
+          "label": "month=3",
+          "count": 3088,
+          "total_abs_logit_contrib": 5266.783812046051,
+          "mean_abs_logit_contrib": 1.7055647059734622,
+          "mean_signed_logit_contrib": 1.574193089891592,
+          "impact_score": 94.777848592475
+        },
+        {
+          "token_id": 25,
+          "feature": "hour",
+          "label": "hour=15",
+          "count": 4090,
+          "total_abs_logit_contrib": 5959.68846654892,
+          "mean_abs_logit_contrib": 1.457136544388489,
+          "mean_signed_logit_contrib": 1.2901775144423133,
+          "impact_score": 93.18841053360136
+        },
+        {
+          "token_id": 20,
+          "feature": "hour",
+          "label": "hour=10",
+          "count": 3149,
+          "total_abs_logit_contrib": 5185.277737855911,
+          "mean_abs_logit_contrib": 1.6466426604813944,
+          "mean_signed_logit_contrib": 1.5232569276434764,
+          "impact_score": 92.40291948633444
+        },
+        {
+          "token_id": 44,
+          "feature": "month",
+          "label": "month=10",
+          "count": 3380,
+          "total_abs_logit_contrib": 5370.245390415192,
+          "mean_abs_logit_contrib": 1.5888299971642579,
+          "mean_signed_logit_contrib": 1.4602847439297557,
+          "impact_score": 92.37102883710205
+        },
+        {
+          "token_id": 3,
+          "feature": "amount",
+          "label": "amount~[2.52,9.15)",
+          "count": 2405,
+          "total_abs_logit_contrib": 4514.662141084671,
+          "mean_abs_logit_contrib": 1.8771983954614018,
+          "mean_signed_logit_contrib": 1.8725636465385898,
+          "impact_score": 92.0593098349889
+        },
+        {
+          "token_id": 43,
+          "feature": "month",
+          "label": "month=9",
+          "count": 3212,
+          "total_abs_logit_contrib": 5122.240082740784,
+          "mean_abs_logit_contrib": 1.5947198265070932,
+          "mean_signed_logit_contrib": 1.4736861413620774,
+          "impact_score": 90.37996357642584
+        },
+        {
+          "token_id": 41,
+          "feature": "month",
+          "label": "month=7",
+          "count": 3779,
+          "total_abs_logit_contrib": 5511.037057876587,
+          "mean_abs_logit_contrib": 1.4583321137540584,
+          "mean_signed_logit_contrib": 1.3857197576049902,
+          "impact_score": 89.64888354904433
+        },
+        {
+          "token_id": 40,
+          "feature": "month",
+          "label": "month=6",
+          "count": 3274,
+          "total_abs_logit_contrib": 5019.548796415329,
+          "mean_abs_logit_contrib": 1.5331547942624706,
+          "mean_signed_logit_contrib": 1.4024409976177414,
+          "impact_score": 87.72539713366122
+        },
+        {
+          "token_id": 36,
+          "feature": "month",
+          "label": "month=2",
+          "count": 3319,
+          "total_abs_logit_contrib": 4997.930011034012,
+          "mean_abs_logit_contrib": 1.5058541762681565,
+          "mean_signed_logit_contrib": 1.3972107895744532,
+          "impact_score": 86.75340788586648
+        },
+        {
+          "token_id": 23,
+          "feature": "hour",
+          "label": "hour=13",
+          "count": 2883,
+          "total_abs_logit_contrib": 4611.482325077057,
+          "mean_abs_logit_contrib": 1.5995429500787572,
+          "mean_signed_logit_contrib": 1.4826555270268773,
+          "impact_score": 85.88517941117549
+        },
+        {
+          "token_id": 26,
+          "feature": "hour",
+          "label": "hour=16",
+          "count": 3553,
+          "total_abs_logit_contrib": 5118.284555673599,
+          "mean_abs_logit_contrib": 1.4405529287007035,
+          "mean_signed_logit_contrib": 1.2943265026064614,
+          "impact_score": 85.8671054979681
+        },
+        {
+          "token_id": 24,
+          "feature": "hour",
+          "label": "hour=14",
+          "count": 2882,
+          "total_abs_logit_contrib": 4358.263245105743,
+          "mean_abs_logit_contrib": 1.5122356853246854,
+          "mean_signed_logit_contrib": 1.3650743177084357,
+          "impact_score": 81.18325692707747
+        },
+        {
+          "token_id": 18,
+          "feature": "hour",
+          "label": "hour=8",
+          "count": 2336,
+          "total_abs_logit_contrib": 3510.4059841632843,
+          "mean_abs_logit_contrib": 1.502742287741132,
+          "mean_signed_logit_contrib": 1.3439143452129951,
+          "impact_score": 72.63081659696313
+        }
+      ],
+      "top_positive": [
+        {
+          "token_id": 176,
+          "feature": "Merchant City",
+          "label": "Merchant City=Rome",
+          "count": 558,
+          "total_abs_logit_contrib": 4571.2893924713135,
+          "mean_abs_logit_contrib": 8.192274896901996,
+          "mean_signed_logit_contrib": 8.192274896901996,
+          "impact_score": 193.51811113282682
+        },
+        {
+          "token_id": 106,
+          "feature": "MCC",
+          "label": "MCC=5970",
+          "count": 1,
+          "total_abs_logit_contrib": 8.061083793640137,
+          "mean_abs_logit_contrib": 8.061083793640137,
+          "mean_signed_logit_contrib": 8.061083793640137,
+          "impact_score": 8.061083793640137
+        },
+        {
+          "token_id": 207,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-7146670748125200898",
+          "count": 1,
+          "total_abs_logit_contrib": 8.018362998962402,
+          "mean_abs_logit_contrib": 8.018362998962402,
+          "mean_signed_logit_contrib": 8.018362998962402,
+          "impact_score": 8.018362998962402
+        },
+        {
+          "token_id": 204,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-727612092139916043",
+          "count": 49,
+          "total_abs_logit_contrib": 326.413104057312,
+          "mean_abs_logit_contrib": 6.66149191953698,
+          "mean_signed_logit_contrib": 6.66149191953698,
+          "impact_score": 46.63044343675886
+        },
+        {
+          "token_id": 179,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=1799189980464955940",
+          "count": 25,
+          "total_abs_logit_contrib": 150.7254285812378,
+          "mean_abs_logit_contrib": 6.029017143249511,
+          "mean_signed_logit_contrib": 5.946878089904785,
+          "impact_score": 30.145085716247557
+        },
+        {
+          "token_id": 180,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=2027553650310142703",
+          "count": 42,
+          "total_abs_logit_contrib": 237.938006401062,
+          "mean_abs_logit_contrib": 5.665190628596714,
+          "mean_signed_logit_contrib": 5.620117391858782,
+          "impact_score": 36.71463147098554
+        },
+        {
+          "token_id": 200,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-245178307025547046",
+          "count": 2,
+          "total_abs_logit_contrib": 10.666829109191895,
+          "mean_abs_logit_contrib": 5.333414554595947,
+          "mean_signed_logit_contrib": 5.333414554595947,
+          "impact_score": 7.5425871968676494
+        },
+        {
+          "token_id": 80,
+          "feature": "MCC",
+          "label": "MCC=5499",
+          "count": 49,
+          "total_abs_logit_contrib": 261.8366060256958,
+          "mean_abs_logit_contrib": 5.343604204606037,
+          "mean_signed_logit_contrib": 5.297473537678621,
+          "impact_score": 37.40522943224226
+        },
+        {
+          "token_id": 81,
+          "feature": "MCC",
+          "label": "MCC=5541",
+          "count": 80,
+          "total_abs_logit_contrib": 410.60093784332275,
+          "mean_abs_logit_contrib": 5.132511723041534,
+          "mean_signed_logit_contrib": 5.111027443408966,
+          "impact_score": 45.90658043214178
+        },
+        {
+          "token_id": 182,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-1288082279022882052",
+          "count": 15,
+          "total_abs_logit_contrib": 69.8388261795044,
+          "mean_abs_logit_contrib": 4.655921745300293,
+          "mean_signed_logit_contrib": 4.655921745300293,
+          "impact_score": 18.032307380793004
+        },
+        {
+          "token_id": 181,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-5162038175624867091",
+          "count": 38,
+          "total_abs_logit_contrib": 166.91763591766357,
+          "mean_abs_logit_contrib": 4.392569366254304,
+          "mean_signed_logit_contrib": 4.359606115441573,
+          "impact_score": 27.077616110350593
+        },
+        {
+          "token_id": 144,
+          "feature": "Merchant State",
+          "label": "Merchant State=other",
+          "count": 597,
+          "total_abs_logit_contrib": 2597.4190816879272,
+          "mean_abs_logit_contrib": 4.350785731470565,
+          "mean_signed_logit_contrib": 4.350785731470565,
+          "impact_score": 106.30528622442635
+        },
+        {
+          "token_id": 214,
+          "feature": "error_type",
+          "label": "error_type=bad_pin",
+          "count": 3,
+          "total_abs_logit_contrib": 12.79165267944336,
+          "mean_abs_logit_contrib": 4.26388422648112,
+          "mean_signed_logit_contrib": 4.26388422648112,
+          "impact_score": 7.3852641178568215
+        },
+        {
+          "token_id": 192,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=6666504894937430109",
+          "count": 3,
+          "total_abs_logit_contrib": 11.160994529724121,
+          "mean_abs_logit_contrib": 3.7203315099080405,
+          "mean_signed_logit_contrib": 3.7203315099080405,
+          "impact_score": 6.443803196160162
+        },
+        {
+          "token_id": 89,
+          "feature": "MCC",
+          "label": "MCC=5311",
+          "count": 26273,
+          "total_abs_logit_contrib": 84539.41285920143,
+          "mean_abs_logit_contrib": 3.2177297171697723,
+          "mean_signed_logit_contrib": 3.2088711061380746,
+          "impact_score": 521.5601413347619
+        },
+        {
+          "token_id": 193,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=4751695835751691036",
+          "count": 2,
+          "total_abs_logit_contrib": 7.960084438323975,
+          "mean_abs_logit_contrib": 3.9800422191619873,
+          "mean_signed_logit_contrib": 3.049421548843384,
+          "impact_score": 5.628629685156393
+        },
+        {
+          "token_id": 79,
+          "feature": "MCC",
+          "label": "MCC=5411",
+          "count": 116,
+          "total_abs_logit_contrib": 358.03632640838623,
+          "mean_abs_logit_contrib": 3.086520055244709,
+          "mean_signed_logit_contrib": 2.7662952768391578,
+          "impact_score": 33.2428383560373
+        },
+        {
+          "token_id": 185,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-6571010470072147219",
+          "count": 6,
+          "total_abs_logit_contrib": 14.329841613769531,
+          "mean_abs_logit_contrib": 2.3883069356282554,
+          "mean_signed_logit_contrib": 2.3883069356282554,
+          "impact_score": 5.850133341439335
+        },
+        {
+          "token_id": 33,
+          "feature": "hour",
+          "label": "hour=23",
+          "count": 548,
+          "total_abs_logit_contrib": 1247.7702243328094,
+          "mean_abs_logit_contrib": 2.2769529641109663,
+          "mean_signed_logit_contrib": 2.2369328863429327,
+          "impact_score": 53.30210231148483
+        },
+        {
+          "token_id": 9,
+          "feature": "amount",
+          "label": "amount>100.00",
+          "count": 19933,
+          "total_abs_logit_contrib": 44135.52736711502,
+          "mean_abs_logit_contrib": 2.2141939179809875,
+          "mean_signed_logit_contrib": 2.2137394673621094,
+          "impact_score": 312.609366883255
+        },
+        {
+          "token_id": 56,
+          "feature": "year",
+          "label": "year~[2008.00,2012.00)",
+          "count": 15423,
+          "total_abs_logit_contrib": 33419.18338727951,
+          "mean_abs_logit_contrib": 2.1668406527445705,
+          "mean_signed_logit_contrib": 2.15101658140864,
+          "impact_score": 269.0985788611364
+        },
+        {
+          "token_id": 199,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=4241336128694185533",
+          "count": 10678,
+          "total_abs_logit_contrib": 22643.119252204895,
+          "mean_abs_logit_contrib": 2.1205393568275794,
+          "mean_signed_logit_contrib": 2.120438030851671,
+          "impact_score": 219.12468034349928
+        },
+        {
+          "token_id": 77,
+          "feature": "Use Chip",
+          "label": "Use Chip=Swipe Transaction",
+          "count": 428,
+          "total_abs_logit_contrib": 940.142945766449,
+          "mean_abs_logit_contrib": 2.196595667678619,
+          "mean_signed_logit_contrib": 2.030433568999032,
+          "impact_score": 45.44352452956523
+        },
+        {
+          "token_id": 7,
+          "feature": "amount",
+          "label": "amount~[46.26,66.42)",
+          "count": 4484,
+          "total_abs_logit_contrib": 8514.780460834503,
+          "mean_abs_logit_contrib": 1.8989251696776324,
+          "mean_signed_logit_contrib": 1.8988387160382028,
+          "impact_score": 127.15711121033675
+        },
+        {
+          "token_id": 8,
+          "feature": "amount",
+          "label": "amount~[66.42,100.00)",
+          "count": 5365,
+          "total_abs_logit_contrib": 10103.12904047966,
+          "mean_abs_logit_contrib": 1.8831554595488649,
+          "mean_signed_logit_contrib": 1.8824075038924133,
+          "impact_score": 137.93390667673398
+        },
+        {
+          "token_id": 3,
+          "feature": "amount",
+          "label": "amount~[2.52,9.15)",
+          "count": 2405,
+          "total_abs_logit_contrib": 4514.662141084671,
+          "mean_abs_logit_contrib": 1.8771983954614018,
+          "mean_signed_logit_contrib": 1.8725636465385898,
+          "impact_score": 92.0593098349889
+        },
+        {
+          "token_id": 211,
+          "feature": "error_type",
+          "label": "error_type=bad_card_number",
+          "count": 187,
+          "total_abs_logit_contrib": 365.2801194190979,
+          "mean_abs_logit_contrib": 1.953369622562021,
+          "mean_signed_logit_contrib": 1.8665687515136393,
+          "impact_score": 26.71192784130515
+        },
+        {
+          "token_id": 6,
+          "feature": "amount",
+          "label": "amount~[30.79,46.26)",
+          "count": 3993,
+          "total_abs_logit_contrib": 7453.221989631653,
+          "mean_abs_logit_contrib": 1.8665719984051221,
+          "mean_signed_logit_contrib": 1.8664799627432571,
+          "impact_score": 117.94903757023096
+        },
+        {
+          "token_id": 29,
+          "feature": "hour",
+          "label": "hour=19",
+          "count": 1124,
+          "total_abs_logit_contrib": 2100.161666870117,
+          "mean_abs_logit_contrib": 1.868471233870211,
+          "mean_signed_logit_contrib": 1.8317433396268146,
+          "impact_score": 62.64257067700628
+        },
+        {
+          "token_id": 5,
+          "feature": "amount",
+          "label": "amount~[17.71,30.79)",
+          "count": 3890,
+          "total_abs_logit_contrib": 7116.670216321945,
+          "mean_abs_logit_contrib": 1.8294782047100115,
+          "mean_signed_logit_contrib": 1.8293258497218545,
+          "impact_score": 114.10430776649005
+        },
+        {
+          "token_id": 112,
+          "feature": "Merchant State",
+          "label": "Merchant State=ONLINE",
+          "count": 43293,
+          "total_abs_logit_contrib": 79673.67212820053,
+          "mean_abs_logit_contrib": 1.840336131203671,
+          "mean_signed_logit_contrib": 1.824819043903405,
+          "impact_score": 382.9181864618111
+        },
+        {
+          "token_id": 2,
+          "feature": "amount",
+          "label": "amount<2.52",
+          "count": 550,
+          "total_abs_logit_contrib": 1008.9390406608582,
+          "mean_abs_logit_contrib": 1.8344346193833785,
+          "mean_signed_logit_contrib": 1.7983408624475652,
+          "impact_score": 43.021305245607465
+        },
+        {
+          "token_id": 31,
+          "feature": "hour",
+          "label": "hour=21",
+          "count": 957,
+          "total_abs_logit_contrib": 1835.552095413208,
+          "mean_abs_logit_contrib": 1.9180272679343866,
+          "mean_signed_logit_contrib": 1.7846823735172348,
+          "impact_score": 59.334972577027735
+        },
+        {
+          "token_id": 4,
+          "feature": "amount",
+          "label": "amount~[9.15,17.71)",
+          "count": 3270,
+          "total_abs_logit_contrib": 5785.6301510334015,
+          "mean_abs_logit_contrib": 1.769305856585138,
+          "mean_signed_logit_contrib": 1.7689531790736255,
+          "impact_score": 101.17583362769469
+        },
+        {
+          "token_id": 10,
+          "feature": "hour",
+          "label": "hour=0",
+          "count": 674,
+          "total_abs_logit_contrib": 1209.0806636810303,
+          "mean_abs_logit_contrib": 1.793888225046039,
+          "mean_signed_logit_contrib": 1.7144627542807016,
+          "impact_score": 46.572047042279024
+        },
+        {
+          "token_id": 14,
+          "feature": "hour",
+          "label": "hour=4",
+          "count": 641,
+          "total_abs_logit_contrib": 1152.8713433742523,
+          "mean_abs_logit_contrib": 1.7985512377133421,
+          "mean_signed_logit_contrib": 1.6989787272097725,
+          "impact_score": 45.53568031280531
+        },
+        {
+          "token_id": 76,
+          "feature": "Use Chip",
+          "label": "Use Chip=Online Transaction",
+          "count": 43293,
+          "total_abs_logit_contrib": 72808.32286524773,
+          "mean_abs_logit_contrib": 1.6817573941572015,
+          "mean_signed_logit_contrib": 1.665709521312122,
+          "impact_score": 349.9227562403097
+        },
+        {
+          "token_id": 11,
+          "feature": "hour",
+          "label": "hour=1",
+          "count": 576,
+          "total_abs_logit_contrib": 989.692300081253,
+          "mean_abs_logit_contrib": 1.7182157987521753,
+          "mean_signed_logit_contrib": 1.6493808316687744,
+          "impact_score": 41.23717917005221
+        },
+        {
+          "token_id": 21,
+          "feature": "hour",
+          "label": "hour=11",
+          "count": 3248,
+          "total_abs_logit_contrib": 5527.483716964722,
+          "mean_abs_logit_contrib": 1.7018114892132763,
+          "mean_signed_logit_contrib": 1.5935893308352955,
+          "impact_score": 96.98832556534765
+        },
+        {
+          "token_id": 39,
+          "feature": "month",
+          "label": "month=5",
+          "count": 4338,
+          "total_abs_logit_contrib": 7355.769257068634,
+          "mean_abs_logit_contrib": 1.695659118734125,
+          "mean_signed_logit_contrib": 1.591664193686718,
+          "impact_score": 111.68203622809074
+        },
+        {
+          "token_id": 96,
+          "feature": "MCC",
+          "label": "MCC=5211",
+          "count": 3,
+          "total_abs_logit_contrib": 4.7686872482299805,
+          "mean_abs_logit_contrib": 1.5895624160766602,
+          "mean_signed_logit_contrib": 1.5895624160766602,
+          "impact_score": 2.7532028664467147
+        },
+        {
+          "token_id": 35,
+          "feature": "month",
+          "label": "month=1",
+          "count": 4851,
+          "total_abs_logit_contrib": 7812.051021337509,
+          "mean_abs_logit_contrib": 1.6104001280844176,
+          "mean_signed_logit_contrib": 1.575079156255948,
+          "impact_score": 112.16295273112209
+        },
+        {
+          "token_id": 37,
+          "feature": "month",
+          "label": "month=3",
+          "count": 3088,
+          "total_abs_logit_contrib": 5266.783812046051,
+          "mean_abs_logit_contrib": 1.7055647059734622,
+          "mean_signed_logit_contrib": 1.574193089891592,
+          "impact_score": 94.777848592475
+        },
+        {
+          "token_id": 38,
+          "feature": "month",
+          "label": "month=4",
+          "count": 4420,
+          "total_abs_logit_contrib": 7137.187918186188,
+          "mean_abs_logit_contrib": 1.6147483977796804,
+          "mean_signed_logit_contrib": 1.5518981908780958,
+          "impact_score": 107.35344780464034
+        },
+        {
+          "token_id": 213,
+          "feature": "error_type",
+          "label": "error_type=bad_expiration",
+          "count": 144,
+          "total_abs_logit_contrib": 255.69916486740112,
+          "mean_abs_logit_contrib": 1.7756886449125078,
+          "mean_signed_logit_contrib": 1.5514817867014143,
+          "impact_score": 21.308263738950092
+        },
+        {
+          "token_id": 19,
+          "feature": "hour",
+          "label": "hour=9",
+          "count": 1713,
+          "total_abs_logit_contrib": 2913.5088183879852,
+          "mean_abs_logit_contrib": 1.700822427546985,
+          "mean_signed_logit_contrib": 1.551216722717775,
+          "impact_score": 70.39432605807232
+        },
+        {
+          "token_id": 216,
+          "feature": "error_type",
+          "label": "error_type=insufficient_balance",
+          "count": 626,
+          "total_abs_logit_contrib": 1033.7542395591736,
+          "mean_abs_logit_contrib": 1.6513645999347821,
+          "mean_signed_logit_contrib": 1.5448531594139319,
+          "impact_score": 41.31712909000963
+        },
+        {
+          "token_id": 13,
+          "feature": "hour",
+          "label": "hour=3",
+          "count": 816,
+          "total_abs_logit_contrib": 1299.4390552043915,
+          "mean_abs_logit_contrib": 1.5924498225544013,
+          "mean_signed_logit_contrib": 1.5436218822119283,
+          "impact_score": 45.48946573527208
+        },
+        {
+          "token_id": 42,
+          "feature": "month",
+          "label": "month=8",
+          "count": 3481,
+          "total_abs_logit_contrib": 5716.242485523224,
+          "mean_abs_logit_contrib": 1.6421265399377258,
+          "mean_signed_logit_contrib": 1.532141276592155,
+          "impact_score": 96.88546585632582
+        },
+        {
+          "token_id": 16,
+          "feature": "hour",
+          "label": "hour=6",
+          "count": 1932,
+          "total_abs_logit_contrib": 3157.5717005729675,
+          "mean_abs_logit_contrib": 1.6343538822841446,
+          "mean_signed_logit_contrib": 1.5268458409339005,
+          "impact_score": 71.83724359565849
+        }
+      ],
+      "top_negative": [
+        {
+          "token_id": 210,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=other",
+          "count": 9154,
+          "total_abs_logit_contrib": 15429.68043756485,
+          "mean_abs_logit_contrib": 1.6855670130614868,
+          "mean_signed_logit_contrib": -1.675402252336035,
+          "impact_score": 161.2692170491301
+        },
+        {
+          "token_id": 98,
+          "feature": "MCC",
+          "label": "MCC=5921",
+          "count": 9,
+          "total_abs_logit_contrib": 11.362717151641846,
+          "mean_abs_logit_contrib": 1.262524127960205,
+          "mean_signed_logit_contrib": -1.262524127960205,
+          "impact_score": 3.7875723838806152
+        },
+        {
+          "token_id": 197,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-4500542936415012428",
+          "count": 2,
+          "total_abs_logit_contrib": 1.7805089950561523,
+          "mean_abs_logit_contrib": 0.8902544975280762,
+          "mean_signed_logit_contrib": -0.8902544975280762,
+          "impact_score": 1.2590099843678504
+        },
+        {
+          "token_id": 94,
+          "feature": "MCC",
+          "label": "MCC=4814",
+          "count": 10678,
+          "total_abs_logit_contrib": 10485.341475009918,
+          "mean_abs_logit_contrib": 0.9819574335090765,
+          "mean_signed_logit_contrib": -0.7262454470080547,
+          "impact_score": 101.46999065865243
+        },
+        {
+          "token_id": 111,
+          "feature": "MCC",
+          "label": "MCC=other",
+          "count": 6240,
+          "total_abs_logit_contrib": 2819.9925870895386,
+          "mean_abs_logit_contrib": 0.4519218889566568,
+          "mean_signed_logit_contrib": -0.4519218889566568,
+          "impact_score": 35.698968847871136
+        },
+        {
+          "token_id": 104,
+          "feature": "MCC",
+          "label": "MCC=5651",
+          "count": 145,
+          "total_abs_logit_contrib": 49.32427740097046,
+          "mean_abs_logit_contrib": 0.3401674303515204,
+          "mean_signed_logit_contrib": -0.33478718790514717,
+          "impact_score": 4.096158285202574
+        },
+        {
+          "token_id": 109,
+          "feature": "MCC",
+          "label": "MCC=7349",
+          "count": 62,
+          "total_abs_logit_contrib": 20.00984239578247,
+          "mean_abs_logit_contrib": 0.32273939348036246,
+          "mean_signed_logit_contrib": -0.32273939348036246,
+          "impact_score": 2.5412525255181704
+        },
+        {
+          "token_id": 168,
+          "feature": "Merchant City",
+          "label": "Merchant City=San Jose",
+          "count": 37,
+          "total_abs_logit_contrib": 5.071563243865967,
+          "mean_abs_logit_contrib": 0.13706927686124235,
+          "mean_signed_logit_contrib": -0.07935989225232923,
+          "impact_score": 0.8337598613466377
+        },
+        {
+          "token_id": 82,
+          "feature": "MCC",
+          "label": "MCC=5812",
+          "count": 89,
+          "total_abs_logit_contrib": 25.6062912940979,
+          "mean_abs_logit_contrib": 0.28771113813593147,
+          "mean_signed_logit_contrib": -0.05347998222608245,
+          "impact_score": 2.7142614486569085
+        },
+        {
+          "token_id": 95,
+          "feature": "MCC",
+          "label": "MCC=5813",
+          "count": 34,
+          "total_abs_logit_contrib": 16.345290660858154,
+          "mean_abs_logit_contrib": 0.4807438429664163,
+          "mean_signed_logit_contrib": -0.008969292921178481,
+          "impact_score": 2.803194222080237
+        }
+      ]
+    }
+  },
+  "cases": [
+    {
+      "true_class": "fraud",
+      "p_fraud": 1.0,
+      "decoded": [
+        "amount~[2.52,9.15)",
+        "hour=14",
+        "month=11",
+        "dayofweek=3",
+        "is_weekend=0",
+        "year>2016.00",
+        "zip~[0.00,8831.00)",
+        "Use Chip=Swipe Transaction",
+        "MCC=5411",
+        "Merchant State=other",
+        "Merchant City=Rome",
+        "Merchant Name=-727612092139916043",
+        "error_type=none"
+      ],
+      "top_contributions": [
+        {
+          "position": 10,
+          "feature": "Merchant City",
+          "label": "Merchant City=Rome",
+          "logit_contrib": 16.319059371948242
+        },
+        {
+          "position": 9,
+          "feature": "Merchant State",
+          "label": "Merchant State=other",
+          "logit_contrib": 9.948868751525879
+        },
+        {
+          "position": 5,
+          "feature": "year",
+          "label": "year>2016.00",
+          "logit_contrib": 8.039438247680664
+        },
+        {
+          "position": 6,
+          "feature": "zip",
+          "label": "zip~[0.00,8831.00)",
+          "logit_contrib": 8.014183044433594
+        },
+        {
+          "position": 11,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-727612092139916043",
+          "logit_contrib": 7.93739128112793
+        }
+      ],
+      "text": "P(fraud)=1.000 | fraud-supporting: Merchant City=Rome; Merchant State=other; year>2016.00 | context: amount~[2.52,9.15); hour=14; month=11; dayofweek=3; is_weekend=0"
+    },
+    {
+      "true_class": "fraud",
+      "p_fraud": 1.0,
+      "decoded": [
+        "amount~[17.71,30.79)",
+        "hour=13",
+        "month=7",
+        "dayofweek=3",
+        "is_weekend=0",
+        "year~[2008.00,2012.00)",
+        "zip~[0.00,8831.00)",
+        "Use Chip=Online Transaction",
+        "MCC=5912",
+        "Merchant State=ONLINE",
+        "Merchant City=ONLINE",
+        "Merchant Name=-5467922351692495955",
+        "error_type=none"
+      ],
+      "top_contributions": [
+        {
+          "position": 11,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-5467922351692495955",
+          "logit_contrib": 11.06320571899414
+        },
+        {
+          "position": 5,
+          "feature": "year",
+          "label": "year~[2008.00,2012.00)",
+          "logit_contrib": 10.860042572021484
+        },
+        {
+          "position": 8,
+          "feature": "MCC",
+          "label": "MCC=5912",
+          "logit_contrib": 10.830794334411621
+        },
+        {
+          "position": 4,
+          "feature": "is_weekend",
+          "label": "is_weekend=0",
+          "logit_contrib": 10.665510177612305
+        },
+        {
+          "position": 12,
+          "feature": "error_type",
+          "label": "error_type=none",
+          "logit_contrib": 10.62162971496582
+        }
+      ],
+      "text": "P(fraud)=1.000 | fraud-supporting: Merchant Name=-5467922351692495955; year~[2008.00,2012.00); MCC=5912 | context: amount~[17.71,30.79); hour=13; month=7; dayofweek=3; is_weekend=0"
+    },
+    {
+      "true_class": "fraud",
+      "p_fraud": 1.0,
+      "decoded": [
+        "amount<2.52",
+        "hour=11",
+        "month=8",
+        "dayofweek=0",
+        "is_weekend=0",
+        "year>2016.00",
+        "zip~[0.00,8831.00)",
+        "Use Chip=Swipe Transaction",
+        "MCC=5499",
+        "Merchant State=other",
+        "Merchant City=Rome",
+        "Merchant Name=1799189980464955940",
+        "error_type=none"
+      ],
+      "top_contributions": [
+        {
+          "position": 10,
+          "feature": "Merchant City",
+          "label": "Merchant City=Rome",
+          "logit_contrib": 15.645195960998535
+        },
+        {
+          "position": 9,
+          "feature": "Merchant State",
+          "label": "Merchant State=other",
+          "logit_contrib": 12.054215431213379
+        },
+        {
+          "position": 11,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=1799189980464955940",
+          "logit_contrib": 10.065018653869629
+        },
+        {
+          "position": 5,
+          "feature": "year",
+          "label": "year>2016.00",
+          "logit_contrib": 9.810078620910645
+        },
+        {
+          "position": 8,
+          "feature": "MCC",
+          "label": "MCC=5499",
+          "logit_contrib": 9.804177284240723
+        }
+      ],
+      "text": "P(fraud)=1.000 | fraud-supporting: Merchant City=Rome; Merchant State=other; Merchant Name=1799189980464955940 | context: amount<2.52; hour=11; month=8; dayofweek=0; is_weekend=0"
+    },
+    {
+      "true_class": "fraud",
+      "p_fraud": 1.0,
+      "decoded": [
+        "amount>100.00",
+        "hour=13",
+        "month=4",
+        "dayofweek=1",
+        "is_weekend=0",
+        "year>2016.00",
+        "zip~[0.00,8831.00)",
+        "Use Chip=Online Transaction",
+        "MCC=5912",
+        "Merchant State=ONLINE",
+        "Merchant City=ONLINE",
+        "Merchant Name=-5467922351692495955",
+        "error_type=none"
+      ],
+      "top_contributions": [
+        {
+          "position": 11,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-5467922351692495955",
+          "logit_contrib": 10.838744163513184
+        },
+        {
+          "position": 0,
+          "feature": "amount",
+          "label": "amount>100.00",
+          "logit_contrib": 10.649681091308594
+        },
+        {
+          "position": 8,
+          "feature": "MCC",
+          "label": "MCC=5912",
+          "logit_contrib": 10.146010398864746
+        },
+        {
+          "position": 5,
+          "feature": "year",
+          "label": "year>2016.00",
+          "logit_contrib": 9.842134475708008
+        },
+        {
+          "position": 2,
+          "feature": "month",
+          "label": "month=4",
+          "logit_contrib": 9.77431583404541
+        }
+      ],
+      "text": "P(fraud)=1.000 | fraud-supporting: Merchant Name=-5467922351692495955; amount>100.00; MCC=5912 | context: amount>100.00; hour=13; month=4; dayofweek=1; is_weekend=0"
+    },
+    {
+      "true_class": "fraud",
+      "p_fraud": 1.0,
+      "decoded": [
+        "amount~[46.26,66.42)",
+        "hour=6",
+        "month=10",
+        "dayofweek=0",
+        "is_weekend=0",
+        "year~[2008.00,2012.00)",
+        "zip~[0.00,8831.00)",
+        "Use Chip=Online Transaction",
+        "MCC=5912",
+        "Merchant State=ONLINE",
+        "Merchant City=ONLINE",
+        "Merchant Name=-5467922351692495955",
+        "error_type=none"
+      ],
+      "top_contributions": [
+        {
+          "position": 11,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=-5467922351692495955",
+          "logit_contrib": 11.600269317626953
+        },
+        {
+          "position": 8,
+          "feature": "MCC",
+          "label": "MCC=5912",
+          "logit_contrib": 11.074214935302734
+        },
+        {
+          "position": 5,
+          "feature": "year",
+          "label": "year~[2008.00,2012.00)",
+          "logit_contrib": 10.931851387023926
+        },
+        {
+          "position": 7,
+          "feature": "Use Chip",
+          "label": "Use Chip=Online Transaction",
+          "logit_contrib": 10.780901908874512
+        },
+        {
+          "position": 4,
+          "feature": "is_weekend",
+          "label": "is_weekend=0",
+          "logit_contrib": 10.705395698547363
+        }
+      ],
+      "text": "P(fraud)=1.000 | fraud-supporting: Merchant Name=-5467922351692495955; MCC=5912; year~[2008.00,2012.00) | context: amount~[46.26,66.42); hour=6; month=10; dayofweek=0; is_weekend=0"
+    },
+    {
+      "true_class": "normal",
+      "p_fraud": 1.0,
+      "decoded": [
+        "amount~[46.26,66.42)",
+        "hour=6",
+        "month=6",
+        "dayofweek=4",
+        "is_weekend=0",
+        "year~[2008.00,2012.00)",
+        "zip~[0.00,8831.00)",
+        "Use Chip=Swipe Transaction",
+        "MCC=5541",
+        "Merchant State=other",
+        "Merchant City=Rome",
+        "Merchant Name=2027553650310142703",
+        "error_type=none"
+      ],
+      "top_contributions": [
+        {
+          "position": 10,
+          "feature": "Merchant City",
+          "label": "Merchant City=Rome",
+          "logit_contrib": 12.665841102600098
+        },
+        {
+          "position": 9,
+          "feature": "Merchant State",
+          "label": "Merchant State=other",
+          "logit_contrib": 9.810277938842773
+        },
+        {
+          "position": 6,
+          "feature": "zip",
+          "label": "zip~[0.00,8831.00)",
+          "logit_contrib": 7.913335800170898
+        },
+        {
+          "position": 11,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=2027553650310142703",
+          "logit_contrib": 7.838844299316406
+        },
+        {
+          "position": 8,
+          "feature": "MCC",
+          "label": "MCC=5541",
+          "logit_contrib": 7.665421485900879
+        }
+      ],
+      "text": "P(fraud)=1.000 | fraud-supporting: Merchant City=Rome; Merchant State=other; zip~[0.00,8831.00) | context: amount~[46.26,66.42); hour=6; month=6; dayofweek=4; is_weekend=0"
+    },
+    {
+      "true_class": "normal",
+      "p_fraud": 1.0,
+      "decoded": [
+        "amount~[9.15,17.71)",
+        "hour=12",
+        "month=4",
+        "dayofweek=5",
+        "is_weekend=1",
+        "year~[2008.00,2012.00)",
+        "zip~[0.00,8831.00)",
+        "Use Chip=Swipe Transaction",
+        "MCC=5411",
+        "Merchant State=other",
+        "Merchant City=Rome",
+        "Merchant Name=-727612092139916043",
+        "error_type=none"
+      ],
+      "top_contributions": [
+        {
+          "position": 10,
+          "feature": "Merchant City",
+          "label": "Merchant City=Rome",
+          "logit_contrib": 12.55512809753418
+        },
+        {
+          "position": 9,
+          "feature": "Merchant State",
+          "label": "Merchant State=other",
+          "logit_contrib": 11.540426254272461
+        },
+        {
+          "position": 0,
+          "feature": "amount",
+          "label": "amount~[9.15,17.71)",
+          "logit_contrib": 9.681938171386719
+        },
+        {
+          "position": 6,
+          "feature": "zip",
+          "label": "zip~[0.00,8831.00)",
+          "logit_contrib": 9.218462944030762
+        },
+        {
+          "position": 12,
+          "feature": "error_type",
+          "label": "error_type=none",
+          "logit_contrib": 9.026291847229004
+        }
+      ],
+      "text": "P(fraud)=1.000 | fraud-supporting: Merchant City=Rome; Merchant State=other; amount~[9.15,17.71) | context: amount~[9.15,17.71); hour=12; month=4; dayofweek=5; is_weekend=1"
+    },
+    {
+      "true_class": "normal",
+      "p_fraud": 1.0,
+      "decoded": [
+        "amount~[9.15,17.71)",
+        "hour=11",
+        "month=8",
+        "dayofweek=0",
+        "is_weekend=0",
+        "year~[2008.00,2012.00)",
+        "zip~[0.00,8831.00)",
+        "Use Chip=Swipe Transaction",
+        "MCC=5541",
+        "Merchant State=other",
+        "Merchant City=Rome",
+        "Merchant Name=2027553650310142703",
+        "error_type=none"
+      ],
+      "top_contributions": [
+        {
+          "position": 10,
+          "feature": "Merchant City",
+          "label": "Merchant City=Rome",
+          "logit_contrib": 13.037864685058594
+        },
+        {
+          "position": 9,
+          "feature": "Merchant State",
+          "label": "Merchant State=other",
+          "logit_contrib": 11.28239917755127
+        },
+        {
+          "position": 0,
+          "feature": "amount",
+          "label": "amount~[9.15,17.71)",
+          "logit_contrib": 9.381255149841309
+        },
+        {
+          "position": 6,
+          "feature": "zip",
+          "label": "zip~[0.00,8831.00)",
+          "logit_contrib": 8.95061206817627
+        },
+        {
+          "position": 8,
+          "feature": "MCC",
+          "label": "MCC=5541",
+          "logit_contrib": 8.854584693908691
+        }
+      ],
+      "text": "P(fraud)=1.000 | fraud-supporting: Merchant City=Rome; Merchant State=other; amount~[9.15,17.71) | context: amount~[9.15,17.71); hour=11; month=8; dayofweek=0; is_weekend=0"
+    },
+    {
+      "true_class": "normal",
+      "p_fraud": 1.0,
+      "decoded": [
+        "amount~[9.15,17.71)",
+        "hour=12",
+        "month=11",
+        "dayofweek=3",
+        "is_weekend=0",
+        "year~[2008.00,2012.00)",
+        "zip~[0.00,8831.00)",
+        "Use Chip=Swipe Transaction",
+        "MCC=5411",
+        "Merchant State=other",
+        "Merchant City=Rome",
+        "Merchant Name=-727612092139916043",
+        "error_type=none"
+      ],
+      "top_contributions": [
+        {
+          "position": 10,
+          "feature": "Merchant City",
+          "label": "Merchant City=Rome",
+          "logit_contrib": 13.029157638549805
+        },
+        {
+          "position": 9,
+          "feature": "Merchant State",
+          "label": "Merchant State=other",
+          "logit_contrib": 11.368480682373047
+        },
+        {
+          "position": 0,
+          "feature": "amount",
+          "label": "amount~[9.15,17.71)",
+          "logit_contrib": 9.63835620880127
+        },
+        {
+          "position": 6,
+          "feature": "zip",
+          "label": "zip~[0.00,8831.00)",
+          "logit_contrib": 9.222214698791504
+        },
+        {
+          "position": 12,
+          "feature": "error_type",
+          "label": "error_type=none",
+          "logit_contrib": 9.002124786376953
+        }
+      ],
+      "text": "P(fraud)=1.000 | fraud-supporting: Merchant City=Rome; Merchant State=other; amount~[9.15,17.71) | context: amount~[9.15,17.71); hour=12; month=11; dayofweek=3; is_weekend=0"
+    },
+    {
+      "true_class": "normal",
+      "p_fraud": 1.0,
+      "decoded": [
+        "amount~[2.52,9.15)",
+        "hour=5",
+        "month=2",
+        "dayofweek=3",
+        "is_weekend=0",
+        "year~[2012.00,2016.00)",
+        "zip~[0.00,8831.00)",
+        "Use Chip=Swipe Transaction",
+        "MCC=5499",
+        "Merchant State=other",
+        "Merchant City=Rome",
+        "Merchant Name=1799189980464955940",
+        "error_type=none"
+      ],
+      "top_contributions": [
+        {
+          "position": 10,
+          "feature": "Merchant City",
+          "label": "Merchant City=Rome",
+          "logit_contrib": 17.913484573364258
+        },
+        {
+          "position": 9,
+          "feature": "Merchant State",
+          "label": "Merchant State=other",
+          "logit_contrib": 11.479106903076172
+        },
+        {
+          "position": 11,
+          "feature": "Merchant Name",
+          "label": "Merchant Name=1799189980464955940",
+          "logit_contrib": 9.393437385559082
+        },
+        {
+          "position": 6,
+          "feature": "zip",
+          "label": "zip~[0.00,8831.00)",
+          "logit_contrib": 9.26279067993164
+        },
+        {
+          "position": 8,
+          "feature": "MCC",
+          "label": "MCC=5499",
+          "logit_contrib": 9.22119426727295
+        }
+      ],
+      "text": "P(fraud)=1.000 | fraud-supporting: Merchant City=Rome; Merchant State=other; Merchant Name=1799189980464955940 | context: amount~[2.52,9.15); hour=5; month=2; dayofweek=3; is_weekend=0"
+    }
+  ]
+}

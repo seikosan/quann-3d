@@ -68,6 +68,9 @@ python3 -u fraud/src/train_rich_points.py --configs 16,32 --normal-cap 450000 \
 python3 -u fraud/src/explain_pilot.py --n-fraud 27 --n-normal 800 \
   --cases 5 --top-k 5 --out fraud/results/explain_pilot.json
 
+# full 4.7M natural test: score all rows, explain a bounded 50K upper slice
+bash fraud/scripts/run_explain_upper_slice.sh
+
 # regenerate the four project figures
 python3 fraud/src/make_figures.py
 
@@ -200,6 +203,19 @@ merchant identities, an `amount~[30.79,46.26)` bin, and `hour=16`. This is an
 ablation sensitivity, not SHAP: pair geometry makes contributions non-additive.
 Output: `results/explain_pilot.json` and `logs/run_explain_pilot.log`.
 
+**Upper-slice explanation (2026-10-19; full 4.7M natural test):** the full
+test reproduces the canonical full-scale reading — **AUC-PR 0.2560**,
+**AUC-ROC 0.9451** on 4.7M rows / 6,110 fraud — and a bounded **50K upper
+slice** (all fraud + highest-probability normals; 12.2% base rate by
+construction) receives point-ablation attribution. Its dominant fraud-supporting
+tokens are `MCC=5311`, `Merchant State=ONLINE`, `Use Chip=Online Transaction`,
+a low `zip` bin, and `error_type=none`; rare merchant names and `MCC=5942`
+recur in true-fraud cases. The high-prob normal population is driven largely by
+`Merchant City=Rome` and `MCC=5970`, while `Merchant Name=other` is the largest
+fraud-protecting token. The slice’s within-slice AUC is a truncation artifact,
+not an operating metric. Output: `results/explain_upper_slice.json` and
+`logs/run_explain_upper_slice.log`.
+
 ## Figures and result files
 
 Figures in `figures/` (regenerate with `python3 fraud/src/make_figures.py`):
@@ -224,5 +240,6 @@ Figures in `figures/` (regenerate with `python3 fraud/src/make_figures.py`):
 | `results/edge_eval_full_scale.json` | Full 4.7M natural-test FP32 / INT8 AUC with bundled quantizer |
 | `results/full_scale_hybrid.json` | Reproducible full-scale hybrid metrics (bundled quantizer) |
 | `results/explain_pilot.json` | Point-ablation explanation pilot (827 stratified User0 rows) |
+| `results/explain_upper_slice.json` | Full 4.7M natural-test score + 50K upper-slice point-ablation attribution |
 
 Other artifacts and checkpoint provenance: `results/MANIFEST.md`.

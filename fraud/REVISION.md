@@ -34,7 +34,7 @@ reproduce olmuyor.
   yoksa re-fit fallback. Default → `quann_hybrid_full.pt`.
 * `train_strong_reader.py` default → `quann_hybrid_full.pt`.
 * İyi model pinlendi: `results/quann_hybrid_full.pt` (full/214pt).
-* Doğrulama: `fraud/tests/test_fraud.py` **13/13**; quantizer round-trip
+* Doğrulama: `fraud/tests/test_fraud.py` **14/14**; quantizer round-trip
   identical tokens; save/load quantizer taşır.
 
 ## Kapanan revizyonlar + P1 durumu
@@ -45,13 +45,16 @@ reproduce olmuyor.
    tartışması `results/MANIFEST.md` içinde çözüldü.
 2. **Kapatıldı (10-17):** edge set reproducible: 529KB FP32 / 138KB INT8,
    ONNX parite `1.0e-7`, ~63k tx/s native.
-3. **P1 explanation pilot (10-19):** `src/explain_pilot.py` mevcut full hybrid
-   checkpoint üzerinde leave-one-point-out logit katkılarını hesaplıyor;
-   küçük User0 örneğinde 827 satır (27 fraud/800 normal) çalıştı. Bu bir
-   ablation sensitivity'idir, SHAP değildir.
-4. **Sıradaki P1 adımı:** daha büyük doğal oranlı bir dilimde explanation
-   üretmek — önerilen ilk hedef, tam 4.7M testin üst olasılık/fraud dilimi —
-   ve çıkan token kanıtlarını AML named-explanation kalıbıyla karşılaştırmak.
+3. **P1 explanation pilot (10-19):** küçük User0 örneğinde (827 satır;
+   27 fraud/800 normal) leave-one-point-out logit katkılarları çalıştı.
+4. **P1 upper-slice (10-19):** tam 4.7M doğal test skorlandı (AUC-PR 0.2560,
+   AUC-ROC 0.9451); 50K üst dilimde baskın fraud-sinyalleri `MCC=5311`,
+   `Merchant State=ONLINE`, `Use Chip=Online Transaction`, düşük `zip` bini ve
+   `error_type=none`. Nadir merchant isimleri fraud vakalarında tekrar ediyor.
+   Bu yorum additif SHAP değil, non-additive point-ablation'dır.
+5. **Sıradaki P1 adımı:** yüksek-olasılık normal popülasyonunun false-alarm
+   kaynağını (`Merchant City=Rome`, `MCC=5970`) audit etmek ve explanation
+   yüzeyini deploy artifact'ına (ONNX + quantizer + token decoder) taşımak.
 
 ## Edge-eval özeti (10-16, ölçülmüş)
 

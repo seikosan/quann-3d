@@ -1,12 +1,16 @@
 from __future__ import annotations
 
 import argparse
+import gc
 import json
 import os
+import re
+import subprocess
 import sys
 import time
 
 import numpy as np
+import pandas as pd
 import torch
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -14,6 +18,7 @@ import config
 import datasets
 import metrics
 import quantize
+import train_quann as tq
 from qcloud_fraud import QCloudFraudClassifier
 from quantize import FeatureQuantizer
 
@@ -23,6 +28,40 @@ def load_quantizer(checkpoint_path: str, fallback: FeatureQuantizer) -> FeatureQ
     if raw.get("quantizer"):
         return FeatureQuantizer.from_dict(raw["quantizer"])
     return fallback
+
+
+def free_gb() -> float:
+    try:
+        out = subprocess.run(["vm_stat"], capture_output=True, text=True).stdout
+        page = int(re.search(r"page size of (\d+)", out).group(1))
+        free = int(re.search(r"Pages free:\s+(\d+)", out).group(1))
+        inactive = int(re.search(r"Pages inactive:\s+(\d+)", out).group(1))
+        return (free + inactive) * page / 1e9
+    except Exception:
+        return 1e9
+
+
+def select_upper_slice(probs: np.ndarray, labels: np.ndarray,
+                       n_slice: int) -> np.ndarray:
+    """Fixed-size upper slice: all fraud (if it fits) + highest-prob normals."""
+    probs = np.asarray(probs)
+    labels = np.asarray(labels)
+    n = len(probs)
+    if n_slice >= n:
+        sel = np.arange(n)
+    else:
+        fraud_idx = np.flatnonzero(labels == 1)
+        if len(fraud_idx) >= n_slice:
+            sel = np.argsort(-probs, kind="stable")[:n_slice]
+        else:
+            normal_idx = np.flatnonzero(labels == 0)
+            remaining = max(0, n_slice - len(fraud_idx))
+            if remaining:
+                top_normal = np.argsort(-probs[normal_idx], kind="stable")[:remaining]
+                sel = np.concatenate([fraud_idx, normal_idx[top_normal]])
+            else:
+                sel = fraud_idx
+    return np.sort(sel)
 
 
 def decode_token(fq: FeatureQuantizer, feature_index: int, token_id: int) -> str:
@@ -174,23 +213,36 @@ def select_cases(fq: FeatureQuantizer, labels: np.ndarray, probs: np.ndarray,
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--checkpoint", default=os.path.join(config.RESULTS_DIR, "quann_full_hybrid.pt"))
-    ap.add_argument("--data", choices=["small", "big"], default="small")
+    ap.add_argument("--data", choices=["small", "big-test"], default="small")
     ap.add_argument("--n-rows", type=int, default=None)
     ap.add_argument("--n-fraud", type=int, default=200)
     ap.add_argument("--n-normal", type=int, default=800)
+    ap.add_argument("--n-explain", type=int, default=50000)
+    ap.add_argument("--n-test", type=int, default=4700000)
+    ap.add_argument("--n-train", type=int, default=1020000)
+    ap.add_argument("--n-val", type=int, default=100000)
+    ap.add_argument("--train-fraud-frac", type=float, default=0.02)
+    ap.add_argument("--test-frac", type=float, default=0.0013)
     ap.add_argument("--top-tokens", type=int, default=20)
     ap.add_argument("--cases", type=int, default=5)
     ap.add_argument("--top-k", type=int, default=5)
-    ap.add_argument("--chunk", type=int, default=256)
+    ap.add_argument("--chunk", type=int, default=None)
     ap.add_argument("--seed", type=int, default=config.SEED)
-    ap.add_argument("--out", default=os.path.join(config.RESULTS_DIR, "explain_pilot.json"))
+    ap.add_argument("--out", default=None)
     args = ap.parse_args(argv)
+    if args.chunk is None:
+        args.chunk = 256 if args.data == "small" else 5000
+    if args.out is None:
+        name = "explain_pilot.json" if args.data == "small" else "explain_upper_slice.json"
+        args.out = os.path.join(config.RESULTS_DIR, name)
 
     torch.manual_seed(args.seed)
     np.random.seed(args.seed)
     os.makedirs(config.RESULTS_DIR, exist_ok=True)
     os.makedirs(config.LOGS_DIR, exist_ok=True)
-    log_path = os.path.join(config.LOGS_DIR, "run_explain_pilot.log")
+    log_name = ("run_explain_pilot.log" if args.data == "small"
+                else "run_explain_upper_slice.log")
+    log_path = os.path.join(config.LOGS_DIR, log_name)
     log_fp = open(log_path, "a")
 
     def log(msg: str):
@@ -198,36 +250,96 @@ def main(argv=None):
         print(line, flush=True)
         log_fp.write(line + "\n")
 
-    log("FRAUD EXPLANATION PILOT — point-ablation attribution")
+    title = ("FRAUD EXPLANATION PILOT — point-ablation attribution"
+             if args.data == "small" else
+             "FRAUD UPPER-SLICE EXPLANATION — full 4.7M test, bounded attribution")
+    log(title)
     print(f"  checkpoint: {args.checkpoint}", flush=True)
     log_fp.write(f"  checkpoint: {args.checkpoint}\n")
 
-    frame = datasets.load_small() if args.data == "small" else datasets.load_big(args.n_rows)
-    y = datasets.get_label(frame)
-    rng = np.random.default_rng(args.seed)
-    fraud_idx = np.flatnonzero(y == 1)
-    normal_idx = np.flatnonzero(y == 0)
-    n_fraud = min(args.n_fraud, len(fraud_idx))
-    n_normal = min(args.n_normal, len(normal_idx))
-    sel = np.concatenate([
-        rng.choice(fraud_idx, size=n_fraud, replace=n_fraud > len(fraud_idx)),
-        rng.choice(normal_idx, size=n_normal, replace=n_normal > len(normal_idx)),
-    ])
-    rng.shuffle(sel)
-
     model = QCloudFraudClassifier.load_quann(args.checkpoint, torch.device("cpu"))
-    fallback = quantize.FeatureQuantizer(specs=quantize.LEGACY_QUANT_SPECS).fit(frame.iloc[sel])
-    fq = load_quantizer(args.checkpoint, fallback)
+
+    full_test_info = None
+    full_test_metrics = None
+    if args.data == "small":
+        frame = datasets.load_small()
+        y = datasets.get_label(frame)
+        rng = np.random.default_rng(args.seed)
+        fraud_idx = np.flatnonzero(y == 1)
+        normal_idx = np.flatnonzero(y == 0)
+        n_fraud = min(args.n_fraud, len(fraud_idx))
+        n_normal = min(args.n_normal, len(normal_idx))
+        sel = np.concatenate([
+            rng.choice(fraud_idx, size=n_fraud, replace=n_fraud > len(fraud_idx)),
+            rng.choice(normal_idx, size=n_normal, replace=n_normal > len(normal_idx)),
+        ])
+        rng.shuffle(sel)
+        fallback = quantize.FeatureQuantizer(specs=quantize.LEGACY_QUANT_SPECS).fit(frame.iloc[sel])
+        fq = load_quantizer(args.checkpoint, fallback)
+        tok = fq.transform(frame.iloc[sel])
+        labels = y[sel]
+        note = "stratified development sample; not the natural 4.7M held-out population"
+        strategy = "stratified random sample"
+    else:
+        if free_gb() < 12:
+            raise SystemExit(f"aborted: only {free_gb():.1f}GB reclaimable; big-test load needs >=12GB")
+        usecols = ["User", "Is Fraud?", "Amount", "Time", "Month", "Day", "Year",
+                   "Zip", "Use Chip", "MCC", "Merchant City", "Merchant Name",
+                   "Merchant State", "Errors?"]
+        print(f"  reading {config.BIG_CSV} (usecols={len(usecols)}) ...", flush=True)
+        log_fp.write(f"  reading {config.BIG_CSV} (usecols={len(usecols)}) ...\n")
+        frame = pd.read_csv(config.BIG_CSV, usecols=usecols)
+        print(f"  rows={len(frame):,} free_gb={free_gb():.1f}", flush=True)
+        log_fp.write(f"  rows={len(frame):,} free_gb={free_gb():.1f}\n")
+        raw = torch.load(args.checkpoint, map_location="cpu")
+        if not raw.get("quantizer"):
+            raise SystemExit("big-test mode requires a checkpoint with a bundled quantizer")
+        fq = FeatureQuantizer.from_dict(raw["quantizer"])
+        data = tq.build_data(frame, args.n_train, args.n_val, args.n_test,
+                             args.train_fraud_frac, args.test_frac,
+                             seed=config.SEED, quantizer=fq)
+        te = data["te_sel"]
+        tok = data["tok_te"]
+        labels = datasets.get_label(frame)[te]
+        del data, frame
+        gc.collect()
+
+        t = torch.tensor(tok, dtype=torch.long)
+        mask = (t != 0) & (t != 1)
+        probs_full = model.predict_proba(t, use_quann_points=True,
+                                         batch=args.chunk).cpu().numpy()
+        full_test_metrics = metrics.evaluate(labels, probs_full)
+        full_test_info = {
+            "n": int(len(labels)),
+            "n_fraud": int(labels.sum()),
+            "base_rate": float(labels.mean()),
+            "prob_percentiles": {
+                "p50": float(np.quantile(probs_full, 0.50)),
+                "p90": float(np.quantile(probs_full, 0.90)),
+                "p99": float(np.quantile(probs_full, 0.99)),
+                "p999": float(np.quantile(probs_full, 0.999)),
+                "p9999": float(np.quantile(probs_full, 0.9999)),
+            },
+        }
+        sel = select_upper_slice(probs_full, labels, args.n_explain)
+        tok = tok[sel]
+        labels = labels[sel]
+        probs = probs_full[sel]
+        del t, mask, probs_full
+        gc.collect()
+        note = ("upper slice of the full natural-rate test; enriched by construction, "
+                "not a natural-prevalence estimate")
+        strategy = "all fraud + highest-probability normal rows"
+
     print(f"  {model} | bundled quantizer vocab={fq.vocab_size} K={fq.n_features}", flush=True)
     log_fp.write(f"  {model} | bundled quantizer vocab={fq.vocab_size} K={fq.n_features}\n")
 
-    tok = fq.transform(frame.iloc[sel])
-    labels = y[sel]
     t = torch.tensor(tok, dtype=torch.long)
     mask = (t != 0) & (t != 1)
-    with torch.no_grad():
-        base, _ = model.forward(t, mask, points_override=model.points_for(t, mask))
-        probs = torch.sigmoid(base).squeeze(-1).cpu().numpy()
+    if args.data == "small":
+        with torch.no_grad():
+            base, _ = model.forward(t, mask, points_override=model.points_for(t, mask))
+            probs = torch.sigmoid(base).squeeze(-1).cpu().numpy()
     contribs = point_ablation(model, t, mask, chunk=args.chunk).cpu().numpy()
     sample_metrics = metrics.evaluate(labels, probs)
 
@@ -241,12 +353,15 @@ def main(argv=None):
         "data": args.data,
         "seed": args.seed,
         "sample": {
-            "n": int(len(sel)),
+            "n": int(len(labels)),
             "n_fraud": int(labels.sum()),
             "n_normal": int((labels == 0).sum()),
             "sample_base_rate": float(labels.mean()),
-            "note": "stratified development sample; not the natural 4.7M held-out population",
+            "strategy": strategy,
+            "note": note,
         },
+        "full_test": full_test_info,
+        "full_test_metrics": full_test_metrics,
         "model": {
             "D": model.D,
             "d_cloud": model.d_cloud,
@@ -271,6 +386,10 @@ def main(argv=None):
     log(f"done -> {args.out}")
     log_fp.close()
 
+    if full_test_metrics:
+        print(f"  full test AUC-PR={full_test_metrics['auc_pr']:.4f} "
+              f"ROC={full_test_metrics['auc_roc']:.4f} "
+              f"n={full_test_metrics['n']:,} fraud={full_test_metrics['n_fraud']:,}")
     print(f"  sample AUC-PR={sample_metrics['auc_pr']:.4f} ROC={sample_metrics['auc_roc']:.4f}")
     print("  top features:", ", ".join(
         f"{r['feature']}({r['mean_abs_logit_contrib']:.3f})"

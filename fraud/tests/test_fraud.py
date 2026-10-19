@@ -283,6 +283,23 @@ def test_rich_points_tiny_d16_train_and_reader_step():
     assert model.D == 16 and model.get_weight(int(t[0, 0])).value.shape == (16,)
 
 
+def test_explain_pilot_select_upper_slice():
+    probs = np.array([0.1, 0.9, 0.3, 0.8, 0.2, 0.7, 0.05, 0.95])
+    labels = np.array([0, 1, 0, 1, 0, 0, 1, 0])
+
+    sel = explain_pilot.select_upper_slice(probs, labels, 5)
+    assert len(sel) == 5
+    assert set(sel) == {1, 3, 6, 7, 5}
+
+    sel = explain_pilot.select_upper_slice(probs, labels, 2)
+    assert len(sel) == 2
+    assert set(sel) == {7, 1}
+
+    sel = explain_pilot.select_upper_slice(probs, labels, 8)
+    assert len(sel) == 8
+    assert set(sel) == set(range(8))
+
+
 def test_explain_pilot_decode_ablation_aggregate_and_cases():
     d = _small().iloc[:16]
     fq = quantize.FeatureQuantizer(specs=quantize.LEGACY_QUANT_SPECS).fit(d)
