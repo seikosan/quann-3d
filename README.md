@@ -41,7 +41,7 @@ quann-3d/
 ├── checkpoints/                # Tüm checkpoint'ler
 │   ├── cloudlm/                #   (eski "checkpoints/") word-tokenizer run
 │   ├── wiki_checkpoints/       #   16D wiki run
-│   ├── wiki_checkpoints_200k/  #   200K run (PPL 8.14 best)
+│   ├── wiki_checkpoints_200k/  #   200K run (shared held-out PPL 6.45)
 │   ├── wiki_checkpoints_32d/   #   32D run
 │   ├── wiki_checkpoints_wiki1500k/
 │   ├── baseline_200k/          #   Causal baseline 200K
@@ -154,7 +154,7 @@ datasets        # yalnız download_wiki.py için
 - 7D: Hem özne-fiil hem yer-fiil ayrışır
 - 16D: Sözdizimsel roller uzayda bölgeleşir (edatlar merkez, belirsizlik batı)
 - Gerçek corpus'ta (3K vocab): PPL 2794→62 (44x iyileşme)
-- 200K wiki (20K BPE): **PPL 8.14** (`checkpoints/wiki_checkpoints_200k/wiki_cloud_best.pt`)
+- 200K wiki (20K BPE, D=32, 50ep): **PPL 6.45** on the shared held-out set (`checkpoints/wiki_checkpoints_200k/wiki_cloud_best.pt`)
 - 200K held-out karşılaştırma (2000 cümle): causal baseline **2.92** vs CloudLM **6.45** —
   kök neden kapasite (D boyutu); revizyon adayları: `quann_cloud/REVISION.md`
 - QUANN-Cloud: XOR'u backprop'suz %100 çözer; gerçek LM'de random'a yakın (0th-order sınırı) —

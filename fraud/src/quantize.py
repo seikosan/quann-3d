@@ -42,6 +42,21 @@ QUANT_SPECS = [
     ("Merchant Name",  "cat_topn", 32),
     ("error_type",     "cat", None),             # none/multi/~7 = 9
 ]
+LEGACY_QUANT_SPECS = list(QUANT_SPECS)
+
+# Rich-point experiment additions. Keep the original 13 entries above byte-for-
+# byte stable: their token offsets are part of existing QUANN checkpoint data.
+# These are all outputs of features.derive_base(); no raw-column features are
+# engineered here. Current nominal vocabulary growth is only 28 buckets.
+QUANT_SPECS += [
+    ("amount_abs_log", "quantile", 16),
+    ("amount_neg",    "int", 2),
+    ("zip_missing",   "int", 2),
+    ("has_error",     "int", 2),
+    ("err_bad_pin",   "int", 2),
+    ("err_insufficient_balance", "int", 2),
+    ("err_bad_zipcode", "int", 2),
+]
 
 
 class FeatureQuantizer:

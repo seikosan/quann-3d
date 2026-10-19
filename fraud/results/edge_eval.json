@@ -1,70 +1,70 @@
 {
   "config": {
     "D": 8,
-    "d_cloud": 64,
+    "d_cloud": 128,
     "d_model": 32,
     "vocab": 221
   },
   "footprint": {
-    "reader_params": 42944,
-    "head_params": 4225,
+    "reader_params": 125312,
+    "head_params": 8321,
     "lm_dead_params": 8392,
     "quann_point_ids": 214,
     "deploy_vocab": 221,
     "table_floats": 1768,
-    "deploy_fp32_kb": 191.2,
-    "deploy_int8_kb": 53.3,
-    "pt_file_kb": 294.5
+    "deploy_fp32_kb": 528.9,
+    "deploy_int8_kb": 138.2,
+    "pt_file_kb": 636.5
   },
   "latency": {
     "k": 13,
     "n_tx": 2000,
-    "batch_p50_ms": 41.6495205136016,
-    "per_tx_p50_ms": 0.0208247602568008,
-    "per_tx_p99_ms": 0.022368764172424564,
-    "tx_per_s": 48383.63429220543
+    "batch_p50_ms": 31.825687969103456,
+    "per_tx_p50_ms": 0.015912843984551728,
+    "per_tx_p99_ms": 0.017278228622744793,
+    "tx_per_s": 62845.10641151401
   },
   "k_scaling": [
     {
       "k": 13,
-      "macs_per_tx": 1691160,
-      "per_tx_p50_ms": 0.022944009856473713,
-      "tx_per_s": 42904.36603326646
+      "macs_per_tx": 2522200,
+      "per_tx_p50_ms": 0.019058348584621854,
+      "tx_per_s": 51180.90987574436
     },
     {
       "k": 25,
-      "macs_per_tx": 5982168,
-      "per_tx_p50_ms": 0.07356307025929709,
-      "tx_per_s": 13718.73418124206
+      "macs_per_tx": 8760088,
+      "per_tx_p50_ms": 0.059199543898103,
+      "tx_per_s": 16824.362656601574
     },
     {
       "k": 50,
-      "macs_per_tx": 23409568,
-      "per_tx_p50_ms": 0.29427795311676164,
-      "tx_per_s": 3420.2252775103843
+      "macs_per_tx": 34091488,
+      "per_tx_p50_ms": 0.22592594427806034,
+      "tx_per_s": 4439.0513682986775
     }
   ],
   "onnx": {
-    "onnx_kb": 205.7,
-    "ort_max_abs_diff": 2.5331974029541016e-06,
-    "ort_per_tx_p50_ms": 0.02650031226221472,
-    "ort_tx_per_s": 38415.33725645244
+    "onnx_kb": 543.5,
+    "ort_max_abs_diff": 1.0058283805847168e-07,
+    "ort_per_tx_p50_ms": 0.02578230228391476,
+    "ort_tx_per_s": 39056.267050717805
   },
   "int8_drift": {
-    "int8_max_abs_dp": 0.8625514507293701,
-    "int8_mean_abs_dp": 0.17123395204544067,
-    "int8_p99_abs_dp": 0.7190113663673401
+    "int8_max_abs_dp": 0.3432929813861847,
+    "int8_mean_abs_dp": 0.008917972445487976,
+    "int8_p99_abs_dp": 0.14572913944721222
   },
   "int8_auc": {
     "n_test": 4700000,
-    "n_fraud": 6180,
-    "base_rate": 0.0013148936170212767,
-    "auc_fp32": 0.7718458208127388,
-    "auc_int8_tensor": 0.7131246387438118,
-    "auc_int8_channel": 0.7541713910671415,
-    "delta_tensor": -0.05872118206892696,
-    "delta_channel": -0.017674429745597298,
-    "tokenized_with": "re-fit quantizer",
-    "note": "recorded ref AUC-ROC=0.9581 is NOT reproducible from this checkpoint (its input quantizer was not saved at train time); re-fit quantizer reproduces FP32 ~0.77 on the 4.7M test. See fraud/REVISION.md."
+    "n_fraud": 6110,
+    "base_rate": 0.0013,
+    "auc_fp32": 0.9450745846153957,
+    "auc_int8_tensor": 0.9364812440872093,
+    "auc_int8_channel": 0.9367113790742326,
+    "delta_tensor": -0.008593340528186388,
+    "delta_channel": -0.008363205541163099,
+    "tokenized_with": "bundled quantizer",
+    "note": "tokenized with the checkpoint's bundled quantizer -> AUC reproducible."
   }
 }

@@ -27,6 +27,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import config
 import datasets
 import metrics
+import quantize
 import train_quann
 from qcloud_fraud import QCloudFraudClassifier
 
@@ -52,7 +53,11 @@ def main():
 
     print("Loading full dataset ...")
     df = datasets.load_big()
-    data = train_quann.build_data(df, args.n_train, args.n_val, args.n_test, 0.5, 0.05)
+    checkpoint = torch.load(args.ckpt, map_location="cpu")
+    fq = (quantize.FeatureQuantizer.from_dict(checkpoint["quantizer"])
+          if "quantizer" in checkpoint else None)
+    data = train_quann.build_data(df, args.n_train, args.n_val, args.n_test, 0.5, 0.05,
+                                  quantizer=fq)
     fq = data["fq"]; y = data["y"]
     tr, va, te = data["tr_sel"], data["va_sel"], data["te_sel"]
     print(f"train={len(tr):,} val={len(va):,} test={len(te):,} (test fraud {y[te].sum():,}, "

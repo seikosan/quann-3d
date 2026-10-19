@@ -72,7 +72,8 @@ def build_tensors(tokens: np.ndarray, y: np.ndarray, device):
     return t, mask, yy
 
 
-def build_data(df, n_train, n_val, n_test, train_frac, test_frac, seed=config.SEED):
+def build_data(df, n_train, n_val, n_test, train_frac, test_frac, seed=config.SEED,
+               quant_specs=None, quantizer=None):
     """Deterministic group-disjoint splits + quantized token matrices.
 
     Returns a dict so both training and figure-making can rebuild the exact same
@@ -91,8 +92,12 @@ def build_data(df, n_train, n_val, n_test, train_frac, test_frac, seed=config.SE
     va_sel = sample_from_users(df, va_users, n_val, train_frac, seed + 1)
     te_sel = sample_from_users(df, te_users, n_test, test_frac, seed + 2)
 
-    fq = quantize.FeatureQuantizer()
-    fq.fit(df.iloc[tr_sel])
+    # Keep this established pipeline/checkpoint mapping on the original K=13
+    # tokens. Rich-point experiments opt in to the appended specs explicitly.
+    fq = quantizer or quantize.FeatureQuantizer(
+        specs=quant_specs or quantize.LEGACY_QUANT_SPECS)
+    if not fq._fitted:
+        fq.fit(df.iloc[tr_sel])
     return {
         "fq": fq,
         "tr_sel": tr_sel, "va_sel": va_sel, "te_sel": te_sel,

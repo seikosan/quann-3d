@@ -63,5 +63,6 @@ Her varyant: 20K × 10ep (~2-4 saat) → vaat edeni 200K'a ölçekle.
 ## Durum
 
 - [x] Hassasiyet analizi (bu dosya)
-- [ ] Ölçek kuyruğu: hibrit 200K → CloudLM 1.5M (çalışıyor)
-- [ ] R1-R4 ön-testleri (kuyruğa eklenecek)
+- [x] Ölçek kuyruğu: 1.5M OOM/kill teşhisi + `train_wiki.py` bellek düzeltmesi + resume 18–20 + 200K-wiki/50ep kontrol + eş dağıtım eval; on-wiki 62.15, aynı 200K kesitinde 200K/50ep 24.53 vs 1.5M/20ep 64.28
+- [x] R1 20K ön-test: D=64 en iyi (181 vs 201); wiki scale gate'inde D=32'de tekrar derinliği baskın; **D=64×200K-wiki/50ep** açık aday
+- [ ] R2 cloud attention, R3 attention-weighted pooling, R4 QUANN freeze ön-testleri

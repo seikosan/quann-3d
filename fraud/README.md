@@ -33,7 +33,8 @@ fraud/
     datasets.py      load / GroupKFold-by-User / fraud-enriched sampling
     metrics.py       AUC-PR, AUC-ROC, P/R/F1/F2@threshold, lift
     qcloud_fraud.py  QCloudFraudClassifier (reuses WordToND+CloudEncoderND+QCloudWeight)
-    train_standard.py, train_quann.py
+    train_standard.py, train_quann.py, train_duels.py
+    train_strong_reader.py, train_rich_points.py, make_figures.py
   data/              bundled small CSVs
   results/           metrics JSON + model checkpoints
   figures/           plots
@@ -53,6 +54,17 @@ python3 fraud/src/train_standard.py --n-rows 300000 --models lr gb   # quick
 # QUANN point-cloud, 3 regimes (pure / hybrid / backprop)
 python3 fraud/src/train_quann.py --smoke                 # tiny, verify
 python3 fraud/src/train_quann.py                         # large (50K, 3 epochs)
+
+# full-data baseline duels (XGBoost / LightGBM / FT-Transformer)
+bash fraud/scripts/run_duels.sh
+
+# reader-capacity diagnostic; rich-points D=16/32 results are complete
+python3 fraud/src/train_strong_reader.py
+python3 -u fraud/src/train_rich_points.py --configs 16,32 --normal-cap 450000 \
+  --reader-epochs 3 --out fraud/results/rich_points.json
+
+# regenerate the four project figures
+python3 fraud/src/make_figures.py
 
 # tests
 python3 fraud/tests/test_fraud.py
@@ -85,7 +97,8 @@ learned:
 
 ## Results (measured, held-out, group-disjoint by User)
 
-**Standard layer** — full 24.4M rows; test = 4.72M (6,480 fraud, base 0.14%):
+**Standard layer** — 24.39M rows, 27 features; split = 14.61M / 5.06M / 4.72M
+(train / validation / test). Test has 6,480 fraud (base 0.137%):
 
 | model | AUC-PR | AUC-ROC | @best-thr F2 | lift |
 |---|---|---|---|---|
@@ -94,31 +107,104 @@ learned:
 | HistGBT | 0.598 | **0.981** | 0.607 | 272x |
 | MLP (64-64) | 0.252 | 0.956 | 0.294 | 134x |
 
-**QUANN point-cloud layer** — test = 10K (500 fraud, base 5%):
+**Full-data duels** on the same standard split:
 
-| regime | AUC-PR | AUC-ROC | @best-thr F2 | points converged |
-|---|---|---|---|---|
-| pure (0th-order only) | 0.061 | 0.573 | 0.210 | 0 (drifts to all-fraud) |
-| **hybrid (QUANN pts + backprop net)** | **0.829** | **0.9745** | 0.679 | 210/210 |
-| backprop (ceiling) | 0.810 | 0.9647 | 0.639 | — |
+| model | AUC-PR | AUC-ROC | lift |
+|---|---:|---:|---:|
+| XGBoost | **0.779** | **0.993** | **268x** |
+| LightGBM | 0.639 | 0.936 | 255x |
+| FT-Transformer (183K params) | 0.687 | 0.969 | 242x |
 
-**Headline:** the point-cloud representation is expressive enough that the
-**hybrid** regime (QUANN 0th-order narrows the points; a small backprop reader
-decodes the cloud) matches the strongest standard baselines
-(AUC-ROC 0.9745 ≈ RF 0.973 / GBT 0.981). **Pure** 0th-order (no backprop
-anywhere) fails (~random) — consistent with the repo's finding that QUANN
-scales to small/interpretable models, not complex ones. The cloud geometry
-separates fraud from normal in 3D (centroid distance 1.95; see
-`figures/quann_cloud_3d.png`).
+**QUANN point-cloud layer** — matched split = 1.02M / 100K / 4.7M
+(train / validation / test), 6,181 test fraud (base 0.132%):
 
-Artifacts: `results/standard_full.json`, `results/quann_large.json`,
-`results/quann_{pure,hybrid,backprop}.pt`, `figures/*.png`.
+| model | AUC-PR | AUC-ROC | lift / note |
+|---|---:|---:|---|
+| hybrid (full scale; balanced 100K test) | **0.2673** | **0.9351** | F2 0.1564; lift 29.0x; 214 converged points |
+| backprop | 0.080 | 0.894 | — |
+| pure 0th-order | 0.001 | 0.450 | near-random; predicts almost all fraud |
+| strong reader 64/64, D=8 points frozen | 0.383 | 0.969 | 188x |
+| strong reader 128/128, D=8 points frozen | 0.411 | 0.975 | 197x |
+| strong reader 256/256, D=8 points frozen | **0.462** | **0.975** | 207x |
+| matched XGBoost | 0.805 | 0.994 | same 1.02M / 4.7M split |
+| matched LightGBM | 0.766 | 0.990 | same 1.02M / 4.7M split |
+| matched FT-Transformer (183K params) | 0.687 | 0.983 | same 1.02M / 4.7M split |
 
-> **Integrity note (2026-10-16):** the 0.9745 above is the *large* run on a
-> **10K / 5%-fraud** test; that checkpoint was clobbered and is now **lost**
-> (metrics survive in `quann_large.json`). The deployable good model is the
-> *full* run (214 pts, AUC 0.9581 @ 4.7M natural-rate), pinned to
-> `results/quann_hybrid_full.pt`. Checkpoints did not bundle their input
-> quantizer, so recorded AUCs are not yet reproducible from disk — now fixed for
-> future runs. See `results/MANIFEST.md` (provenance) and `REVISION.md`
-> (diagnosis + edge-eval: 53KB INT8, ~13µs/tx, INT8 ΔAUC −1.4).
+**Rich points (K=20, matched split; normal-cap 450,000; 3 reader epochs):**
+
+| model | AUC-PR | AUC-ROC | F2 | lift | 0th-order speed | checkpoint |
+|---|---:|---:|---:|---:|---:|---|
+| rich points D=16 | 0.1919 | 0.9770 | 0.2524 | 50.92× | 108.6 rows/s | `results/quann_rich_d16.pt` |
+| rich points D=32 | 0.4261 | 0.9792 | 0.2694 | 55.54× | 88.8 rows/s | `results/quann_rich_d32.pt` |
+
+Rich-points runs are **complete**. D=32 approaches, but does not exceed, the
+D=8 strong-reader AUC-PR of 0.462; D=16 regresses. Increasing point dimension
+from D=8 to D=16/32 therefore did **not** break the D=8 geometry ceiling. The
+results point to reader capacity—not point dimension—as the leverage. The
+matched XGBoost gap remains substantial (0.8047 vs 0.4261 AUC-PR for D=32).
+Exact metrics and run details: `logs/run_rich_points.log` and
+`results/rich_points.json`.
+
+Matched-duel test metrics on this split (AUC-PR / AUC-ROC / F2): XGBoost
+0.8047 / 0.9938 / 0.4884; LightGBM 0.7665 / 0.9899 / 0.4455;
+FT-Transformer 0.6866 / 0.9831 / 0.4897. The D=8 strong-reader reference is
+0.462 AUC-PR (ROC 0.969–0.975 across the 64/128/256 readers; 214 fixed points).
+
+## Honest positioning
+
+This is **not SOTA**. The defensible results are narrower:
+
+1. Point-cloud readers reach near-top tabular AUC-ROC on real data: 0.975–0.977
+   versus RF 0.973 and GBT 0.981.
+2. On the full 4.7M natural test, hybrid FP32 ROC is 0.9451 (backprop: 0.8938);
+   it remains below the standard RF/GBT ceiling, so there is no parity claim.
+3. There is an edge/explainability wedge: 191 KB FP32, 53 KB INT8, about 75k
+   tx/s, and identity-based points that can be inspected.
+
+AUC-PR is the meaningful metric under this class imbalance. The best QUANN
+strong-reader result (0.462) remains about 0.34 below matched XGBoost (0.805).
+More data does not explain the gap: tree/transformer baselines are broadly flat
+between the 1.02M and 14.6M training runs. Rich-point ablations are complete:
+D=16/32 did not surpass the D=8 strong-reader result—D=32 reached 0.426 AUC-PR,
+while D=16 regressed to 0.192. This supports a D=8 geometry ceiling for these
+experiments and indicates reader capacity, rather than point dimension, as the
+more useful lever. The matched XGBoost gap remains (0.8047 vs D=32's 0.4261
+AUC-PR).
+
+**Full-scale hybrid and edge evaluation (2026-10-18; bundled quantizer):** on
+the full 4.7M natural-rate test, AUC-ROC is **0.9451 FP32**, **0.9367 INT8
+channel-wise** (Δ FP32→INT8 −0.0084), and **0.9365 INT8 tensor-wise**. On the
+balanced 100K test, hybrid scores AUC-PR 0.2673, AUC-ROC 0.9351, F2 0.1564,
+and lift 29.0×, with 214 converged points. RF 0.973 / GBT 0.981 ROC on the
+same full test remain above hybrid; there is no parity claim. The checkpoint
+bundles its trained quantizer, enabling bit-level AUC reproduction; the old
+0.9581 / 0.9745 readings came from checkpoints without a saved quantizer and
+are not reproducible. Footprint remains 191 KB FP32 / 53 KB INT8, with ONNX
+parity max error 2.5e-6 and about 75k tx/s. Sources: `results/edge_eval_full_scale.json`,
+`results/full_scale_hybrid.json`, `results/MANIFEST.md`, and `REVISION.md`.
+
+## Figures and result files
+
+Figures in `figures/` (regenerate with `python3 fraud/src/make_figures.py`):
+
+| PNG | Contents |
+|---|---|
+| `standard_models.png` | Standard-model metrics |
+| `quann_regimes.png` | QUANN regime comparison |
+| `quann_pr.png` | Precision-recall curves, including duels and strong-reader results |
+| `quann_cloud_3d.png` | Fraud/normal point-cloud view |
+
+| JSON | Contents / status |
+|---|---|
+| `results/standard_full.json` | Full-data standard baselines |
+| `results/quann_full.json` | Full-scale QUANN regimes on matched split |
+| `results/quann_large.json` | Historical 10K / 5%-fraud run; not comparable to natural-rate results |
+| `results/duels.json` | Full standard-split XGBoost, LightGBM, FT-Transformer |
+| `results/duels_quann.json` | Matched 1.02M / 100K / 4.7M baselines |
+| `results/strong_reader.json` | Frozen D=8 points with 64/128/256 readers |
+| `results/rich_points.json` | Completed D=16/32 rich-points metrics (K=20, matched split) |
+| `results/edge_eval.json` | Footprint, latency, ONNX parity, and INT8 evaluation |
+| `results/edge_eval_full_scale.json` | Full 4.7M natural-test FP32 / INT8 AUC with bundled quantizer |
+| `results/full_scale_hybrid.json` | Reproducible full-scale hybrid metrics (bundled quantizer) |
+
+Other artifacts and checkpoint provenance: `results/MANIFEST.md`.

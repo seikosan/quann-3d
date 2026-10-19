@@ -4,7 +4,8 @@
 > (mesafe + açı), (3) açıklanabilir geometri (bölge haritaları), (4) QUANN
 > (backprop'suz eğitim).
 > Repo kanıtı: `fraud/README.md` + `fraud/results/` (IBM kart verisi, hybrid
-> AUC-ROC 0.9745 ≈ standart tavan), `quann_cloud/` (0th-order bulgu).
+> AUC-ROC 0.9451 FP32 / 0.9367 INT8 — tam doğal testte, bundled quantizer ile repro;
+> standart tavan RF .973 / GBT .981'in altında), `quann_cloud/` (0th-order bulgu).
 
 ## Öncelik 3 — Dört farklılaştırıcının hepsinin aynı anda değer olduğu, bütçesi ve düzenleyicisi hazır alanlar
 

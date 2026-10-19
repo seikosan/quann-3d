@@ -36,13 +36,14 @@ aynı geometri, makale ile izomorf.
 
 | # | Deney | Durum |
 |---|---|---|
-| E0 | C-MAPSS FD001: pencere→bulut; LR/RF/GBT/MLP + hybrid; aşınma evresi sınıflaması | bekliyor |
-| E1 | CWRU rulman (öznitelik çıkarımlı): normal vs aşınmış; 3D bulut figürü | bekliyor |
-| E2 | çift kanal: sensör-lerarası açı → aşınma imzası | bekliyor |
-| E3 | bölge haritası + drift alarmı demosu ("bölge genişledi") | bekliyor |
-| E4 | QUANN saha adaptasyonu: yeni işletme koşulu → 0th-order, retrain yok | bekliyor |
+| E0 | C-MAPSS FD001: pencere→bulut; LR/RF/GBT/MLP + hybrid; aşınma evresi sınıflaması | tamam — binary RUL≤30: hybrid .908/.428 vs GBT .996/.883; detection gap, explanation wedge (`results/e0b_cmapss.json`) |
+| E1 | CWRU rulman (öznitelik çıkarımlı): normal vs aşınmış; 3D bulut figürü | tamam — record-disjoint binary: hybrid .999/1.000, GBT 1.000; C-MAPSS explanation coverage %81.7 (`results/e1_cwru.json`, `results/e1_cmapss.json`) |
+| E2 | çift kanal: sensör-lerarası açı → aşınma imzası | tamam — CWRU angle-pair/feature design + C-MAPSS pairwise geometry; 3-class hâlâ zayıf (`results/e5_type_design.json`) |
+| E3 | bölge haritası + drift alarmı demosu ("bölge genişledi") | tamam — C-MAPSS region map + 2.4× operating-shift drift alarmı (`results/e1_cmapss.json`) |
+| E4 | QUANN saha adaptasyonu: yeni işletme koşulu → 0th-order, retrain yok | tamam ama avantaj gösterilemedi — frozen zaten yüksek; 0th-order backprop gain'i yakalamadı (`results/e4_adapt.json`) |
+| E5 | CWRU 3-class fault-type design grid | tamam ama başarısız — best hybrid .678/.530 vs GBT .900/.799; inner recall .000; iki kriter birlikte sağlanmadı (`results/e5_type_design.json`) |
 
-**Koşum notu:** CPU (MPS, canlı 1.5M CloudLM run'ı için açık tutulur).
+**Koşum notu:** CPU (MPS şu an boş; D=64×200K-wiki adayı için ayrılabilir).
 
 ## Başarı Kriterleri
 

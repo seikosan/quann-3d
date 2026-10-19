@@ -52,13 +52,14 @@ gerekçe: eşik-kenarı kümesi").
 
 | # | Deney | Durum |
 |---|---|---|
-| E0 | sentetik tipolojiler: standart (LR/RF/GBT) + hybrid; AUC + tipoloji-bazlı recall @ sabit FPR | bekliyor |
-| E1 | bölge haritası figürü + "prototipe mesafe → SAR taslağı gerekçesi" demosu | bekliyor |
-| E2 | Elliptic (erişilebilirse): pencere→bulut, mixing etiketi | bekliyor |
-| E3 | çift kanal velocity deseni (sentezik + gerçek) | bekliyor |
-| E4 | QUANN haftalık adaptasyon: tipoloji drift'i → 0th-order güncelleme, retrain yok | bekliyor |
+| E0 | sentetik tipolojiler: standart (LR/RF/GBT) + hybrid; AUC + tipoloji-bazlı recall @ sabit FPR | tamam — clean setting GBT 1.0; hybrid .96 AUC / .872 AP; challenging setting detection gap (`results/e0_smoke.json`) |
+| E1 | bölge haritası figürü + "prototipe mesafe → SAR taslağı gerekçesi" demosu | tamam — held-out nearest-prototype %87.8; structuring 14× separation; SAR taslağı demosu (`results/e1_explain.json`) |
+| E2 | Elliptic (erişilebilirse): pencere→bulut, mixing etiketi | tamam — 2000 labeled-node proxy: hybrid .838/.370 vs GBT .943/.758; explanation %75 overall / %45 illicit; 1-hop/transductive sınırlaması açık (`results/e2_elliptic.json`, `results/e2_explain.json`) |
+| E3 | çift kanal velocity deseni (sentezik + gerçek) | tamam — chain-aware çift kanal + E3′ zaman-disjoint 46.5K Elliptic doğrulaması; detection gap sürüyor (`results/e3_chain.json`, `results/e3_prime.json`) |
+| E4 | QUANN haftalık adaptasyon: tipoloji drift'i → 0th-order güncelleme, retrain yok | tamam ama başarısız — retraining gain'inin 0%'ını geri aldı; iddia open work (`results/e4_adapt.json`) |
+| E5 | retraining stability + audit batch (yeni) | tamam — 5-seed Elliptic pilot: name stability 0.325 vs SHAP top-1 0.1025; top-3 Jaccard 0.434, Spearman 0.651, PCA-2 displacement 4.49; kaba label daha stabil, sürekli 2D map/magnitudes stabil değil (`results/e5_stability.json`) |
 
-**Koşum notu:** CPU (MPS, canlı 1.5M CloudLM run'ı için açık tutulur) —
+**Koşum notu:** CPU (MPS şu an boş; D=64×200K-wiki adayı için ayrılabilir) —
 `fraud/` ile aynı konvansiyon.
 
 ## Başarı Kriterleri

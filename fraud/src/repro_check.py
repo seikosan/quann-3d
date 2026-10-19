@@ -56,7 +56,7 @@ def main():
           f"({y[te_sel].mean():.2%})")
 
     # --- build a deterministic model + its (training) quantizer -------------
-    fq = quantize.FeatureQuantizer().fit(df.iloc[tr_sel])
+    fq = quantize.FeatureQuantizer(specs=quantize.LEGACY_QUANT_SPECS).fit(df.iloc[tr_sel])
     m = QCloudFraudClassifier(vocab_size=fq.vocab_size, d_model=32,
                               d_cloud=64, d_cloud_dim=8)
     tr_tok, tr_msk, tr_y = _tokens_and_label(df, tr_sel[:args.n_train], fq)
@@ -105,7 +105,8 @@ def main():
     tok_identical = bool(torch.equal(tA, tB))
 
     # 2) the OLD behavior: a freshly re-fit quantizer (independent train sample)
-    fq_refit = quantize.FeatureQuantizer().fit(df.iloc[tr_sel[args.n_train:]])
+    fq_refit = quantize.FeatureQuantizer(specs=quantize.LEGACY_QUANT_SPECS).fit(
+        df.iloc[tr_sel[args.n_train:]])
     a_refit = auc_with_quantizer(fq_refit)
 
     print(f"\n  bundled  : AUC reload#1={a1:.4f}  reload#2={a2:.4f}  "

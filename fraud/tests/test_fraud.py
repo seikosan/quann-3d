@@ -24,6 +24,7 @@ import features
 import quantize
 import metrics
 import train_duels
+import train_rich_points
 from qcloud_fraud import QCloudFraudClassifier
 
 
@@ -57,6 +58,7 @@ def test_quantize_vocab_and_ranges():
     fq = quantize.FeatureQuantizer()
     tok = fq.fit_transform(d)
     assert tok.shape == (len(d), fq.n_features)
+    assert fq.n_features == 20
     assert tok.dtype == np.int64
     assert tok.min() >= 2 and tok.max() < fq.vocab_size
     for j, (key, kind, n) in enumerate(quantize.QUANT_SPECS):
@@ -219,7 +221,7 @@ def test_qcloud_fraud_forward_and_predict():
     t = torch.tensor(tok[:8])
     mask = (t != 0) & (t != 1)
     lp, pts = m(t, mask, points_override=m.points_for(t, mask))
-    assert tuple(lp.shape) == (8, 1) and tuple(pts.shape) == (8, 13, 6)
+    assert tuple(lp.shape) == (8, 1) and tuple(pts.shape) == (8, fq.n_features, 6)
     p = m.predict_proba(t, use_quann_points=True)
     assert p.shape[0] == 8 and (p >= 0).all() and (p <= 1).all()
 
@@ -254,6 +256,30 @@ def test_qcloud_fraud_quann_update_changes_points_and_saveload():
     assert len(m2.token_weights) == len(m.token_weights)
     assert np.allclose(m2.get_weight(tid).value, m.get_weight(tid).value)
     os.remove(path)
+
+
+def test_rich_points_tiny_d16_train_and_reader_step():
+    """Exercise appended K=20 tokenization, three point steps, and one reader step."""
+    d = _small().iloc[:100].copy()
+    fq = quantize.FeatureQuantizer().fit(d)
+    tok = fq.transform(d)
+    y = datasets.get_label(d)
+    assert tok.shape == (100, 20)
+    assert fq.vocab_size < 400
+    assert {"amount_abs_log", "amount_neg", "zip_missing", "has_error",
+            "err_bad_pin", "err_insufficient_balance", "err_bad_zipcode"} <= set(fq.feature_order)
+
+    t, mask, target = train_rich_points._tensors(tok, y, torch.device("cpu"))
+    model = QCloudFraudClassifier(vocab_size=fq.vocab_size, d_model=16,
+                                  d_cloud=32, d_cloud_dim=16, hidden=16)
+    point_result = train_rich_points.train_point_steps(model, t, target, steps=3)
+    reader_result = train_rich_points.train_reader(
+        model, t, target, epochs=1, batch_size=100,
+        pos_weight=torch.tensor(20.0), max_steps=1)
+    assert point_result["steps"] == 3
+    assert point_result["steps_per_sec"] > 0
+    assert reader_result["steps"] == 1
+    assert model.D == 16 and model.get_weight(int(t[0, 0])).value.shape == (16,)
 
 
 if __name__ == "__main__":

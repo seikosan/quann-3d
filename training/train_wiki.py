@@ -39,6 +39,66 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
+EXAMPLE_CHUNK_SIZE = 8192
+
+
+def iter_shuffled_batches(all_tokens, seq_len, batch_size):
+    """Yield shuffled batches without materializing every corpus window."""
+    chunks = []
+    chunk_start = None
+    chunk_count = 0
+    chunk_remaining = EXAMPLE_CHUNK_SIZE
+    for sentence_idx, tokens in enumerate(all_tokens):
+        n_examples = max(0, len(tokens) - seq_len)
+        local_start = 0
+        while local_start < n_examples:
+            take = min(chunk_remaining, n_examples - local_start)
+            if chunk_count == 0:
+                chunk_start = (sentence_idx, local_start)
+            chunk_count += take
+            local_start += take
+            chunk_remaining -= take
+            if chunk_remaining == 0:
+                chunks.append((*chunk_start, chunk_count))
+                chunk_start = None
+                chunk_count = 0
+                chunk_remaining = EXAMPLE_CHUNK_SIZE
+
+    if chunk_count:
+        chunks.append((*chunk_start, chunk_count))
+
+    # Random chunk order plus per-chunk shuffle approximates a global shuffle,
+    # while keeping token-window objects bounded by the chunk size.
+    random.shuffle(chunks)
+    pending = []
+    for sentence_idx, local_start, chunk_count in chunks:
+        remaining = chunk_count
+        examples = []
+        while remaining:
+            tokens = all_tokens[sentence_idx]
+            n_examples = max(0, len(tokens) - seq_len)
+            take = min(remaining, n_examples - local_start)
+            if take:
+                examples.extend(
+                    (tokens[i:i+seq_len], tokens[i+seq_len])
+                    for i in range(local_start, local_start + take)
+                )
+                remaining -= take
+            sentence_idx += 1
+            local_start = 0
+
+        random.shuffle(examples)
+        if pending:
+            examples = pending + examples
+
+        full_size = len(examples) // batch_size * batch_size
+        for b in range(0, full_size, batch_size):
+            yield examples[b:b+batch_size]
+        pending = examples[full_size:]
+
+    if len(pending) >= 2:
+        yield pending
+
 
 # ─────────────────────────────────────────────
 # CORPUS
@@ -135,16 +195,9 @@ def step_train(args, tok):
     t0 = time.time()
 
     for epoch in range(start_epoch, args.epochs):
-        examples = []
-        for tokens in all_tokens:
-            for i in range(len(tokens) - args.seq_len):
-                examples.append((tokens[i:i+args.seq_len], tokens[i+args.seq_len]))
-        
-        random.shuffle(examples)
         epoch_loss, n_batches = 0, 0
         
-        for b in range(0, len(examples), args.batch):
-            batch = examples[b:b+args.batch]
+        for batch in iter_shuffled_batches(all_tokens, args.seq_len, args.batch):
             if len(batch) < 2: continue
             inputs = torch.tensor([e[0] for e in batch], device=device)
             targets = torch.tensor([e[1] for e in batch], device=device)
