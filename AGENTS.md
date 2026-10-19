@@ -43,6 +43,11 @@ kurallarla korunur — her oturum bu dosya + `RESEARCH.md` ile başlar.
    tek satır gerekçeyle.
 6. **`quann_cloud/src/` motoru** (qcloud_quann vb.) değişikliği test gerektirir:
    `python3 -m pytest quann_cloud/tests/ -v` koşmadan commit etme.
+7. **Doküman satır bütçesi:** repo'daki tüm `*.md` (dışı: `_archive/`) ≤200
+   satır. İstisna (formal teslimat, yapısal uzunluk): `docs/patent/**`,
+   `docs/paper_draft.md`. `RESEARCH.md` ≤150 (§5). Checker:
+   `scripts/check_docs_lines.sh` — her commit öncesi koş (committer/ana
+   oturum).
 
 ## 4. Veri
 
@@ -63,3 +68,18 @@ Nasıl:
 - Dosya 150 satırı geçemez; "Son güncelleme" damgası vurulur.
 - Teşhis/revizyon adayları `quann_cloud/REVISION.md`'de yaşar — RESEARCH.md
   onlara pointer verir, kopyalamaz.
+
+## 6. Sonuç Raporlama Şablonu (kullanıcı tercihi, 2026-10-19)
+
+Bir deneysel iş bitince / sonuç-durum gösterilince ana oturum şu 4 bölümlü
+biçimde yazar:
+
+1. **Ne yaptık** — 1-2 cümle, jargonsuz, insan dili (neyi, hangi yöntemle).
+2. **Sonuçlar** — basit tablo: `Ne | Değer | Basit anlam` (sayılar + günlük dil).
+3. **Teknik yanıtlar** — hassas değerler: mimari, metrikler, basınç/baselines,
+   audit, deploy, tavan/kısıt. Jargon burada serbest.
+4. **HÜKMÜ** — en sonda, teknik bölümün altında: *iyi yolda mıyız? sonuç iyi mi?
+   neden iyi / neden kötü?* Dürüst iki-yanlı; iddianın çerçevesini (niş vs SOTA)
+   açıkça belirt.
+
+Kısa bilgi sorularında kullanılmaz; sonuç/durum raporlarında zorunludur.

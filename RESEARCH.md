@@ -55,6 +55,7 @@ hassasiyet değil. Bulut (10×32=320 sayı), transformer gizli durumunun
 1. **P1:** Tam 4.7M false-alarm audit'ini yeniden koş (`--dom-pairs`; dominant çift joint'i non-additivity'yi n=1'den istatistiğe taşır) — ≥12GB bellek gerekir (şu an 8.8GB, splash ~50GB); bellek boşalınca `bash fraud/scripts/run_false_alarm_audit.sh`.
 2. **Aday (MPS boş):** D=64 × 200K-wiki/50ep — R1 kapasite × derinlik gate.
 3. Push: 2 commit (`181539a` upper-slice, `5f66aed` audit) ağ gelince push (ağ şu an kapalı); karar kullanıcıda.
+4. **Doküman satır bütçesi** kuralı kondu (AGENTS.md §3.7 + `scripts/check_docs_lines.sh`; formal istisna: `docs/patent/**`, `paper_draft`). 6 bütçe-üstü dosya grandfather'da; ağ gelince `archiver` → `quann_cloud/PATENT_QUANN_CLOUD.md` + `PATENT_V2.md` `_archive/`e, `cleaner` → 4 dosyayı ≤200'ye distil + checker listesi temizlenir.
 
 ## Subproje: quann_cloud/
 
