@@ -17,165 +17,67 @@
 
 ```
 quann_cloud/
-├── README.md                  # Bu dosya
-├── DESIGN.md                  # Detaylı mimari tasarım
+├── README.md                  # Giriş
+├── DESIGN.md                  # Detaylı mimari tasarım (pseudokod + ADR)
 ├── EXPERIMENTS.md             # Deney planı
 ├── PROJECT_SUMMARY.md         # Bu dosya (özet)
 │
 ├── src/
-│   ├── __init__.py
-│   ├── qcloud_weight.py       # QCloudWeight (her token'ın noktası) ✅ TEST GEÇTİ
-│   ├── qcloud_network.py      # QCloudNetwork (CloudLM + QUANN eğitim) ✅ TEST GEÇTİ
-│   └── qcloud_trainer.py      # QCloudTrainer (backprop'suz eğitim pipeline) ✅ TEST GEÇTİ
+│   ├── qcloud_weight.py       # QCloudWeight (her token'ın noktası) ✅ TEST
+│   ├── qcloud_network.py      # QCloudNetwork (CloudLM + QUANN eğitim) ✅ TEST
+│   └── qcloud_trainer.py      # QCloudTrainer (backprop'suz pipeline) ✅ TEST
 │
 ├── experiments/
 │   ├── xor_gate.py            # XOR doğrulama (v0 benzeri)
 │   ├── tiny_corpus.py         # Küçük corpus (20K cümle)
 │   └── full_corpus.py         # Büyük corpus (200K cümle)
 │
-├── tests/
-│   ├── test_weight.py
-│   └── test_network.py
-│
-├── data/                      # Corpus dosyaları
-│   └── turkish_sentences.txt  # Mevcut corpus
-│
+├── tests/                     # test_weight.py, test_network.py
+├── data/                      # turkish_sentences.txt corpus
 └── logs/                      # Eğitim logları
 ```
 
 ## ✅ Test Sonuçları
 
-### 1. QCloudWeight ✅ GEÇTİ
-
-```
-=== QCloudWeight Test ===
-
-Başlangıç: QCloudWeight(D=3, val=0.474, width=2.0000)
-low: [-1. -1. -1.]
-high: [1. 1. 1.]
-value: [0.048 0.762 0.612]
-direction: [1 1 1]
-
---- Reward Test ---
-After reward: QCloudWeight(D=3, val=-0.064, width=2.0000)
-direction: [-1 -1 -1]
-
---- Censure Test ---
-After censure: QCloudWeight(D=3, val=0.167, width=0.8333)
-direction: [1 1 1]
-
---- Sigma Adaptation ---
-Sigma after 10 steps: 0.076
-
---- Convergence Test ---
-Not converged after 20 steps. Width: [1.8 2.  1.7]
-
-=== Test Passed ===
-```
-
-### 2. QCloudNetwork ✅ GEÇTİ
-
-```
-=== All imports successful ===
-QCloudWeight: QCloudWeight(D=3, val=0.130, width=2.0000)
-QCloudNetwork: QCloudNetwork(D=3, d_model=64, d_cloud=512, layers=2, mode=bidir, tokens=0)
-Parameters: 2,480,490
-
-Forward: logits=torch.Size([1, 100]), point=torch.Size([1, 3]), points=torch.Size([1, 5, 3])
-=== Test passed ===
-```
-
-### 3. QCloudTrainer ✅ GEÇTİ
-
-Backprop'suz eğitim pipeline'ı çalışıyor:
-- train_epoch(): Her corpus için forward pass + reward/cense ile narrownning
-- evaluate_ppl(): Held-out PPL evalüasyonu
-- generate(): Metin üretimi
+| Modül | Sonuç | Özet |
+|---|---|---|
+| QCloudWeight | ✅ | reward → yön tersine döner; censure → aralık daralır (width 2.0→0.83); sigma 10 adımda 0.076; 20 adımda yakınsamadı (beklenen) |
+| QCloudNetwork | ✅ | D=3, d_model=64, d_cloud=512, 2 katman, bidir; 2.48M param; forward → logits [1,100], point [1,3] |
+| QCloudTrainer | ✅ | train_epoch (forward + reward/censure narrownning), evaluate_ppl, generate |
 
 ## 📐 Mimari Tasarım
 
-### QCloudWeight — Her Token'ın Noktası
+Tam pseudokod `DESIGN.md`'de. Özet:
 
-```python
-QCloudWeight:
-  - D: int  # Boyut sayısı (başlangıç: 16)
-  - low: np.array[D]  # Aralık alt sınırı (başlangıç: -1.0)
-  - high: np.array[D]  # Aralık üst sınırı (başlangıç: 1.0)
-  - value: np.array[D]  # Şu anki nokta konumu (başlangıç: random[-1, 1])
-  - direction: np.array[D]  # Her boyut için yön (+1/-1)
-  - sigma: float  # Arama belirsizliği (başlangıç: 0.25)
-  - outcomes: list[bool]  # Son başarı/başarısızlık penceresi
-  - history: list[tuple]  # Path kaydı (value, direction, 'reward/censure')
-```
-
-**Önemli:** CloudLM'de her token bir `D` boyutlu vektördür. QCloudWeight her boyut için **bağımsız** bir aralık tutar.
-
-### QCloudNetwork — CloudLM + QUANN Eğitim
-
-```python
-QCloudNetwork:
-  - context_encoder: nn.TransformerEncoder (4 katman, d_model=256)
-  - to_nd: WordToND (256 → D boyutlu projeksiyon)
-  - cloud_encoder: CloudEncoderND (nokta bulut kodlayıcı)
-  - word_head: nn.Sequential (cloud_state → logits)
-  - point_head: nn.Sequential (cloud_state → next_point)
-  - token_weights: list[QCloudWeight]  # Her token için QUANN narrownning
-  - bidirectional: bool  # Karşıt yön deneme aktif mi?
-```
-
-**Fark (standart CloudLM vs QCloudNetwork):**
-- Standart: Backprop ile ağırlık güncelleme
-- QCloudNetwork: Reward/ceza ile token'ların bulut noktalarının aralığı daraltma
-
-### QCloudTrainer — Backprop'suz Eğitim Pipeline
-
-```python
-QCloudTrainer:
-  - model: QCloudNetwork
-  - corpus: list[str]
-  - device: torch.device
-  - bidirectional: bool
-  - convergence_threshold: float
-  - expansion_rate: float
-  - max_epochs: int
-  - eval_interval: int
-```
-
-**Backprop'suz eğitim döngüsü:**
-1. Her epoch'ta tüm corpus forward pass edilir
-2. Her token'ın QCloudWeight'ini reward/cense ile güncelle
-3. Sigma adaptasyonu ile arama stratejisi ayarla
-4. Yakınsama kontrolü ile eğitim durdur
+- **QCloudWeight** — her token'ın D boyutlu noktası: `low/high` (bağımsız aralık),
+  `value`, `direction` (+1/-1/boyut), `sigma`, `outcomes`, `history`.
+- **QCloudNetwork** — `context_encoder` (Transformer 4L, d_model=256) + `to_nd`
+  (256→D) + `cloud_encoder` (CloudEncoderND) + `word_head`/`point_head` +
+  `token_weights` (lazy `Dict[token_id, QCloudWeight]`). Standart CloudLM backprop
+  günceller; QCloudNetwork reward/ceza ile bulut noktalarının aralığını daraltır.
+- **QCloudTrainer** — epoch: forward → her token'ı reward/cense güncelle → sigma
+  adaptasyonu → yakınsama kontrolü.
 
 ## 📊 Karşılaştırma: Backprop vs QUANN-Cloud
 
 | Metrik | CloudLM (BP) | QUANN-Cloud |
 |--------|--------------|-------------|
-| **Backprop** | ✅ Var | ❌ Yok |
-| **Gradient** | ✅ Var | ❌ Yok |
+| **Backprop / Gradient** | ✅ Var | ❌ Yok |
 | **Credit Assignment** | Chain rule | Token-level reward |
 | **Search Space** | Weight space | Point cloud geometry |
 | **Search Mechanism** | Gradient descent | Reward/cense + narrownning |
 | **Learning Speed** | Hızlı (15-20 epoch) | Yavaş (15-25 epoch) |
 | **Final PPL** | ~4-5 | ~5-10 (hedef) |
-| **Interpretability** | ✅ Geometrik | ✅ Geometrik |
-| **Edge Suitability** | ✅ Potansiyel | ✅ Potansiyel |
+| **Interpretability / Edge** | ✅ Geometrik / potansiyel | ✅ Geometrik / potansiyel |
 | **Memory** | KV cache + d_model | D boyutlu point cloud |
 
-## 🧪 Deney Planı
+## 🧪 Deney Planı (durum: tamamı çalıştırıldı)
 
-### Faz 1: XOR Gate Doğrulama ✅ TASARIM HAZIR
-- **Amaç:** Mekanizmanın temel çalışmasını doğrula
-- **Yapı:** 2 giriş, 4 gizli (her node D=16 nokta bulutu), 1 çıkış
-- **Beklenen:** XOR problemi backprop olmadan çözülür
-
-### Faz 2: Tiny Corpus (20K cümle) 📝 TASARIM HAZIR
-- **Amaç:** Küçük korpus üzerinde test
-- **Beklenen:** PPL ~10-20 (CloudLM'in backprop ile ~4-5'ine yakın)
-
-### Faz 3: Full Corpus (200K cümle) 📝 TASARIM HAZIR
-- **Amaç:** Büyük korpus üzerinde test
-- **Beklenen:** PPL ~5-10 (CloudLM'in backprop ile ~4-5'ine yaklaşabilir)
+| Faz | Yapı | Sonuç |
+|---|---|---|
+| 1: XOR Gate | 2→4 gizli (D=16), 1 çıkış | ✅ %100 (FINDINGS §6) |
+| 2: Tiny Corpus (20K) | d_model=256, D=16, ~21M | saf: NULL; hibrit: 4.271 PPL (aşağıda) |
+| 3: Full Corpus (200K) | D=16/32 | backprop 2.94 vs QUANN random'a yakın |
 
 ## 📊 Deney Sonuçları (14-15 Ekim 2026)
 
@@ -202,26 +104,22 @@ Pilot (2K cümle, 2 epoch):
 
 ## 🔧 Yapılan Tasarım Düzeltmeleri (14 Ekim)
 
-1. **Token kimliği bazlı ağırlıklar:** `token_weights` artık `Dict[token_id, QCloudWeight]` (lazy).
-   Önceki konum bazlı (10 ağırlık) tasarım her cümle için aynı bulutu üretiyordu →
-   sabit çıktı. README'nin "her kelime → bir nokta" ilkesiyle uyumlu hale getirildi.
-2. **Gerçek arama:** Aday noktalar forward'a `points_override` ile giriyor (önceki stub
-değil). Batch'li değerlendirme: base + tüm adaylar tek forward'da.
-3. **narrow_search():** Düzeltmeli arama semantiği — ödül→segmente daralt, ceza→kötü
-   tarafı kes, value cezada sabit. (Orijinal `narrow()` ödülde genişletip cezada kötü
-   tarafa daraltıyordu — ters mantık; korundu, hibrit `search` kuralı kullanıyor.)
+1. **Token kimliği bazlı ağırlıklar:** `token_weights` artık `Dict[token_id, QCloudWeight]`
+   (lazy). Önceki konum bazlı (10 ağırlık) tasarım her cümle için aynı bulutu üretiyordu → sabit çıktı.
+2. **Gerçek arama:** Aday noktalar forward'a `points_override` ile giriyor;
+   batch'li değerlendirme (base + tüm adaylar tek forward).
+3. **narrow_search():** düzeltmeli semantik — ödül→segmente daralt, ceza→kötü tarafı kes,
+   value cezada sabit. (Orijinal `narrow()` ters mantıktı; korundu, hibrit `search` kullanıyor.)
 4. **Encoder skip:** QUANN noktaları verildiğinde transformer encoder atlanır (hız).
 5. **Eval düzeltmesi:** PPL hesabında token sayısını 10× şişiren hata giderildi.
-6. **Gerçek BPE tokenizer** trainer'a entegre edildi (placeholder'lar kaldırıldı).
+6. **Gerçek BPE tokenizer** trainer'a entegre (placeholder'lar kaldırıldı).
 
-## ✅ Gerçekleşenler (14 Ekim 2026 — bu oturum)
+## ✅ Gerçekleşenler (14 Ekim 2026)
 
 1. **Faz 1 XOR:** QUANN, XOR'u backprop'suz **%100** çözüyor → mekanizma sağlam.
-2. **Faz 2-3 Gerçek veri:** QUANN (backprop'suz) vs Backprop, aynı mimari/veri/BPE.
-   Sonuç: QUANN random'a yakın (1016 vs 1045), backprop 563 → **0th-order ölçeklenmiyor**.
+2. **Faz 2-3 Gerçek veri:** QUANN vs Backprop, aynı mimari/veri/BPE: QUANN random'a yakın
+   (1016 vs 1045), backprop 563 → **0th-order ölçeklenmiyor** (FINDINGS.md).
 3. **Edge:** CloudLM weight-only INT8 → 84MB→46MB, kalite 0.999x (kayıpsız).
-
-Tümü ölçülmüş, hype'sız: **`FINDINGS.md`**.
 
 ## 📊 200K & 20K Karşılaştırmalar (15 Ekim — hibrit oturumu)
 
@@ -256,20 +154,20 @@ geçiyor; üretim de belirgin iyi (bağlı Türkçe vs tekrarlayan gürültü).
 3. **QUANN'ı doğru nişinde konumla:** küçük/edge/yorumlanabilir modeller için
    backprop'suz alternatif (XOR kanıtıyla).
 4. **QUANN-Cloud v1.0:** Patent + yayın — iddiayı FINDINGS.md'deki savunulabilir
-   çerçevede (mimari güçlü, QUANN küçük ölçek, edge uygun).
+   çerçevede (mimari güçlü, QUANN küçük ölçek, edge uygun). Güncel patent sürümleri:
+   `docs/patent/`.
 
 ## 💡 Özet
 
 **QUANN-Cloud:** Backprop'suz, nokta bulut tabanlı dil modeli.
 
 - **Sekans yok + Geometri var + Backprop yok + Arama-Tabanlı Öğrenme**
-- **Dünyada bir ilk:** Backpropagation olmadan, nokta bulut tabanlı dil modeli
-- **Sizin 2 sisteminiz:** QUANN (v0 backprop'suz) + CloudLM (mimari)
-- **Dış referans:** Dust (Q-Labs) — backprop'suz eğitim fikri
+- **Sizin 2 sisteminiz:** QUANN (v0 backprop'suz) + CloudLM (mimari) ·
+  **Dış referans:** Dust (Q-Labs)
+- **Öğrenme = Yakınsama:** Aralık bir eşik altına düştüğünde token "öğrenmiş" sayılır.
 
-**Kod durumu:** QCloudWeight ✅ · QCloudNetwork ✅ · QCloudTrainer ✅ · **QUANN motoru (`qcloud_quann.py`) ✅** · **Gerçek veri deneyi (`real_data_test.py`) ✅ çalıştı**
-
-**Öğrenme = Yakınsama:** Aralık bir eşik altına düştüğünde token "öğrenmiş" sayılır.
+**Kod durumu:** QCloudWeight ✅ · QCloudNetwork ✅ · QCloudTrainer ✅ ·
+QUANN motoru (`qcloud_quann.py`) ✅ · Gerçek veri deneyi (`real_data_test.py`) ✅
 
 > Gerçek veri bulgusu için **`FINDINGS.md`**'ye bak — QUANN'ın 0th-order sınırı,
 > ölçülen PPL karşılaştırması ve savunulabilir iddia çerçevesi orada.

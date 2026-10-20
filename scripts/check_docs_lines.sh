@@ -7,24 +7,10 @@ max=200
 fail=0
 while IFS= read -r f; do
   n=$(wc -l < "$f")
-  [ "$n" -le "$max" ] && continue
-  # Grandfather listesi (geçici — RESEARCH.md "Sıradaki Aksiyonlar"):
-  # Ağ geri gelince archiver (2 patent → _archive/) + cleaner (4 dosya → ≤200)
-  # çalıştırılıp bu listeden satırlar silinecek.
-  case "$f" in
-    ./fraud/README.md|\
-    ./quann_cloud/PROJECT_SUMMARY.md|\
-    ./quann_cloud/PATENT_V2.md|\
-    ./quann_cloud/PATENT_QUANN_CLOUD.md|\
-    ./quann_cloud/FINDINGS.md|\
-    ./quann_cloud/DESIGN.md)
-      echo "GRANDFATHERED (distil/arşiv kuyruğunda): $f ($n lines)"
-      ;;
-    *)
-      echo "OVER $max: $f ($n lines)"
-      fail=1
-      ;;
-  esac
+  if [ "$n" -gt "$max" ]; then
+    echo "OVER $max: $f ($n lines)"
+    fail=1
+  fi
 done < <(find . -name "*.md" \
   -not -path "./.git/*" \
   -not -path "./.opencode/node_modules/*" \
@@ -35,4 +21,4 @@ if [ "$fail" -eq 1 ]; then
   echo "FAIL: doküman satır bütçesi aşıldı (AGENTS.md §3.7)"
   exit 1
 fi
-echo "OK: yeni ihlal yok (grandfather listesi ayrı gösterilir)"
+echo "OK: tüm *.md ≤ $max satır"

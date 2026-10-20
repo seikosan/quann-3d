@@ -17,12 +17,9 @@ QCloudWeight:
   - history: list[tuple]  # Path kaydı (y, direction, 'reward/censure')
 ```
 
-**Önemli:** CloudLM'de her token bir `D` boyutlu vektördür. 
-QCloudWeight her boyut için **bağımsız** bir aralık tutar:
-
-- `low[i]` ve `high[i]`: i'inci boyut için aralık
-- `value[i]`: i'inci boyuttaki anlık konum
-- `direction[i]`: i'inci boyuttaki öğrenme yönü
+**Önemli:** CloudLM'de her token bir `D` boyutlu vektördür. QCloudWeight her boyut
+için **bağımsız** bir aralık tutar: `low[i]/high[i]` aralık, `value[i]` anlık konum,
+`direction[i]` öğrenme yönü.
 
 ### 1.2 QCloudNetwork — CloudLM + QUANN Eğitim
 
@@ -49,43 +46,27 @@ QCloudNetwork:
 def train_epoch(self, corpus):
     for sentence in corpus:
         tokens = tokenize(sentence)
-        
         # 1. Mevcut bulut konumlarıyla tahmin
         cloud_state = self.forward(tokens)
         prediction = self.predict_next_token(cloud_state)
-        
-        # 2. Gerçek next token'ı bul
+        # 2. Gerçek next token'ı bul + 3. hata
         true_token = tokens[next_position]
-        
-        # 3. Hata hesapla
         error = self.compute_error(prediction, true_token)
-        
         # 4. Her token'ın QCloudWeight'ini güncelle
         for i, token_weight in enumerate(self.token_weights):
-            # 4a. Rastgele deneme (sample)
-            candidate = token_weight.sample()
-            
-            # 4b. Yeni konumla hata ölç
-            new_error = self.forward_with_point(i, candidate)
-            
-            # 4c. Reward/Cense
+            candidate = token_weight.sample()                      # 4a rastgele deneme
+            new_error = self.forward_with_point(i, candidate)      # 4b yeni hata
             if new_error < error:
-                token_weight.narrow(candidate, reward=True)  # ödül
+                token_weight.narrow(candidate, reward=True)        # 4c ödül
             else:
-                # 4d. Karşıt yön dene (bidirectional)
-                opposite = token_weight.opposite(candidate)
-                opposite_error = self.forward_with_point(i, opposite)
-                
-                if opposite_error < error:
-                    token_weight.narrow(opposite, reward=True)  # doğru yön bulundu
+                opposite = token_weight.opposite(candidate)        # 4d karşıt yön
+                if self.forward_with_point(i, opposite) < error:
+                    token_weight.narrow(opposite, reward=True)
                 else:
-                    token_weight.narrow(candidate, reward=False)  # ceza
-        
-        # 5. Sigma adaptasyonu (başarı penceresi)
+                    token_weight.narrow(candidate, reward=False)   # ceza
+        # 5. Sigma adaptasyonu + 6. yakınsama kontrolü
         for token_weight in self.token_weights:
             token_weight.update_sigma()
-            
-        # 6. Yakınsama kontrolü
         if self.all_converged():
             break
 ```
@@ -97,18 +78,12 @@ def train_epoch(self, corpus):
 Mevcut `QWeight` tek boyutlu (skaler). CloudLM'de her token `D` boyutlu vektör:
 
 ```python
-# V0: Tek boyut
-class QWeight:
-    low: float = 0.0
-    high: float = 1.0
-    value: float = None
-
-# Cloud: D boyutlu vektör
-class QCloudWeight:
-    low: np.array[D] = -1.0  # Her boyut için aralık
-    high: np.array[D] = 1.0
-    value: np.array[D] = None
-    direction: np.array[D] = +1  # Her boyut için yön
+# V0: Tek boyut                     # Cloud: D boyutlu vektör
+class QWeight:                      class QCloudWeight:
+    low: float = 0.0                   low: np.array[D] = -1.0   # Her boyut için aralık
+    high: float = 1.0                  high: np.array[D] = 1.0
+    value: float = None                value: np.array[D] = None
+                                       direction: np.array[D] = +1 # Her boyut için yön
 ```
 
 ### 2.2 QNetwork → QCloudNetwork (CloudLM + QUANN)
@@ -116,17 +91,13 @@ class QCloudWeight:
 Mevcut `QNetwork` basit lineer katmanlar. CloudLM'de transformer tabanlı:
 
 ```python
-# V0: Basit lineer ağ
-class QNetwork:
-    layers: list[QLinear]  # [input, hidden, output]
-
-# Cloud: Transformer + Point Cloud
-class QCloudNetwork:
-    context_encoder: nn.TransformerEncoder  # Bağlam kodlayıcı
-    to_nd: WordToND  # Bağlam → nokta projeksiyonu
-    cloud_encoder: CloudEncoderND  # Nokta bulut kodlayıcı
-    word_head: nn.Linear  # Tahmin modülü
-    token_weights: list[QCloudWeight]  # QUANN öğrenme
+# V0: Basit lineer ağ                    # Cloud: Transformer + Point Cloud
+class QNetwork:                          class QCloudNetwork:
+    layers: list[QLinear]                    context_encoder: nn.TransformerEncoder
+                                               to_nd: WordToND   # Bağlam → nokta projeksiyonu
+                                               cloud_encoder: CloudEncoderND
+                                               word_head: nn.Linear
+                                               token_weights: list[QCloudWeight]
 ```
 
 ### 2.3 Narrownning — Skaler → Vektör
@@ -147,7 +118,7 @@ def narrow(self, new_value, reward):
         else:
             self.high = new_value
 
-# Cloud: D boyutlu narrownning (her boyut için ayrı)
+# Cloud: D boyutlu narrownning (her boyut için ayrı; sınırlar [-1, 1])
 def narrow(self, new_point: np.array[D], reward: bool):
     for i in range(D):
         if reward:
@@ -163,25 +134,13 @@ def narrow(self, new_point: np.array[D], reward: bool):
     self.value = new_point
 ```
 
-## 3. Deney Planı
+## 3. Deney Planı (durum: tamamı çalıştırıldı — sonuçlar PROJECT_SUMMARY/FINDINGS)
 
-### Faz 1: XOR Gate Doğrulama
-- **Amaç:** Mekanizmanın temel çalışmasını doğrula
-- **Yapı:** 2 giriş, 4 gizli (her node D boyutlu nokta), 1 çıkış
-- **Beklenen:** XOR problemi backprop olmadan çözülür
-- **Metrik:** Yakınsama adı sayısı, son aralık genişliği
-
-### Faz 2: Tiny Corpus (20K cümle)
-- **Amaç:** Küçük korpus üzerinde test
-- **Yapı:** d_model=256, D=16, 4 katman, ~21M parametre
-- **Beklenen:** Backprop ile rekabetçi PPL (~10-20)
-- **Metrik:** PPL, generation kalitesi, yakınsama süresi
-
-### Faz 3: Full Corpus (200K cümle)
-- **Amaç:** Büyük korpus üzerinde test
-- **Yapı:** d_model=256, D=16/32, 4 katman, ~21M parametre
-- **Beklenen:** CloudLM ile karşılaştırılabilir PPL
-- **Metrik:** PPL, generation kalitesi, yorumlanabilirlik
+| Faz | Yapı | Beklenen | Metrik |
+|---|---|---|---|
+| 1: XOR Gate | 2→4 gizli (D boyutlu nokta), 1 çıkış | XOR backprop'suz çözülür | yakınsama adımı, son aralık genişliği |
+| 2: Tiny Corpus (20K) | d_model=256, D=16, 4L, ~21M | rekabetçi PPL (~10-20) | PPL, üretim, yakınsama süresi |
+| 3: Full Corpus (200K) | d_model=256, D=16/32, 4L, ~21M | CloudLM'e yakın PPL | PPL, üretim, yorumlanabilirlik |
 
 ## 4. Riskler ve Azaltma
 

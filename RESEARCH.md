@@ -5,7 +5,7 @@
 > `geometry`, `paper`) okur, distile sonuç döndürür. Güncelleme protokolü:
 > `AGENTS.md` §5. Boyut bütçesi: **≤150 satır** — taşarsa en eski deney "Son
 > Deneyler" tablosundan çıkarılır (detay `logs/`'da kalır).
-> Son güncelleme: 2026-10-19
+> Son güncelleme: 2026-10-20
 
 ## Bir Cümle
 
@@ -14,9 +14,11 @@ uzayda nokta, cümle → nokta bulutu, anlam → bulut geometrisi; tahmin bu
 konfigürasyondan. İkinci katman QUANN-Cloud: aynı mimariyi backprop'suz (0th-order)
 eğiten yöntem.
 
-## Canlı Runlar (2026-10-19)
+## Canlı Runlar (2026-10-20)
 
-Canlı run yok — wiki scale gate kuyruğu tamamlandı (sonuç "Son Deneyler"); MPS boş.
+| Run | Config | Durum | PID | Log |
+|---|---|---|---|---|
+| R1 D=64 × 200K-wiki | 50ep, batch 64, seed/eval düzeni sabit; ortak BPE | çalışıyor | queue 42316 (train 42331) | `logs/run_d64_200k.log` |
 
 **Bitiş teşhisi (tarih):** 1.5M wiki run'ı epoch 17/20'de exit 137 ile OOM/kill oldu (RSS ~13.2 GB, free ~1.2 GB); epoch 18–20, bellek düzeltmesi sonrası kuyruktan resume edildi. Queue'daki step-4 eval, stdin çalıştırmasında `training/`'in sys.path'te olmaması ile bir kez FAILED (ModuleNotFoundError); script düzeltildi, eval retry ile tamamlandı.
 
@@ -37,7 +39,7 @@ hassasiyet değil. Bulut (10×32=320 sayı), transformer gizli durumunun
 
 | # | Hipotez | Öncelik | Durum |
 |---|---|---|---|
-| R1 | Kapasite: D=64 / D=128 | 1 | **kapandı** — 20K: D=64 en iyi (181 vs 201); 1.5M karşılaştırması artefaktı elenince wiki scale-gate'te (aynı 200K dağıtımı) 50ep/200K 24.5 PPL, 20ep/1.5M 64.3 → bu bütçelerde kaldıraç tekrar derinliği. D×ölçek grid'i (D=64×200K-wiki) açık aday. |
+| R1 | Kapasite: D=64 / D=128 | 1 | 20K: D=64 en iyi (181 vs 201); wiki D=32 kontrolünde derinlik baskın çıktı. D=64×200K-wiki/50ep gate çalışıyor (`logs/run_d64_200k.log`). |
 | R2 | Cloud attention (ilişkisel sözlük genişletme) | 3 | bekliyor |
 | R3 | Attention-weighted pooling (max-pool onarımı) | 2 | bekliyor |
 | R4 | QUANN: aramayı pair-kanalına yönlendir (freeze varyantı) | 4 | bekliyor |
@@ -53,9 +55,9 @@ hassasiyet değil. Bulut (10×32=320 sayı), transformer gizli durumunun
 ## Sıradaki Aksiyonlar
 
 1. **P1:** Tam 4.7M false-alarm audit'ini yeniden koş (`--dom-pairs`; dominant çift joint'i non-additivity'yi n=1'den istatistiğe taşır) — ≥12GB bellek gerekir (şu an 8.8GB, splash ~50GB); bellek boşalınca `bash fraud/scripts/run_false_alarm_audit.sh`.
-2. **Aday (MPS boş):** D=64 × 200K-wiki/50ep — R1 kapasite × derinlik gate.
+2. **Canlı (MPS):** R1 D=64 × 200K-wiki/50ep — `logs/run_d64_200k.log`; bitince held-out PPL'yi D=32/6.45 ile karşılaştır ve bu satırı deney geçmişine taşı.
 3. Push: 2 commit (`181539a` upper-slice, `5f66aed` audit) ağ gelince push (ağ şu an kapalı); karar kullanıcıda.
-4. **Doküman satır bütçesi** kuralı kondu (AGENTS.md §3.7 + `scripts/check_docs_lines.sh`; formal istisna: `docs/patent/**`, `paper_draft`). 6 bütçe-üstü dosya grandfather'da; ağ gelince `archiver` → `quann_cloud/PATENT_QUANN_CLOUD.md` + `PATENT_V2.md` `_archive/`e, `cleaner` → 4 dosyayı ≤200'ye distil + checker listesi temizlenir.
+4. **Doküman satır bütçesi** kuralı kondu (AGENTS.md §3.7 + `scripts/check_docs_lines.sh`; formal istisna: `docs/patent/**`, `paper_draft`). Geçiş kuyruğu TAMAM (2026-10-20, ağ kapalı → kullanıcı onayıyla ana oturumda): 2 bayat patent `_archive/quann_cloud/`a (gerekçe `ARCHIVE.md`), 4 dosya ≤200'ye distile (fraud/README 198, FINDINGS 195, PROJECT_SUMMARY 173, DESIGN 173), checker listesi temiz → `OK`.
 
 ## Subproje: quann_cloud/
 
@@ -99,7 +101,7 @@ K10/B8 hybrid aynı-split GBT'den geride. E2 açıklanabilirlik probe'u
 `aml/results/e2_explain.json`'da (held-out nearest-prototype %75, illicit %45);
 ham tutar ve hesap kimliği yok, tek-hop proxy/transductive sınırlaması açık.
 Gerçek-veri bölge haritası `viz` işi; E3′ bağımsız zaman-disjoint doğrulaması tamamlandı.
-`maintenance/` = C-MAPSS/CWRU (pencere→bulut); alt-proje run'ları CPU. MPS şu an boş.
+`maintenance/` = C-MAPSS/CWRU (pencere→bulut); alt-proje run'ları CPU. MPS şu an R1 D=64 eğitiminde.
 Positioning: `aml/figures/typology_naming_{comparison,layering}.png` + `aml/figures/e2_elliptic_{region_map,naming_comparison}.png` (GBM/SHAP vs bölge-prototip; sentetik + gerçek) + makale `docs/paper_draft.md` §6.5 (isimlendirme boşluğu).
 
 ## Dondurulmuş Kurallar
