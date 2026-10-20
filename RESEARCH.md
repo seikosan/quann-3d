@@ -108,3 +108,9 @@ Positioning: `aml/figures/typology_naming_{comparison,layering}.png` + `aml/figu
 
 `AGENTS.md` §3'e bak: `state_dict` ana adları, checkpoint adlandırması,
 `logs/` append-only, `_archive/` yolu.
+
+## Yedek Altyapısı
+
+`scripts/backup_ssd.sh`: günlük 03:00 (launchd `com.quann3d.backup-ssd`) →
+`/Volumes/x/backups/quann-3d/`: git bundle (tam geçmiş) + tam repo tar (artifact'lar
+dahil; 1 jenerasyon rotasyon `.prev`). SSD yoksa exit 2, zararsız. Restore: o README.
