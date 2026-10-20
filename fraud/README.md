@@ -172,7 +172,7 @@ treats the whole online-transaction cloud as fraud-like, not a few rare merchant
 Upper-slice candidates (`Rome` 5.6% of FPs, +8.19; `MCC=5970` and name hashes, 1
 row each) push hard per row but cover a small share. Joint pair masks (n=1,
 descriptive): with Rome present, masking (Rome + `MCC=5970`) unflags the row (1.00)
-though `MCC=5970` alone does not (0.00). Output: `results/false_alarm_audit.json`, `logs/run_false_alarm_audit.log`.
+though `MCC=5970` alone does not (0.00). Dominant-token joints (2026-10-20 re-run, n=558/80/80): joint ≈ max of singles (0.92/0.00/0.97) — super-additivity does not scale. Output: `results/false_alarm_audit.json` (prior: `false_alarm_audit_20261019.json`), `logs/run_false_alarm_audit.log`.
 
 **Deploy package (2026-10-19; `export_deploy.py`):** self-contained `results/deploy/` —
 `model.onnx` (543 KB, dynamic batch), `quantizer.json` (raw row → token ids),
@@ -192,7 +192,7 @@ Figures in `figures/` (regenerate: `python3 fraud/src/make_figures.py`): `standa
 | `results/strong_reader.json`, `rich_points.json` | D=8 reader capacity; D=16/32 rich points (K=20) |
 | `results/edge_eval.json`, `edge_eval_full_scale.json` | Footprint/latency/parity; full 4.7M FP32/INT8 AUC |
 | `results/full_scale_hybrid.json` | Reproducible full-scale hybrid metrics |
-| `results/explain_pilot.json`, `explain_upper_slice.json`, `false_alarm_audit.json` | Explanation + audit outputs |
+| `results/explain_pilot.json`, `explain_upper_slice.json`, `false_alarm_audit.json` (prior: `false_alarm_audit_20261019.json`) | Explanation + audit outputs |
 | `results/deploy/` | `model.onnx` (gitignored) + `quantizer.json` + `token_decoder.json` + `manifest.json` |
 
 Other artifacts and checkpoint provenance: `results/MANIFEST.md`.

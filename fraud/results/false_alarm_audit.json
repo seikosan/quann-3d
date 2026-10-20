@@ -926,6 +926,47 @@
       "frac_unflagged_single_b": 0.0
     }
   ],
+  "dom_joint": [
+    {
+      "tokens": [
+        "Merchant State=other",
+        "Merchant City=Rome"
+      ],
+      "n_rows_both": 558,
+      "n_unflagged_joint": 515,
+      "frac_unflagged_joint": 0.9229390681003584,
+      "n_unflagged_single_a": 245,
+      "frac_unflagged_single_a": 0.4390681003584229,
+      "n_unflagged_single_b": 536,
+      "frac_unflagged_single_b": 0.9605734767025089
+    },
+    {
+      "tokens": [
+        "Merchant State=other",
+        "MCC=5541"
+      ],
+      "n_rows_both": 80,
+      "n_unflagged_joint": 0,
+      "frac_unflagged_joint": 0.0,
+      "n_unflagged_single_a": 0,
+      "frac_unflagged_single_a": 0.0,
+      "n_unflagged_single_b": 0,
+      "frac_unflagged_single_b": 0.0
+    },
+    {
+      "tokens": [
+        "Merchant City=Rome",
+        "MCC=5541"
+      ],
+      "n_rows_both": 80,
+      "n_unflagged_joint": 78,
+      "frac_unflagged_joint": 0.975,
+      "n_unflagged_single_a": 77,
+      "frac_unflagged_single_a": 0.9625,
+      "n_unflagged_single_b": 0,
+      "frac_unflagged_single_b": 0.0
+    }
+  ],
   "cases": [
     {
       "row": 31587,
@@ -1349,6 +1390,7 @@
     "positive_means": "feature supports the fraud prediction",
     "counterfactual": "single-point mask: sigmoid(base - contrib_j) < threshold => row unflagged",
     "joint": "both points masked in one forward (non-additive; not the sum of singles)",
+    "dom_joint": "same joint test over the dominant (most-populous) positive tokens; statistically meaningful n vs the rare-token joint",
     "caveat": "ablation sensitivity, not SHAP; pair-geometry makes contributions non-additive",
     "population": "normals predicted fraud at the operational threshold"
   }
