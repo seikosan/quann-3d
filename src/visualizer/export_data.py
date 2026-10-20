@@ -97,9 +97,11 @@ def cloud_section():
     print(f"   yüklendi: {sum(p.numel() for p in model.parameters())/1e6:.1f}M param, "
           f"vocab {tok.num_tokens}, best PPL {ck['ppl']:.2f}", flush=True)
 
-    # cümle → (kelime etiketleri, token id'leri).
+    # cümle → (kelime etiketleri, token id'leri, kelime→token grupları).
     # Tam cümle encode edilir (model bu biçimde eğitildi); kelime grupları
     # token offset'lerinden çıkarılır, etiketler BPE decoder ile temizlenir.
+    # wordSpans: kelimelerin token dizisindeki [başlangıç, bitiş) aralıkları —
+    # 1 kelime = 1+ BPE token olabildiğinden nokta/kelime sayıları eşit değildir.
     def encode_words(text):
         enc = tok._tokenizer.encode(text)
         ids, offsets = enc.ids, enc.offsets
@@ -118,12 +120,17 @@ def cloud_section():
                     groups[wi].append(ids[i])
                     break
         words = [tok.decode(g).strip() if g else "" for g in groups]
-        return words, ids, [len(g) for g in groups]
+        gsizes = [len(g) for g in groups]
+        bounds = [0]
+        for g in gsizes:
+            bounds.append(bounds[-1] + g)
+        spans = [[bounds[i], bounds[i + 1]] for i in range(len(bounds) - 1)]
+        return words, ids, gsizes, spans
 
     sents = []
     all_pts = []
     for text in CLOUD_SENTENCES:
-        words, ids, gsizes = encode_words(text)
+        words, ids, gsizes, spans = encode_words(text)
         full = ids
         frag = ids[: len(ids) - gsizes[-1]]  # son KELIMEYİ (tüm tokenları) gizle
         with torch.no_grad():
@@ -142,10 +149,12 @@ def cloud_section():
         sents.append({
             "text": text,
             "words": words,
+            "wordSpans": spans,
             "pts": r3m(pts_f[0]),
             "nextPt": r3(np_f[0]),
             "top5": top5(probs_f),
             "fragWords": words[:-1],
+            "fragSpans": spans[:-1],
             "fragPts": r3m(pts_r[0]),
             "fragNextPt": r3(np_r[0]),
             "fragTop5": top5(probs_r),

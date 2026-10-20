@@ -59,6 +59,7 @@ button.ctl.on{color:var(--accent); border-color:var(--accent)}
 .chip.neutral,.chip.noop,.chip.converged,.chip.start{background:rgba(148,163,184,.14); color:var(--chipn); border:1px solid rgba(148,163,184,.35)}
 input[type=range]{width:100%; accent-color:var(--accent)}
 .note{font-size:12px; color:var(--muted); line-height:1.55; margin-top:8px}
+.sent{color:var(--doc); font-size:13px; line-height:1.6}
 .rule{font-size:12px; color:var(--muted); padding:5px 0 5px 12px; border-left:2px solid var(--border); margin-bottom:5px}
 table.cmp{width:100%; border-collapse:collapse; font-size:13px; margin:10px 0}
 table.cmp th,table.cmp td{border:1px solid var(--border); padding:7px 10px; text-align:left}
@@ -113,6 +114,7 @@ table.cmp th{background:var(--panel); color:var(--muted); font-size:12px}
     <aside>
       <h3>Cümle</h3>
       <div class="selwrap"><select id="b-sent"></select></div>
+      <div class="sent" id="b-senttext"></div>
       <div class="togrow">
         <button class="ctl on" id="b-full">Tam cümle</button>
         <button class="ctl" id="b-frag">Son kelime gizli → tahmin</button>
@@ -303,57 +305,80 @@ const V3 = a => new THREE.Vector3(a[0], a[1], a[2]);
 
    function clear(){ if(cloudGrp) while(cloudGrp.children.length) cloudGrp.children.pop(); selected = -1; labelHost.innerHTML = ""; window._bulutLbls = []; }
 
-   function build(){
-     clear();
-     const s = sents[idx];
-     const words = mode === "full" ? s.words : s.fragWords;
-     const pts = mode === "full" ? s.pts3 : s.fragPts3;
-     const nextPt = mode === "full" ? s.nextPt3 : s.fragNextPt3;
-     const top5 = mode === "full" ? s.top5 : s.fragTop5;
-     const hiddenWord = mode === "frag" ? s.words[s.words.length-1] : null;
-     const Dm = mode === "full" ? s.distM : s.fragDistM;
+    // kelime i → o token grubunun 3D centroid'u (1 kelime = 1+ BPE token)
+    function centroid(sp, pts){
+      let x=0, y=0, z=0;
+      for(let i=sp[0]; i<sp[1]; i++){ x+=pts[i][0]; y+=pts[i][1]; z+=pts[i][2]; }
+      const k = Math.max(1, sp[1]-sp[0]);
+      return [x/k, y/k, z/k];
+    }
 
-     const n = words.length;
-     if(o){
-       const maxD = Math.max(...Dm.flat(), 1e-6);
-       // çift çizgileri (mesafe: yakın=sıcak, uzak=soğuk)
-       for(let i=0;i<n;i++) for(let j=i+1;j<n;j++){
-         const d = Dm[i][j];
-         const t = Math.min(1, d / maxD);
-         const c2 = new THREE.Color().setHSL(0.02*(1-t) + 0.6*t, .75, .5);
-         const a = V3(pts[i]).multiplyScalar(S), b = V3(pts[j]).multiplyScalar(S);
-         cloudGrp.add(lineBetween(a, b, c2.getHex(), .28 + .5*(1-t)));
-       }
-       // noktalar + etiketler
-       for(let i=0;i<n;i++){
-         const p = V3(pts[i]).multiplyScalar(S);
-         const sp = new THREE.Mesh(new THREE.SphereGeometry(.075, 20, 20),
-           new THREE.MeshBasicMaterial({color: new THREE.Color(C.palette[i % C.palette.length])}));
-         sp.position.copy(p); sp.userData.idx = i;
-         cloudGrp.add(sp);
-         const el = document.createElement("div"); el.className = "lbl"; el.textContent = words[i];
-         labelHost.appendChild(el); window._bulutLbls.push({el, p, sp});
-       }
-       // bir sonraki nokta (hayalet) + en yakın kelimeyle kesik çizgi
-       const gp = V3(nextPt).multiplyScalar(S);
-       const ghost = new THREE.Mesh(new THREE.SphereGeometry(.09, 16, 16),
-         new THREE.MeshBasicMaterial({color:0xffffff, wireframe:true, transparent:true, opacity:.85}));
-       ghost.position.copy(gp); cloudGrp.add(ghost);
-       let best = -1, bc = -2;
-       for(let i=0;i<n;i++){ const ni = Math.max(1e-8, Math.hypot(...pts[i])); const nj = Math.max(1e-8, Math.hypot(...nextPt));
-         const c = (pts[i][0]*nextPt[0]+pts[i][1]*nextPt[1]+pts[i][2]*nextPt[2])/(ni*nj);
-         if(c > bc){ bc = c; best = i; } }
-       if(best >= 0){ const lp = V3(pts[best]).multiplyScalar(S); cloudGrp.add(lineBetween(lp, gp, 0xffffff, .7, true)); }
-       const gel = document.createElement("div"); gel.className = "lbl tgt"; gel.textContent = "→ " + (top5[0] ? top5[0].w : "?");
-       labelHost.appendChild(gel); window._bulutLbls.push({el:gel, p:gp, sp:ghost});
-     }
-     // yan panel
-     $("#b-top5").innerHTML = top5.map(t =>
-       `<div class="row"><span class="w">${t.w}</span><span class="t"><span class="f" style="width:${(t.p*100).toFixed(1)}%"></span></span><span class="p">${(t.p*100).toFixed(1)}%</span></div>`).join("");
-     $("#b-note").innerHTML = mode === "full"
-       ? `Bu cümlenin ${DATA.cloud.cfg.d_cloud_dim} boyutlu gerçek bulutu (32D → 3D PCA). Çizgiler kelime çiftleri: <b style="color:#fbbf24">sıcak</b> = yakın (güçlü bağ), <b style="color:#60a5fa">soğuk</b> = uzak. Beyaz kesik nokta = modelin tahmin ettiği <b>sonraki kelimenin</b> buluttaki konumu (point_head).`
-       : `Son kelime gizlendi — kalan buluttan model <b>${top5[0] ? top5[0].w : "?"}</b> diyor (gerçek: <b>${hiddenWord}</b>). Bulut geometrisi (mesafe + açı) tahmini belirler: sıralama değil, <b>konfigürasyon</b>.`;
-   }
+    function build(){
+      clear();
+      const s = sents[idx];
+      const words = mode === "full" ? s.words : s.fragWords;
+      const spans = (mode === "full" ? s.wordSpans : s.fragSpans) || words.map((_,i)=>[i,i+1]);
+      const pts = mode === "full" ? s.pts3 : s.fragPts3;
+      const nextPt = mode === "full" ? s.nextPt3 : s.fragNextPt3;
+      const top5 = mode === "full" ? s.top5 : s.fragTop5;
+      const hiddenWord = mode === "frag" ? s.words[s.words.length-1] : null;
+      const Dm = mode === "full" ? s.distM : s.fragDistM;
+      const cent = words.map((w,i) => centroid(spans[i], pts));
+
+      const nt = pts.length;  // token sayısı (bulutun gerçek çözünürlüğü)
+      if(o){
+        const maxD = Math.max(...Dm.flat(), 1e-6);
+        // çift çizgileri (token-token; mesafe: yakın=sıcak, uzak=soğuk)
+        for(let i=0;i<nt;i++) for(let j=i+1;j<nt;j++){
+          const d = Dm[i][j];
+          const t = Math.min(1, d / maxD);
+          const c2 = new THREE.Color().setHSL(0.02*(1-t) + 0.6*t, .75, .5);
+          const a = V3(pts[i]).multiplyScalar(S), b = V3(pts[j]).multiplyScalar(S);
+          cloudGrp.add(lineBetween(a, b, c2.getHex(), .28 + .5*(1-t)));
+        }
+        // tüm token noktaları (renk = ait olduğu kelime)
+        for(let i=0;i<nt;i++){
+          const p = V3(pts[i]).multiplyScalar(S);
+          let wi = nt - 1;
+          for(let k=0;k<spans.length;k++){ if(i >= spans[k][0] && i < spans[k][1]){ wi = k; break; } }
+          const sp = new THREE.Mesh(new THREE.SphereGeometry(.075, 20, 20),
+            new THREE.MeshBasicMaterial({color: new THREE.Color(C.palette[wi % C.palette.length])}));
+          sp.position.copy(p); sp.userData.tok = i; sp.userData.wi = wi;
+          cloudGrp.add(sp);
+        }
+        // kelime etiketleri: her kelimenin token grubunun centroid'ünde
+        for(let k=0;k<words.length;k++){
+          const p = V3(cent[k]).multiplyScalar(S);
+          const el = document.createElement("div"); el.className = "lbl"; el.textContent = words[k];
+          labelHost.appendChild(el); window._bulutLbls.push({el, p, sp:null, wi:k});
+        }
+        // bir sonraki nokta (hayalet) + en yakın kelimeyle kesik çizgi
+        const gp = V3(nextPt).multiplyScalar(S);
+        const ghost = new THREE.Mesh(new THREE.SphereGeometry(.09, 16, 16),
+          new THREE.MeshBasicMaterial({color:0xffffff, wireframe:true, transparent:true, opacity:.85}));
+        ghost.position.copy(gp); cloudGrp.add(ghost);
+        let best = -1, bc = -2;
+        for(let k=0;k<cent.length;k++){ const ni = Math.max(1e-8, Math.hypot(...cent[k])); const nj = Math.max(1e-8, Math.hypot(...nextPt));
+          const c = (cent[k][0]*nextPt[0]+cent[k][1]*nextPt[1]+cent[k][2]*nextPt[2])/(ni*nj);
+          if(c > bc){ bc = c; best = k; } }
+        if(best >= 0){ const lp = V3(cent[best]).multiplyScalar(S); cloudGrp.add(lineBetween(lp, gp, 0xffffff, .7, true)); }
+        const gel = document.createElement("div"); gel.className = "lbl tgt"; gel.textContent = "→ " + (top5[0] ? top5[0].w : "?");
+        labelHost.appendChild(gel); window._bulutLbls.push({el:gel, p:gp, sp:ghost});
+      }
+      // yan panel: tam cümle + top-5 + not
+      const esc = w => String(w).replace(/&/g,"&amp;").replace(/</g,"&lt;");
+      if(mode === "full"){
+        $("#b-senttext").innerHTML = s.words.map(esc).join(" ");
+      } else {
+        $("#b-senttext").innerHTML = s.fragWords.map(esc).join(" ") +
+          ` <span style="opacity:.55">… <b>${esc(hiddenWord)}</b> gizli</span>`;
+      }
+      $("#b-top5").innerHTML = top5.map(t =>
+        `<div class="row"><span class="w">${t.w}</span><span class="t"><span class="f" style="width:${(t.p*100).toFixed(1)}%"></span></span><span class="p">${(t.p*100).toFixed(1)}%</span></div>`).join("");
+      $("#b-note").innerHTML = mode === "full"
+        ? `Bu cümlenin ${DATA.cloud.cfg.d_cloud_dim} boyutlu gerçek bulutu (32D → 3D PCA); ${nt} nokta = BPE tokenları. Çizgiler token çiftleri: <b style="color:#fbbf24">sıcak</b> = yakın (güçlü bağ), <b style="color:#60a5fa">soğuk</b> = uzak. Beyaz kesik nokta = modelin tahmin ettiği <b>sonraki kelimenin</b> buluttaki konumu (point_head).`
+        : `Son kelime gizlendi — kalan buluttan model <b>${top5[0] ? top5[0].w : "?"}</b> diyor (gerçek: <b>${hiddenWord}</b>). Bulut geometrisi (mesafe + açı) tahmini belirler: sıralama değil, <b>konfigürasyon</b>.`;
+    }
    window._bulutLbls = [];
    build();
 
@@ -363,19 +388,24 @@ const V3 = a => new THREE.Vector3(a[0], a[1], a[2]);
      o.r.domElement.addEventListener("click", e => {
        const r = o.r.domElement.getBoundingClientRect();
        mpt.set(((e.clientX - r.left)/r.width)*2 - 1, -((e.clientY - r.top)/r.height)*2 + 1);
-       ray.setFromCamera(mpt, o.cam);
-       const hit = ray.intersectObjects(cloudGrp.children).find(h => h.object.userData.idx !== undefined);
-       selected = hit ? hit.object.userData.idx : -1;
-       const s = sents[idx];
-       const wi = $("#b-wordinfo");
-       if(selected < 0){ wi.innerHTML = "Bir noktaya tıklayın."; return; }
-       const words = mode === "full" ? s.words : s.fragWords;
-       const Dm = mode === "full" ? s.distM : s.fragDistM;
-       const Cm = mode === "full" ? s.cosM : s.fragCosM;
-       const Pts3 = mode === "full" ? s.pts3 : s.fragPts3;
-       const rows = Dm[selected].map((d, j) => ({j, d, c: Cm[selected][j]}))
-        .filter(r => r.j !== selected).sort((a,b) => a.d - b.d).slice(0,4);
-       wi.innerHTML = `<b style="color:${C.palette[selected % C.palette.length]}">${words[selected]}</b> — konum (${Pts3[selected].map(v=>v.toFixed(2)).join(", ")})<br>` +
+        ray.setFromCamera(mpt, o.cam);
+        const hit = ray.intersectObjects(cloudGrp.children).find(h => h.object.userData.tok !== undefined);
+        selected = hit ? hit.object.userData.wi : -1;
+        const s = sents[idx];
+        const wi = $("#b-wordinfo");
+        if(selected < 0){ wi.innerHTML = "Bir noktaya tıklayın."; return; }
+        const words = mode === "full" ? s.words : s.fragWords;
+        const spans = (mode === "full" ? s.wordSpans : s.fragSpans) || words.map((_,i)=>[i,i+1]);
+        const Pts3 = mode === "full" ? s.pts3 : s.fragPts3;
+        const cent = words.map((w,k) => centroid(spans[k], Pts3));
+        const self = cent[selected];
+        const rows = cent.map((c, j) => {
+          if(j === selected) return null;
+          const d = Math.hypot(self[0]-c[0], self[1]-c[1], self[2]-c[2]);
+          const ni = Math.max(1e-8, Math.hypot(...self)), nj = Math.max(1e-8, Math.hypot(...c));
+          return {j, d, c: (self[0]*c[0]+self[1]*c[1]+self[2]*c[2])/(ni*nj)};
+        }).filter(Boolean).sort((a,b) => a.d - b.d).slice(0,4);
+        wi.innerHTML = `<b style="color:${C.palette[selected % C.palette.length]}">${words[selected]}</b> — konum (${self.map(v=>v.toFixed(2)).join(", ")})<br>` +
         rows.map(r => `<span style="color:var(--muted)">↔ ${words[r.j]}</span> &nbsp;mesafe ${r.d.toFixed(2)} · açı ${Math.acos(Math.max(-1,Math.min(1,r.c))).toFixed(2)} rad</span>`).join("<br>") +
         `<br><span class="note">Yakın + küçük açı = güçlü semantik/sözdizimsel bağ.</span>`;
      });
@@ -386,17 +416,21 @@ const V3 = a => new THREE.Vector3(a[0], a[1], a[2]);
      if(!o){ return; }
      o.upd(); fitCanvas(o);
      const w = o.r.domElement.clientWidth, h = o.r.domElement.clientHeight;
-     for(const L of (window._bulutLbls || [])){
-       const p = toScreen(L.p, o.cam, w, h);
-       if(p.behind){ L.el.style.display = "none"; continue; }
-       L.el.style.display = ""; L.el.style.left = p.x + "px"; L.el.style.top = p.y + "px";
-       const selOn = L.sp && L.sp.userData.idx === selected;
+      for(const L of (window._bulutLbls || [])){
+        const p = toScreen(L.p, o.cam, w, h);
+        if(p.behind){ L.el.style.display = "none"; continue; }
+        L.el.style.display = "";
+        // kenar kesilmesini önle: etiket'i konteyner içinde tut
+        const hx = L.el.offsetWidth/2, hy = L.el.offsetHeight/2;
+        L.el.style.left = Math.max(hx+2, Math.min(w-hx-2, p.x)) + "px";
+        L.el.style.top = Math.max(hy+2, Math.min(h-hy-2, p.y)) + "px";
+        const selOn = L.wi !== undefined && L.wi === selected;
         const hl = window.theme === "light" ? "#b45309" : "#fbbf24";
         L.el.style.borderColor = selOn ? hl : "";
         L.el.style.boxShadow = selOn ? `0 0 10px ${hl}66` : "";
-     }
-      o.r.render(o.scene, o.cam);
-      raf = requestAnimationFrame(loop);
+      }
+       o.r.render(o.scene, o.cam);
+       raf = requestAnimationFrame(loop);
     }
     // tema → sahne renkleri
     window._themeFns.push(t => {
@@ -567,14 +601,17 @@ const V3 = a => new THREE.Vector3(a[0], a[1], a[2]);
   function loop(){
     if(!o){ return; }
     o.upd(); fitCanvas(o);
-    const w = o.r.domElement.clientWidth, h = o.r.domElement.clientHeight;
-    for(const L of (window._qLbls || [])){
-      const p = toScreen(L.p, o.cam, w, h);
-      if(p.behind){ L.el.style.display = "none"; continue; }
-      L.el.style.display = ""; L.el.style.left = p.x + "px"; L.el.style.top = p.y + "px";
-    }
-    o.r.render(o.scene, o.cam);
-    raf = requestAnimationFrame(loop);
+      const w = o.r.domElement.clientWidth, h = o.r.domElement.clientHeight;
+      for(const L of (window._qLbls || [])){
+        const p = toScreen(L.p, o.cam, w, h);
+        if(p.behind){ L.el.style.display = "none"; continue; }
+        L.el.style.display = "";
+        const hx = L.el.offsetWidth/2, hy = L.el.offsetHeight/2;
+        L.el.style.left = Math.max(hx+2, Math.min(w-hx-2, p.x)) + "px";
+        L.el.style.top = Math.max(hy+2, Math.min(h-hy-2, p.y)) + "px";
+      }
+      o.r.render(o.scene, o.cam);
+      raf = requestAnimationFrame(loop);
   }
   // tema → sahne renkleri (applyFrame kutu renklerini, sonundaki drawChart ise grafiği yeniden tema'ya göre çizer)
   window._themeFns.push(t => {
