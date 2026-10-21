@@ -34,7 +34,7 @@ CloudLM 200K (D=32, 50ep) üzerinde:
   - D=64: train **21.20**; slice (ilk-200K, in-sample) **19.08**; full-1.5M pool **59.32** (kısmi overlap). Train≈slice → kendi dağıtımında overfit yok.
   - 2621.31 (`R1_MATCHED_645`) **korpus OOD artefaktı**: 6.45 referansı `turkish_sentences.txt`'de, D=64 wiki'de eğitildi. Protokolün D32 ayağı 6.45'i birebir repro'ladı (validasyon) — D64 ayağı kapasite sinyali taşımıyor.
   - Aynı-pool 19.08 vs 24.53 + 1.5M 59.32 vs 218.84 yönsel olarak D=64 lehine ama (a) in-sample, (b) eski D32 kontrolü farklı BPE → **tek başına hüküm verilmez**.
-  - **FİNAL hüküm** = eşleşen duel: yeni D32 (aynı shared BPE `wiki_bpe.json`, aynı 200K-wiki) `logs/run_d32_wiki200k.log` içinde disjoint [200000,202000) holdout ile `DUEL_SUMMARY` üretecek (eğitim 21/50ep, bitiş ~yarın 17:00). Sonra 2.94 (causal baseline) kıyası ve D=128 adımı.
+  - **FİNAL hüküm** = eşleşen duel: yeni D32 (aynı shared BPE `wiki_bpe.json`, aynı 200K-wiki) `logs/run_d32_wiki200k.log` içinde disjoint [200000,202000) holdout ile `DUEL_SUMMARY` üretecek (eğitim 6/50ep, ~30dk/ep → bitiş ~yarın akşam). Sonra 2.94 (causal baseline) kıyası ve D=128 adımı.
 
 ### R2 — Cloud Attention (ilişkisel sözlük genişletme)
 - CloudEncoderND'ye, pooling öncesi nokta-üstü self-attention (2-4 head) ekle.
