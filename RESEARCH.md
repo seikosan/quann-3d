@@ -55,7 +55,7 @@ hassasiyet değil. Bulut (10×32=320 sayı), transformer gizli durumunun
 ## Sıradaki Aksiyonlar
 
 1. **R1 (öncelik):** D32 eğitim bitince `logs/run_d32_wiki200k.log` içindeki `DUEL_SUMMARY`'yi oku; aynı BPE ve [200000,202000) holdout D32/D64 PPL farkına göre R1 kararı ver, canlı satırı kaldırıp metrikli sonucu “Son Deneyler”e taşı (en eski satırı düşür).
-2. **P1:** QAT gate TAMAM (2026-10-21); kullanıcı kararı bekliyor: QAT checkpoint'inden deploy paketi re-export (`run_export_deploy.sh` + parite self-test) ya da mevcut paketi koruma. Kanıt: `fraud/results/qat_gate.json`.
+2. **P1 TAMAM (2026-10-21, kullanıcı kararıyla):** `fraud/results/deploy/` QAT checkpoint'inden re-export edildi (ONNX 543KB; gerçek-satır parite **1.46e-6**, 54k tx/s; decoder 221) — manifest `quann_qat_gate.pt`'yi sha256 ile kaydeder. Pre-QAT paket → `fraud/results/deploy_pre_qat/` (geri dönüş). Kanıt: `fraud/results/qat_gate.json` + `fraud/logs/run_export_deploy.log`.
 3. Remote yok: `181539a`/`5f66aed` yerelde; push değil — gerekiyse `scripts/backup_ssd.sh`/bundle ile yedekle.
 
 ## Subproje: quann_cloud/
