@@ -30,6 +30,11 @@ CloudLM 200K (D=32, 50ep) üzerinde:
 - En doğrudan müdahale. Point/pair MLP'ler D ile ölçeklenir (maliyet ~2-4×).
 - **Test:** 20K, 10ep, D=64 ve D=128 → held-out PPL + Transformer'a oran.
 - Beklenti: 6.45 → ~4-5 (D=64), ~3-4 (D=128)? 2.94'ü geçebilir mi?
+- **ARA SONUÇ (2026-10-21, D=64×200K-wiki/50ep, `logs/run_d64_200k.log`):**
+  - D=64: train **21.20**; slice (ilk-200K, in-sample) **19.08**; full-1.5M pool **59.32** (kısmi overlap). Train≈slice → kendi dağıtımında overfit yok.
+  - 2621.31 (`R1_MATCHED_645`) **korpus OOD artefaktı**: 6.45 referansı `turkish_sentences.txt`'de, D=64 wiki'de eğitildi. Protokolün D32 ayağı 6.45'i birebir repro'ladı (validasyon) — D64 ayağı kapasite sinyali taşımıyor.
+  - Aynı-pool 19.08 vs 24.53 + 1.5M 59.32 vs 218.84 yönsel olarak D=64 lehine ama (a) in-sample, (b) eski D32 kontrolü farklı BPE → **tek başına hüküm verilmez**.
+  - **FİNAL hüküm** = eşleşen duel: yeni D32 (aynı shared BPE `wiki_bpe.json`, aynı 200K-wiki) `logs/run_d32_wiki200k.log` içinde disjoint [200000,202000) holdout ile `DUEL_SUMMARY` üretecek (eğitim 21/50ep, bitiş ~yarın 17:00). Sonra 2.94 (causal baseline) kıyası ve D=128 adımı.
 
 ### R2 — Cloud Attention (ilişkisel sözlük genişletme)
 - CloudEncoderND'ye, pooling öncesi nokta-üstü self-attention (2-4 head) ekle.
@@ -64,5 +69,6 @@ Her varyant: 20K × 10ep (~2-4 saat) → vaat edeni 200K'a ölçekle.
 
 - [x] Hassasiyet analizi (bu dosya)
 - [x] Ölçek kuyruğu: 1.5M OOM/kill teşhisi + `train_wiki.py` bellek düzeltmesi + resume 18–20 + 200K-wiki/50ep kontrol + eş dağıtım eval; on-wiki 62.15, aynı 200K kesitinde 200K/50ep 24.53 vs 1.5M/20ep 64.28
-- [x] R1 20K ön-test: D=64 en iyi (181 vs 201); wiki scale gate'inde D=32'de tekrar derinliği baskın; **D=64×200K-wiki/50ep** açık aday
+- [x] R1 20K ön-test: D=64 en iyi (181 vs 201); wiki scale gate'inde D=32'de tekrar derinliği baskın
+- [x] R1 D=64×200K-wiki/50ep TAMAM (2026-10-21) + eşleşen D32 kontrolü; **duel (disjoint holdout, aynı BPE) çalışıyor — hüküm `DUEL_SUMMARY`'de**
 - [ ] R2 cloud attention, R3 attention-weighted pooling, R4 QUANN freeze ön-testleri

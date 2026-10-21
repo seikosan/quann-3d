@@ -18,18 +18,18 @@ eğiten yöntem.
 
 | Run | Config | Durum | PID | Log |
 |---|---|---|---|---|
-| R1 D=64 × 200K-wiki | 50ep, batch 64, seed/eval düzeni sabit; ortak BPE | çalışıyor (epoch 32/50, PPL 33.6) | queue 42316 (train 42331) | `logs/run_d64_200k.log` |
+| R1-duel D32 × wiki-200K | D=32, d-model=256, d-cloud=512, 4L, seq=10, 50ep, batch=64, lr=2e-4; seed belirtilmemiş; ilk 200K satır; ortak BPE | Eğitim çalışıyor; duel bekliyor (D32 eşleşen kontrol eğitiliyor); holdout [200000,202000) | eğitim 28745; nohup wrapper 31865 | `logs/run_d32_200k.log` (eğitim), `logs/run_d32_wiki200k.log` (duel) |
 
 **Bitiş teşhisi (tarih):** 1.5M wiki run'ı epoch 17/20'de exit 137 ile OOM/kill oldu (RSS ~13.2 GB, free ~1.2 GB); epoch 18–20, bellek düzeltmesi sonrası kuyruktan resume edildi. Queue'daki step-4 eval, stdin çalıştırmasında `training/`'in sys.path'te olmaması ile bir kez FAILED (ModuleNotFoundError); script düzeltildi, eval retry ile tamamlandı.
 
-## Mevcut Best (ölçülmüş, ortak held-out 2000 cümle)
+## Mevcut Best (legacy protokol: seed=0 ile 2000 örnek; gerçek held-out değil)
 
-| Model | Config | Param | Held-out PPL | Checkpoint |
+| Model | Config | Param | PPL (legacy eval) | Checkpoint |
 |---|---|---|---|---|
 | CloudLM | D=32, 200K, 50ep | 21.0M | **6.45** | `checkpoints/wiki_checkpoints_200k/wiki_cloud_best.pt` |
 | Causal baseline | d=384, 4L, 200K, 50ep | 22.7M | **2.92** | `checkpoints/baseline_200k/baseline_best.pt` |
 
-> 1.5M: 143.00 **ölçüm artefaktı** (BPE/dağıtım eşleşmemesi). Scale-gate final: tam wiki dosyasında 1.5M **62.15** @20ep vs 200K-wiki 218.84 (baskın OOD); aynı 200K kesitinde 1.5M 64.28 vs 200K **24.53** (train 32.01) → aynı dağıtımda tekrar derinliği (50ep, ~231M token) veri genişliğine (20ep, ~716M, 3.1×) üstün; 1.5M'in kazanımı tam konu-kapsamı. Best 200K 6.45 (cümle dağıtımı) korundu.
+> 1.5M: 143.00 **ölçüm artefaktı** (BPE/dağıtım eşleşmemesi). Wiki PPL'leri eğitim korpusundan seed=0 örneklemidir: 62.15 tam 1.5M train'inden, 64.28/24.53 ilk-200K train kesitinden; D32'nin 218.84 ve D64'ün 59.32 full-1.5M örnekleri ilk-200K training slice ile kısmen örtüşebilir. D64 19.08 ilk-200K slice'tan tamamen in-sample'dır. Bu yüzden hiçbiri strict held-out değil; D32 wiki'nin 218.84/24.53 değerleri ayrıca D64 BPE'siyle eşleşmez ve aralarında kapasite kıyası yapılamaz. **10,698,546.20 / 8,041,277.58 BPE-mismatch ölçüm artefaktlarıdır.** 6.45 de `turkish_sentences` D32 eğitim kümesinden seed=0 örneklemesidir; held-out değildir. Mevcut Best satırı korunmuştur; bağımsız test gerekir.
 
 **Kök teşhis (sensitivity_analysis, ölçülmüş):** kapasite (D boyutu) —
 hassasiyet değil. Bulut (10×32=320 sayı), transformer gizli durumunun
@@ -39,7 +39,7 @@ hassasiyet değil. Bulut (10×32=320 sayı), transformer gizli durumunun
 
 | # | Hipotez | Öncelik | Durum |
 |---|---|---|---|
-| R1 | Kapasite: D=64 / D=128 | 1 | 20K: D=64 en iyi (181 vs 201); wiki D=32 kontrolünde derinlik baskın çıktı. D=64×200K-wiki/50ep gate çalışıyor (`logs/run_d64_200k.log`). |
+| R1 | Kapasite: D=64 / D=128 | 1 | Önceki wiki probeleri BPE eşleşmediğinden sonuçsuzdu; **D32 kontrol eğitiliyor, duel bekliyor** (D64 ile aynı 200K-wiki/BPE; disjoint sabit holdout). |
 | R2 | Cloud attention (ilişkisel sözlük genişletme) | 3 | bekliyor |
 | R3 | Attention-weighted pooling (max-pool onarımı) | 2 | bekliyor |
 | R4 | QUANN: aramayı pair-kanalına yönlendir (freeze varyantı) | 4 | bekliyor |
@@ -48,16 +48,15 @@ hassasiyet değil. Bulut (10×32=320 sayı), transformer gizli durumunun
 
 | Tarih | Run | Sonuç | Ders | Log |
 |---|---|---|---|---|
+| 2026-10-21 | R1 D=64 × 200K-wiki (50ep) | Wiki ilk 200K satır (189,872 uzun-sekans), referans BPE; train PPL **21.20**; full-corpus 59.32 (kısmi overlap riski), slice 19.08 (in-sample); 6.45 setinde D32=6.45, D64=2621.31; BPE-mismatch kontrolleri artefakt | 6.45 örneği D32'nin eğitim verisinden; D64 farklı corpus'ta eğitildi, wiki D32 BPE'si farklı — run kapasite etkisini ayırmıyor ve R1 sonuçsuz. | `logs/run_d64_200k.log` |
 | 2026-10-21 | P1 QAT gate (online-neutralized ckpt + STE fake-quant: per-channel weight + static per-tensor act; 4ep; full 4.7M) | @.9969: FP32 FP 8,468→6,817, TP 1,930→2,413; P/R .186/.316→.261/.395; PR/ROC .2706/.9474→.3097/.9502. INT8-channel FP 10,856→**3,834**, TP 1,922→2,014; P/R .150/.315→.344/.330; PR/ROC .2573/.9389→.2869/.9424 | Parity gap sistematik kaymaydı (100K: ΔP +0.059 ortalama, %72 yukarı); QAT FP32'yi de düzeltti — INT8 FP (3,834) FP32'den (6,817) bile düşük; kriter tuttu, operasyonel eşik değişmedi | `fraud/logs/run_qat_gate.log` |
 | 2026-10-20 | P1 online-cloud-separation (reader/head BCE fine-tune, 3ep; full 4.7M) | @.9969 FP32 FP 9,942→8,468, TP 1,842→1,930; P/R .156/.301→.186/.316; PR/ROC .2560/.9451→.2706/.9474. INT8-channel FP 27,858→10,856, TP 1,931→1,922; PR/ROC .2506/.9367→.2573/.9389 | Reader-space ayrım zayıf-orta (d/σ=.71 cloud, 1.00 encoded); fine-tune AUC'yi artırdı ama INT8 FP hâlâ FP32 baz çizgisinden yüksek — eşik davranışı çözülmedi | `fraud/logs/run_online_cloud_separation.log` |
 | 2026-10-20 | P1 fraud false-alarm audit re-run (full 4.7M, `--dom-pairs`; eski JSON → `false_alarm_audit_20261019.json`) | FP 9,942 birebir repro; dominant çiftler (n=558/80/80): joint **0.92/0.00/0.97** ≈ max(single 0.44/0.96, 0/0, 0.96/0) → **additif** | n=1 süper-adektivite (Rome+MCC=5970) istatistiksel n'de yok — operasyonel FP popülasyonu tek generic online tokenlar (ONLINE %94, MCC=5311 %61, amount>100 %73); pair-geometri non-additivity caveat'ı pratikte önemsiz | `fraud/logs/run_false_alarm_audit.log` |
-| 2026-10-19 | P1 fraud explanation deploy surface (ONNX + bundled quantizer + token decoder; 19.96K User0 row self-test) | gerçek-satır torch↔ORT parite max **1.5e-6**, ~**45.5k tx/s**; decoder 221 girdi = tam sözlük | edge_eval ONNX'i + quantizer + decoder tek paket (`fraud/results/deploy/`); `model.onnx` gitignored → sha256 manifest'te, `run_export_deploy.sh` ile repro | `fraud/logs/run_export_deploy.log` |
 ## Sıradaki Aksiyonlar
 
-1. **P1:** QAT gate TAMAM (2026-10-21): kriter tuttu — INT8-channel FP 3,834 (orijinal FP32 baz 9,942'nin çok altında), ROC .9424, TP 2,014; FP32 de düzeldi (FP 6,817, PR .3097). Aday `fraud/results/quann_qat_gate.pt`, kanıt `fraud/results/qat_gate.json`. Sıradaki: kullanıcı kararı — QAT ckpt'inden deploy paketi re-export (`run_export_deploy.sh` + parite self-test) vs mevcut paket korunur.
-2. **Canlı (MPS):** R1 D=64 × 200K-wiki/50ep — `logs/run_d64_200k.log`; bitince held-out PPL'yi D=32/6.45 ile karşılaştır ve bu satırı deney geçmişine taşı.
+1. **R1 (öncelik):** D32 eğitim bitince `logs/run_d32_wiki200k.log` içindeki `DUEL_SUMMARY`'yi oku; aynı BPE ve [200000,202000) holdout D32/D64 PPL farkına göre R1 kararı ver, canlı satırı kaldırıp metrikli sonucu “Son Deneyler”e taşı (en eski satırı düşür).
+2. **P1:** QAT gate TAMAM (2026-10-21); kullanıcı kararı bekliyor: QAT checkpoint'inden deploy paketi re-export (`run_export_deploy.sh` + parite self-test) ya da mevcut paketi koruma. Kanıt: `fraud/results/qat_gate.json`.
 3. Remote yok: `181539a`/`5f66aed` yerelde; push değil — gerekiyse `scripts/backup_ssd.sh`/bundle ile yedekle.
-4. **Doküman satır bütçesi** kuralı kondu (AGENTS.md §3.7 + `scripts/check_docs_lines.sh`; formal istisna: `docs/patent/**`, `paper_draft`). Geçiş kuyruğu TAMAM (2026-10-20, ağ kapalı → kullanıcı onayıyla ana oturumda): 2 bayat patent `_archive/quann_cloud/`a (gerekçe `ARCHIVE.md`), 4 dosya ≤200'ye distile (fraud/README 198, FINDINGS 195, PROJECT_SUMMARY 173, DESIGN 173), checker listesi temiz → `OK`.
 
 ## Subproje: quann_cloud/
 
@@ -101,7 +100,7 @@ K10/B8 hybrid aynı-split GBT'den geride. E2 açıklanabilirlik probe'u
 `aml/results/e2_explain.json`'da (held-out nearest-prototype %75, illicit %45);
 ham tutar ve hesap kimliği yok, tek-hop proxy/transductive sınırlaması açık.
 Gerçek-veri bölge haritası `viz` işi; E3′ bağımsız zaman-disjoint doğrulaması tamamlandı.
-`maintenance/` = C-MAPSS/CWRU (pencere→bulut); alt-proje run'ları CPU. MPS şu an R1 D=64 eğitiminde.
+`maintenance/` = C-MAPSS/CWRU (pencere→bulut); alt-proje run'ları CPU. R1 bitti; MPS'te aktif ağır eğitim yok.
 Positioning: `aml/figures/typology_naming_{comparison,layering}.png` + `aml/figures/e2_elliptic_{region_map,naming_comparison}.png` (GBM/SHAP vs bölge-prototip; sentetik + gerçek) + makale `docs/paper_draft.md` §6.5 (isimlendirme boşluğu).
 
 ## Dondurulmuş Kurallar
