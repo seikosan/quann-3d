@@ -35,6 +35,9 @@ SMALL_CSV = os.path.join(_BUNDLED, "User0_credit_card_transactions.csv")
 CARDS_CSV = os.path.join(_BUNDLED, "sd254_cards.csv")
 USERS_CSV = os.path.join(_BUNDLED, "sd254_users.csv")
 
+# Public benchmark branch (Kaggle cc-fraud); lives in the repo data dir, not the archive.
+DATA_DIR_KAGGLE = os.path.join(_REPO_ROOT, "data", "kaggle_cc")
+
 RESULTS_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "results")
 FIGURES_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "figures")
 LOGS_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "logs")
@@ -43,6 +46,10 @@ LOGS_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__
 LABEL_COL = "Is Fraud?"
 GROUP_COL = "User"          # identity -> used for GroupKFold (no leakage)
 AMOUNT_COL = "Amount"
+
+# Kaggle cc-fraud schema.
+KAGGLE_TIME_COL = "Time"
+KAGGLE_AMOUNT_COL = "Amount"
 
 # Random seed used across the sub-project for reproducibility.
 SEED = 20261015

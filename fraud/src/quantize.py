@@ -20,6 +20,10 @@ import pandas as pd
 
 import config  # noqa: F401  (also sets up repo-root import path)
 from features import derive_base, _slug
+from datasets_kaggle import derive_base_kaggle
+
+# base-derivation functions known to (de)serialization, by module-level name.
+BASE_FNS = {"derive_base": derive_base, "derive_base_kaggle": derive_base_kaggle}
 
 # Quantization spec: (feature_key, kind, n)
 #   kind 'quantile'  : n quantile bins of the numeric column (missing -> extra bucket)
@@ -58,12 +62,26 @@ QUANT_SPECS += [
     ("err_bad_zipcode", "int", 2),
 ]
 
+# Kaggle cc-fraud branch (V1-V28 are PCA-processed numerics -> quantile bins;
+# calendar derived from Time in datasets_kaggle.derive_base_kaggle). This spec
+# is independent of the frozen IBM specs above.
+KAGGLE_QUANT_SPECS = (
+    [(f"V{i}", "quantile", 16) for i in range(1, 29)]
+    + [
+        ("amount",      "quantile", 16),
+        ("hour",        "int", 24),
+        ("dayofweek",   "int", 7),
+        ("is_weekend",  "int", 2),
+    ]
+)
+
 
 class FeatureQuantizer:
     """Map a raw frame to an (N, K) int64 token matrix (1 token per feature)."""
 
-    def __init__(self, specs=None):
+    def __init__(self, specs=None, base_fn=None):
         self.specs = list(specs or QUANT_SPECS)
+        self.base_fn = base_fn or derive_base
         self.feature_order = [s[0] for s in self.specs]
         self.offsets: dict[str, int] = {}
         self.n_per_feature: dict[str, int] = {}
@@ -74,7 +92,7 @@ class FeatureQuantizer:
 
     # ------------------------------------------------------------------ fit
     def fit(self, raw: pd.DataFrame) -> "FeatureQuantizer":
-        base = derive_base(raw)
+        base = self.base_fn(raw)
         offset = 2  # 0 = pad, 1 = eos (reserved, mirroring QCloudNetwork)
         for key, kind, n in self.specs:
             if kind == "quantile":
@@ -134,7 +152,7 @@ class FeatureQuantizer:
     def transform(self, raw: pd.DataFrame) -> np.ndarray:
         if not self._fitted:
             raise RuntimeError("FeatureQuantizer.fit() must be called first")
-        base = derive_base(raw)
+        base = self.base_fn(raw)
         cols = []
         for key, kind, n in self.specs:
             b = self._bucket(raw, base, key, kind, n)
@@ -158,6 +176,7 @@ class FeatureQuantizer:
         """
         return {
             "specs": [list(s) for s in self.specs],
+            "base_fn": self.base_fn.__name__,
             "feature_order": list(self.feature_order),
             "offsets": {k: int(v) for k, v in self.offsets.items()},
             "n_per_feature": {k: int(v) for k, v in self.n_per_feature.items()},
@@ -169,7 +188,8 @@ class FeatureQuantizer:
 
     @classmethod
     def from_dict(cls, d: dict) -> "FeatureQuantizer":
-        fq = cls(specs=[tuple(s) for s in d["specs"]])
+        base_fn = BASE_FNS.get(d.get("base_fn", "derive_base"), derive_base)
+        fq = cls(specs=[tuple(s) for s in d["specs"]], base_fn=base_fn)
         fq.feature_order = list(d["feature_order"])
         fq.offsets = {k: int(v) for k, v in d["offsets"].items()}
         fq.n_per_feature = {k: int(v) for k, v in d["n_per_feature"].items()}
