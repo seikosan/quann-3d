@@ -62,6 +62,22 @@ gerekçe: eşik-kenarı kümesi").
 **Koşum notu:** CPU (MPS şu an boş; D=64×200K-wiki adayı için ayrılabilir) —
 `fraud/` ile aynı konvansiyon.
 
+## Compliance-grade çıktı
+
+`python3 -m aml.src.compliance_report --ckpt aml/results/quann_hybrid.pt --data <windows.csv> --out aml/results/audit_trail.jsonl`
+komutu her test penceresi için E1'deki encoder, en yakın prototip ve gerekçe
+şablonunu kullanarak zaman damgalı, model sürümü taşıyan bir JSONL denetim izi
+ekler. CSV, E1 pencere özelliklerini taşımalı; `split=train/test` varsa prototipler
+yalnızca train satırlarından öğrenilir. İz append-only'dir; analist incelemesi
+taslağıdır, otomatik SAR kararı değildir.
+
+**Sınırlar:** E5'te yalnızca kaba tipoloji adı görece kararlıydı; koordinatlar ve
+attribution büyüklükleri yeniden eğitimde kararlı değil, bu nedenle rapor yalnızca
+name-scope gerekçe verir. E0 sentetik bir proxy'dir; AML tipolojileri için gerçek
+bankacılık verisi yoktur. Elliptic E2/E2′ ayrı gerçek-veri proxy deneyidir
+(anonimleştirilmiş işlem düğümleri, 1-hop/transductive kısıtları), sentetik AML
+kanıtının yerine geçmez. En iyi K10/B8 hybrid aynı-split GBT'den geridedir.
+
 ## Başarı Kriterleri
 
 1. hybrid AUC ≥ standart tavan (`fraud/` örneği: 0.9745 ≈ RF/GBT)
