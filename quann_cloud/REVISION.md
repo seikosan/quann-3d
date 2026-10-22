@@ -27,6 +27,8 @@ CloudLM 200K (D=32, 50ep) üzerinde:
 ## Aday Revizyonlar (20K ön-test, sonra 200K)
 
 ### R1 — Kapasite: D=64 / D=128
+**Hat: Makale hattı.** Ürün D=8–32'de kalır; küçük D ürün özelliğidir,
+tavan ve okunurluk kapasite deneyi makale hattındadır.
 - En doğrudan müdahale. Point/pair MLP'ler D ile ölçeklenir (maliyet ~2-4×).
 - **Test:** 20K, 10ep, D=64 ve D=128 → held-out PPL + Transformer'a oran.
 - Beklenti: 6.45 → ~4-5 (D=64), ~3-4 (D=128)? 2.94'ü geçebilir mi?
@@ -37,18 +39,21 @@ CloudLM 200K (D=32, 50ep) üzerinde:
   - **FİNAL hüküm** = eşleşen duel: yeni D32 (aynı shared BPE `wiki_bpe.json`, aynı 200K-wiki) `logs/run_d32_wiki200k.log` içinde disjoint [200000,202000) holdout ile `DUEL_SUMMARY` üretecek (eğitim 6/50ep, ~30dk/ep → bitiş ~yarın akşam). Sonra 2.94 (causal baseline) kıyası ve D=128 adımı.
 
 ### R2 — Cloud Attention (ilişkisel sözlük genişletme)
+**Hat: Araştırma.**
 - CloudEncoderND'ye, pooling öncesi nokta-üstü self-attention (2-4 head) ekle.
 - Pair MLP'nin kaba (dist, cos, norm) sözlüğü yerine tam dikkat.
 - Permutation-invariance korunur (attention + pool).
 - **Test:** 20K, D=32 (kontrolle) → PPL + hassasiyet analizi tekrar.
 
 ### R3 — Attention-Weighted Pooling
+**Hat: Ürün + makale kesişimi.**
 - max-pool (sessiz branch) yerine öğrenilmiş attention-pool.
 - Düzeltme: tek nokta etkisi max-pool'da argmax'a bağlı (0/1); attention'da
   yumuşak ve sürekli → hem hassasiyet hem gradyan/arama sinyali artar.
 - **Test:** 20K, D=32.
 
 ### R4 (QUANN özel) — Aramayı pair-kanalına yönlendir
+**Hat: Araştırma.**
 - Aramanın no-op olmasının nedeni head'in ko-adaptasyonu. İki seçenek:
   a) Arama sırasında head'i dondur (freeze) → manzara düz kalmaz,
      noktalar gerçekten öğrenir; sonra head'i fine-tune et.
