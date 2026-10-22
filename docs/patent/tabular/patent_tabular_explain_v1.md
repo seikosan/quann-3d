@@ -1,6 +1,6 @@
 # PATENT BAŞVURU DOSYASI — Tabular Kimlik-Bulut Yorumlama (v1, Taze İcat)
 
-> **Kapsam notu:** Bu başvuru, dil modelleme icadının (`patent_application_v2.3.md`,
+> **Kapsam notu:** Bu başvuru, dil modelleme icadının (`../dil/patent_application_v2.3.md`,
 > cümle → nokta-bulut → bir sonraki token) **ayrık** bir uygulamasıdır. İcat, aynı
 > nokta-bulut (CloudEncoder) çekirdeğini **tabloları/kayıtları** (ör. kredi kartı
 > işlemleri) hedef alan, **kimlik-tabanlı özellik noktaları + native set-ablation
@@ -67,7 +67,7 @@ Bu yaklaşımın sınırlamaları:
   sıralamasız kümeyi tek vektöre havuzlar. Noktaların **uzaysal konumu girdi
   olarak var değildir** — geometri korunmaz, dolayısıyla nokta-düzeyinde
   ablation açıklaması tanımlanamaz.
-- **QUANN nokta-bulut çekirdeği** (bitişik icat, `patent_application_v2.3.md`):
+- **QUANN nokta-bulut çekirdeği** (bitişik icat, `../dil/patent_application_v2.3.md`):
   token'ları düşük-boyutlu noktalara projekte edip bulut geometrisinden karar
   alan ve 0. sıra (backprop'suz) daraltma ile eğiten çekirdek. Bu çekirdek burada
   **bilinen** olarak referans verilir; yeni olan onun **tablolar kaydına**
@@ -394,14 +394,14 @@ metin üreten, sub-megabyte bir artifact olarak dağıtılır.
 | Sayfa | Şekil | İçerik | Kaynak |
 |---|---|---|---|
 | 1 | Şekil 1 | Sistem mimarisi (200–290 referans numaralarıyla) | Yeni çizim (blok diyagram) |
-| 2 | Şekil 2 | Kimlik-bucket projeksiyonu — kayıt noktaları bulutta | `fraud/figures/quann_cloud_3d.png` |
+| 2 | Şekil 2 | Kimlik-bucket projeksiyonu — kayıt noktaları bulutta | `fig/fig1_fraud_bulut.png` |
 | 3 | Şekil 3 | Leave-one-point-out ablation (logit değişimi) | Yeni çizim (şema) |
 | 4 | Şekil 4 | Tek-ve çift-maske karşı-faktürel | Yeni çizim (şema) |
 | 5 | Şekil 5 | Self-contained paket + ham-satır bit-kesinlik | `fraud/results/deploy/` |
 
 > **Vekil notu:** Şekiller siyah-beyaz çizgi, referans numaralarıyla, ayrı sayfalarda
 > PDF çizim formatında hazırlanmalıdır. Bu dosya taze bir icat (v1) olup, dil
-> modelleme patentinden (`patent_application_v2.3.md`) ayrık bir başvuru olarak
+> modelleme patentinden (`../dil/patent_application_v2.3.md`) ayrık bir başvuru olarak
 > sunulur; ikisi arasındaki bulut kodlayıcı çekirdeği çakışması, vekil tarafından
 > çapraz-referans / öncelik (priority) açısından değerlendirilmelidir.
 
@@ -411,7 +411,7 @@ metin üreten, sub-megabyte bir artifact olarak dağıtılır.
 
 ### 6.1 Neden ayrı başvuru?
 
-Dil modelleme icadı (`patent_application_v2.3.md`) **cümle → word-token → bulut →
+Dil modelleme icadı (`../dil/patent_application_v2.3.md`) **cümle → word-token → bulut →
 bir sonraki token** idi. Bu icat, aynı çekirdeği **tablolar kayıt** hedefine
 kaydırır ve asıl yeniliği **açıklama yüzeyinde** (kimlik-bucket + çözümlenen
 ablation + karşı-faktürel denetim + self-contained dağıtım) taşır. Ayrı dosya:

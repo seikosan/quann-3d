@@ -113,9 +113,9 @@ Dağıtım ilkesi, okuyucu, gerekli kantizör/decoder ve manifestin kompakt, sel
 - **Şekil 1:** Birleşik mimari — 100 girdi/bağlam modülü, 110 nokta projeksiyonu, 120 çift-geometri kodlayıcı, 123 simetrik birleştirme, 130 skor okuyucu, 150 yorumlama, 260 ablation, 270 decoder, 280 karşı-faktürel denetim, 290 dağıtım.
 - **Şekil 2:** Nokta ve çift-geometri — D-boyutlu noktalar, [pᵢ−pⱼ, ‖pᵢ−pⱼ‖, cosθ, ‖pᵢ‖, ‖pⱼ‖] vektörü ve simetrik agregasyon.
 - **Şekil 3:** Aynı buluttan native açıklama — çıkarılan noktanın logit farkı, metin decoder'ı, bölge/prototip adı ve zamanlar arası drift.
-- **Şekil 4:** AML bölge/prototip isimlendirme örnekleri — `aml/figures/typology_naming_comparison.png`, `aml/figures/typology_naming_layering.png`.
-- **Şekil 5:** Fraud kimlik-bucket bulutu — `fraud/figures/quann_cloud_3d.png`.
-- **Şekil 6:** Bakım sensör penceresi bulutu ve bölge kayması — `maintenance/figures/e1_region_map.png`, `maintenance/figures/e1_drift.png`.
+- **Şekil 4:** AML bölge/prototip isimlendirme örnekleri — `fig/fig4a_aml_tipoloji.png`, `fig/fig4b_aml_tipoloji.png`.
+- **Şekil 5:** Fraud kimlik-bucket bulutu — `fig/fig5_fraud_bulut.png`.
+- **Şekil 6:** Bakım sensör penceresi bulutu ve bölge kayması — `fig/fig6a_bakim_bolge.png`, `fig/fig6b_bakim_drift.png`.
 - **Şekil 7:** Self-contained dağıtım ve doğrulama — fraud ONNX/manifest ve bakım INT8 edge örnekleri.
 
 ### 2.7 İcadın Detaylı Açıklaması
@@ -231,12 +231,12 @@ TÜRKPATENT çizimleri, açıklama metninden ayrı sayfalar halinde, siyah-beyaz
 
 | Sayfa | Şekil | İçerik | Kaynak / hazırlanma notu |
 |---|---|---|---|
-| 1 | Şekil 1 | Evrensel mimari ve modül akışı (100–290) | `docs/figures/core_sekil_1_universal_arch.svg` |
-| 2 | Şekil 2 | Çift-geometri ve simetrik birleştirme | `docs/figures/core_sekil_2_dual_geometry.svg` |
-| 3 | Şekil 3 | Aynı buluttan skor, ablation, prototip ve drift | `docs/figures/core_sekil_3_native_explain.svg` |
-| 4 | Şekil 4 | AML tipoloji isimlendirme örnekleri | `aml/figures/typology_naming_comparison.png`; `aml/figures/typology_naming_layering.png` |
-| 5 | Şekil 5 | Fraud kimlik-bucket bulutu | `fraud/figures/quann_cloud_3d.png` |
-| 6 | Şekil 6 | Bakım bulutu ve çalışma koşulu drift'i | `maintenance/figures/e1_region_map.png`; `maintenance/figures/e1_drift.png` |
+| 1 | Şekil 1 | Evrensel mimari ve modül akışı (100–290) | `fig/fig1_mimari.svg` |
+| 2 | Şekil 2 | Çift-geometri ve simetrik birleştirme | `fig/fig2_ciftgeometri.svg` |
+| 3 | Şekil 3 | Aynı buluttan skor, ablation, prototip ve drift | `fig/fig3_aciklama.svg` |
+| 4 | Şekil 4 | AML tipoloji isimlendirme örnekleri | `fig/fig4a_aml_tipoloji.png`; `fig/fig4b_aml_tipoloji.png` |
+| 5 | Şekil 5 | Fraud kimlik-bucket bulutu | `fig/fig5_fraud_bulut.png` |
+| 6 | Şekil 6 | Bakım bulutu ve çalışma koşulu drift'i | `fig/fig6a_bakim_bolge.png`; `fig/fig6b_bakim_drift.png` |
 | 7 | Şekil 7 | Self-contained dağıtım ve parite/manifest denetimi | Fraud deploy artifact'i ve maintenance edge örneği |
 
 ---
@@ -267,7 +267,7 @@ Dil, fraud, AML ve bakımın tek başvuruda birlikte sunulması “çok icat”/
 
 ### 7.2 TR ulusal (dil) başvur ile ilişki / öncelik
 
-Bu dosya evrensel dual-use çekirdeğini ifade eder ve iki özel dosyanın üst kümesidir: `patent_application_v2.3.md` (dil/sonraki-token uygulaması) ve `patent_tabular_explain_v1.md` (tabular/fraud kimlik-bucket, açıklama ve edge uygulaması).
+Bu dosya evrensel dual-use çekirdeğini ifade eder ve iki özel dosyanın üst kümesidir: `../dil/patent_application_v2.3.md` (dil/sonraki-token uygulaması) ve `../tabular/patent_tabular_explain_v1.md` (tabular/fraud kimlik-bucket, açıklama ve edge uygulaması).
 
 **PCT–TR öncelik ilişkisi (kritik):** TR ulusal başvurumuz `TURKPATENT_basvuru_v2.3.md` **yalnızca dil** kapsamındadır. Bu PCT dosyasının kapsamı (dual-use çekirdek + dil/fraud/AML/bakım) TR dil başvurda **açıklanmamış** olduğundan, bu PCT başvurusu TR ulusal (dil) başvurudan **öncelik talep edemez** — iki bağımsız icat/kapsam olarak değerlendirilmelidir. Önerilen strateji: **TR ulusal = dil** (öncelik T1) ve **PCT = evrensel + 4 dikey** (kendi önceliği T2); dosyalar arası metin bağlantısı kendiliğinden önceki tarih yaratmaz. Öncelik tarihi ancak usulüne uygun bir başvuruyla oluşur; hiçbir dosya yayımlanana kadar gizlilik uyarısı korunmalıdır.
 

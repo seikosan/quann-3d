@@ -9,20 +9,20 @@
 ## 1. Ne gönderiyoruz (2 dosya + çizimler)
 
 ### Dosya A — Türkiye ULUSAL patent (dil)
-- **Teknik metin:** `docs/patent/TURKPATENT_basvuru_v2.3.md` (filing-ready: Başvuru Formu + İçindekiler + Açıklama + 19 İddia + Özet + Çizimler + Atıf Listesi + Vekile Not)
+- **Teknik metin:** `docs/patent/dil/TURKPATENT_basvuru_v2.3.md` (filing-ready: Başvuru Formu + İçindekiler + Açıklama + 19 İddia + Özet + Çizimler + Atıf Listesi + Vekile Not)
 - **Kapsam:** Dil modelleme (bir-sonraki-token + agglütinatif morfoloji)
 - **Başlık:** Düşük Boyutlu Nokta Bulutu Geometrisi Tabanlı Dil Modelleme Sistemi, Yöntemi ve Bilgisayar Programı
 - **İddia:** 3 bağımsız (Sistem, Yöntem, Bilgisayar Programı) + 16 bağımlı = 19
-- **Çizimler:** 8 SVG → `docs/figures/sekil_1..8_*.svg` (siyah-beyaz, referanslı, ayrı sayfa olarak PDF/TIFF render edilecek)
+- **Çizimler:** 8 SVG → `docs/patent/dil/fig/fig1..8_*.svg` (siyah-beyaz, referanslı, ayrı sayfa olarak PDF/TIFF render edilecek)
 - **Öncelik:** T1 — bu ulusal başvurunun kendi tarihi
 
 ### Dosya B — PCT ULUSLARARASI başvuru (evrensel çekirdek + 4 dikey)
-- **TR metin:** `docs/patent/geometry_dual_use_core_v1.md` (PCT/RO/101 + Açıklama + 13 İddia + Özet + Çizimler + Atıf + Vekil Değerlendirmesi)
-- **EN metin:** `docs/patent/geometry_dual_use_core_v1_EN.md` (PCT uluslararası yayım için)
+- **TR metin:** `docs/patent/evrensel/geometry_dual_use_core_v1.md` (PCT/RO/101 + Açıklama + 13 İddia + Özet + Çizimler + Atıf + Vekil Değerlendirmesi)
+- **EN metin:** `docs/patent/evrensel/geometry_dual_use_core_v1_EN.md` (PCT uluslararası yayım için)
 - **Kapsam:** Çift-geometri nokta-bulutu ile birleşik hesaplama + native açıklanabilirlik; 4 dikey embodiment (dil, fraud, AML, bakım)
 - **Başlık:** Çift-Geometri Nokta-Bulutu Temsili ile Birleşik Hesaplama ve Native Açıklanabilirlik Yöneten Evrensel Sistem, Yöntemi ve Bilgisayar Programı
 - **İddia:** 3 bağımsız + 10 bağımlı (6 mekanizma + 4 dikey) = 13
-- **Çizimler:** Şekil 1-3 yeni SVG → `docs/figures/core_sekil_1..3_*.svg`; Şekil 4-7 dikey artifact figürlerinden (bkz. dosya içindeki tablo)
+- **Çizimler:** Şekil 1-3 yeni SVG → `docs/patent/evrensel/fig/fig1..3_*.svg`; Şekil 4-7 dikey artifact figürlerinden (bkz. dosya içindeki tablo)
 - **Öncelik:** T2 — bağımsız (bkz. §2)
 
 ---
@@ -76,12 +76,12 @@
 
 | Dosya | Tür |
 |---|---|
-| `docs/patent/TURKPATENT_basvuru_v2.3.md` | TR ulusal — dil (filing-ready) |
-| `docs/patent/geometry_dual_use_core_v1.md` | PCT — evrensel+4 (TR) |
-| `docs/patent/geometry_dual_use_core_v1_EN.md` | PCT — evrensel+4 (EN) |
-| `docs/figures/sekil_1..8_*.svg` | TR dil — 8 çizim (kaynak) |
-| `docs/figures/core_sekil_1..3_*.svg` | PCT — 3 yeni çizim (kaynak) |
-| `aml/figures/typology_naming_*.png`, `fraud/figures/quann_cloud_3d.png`, `maintenance/figures/e1_*.png` | PCT Şekil 4-7 (dikey artifact'ler) |
-| `docs/patent/patent_application_v2.3.md` + `_EN`, `docs/patent/patent_tabular_explain_v1.md` + `_EN` | Özel dosyalar (çekirdeğin alt kümeleri; cross-ref) |
+| `docs/patent/dil/TURKPATENT_basvuru_v2.3.md` | TR ulusal — dil (filing-ready) |
+| `docs/patent/evrensel/geometry_dual_use_core_v1.md` | PCT — evrensel+4 (TR) |
+| `docs/patent/evrensel/geometry_dual_use_core_v1_EN.md` | PCT — evrensel+4 (EN) |
+| `docs/patent/dil/fig/fig1..8_*.svg` | TR dil — 8 çizim (kaynak) |
+| `docs/patent/evrensel/fig/fig1..3_*.svg` | PCT — 3 yeni çizim (kaynak) |
+| `docs/patent/evrensel/fig/fig4..7*.png` | PCT Şekil 4-7 (dikey artifact'ler; kaynak `aml/`, `fraud/`, `maintenance/` fig'leri) |
+| `docs/patent/dil/patent_application_v2.3.md` + `_EN`, `docs/patent/tabular/patent_tabular_explain_v1.md` + `_EN` | Özel dosyalar (çekirdeğin alt kümeleri; cross-ref) |
 
 > **Gizlilik (tekrar):** Bu paketin tamamı ve ekleri, ilgili başvuru tarihi (öncelik) alınana kadar ve PCT 18-ay yayımı öncesi kamuya açılmamalıdır.

@@ -383,18 +383,18 @@ Each token of a sentence is projected to a point within a bounded hypercube in 3
 
 ## 5. DRAWINGS (Separate Pages)
 
-TÜRKPATENT requires each drawing on a separate page, in black-and-white line art, with reference numerals and a figure title. The following 8 drawings have been prepared as SVG in the `docs/figures/` folder; each is added to the formal file as a separate page.
+TÜRKPATENT requires each drawing on a separate page, in black-and-white line art, with reference numerals and a figure title. The following 8 drawings have been prepared as SVG in the `fig/` folder; each is added to the formal file as a separate page.
 
 | Page | Figure | Title | File |
 |---|---|---|---|
-| 1 | Fig. 1 | System architecture (100–150) | `docs/figures/sekil_1_sistem_mimarisi.svg` |
-| 2 | Fig. 2 | "kedi bahçede uyudu" 3D point cloud (200, 210) | `docs/figures/sekil_2_3d_bulut.svg` |
-| 3 | Fig. 3 | Cloud evolution 1→4 points (300) | `docs/figures/sekil_3_bulut_evrimi.svg` |
-| 4 | Fig. 4 | 16D and 32D region maps (400, 410) | `docs/figures/sekil_4_bolge_haritalari.svg` |
-| 5 | Fig. 5 | Word region geography (500) | `docs/figures/sekil_5_kelime_cografyasi.svg` |
-| 6 | Fig. 6 | Pair geometry vector components (600–630) | `docs/figures/sekil_6_cift_geometrisi.svg` |
-| 7 | Fig. 7 | Training curve PPL (700) | `docs/figures/sekil_7_egitim_egrisi.svg` |
-| 8 | Fig. 8 | Morphological clustering (800, 810) | `docs/figures/sekil_8_morfolojik_kumelenme.svg` |
+| 1 | Fig. 1 | System architecture (100–150) | `fig/fig1_mimarisi.svg` |
+| 2 | Fig. 2 | "kedi bahçede uyudu" 3D point cloud (200, 210) | `fig/fig2_bulut.svg` |
+| 3 | Fig. 3 | Cloud evolution 1→4 points (300) | `fig/fig3_evrim.svg` |
+| 4 | Fig. 4 | 16D and 32D region maps (400, 410) | `fig/fig4_bolge.svg` |
+| 5 | Fig. 5 | Word region geography (500) | `fig/fig5_kelime.svg` |
+| 6 | Fig. 6 | Pair geometry vector components (600–630) | `fig/fig6_cift.svg` |
+| 7 | Fig. 7 | Training curve PPL (700) | `fig/fig7_egri.svg` |
+| 8 | Fig. 8 | Morphological clustering (800, 810) | `fig/fig8_morfoloji.svg` |
 
 > **Note:** Drawings must be compiled as separate pages in PDF drawing format (black-and-white, with reference numerals) before filing. The SVG files are kept as source. The PPL axis range of Fig. 7 must be consistent with the Run A curve (~20,000 → 4.08, training side).
 

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000">
+  <style>
+    text { font-family: Arial, Helvetica, sans-serif; fill: #000; }
+    .box { fill: #fff; stroke: #000; stroke-width: 2; }
+    .pt { fill: #000; }
+    .cluster { fill: none; stroke: #000; stroke-width: 2; stroke-dasharray: 6 5; }
+    .lbl { font-size: 15px; }
+    .ref { font-size: 17px; font-weight: bold; }
+    .title { font-size: 20px; font-weight: bold; }
+  </style>
+
+  <rect class="box" x="90" y="150" width="560" height="560"/>
+
+  <!-- root sub-cluster 800 (center): bah, c -->
+  <ellipse class="cluster" cx="360" cy="430" rx="80" ry="70"/>
+  <circle class="pt" cx="340" cy="410" r="7"/><text class="lbl" x="320" y="395">bah</text>
+  <circle class="pt" cx="390" cy="445" r="7"/><text class="lbl" x="400" y="460">&#231;</text>
+  <text class="ref" x="330" y="520">800</text>
+  <text class="lbl" x="360" y="545" text-anchor="middle">k&#246;k alt-k&#252;mesi</text>
+
+  <!-- affix cluster 810a (north-east): eler -->
+  <ellipse class="cluster" cx="540" cy="280" rx="70" ry="55"/>
+  <circle class="pt" cx="525" cy="270" r="7"/><text class="lbl" x="500" y="255">eler</text>
+  <circle class="pt" cx="560" cy="295" r="7"/>
+  <text class="ref" x="545" y="360">810</text>
+  <text class="lbl" x="540" y="385" text-anchor="middle">ek alt-k&#252;mesi (y&#246;n 1)</text>
+
+  <!-- affix cluster 810b (south-west): den -->
+  <ellipse class="cluster" cx="200" cy="560" rx="70" ry="55"/>
+  <circle class="pt" cx="185" cy="550" r="7"/><text class="lbl" x="150" y="540">den</text>
+  <circle class="pt" cx="220" cy="575" r="7"/>
+  <text class="ref" x="200" y="640">810</text>
+  <text class="lbl" x="200" y="665" text-anchor="middle">ek alt-k&#252;mesi (y&#246;n 2)</text>
+
+  <text class="lbl" x="370" y="130" text-anchor="middle">"bah&#231;elerden" = bah + &#231; + eler + den</text>
+
+  <!-- Title -->
+  <text class="title" x="400" y="900" text-anchor="middle">&#350;ekil 8: Morfolojik k&#252;mele&#351;me (ayn&#237; k&#246;kten t&#252;reyen subword token'lar)</text>
+</svg>

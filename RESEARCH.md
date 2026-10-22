@@ -89,7 +89,7 @@ açıklanabilirlik + uyum hızı + boyut, ham doğruluk değil. Kanıt zemini:
 `fraud/` (tam doğal testte hybrid FP32 AUC-ROC .9451 / INT8-channel .9367;
 RF .973 / GBT .981 tavanlarının altında).
 
-Patent: evrensel çekirdek `docs/patent/geometry_dual_use_core_v1.md` (dual-use geometri: aynı bulut hem hesaplama hem native açıklama; dil/fraud/aml/bakım embodiment); dil v2.3 + tabular v1 onun uygulaması.
+Patent: evrensel çekirdek `docs/patent/evrensel/geometry_dual_use_core_v1.md` (dual-use geometri: aynı bulut hem hesaplama hem native açıklama; dil/fraud/aml/bakım embodiment); dil v2.3 + tabular v1 onun uygulaması.
 
 ## Subproje: aml/, maintenance/
 

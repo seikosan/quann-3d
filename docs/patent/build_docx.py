@@ -320,7 +320,7 @@ def _render_cover(doc, cover_blocks):
             render_block(doc, kind, val)
 
 def build_tr():
-    md = open(os.path.join(REPO, "docs/patent/TURKPATENT_basvuru_v2.3.md")).read()
+    md = open(os.path.join(REPO, "docs/patent/dil/TURKPATENT_basvuru_v2.3.md")).read()
     blocks = parse_blocks(md)
     cover, secs = split_sections(blocks)
     doc = setup_doc()
@@ -339,7 +339,7 @@ def build_tr():
                     add_figure(doc, os.path.join(RENDER, png), cap, page_first=True)
                 continue
             render_block(doc, kind, val)
-    out = os.path.join(REPO, "docs/patent/TURKPATENT_basvuru_v2.3.docx")
+    out = os.path.join(REPO, "docs/patent/dil/TURKPATENT_basvuru_v2.3.docx")
     doc.save(out)
     print("TR dil  ->", out)
     return out
@@ -371,7 +371,7 @@ def _render_pct_figures(doc):
         r = capP.add_run(cap); r.bold = True; r.font.size = Pt(11); r.font.name = FONT
 
 def build_pct():
-    md = open(os.path.join(REPO, "docs/patent/geometry_dual_use_core_v1_EN.md")).read()
+    md = open(os.path.join(REPO, "docs/patent/evrensel/geometry_dual_use_core_v1_EN.md")).read()
     blocks = parse_blocks(md)
     cover, secs = split_sections(blocks)
     doc = setup_doc()
@@ -389,7 +389,7 @@ def build_pct():
                 _render_pct_figures(doc)
                 continue
             render_block(doc, kind, val)
-    out = os.path.join(REPO, "docs/patent/geometry_dual_use_core_v1_EN.docx")
+    out = os.path.join(REPO, "docs/patent/evrensel/geometry_dual_use_core_v1_EN.docx")
     doc.save(out)
     print("PCT EN  ->", out)
     return out

@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#000"/>
+    </marker>
+  </defs>
+  <style>
+    text { font-family: Arial, Helvetica, sans-serif; fill: #000; }
+    .box { fill: #fff; stroke: #000; stroke-width: 2; }
+    .lbl { font-size: 15px; }
+    .sub { font-size: 13px; }
+    .ref { font-size: 17px; font-weight: bold; }
+    .title { font-size: 20px; font-weight: bold; }
+    .arrow { stroke: #000; stroke-width: 2; fill: none; marker-end: url(#arrow); }
+  </style>
+
+  <!-- Token dizisi -->
+  <rect class="box" x="250" y="30" width="300" height="50"/>
+  <text class="lbl" x="400" y="60" text-anchor="middle">Token dizisi [t&#8321;, &#8230;, t&#8348;]</text>
+  <line class="arrow" x1="400" y1="80" x2="400" y2="120"/>
+
+  <!-- Tokenizasyon 140 -->
+  <rect class="box" x="250" y="120" width="300" height="70"/>
+  <text class="ref" x="262" y="142">140</text>
+  <text class="lbl" x="400" y="163" text-anchor="middle">Tokenizasyon Mod&#252;l&#252; (byte-level BPE)</text>
+  <text class="sub" x="400" y="181" text-anchor="middle">subword token'lar</text>
+  <line class="arrow" x1="400" y1="190" x2="400" y2="230"/>
+
+  <!-- Baglam Kodlayici 100 -->
+  <rect class="box" x="250" y="230" width="300" height="70"/>
+  <text class="ref" x="262" y="252">100</text>
+  <text class="lbl" x="400" y="273" text-anchor="middle">Ba&#231;lam Kodlay&#237;c&#237; (L katman transformer)</text>
+  <text class="sub" x="400" y="291" text-anchor="middle">c&#8321;, &#8230;, c&#8348; &#8712; &#8477;<tspan baseline-shift="super" font-size="10">d_model</tspan></text>
+  <line class="arrow" x1="400" y1="300" x2="400" y2="340"/>
+
+  <!-- ND Projeksiyon 110 -->
+  <rect class="box" x="250" y="340" width="300" height="70"/>
+  <text class="ref" x="262" y="362">110</text>
+  <text class="lbl" x="400" y="383" text-anchor="middle">ND Projeksiyon Mod&#252;l&#252; (Tanh)</text>
+  <text class="sub" x="400" y="401" text-anchor="middle">p&#8321;, &#8230;, p&#8348; &#8712; [-1,1]<tspan baseline-shift="super" font-size="10">D</tspan></text>
+  <line class="arrow" x1="400" y1="410" x2="400" y2="450"/>
+
+  <!-- Bulut Kodlayici 120 (big) -->
+  <rect class="box" x="150" y="450" width="500" height="210"/>
+  <text class="ref" x="165" y="472">120</text>
+  <text class="lbl" x="400" y="472" text-anchor="middle">Bulut Kodlay&#237;c&#237; (perm&#252;tasyon de&#231;mez)</text>
+
+  <!-- Nokta MLP 121 -->
+  <rect class="box" x="180" y="490" width="200" height="60"/>
+  <text class="ref" x="192" y="512">121</text>
+  <text class="lbl" x="285" y="530" text-anchor="middle">Nokta MLP</text>
+  <text class="sub" x="285" y="545" text-anchor="middle">pay&#305;&#351;l&#237; a&#231;&#237;rl&#237;k</text>
+
+  <!-- Cift MLP 122 -->
+  <rect class="box" x="420" y="490" width="200" height="60"/>
+  <text class="ref" x="432" y="512">122</text>
+  <text class="lbl" x="525" y="530" text-anchor="middle">&#199;ift MLP</text>
+  <text class="sub" x="525" y="545" text-anchor="middle">[p&#8321;&#8722;p&#8340;, &#8214;&#8322;&#8214;, cos&#952;, &#8214;p&#8321;&#8214;, &#8214;p&#8340;&#8214;]</text>
+
+  <line class="arrow" x1="285" y1="550" x2="345" y2="595"/>
+  <line class="arrow" x1="525" y1="550" x2="455" y2="595"/>
+
+  <!-- Kume Bilesirme 123 -->
+  <rect class="box" x="300" y="595" width="200" height="50"/>
+  <text class="ref" x="312" y="617">123</text>
+  <text class="lbl" x="400" y="632" text-anchor="middle">K&#252;me Birle&#351;tirme</text>
+  <line class="arrow" x1="400" y1="645" x2="400" y2="690"/>
+
+  <!-- Tahmin Modulu 130 -->
+  <rect class="box" x="200" y="690" width="400" height="80"/>
+  <text class="ref" x="212" y="712">130</text>
+  <text class="lbl" x="400" y="725" text-anchor="middle">Tahmin Mod&#252;l&#252;</text>
+  <text class="sub" x="330" y="752" text-anchor="middle">word_logits &#8712; &#8477;<tspan baseline-shift="super" font-size="10">vocab</tspan></text>
+  <text class="sub" x="510" y="752" text-anchor="middle">p_next &#8712; &#8477;<tspan baseline-shift="super" font-size="10">D</tspan>  (131)</text>
+  <line class="arrow" x1="400" y1="770" x2="400" y2="815"/>
+
+  <!-- bir sonraki token -->
+  <rect class="box" x="280" y="815" width="240" height="50"/>
+  <text class="lbl" x="400" y="845" text-anchor="middle">Bir sonraki token</text>
+
+  <!-- Yorumlama 150 (side) -->
+  <rect class="box" x="660" y="490" width="130" height="100"/>
+  <text class="ref" x="672" y="512">150</text>
+  <text class="lbl" x="725" y="537" text-anchor="middle">Yorumlama</text>
+  <text class="sub" x="725" y="557" text-anchor="middle">mod&#252;l&#252;</text>
+  <text class="sub" x="725" y="577" text-anchor="middle">(mesafe, a&#231;&#237;, b&#246;lge)</text>
+  <line class="arrow" x1="650" y1="540" x2="660" y2="540"/>
+
+  <!-- Title -->
+  <text class="title" x="400" y="940" text-anchor="middle">&#350;ekil 1: Sistem mimarisi</text>
+</svg>

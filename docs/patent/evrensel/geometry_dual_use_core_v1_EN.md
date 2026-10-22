@@ -113,9 +113,9 @@ The deployment principle is that the reader, the required quantizer/decoder and 
 - **Figure 1:** Combined architecture — 100 input/context module, 110 point projection, 120 dual-geometry encoder, 123 symmetric fusion, 130 score reader, 150 interpretation, 260 ablation, 270 decoder, 280 counterfactual audit, 290 deployment.
 - **Figure 2:** Point and dual-geometry — D-dimensional points, the [pᵢ−pⱼ, ‖pᵢ−pⱼ‖, cosθ, ‖pᵢ‖, ‖pⱼ‖] vector and symmetric aggregation.
 - **Figure 3:** Native explanation from the same cloud — the logit difference of the removed point, the text decoder, the region/prototype name and the drift across times.
-- **Figure 4:** AML region/prototype naming examples — `aml/figures/typology_naming_comparison.png`, `aml/figures/typology_naming_layering.png`.
-- **Figure 5:** Fraud identity-bucket cloud — `fraud/figures/quann_cloud_3d.png`.
-- **Figure 6:** Maintenance sensor-window cloud and region shift — `maintenance/figures/e1_region_map.png`, `maintenance/figures/e1_drift.png`.
+- **Figure 4:** AML region/prototype naming examples — `fig/fig4a_aml_tipoloji.png`, `fig/fig4b_aml_tipoloji.png`.
+- **Figure 5:** Fraud identity-bucket cloud — `fig/fig5_fraud_bulut.png`.
+- **Figure 6:** Maintenance sensor-window cloud and region shift — `fig/fig6a_bakim_bolge.png`, `fig/fig6b_bakim_drift.png`.
 - **Figure 7:** Self-contained deployment and verification — fraud ONNX/manifest and maintenance INT8 edge examples.
 
 ### 2.7 Detailed Description of the Invention
@@ -231,12 +231,12 @@ The drawings must be prepared, on separate pages from the description text, as b
 
 | Page | Figure | Content | Source / preparation note |
 |---|---|---|---|
-| 1 | Figure 1 | Universal architecture and module flow (100–290) | `docs/figures/core_sekil_1_universal_arch.svg` |
-| 2 | Figure 2 | Dual-geometry and symmetric fusion | `docs/figures/core_sekil_2_dual_geometry.svg` |
-| 3 | Figure 3 | Score, ablation, prototype and drift from the same cloud | `docs/figures/core_sekil_3_native_explain.svg` |
-| 4 | Figure 4 | AML typology naming examples | `aml/figures/typology_naming_comparison.png`; `aml/figures/typology_naming_layering.png` |
-| 5 | Figure 5 | Fraud identity-bucket cloud | `fraud/figures/quann_cloud_3d.png` |
-| 6 | Figure 6 | Maintenance cloud and operating-condition drift | `maintenance/figures/e1_region_map.png`; `maintenance/figures/e1_drift.png` |
+| 1 | Figure 1 | Universal architecture and module flow (100–290) | `fig/fig1_mimari.svg` |
+| 2 | Figure 2 | Dual-geometry and symmetric fusion | `fig/fig2_ciftgeometri.svg` |
+| 3 | Figure 3 | Score, ablation, prototype and drift from the same cloud | `fig/fig3_aciklama.svg` |
+| 4 | Figure 4 | AML typology naming examples | `fig/fig4a_aml_tipoloji.png`; `fig/fig4b_aml_tipoloji.png` |
+| 5 | Figure 5 | Fraud identity-bucket cloud | `fig/fig5_fraud_bulut.png` |
+| 6 | Figure 6 | Maintenance cloud and operating-condition drift | `fig/fig6a_bakim_bolge.png`; `fig/fig6b_bakim_drift.png` |
 | 7 | Figure 7 | Self-contained deployment and parity/manifest audit | Fraud deploy artifact and maintenance edge example |
 
 > **Note:** Figures 1–3 are new line drawings to be produced (black-and-white, with reference numerals, each on its own page); Figures 4–7 derive from the per-vertical artifact figures cited above and must be reproduced as black-and-white line/paper drawings on separate pages.
@@ -269,7 +269,7 @@ Presenting language, fraud, AML and maintenance together in a single application
 
 ### 7.2 Relationship to the TR national (language) filing / priority
 
-This document expresses the universal dual-use core and is the superset of two specific documents: `patent_application_v2.3.md` (the language/next-token application) and `patent_tabular_explain_v1.md` (the tabular/fraud identity-bucket, explanation and edge application).
+This document expresses the universal dual-use core and is the superset of two specific documents: `../dil/patent_application_v2.3.md` (the language/next-token application) and `../tabular/patent_tabular_explain_v1.md` (the tabular/fraud identity-bucket, explanation and edge application).
 
 **PCT–TR priority relationship (critical):** Our TR national filing `TURKPATENT_basvuru_v2.3.md` is **language-only** in scope. Since the scope of this PCT document (dual-use core + language/fraud/AML/maintenance) is **not disclosed** in the TR language filing, this PCT application **cannot claim priority** from the TR national (language) filing — it must be treated as two independent inventions/scopes. The recommended strategy: **TR national = language** (priority T1) and **PCT = universal + 4 verticals** (its own priority T2); a textual link between the documents does not, by itself, create an earlier date. A priority date arises only from a duly filed application; the confidentiality warning must be maintained until no document is published.
 

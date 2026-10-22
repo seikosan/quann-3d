@@ -397,18 +397,18 @@ Bir cümlenin her token'ı, 3–64 boyutlu öklid uzayda sınırlı bir hiperkü
 
 ## 5. ÇİZİMLER (Ayrı Sayfalar)
 
-TÜRKPATENT, her çizimi ayrı sayfada, siyah-beyaz çizgi, referans numaraları ve şekil başlığı ile ister. Aşağıdaki 8 çizim, `docs/figures/` klasöründe SVG olarak hazırlanmıştır; resmî dosyaya her biri ayrı sayfa olarak eklenir.
+TÜRKPATENT, her çizimi ayrı sayfada, siyah-beyaz çizgi, referans numaraları ve şekil başlığı ile ister. Aşağıdaki 8 çizim, `fig/` klasöründe SVG olarak hazırlanmıştır; resmî dosyaya her biri ayrı sayfa olarak eklenir.
 
 | Sayfa | Şekil | Başlık | Dosya |
 |---|---|---|---|
-| 1 | Şekil 1 | Sistem mimarisi (100–150) | `docs/figures/sekil_1_sistem_mimarisi.svg` |
-| 2 | Şekil 2 | "kedi bahçede uyudu" 3D nokta bulutu (200, 210) | `docs/figures/sekil_2_3d_bulut.svg` |
-| 3 | Şekil 3 | Bulut evrimi 1→4 nokta (300) | `docs/figures/sekil_3_bulut_evrimi.svg` |
-| 4 | Şekil 4 | 16D ve 32D bölge haritaları (400, 410) | `docs/figures/sekil_4_bolge_haritalari.svg` |
-| 5 | Şekil 5 | Kelime bölge coğrafyası (500) | `docs/figures/sekil_5_kelime_cografyasi.svg` |
-| 6 | Şekil 6 | Çift geometrisi vektörü bileşenleri (600–630) | `docs/figures/sekil_6_cift_geometrisi.svg` |
-| 7 | Şekil 7 | Eğitim eğrisi PPL (700) | `docs/figures/sekil_7_egitim_egrisi.svg` |
-| 8 | Şekil 8 | Morfolojik kümeleşme (800, 810) | `docs/figures/sekil_8_morfolojik_kumelenme.svg` |
+| 1 | Şekil 1 | Sistem mimarisi (100–150) | `fig/fig1_mimarisi.svg` |
+| 2 | Şekil 2 | "kedi bahçede uyudu" 3D nokta bulutu (200, 210) | `fig/fig2_bulut.svg` |
+| 3 | Şekil 3 | Bulut evrimi 1→4 nokta (300) | `fig/fig3_evrim.svg` |
+| 4 | Şekil 4 | 16D ve 32D bölge haritaları (400, 410) | `fig/fig4_bolge.svg` |
+| 5 | Şekil 5 | Kelime bölge coğrafyası (500) | `fig/fig5_kelime.svg` |
+| 6 | Şekil 6 | Çift geometrisi vektörü bileşenleri (600–630) | `fig/fig6_cift.svg` |
+| 7 | Şekil 7 | Eğitim eğrisi PPL (700) | `fig/fig7_egri.svg` |
+| 8 | Şekil 8 | Morfolojik kümeleşme (800, 810) | `fig/fig8_morfoloji.svg` |
 
 > **Not:** Çizimler, başvuru öncesi PDF çizim formatında (siyah-beyaz, referans numaralı) ayrı sayfalar halinde derlenmelidir. SVG dosyaları kaynak olarak saklanır. Şekil 7'nin PPL eksen aralığı, Koşu A eğrisiyle (~20.000 → 4.08, eğitim tarafı) uyumlu olmalıdır.
 

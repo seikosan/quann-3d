@@ -1,7 +1,7 @@
 # PATENT APPLICATION — Tabular Identity-Cloud Interpretation (v1, New Invention)
 
 > **Scope note:** This application is a **separate** embodiment of the language
-> modeling invention (`patent_application_v2.3.md`, sentence → point-cloud → next
+> modeling invention (`../dil/patent_application_v2.3.md`, sentence → point-cloud → next
 > token). It claims the **same point-cloud (CloudEncoder) core** applied to
 > **tabular records** (e.g. credit-card transactions), combined with
 > **identity-based feature points + a native set-ablation plain-text explanation
@@ -65,7 +65,7 @@ Limitations:
   feature-vectors and pool the unordered set into one vector. The points'
   **spatial positions are not present as input** — geometry is not preserved, so a
   point-level ablation explanation cannot be defined.
-- **The QUANN point-cloud core** (adjacent invention, `patent_application_v2.3.md`):
+- **The QUANN point-cloud core** (adjacent invention, `../dil/patent_application_v2.3.md`):
   the core that projects tokens into low-dimensional points, decides from cloud
   geometry, and trains via 0th-order (backprop-free) narrowing. This core is
   referenced here as **known**; what is new is its application to a **tabular
@@ -397,7 +397,7 @@ on raw rows and produces plain text on the edge.
 | Page | Figure | Content | Source |
 |---|---|---|---|
 | 1 | Figure 1 | System architecture (reference numbers 200–290) | New drawing (block diagram) |
-| 2 | Figure 2 | Identity-bucket projection — record points in the cloud | `fraud/figures/quann_cloud_3d.png` |
+| 2 | Figure 2 | Identity-bucket projection — record points in the cloud | `fig/fig1_fraud_bulut.png` |
 | 3 | Figure 3 | Leave-one-point-out ablation (logit change) | New drawing (schematic) |
 | 4 | Figure 4 | Single- and pair-mask counterfactual | New drawing (schematic) |
 | 5 | Figure 5 | Self-contained package + raw-row bit-exactness | `fraud/results/deploy/` |
@@ -405,7 +405,7 @@ on raw rows and produces plain text on the edge.
 > **Attorney note:** Figures must be prepared as separate pages, black-and-white
 > line art with reference numbers, in PDF drawing format. This document is a **new
 > invention (v1)**, filed separately from the language-modeling patent
-> (`patent_application_v2.3.md`); the overlap of the shared cloud-encoder core
+> (`../dil/patent_application_v2.3.md`); the overlap of the shared cloud-encoder core
 > between the two must be assessed by the attorney for cross-reference / priority.
 
 ---
@@ -414,7 +414,7 @@ on raw rows and produces plain text on the edge.
 
 ### 6.1 Why a separate application?
 
-The language-modeling invention (`patent_application_v2.3.md`) is **sentence →
+The language-modeling invention (`../dil/patent_application_v2.3.md`) is **sentence →
 word-token → cloud → next token**. This invention moves the same core to a
 **tabular-record** target, and carries its real novelty in the **explanation
 surface** (identity-bucket + decoded ablation + counterfactual audit +
