@@ -1,5 +1,15 @@
 # Quann-3D: Cümle Bulutu Dil Modeli
 
+**Cloud geometry**, dil, işlem, sensör ve hesap verisini evrensel bir geometrik
+temsil olarak ele alır; ticari değeri denetlenebilir tahmin, edge boyutu ve
+retrain'siz uyumdur — ham doğrulukta SOTA iddiası yoktur.
+
+- **AML:** Tipoloji haritalarını uyum ekipleriyle doğrula — [AML projesi](aml/README.md).
+- **İşlem fraud / edge:** Küçük model ve operasyonel dengeyi otorizasyon akışında ölç — [fraud projesi](fraud/README.md).
+- **Endüstriyel bakım:** Sensör bulutlarındaki değişimi mühendislerle doğrula — [bakım projesi](maintenance/README.md).
+
+Ürün konumlandırması, pilotlar ve açık iddia sınırları: [`docs/positioning.md`](docs/positioning.md).
+
 Transformer'ın "sıralı dikkat + tek vektör" paradigması yerine:
 - Her kelime → ND uzayda bir **nokta**
 - Cümle → **nokta bulutu**
@@ -154,12 +164,13 @@ datasets        # yalnız download_wiki.py için
 - 7D: Hem özne-fiil hem yer-fiil ayrışır
 - 16D: Sözdizimsel roller uzayda bölgeleşir (edatlar merkez, belirsizlik batı)
 - Gerçek corpus'ta (3K vocab): PPL 2794→62 (44x iyileşme)
-- 200K wiki (20K BPE, D=32, 50ep): **PPL 6.45** on the shared held-out set (`checkpoints/wiki_checkpoints_200k/wiki_cloud_best.pt`)
-- 200K held-out karşılaştırma (2000 cümle): causal baseline **2.92** vs CloudLM **6.45** —
-  kök neden kapasite (D boyutu); revizyon adayları: `quann_cloud/REVISION.md`
+- Legacy 200K karşılaştırması: CloudLM **6.45** vs causal baseline **2.92**; bu
+  değer strict held-out değildir ve SOTA iddiası olarak sunulmaz. Revizyonlar:
+  `quann_cloud/REVISION.md`.
 - QUANN-Cloud: XOR'u backprop'suz %100 çözer; gerçek LM'de random'a yakın (0th-order sınırı) —
   dürüst analiz: `quann_cloud/FINDINGS.md`
-- Edge: INT8 ile 84→21MB, kayıpsız; ONNX/CoreML export — `quann_cloud/FINDINGS.md` §7-8
+- Edge: 21M modelin INT8 paketi 84→21MB; fraud tam doğal testinde FP32 ROC-AUC
+  .9451, INT8-channel .9367 (ölçülen fark −.0084) — `RESEARCH.md`, deploy artefaktı.
 
 ## Corpus
 

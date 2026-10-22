@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 640" width="820" height="640">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#000"/>
+    </marker>
+  </defs>
+  <style>
+    text { font-family: Arial, Helvetica, sans-serif; fill: #000; }
+    .box { fill: #fff; stroke: #000; stroke-width: 2; }
+    .shared { fill: #fff; stroke: #000; stroke-width: 3; }
+    .lbl { font-size: 15px; }
+    .sub { font-size: 12px; }
+    .ref { font-size: 17px; font-weight: bold; }
+    .title { font-size: 20px; font-weight: bold; }
+    .arrow { stroke: #000; stroke-width: 2; fill: none; marker-end: url(#arrow); }
+    .pt { fill: #000; }
+    .ptout { fill: #fff; stroke: #000; stroke-width: 1.5; stroke-dasharray: 4 2; }
+  </style>
+
+  <!-- Merkezi ortak bulut -->
+  <rect class="shared" x="300" y="250" width="220" height="150"/>
+  <text class="ref" x="315" y="276">123</text>
+  <text class="lbl" x="410" y="290" text-anchor="middle">AYNI NOKTA-BULUTU</text>
+  <circle class="pt" cx="350" cy="330" r="6"/>
+  <circle class="pt" cx="400" cy="315" r="6"/>
+  <circle class="ptout" cx="450" cy="340" r="7"/>
+  <circle class="pt" cx="380" cy="375" r="6"/>
+  <text class="sub" x="410" y="388" text-anchor="middle">p&#8348; = &#231;&#237;kar&#237;lanacak nokta</text>
+
+  <!-- SOL: skor -->
+  <line class="arrow" x1="300" y1="300" x2="180" y2="300"/>
+  <rect class="box" x="40" y="270" width="140" height="60"/>
+  <text class="ref" x="52" y="292">130</text>
+  <text class="lbl" x="110" y="305" text-anchor="middle">Skor Okuyucu</text>
+  <line class="arrow" x1="110" y1="330" x2="110" y2="370"/>
+  <rect class="box" x="40" y="370" width="140" height="50"/>
+  <text class="lbl" x="110" y="400" text-anchor="middle">G&#246;rev skoru</text>
+
+  <!-- SA&#199;: aciklama dallari -->
+  <line class="arrow" x1="520" y1="290" x2="600" y2="230"/>
+  <line class="arrow" x1="520" y1="325" x2="600" y2="325"/>
+  <line class="arrow" x1="520" y1="360" x2="600" y2="430"/>
+
+  <!-- 260 Ablation -->
+  <rect class="box" x="600" y="195" width="185" height="62"/>
+  <text class="ref" x="612" y="217">260</text>
+  <text class="lbl" x="692" y="230" text-anchor="middle">Ablation (p&#8348; &#231;&#237;kar&#232;l&#237;r)</text>
+  <text class="sub" x="692" y="248" text-anchor="middle">&#916;logit = leave-one-point-out</text>
+
+  <!-- 270 Decoder -->
+  <rect class="box" x="600" y="290" width="185" height="62"/>
+  <text class="ref" x="612" y="312">270</text>
+  <text class="lbl" x="692" y="325" text-anchor="middle">Decoder (tam s&#246;zl&#252;k)</text>
+  <text class="sub" x="692" y="343" text-anchor="middle">&#916;logit &#8594; metin / etiket</text>
+  <line class="arrow" x1="692" y1="257" x2="692" y2="290"/>
+
+  <!-- 150 Bolge/Prototip -->
+  <rect class="box" x="600" y="395" width="185" height="62"/>
+  <text class="ref" x="612" y="417">150</text>
+  <text class="lbl" x="692" y="430" text-anchor="middle">B&#246;lge / Prototip</text>
+  <text class="sub" x="692" y="448" text-anchor="middle">isimlendirme + drift</text>
+
+  <!-- alt: drift zaman serisi -->
+  <line class="arrow" x1="692" y1="457" x2="692" y2="495"/>
+  <rect class="box" x="585" y="495" width="215" height="60"/>
+  <text class="lbl" x="692" y="518" text-anchor="middle">Zamanlar aras&#232; b&#246;lge kaymas&#232;</text>
+  <text class="sub" x="692" y="536" text-anchor="middle">(drift: t&#8321; &#8594; t&#8322; &#8594; t&#8323;)</text>
+
+  <!-- Title -->
+  <text class="title" x="410" y="620" text-anchor="middle">&#350;ekil 3: Ayn&#232; buluttan skor + native a&#231;&#232;klama (ablation / metin / b&#246;lge / drift)</text>
+</svg>

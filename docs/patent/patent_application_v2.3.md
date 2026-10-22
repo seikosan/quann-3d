@@ -5,6 +5,8 @@
 
 > **GİZLİLİK UYARISI:** Bu dosya patent başvurusu öncesi hazırlanmıştır. Başvuru tarihi (öncelik hakkı) alınana kadar bu icata ilişkin hiçbir yayımlama (arXiv, konferans, dergi, blog, genel erişimli GitHub, podcast, sunum) yapılmamalıdır. Yayımlama, yenilik koşulu açısından yıkıcı etki (self-depublication) yaratır.
 
+> **Kapsam notu (2026-10-22):** Bu dosya, `geometry_dual_use_core_v1.md`'deki evrensel çekirdeğin **dil** uygulamasıdır. Bağımsız İddia 1'in (a)-(c) çekirdek paragrafları (projeksiyon/çift-geometri/okuyucu) genel dosyaya çapraz-referans taşır; bu dosyaya özgü yeni olan bir-sonraki-token üretim + agglütinatif morfoloji embodiment'idir.
+
 ---
 
 ## 1. BAŞLIK

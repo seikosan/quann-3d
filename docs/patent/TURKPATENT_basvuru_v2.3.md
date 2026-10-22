@@ -2,26 +2,35 @@
 
 **556 sayılı Sınai Mülkiyet Kanunu'na uygun başvuru dosyası**
 
-| | |
+## 0. BAŞVURU FORMU
+
+| Alan | Bilgi |
 |---|---|
-| **Başvuru No:** | [TÜRKPATENT tarafından verilecektir] |
-| **Başvuru Tarihi:** | [başvuru tarihi = öncelik tarihi] |
-| **İcatçı:** | [İcatçı Adı Soyadı, T.C. Kimlik No, adres] |
-| **Başvuru Sahibi:** | [Sahip unvanı, adres] |
-| **Vekil:** | [Patent vekili / vekil ofisi] |
-| **İcat Başlığı:** | Düşük Boyutlu Nokta Bulutu Geometrisi Tabanlı Dil Modelleme Sistemi, Yöntemi ve Bilgisayar Programı |
-| **Teknik Alan (IPC önerisi):** | G06F 18/00; G06N 3/04; G06N 5/02 |
+| **Başvuru Türü** | Pat
+| **Başvuru No** | [TÜRKPATENT tarafından verilecektir] |
+| **Başvuru Tarihi** | [başvuru tarihi = ulusal öncelik tarihi] |
+| **İcatçı(lar)** | [Ad Soyad, T.C. Kimlik No, adres, uyrukluk] |
+| **Başvuru Sahibi** | [Unvan / kişi, adres, uyrukluk] |
+| **Tescile Hakkı Geçen** | [İcatçı → Sahip devri gerekirse: devir belgesi eklenecektir] |
+| **Vekil** | [Patent vekili / vekil ofisi, TÜRKPATENT yetki belgesi] |
+| **İcat Başlığı** | Düşük Boyutlu Nokta Bulutu Geometrisi Tabanlı Dil Modelleme Sistemi, Yöntemi ve Bilgisayar Programı |
+| **Teknik Alan (IPC)** | G06F 18/00; G06N 3/04; G06N 5/02 |
+| **Öncelik Bilgisi** | [Bu ulusal başvuru bağımsızdır; önceki bir ulusal/PCT başvurudan öncelik talep edilmiyorsa boş bırakılır] |
 
 > **GİZLİLİK / ÖNCELİK UYARISI:** Bu dosya patent başvurusu için hazırlanmıştır. Başvuru tarihi (öncelik hakkı) alınana kadar bu icata ilişkin hiçbir yayımlama (arXiv, konferans, dergi, blog, genel erişimli GitHub, podcast, sunum) yapılmamalıdır. Yayımlama, yenilik koşulu açısından yıkıcı etki (self-depublication) yaratır.
 
-**Dosya içeriği:** 1. Başlık — 2. Açıklama — 3. İddialar — 4. Özet — 5. Çizimler (8 şekil, ayrı sayfalar).
+## İÇİNDEKİLER
 
-**v2.3 değişiklik özeti (16 Ekim 2026):**
-1. PPL tablosu doğrulanmış koşu loglarıyla uzlaştırıldı: 50K koşularının **eğitim-tarafı** PPL'ı (4.08/4.58) ile 200K koşusunun **ortak held-out** PPL'ı (6.45; nedensel referans 2.92) ayrı tablolar olarak verildi; "≈4,9×" ifadesi eğitim-tarafı sayıya bağlandı.
-2. İddia 1'in son cümlesi yeniden yazıldı: bağlam kodlayıcı (100) attention içerebilir; karakterize edici özellik, tahminin d_model boyutlu bağlam vektörlerinden değil, D boyutlu bulut geometrisinden türemesidir.
-3. İddia 3 ve 19'daki ölçülmemiş "hesaplama tasarrufu / toplam maliyet" vaadi yapısal ifadeye (D+4 ≪ d_model) daraltıldı.
-4. Embodiment parametreleri koşu loglarıyla doğrulandı (d_cloud = 512; 50.000 cümle); 2.7.8'de fraud / AML / bakım uygulama örnekleri eklendi; 2.7.4'e D=64/128 ön-test bulgusu ve kapasite sınırlaması eklendi.
-5. İddia 11–12 birleştirildi; "eğitilmiştir" sonuç iddiası "temsil edebilir" yetenek ifadesine daraltıldı; İddia 10/13/14 korundu.
+1. **Başlık** — icadın adı
+2. **Açıklama** — 2.1 Teknik Alan · 2.2 Ön Teknik (Prior Art) · 2.3 Teknik Sorun · 2.4 İcadın Özü · 2.5 Teknik Etkiler · 2.6 Şekillerin Kısa Açıklaması · 2.7 Detaylı Açıklama (2.7.1–2.7.8)
+3. **İddialar** — 3 bağımsız (Sistem, Yöntem, Bilgisayar Programı) + 16 bağımlı = 19 iddia
+4. **Özet (Abstract)**
+5. **Çizimler** — 8 şekil, ayrı sayfalar (siyah-beyaz, referans numaralı)
+6. **Atıf Listesi (Bibliyografi)**
+
+**Dosya içeriği:** Başvuru Formu — Başlık — Açıklama — İddialar — Özet — Çizimler — Atıf Listesi — Vekile Not.
+
+> **Revizyon notu (v2.3, 16 Ekim 2026):** PPL tablosu koşu loglarıyla uzlaştırıldı (50K eğitim-tarafı 4.08/4.58; 200K ortak held-out 6.45; nedensel referans 2.92); İddia 1 son cümlesi (attention içerebilir, karakterize edici = geometriden tahmin), İddia 3/19 (yapısal D+4 ≪ d_model) ve İddia 11–12 daraltıldı; 2.7.8 fraud/AML/bakım örnekleri, 2.7.4 D=64/128 kapasite bulgusu eklendi. Bu not revizyon kaydıdır; başvuruya teknik metin olarak girmemektedir.
 
 ---
 
@@ -405,7 +414,57 @@ TÜRKPATENT, her çizimi ayrı sayfada, siyah-beyaz çizgi, referans numaraları
 
 ---
 
+## 6. ATIF LİSTESİ (BİBLİYOGRAFİ)
+
+Açıklamanın 2.2 bölümünde atıf verilen kaynaklar:
+
+1. Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, Ł., & Polosukhin, I., 2017. *Attention Is All You Need.* Advances in Neural Information Processing Systems 30 (NeurIPS 30).
+2. Qi, C., Yi, L., Su, H., & Guibas, L. J., 2017. *PointNet: Deep Learning on Point Sets for 3D Classification and Segmentation.* IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), 77–80.
+3. Zaheer, M., Kottur, M., Ravanbakhsh, S., Poczos, B., Salakhutdinov, R. R., & Smola, A. J., 2017. *Deep Sets.* Advances in Neural Information Processing Systems 30 (NeurIPS 30).
+4. Lee, J., Lee, J., Kim, M., Kosiorek, A. R., Choi, S., & Teh, Y. W., 2019. *Set Transformer: A Framework for Attention-based Permutation-Invariant Neural Networks.* International Conference on Machine Learning (ICML), 3714–3723.
+5. Mikolov, T., Chen, K., Corrado, G., & Dean, J., 2013. *Efficient Estimation of Word Representations in Vector Space.* arXiv:1301.3781.
+6. Pennington, J., Socher, R., & Manning, C. D., 2014. *GloVe: Global Vectors for Word Representation.* Proceedings of EMNLP, 1532–1543.
+7. Hu, Z., Niu, L., & Varma, S., 2026. *Neural population geometry / point-cloud manifold analysis.* arXiv:2607.04525 [cs.CL]; DOI 10.48550/arXiv.2607.04525.
+8. Chung, S., & Abbott, L. F., 2021. *Geometry of a neural population.* Nature 592(7853), 117–122.
+9. Xu, W., 2026. *Scale/PGA: Subspace Procrustes Geometry alignment analysis.* arXiv:2605.17084 [cs.LG]; DOI 10.48550/arXiv.2605.17084.
+
+> **Atıf kapsamı notu:** Bu liste, 2.2'de atıf verilen öncü teknik kaynakları içerir. Daha geniş bir prior-art taraması (TÜRKPATENT, Espacenet, Google Patents, arXiv) vekil tarafından başvuruya eklenmesi ve her atfın teknik metin içindeki karşılığı (bölüm/iddia) belirtilmesi önerilir.
+
+---
+
+## 7. VEKİLE NOT — BAŞVURU KONTROL LİSTESİ
+
+> **Bu bölüm başvuruya teknik metin olarak girmez; vekil başvuru hazırlığı için referanstır.**
+
+**A. Teknik metin (bu dosya):**
+- [x] Başlık (TR + EN)
+- [x] Açıklama (2.1–2.7; tüm alt başlıklar)
+- [x] İddialar (3 bağımsız + 16 bağımlı = 19)
+- [x] Özet
+- [x] Çizimler (8 SVG → PDF çizim olarak derlenecek, ayrı sayfa)
+- [x] Atıf listesi
+
+**B. Vekil tarafından tamamlanacaklar:**
+- [ ] Başvuru formu alanları (icatçı, sahip, vekil, T.C. Kimlik, adres, uyrukluk) — resmi TÜRKPATENT formuna aktarılacak
+- [ ] İcatçı → Sahip devri varsa devir (assignment) belgesi
+- [ ] Vekâletname (TÜRKPATENT yetki belgesi)
+- [ ] Öncelik beyanı (varsa; bu ulusal başvuru bağımsızdır)
+- [ ] Resmi prior-art taraması (Espacenet/Google Patents/TÜRKPATENT) ve atıf genişletme
+- [ ] İddia 1'in (a)–(c) çekirdeğinin, evrensel çekirdek başvurusuyla (`geometry_dual_use_core_v1.md`) çakışma/teklik analizi — **bkz. D**
+- [ ] IPC sınıflandırmasının resmî ataması (G06F 18/00; G06N 3/04; G06N 5/02 önerisi)
+
+**C. Gizlilik (kritik):**
+- [ ] Başvuru tarihi (öncelik hakkı) alınana kadar hiçbir yayımlama (arXiv/dergi/blog/genel GitHub/podcast/sunum) yapılmayacak
+- [ ] Bu dosya ve 8 SVG, yayımlanmamış kalacak; genel erişimli repoya konulmayacak
+
+**D. PCT ilişkisi (vekil karar verecektir):**
+- Bu **ulusal (dil)** başvuru, `geometry_dual_use_core_v1.md`'deki **evrensel çekirdek** başvurusunun dil uygulamasıdır.
+- **Önemli:** Evrensel çekirdek + fraud/AML/bakım kapsamı bu dil başvuruda **açıklanmamış** olduğundan, PCT (evrensel) dosyası bu ulusal (dil) başvurudan **öncelik talep edemez** — iki bağımsız icat/kapsam olarak değerlendirilecektir.
+- Önerilen strateji: (1) **ulusal = dil** (bu dosya) → öncelik tarihi T1; (2) **PCT = evrensel + 4 dikey** → kendi öncelik tarihi T2. Vekil, birleştirme/bölme (divisional) ve teklik (unity) açısından değerlendirecektir.
+
+---
+
 *Bu dosya, TÜRKPATENT patent başvurusu için teknik metindir.*
 *Hazırlayan: [İcatçı Adı]*
-*Revizyon: v2.3*
-*Tarih: 16 Ekim 2026*
+*Revizyon: v2.3 (filing-ready paket: form + içindekiler + atıf + vekil notu eklendi)*
+*Tarih: 22 Ekim 2026*

@@ -10,6 +10,8 @@
 > referans verilir; burada yeni olan **tablolar arası kimlik-bucket projeksiyonu,
 > çözümlenen ablation açıklaması, karşı-faktürel denetim ve self-contained paket**tir.
 
+> **Kapsam notu (2026-10-22):** Bu dosya, `geometry_dual_use_core_v1.md`'deki evrensel çekirdeğin **tabular/fraud** uygulamasıdır. Bağımsız İddia 1'in (a)-(c) çekirdek paragrafları genel dosyaya çapraz-referans taşır; bu dosyaya özgü yeni olan kimlik-bucket projeksiyon + karşı-faktürel hatalı-uyarı denetimi + self-contained edge embodiment'idir.
+
 ---
 
 ## 1. BAŞLIK
