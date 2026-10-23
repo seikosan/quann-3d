@@ -166,7 +166,8 @@ def step_train(args, tok):
         d_model=args.d_model,
         d_cloud=args.d_cloud,
         d_cloud_dim=args.d_dim,
-        n_layers=args.layers
+        n_layers=args.layers,
+        pool=args.pool,
     )
     model.to(device)
     
@@ -223,7 +224,8 @@ def step_train(args, tok):
                 "epoch": epoch+1, "model_state": model.state_dict(),
                 "vocab_size": tok.num_tokens,
                 "config": {"d_model": args.d_model, "d_cloud": args.d_cloud,
-                           "d_cloud_dim": args.d_dim, "n_layers": args.layers},
+                           "d_cloud_dim": args.d_dim, "n_layers": args.layers,
+                           "pool": args.pool},
                 "ppl": ppl,
             }, os.path.join(args.save_dir, f"wiki_cloud_epoch{epoch+1}.pt"))
         
@@ -233,7 +235,8 @@ def step_train(args, tok):
                 "epoch": epoch+1, "model_state": model.state_dict(),
                 "vocab_size": tok.num_tokens,
                 "config": {"d_model": args.d_model, "d_cloud": args.d_cloud,
-                           "d_cloud_dim": args.d_dim, "n_layers": args.layers},
+                           "d_cloud_dim": args.d_dim, "n_layers": args.layers,
+                           "pool": args.pool},
                 "ppl": ppl,
             }, os.path.join(args.save_dir, "wiki_cloud_best.pt"))
     
@@ -337,6 +340,7 @@ def main():
     parser.add_argument("--d-cloud", type=int, default=512)
     parser.add_argument("--d-dim", type=int, default=16)
     parser.add_argument("--layers", type=int, default=4)
+    parser.add_argument("--pool", type=str, default="max", choices=["max", "attn"])
     parser.add_argument("--save-dir", type=str,
                         default=os.path.join(ROOT, "checkpoints", "wiki_checkpoints"))
     parser.add_argument("--resume", type=str, default=None,

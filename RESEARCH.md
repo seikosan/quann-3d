@@ -5,7 +5,7 @@
 > `geometry`, `paper`) okur, distile sonuç döndürür. Güncelleme protokolü:
 > `AGENTS.md` §5. Boyut bütçesi: **≤150 satır** — taşarsa en eski deney "Son
 > Deneyler" tablosundan çıkarılır (detay `logs/`'da kalır).
-> Son güncelleme: 2026-10-22
+> Son güncelleme: 2026-10-23
 
 ## Bir Cümle
 
@@ -14,9 +14,9 @@ uzayda nokta, cümle → nokta bulutu, anlam → bulut geometrisi; tahmin bu
 konfigürasyondan. İkinci katman QUANN-Cloud: aynı mimariyi backprop'suz (0th-order)
 eğiten yöntem.
 
-## Canlı Runlar (2026-10-22)
+## Canlı Runlar (2026-10-23)
 
-çalışan run yok
+R3 attention-pool 20K matched ön-test (MPS): `logs/run_r3_20k_max_v2.log`/`_attn_v2.log` (wiki korpus, R1 matched-duel protokolü; max kontrol → attn ardışık). Hüküm disjoint holdout DUEL_SUMMARY'ye: **MAX 315.99 > ATTN 334.89 (Δ18.90)** — attention-pool performansı düşürdü. Katman-2 complaints ölçümü CPU'da tamamlandı (3.77M, region stability ARI 0.994, Spearman 1.0).
 
 **Bitiş teşhisi (tarih):** 1.5M wiki run'ı epoch 17/20'de exit 137 ile OOM/kill oldu (RSS ~13.2 GB, free ~1.2 GB); epoch 18–20, bellek düzeltmesi sonrası kuyruktan resume edildi. Queue'daki step-4 eval, stdin çalıştırmasında `training/`'in sys.path'te olmaması ile bir kez FAILED (ModuleNotFoundError); script düzeltildi, eval retry ile tamamlandı.
 
@@ -48,15 +48,17 @@ hassasiyet değil. Bulut (10×32=320 sayı), transformer gizli durumunun
 
 | Tarih | Run | Sonuç | Ders | Log |
 |---|---|---|---|---|
+| 2026-10-23 | R3 attention-weighted pooling 20K duel (max vs attn, disjoint holdout [200000,202000), n=2000, seed=0) | Held-out PPL MAX **315.99** < ATTN **334.89** (Δ18.90, MAX kazandı); train PPL MAX 88.19 vs ATTN 124.22. | Attention-pool 20K'da overfitting'e yol açtı (train PPL 124.22 vs 88.19). 200K'da tekrar test edilmeli — küçük korpusta attention sinyali gürültüye dönüşüyor olabilir. | `logs/run_r3_20k_max_v2.log` + `logs/run_r3_20k_attn_v2.log` + `training/eval_r3_duel.py` |
 | 2026-10-22 | R1 matched duel D32 vs D64 (aynı 200K-wiki + ortak BPE; disjoint holdout [200000,202000), n=2000, seed=0) | Held-out PPL D64 **71.09** < D32 **73.27** (Δ2.18, D64 kazandı); train 21.20 vs 22.12. | D64 yönü destekleniyor ama ~%3 fark, REVISION kapasite teşhisine göre bulutun temsil kapasitesi sınırlı; ölçülen büyük train→holdout gap de bölge driftini araştırmayı gerektiriyor. | `logs/run_d32_wiki200k.log` (D32 eval) + `logs/run_d32_200k.log` (D32 train) |
 | 2026-10-21 | R1 D=64 × 200K-wiki (50ep) | Wiki ilk 200K satır (189,872 uzun-sekans), referans BPE; train PPL **21.20**; full-corpus 59.32 (kısmi overlap riski), slice 19.08 (in-sample); 6.45 setinde D32=6.45, D64=2621.31; BPE-mismatch kontrolleri artefakt | 6.45 örneği D32'nin eğitim verisinden; D64 farklı corpus'ta eğitildi, wiki D32 BPE'si farklı — run kapasite etkisini ayırmıyor ve R1 sonuçsuz. | `logs/run_d64_200k.log` |
 | 2026-10-21 | P1 QAT gate (online-neutralized ckpt + STE fake-quant: per-channel weight + static per-tensor act; 4ep; full 4.7M) | @.9969: FP32 FP 8,468→6,817, TP 1,930→2,413; P/R .186/.316→.261/.395; PR/ROC .2706/.9474→.3097/.9502. INT8-channel FP 10,856→**3,834**, TP 1,922→2,014; P/R .150/.315→.344/.330; PR/ROC .2573/.9389→.2869/.9424 | Parity gap sistematik kaymaydı (100K: ΔP +0.059 ortalama, %72 yukarı); QAT FP32'yi de düzeltti — INT8 FP (3,834) FP32'den (6,817) bile düşük; kriter tuttu, operasyonel eşik değişmedi | `fraud/logs/run_qat_gate.log` |
 | 2026-10-20 | P1 online-cloud-separation (reader/head BCE fine-tune, 3ep; full 4.7M) | @.9969 FP32 FP 9,942→8,468, TP 1,842→1,930; P/R .156/.301→.186/.316; PR/ROC .2560/.9451→.2706/.9474. INT8-channel FP 27,858→10,856, TP 1,931→1,922; PR/ROC .2506/.9367→.2573/.9389 | Reader-space ayrım zayıf-orta (d/σ=.71 cloud, 1.00 encoded); fine-tune AUC'yi artırdı ama INT8 FP hâlâ FP32 baz çizgisinden yüksek — eşik davranışı çözülmedi | `fraud/logs/run_online_cloud_separation.log` |
 ## Sıradaki Aksiyonlar
 
-1. **R1 hükmü:** D64'ün 2.18 PPL (~%3) avantajı kapasite yönünü destekliyor ama REVISION'daki temsil-kapasitesi teşhisine göre ana darboğazı çözmüyor; D=128'e geçmeden önce mimari/temsil tavanını ve matched sonucun anlamını değerlendir.
-2. **Yeni deney adayı:** train→holdout gap kök-nedenini ölç; [0,200000) ve [200000,202000) arasında BPE token frekans KL/kosinüs benzerliğini hesapla. Drift büyükse aynı bölgeden holdout varyantıyla duel'ü teyit et.
-3. **P1 QAT:** deploy kararı hâlâ kullanıcıda; mevcut paket/kanıt `fraud/results/deploy/` ve `fraud/results/qat_gate.json` altında. Remote yok: `181539a`/`5f66aed` yerelde; push değil — gerekiyse `scripts/backup_ssd.sh`/bundle ile yedekle.
+1. **R3 tekrar 200K:** Attention-pool 20K'da overfitting gösterdi (train PPL 124.22 vs MAX 88.19). 200K'da tekrar test edilmeli — küçük korpusta attention sinyali gürültüye dönüşüyor olabilir.
+2. **R1 hükmü:** D64'ün 2.18 PPL (~%3) avantajı kapasite yönünü destekliyor ama REVISION'daki temsil-kapasitesi teşhisine göre ana darboğazı çözmüyor; D=128'e geçmeden önce mimari/temsil tavanını ve matched sonucun anlamını değerlendir.
+3. **Yeni deney adayı:** train→holdout gap kök-nedenini ölç; [0,200000) ve [200000,202000) arasında BPE token frekans KL/kosinüs benzerliğini hesapla. Drift büyükse aynı bölgeden holdout varyantıyla duel'ü teyit et.
+4. **P1 QAT:** deploy kararı hâlâ kullanıcıda; mevcut paket/kanıt `fraud/results/deploy/` ve `fraud/results/qat_gate.json` altında. Remote yok: `181539a`/`5f66aed` yerelde; push değil — gerekiyse `scripts/backup_ssd.sh`/bundle ile yedekle.
 
 ## Subproje: quann_cloud/
 
@@ -90,6 +92,10 @@ açıklanabilirlik + uyum hızı + boyut, ham doğruluk değil. Kanıt zemini:
 RF .973 / GBT .981 tavanlarının altında).
 
 Patent: evrensel çekirdek `docs/patent/evrensel/geometry_dual_use_core_v1.md` (dual-use geometri: aynı bulut hem hesaplama hem native açıklama; dil/fraud/aml/bakım embodiment); dil v2.3 + tabular v1 onun uygulaması.
+
+## Subproje: complaints/
+
+Full-corpus ölçüm (3.77M usable, product mix, 2015–2026) + region stability (ARI mean 0.994, share Spearman 1.0) tamamlandı. Pilot scale drift: region 7 +21%, region 1 −17%. Output: `complaints/results/complaints_scale_stability.json`. Katman-2 scale ceiling: reader 20K pilot eğitildi, full 3.77M (188×) region assignment CPU'da infeasible.
 
 ## Subproje: aml/, maintenance/
 

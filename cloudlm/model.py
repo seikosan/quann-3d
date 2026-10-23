@@ -38,14 +38,16 @@ class CloudEncoderND(nn.Module):
     ND nokta bulutunu (B, N, D) → küme durumu (B, d_cloud) olarak kodlar.
 
     PointNet mantığı:
-      a) nokta MLP (paylaşılan) → max-pool
+      a) nokta MLP (paylaşılan) → max/attention-pool
       b) çift geometri MLP: [diff(D), dist, cos_açı, |i|, |j|] → mean-pool
       c) fusion
     Sıralama YOK — küme olarak işler; mask ile padding çiftleri sıfırlanır.
     """
 
-    def __init__(self, d_cloud_dim: int, d_cloud: int = 512, hidden: int = 256):
+    def __init__(self, d_cloud_dim: int, d_cloud: int = 512, hidden: int = 256,
+                 pool: str = "max"):
         super().__init__()
+        self.pool = pool
         self.point_mlp = nn.Sequential(
             nn.Linear(d_cloud_dim, hidden), nn.GELU(),
             nn.Linear(hidden, hidden), nn.GELU(),
@@ -61,14 +63,33 @@ class CloudEncoderND(nn.Module):
             nn.Linear(d_cloud * 2, d_cloud),
             nn.LayerNorm(d_cloud),
         )
+        # Append after the legacy modules so their seeded initialization is unchanged.
+        self.attn_proj = nn.Linear(d_cloud, 1)
+
+        def load_legacy_max_pool_state(module, state_dict, prefix, local_metadata,
+                                       strict, missing_keys, unexpected_keys, error_msgs):
+            # Old max-pool checkpoints predate attn_proj. Its parameters are unused
+            # in max mode, so preserve strict loading without changing old weights.
+            if module.pool == "max":
+                for name, value in module.attn_proj.state_dict().items():
+                    state_dict.setdefault(prefix + "attn_proj." + name, value)
+
+        self.register_load_state_dict_pre_hook(load_legacy_max_pool_state)
 
     def forward(self, points: torch.Tensor, mask: Optional[torch.Tensor] = None) -> torch.Tensor:
         B, N, D = points.shape
 
         pf = self.point_mlp(points)
-        if mask is not None:
-            pf = pf.masked_fill(~mask.unsqueeze(-1), 0)
-        point_pooled = pf.max(dim=1).values
+        if self.pool == "attn":
+            scores = self.attn_proj(pf).squeeze(-1)
+            if mask is not None:
+                scores = scores.masked_fill(~mask, -1e9)
+            w = F.softmax(scores, dim=1)
+            point_pooled = (pf * w.unsqueeze(-1)).sum(dim=1)
+        else:
+            if mask is not None:
+                pf = pf.masked_fill(~mask.unsqueeze(-1), 0)
+            point_pooled = pf.max(dim=1).values
 
         diff = points.unsqueeze(2) - points.unsqueeze(1)
         dist = diff.norm(dim=-1)
@@ -108,7 +129,7 @@ class CloudLM(nn.Module):
                  d_cloud_dim: int = 16, n_layers: int = 4,
                  nhead: Optional[int] = None, pos_len: int = 256,
                  hidden: int = 256, proj_hidden: Optional[int] = None,
-                 point_hidden: int = 128):
+                 point_hidden: int = 128, pool: str = "max"):
         """
         hidden:      cloud MLP gizli boyutu (nokta+çift MLP) — vars. 256
         proj_hidden: WordToND projeksiyon gizli boyutu — None → d_model
@@ -130,7 +151,7 @@ class CloudLM(nn.Module):
         self.norm = nn.LayerNorm(d_model)
 
         self.to_nd = WordToND(d_model, d_cloud_dim, hidden=proj_hidden)
-        self.cloud = CloudEncoderND(d_cloud_dim, d_cloud, hidden=hidden)
+        self.cloud = CloudEncoderND(d_cloud_dim, d_cloud, hidden=hidden, pool=pool)
 
         self.word_head = nn.Sequential(
             nn.Linear(d_cloud, d_cloud), nn.GELU(),
