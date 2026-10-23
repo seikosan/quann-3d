@@ -51,10 +51,9 @@ tavan ve okunurluk kapasite deneyi makale hattındadır.
 - Düzeltme: tek nokta etkisi max-pool'da argmax'a bağlı (0/1); attention'da
   yumuşak ve sürekli → hem hassasiyet hem gradyan/arama sinyali artar.
 - **Test:** 20K, D=32.
-- **Durum:** TAMAM (2026-10-23) — 20K × 10ep, disjoint holdout [200000,202000) duel tamamlandı.
-- **Sonuç:** Max pool (PPL 315.99) > Attn pool (PPL 334.89), Δ18.90 → attention-pool **performansı düşürdü**.
-- **Teşhis:** Attention pooling, 20K'da overfitting'e yol açtı (train PPL 124.22 vs 88.19). 200K'da tekrar test edilmeli — küçük korpusta attention sinyali gürültüye dönüşüyor olabilir.
-- **Kuyruk:** `bash training/shell/run_r3_20k.sh` (max → attn, MPS ardışık); checkpoint'ler `checkpoints/r3_20k/{max,attn}/`.
+- **Durum:** 20K duel tamamlandı (2026-10-23) — MAX 315.99 > ATTN 334.89 (Δ18.90); attention-pool performansı düşürdü. 200K'da tekrar test ediliyor (`training/shell/run_r3_200k.sh`).
+- **Teşhis:** Attention pooling 20K'da overfitting'e yol açtı (train PPL 124.22 vs MAX 88.19). 200K'da tekrar test ediliyor — küçük korpusta attention sinyali gürültüye dönüşüyor olabilir.
+- **Kuyruk:** `bash training/shell/run_r3_200k.sh` (max → attn, MPS ardışık); checkpoint'ler `checkpoints/r3_200k/{max,attn}/`.
 
 ### R4 (QUANN özel) — Aramayı pair-kanalına yönlendir
 **Hat: Araştırma.**
@@ -80,5 +79,6 @@ Her varyant: 20K × 10ep (~2-4 saat) → vaat edeni 200K'a ölçekle.
 - [x] Ölçek kuyruğu: 1.5M OOM/kill teşhisi + `train_wiki.py` bellek düzeltmesi + resume 18–20 + 200K-wiki/50ep kontrol + eş dağıtım eval; on-wiki 62.15, aynı 200K kesitinde 200K/50ep 24.53 vs 1.5M/20ep 64.28
 - [x] R1 20K ön-test: D=64 en iyi (181 vs 201); wiki scale gate'inde D=32'de tekrar derinliği baskın
 - [x] R1 D=64×200K-wiki/50ep TAMAM (2026-10-21) + eşleşen D32 kontrolü; **duel (disjoint holdout, aynı BPE) tamamlandı — D64 71.09 < D32 73.27 (Δ2.18)**
-- [x] R3 attention-weighted pooling TAMAM (2026-10-23) — 20K duel: MAX 315.99 > ATTN 334.89 (Δ18.90); attention-pool performansı düşürdü
+- [x] R3 attention-weighted pooling 20K TAMAM (2026-10-23) — 20K duel: MAX 315.99 > ATTN 334.89 (Δ18.90); attention-pool performansı düşürdü
+- [ ] R3 200K tekrar test ediliyor — `training/shell/run_r3_200k.sh` (max → attn, MPS ardışık)
 - [ ] R2 cloud attention, R4 QUANN freeze ön-testleri
