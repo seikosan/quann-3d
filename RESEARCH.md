@@ -16,7 +16,7 @@ eğiten yöntem.
 
 ## Canlı Runlar (2026-10-23)
 
-R3 attention-pool 20K matched ön-test (MPS): `logs/run_r3_20k_max_v2.log`/`_attn_v2.log` (wiki korpus, R1 matched-duel protokolü; max kontrol → attn ardışık). Hüküm disjoint holdout DUEL_SUMMARY'ye: **MAX 315.99 > ATTN 334.89 (Δ18.90)** — attention-pool performansı düşürdü. Katman-2 complaints ölçümü CPU'da tamamlandı (3.77M, region stability ARI 0.994, Spearman 1.0).
+R3 200K max/arm training started (MPS): `logs/run_r3_200k_max.log` (200K wiki, 10ep). R3 attention-pool 20K matched ön-test (MPS): `logs/run_r3_20k_max_v2.log`/`_attn_v2.log` (wiki korpus, R1 matched-duel protokolü; max kontrol → attn ardışık). Hüküm disjoint holdout DUEL_SUMMARY'ye: **MAX 315.99 > ATTN 334.89 (Δ18.90)** — attention-pool performansı düşürdü. Katman-2 complaints ölçümü CPU'da tamamlandı (3.77M, region stability ARI 0.994, Spearman 1.0).
 
 **Bitiş teşhisi (tarih):** 1.5M wiki run'ı epoch 17/20'de exit 137 ile OOM/kill oldu (RSS ~13.2 GB, free ~1.2 GB); epoch 18–20, bellek düzeltmesi sonrası kuyruktan resume edildi. Queue'daki step-4 eval, stdin çalıştırmasında `training/`'in sys.path'te olmaması ile bir kez FAILED (ModuleNotFoundError); script düzeltildi, eval retry ile tamamlandı.
 
@@ -41,7 +41,7 @@ hassasiyet değil. Bulut (10×32=320 sayı), transformer gizli durumunun
 |---|---|---|---|
 | R1 | Kapasite: D=64 / D=128 | 1 | Matched duel tamam: D64 71.09 < D32 73.27 (Δ2.18) — kapasite yönü doğru, büyüklük sınırlı; ikisi de baseline 2.92'nin çok üstünde → darboğaz mimari/temsil, kapasite değil. |
 | R2 | Cloud attention (ilişkisel sözlük genişletme) | 3 | bekliyor |
-| R3 | Attention-weighted pooling (max-pool onarımı) | 2 | bekliyor |
+| R3 | Attention-weighted pooling (max-pool onarımı) | 2 | 20K tamam (MAX kazandı); 200K tekrarı bekliyor |
 | R4 | QUANN: aramayı pair-kanalına yönlendir (freeze varyantı) | 4 | bekliyor |
 
 ## Son Deneyler (en yeni üstte)
@@ -55,7 +55,7 @@ hassasiyet değil. Bulut (10×32=320 sayı), transformer gizli durumunun
 | 2026-10-20 | P1 online-cloud-separation (reader/head BCE fine-tune, 3ep; full 4.7M) | @.9969 FP32 FP 9,942→8,468, TP 1,842→1,930; P/R .156/.301→.186/.316; PR/ROC .2560/.9451→.2706/.9474. INT8-channel FP 27,858→10,856, TP 1,931→1,922; PR/ROC .2506/.9367→.2573/.9389 | Reader-space ayrım zayıf-orta (d/σ=.71 cloud, 1.00 encoded); fine-tune AUC'yi artırdı ama INT8 FP hâlâ FP32 baz çizgisinden yüksek — eşik davranışı çözülmedi | `fraud/logs/run_online_cloud_separation.log` |
 ## Sıradaki Aksiyonlar
 
-1. **R3 tekrar 200K:** Attention-pool 20K'da overfitting gösterdi (train PPL 124.22 vs MAX 88.19). 200K'da tekrar test edilmeli — küçük korpusta attention sinyali gürültüye dönüşüyor olabilir.
+1. **R3 200K training:** Attention-pool 20K'da overfitting gösterdi (train PPL 124.22 vs MAX 88.19). 200K'da tekrar test ediliyor — küçük korpusta attention sinyali gürültüye dönüşüyor olabilir. `training/shell/run_r3_200k.sh` (max → attn, MPS ardışık).
 2. **R1 hükmü:** D64'ün 2.18 PPL (~%3) avantajı kapasite yönünü destekliyor ama REVISION'daki temsil-kapasitesi teşhisine göre ana darboğazı çözmüyor; D=128'e geçmeden önce mimari/temsil tavanını ve matched sonucun anlamını değerlendir.
 3. **Yeni deney adayı:** train→holdout gap kök-nedenini ölç; [0,200000) ve [200000,202000) arasında BPE token frekans KL/kosinüs benzerliğini hesapla. Drift büyükse aynı bölgeden holdout varyantıyla duel'ü teyit et.
 4. **P1 QAT:** deploy kararı hâlâ kullanıcıda; mevcut paket/kanıt `fraud/results/deploy/` ve `fraud/results/qat_gate.json` altında. Remote yok: `181539a`/`5f66aed` yerelde; push değil — gerekiyse `scripts/backup_ssd.sh`/bundle ile yedekle.
