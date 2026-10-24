@@ -33,6 +33,26 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
 
+def build_model_from_checkpoint(ckpt):
+    """Construct a CloudLM using every architecture field saved in its checkpoint."""
+    config = ckpt.get("config", {})
+    model = CloudLM(
+        vocab_size=ckpt["vocab_size"],
+        d_model=config.get("d_model", 128),
+        d_cloud=config.get("d_cloud", 256),
+        d_cloud_dim=config.get("d_cloud_dim", 16),
+        n_layers=config.get("n_layers", 2),
+        nhead=config.get("nhead"),
+        pos_len=config.get("pos_len", 256),
+        hidden=config.get("hidden", 256),
+        proj_hidden=config.get("proj_hidden"),
+        point_hidden=config.get("point_hidden", 128),
+        pool=config.get("pool", "max"),
+    )
+    model.load_state_dict(ckpt["model_state"])
+    return model
+
+
 # ─────────────────────────────────────────────
 # TEST FONKSİYONLARI
 # ─────────────────────────────────────────────
@@ -292,14 +312,7 @@ def main():
     ckpt = torch.load(args.checkpoint, map_location="cpu", weights_only=False)
     
     config = ckpt.get("config", {})
-    model = CloudLM(
-        vocab_size=ckpt["vocab_size"],
-        d_model=config.get("d_model", 128),
-        d_cloud=config.get("d_cloud", 256),
-        d_cloud_dim=config.get("d_cloud_dim", 16),
-        n_layers=config.get("n_layers", 2),
-    )
-    model.load_state_dict(ckpt["model_state"])
+    model = build_model_from_checkpoint(ckpt)
     print(f"  Model: d_model={config.get('d_model')}, d_cloud={config.get('d_cloud')}, "
           f"D={config.get('d_cloud_dim')}, layers={config.get('n_layers')}")
     print(f"  Epoch: {ckpt.get('epoch', '?')} | PPL: {ckpt.get('ppl', '?')}")

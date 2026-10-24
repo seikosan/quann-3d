@@ -259,7 +259,10 @@ class QCloudNetwork(nn.Module):
         """
         with torch.no_grad():
             word_logits, _, _ = self.forward(tokens, mask, points_override=points_override)
-            loss = F.cross_entropy(word_logits, torch.tensor([target_token]))
+            loss = F.cross_entropy(
+                word_logits,
+                torch.tensor([target_token], device=word_logits.device),
+            )
         return loss.item()
     
     def update_token_weights(
@@ -334,9 +337,9 @@ class QCloudNetwork(nn.Module):
             delta_sum = (var_err[1:] - base_error).sum().item()
             delta_n = len(valid)
             
-            def _scatter(new_val, src_pts):
+            def _scatter(new_val, src_pts, token_id):
                 for j in range(T):
-                    if tokens[0, j].item() == t:
+                    if tokens[0, j].item() == token_id:
                         src_pts[0, j] = torch.tensor(new_val.tolist(), device=tokens.device)
             
             # Ödül adaylarını uygula; başarısızları karşıt yöne ilet
@@ -348,18 +351,18 @@ class QCloudNetwork(nn.Module):
                     self._apply_narrow(w, candidates[(i, t)]['cand'], True, search_rule)
                     w.update_sigma(rewarded=True)
                     stats['rewarded'] += 1
-                    _scatter(w.value, base_points)
+                    _scatter(w.value, base_points, t)
                 else:
                     failed.append((i, t, err_c))
             
             # PASS 2: başarısız pozisyonlar için karşıt yön (tek batch'li forward)
-            if failed:
+            if failed and self.bidirectional:
                 opp_variants = []
                 for i, t, _ in failed:
                     w = self.get_weight(t)
                     opp = w.opposite(w.value)
                     vp = base_points.clone()
-                    _scatter(opp, vp)
+                    _scatter(opp, vp, t)
                     candidates[(i, t)]['opp'] = opp
                     opp_variants.append(vp)
                 
@@ -381,16 +384,32 @@ class QCloudNetwork(nn.Module):
                         self._apply_narrow(w, candidates[(i, t)]['opp'], True, search_rule)
                         w.update_sigma(rewarded=True)
                         stats['rewarded'] += 1
-                        _scatter(w.value, base_points)
+                        _scatter(w.value, base_points, t)
                     elif err_c > base_error + 1e-6:
                         # Her iki yön de kötü → ceza
                         self._apply_narrow(w, candidates[(i, t)]['cand'], False, search_rule)
                         w.update_sigma(rewarded=False)
                         stats['censured'] += 1
-                        _scatter(w.value, base_points)
+                        _scatter(w.value, base_points, t)
                     else:
                         stats['unchanged'] += 1
-                    final_error = min(final_error, err_c, err_o)
+            elif failed:
+                for i, t, _ in failed:
+                    w = self.get_weight(t)
+                    self._apply_narrow(w, candidates[(i, t)]['cand'], False, search_rule)
+                    w.update_sigma(rewarded=False)
+                    stats['censured'] += 1
+                    _scatter(w.value, base_points, t)
+
+            # Measure the actual post-update state, not the best isolated
+            # candidate (which may not represent the combined updated cloud).
+            final_logits, _, _ = self.forward(
+                tokens, mask, points_override=base_points
+            )
+            final_error = F.cross_entropy(
+                final_logits,
+                torch.tensor([target_token], device=final_logits.device),
+            ).item()
         
         stats['base_error'] = base_error
         stats['final_error'] = final_error

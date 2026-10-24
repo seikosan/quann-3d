@@ -204,16 +204,22 @@ def step_train(args, tok):
 
     # Resume: checkpoint epoch'undan devam et, cosine schedule'ı oradan hizala
     start_epoch = 0
+    best_ppl = float('inf')
     if args.resume:
         ckpt = torch.load(args.resume, map_location="cpu", weights_only=False)
         model.load_state_dict(ckpt["model_state"])
         start_epoch = ckpt.get("epoch", 0)
-        for _ in range(start_epoch):
-            scheduler.step()
+        if "optimizer_state" in ckpt:
+            optimizer.load_state_dict(ckpt["optimizer_state"])
+        if "scheduler_state" in ckpt:
+            scheduler.load_state_dict(ckpt["scheduler_state"])
+        else:
+            for _ in range(start_epoch):
+                scheduler.step()
+        best_ppl = ckpt.get("best_ppl", float('inf'))
         print(f"  Resume: epoch {start_epoch} checkpoint'undan devam ({args.resume})")
 
     os.makedirs(args.save_dir, exist_ok=True)
-    best_ppl = float('inf')
     model.train()
     t0 = time.time()
 
@@ -255,14 +261,18 @@ def step_train(args, tok):
 
         ckpt = {
             "epoch": epoch + 1, "model_state": model.state_dict(),
+            "optimizer_state": optimizer.state_dict(),
+            "scheduler_state": scheduler.state_dict(),
             "vocab_size": tok.num_tokens,
             "config": {"arch": args.arch, "d_model": args.d_model, "n_layers": args.layers},
             "ppl": ppl,
+            "best_ppl": best_ppl,
         }
         if (epoch + 1) % 5 == 0:
             torch.save(ckpt, os.path.join(args.save_dir, f"baseline_{epoch+1}.pt"))
         if ppl < best_ppl:
             best_ppl = ppl
+            ckpt["best_ppl"] = best_ppl
             torch.save(ckpt, os.path.join(args.save_dir, "baseline_best.pt"))
 
     total = time.time() - t0

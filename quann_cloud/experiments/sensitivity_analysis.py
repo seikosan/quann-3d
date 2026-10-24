@@ -112,8 +112,9 @@ def main():
                 continue
 
             pf0 = model.cloud.point_mlp(points0)
-            pf0 = pf0.masked_fill(~mask.unsqueeze(-1), 0)
+            pf0 = pf0.masked_fill(~mask.unsqueeze(-1), torch.finfo(pf0.dtype).min)
             pp0 = pf0.max(dim=1).values
+            pp0 = pp0.masked_fill(~mask.any(dim=1, keepdim=True), 0)
 
             def pair_pool(pts):
                 B, N, Dd = pts.shape

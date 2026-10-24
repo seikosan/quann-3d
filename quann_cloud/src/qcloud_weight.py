@@ -75,12 +75,15 @@ class QCloudWeight:
     
     def sample(self) -> np.ndarray:
         """
-        Her boyut için bağımsız olarak aralıktan rastgele değer üret.
+        Yön ve sigma'ya göre aralık içinde aday üret.
         
         Return:
             np.array[D]: Yeni üretilen nokta (value değişmez)
         """
-        return np.random.uniform(self.low, self.high)
+        width = self.high - self.low
+        step = np.random.uniform(0.0, self.sigma, size=self.D) * width
+        candidate = self.value + self.direction * step
+        return np.clip(candidate, self.low, self.high)
     
     def set_value(self, new_value: np.ndarray) -> None:
         """Value'yu doğrudan belirle (testler ve iç kullanım için)."""
@@ -211,17 +214,10 @@ class QCloudWeight:
         if point.shape != (self.D,):
             raise ValueError(f"point shape {(point.shape,)} != ({self.D,})")
         
-        opposite = np.zeros(self.D)
-        for i in range(self.D):
-            # Karşıt bölge: aralığın diğer yarısı
-            if point[i] > self.value[i]:
-                # point yüksek → düşük bölgeyi dene (aralığın yarısı)
-                opposite[i] = (self.low[i] + self.value[i]) / 2
-            else:
-                # point düşük → yüksek bölgeyi dene (aralığın yarısı)
-                opposite[i] = (self.value[i] + self.high[i]) / 2
-        
-        return opposite
+        width = self.high - self.low
+        step = np.maximum(self.sigma * width, 1e-8)
+        # Opposite is the mirror move against the active search direction.
+        return np.clip(self.value - self.direction * step, self.low, self.high)
     
     # =========================================================================
     # YARDIMCI FONKSİYONLAR
@@ -241,7 +237,7 @@ class QCloudWeight:
         Returns:
             bool — True → her boyut threshold'un altında
         """
-        thresh = threshold or self.convergence_threshold
+        thresh = self.convergence_threshold if threshold is None else threshold
         return bool(np.all(self.error_width() <= thresh))
     
     def update_sigma(self, rewarded: bool) -> None:

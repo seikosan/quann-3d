@@ -88,8 +88,10 @@ class CloudEncoderND(nn.Module):
             point_pooled = (pf * w.unsqueeze(-1)).sum(dim=1)
         else:
             if mask is not None:
-                pf = pf.masked_fill(~mask.unsqueeze(-1), 0)
+                pf = pf.masked_fill(~mask.unsqueeze(-1), torch.finfo(pf.dtype).min)
             point_pooled = pf.max(dim=1).values
+            if mask is not None:
+                point_pooled = point_pooled.masked_fill(~mask.any(dim=1, keepdim=True), 0)
 
         diff = points.unsqueeze(2) - points.unsqueeze(1)
         dist = diff.norm(dim=-1)

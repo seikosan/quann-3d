@@ -1,7 +1,4 @@
-import sys
-sys.path.insert(0, '/Users/serkankose/Documents/quann-3d/quann_cloud/src')
-
-from qcloud_network import QCloudNetwork
+from quann_cloud.src.qcloud_network import QCloudNetwork
 import torch
 import unittest
 
@@ -30,16 +27,37 @@ class TestQCloudNetwork(unittest.TestCase):
         self.assertIn(5, model.token_weights)
 
     def test_update_token_weights(self):
-        model = QCloudNetwork(vocab_size=100, d_model=64, d_cloud_dim=3)
-        for tid in range(1, 4):
-            model.get_weight(tid)
-        
-        tokens = torch.tensor([[1, 2, 3]])
-        mask = (tokens != 0).bool()
-        
+        model = QCloudNetwork(vocab_size=100, d_model=64, d_cloud_dim=3).eval()
+        tokens = torch.tensor([[2, 3, 0]])
+        mask = tokens != 0
         stats = model.update_token_weights(tokens, mask, 4)
-        self.assertIn('rewarded', stats)
-        self.assertIn('censured', stats)
+        self.assertEqual(
+            set(stats),
+            {'rewarded', 'censured', 'unchanged', 'base_error', 'final_error', 'mean_delta'},
+        )
+        self.assertEqual(stats['rewarded'] + stats['censured'] + stats['unchanged'], 2)
+        self.assertTrue(torch.isfinite(torch.tensor(stats['base_error'])))
+        self.assertTrue(torch.isfinite(torch.tensor(stats['final_error'])))
+        self.assertGreaterEqual(stats['final_error'], 0.0)
+
+    def test_compute_error_uses_model_device(self):
+        model = QCloudNetwork(vocab_size=100, d_model=64, d_cloud_dim=3).eval()
+        tokens = torch.tensor([[2, 3]])
+        mask = tokens != 0
+        error = model.compute_error(tokens, mask, target_token=4)
+        self.assertGreaterEqual(error, 0.0)
+
+    def test_bidirectional_flag_controls_opposite_search(self):
+        tokens = torch.tensor([[2, 3]])
+        mask = tokens != 0
+        for bidirectional in (False, True):
+            model = QCloudNetwork(
+                vocab_size=100, d_model=64, d_cloud_dim=3,
+                bidirectional=bidirectional,
+            ).eval()
+            self.assertIs(model.bidirectional, bidirectional)
+            stats = model.update_token_weights(tokens, mask, target_token=4)
+            self.assertEqual(stats['rewarded'] + stats['censured'] + stats['unchanged'], 2)
 
     def test_all_converged(self):
         model = QCloudNetwork(vocab_size=100, d_model=64, d_cloud_dim=3)

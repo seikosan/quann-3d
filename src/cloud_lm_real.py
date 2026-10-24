@@ -39,6 +39,7 @@ from mpl_toolkits.mplot3d import Axes3D
 
 def load_bilkent(path="bilkent_texts.csv", max_texts=5000):
     """CSV'den metinleri yükle, cümlelere böl."""
+    path = os.path.join(ROOT, "data", "bilkent_texts.csv")
     texts = []
     with open(path, 'r', encoding='utf-8') as f:
         reader = csv.DictReader(f)
@@ -206,7 +207,7 @@ def main():
     
     # 1. Corpus yükle
     print("\n📝 Corpus yükleniyor...")
-    texts = load_bilkent("bilkent_texts.csv", max_texts=2000)
+    texts = load_bilkent(max_texts=2000)
     print(f"   {len(texts)} cümle (3-20 kelime)")
     
     # Örnekler

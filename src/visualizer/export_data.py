@@ -433,7 +433,7 @@ def findings_section():
                  {"label": "XOR (backprop'suz)", "v": 100.0, "pct": True},
                  {"label": "Gerçek LM (backprop'suz)", "v": 0.0, "pct": True,
                   "label2": "≈ rastgele"},
-                 {"label": "Hybrid (QUANN nokta + BP okuyucu) fraud AUC", "v": 97.45, "pct": True},
+                  {"label": "Hybrid (QUANN nokta + BP okuyucu) fraud AUC", "v": 94.51, "pct": True, "label2": "FP32 / .9367 INT8"},
              ],
              "note": "Savunulabilir iddia: küçük/yorumlanabilir modeller için backprop'suz "
                      "eğitim. Detay: quann_cloud/FINDINGS.md."},

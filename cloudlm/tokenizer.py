@@ -13,6 +13,13 @@ from typing import List
 from tokenizers import Tokenizer, models, trainers, pre_tokenizers, decoders
 
 
+class _TokenMap(dict):
+    """Dictionary lookup that also supports the historical ``stoi(word)`` API."""
+
+    def __call__(self, word: str) -> int:
+        return self.get(word, 2)
+
+
 class Tok:
     """Kelime tabanlı tokenizer.
 
@@ -26,7 +33,7 @@ class Tok:
 
     def __init__(self, punct: bool = False, fold_i: bool = False):
         self.itos = {0: "<pad>", 1: "<eos>", 2: "<unk>"}
-        self.stoi = {"<pad>": 0, "<eos>": 1, "<unk>": 2}
+        self.stoi = _TokenMap({"<pad>": 0, "<eos>": 1, "<unk>": 2})
         self.punct = punct
         self.fold_i = fold_i
 
@@ -61,9 +68,6 @@ class Tok:
     def vocab_size(self) -> int:
         return len(self.itos)
 
-    def stoi(self, w: str) -> int:
-        return self.stoi.get(w, 2)
-
     def itos_get(self, i: int) -> str:
         return self.itos.get(i, "?")
 
@@ -72,7 +76,11 @@ class Tok:
         if d:
             os.makedirs(d, exist_ok=True)
         with open(path, "w") as f:
-            json.dump({"itos": self.itos, "stoi": self.stoi}, f, ensure_ascii=False)
+            json.dump({
+                "itos": self.itos,
+                "stoi": self.stoi,
+                "normalization": {"punct": self.punct, "fold_i": self.fold_i},
+            }, f, ensure_ascii=False)
 
     @classmethod
     def load(cls, path: str) -> "Tok":
@@ -84,7 +92,11 @@ class Tok:
         """
         with open(path, "r") as f:
             data = json.load(f)
-        tok = cls()
+        normalization = data.get("normalization", {})
+        tok = cls(
+            punct=normalization.get("punct", False),
+            fold_i=normalization.get("fold_i", False),
+        )
         pairs = {}
         for k, v in data.get("itos", {}).items():
             if isinstance(v, int) and not str(k).isdigit():
@@ -100,7 +112,7 @@ class Tok:
         pairs.setdefault(1, "<eos>")
         pairs.setdefault(2, "<unk>")
         tok.itos = pairs
-        tok.stoi = {w: i for i, w in pairs.items()}
+        tok.stoi = _TokenMap({w: i for i, w in pairs.items()})
         return tok
 
 
@@ -129,7 +141,11 @@ class BPETokenizer:
     def encode(self, text: str) -> List[int]:
         if self._tokenizer is None:
             raise RuntimeError("Tokenizer train edilmemiş!")
-        return self._tokenizer.encode(text).ids
+        ids = self._tokenizer.encode(text).ids
+        eos_id = self._tokenizer.token_to_id("<eos>")
+        if eos_id is not None and (not ids or ids[-1] != eos_id):
+            ids.append(eos_id)
+        return ids
 
     def decode(self, ids) -> str:
         return self._tokenizer.decode(ids, skip_special_tokens=True)

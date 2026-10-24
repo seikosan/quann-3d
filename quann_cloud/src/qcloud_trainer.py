@@ -19,16 +19,20 @@ QCloudNetwork kullanarak backprop'suz eğitim yapar:
 from __future__ import annotations
 
 import math
+import os
 import time
 import random
+import numpy as np
 import torch
 import torch.nn.functional as F
 from typing import Optional, List, Dict
 
 try:
     from .qcloud_network import QCloudNetwork
+    from .qcloud_weight import QCloudWeight
 except ImportError:
     from qcloud_network import QCloudNetwork
+    from qcloud_weight import QCloudWeight
 
 
 class QCloudTrainer:
@@ -69,14 +73,24 @@ class QCloudTrainer:
     ):
         assert tokenizer is not None, "QCloudTrainer gerçek bir tokenizer gerektirir"
         self.model = model
+        self.model.bidirectional = bool(bidirectional)
         self.hybrid = hybrid
         self.lr = lr
         self.optimizer = torch.optim.AdamW(
             model.parameters(), lr=lr, weight_decay=0.01) if hybrid else None
         self.scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
             self.optimizer, T_max=max(1, max_epochs)) if hybrid else None
-        self.corpus = corpus
-        self.eval_corpus = eval_corpus or []
+        if eval_corpus:
+            self.corpus = list(corpus)
+            self.eval_corpus = list(eval_corpus)
+        elif len(corpus) >= 2:
+            # Hold out a disjoint tail and never train on it.
+            eval_size = min(max(1, len(corpus) // 10), len(corpus) - 1)
+            self.corpus = list(corpus[:-eval_size])
+            self.eval_corpus = list(corpus[-eval_size:])
+        else:
+            self.corpus = list(corpus)
+            self.eval_corpus = []
         self.tokenizer = tokenizer
         self.device = device
         self.bidirectional = bidirectional
@@ -90,6 +104,8 @@ class QCloudTrainer:
         
         self._examples: Optional[List[tuple]] = None
         self._eval_examples: Optional[List[tuple]] = None
+        self.start_epoch = 0
+        self.best_ppl = float('inf')
     
     # =========================================================================
     # TOKENİZASYON
@@ -114,11 +130,7 @@ class QCloudTrainer:
     
     def _get_eval_examples(self) -> List[tuple]:
         if self._eval_examples is None:
-            if self.eval_corpus:
-                self._eval_examples = self._build_examples(self.eval_corpus)
-            else:
-                n = max(100, len(self.corpus) // 10)
-                self._eval_examples = self._build_examples(self.corpus[-n:])
+            self._eval_examples = self._build_examples(self.eval_corpus)
         return self._eval_examples
     
     def _current_points(self, tokens: torch.Tensor, mask: torch.Tensor) -> torch.Tensor:
@@ -169,10 +181,14 @@ class QCloudTrainer:
             # sonra QUANN noktaları arama ile güncellenir
             if self.hybrid:
                 self.model.train()
-                logits, _, _ = self.model.forward(
+                logits, next_point, _ = self.model.forward(
                     tokens, mask, points_override=base_points)
-                loss = F.cross_entropy(
+                word_loss = F.cross_entropy(
                     logits, torch.tensor([target_id], device=self.device))
+                target_tokens = torch.tensor([[target_id]], device=self.device)
+                target_mask = target_tokens != eos_id
+                target_point = self.model.points_for(target_tokens, target_mask)[:, 0]
+                loss = word_loss + 0.1 * F.mse_loss(next_point, target_point)
                 self.optimizer.zero_grad()
                 loss.backward()
                 torch.nn.utils.clip_grad_norm_(self.model.parameters(), 1.0)
@@ -223,7 +239,8 @@ class QCloudTrainer:
         
         return result
     
-    def train(self, verbose: bool = True, save_path: Optional[str] = None) -> Dict:
+    def train(self, verbose: bool = True, save_path: Optional[str] = None,
+              resume_path: Optional[str] = None) -> Dict:
         """
         Tam eğitim döngüsü (backprop yok).
         
@@ -233,8 +250,10 @@ class QCloudTrainer:
         print(f"\n{'='*60}")
         print(f"  QUANN-Cloud Training — Backprop'suz Eğitim")
         print(f"{'='*60}")
+        if resume_path:
+            self.load_checkpoint(resume_path)
         print(f"  Corpus: {len(self.corpus)} sentences")
-        print(f"  Eval corpus: {len(self.eval_corpus) if self.eval_corpus else '(corpus son %10)'}")
+        print(f"  Eval corpus: {len(self.eval_corpus)} sentences (disjoint holdout)")
         print(f"  Model: {self.model}")
         print(f"  Vocab: {self.model.vocab_size} | Device: {self.device_str}")
         print(f"  Max epochs: {self.max_epochs} | Seq len: {self.seq_len} | "
@@ -245,12 +264,12 @@ class QCloudTrainer:
         # arasında kalıcı — öğrenme birikir, yakınsama takip edilebilir)
         print(f"  Token weights: lazy (token kimliği bazlı, D={self.model.D})\n")
         
-        best_ppl = float('inf')
-        best_epoch = 0
+        best_ppl = self.best_ppl
+        best_epoch = self.start_epoch
         total_t0 = time.time()
         last_stats = None
         
-        for epoch in range(1, self.max_epochs + 1):
+        for epoch in range(self.start_epoch + 1, self.max_epochs + 1):
             self.model.eval()  # dropout kapalı (deterministik arama)
             
             stats = self.train_epoch(epoch, verbose=verbose)
@@ -284,6 +303,8 @@ class QCloudTrainer:
         print(f"\n  ✅ Training complete | Best PPL: {best_ppl:.2f} (epoch {best_epoch})")
         print(f"  Total time: {total:.0f}s ({total/3600:.1f}h)")
         
+        self.best_ppl = best_ppl
+        self.start_epoch = best_epoch if best_epoch > self.start_epoch else self.start_epoch
         return {
             'best_ppl': best_ppl,
             'best_epoch': best_epoch,
@@ -293,6 +314,8 @@ class QCloudTrainer:
     
     def _save(self, path: str, epoch: int, ppl: float) -> None:
         """Model + QUANN noktalarını (low/high/value/direction/sigma) kaydet."""
+        parent = os.path.dirname(os.path.abspath(path))
+        os.makedirs(parent, exist_ok=True)
         ckpt = {
             'model_state': self.model.state_dict(),
             'config': {
@@ -305,6 +328,15 @@ class QCloudTrainer:
             },
             'epoch': epoch,
             'ppl': ppl,
+            'optimizer_state': self.optimizer.state_dict() if self.optimizer else None,
+            'scheduler_state': self.scheduler.state_dict() if self.scheduler else None,
+            'rng_state': {
+                'python': random.getstate(),
+                'numpy': np.random.get_state(),
+                'torch': torch.get_rng_state(),
+                **({'cuda': torch.cuda.get_rng_state_all()} if torch.cuda.is_available() else {}),
+                **({'mps': torch.mps.get_rng_state()} if torch.backends.mps.is_available() else {}),
+            },
             'token_weights': [
                 {
                     'token_id': tid,
@@ -313,11 +345,50 @@ class QCloudTrainer:
                     'value': w.value.tolist(),
                     'direction': w.direction.tolist(),
                     'sigma': w.sigma,
+                    'outcomes': list(w.outcomes),
                 }
                 for tid, w in self.model.token_weights.items()
             ],
         }
         torch.save(ckpt, path)
+
+    def load_checkpoint(self, path: str) -> Dict:
+        """Restore model, QUANN search state, optimizer, scheduler, and RNGs."""
+        ckpt = torch.load(path, map_location='cpu', weights_only=False)
+        self.model.load_state_dict(ckpt['model_state'])
+        self.model.token_weights.clear()
+        for saved in ckpt.get('token_weights', []):
+            weight = QCloudWeight(
+                D=self.model.D,
+                low=np.asarray(saved['low'], dtype=float),
+                high=np.asarray(saved['high'], dtype=float),
+                value=np.asarray(saved['value'], dtype=float),
+                direction=np.asarray(saved['direction'], dtype=int),
+                sigma=float(saved.get('sigma', 0.25)),
+                convergence_threshold=self.convergence_threshold,
+                expansion_rate=self.expansion_rate,
+                outcomes=list(saved.get('outcomes', [])),
+            )
+            self.model.token_weights[int(saved['token_id'])] = weight
+
+        if self.optimizer is not None and ckpt.get('optimizer_state') is not None:
+            self.optimizer.load_state_dict(ckpt['optimizer_state'])
+        if self.scheduler is not None and ckpt.get('scheduler_state') is not None:
+            self.scheduler.load_state_dict(ckpt['scheduler_state'])
+        rng_state = ckpt.get('rng_state', {})
+        if 'python' in rng_state:
+            random.setstate(rng_state['python'])
+        if 'numpy' in rng_state:
+            np.random.set_state(rng_state['numpy'])
+        if 'torch' in rng_state:
+            torch.set_rng_state(rng_state['torch'])
+        if torch.cuda.is_available() and 'cuda' in rng_state:
+            torch.cuda.set_rng_state_all(rng_state['cuda'])
+        if torch.backends.mps.is_available() and 'mps' in rng_state:
+            torch.mps.set_rng_state(rng_state['mps'])
+        self.start_epoch = int(ckpt.get('epoch', 0))
+        self.best_ppl = float(ckpt.get('ppl', float('inf')))
+        return ckpt
     
     # =========================================================================
     # DEĞERLENDİRME

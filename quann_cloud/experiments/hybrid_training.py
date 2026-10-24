@@ -120,6 +120,8 @@ def train_hybrid(model, examples, device, epochs=20, lr=1e-3, batch_size=8,
         if model.token_weights:
             # Token weights'lerini QUANN ile güncelle
             # Basit: her token'ın value'sını hafifçe pertürbe et, loss ölç
+            # NOT: Bu bir scaffold — gerçek QUANN implementasyonu için
+            # forward pass + loss ölçümü gerekir. Şu an placeholder.
             for tid, w in list(model.token_weights.items())[:20]:  # İlk 20 token
                 old_value = w.value.copy()
                 # Rastgele pertürbasyon
@@ -143,7 +145,7 @@ def train_hybrid(model, examples, device, epochs=20, lr=1e-3, batch_size=8,
         if verbose and (epoch % 5 == 0 or epoch == 1):
             print(f"    E{epoch:2d}: PPL={ppl:.2f}, "
                   f"tokens={len(model.token_weights)}, "
-                  f"QUANN R={quann_stats['rewarded']} C={quann_stats['censured']}")
+                  f"QUANN R={quann_stats['rewarded']} C={quann_stats['censured']} (placeholder)")
     
     return history
 

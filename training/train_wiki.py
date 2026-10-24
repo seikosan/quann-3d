@@ -96,7 +96,7 @@ def iter_shuffled_batches(all_tokens, seq_len, batch_size):
             yield examples[b:b+batch_size]
         pending = examples[full_size:]
 
-    if len(pending) >= 2:
+    if pending:
         yield pending
 
 
@@ -185,12 +185,28 @@ def step_train(args, tok):
         ckpt = torch.load(args.resume, map_location="cpu", weights_only=False)
         model.load_state_dict(ckpt["model_state"])
         start_epoch = ckpt.get("epoch", 0)
-        for _ in range(start_epoch):
-            scheduler.step()
+        if "optimizer_state" in ckpt:
+            optimizer.load_state_dict(ckpt["optimizer_state"])
+        if "scheduler_state" in ckpt:
+            scheduler.load_state_dict(ckpt["scheduler_state"])
+        else:
+            for _ in range(start_epoch):
+                scheduler.step()
+        rng_state = ckpt.get("rng_state", {})
+        if "python" in rng_state:
+            random.setstate(rng_state["python"])
+        if "numpy" in rng_state:
+            np.random.set_state(rng_state["numpy"])
+        if "torch" in rng_state:
+            torch.set_rng_state(rng_state["torch"])
+        if torch.cuda.is_available() and "cuda" in rng_state:
+            torch.cuda.set_rng_state_all(rng_state["cuda"])
+        if torch.backends.mps.is_available() and "mps" in rng_state:
+            torch.mps.set_rng_state(rng_state["mps"])
         print(f"  Resume: epoch {start_epoch} checkpoint'undan devam ({args.resume})")
 
     os.makedirs(args.save_dir, exist_ok=True)
-    best_ppl = ckpt.get("ppl", float('inf')) if args.resume else float('inf')
+    best_ppl = ckpt.get("best_ppl", float('inf')) if args.resume else float('inf')
 
     model.train()
     t0 = time.time()
@@ -199,18 +215,21 @@ def step_train(args, tok):
         epoch_loss, n_batches = 0, 0
         
         for batch in iter_shuffled_batches(all_tokens, args.seq_len, args.batch):
-            if len(batch) < 2: continue
             inputs = torch.tensor([e[0] for e in batch], device=device)
             targets = torch.tensor([e[1] for e in batch], device=device)
             mask = (inputs != 0) & (inputs != eos_id)
             
             optimizer.zero_grad()
-            logits, _, _ = model(inputs, mask)
-            loss = F.cross_entropy(logits, targets)
+            logits, next_point, _ = model(inputs, mask)
+            word_loss = F.cross_entropy(logits, targets)
+            target_embedding = model.embedding(targets) * math.sqrt(model.embedding.embedding_dim)
+            target_points = model.to_nd(model.norm(target_embedding.unsqueeze(1)))[:, 0]
+            point_loss = F.mse_loss(next_point, target_points)
+            loss = word_loss + 0.1 * point_loss
             loss.backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
             optimizer.step()
-            epoch_loss += loss.item()
+            epoch_loss += word_loss.item()
             n_batches += 1
         
         scheduler.step()
@@ -219,26 +238,32 @@ def step_train(args, tok):
         elapsed = time.time() - t0
         print(f"  Epoch {epoch+1:3d}/{args.epochs} | loss={avg:.4f} | ppl={ppl:.2f} | {elapsed:.0f}s", flush=True)
         
+        checkpoint = {
+            "epoch": epoch + 1,
+            "model_state": model.state_dict(),
+            "optimizer_state": optimizer.state_dict(),
+            "scheduler_state": scheduler.state_dict(),
+            "rng_state": {
+                "python": random.getstate(),
+                "numpy": np.random.get_state(),
+                "torch": torch.get_rng_state(),
+                **({"cuda": torch.cuda.get_rng_state_all()} if torch.cuda.is_available() else {}),
+                **({"mps": torch.mps.get_rng_state()} if torch.backends.mps.is_available() else {}),
+            },
+            "vocab_size": tok.num_tokens,
+            "config": {"d_model": args.d_model, "d_cloud": args.d_cloud,
+                       "d_cloud_dim": args.d_dim, "n_layers": args.layers,
+                       "pool": args.pool},
+            "ppl": ppl,
+            "best_ppl": best_ppl,
+        }
         if (epoch + 1) % 5 == 0:
-            torch.save({
-                "epoch": epoch+1, "model_state": model.state_dict(),
-                "vocab_size": tok.num_tokens,
-                "config": {"d_model": args.d_model, "d_cloud": args.d_cloud,
-                           "d_cloud_dim": args.d_dim, "n_layers": args.layers,
-                           "pool": args.pool},
-                "ppl": ppl,
-            }, os.path.join(args.save_dir, f"wiki_cloud_epoch{epoch+1}.pt"))
+            torch.save(checkpoint, os.path.join(args.save_dir, f"wiki_cloud_epoch{epoch+1}.pt"))
         
         if ppl < best_ppl:
             best_ppl = ppl
-            torch.save({
-                "epoch": epoch+1, "model_state": model.state_dict(),
-                "vocab_size": tok.num_tokens,
-                "config": {"d_model": args.d_model, "d_cloud": args.d_cloud,
-                           "d_cloud_dim": args.d_dim, "n_layers": args.layers,
-                           "pool": args.pool},
-                "ppl": ppl,
-            }, os.path.join(args.save_dir, "wiki_cloud_best.pt"))
+            checkpoint["best_ppl"] = best_ppl
+            torch.save(checkpoint, os.path.join(args.save_dir, "wiki_cloud_best.pt"))
     
     total = time.time() - t0
     print(f"\n  ✅ {total:.0f}s ({total/60:.1f}dk) | Best PPL: {best_ppl:.2f}")

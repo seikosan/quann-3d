@@ -315,7 +315,7 @@ def main():
             print("  Sadece 16D analizi yapılıyor.")
             model32 = None
             ckpt32 = None
-    else:
+    if os.path.exists(ckpt32_path):
         model32, ckpt32 = load_model(ckpt32_path, device)
         print(f"  32D: epoch {ckpt32['epoch']}, PPL {ckpt32['ppl']:.2f}")
     

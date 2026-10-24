@@ -87,3 +87,16 @@ def test_legacy_max_pool_checkpoint_loads_strictly(tmp_path) -> None:
         outputs = reloaded_model(tokens, mask)
 
     assert all(torch.isfinite(output).all() for output in outputs)
+
+
+def test_max_pool_does_not_let_padding_zero_dominate_negative_points():
+    model = _model("max").eval()
+    with torch.no_grad():
+        model.cloud.point_mlp[-1].weight.zero_()
+        model.cloud.point_mlp[-1].bias.fill_(-1.0)
+    points = torch.full((1, 3, 8), -2.0)
+    mask = torch.tensor([[True, True, False]])
+    with torch.no_grad():
+        masked_state = model.cloud(points, mask)
+        valid_only_state = model.cloud(points[:, :2])
+    torch.testing.assert_close(masked_state, valid_only_state)
