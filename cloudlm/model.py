@@ -45,9 +45,10 @@ class CloudEncoderND(nn.Module):
     """
 
     def __init__(self, d_cloud_dim: int, d_cloud: int = 512, hidden: int = 256,
-                 pool: str = "max"):
+                 pool: str = "max", cloud_attn: bool = False):
         super().__init__()
         self.pool = pool
+        self.cloud_attn = cloud_attn
         self.point_mlp = nn.Sequential(
             nn.Linear(d_cloud_dim, hidden), nn.GELU(),
             nn.Linear(hidden, hidden), nn.GELU(),
@@ -65,14 +66,23 @@ class CloudEncoderND(nn.Module):
         )
         # Append after the legacy modules so their seeded initialization is unchanged.
         self.attn_proj = nn.Linear(d_cloud, 1)
+        
+        # R2: Cloud attention (nokta-üstü self-attention, pooling öncesi)
+        if cloud_attn:
+            self.cloud_self_attn = nn.MultiheadAttention(
+                embed_dim=d_cloud, num_heads=4, batch_first=True
+            )
 
         def load_legacy_max_pool_state(module, state_dict, prefix, local_metadata,
                                        strict, missing_keys, unexpected_keys, error_msgs):
-            # Old max-pool checkpoints predate attn_proj. Its parameters are unused
-            # in max mode, so preserve strict loading without changing old weights.
-            if module.pool == "max":
+            # Old max-pool checkpoints predate attn_proj and cloud_self_attn.
+            # Its parameters are unused in max mode, so preserve strict loading.
+            if module.pool == "max" and not module.cloud_attn:
                 for name, value in module.attn_proj.state_dict().items():
                     state_dict.setdefault(prefix + "attn_proj." + name, value)
+                if hasattr(module, 'cloud_self_attn'):
+                    for name, value in module.cloud_self_attn.state_dict().items():
+                        state_dict.setdefault(prefix + "cloud_self_attn." + name, value)
 
         self.register_load_state_dict_pre_hook(load_legacy_max_pool_state)
 
@@ -80,6 +90,16 @@ class CloudEncoderND(nn.Module):
         B, N, D = points.shape
 
         pf = self.point_mlp(points)
+        
+        # R2: Cloud attention (nokta-üstü self-attention, pooling öncesi)
+        if self.cloud_attn:
+            attn_mask = None
+            if mask is not None:
+                # Convert boolean mask to causal attention mask for MultiheadAttention
+                # (B, N) -> (B, 1, N, N) for padding mask
+                attn_mask = mask.unsqueeze(1)  # (B, 1, N)
+            pf, _ = self.cloud_self_attn(pf, pf, pf, key_padding_mask=mask)
+        
         if self.pool == "attn":
             scores = self.attn_proj(pf).squeeze(-1)
             if mask is not None:
@@ -131,7 +151,8 @@ class CloudLM(nn.Module):
                  d_cloud_dim: int = 16, n_layers: int = 4,
                  nhead: Optional[int] = None, pos_len: int = 256,
                  hidden: int = 256, proj_hidden: Optional[int] = None,
-                 point_hidden: int = 128, pool: str = "max"):
+                 point_hidden: int = 128, pool: str = "max",
+                 cloud_attn: bool = False):
         """
         hidden:      cloud MLP gizli boyutu (nokta+çift MLP) — vars. 256
         proj_hidden: WordToND projeksiyon gizli boyutu — None → d_model
@@ -153,7 +174,8 @@ class CloudLM(nn.Module):
         self.norm = nn.LayerNorm(d_model)
 
         self.to_nd = WordToND(d_model, d_cloud_dim, hidden=proj_hidden)
-        self.cloud = CloudEncoderND(d_cloud_dim, d_cloud, hidden=hidden, pool=pool)
+        self.cloud = CloudEncoderND(d_cloud_dim, d_cloud, hidden=hidden, pool=pool,
+                                    cloud_attn=cloud_attn)
 
         self.word_head = nn.Sequential(
             nn.Linear(d_cloud, d_cloud), nn.GELU(),

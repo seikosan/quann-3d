@@ -162,12 +162,13 @@ def step_train(args, tok):
     eos_id = tok._tokenizer.token_to_id("<eos>") or 1
     
     model = CloudLM(
-        vocab_size=tok.num_tokens,
+        tok.num_tokens,
         d_model=args.d_model,
         d_cloud=args.d_cloud,
         d_cloud_dim=args.d_dim,
         n_layers=args.layers,
         pool=args.pool,
+        cloud_attn=args.cloud_attn,
     )
     model.to(device)
     
@@ -253,7 +254,7 @@ def step_train(args, tok):
             "vocab_size": tok.num_tokens,
             "config": {"d_model": args.d_model, "d_cloud": args.d_cloud,
                        "d_cloud_dim": args.d_dim, "n_layers": args.layers,
-                       "pool": args.pool},
+                       "pool": args.pool, "cloud_attn": args.cloud_attn},
             "ppl": ppl,
             "best_ppl": best_ppl,
         }
@@ -366,6 +367,8 @@ def main():
     parser.add_argument("--d-dim", type=int, default=16)
     parser.add_argument("--layers", type=int, default=4)
     parser.add_argument("--pool", type=str, default="max", choices=["max", "attn"])
+    parser.add_argument("--cloud-attn", action="store_true",
+                        help="Enable R2 cloud self-attention (pooling öncesi nokta-üstü attention)")
     parser.add_argument("--save-dir", type=str,
                         default=os.path.join(ROOT, "checkpoints", "wiki_checkpoints"))
     parser.add_argument("--resume", type=str, default=None,

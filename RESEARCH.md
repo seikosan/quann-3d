@@ -16,7 +16,7 @@ eğiten yöntem.
 
 ## Canlı Runlar (2026-10-24)
 
-R3 200K duel tamamlandı: max-pool **49.84** < attention-pool **55.75** (Δ5.91). Attention-pool 20K ve 200K'da overfit yaptı (train PPL 124.22 vs 88.19; 109.09 vs 49.84). Katman-2 complaints ölçümü CPU'da tamamlandı (3.77M, region stability ARI 0.994, Spearman 1.0).
+R2 cloud attention 200K başladı (MPS): `logs/run_r2_200k_control.log` (kontrol) + `logs/run_r2_200k_cloud_attn.log` (cloud self-attn). R3 attention-pool reddedildi (20K: MAX 315.99 < ATTN 334.89; 200K: MAX 61.91 < ATTN 66.85). Katman-2 complaints ölçümü CPU'da tamamlandı (3.77M, region stability ARI 0.994, Spearman 1.0).
 
 ## Mevcut Best (legacy protokol: seed=0 ile 2000 örnek; gerçek held-out değil)
 
@@ -54,7 +54,7 @@ hassasiyet değil. Bulut (10×32=320 sayı), transformer gizli durumunun
 | 2026-10-20 | P1 online-cloud-separation (reader/head BCE fine-tune, 3ep; full 4.7M) | @.9969 FP32 FP 9,942→8,468, TP 1,842→1,930; P/R .156/.301→.186/.316; PR/ROC .2560/.9451→.2706/.9474. INT8-channel FP 27,858→10,856, TP 1,931→1,922; PR/ROC .2506/.9367→.2573/.9389 | Reader-space ayrım zayıf-orta (d/σ=.71 cloud, 1.00 encoded); fine-tune AUC'yi artırdı ama INT8 FP hâlâ FP32 baz çizgisinden yüksek — eşik davranışı çözülmedi | `fraud/logs/run_online_cloud_separation.log` |
 ## Sıradaki Aksiyonlar
 
-1. **R3 reddedildi:** Attention-pool 20K+200K'da overfit yaptı (20K: MAX 315.99 < ATTN 334.89; 200K: MAX 61.91 < ATTN 66.85). Max-pool tercih edilmeli.
+1. **R2 cloud attention:** CloudEncoderND'ye pooling öncesi 4-head self-attention eklendi. 200K'da test ediliyor (`training/shell/run_r2_200k.sh`).
 2. **R1 hükmü:** D64'ün 2.18 PPL (~%3) avantajı kapasite yönünü destekliyor ama REVISION'daki temsil-kapasitesi teşhisine göre ana darboğazı çözmüyor; D=128'e geçmeden önce mimari/temsil tavanını ve matched sonucun anlamını değerlendir.
 3. **Yeni deney adayı:** train→holdout gap kök-nedenini ölç; [0,200000) ve [200000,202000) arasında BPE token frekans KL/kosinüs benzerliğini hesapla. Drift büyükse aynı bölgeden holdout varyantıyla duel'ü teyit et.
 4. **P1 QAT:** deploy kararı hâlâ kullanıcıda; mevcut paket/kanıt `fraud/results/deploy/` ve `fraud/results/qat_gate.json` altında. Remote yok: `181539a`/`5f66aed` yerelde; push değil — gerekiyse `scripts/backup_ssd.sh`/bundle ile yedekle.

@@ -83,4 +83,5 @@ Her varyant: 20K × 10ep (~2-4 saat) → vaat edeni 200K'a ölçekle.
 - [x] R1 20K ön-test: D=64 en iyi (181 vs 201); wiki scale gate'inde D=32'de tekrar derinliği baskın
 - [x] R1 D=64×200K-wiki/50ep TAMAM (2026-10-21) + eşleşen D32 kontrolü; **duel (disjoint holdout, aynı BPE) tamamlandı — D64 71.09 < D32 73.27 (Δ2.18)**
 - [x] R3 attention-weighted pooling TAMAM (2026-10-23) — **REDD EDİLDİ**: 20K (MAX 315.99 < ATTN 334.89) + 200K (MAX 61.91 < ATTN 66.85); attention-pool her iki korpusta da overfit
-- [ ] R2 cloud attention, R4 QUANN freeze ön-testleri
+- [ ] R2 cloud attention 200K test ediliyor — `training/shell/run_r2_200k.sh` (kontrol → cloud self-attn, MPS ardışık)
+- [ ] R4 QUANN freeze ön-testleri
