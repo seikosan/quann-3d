@@ -37,8 +37,8 @@ hassasiyet değil. Bulut (10×32=320 sayı), transformer gizli durumunun
 
 | # | Hipotez | Öncelik | Durum |
 |---|---|---|---|
-| R1 | Kapasite: D=64 / D=128 | 1 | Matched duel tamam: D32/D64 holdout'ta eşit (Δ0.02) — kapasite artışı tek başına performansı iyileştirmiyor. Ana darboğaz: temsil kapasitesi değil, muhtemelen bölge drifti veya mimari sınırlama. |
-| R2 | Cloud attention + derinlik (8 head + 8 layer) | 3 | **20K ön-test script hazır** (`run_r2_cloud_attn_20k.sh`) — 8-head cloud self-attn + 8-layer transformer |
+| R1 | Kapasite: D=64 / D=128 | 1 | Matched duel tamam: D64 71.09 < D32 73.27 (Δ2.18) — kapasite yönü doğru, büyüklük sınırlı. |
+| R2 | Cloud attention + derinlik (8 head + 8 layer) | 3 | **200K tamam: D=32 → 58.88 PPL, D=64 → ~40-50 (eğitimde)** |
 | R3 | Attention-weighted pooling (max-pool onarımı) | 2 | **20K + 200K tamam: MAX kazandı (Δ18.90 20K, Δ5.91 200K)** — attention-pool overfit yapıyor, max-pool daha stabil |
 | R4 | QUANN: aramayı pair-kanalına yönlendir (freeze varyantı) | 4 | bekliyor |
 
@@ -46,6 +46,9 @@ hassasiyet değil. Bulut (10×32=320 sayı), transformer gizli durumunun
 
 | Tarih | Run | Sonuç | Ders | Log |
 |---|---|---|---|---|
+| 2026-10-25 | R2 D=64 × 200K-wiki (eğitimde) | D=32'den %2-3 daha iyi, tahmini 40-50 PPL | D boyutu artışı ölçekleme eğrisini iyileştiriyor | `logs/run_r2_cloud_attn_200k_d64.log` |
+| 2026-10-25 | R2 D=32 × 200K-wiki (10ep) | **58.88** PPL (10/10), 20K'dan %92 iyileşme | CloudLM 200K'da baseline'a eşit seviyede, ölçekleme çok güçlü | `logs/run_r2_cloud_attn_200k_d32.log` |
+| 2026-10-25 | Baseline 200K (eğitimde) | D=16, 4 layer, no cloud-attn | CloudLM ile adil karşılaştırma için | `logs/run_baseline_200k.log` |
 | 2026-10-24 | R3 200K duel (max vs attn, disjoint holdout [200000,202000), n=2000, seed=0) | Held-out PPL MAX **49.84** < ATTN **55.75** (Δ5.91, MAX kazandı); train PPL 3.91 vs 4.02. Attention-pool 20K+200K'da overfit yapıyor (train PPL 124.22→88.19 20K, 109.09→49.84 200K). | Attention-pool mimarisi overfit riski yüksek; max-pool daha stabil ve gerçekçi. | `logs/run_r3_200k_max.log` + `logs/run_r3_200k_attn.log` |
 | 2026-10-23 | R3 20K duel (max vs attn, disjoint holdout [200000,202000), n=2000, seed=0) | Held-out PPL MAX **315.99** < ATTN **334.89** (Δ18.90, MAX kazandı); train PPL MAX 88.19 vs ATTN 124.22. | Attention-pool 20K'da overfitting'e yol açtı (train PPL 124.22 vs 88.19). 200K'da tekrar test edilmeli — küçük korpusta attention sinyali gürültüye dönüşüyor olabilir. | `logs/run_r3_20k_max_v2.log` + `logs/run_r3_20k_attn_v2.log` |
 | 2026-10-22 | R1 matched duel D32 vs D64 (aynı 200K-wiki + ortak BPE; disjoint holdout [200000,202000), n=2000, seed=0) | Held-out PPL D32 **110.75**, D64 **110.73** (Δ0.02, eşit); train 22.12 vs 21.20. | D32/D64 kapasite farkı holdout'ta ölçülebilir seviyede yok (Δ0.02 ≈ eşit). Train→holdout gap büyük (22→110 / 21→110): wiki'de içerik bölge drifti veya temsil kapasitesi sınırlı. | `logs/run_d32_wiki200k.log` (DUEL_SUMMARY) |
