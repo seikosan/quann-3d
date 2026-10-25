@@ -3,7 +3,7 @@ import torch
 from cloudlm import CloudLM
 
 
-def _model(pool: str) -> CloudLM:
+def _model(pool: str, cloud_attn: bool = False) -> CloudLM:
     return CloudLM(
         vocab_size=32,
         d_model=16,
@@ -16,6 +16,7 @@ def _model(pool: str) -> CloudLM:
         proj_hidden=12,
         point_hidden=8,
         pool=pool,
+        cloud_attn=cloud_attn,
     )
 
 
@@ -100,3 +101,60 @@ def test_max_pool_does_not_let_padding_zero_dominate_negative_points():
         masked_state = model.cloud(points, mask)
         valid_only_state = model.cloud(points[:, :2])
     torch.testing.assert_close(masked_state, valid_only_state)
+
+
+def test_cloud_attn_with_max_pool():
+    """Test cloud self-attention with max pooling (R2 feature)."""
+    model = _model("max", cloud_attn=True).eval()
+    tokens = torch.tensor([[2, 3, 4, 0, 0], [5, 6, 7, 8, 0]])
+    mask = tokens != 0
+    
+    with torch.no_grad():
+        word_logits, next_point, points = model(tokens, mask)
+    
+    assert word_logits.shape == (2, 32)
+    assert next_point.shape == (2, 8)
+    assert points.shape == (2, 5, 8)
+    assert torch.isfinite(word_logits).all()
+    assert torch.isfinite(next_point).all()
+    assert torch.isfinite(points).all()
+
+
+def test_cloud_attn_with_attn_pool():
+    """Test cloud self-attention with attention pooling (R2 feature)."""
+    model = _model("attn", cloud_attn=True).eval()
+    tokens = torch.tensor([[2, 3, 4, 0, 0], [5, 6, 7, 8, 0]])
+    mask = tokens != 0
+    
+    with torch.no_grad():
+        word_logits, next_point, points = model(tokens, mask)
+    
+    assert word_logits.shape == (2, 32)
+    assert next_point.shape == (2, 8)
+    assert points.shape == (2, 5, 8)
+    assert torch.isfinite(word_logits).all()
+    assert torch.isfinite(next_point).all()
+    assert torch.isfinite(points).all()
+
+
+def test_cloud_attn_produces_different_outputs():
+    """Verify that cloud attention produces different outputs than max pool."""
+    torch.manual_seed(42)
+    max_model = _model("max", cloud_attn=False).eval()
+    attn_model = _model("max", cloud_attn=True).eval()
+    
+    # Load max model state into attn model (missing attn layers will be random)
+    attn_model.load_state_dict(max_model.state_dict(), strict=False)
+    
+    points = torch.randn(2, 5, 8)
+    mask = torch.tensor([[True, True, True, False, False],
+                         [True, True, True, True, False]])
+    
+    with torch.no_grad():
+        max_state = max_model.cloud(points, mask)
+        attn_state = attn_model.cloud(points, mask)
+    
+    assert torch.isfinite(max_state).all()
+    assert torch.isfinite(attn_state).all()
+    # Cloud attention should produce different output
+    assert not torch.allclose(max_state, attn_state)

@@ -65,6 +65,15 @@ class MaintenanceCloud(nn.Module):
         mask = torch.ones(points.shape[:2], dtype=torch.bool, device=points.device)
         return self.class_head(self.cloud_encoder(points, mask))
 
+    def load_state_dict(self, state_dict, strict=True):
+        """Load state dict with backward compatibility for legacy checkpoints."""
+        cloud_prefix = "cloud_encoder."
+        if cloud_prefix + "attn_proj.weight" not in state_dict:
+            actual_d_cloud = self.cloud_encoder.point_mlp[-1].out_features
+            state_dict[cloud_prefix + "attn_proj.weight"] = torch.zeros(1, actual_d_cloud)
+            state_dict[cloud_prefix + "attn_proj.bias"] = torch.zeros(1)
+        super().load_state_dict(state_dict, strict=strict)
+
     def quann_update(self, tokens, target):
         with torch.no_grad():
             base = self.points_for(tokens)

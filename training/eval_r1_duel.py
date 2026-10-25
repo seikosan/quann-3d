@@ -39,10 +39,16 @@ def evaluate(label, checkpoint):
     device = get_device()
     model.to(device)
     tokenizer = load_bpe(BPE_PATH)
+    holdout_texts = load_fixed_holdout()
     ppl, _, tokens = evaluate_ppl(
-        model, tokenizer, load_fixed_holdout(), device, SEQ_LEN,
+        model, tokenizer, holdout_texts, device, SEQ_LEN,
         "cloud", n=N, seed=SEED,
     )
+    # Validation: ensure token count is consistent
+    expected_min_tokens = 4500  # Sanity check
+    if tokens < expected_min_tokens:
+        import warnings
+        warnings.warn(f"Token count {tokens} is lower than expected ({expected_min_tokens})")
     print(
         f"{label}_DUEL_RESULT | epoch={state['epoch']} | train_PPL={state['ppl']:.2f} "
         f"| heldout_PPL={ppl:.2f} | BPE={BPE_PATH} | n={N} | seed={SEED} "

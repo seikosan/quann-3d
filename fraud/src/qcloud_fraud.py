@@ -74,6 +74,17 @@ class QCloudFraudClassifier(nn.Module):
         # QUANN identity points: token_id -> QCloudWeight (lazy)
         self.token_weights: Dict[int, QCloudWeight] = {}
 
+    def load_state_dict(self, state_dict, strict=True):
+        """Load state dict with backward compatibility for legacy checkpoints."""
+        # Legacy checkpoints predate attn_proj and cloud_self_attn in CloudEncoderND
+        cloud_prefix = "cloud_encoder."
+        if cloud_prefix + "attn_proj.weight" not in state_dict:
+            # Get actual d_cloud dimension from the cloud_encoder
+            actual_d_cloud = self.cloud_encoder.point_mlp[-1].out_features
+            state_dict[cloud_prefix + "attn_proj.weight"] = torch.zeros(1, actual_d_cloud)
+            state_dict[cloud_prefix + "attn_proj.bias"] = torch.zeros(1)
+        super().load_state_dict(state_dict, strict=strict)
+
     # ------------------------------------------------------------------ points
     def get_weight(self, token_id: int) -> QCloudWeight:
         w = self.token_weights.get(token_id)

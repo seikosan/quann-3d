@@ -169,6 +169,7 @@ def step_train(args, tok):
         n_layers=args.layers,
         pool=args.pool,
         cloud_attn=args.cloud_attn,
+        cloud_attn_heads=args.cloud_attn_heads,
     )
     model.to(device)
     
@@ -223,17 +224,29 @@ def step_train(args, tok):
             optimizer.zero_grad()
             logits, next_point, _ = model(inputs, mask)
             word_loss = F.cross_entropy(logits, targets)
+            
+            # NaN kontrolü - gradient explosion tespiti
+            if not torch.isfinite(word_loss):
+                print(f"    ⚠️  Warning: non-finite loss at batch, skipping", flush=True)
+                continue
+                
             target_embedding = model.embedding(targets) * math.sqrt(model.embedding.embedding_dim)
             target_points = model.to_nd(model.norm(target_embedding.unsqueeze(1)))[:, 0]
             point_loss = F.mse_loss(next_point, target_points)
+            
+            # NaN kontrolü
+            if not torch.isfinite(point_loss):
+                print(f"    ⚠️  Warning: non-finite point_loss at batch, skipping", flush=True)
+                continue
+            
             loss = word_loss + 0.1 * point_loss
             loss.backward()
-            torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
+            torch.nn.utils.clip_grad_norm_(model.parameters(), 0.5)
             optimizer.step()
             epoch_loss += word_loss.item()
             n_batches += 1
         
-        scheduler.step()
+        scheduler.step()  # Step once per epoch
         avg = epoch_loss / max(n_batches, 1)
         ppl = math.exp(min(avg, 20))
         elapsed = time.time() - t0
@@ -254,7 +267,8 @@ def step_train(args, tok):
             "vocab_size": tok.num_tokens,
             "config": {"d_model": args.d_model, "d_cloud": args.d_cloud,
                        "d_cloud_dim": args.d_dim, "n_layers": args.layers,
-                       "pool": args.pool, "cloud_attn": args.cloud_attn},
+                       "pool": args.pool, "cloud_attn": args.cloud_attn,
+                       "cloud_attn_heads": args.cloud_attn_heads},
             "ppl": ppl,
             "best_ppl": best_ppl,
         }
@@ -365,10 +379,13 @@ def main():
     parser.add_argument("--d-model", type=int, default=256)
     parser.add_argument("--d-cloud", type=int, default=512)
     parser.add_argument("--d-dim", type=int, default=16)
-    parser.add_argument("--layers", type=int, default=4)
+    parser.add_argument("--layers", type=int, default=8,
+                        help="Transformer katman sayısı (varsayılan: 8, önceki: 4)")
     parser.add_argument("--pool", type=str, default="max", choices=["max", "attn"])
     parser.add_argument("--cloud-attn", action="store_true",
                         help="Enable R2 cloud self-attention (pooling öncesi nokta-üstü attention)")
+    parser.add_argument("--cloud-attn-heads", type=int, default=8,
+                        help="Cloud self-attention head sayısı (varsayılan: 8, önceki: 4)")
     parser.add_argument("--save-dir", type=str,
                         default=os.path.join(ROOT, "checkpoints", "wiki_checkpoints"))
     parser.add_argument("--resume", type=str, default=None,

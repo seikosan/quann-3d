@@ -20,6 +20,7 @@ def test_resume_restores_optimizer_scheduler_rng_and_epoch(tmp_path, monkeypatch
         d_dim=4,
         layers=1,
         pool="max",
+        cloud_attn=False,
         batch=4,
         lr=1e-3,
         save_dir=str(tmp_path),

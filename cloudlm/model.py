@@ -45,10 +45,12 @@ class CloudEncoderND(nn.Module):
     """
 
     def __init__(self, d_cloud_dim: int, d_cloud: int = 512, hidden: int = 256,
-                 pool: str = "max", cloud_attn: bool = False):
+                 pool: str = "max", cloud_attn: bool = False,
+                 cloud_attn_heads: int = 8):
         super().__init__()
         self.pool = pool
         self.cloud_attn = cloud_attn
+        self.cloud_attn_heads = cloud_attn_heads
         self.point_mlp = nn.Sequential(
             nn.Linear(d_cloud_dim, hidden), nn.GELU(),
             nn.Linear(hidden, hidden), nn.GELU(),
@@ -64,27 +66,30 @@ class CloudEncoderND(nn.Module):
             nn.Linear(d_cloud * 2, d_cloud),
             nn.LayerNorm(d_cloud),
         )
-        # Append after the legacy modules so their seeded initialization is unchanged.
         self.attn_proj = nn.Linear(d_cloud, 1)
         
-        # R2: Cloud attention (nokta-üstü self-attention, pooling öncesi)
         if cloud_attn:
+            # Initialize attention weights carefully to avoid NaN
             self.cloud_self_attn = nn.MultiheadAttention(
-                embed_dim=d_cloud, num_heads=4, batch_first=True
+                embed_dim=d_cloud, num_heads=cloud_attn_heads, batch_first=True,
+                dropout=0.0, bias=True  # Dropout=0 for stability initially
             )
+            # Scale attention output
+            self.attn_scale = nn.Parameter(torch.ones(1) * 0.1)  # Small initial scale
 
-        def load_legacy_max_pool_state(module, state_dict, prefix, local_metadata,
-                                       strict, missing_keys, unexpected_keys, error_msgs):
-            # Old max-pool checkpoints predate attn_proj and cloud_self_attn.
-            # Its parameters are unused in max mode, so preserve strict loading.
-            if module.pool == "max" and not module.cloud_attn:
-                for name, value in module.attn_proj.state_dict().items():
-                    state_dict.setdefault(prefix + "attn_proj." + name, value)
-                if hasattr(module, 'cloud_self_attn'):
-                    for name, value in module.cloud_self_attn.state_dict().items():
-                        state_dict.setdefault(prefix + "cloud_self_attn." + name, value)
-
-        self.register_load_state_dict_pre_hook(load_legacy_max_pool_state)
+    def load_state_dict(self, state_dict, strict=True):
+        """Load state dict with backward compatibility for legacy checkpoints."""
+        # Legacy checkpoint compatibility: old max-pool checkpoints predate
+        # attn_proj and cloud_self_attn. Fill missing keys with zeros.
+        if self.pool == "max" and not self.cloud_attn:
+            prefix = "cloud."
+            # Use actual d_cloud dimension from the model
+            actual_d_cloud = self.point_mlp[-1].out_features
+            if prefix + "attn_proj.weight" not in state_dict:
+                state_dict[prefix + "attn_proj.weight"] = torch.zeros(1, actual_d_cloud)
+            if prefix + "attn_proj.bias" not in state_dict:
+                state_dict[prefix + "attn_proj.bias"] = torch.zeros(1)
+        super().load_state_dict(state_dict, strict=strict)
 
     def forward(self, points: torch.Tensor, mask: Optional[torch.Tensor] = None) -> torch.Tensor:
         B, N, D = points.shape
@@ -93,12 +98,12 @@ class CloudEncoderND(nn.Module):
         
         # R2: Cloud attention (nokta-üstü self-attention, pooling öncesi)
         if self.cloud_attn:
-            attn_mask = None
-            if mask is not None:
-                # Convert boolean mask to causal attention mask for MultiheadAttention
-                # (B, N) -> (B, 1, N, N) for padding mask
-                attn_mask = mask.unsqueeze(1)  # (B, 1, N)
-            pf, _ = self.cloud_self_attn(pf, pf, pf, key_padding_mask=mask)
+            # key_padding_mask: True = padding (ignore), False = keep
+            # Our mask: True = keep, False = padding
+            # So we need to invert it
+            pf, _ = self.cloud_self_attn(pf, pf, pf, key_padding_mask=~mask)
+            # Scale attention output for stability
+            pf = pf * self.attn_scale
         
         if self.pool == "attn":
             scores = self.attn_proj(pf).squeeze(-1)
@@ -148,15 +153,17 @@ class CloudLM(nn.Module):
     """
 
     def __init__(self, vocab_size: int, d_model: int = 256, d_cloud: int = 512,
-                 d_cloud_dim: int = 16, n_layers: int = 4,
+                 d_cloud_dim: int = 16, n_layers: int = 8,
                  nhead: Optional[int] = None, pos_len: int = 256,
                  hidden: int = 256, proj_hidden: Optional[int] = None,
                  point_hidden: int = 128, pool: str = "max",
-                 cloud_attn: bool = False):
+                 cloud_attn: bool = False, cloud_attn_heads: int = 8):
         """
         hidden:      cloud MLP gizli boyutu (nokta+çift MLP) — vars. 256
         proj_hidden: WordToND projeksiyon gizli boyutu — None → d_model
         point_hidden: point_head gizli boyutu — vars. 128
+        n_layers:    Transformer katman sayısı — vars. 8 (önceki: 4)
+        cloud_attn_heads: Cloud self-attention head sayısı — vars. 8 (önceki: 4)
         """
         super().__init__()
         self.d_cloud_dim = d_cloud_dim
@@ -175,7 +182,7 @@ class CloudLM(nn.Module):
 
         self.to_nd = WordToND(d_model, d_cloud_dim, hidden=proj_hidden)
         self.cloud = CloudEncoderND(d_cloud_dim, d_cloud, hidden=hidden, pool=pool,
-                                    cloud_attn=cloud_attn)
+                                    cloud_attn=cloud_attn, cloud_attn_heads=cloud_attn_heads)
 
         self.word_head = nn.Sequential(
             nn.Linear(d_cloud, d_cloud), nn.GELU(),
@@ -185,6 +192,19 @@ class CloudLM(nn.Module):
             nn.Linear(d_cloud, point_hidden), nn.GELU(),
             nn.Linear(point_hidden, d_cloud_dim), nn.Tanh(),
         )
+
+    def load_state_dict(self, state_dict, strict=True):
+        """Load state dict with backward compatibility for legacy checkpoints."""
+        # Legacy checkpoint compatibility: old max-pool checkpoints predate
+        # attn_proj and cloud_self_attn in CloudEncoderND. Fill missing keys.
+        cloud_prefix = "cloud."
+        if cloud_prefix + "attn_proj.weight" not in state_dict:
+            # Get the correct shape from the model
+            cloud = self.cloud
+            if cloud.pool == "max" and not cloud.cloud_attn:
+                state_dict[cloud_prefix + "attn_proj.weight"] = torch.zeros(1, cloud.attn_proj.weight.shape[1])
+                state_dict[cloud_prefix + "attn_proj.bias"] = torch.zeros(1)
+        super().load_state_dict(state_dict, strict=strict)
 
     def forward(self, tokens: torch.Tensor, mask: Optional[torch.Tensor] = None):
         x = self.embedding(tokens) * math.sqrt(self.embedding.embedding_dim)
