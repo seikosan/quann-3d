@@ -83,3 +83,61 @@ biçimde yazar:
    açıkça belirt.
 
 Kısa bilgi sorularında kullanılmaz; sonuç/durum raporlarında zorunludur.
+
+## 7. Kalıcı Hafıza Kuralları (2026-10-27)
+
+1. **Gerçekçilik ilkesi:** Beni memnun etmek için hiçbir şeyi uydurma. Asla
+   kullanıcıyı memnun etmek için veri/kod uydurma. Tüm veriler gerçek,
+   tüm kodlar hatasız olmalı.
+
+2. **Çift-üçlü kontrol:** Kod yazımlarında 2-3 kez tekrarlı kontrol sonrası
+   yazım tamamlanır.
+
+3. **Agent kullanımı:** İhtiyaç halinde subagent'lar serbestçe kullanılabilir.
+
+4. **Dürüst değerlendirme:**
+   - Sonuç iyi ise → açıkça "iyi" de, nedenini belirt
+   - Sonuç kötü ise → açıkça "kötü" de, nerede kötü olduğunu göster
+   - Her zaman açık ve şeffaf ol
+
+5. **Kod kalitesi:** Parametrik ve SOTA kod yazım kurallarına uygun kod yaz.
+   İleride sorun olabilecek kodlar yazma. Structured ve refactor edilmeye
+   ihtiyaç duymayacak şekilde kodlar yaz.
+
+## 8. Hata Yönetimi ve Kurtarma
+
+1. **Deney başarısız:** Log'da neden + 3 dakika içinde çözüm adayı üretilir.
+2. **MPS OOM:** `batch_size` yarılanır, checkpoint'tan resume edilir.
+3. **BPE uyumsuzluğu:** Ana checkpoint'tan BPE'yi `cp` ile al, devam et.
+4. **Veri okuma hatası:** Raw log'a düş, ana oturumu bloklama.
+
+## 9. Kod Kalitesi Kontrolü
+
+Commit öncesi kontrol listesi:
+- [ ] Type hints eksiksiz
+- [ ] Docstring (varsa)
+- [ ] Edge case test edildi
+- [ ] Logging eklendi
+- [ ] Memory leak yok (`torch.no_grad`, context manager)
+- [ ] `quann_cloud/tests/` geçiyor (motor değişikliği varsa)
+
+## 10. Güvenlik ve Secrets
+
+1. **API key, token, credential:** `.env` dosyasında, asla repo'ya commit edilmez.
+2. **`.env`:** `.gitignore`'da mutlaka olmalı.
+3. **Public paylaşım:** Veri/sonuç paylaşımı → anonimleştir, sensitive bilgi yok.
+4. **Dependency:** `pip freeze` → `requirements.txt`, bilinen CVE'leri kontrol et.
+
+## 11. Deney Takibi Standardı
+
+1. **Log başlığı:** `[YYYY-MM-DD HH:MM] <model>_<corpus>_<config>`
+2. **Metrik kaydı:** `logs/metrics_<run>.json` (loss, accuracy, time, epoch)
+3. **Checkpoint:** Her epoch → `checkpoints/<run>/epochN.pt`, en iyisi → `*_best.pt`
+4. **Resume:** `checkpoint_epochN.pt` + `metrics_<run>.json` ile devam
+
+## 12. Dokümantasyon Bakımı
+
+1. **README.md:** Proje özeti, kurulum, kullanım (≤50 satır).
+2. **Yeni feature:** İlgili section'a 2-3 satır ekle.
+3. **_archive/:** Ayda 1 kez gözden geçir, gereksizi sil.
+4. **Çapraz referans:** Değişiklik → ilgili doc güncelle (README, ARCHITECTURE).

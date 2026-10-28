@@ -46,8 +46,9 @@ class CloudEncoderND(nn.Module):
 
     def __init__(self, d_cloud_dim: int, d_cloud: int = 512, hidden: int = 256,
                  pool: str = "max", cloud_attn: bool = False,
-                 cloud_attn_heads: int = 8):
+                 cloud_attn_heads: int = 8, attn_scale_init: float = 1.0):
         super().__init__()
+        self.d_cloud_dim = d_cloud_dim  # Store for load_state_dict compatibility
         self.pool = pool
         self.cloud_attn = cloud_attn
         self.cloud_attn_heads = cloud_attn_heads
@@ -56,8 +57,10 @@ class CloudEncoderND(nn.Module):
             nn.Linear(hidden, hidden), nn.GELU(),
             nn.Linear(hidden, d_cloud),
         )
+        # Pair input: diff(D) + dist(1) + cos(1) + |i|(D) + |j|(D) = 3*D + 2
+        pair_input_dim = 3 * d_cloud_dim + 2
         self.pair_mlp = nn.Sequential(
-            nn.Linear(d_cloud_dim + 4, hidden), nn.GELU(),
+            nn.Linear(pair_input_dim, hidden), nn.GELU(),
             nn.Linear(hidden, hidden), nn.GELU(),
             nn.Linear(hidden, d_cloud),
         )
@@ -69,26 +72,43 @@ class CloudEncoderND(nn.Module):
         self.attn_proj = nn.Linear(d_cloud, 1)
         
         if cloud_attn:
-            # Initialize attention weights carefully to avoid NaN
             self.cloud_self_attn = nn.MultiheadAttention(
                 embed_dim=d_cloud, num_heads=cloud_attn_heads, batch_first=True,
-                dropout=0.0, bias=True  # Dropout=0 for stability initially
+                dropout=0.0, bias=True
             )
-            # Scale attention output
-            self.attn_scale = nn.Parameter(torch.ones(1) * 0.1)  # Small initial scale
+            self.attn_scale = nn.Parameter(torch.ones(1) * attn_scale_init)
 
     def load_state_dict(self, state_dict, strict=True):
         """Load state dict with backward compatibility for legacy checkpoints."""
-        # Legacy checkpoint compatibility: old max-pool checkpoints predate
-        # attn_proj and cloud_self_attn. Fill missing keys with zeros.
+        prefix = "cloud."
+        d = self.d_cloud_dim
+        old_pair_in = d + 4  # Legacy bug: used d_cloud_dim + 4
+        new_pair_in = 3 * d + 2  # Correct: 3*d_cloud_dim + 2
+        
+        # Fix pair_mlp weight for legacy checkpoints
+        pair_weight_key = prefix + "pair_mlp.0.weight"
+        if pair_weight_key in state_dict:
+            old_w = state_dict[pair_weight_key]
+            if old_w.shape[1] == old_pair_in and old_w.shape[1] != new_pair_in:
+                # Legacy checkpoint: expand weights for correct dimensions
+                new_w = torch.zeros(old_w.shape[0], new_pair_in, device=old_w.device, dtype=old_w.dtype)
+                # Copy existing weights
+                new_w[:, :old_pair_in] = old_w
+                # For new |i|(D) and |j|(D) dimensions, reuse the mean of legacy scalar weights
+                # Legacy: old_w[:, d+2:d+2+d] and old_w[:, d+3:d+3+d] were D-dimensional
+                old_norm_i_mean = old_w[:, d + 2:d + 2 + d].mean(dim=1, keepdim=True)
+                old_norm_j_mean = old_w[:, d + 3:d + 3 + d].mean(dim=1, keepdim=True)
+                new_w[:, d + 2:2 * d + 2] = old_norm_i_mean.expand(-1, d)
+                new_w[:, 2 * d + 2:3 * d + 2] = old_norm_j_mean.expand(-1, d)
+                state_dict[pair_weight_key] = new_w
+        
+        # Legacy: old max-pool checkpoints predate attn_proj and cloud_self_attn
         if self.pool == "max" and not self.cloud_attn:
-            prefix = "cloud."
-            # Use actual d_cloud dimension from the model
-            actual_d_cloud = self.point_mlp[-1].out_features
             if prefix + "attn_proj.weight" not in state_dict:
-                state_dict[prefix + "attn_proj.weight"] = torch.zeros(1, actual_d_cloud)
+                state_dict[prefix + "attn_proj.weight"] = torch.zeros(1, d)
             if prefix + "attn_proj.bias" not in state_dict:
                 state_dict[prefix + "attn_proj.bias"] = torch.zeros(1)
+        
         super().load_state_dict(state_dict, strict=strict)
 
     def forward(self, points: torch.Tensor, mask: Optional[torch.Tensor] = None) -> torch.Tensor:
@@ -124,8 +144,9 @@ class CloudEncoderND(nn.Module):
         cos_ang = (points.unsqueeze(2) * points.unsqueeze(1)).sum(-1) / \
                   (norm_i * norm_i.transpose(1, 2)).clamp(min=1e-8)
 
-        norm_i_exp = norm_i.unsqueeze(2).expand(-1, -1, N, -1)
-        norm_j_exp = norm_i.unsqueeze(1).expand(-1, N, -1, -1)
+        # Expand norms to match diff dimension (D)
+        norm_i_exp = norm_i.unsqueeze(2).expand(-1, -1, N, D)
+        norm_j_exp = norm_i.unsqueeze(1).expand(-1, N, -1, D)
 
         pair_in = torch.cat([diff, dist.unsqueeze(-1), cos_ang.unsqueeze(-1),
                              norm_i_exp, norm_j_exp], dim=-1)
@@ -157,13 +178,15 @@ class CloudLM(nn.Module):
                  nhead: Optional[int] = None, pos_len: int = 256,
                  hidden: int = 256, proj_hidden: Optional[int] = None,
                  point_hidden: int = 128, pool: str = "max",
-                 cloud_attn: bool = False, cloud_attn_heads: int = 8):
+                 cloud_attn: bool = False, cloud_attn_heads: int = 8,
+                 attn_scale_init: float = 1.0):
         """
         hidden:      cloud MLP gizli boyutu (nokta+çift MLP) — vars. 256
         proj_hidden: WordToND projeksiyon gizli boyutu — None → d_model
         point_hidden: point_head gizli boyutu — vars. 128
         n_layers:    Transformer katman sayısı — vars. 8 (önceki: 4)
         cloud_attn_heads: Cloud self-attention head sayısı — vars. 8 (önceki: 4)
+        attn_scale_init: Cloud attention scale başlangıç değeri — vars. 1.0
         """
         super().__init__()
         self.d_cloud_dim = d_cloud_dim
@@ -182,7 +205,8 @@ class CloudLM(nn.Module):
 
         self.to_nd = WordToND(d_model, d_cloud_dim, hidden=proj_hidden)
         self.cloud = CloudEncoderND(d_cloud_dim, d_cloud, hidden=hidden, pool=pool,
-                                    cloud_attn=cloud_attn, cloud_attn_heads=cloud_attn_heads)
+                                    cloud_attn=cloud_attn, cloud_attn_heads=cloud_attn_heads,
+                                    attn_scale_init=attn_scale_init)
 
         self.word_head = nn.Sequential(
             nn.Linear(d_cloud, d_cloud), nn.GELU(),
@@ -195,15 +219,28 @@ class CloudLM(nn.Module):
 
     def load_state_dict(self, state_dict, strict=True):
         """Load state dict with backward compatibility for legacy checkpoints."""
-        # Legacy checkpoint compatibility: old max-pool checkpoints predate
-        # attn_proj and cloud_self_attn in CloudEncoderND. Fill missing keys.
+        # Fix CloudEncoderND pair_mlp compatibility
         cloud_prefix = "cloud."
+        pair_weight_key = cloud_prefix + "pair_mlp.0.weight"
+        if pair_weight_key in state_dict:
+            old_w = state_dict[pair_weight_key]
+            d = self.cloud.d_cloud_dim
+            old_pair_in = d + 4  # Legacy bug
+            new_pair_in = 3 * d + 2  # Correct
+            if old_w.shape[1] == old_pair_in and old_w.shape[1] != new_pair_in:
+                new_w = torch.zeros(old_w.shape[0], new_pair_in, device=old_w.device, dtype=old_w.dtype)
+                new_w[:, :old_pair_in] = old_w
+                new_w[:, d + 2:2 * d + 2] = old_w[:, d + 2].unsqueeze(1).expand(-1, d)
+                new_w[:, 2 * d + 2:3 * d + 2] = old_w[:, d + 3].unsqueeze(1).expand(-1, d)
+                state_dict[pair_weight_key] = new_w
+        
+        # Legacy: old max-pool checkpoints predate attn_proj and cloud_self_attn
         if cloud_prefix + "attn_proj.weight" not in state_dict:
-            # Get the correct shape from the model
             cloud = self.cloud
             if cloud.pool == "max" and not cloud.cloud_attn:
-                state_dict[cloud_prefix + "attn_proj.weight"] = torch.zeros(1, cloud.attn_proj.weight.shape[1])
+                state_dict[cloud_prefix + "attn_proj.weight"] = torch.zeros(1, cloud.d_cloud_dim)
                 state_dict[cloud_prefix + "attn_proj.bias"] = torch.zeros(1)
+        
         super().load_state_dict(state_dict, strict=strict)
 
     def forward(self, tokens: torch.Tensor, mask: Optional[torch.Tensor] = None):

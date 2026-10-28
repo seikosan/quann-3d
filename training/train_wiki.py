@@ -27,7 +27,7 @@ import re
 import json
 import argparse
 import numpy as np
-from typing import List
+from typing import List, Optional
 from collections import Counter
 
 # Ortak mimari (tek kaynak): model + tokenizer'lar cloudlm paketinden
@@ -143,10 +143,24 @@ def step_tokenizer(args):
     return tok
 
 
+def set_seeds(seed: int):
+    """Reproducible training."""
+    torch.manual_seed(seed)
+    np.random.seed(seed)
+    random.seed(seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(seed)
+    if torch.backends.mps.is_available():
+        torch.mps.manual_seed(seed)
+
+
 def step_train(args, tok):
     print(f"\n{'='*60}")
     print(f"  ADIM 2B+3: MODEL EĞİTİM (Wikipedia + Büyük Model)")
     print(f"{'='*60}")
+    
+    # Set seeds for reproducibility
+    set_seeds(args.seed)
     
     device = "mps" if torch.backends.mps.is_available() else \
              "cuda" if torch.cuda.is_available() else "cpu"
@@ -170,6 +184,7 @@ def step_train(args, tok):
         pool=args.pool,
         cloud_attn=args.cloud_attn,
         cloud_attn_heads=args.cloud_attn_heads,
+        attn_scale_init=1.0,
     )
     model.to(device)
     
@@ -183,6 +198,7 @@ def step_train(args, tok):
 
     # Resume: checkpoint epoch'undan devam et, cosine schedule'ı oradan hizala
     start_epoch = 0
+    ckpt = None
     if args.resume:
         ckpt = torch.load(args.resume, map_location="cpu", weights_only=False)
         model.load_state_dict(ckpt["model_state"])
@@ -208,7 +224,7 @@ def step_train(args, tok):
         print(f"  Resume: epoch {start_epoch} checkpoint'undan devam ({args.resume})")
 
     os.makedirs(args.save_dir, exist_ok=True)
-    best_ppl = ckpt.get("best_ppl", float('inf')) if args.resume else float('inf')
+    best_ppl = ckpt.get("best_ppl", float('inf')) if ckpt else float('inf')
 
     model.train()
     t0 = time.time()
@@ -225,23 +241,17 @@ def step_train(args, tok):
             logits, next_point, _ = model(inputs, mask)
             word_loss = F.cross_entropy(logits, targets)
             
-            # NaN kontrolü - gradient explosion tespiti
-            if not torch.isfinite(word_loss):
-                print(f"    ⚠️  Warning: non-finite loss at batch, skipping", flush=True)
-                continue
-                
             target_embedding = model.embedding(targets) * math.sqrt(model.embedding.embedding_dim)
             target_points = model.to_nd(model.norm(target_embedding.unsqueeze(1)))[:, 0]
             point_loss = F.mse_loss(next_point, target_points)
             
-            # NaN kontrolü
-            if not torch.isfinite(point_loss):
-                print(f"    ⚠️  Warning: non-finite point_loss at batch, skipping", flush=True)
+            # NaN kontrolü - gradient explosion tespiti
+            if not torch.isfinite(word_loss) or not torch.isfinite(point_loss):
+                print(f"    ⚠️  Warning: non-finite loss (word={word_loss.item():.4f}, point={point_loss.item():.4f}), skipping", flush=True)
                 continue
             
-            loss = word_loss + 0.1 * point_loss
-            loss.backward()
-            torch.nn.utils.clip_grad_norm_(model.parameters(), 0.5)
+            loss = word_loss + args.point_loss_weight * point_loss
+            torch.nn.utils.clip_grad_norm_(model.parameters(), args.grad_clip)
             optimizer.step()
             epoch_loss += word_loss.item()
             n_batches += 1
@@ -268,9 +278,12 @@ def step_train(args, tok):
             "config": {"d_model": args.d_model, "d_cloud": args.d_cloud,
                        "d_cloud_dim": args.d_dim, "n_layers": args.layers,
                        "pool": args.pool, "cloud_attn": args.cloud_attn,
-                       "cloud_attn_heads": args.cloud_attn_heads},
+                       "cloud_attn_heads": args.cloud_attn_heads,
+                       "attn_scale_init": 1.0},
             "ppl": ppl,
             "best_ppl": best_ppl,
+            "seed": args.seed,
+            "point_loss_weight": args.point_loss_weight,
         }
         if (epoch + 1) % 5 == 0:
             torch.save(checkpoint, os.path.join(args.save_dir, f"wiki_cloud_epoch{epoch+1}.pt"))
@@ -284,6 +297,29 @@ def step_train(args, tok):
     print(f"\n  ✅ {total:.0f}s ({total/60:.1f}dk) | Best PPL: {best_ppl:.2f}")
     tok.save(os.path.join(args.save_dir, "wiki_bpe.json"))
     return model, tok
+
+
+def evaluate_model(model, tok, texts, all_tokens, args, device, eos_id, split_name="val"):
+    """Evaluate model on a dataset, return PPL."""
+    model.eval()
+    total_loss = 0.0
+    n_batches = 0
+    
+    with torch.no_grad():
+        for batch in iter_shuffled_batches(all_tokens, args.seq_len, args.batch):
+            inputs = torch.tensor([e[0] for e in batch], device=device)
+            targets = torch.tensor([e[1] for e in batch], device=device)
+            mask = (inputs != 0) & (inputs != eos_id)
+            
+            logits, _, _ = model(inputs, mask)
+            loss = F.cross_entropy(logits, targets)
+            total_loss += loss.item()
+            n_batches += 1
+    
+    avg_loss = total_loss / max(n_batches, 1)
+    ppl = math.exp(min(avg_loss, 20))
+    model.train()
+    return ppl
 
 
 def step_test(args, model=None, tok=None):
@@ -306,6 +342,21 @@ def step_test(args, model=None, tok=None):
     
     model.to(device)
     eos_id = tok._tokenizer.token_to_id("<eos>") or 1
+    
+    # Evaluation on held-out set
+    if args.eval_split > 0:
+        print(f"\n  📊 EVALUATION (held-out {args.eval_split}%):")
+        n_eval = int(len(texts) * args.eval_split / 100)
+        eval_texts = texts[:n_eval]
+        eval_tokens = [tok.encode(t) for t in eval_texts if len(t) >= args.seq_len + 1]
+        eval_ppl = evaluate_model(model, tok, eval_texts, eval_tokens, args, device, eos_id, "held-out")
+        print(f"    Held-out PPL: {eval_ppl:.2f}")
+        
+        # Also evaluate on training set for comparison
+        train_tokens = [tok.encode(t) for t in texts[args.eval_split:] if len(t) >= args.seq_len + 1]
+        train_ppl = evaluate_model(model, tok, texts[args.eval_split:], train_tokens, args, device, eos_id, "train")
+        print(f"    Train PPL: {train_ppl:.2f}")
+        print(f"    Gap: {eval_ppl - train_ppl:.2f}")
     
     # Üretim
     print(f"\n  🧪 ÜRETİM:")
@@ -378,7 +429,8 @@ def main():
     parser.add_argument("--seq-len", type=int, default=10)
     parser.add_argument("--d-model", type=int, default=256)
     parser.add_argument("--d-cloud", type=int, default=512)
-    parser.add_argument("--d-dim", type=int, default=16)
+    parser.add_argument("--d-dim", type=int, default=32,
+                        help="Bulut nokta boyutu D (varsayılan: 32, varyantlar: 64/128)")
     parser.add_argument("--layers", type=int, default=8,
                         help="Transformer katman sayısı (varsayılan: 8, önceki: 4)")
     parser.add_argument("--pool", type=str, default="max", choices=["max", "attn"])
@@ -390,6 +442,14 @@ def main():
                         default=os.path.join(ROOT, "checkpoints", "wiki_checkpoints"))
     parser.add_argument("--resume", type=str, default=None,
                         help="Devam edilecek checkpoint yolu (örn. wiki_checkpoints_wiki1500k/wiki_cloud_best.pt)")
+    parser.add_argument("--seed", type=int, default=42,
+                        help="Random seed for reproducibility (varsayılan: 42)")
+    parser.add_argument("--point-loss-weight", type=float, default=0.1,
+                        help="Point loss weight in total loss (varsayılan: 0.1)")
+    parser.add_argument("--grad-clip", type=float, default=0.5,
+                        help="Gradient clipping norm (varsayılan: 0.5)")
+    parser.add_argument("--eval-split", type=float, default=5.0,
+                        help="Percentage of data to use for held-out evaluation (varsayılan: 5.0)")
     args = parser.parse_args()
 
     print("=" * 60)

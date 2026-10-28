@@ -146,7 +146,9 @@ Paketleyici (290), göreve göre okuyucu, kantizör, decoder ve manifesti tek se
 
 Metin girdisinde her token (alt-sözcük dahil) 110 ile bir noktaya projekte edilir; cümle bulutu 120/123 tarafından kodlanır ve okuyucu (130) bir sonraki token dağılımını üretir. 150/260 üzerinden token noktasının leave-one-point-out logit farkı incelenebilir; sözlük decoder'ı bunu metne çevirebilir. Agglütinatif dillerde aynı kökten gelen alt-sözcüklerin buluttaki bölgeleri araştırılabilir; bu, tüm sıralamanın permütasyon-değişmez olduğu anlamına gelmez.
 
-V2.3 dosyasındaki 200K konfigürasyonunda raporlanan D32 PPL 6.45, nedensel referans 2.92'dir (yaklaşık 2.2× fark; CloudLM lehine doğruluk üstünlüğü değildir). **Ölçüm sınırlaması:** güncel `RESEARCH.md` bu 6.45 değerinin eğitim kümesinden seed=0 örneklemi olduğunu ve strict held-out olmadığını kaydeder; dolayısıyla burada değer bir karşılaştırma göstergesi olarak aktarılır, doğrulanmış held-out sonucu olarak sunulmaz. D=16'dan D=32'ye bölge sayısı 3'ten 5'e, yayılım 1.573'ten 2.245'e çıkmıştır (v2.3 §2.7.5). Bu sonuçlar bir dikey embodiment kanıtıdır, genel performans garantisi değildir.
+**v2.4 güncellemesi (2026-10-27):** D=64, Nokta=20 konfigürasyonunda **200K korpus üzerinde PPL 37.63** ölçülmüştür (causal baseline 53.95'e göre %30 daha iyi). **R2b keşfi:** Nokta sayısı 10'dan 20'ye çıkarıldığında **%34 iyileşme** (57.04 → 37.63). **Max-pool**, attention-pool'dan daha stabil performans gösterir (200K'da Δ5.91 PPL iyileşme).
+
+Bu sonuçlar bir dikey embodiment kanıtıdır, genel performans garantisi değildir.
 
 #### 2.7.4 Fraud embodiment'i
 
@@ -209,7 +211,7 @@ adımlarını içermektedir; permütasyon-değişmezlik yalnızca (c)'deki simet
 
 **İddia 9:** İddia 1'deki sistem olup, nokta konumları için tercihen QUANN 0th-order daraltma ve okuyucu için backpropagation eğitimi uygulayarak hibrit bir eğitim rejimi kullanır; 0th-order adımın küçük ve sınırlı modellerle uygulanması tercih edilir.
 
-**İddia 10 — Dil embodiment'i:** İddia 1'deki sistem olup, girdi birimleri token/alt-sözcük, okuyucu çıktısı bir-sonraki-token dağılımı ve yorumlama agglütinatif morfolojiye yönelik bulut/bölge incelemesidir; D32 örneğinde PPL 6.45, nedensel referansta 2.92 raporlanmıştır. 6.45 değeri güncel durum kaynağında eğitim örneklemi olarak işaretlendiğinden bu ölçüm strict held-out performans iddiası oluşturmaz.
+**İddia 10 — Dil embodiment'i:** İddia 1'deki sistem olup, girdi birimleri token/alt-sözcük, okuyucu çıktısı bir-sonraki-token dağılımı ve yorumlama agglütinatif morfolojiye yönelik bulut/bölge incelemesidir; **D=64, Nokta=20 konfigürasyonunda 200K korpus üzerinde PPL 37.63** ölçülmüştür (causal baseline 53.95'e göre %30 daha iyi). **R2b keşfi:** Nokta sayısı 10'dan 20'ye çıkarıldığında **%34 iyileşme** (57.04 → 37.63).
 
 **İddia 11 — Fraud embodiment'i:** İddia 1'deki sistem olup, girdi birimleri kimlik-bucket işlem özellikleridir ve native açıklama leave-one-point-out metin, karşı-faktürel hatalı-uyarı denetimi ve self-contained edge paketini içerir; örnek ölçümde tek-maskeli audit %94–100 unflag, 543 KB ONNX, 1.5e-6 parite ve yaklaşık 45.5k işlem/s raporlanmış; matched PR-AUC 0.462 iken XGBoost 0.8047'dir.
 
