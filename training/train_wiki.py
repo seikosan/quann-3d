@@ -252,11 +252,12 @@ def step_train(args, tok):
             
             loss = word_loss + args.point_loss_weight * point_loss
             torch.nn.utils.clip_grad_norm_(model.parameters(), args.grad_clip)
+            loss.backward()
             optimizer.step()
             epoch_loss += word_loss.item()
             n_batches += 1
         
-        scheduler.step()  # Step once per epoch
+        scheduler.step()  # Step once per epoch (after optimizer.step)
         avg = epoch_loss / max(n_batches, 1)
         ppl = math.exp(min(avg, 20))
         elapsed = time.time() - t0
