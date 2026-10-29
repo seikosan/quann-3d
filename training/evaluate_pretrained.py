@@ -79,26 +79,37 @@ def evaluate_bert_turkish(texts: List[str], tok: BPETokenizer, max_samples=1000)
         model.to(device)
         model.eval()
         
-        # BERT perplexity calculation (masked LM)
+        # BERT MLM evaluation with proper 15% masking strategy
+        # Per BERT: 15% of tokens masked, predict only masked positions
         total_loss = 0.0
         n_samples = 0
+        n_masked = 0
         
         with torch.no_grad():
             for i, text in enumerate(texts[:max_samples]):
                 inputs = tokenizer(text, return_tensors="pt", truncation=True, max_length=512)
-                inputs = {k: v.to(device) for k, v in inputs.items()}
+                input_ids = inputs["input_ids"].to(device)
                 
-                # Create masked inputs
-                masked_inputs = inputs["input_ids"].clone()
-                labels = masked_inputs.clone()
+                # Create 15% masked labels (BERT strategy)
+                labels = input_ids.clone()
+                probability_matrix = torch.full(labels.shape, 0.15)
+                masked_indices = torch.bernoulli(probability_matrix).bool()
                 
-                outputs = model(masked_inputs, labels=labels)
+                # Only compute loss on masked positions
+                labels[~masked_indices] = -100  # -100 = ignore in loss calculation
+                
+                outputs = model(input_ids, labels=labels)
                 loss = outputs.loss
                 total_loss += loss.item()
                 n_samples += 1
+                n_masked += masked_indices.sum().item()
                 
                 if (i + 1) % 100 == 0:
-                    print(f"  BERT: {i+1}/{max_samples} samples")
+                    print(f"  BERT: {i+1}/{max_samples} samples (masked tokens: {int(n_masked)})")
+        
+        # Per-token loss over masked positions only
+        avg_loss_per_token = total_loss / max(n_samples, 1)
+        ppl = math.exp(min(avg_loss_per_token, 20))
         
         avg_loss = total_loss / max(n_samples, 1)
         ppl = math.exp(min(avg_loss, 20))

@@ -28,6 +28,7 @@ import config
 import datasets
 import metrics
 import quantize
+import threshold_utils
 import train_quann
 from qcloud_fraud import QCloudFraudClassifier
 
@@ -106,13 +107,26 @@ def main():
                 loss = torch.nn.functional.binary_cross_entropy_with_logits(
                     logits.squeeze(-1), tgt, pos_weight=pos_w)
                 opt.zero_grad(); loss.backward(); opt.step()
+            
+            # Val-based threshold selection (F2 maximization)
+            pva = m.predict_proba(tva, use_quann_points=True, batch=50000).cpu().numpy()
+            optimal_thresh = threshold_utils.select_threshold_by_f2(
+                yva.cpu().numpy(), pva, target_fbeta=2.0)
+            
+            # Test-applied evaluation at fixed threshold
             pte = m.predict_proba(tte, use_quann_points=True, batch=50000).cpu().numpy()
-            met = metrics.evaluate(yte.cpu().numpy(), pte)
-            print(f"  ep{ep}: AUC-ROC={met['auc_roc']:.4f} AUC-PR={met['auc_pr']:.4f} "
-                  f"F2={met['fbeta']:.3f} P={met['precision']:.3f} ({time.time()-t0:.0f}s)")
-        results[f"{hidden}/{dcloud}"] = {k: met[k] for k in
-                                         ("auc_roc", "auc_pr", "fbeta", "precision", "recall",
-                                          "lift_at_threshold", "threshold")}
+            met_fixed = threshold_utils.evaluate_at_threshold(
+                yte.cpu().numpy(), pte, optimal_thresh)
+            
+            # Also compute AUC-PR/ROC (threshold-independent)
+            met_auc = metrics.evaluate(yte.cpu().numpy(), pte)
+            
+            print(f"  ep{ep}: AUC-ROC={met_auc['auc_roc']:.4f} AUC-PR={met_auc['auc_pr']:.4f} "
+                  f"F2@thresh={met_fixed['fbeta']:.3f} P@thresh={met_fixed['precision']:.3f} "
+                  f"thresh={optimal_thresh:.4f} ({time.time()-t0:.0f}s)")
+        results[f"{hidden}/{dcloud}"] = {**met_fixed, **{
+            k: met_auc[k] for k in ("auc_roc", "auc_pr")
+        }}
 
     print(f"\n=== STRONG-READER SUMMARY (fixed D={D} QUANN points, full 4.7M test) ===")
     for k, v in results.items():

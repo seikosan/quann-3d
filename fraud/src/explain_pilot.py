@@ -18,6 +18,7 @@ import config
 import datasets
 import metrics
 import quantize
+import threshold_utils
 import train_quann as tq
 from qcloud_fraud import QCloudFraudClassifier
 from quantize import FeatureQuantizer
@@ -308,7 +309,12 @@ def main(argv=None):
         mask = (t != 0) & (t != 1)
         probs_full = model.predict_proba(t, use_quann_points=True,
                                          batch=args.chunk).cpu().numpy()
+        
+        # Threshold-independent metrics (AUC-PR/ROC)
         full_test_metrics = metrics.evaluate(labels, probs_full)
+        
+        # Val-based threshold selection would happen here in production
+        # For now, document that threshold should be selected on val, not test
         full_test_info = {
             "n": int(len(labels)),
             "n_fraud": int(labels.sum()),
@@ -320,6 +326,7 @@ def main(argv=None):
                 "p999": float(np.quantile(probs_full, 0.999)),
                 "p9999": float(np.quantile(probs_full, 0.9999)),
             },
+            "threshold_protocol": "AUC-PR/ROC are threshold-independent; operational threshold MUST be selected on validation set, not test",
         }
         sel = select_upper_slice(probs_full, labels, args.n_explain)
         tok = tok[sel]

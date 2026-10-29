@@ -318,7 +318,7 @@ def evaluate_model(model, tok, texts, all_tokens, args, device, eos_id, split_na
     
     avg_loss = total_loss / max(n_batches, 1)
     ppl = math.exp(min(avg_loss, 20))
-    model.train()
+    # FIXED: Keep model in eval mode (don't call model.train() here)
     return ppl
 
 
@@ -344,17 +344,21 @@ def step_test(args, model=None, tok=None):
     eos_id = tok._tokenizer.token_to_id("<eos>") or 1
     
     # Evaluation on held-out set
+    # FIXED: Use proper train/eval split (eval rows are NOT in training set)
     if args.eval_split > 0:
         print(f"\n  📊 EVALUATION (held-out {args.eval_split}%):")
+        # FIXED: eval_texts are from the FIRST portion, train from the REST
+        # This ensures eval is truly held-out (not train subset)
         n_eval = int(len(texts) * args.eval_split / 100)
-        eval_texts = texts[:n_eval]
+        eval_texts = texts[:n_eval]  # Eval set (held-out)
+        train_texts = texts[n_eval:]  # Training set
         eval_tokens = [tok.encode(t) for t in eval_texts if len(t) >= args.seq_len + 1]
         eval_ppl = evaluate_model(model, tok, eval_texts, eval_tokens, args, device, eos_id, "held-out")
         print(f"    Held-out PPL: {eval_ppl:.2f}")
         
         # Also evaluate on training set for comparison
-        train_tokens = [tok.encode(t) for t in texts[args.eval_split:] if len(t) >= args.seq_len + 1]
-        train_ppl = evaluate_model(model, tok, texts[args.eval_split:], train_tokens, args, device, eos_id, "train")
+        train_tokens = [tok.encode(t) for t in train_texts if len(t) >= args.seq_len + 1]
+        train_ppl = evaluate_model(model, tok, train_texts, train_tokens, args, device, eos_id, "train")
         print(f"    Train PPL: {train_ppl:.2f}")
         print(f"    Gap: {eval_ppl - train_ppl:.2f}")
     

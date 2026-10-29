@@ -1,5 +1,5 @@
 #!/bin/bash
-# Baseline causal transformer 200K wiki (clean rerun)
+# CloudLM d=384, 4L 200K wiki (clean rerun) — NOT baseline causal transformer
 cd "$(dirname "$0")/../.."
 set -euo pipefail
 
