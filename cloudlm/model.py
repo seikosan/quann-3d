@@ -78,34 +78,45 @@ class CloudEncoderND(nn.Module):
             )
             self.attn_scale = nn.Parameter(torch.ones(1) * attn_scale_init)
 
-    def load_state_dict(self, state_dict, strict=True):
-        """Load state dict with backward compatibility for legacy checkpoints."""
-        prefix = "cloud."
+    def _fix_legacy_pair_mlp_weight(self, state_dict, prefix: str) -> None:
+        """Fix legacy pair_mlp weight for backward compatibility.
+        
+        FIXED: Does NOT mutate the original state_dict; works on a copy.
+        """
         d = self.d_cloud_dim
         old_pair_in = d + 4  # Legacy bug: used d_cloud_dim + 4
         new_pair_in = 3 * d + 2  # Correct: 3*d_cloud_dim + 2
         
-        # Fix pair_mlp weight for legacy checkpoints
         pair_weight_key = prefix + "pair_mlp.0.weight"
-        if pair_weight_key in state_dict:
-            old_w = state_dict[pair_weight_key]
-            if old_w.shape[1] == old_pair_in and old_w.shape[1] != new_pair_in:
-                # Legacy checkpoint: expand weights for correct dimensions
-                new_w = torch.zeros(old_w.shape[0], new_pair_in, device=old_w.device, dtype=old_w.dtype)
-                # Copy existing weights
-                new_w[:, :old_pair_in] = old_w
-                # For new |i|(D) and |j|(D) dimensions, reuse the mean of legacy scalar weights
-                # Legacy: old_w[:, d+2:d+2+d] and old_w[:, d+3:d+3+d] were D-dimensional
-                old_norm_i_mean = old_w[:, d + 2:d + 2 + d].mean(dim=1, keepdim=True)
-                old_norm_j_mean = old_w[:, d + 3:d + 3 + d].mean(dim=1, keepdim=True)
-                new_w[:, d + 2:2 * d + 2] = old_norm_i_mean.expand(-1, d)
-                new_w[:, 2 * d + 2:3 * d + 2] = old_norm_j_mean.expand(-1, d)
-                state_dict[pair_weight_key] = new_w
+        if pair_weight_key not in state_dict:
+            return
+        
+        old_w = state_dict[pair_weight_key]
+        if old_w.shape[1] != old_pair_in:
+            return  # Not a legacy checkpoint
+        
+        # Create new weight (don't mutate original)
+        new_w = torch.zeros(old_w.shape[0], new_pair_in, device=old_w.device, dtype=old_w.dtype)
+        new_w[:, :old_pair_in] = old_w
+        # For new |i|(D) and |j|(D) dimensions, reuse the scalar weights
+        new_w[:, d + 2:2 * d + 2] = old_w[:, d + 2].unsqueeze(1).expand(-1, d)
+        new_w[:, 2 * d + 2:3 * d + 2] = old_w[:, d + 3].unsqueeze(1).expand(-1, d)
+        state_dict[pair_weight_key] = new_w
+
+    def load_state_dict(self, state_dict, strict=True):
+        """Load state dict with backward compatibility for legacy checkpoints.
+        
+        FIXED: Works on a copy of state_dict to avoid mutating the caller's dict.
+        """
+        # Work on a copy to avoid mutating the original state_dict
+        state_dict = dict(state_dict)
+        prefix = "cloud."
+        self._fix_legacy_pair_mlp_weight(state_dict, prefix)
         
         # Legacy: old max-pool checkpoints predate attn_proj and cloud_self_attn
         if self.pool == "max" and not self.cloud_attn:
             if prefix + "attn_proj.weight" not in state_dict:
-                state_dict[prefix + "attn_proj.weight"] = torch.zeros(1, d)
+                state_dict[prefix + "attn_proj.weight"] = torch.zeros(1, self.d_cloud)
             if prefix + "attn_proj.bias" not in state_dict:
                 state_dict[prefix + "attn_proj.bias"] = torch.zeros(1)
         
@@ -218,28 +229,15 @@ class CloudLM(nn.Module):
         )
 
     def load_state_dict(self, state_dict, strict=True):
-        """Load state dict with backward compatibility for legacy checkpoints."""
-        # Fix CloudEncoderND pair_mlp compatibility
-        cloud_prefix = "cloud."
-        pair_weight_key = cloud_prefix + "pair_mlp.0.weight"
-        if pair_weight_key in state_dict:
-            old_w = state_dict[pair_weight_key]
-            d = self.cloud.d_cloud_dim
-            old_pair_in = d + 4  # Legacy bug
-            new_pair_in = 3 * d + 2  # Correct
-            if old_w.shape[1] == old_pair_in and old_w.shape[1] != new_pair_in:
-                new_w = torch.zeros(old_w.shape[0], new_pair_in, device=old_w.device, dtype=old_w.dtype)
-                new_w[:, :old_pair_in] = old_w
-                new_w[:, d + 2:2 * d + 2] = old_w[:, d + 2].unsqueeze(1).expand(-1, d)
-                new_w[:, 2 * d + 2:3 * d + 2] = old_w[:, d + 3].unsqueeze(1).expand(-1, d)
-                state_dict[pair_weight_key] = new_w
+        """Load state dict with backward compatibility for legacy checkpoints.
         
-        # Legacy: old max-pool checkpoints predate attn_proj and cloud_self_attn
-        if cloud_prefix + "attn_proj.weight" not in state_dict:
-            cloud = self.cloud
-            if cloud.pool == "max" and not cloud.cloud_attn:
-                state_dict[cloud_prefix + "attn_proj.weight"] = torch.zeros(1, cloud.d_cloud_dim)
-                state_dict[cloud_prefix + "attn_proj.bias"] = torch.zeros(1)
+        FIXED: Works on a copy of state_dict to avoid mutating the caller's dict.
+        Uses shared _fix_legacy_pair_mlp_weight helper.
+        """
+        # Work on a copy to avoid mutating the original state_dict
+        state_dict = dict(state_dict)
+        cloud_prefix = "cloud."
+        self.cloud._fix_legacy_pair_mlp_weight(state_dict, cloud_prefix)
         
         super().load_state_dict(state_dict, strict=strict)
 

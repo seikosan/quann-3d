@@ -122,16 +122,17 @@ class QCloudWeight:
                     self.low[i] = max(-1.0, self.low[i] - self.expansion_rate)
                 # Eşitse, dokunma
             else:
-                # CEZA: Yanlış yönde → aralığı daralt
-                # Eğer yeni değer eskisinden büyükse, alt sınırı yukarı çek
+                # CEZA: Yanlış yönde → aralığı daralt (FIXED: narrow_search semantiği)
+                # Kötü deneme: value DEĞİŞMEZ; aralık, kötü noktanın dışını keser
                 if new_point[i] > self.value[i]:
-                    self.low[i] = new_point[i]
-                # Eğer yeni değer eskisinden küçükse, üst sınırı aşağı çek
+                    # Kötü nokta value'dan yüksekse, üst kısmı kes
+                    self.high[i] = min(self.high[i], new_point[i])
                 elif new_point[i] < self.value[i]:
-                    self.high[i] = new_point[i]
-                # Eşitse, dokunma
+                    # Kötü nokta value'dan düşükse, alt kısmı kes
+                    self.low[i] = max(self.low[i], new_point[i])
+                # value değişmez! (FIXED: eski kod value'yu kötü noktaya taşıyordu)
             
-            # Yonu güncelle (eğer ödülse aynı yönde, ceza ise ters)
+            # Yön güncelle (eğer ödülse aynı yönde, ceza ise ters)
             if reward:
                 if new_point[i] > self.value[i]:
                     self.direction[i] = 1
@@ -144,8 +145,9 @@ class QCloudWeight:
         self.history.append((new_point.copy(), self.direction.copy(), 
                             'reward' if reward else 'censure'))
         
-        # Value'yü güncelle
-        self.value = new_point.copy()
+        # FIXED: Value'yu ceza durumunda DEĞİŞTİRME (sadece ödülde güncelle)
+        if reward:
+            self.value = new_point.copy()
     
     def narrow_search(self, new_point: np.ndarray, reward: bool) -> None:
         """

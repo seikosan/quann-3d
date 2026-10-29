@@ -20,13 +20,21 @@ class TestQCloudWeight(unittest.TestCase):
         self.assertTrue(w.low[0] <= 0.5 <= w.high[0])
 
     def test_narrow_censure(self):
+        """Test FIXED narrow_search censure semantics.
+        
+        Per narrow_search (line 176-179):
+        - Kötü deneme: value DEĞİŞMEZ; aralık, kötü noktanın dışını keser
+        - 0.5 > 0.0 → high = min(high, 0.5) = 0.5 (üst kısmı kes)
+        - value remains 0.0 (FIXED: old code updated value to bad point)
+        """
         w = QCloudWeight(D=1)
         w.set_value(np.array([0.0]))  # Deterministic
         point = np.array([0.5])
         w.narrow(point, reward=False)
-        # 0.5 > 0.0 → low = 0.5 (daralt)
-        self.assertAlmostEqual(w.low[0], 0.5)
-        self.assertEqual(w.direction[0], -1)
+        # FIXED: value unchanged, high cut at bad point
+        self.assertEqual(w.value[0], 0.0)  # value unchanged
+        self.assertAlmostEqual(w.high[0], 0.5)  # upper bound cut at bad point
+        self.assertEqual(w.direction[0], -1)  # direction reversed
 
     def test_convergence(self):
         w = QCloudWeight(D=2, convergence_threshold=0.1)

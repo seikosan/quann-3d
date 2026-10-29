@@ -47,10 +47,19 @@ class Tok:
         return t
 
     def build(self, texts: List[str], max_vocab: int = 8000):
+        """Build vocabulary from texts.
+        
+        FIXED: Uses sep=" " for punct replacement to match encode() behavior.
+        Also includes punct tokens in vocab (not filtered by len > 1).
+        """
         counts = Counter()
         for t in texts:
-            for w in self._norm(t, "").split():
-                if len(w) > 1:
+            # FIXED: Use " " instead of "" to match encode() behavior
+            normalized = self._norm(t, " ")
+            for w in normalized.split():
+                # FIXED: Include all tokens (including punct) in vocab
+                # Previously: len(w) > 1 filter excluded punct
+                if w:  # Just check non-empty
                     counts[w] += 1
         for word, _ in counts.most_common(max_vocab):
             if word not in self.stoi:

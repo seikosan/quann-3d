@@ -15,14 +15,24 @@ def test_bpe_encode_appends_eos(tmp_path):
 
 
 def test_tok_stoi_is_callable_and_normalization_round_trips(tmp_path):
+    """Test Tok build/encode consistency with punct=True.
+    
+    Note: punct=True replaces punctuation with spaces, so punct tokens
+    are not included in vocab (they become whitespace and are split away).
+    This is consistent behavior between build() and encode().
+    """
     tokenizer = Tok(punct=True, fold_i=True)
     tokenizer.build(["IĞDIR, güzel."])
     assert tokenizer.stoi("bilinmeyen") == 2
     assert tokenizer.stoi.get("<eos>") == 1
-
+    
     path = tmp_path / "tok.json"
     tokenizer.save(str(path))
     loaded = Tok.load(str(path))
     assert loaded.punct is True
     assert loaded.fold_i is True
+    
+    # FIXED: punct tokens are stripped (replaced with spaces), so only
+    # non-punct words appear in vocab. encode() is consistent with build().
     assert loaded.encode("IĞDIR, güzel.") == tokenizer.encode("IĞDIR, güzel.")
+    # Both should be [3, 4, 1] (iğdir, güzel, eos) - punct stripped

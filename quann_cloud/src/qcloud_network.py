@@ -118,10 +118,17 @@ class QCloudNetwork(nn.Module):
         # kimlik bazlı noktalarından kurulur (konum bazlı DEĞİL).
         self.token_weights: Dict[int, QCloudWeight] = {}
     
-    def get_weight(self, token_id: int) -> QCloudWeight:
-        """Token'ın QCloudWeight'ini döndür (yoksa rastgele başlat)."""
+    def get_weight(self, token_id: int, create_if_missing: bool = True) -> QCloudWeight:
+        """Token'ın QCloudWeight'ini döndür (yoksa rastgele başlat).
+        
+        FIXED: create_if_missing=False ile eval modunda yeni weight oluşturulmaz.
+        """
         w = self.token_weights.get(token_id)
         if w is None:
+            if not create_if_missing:
+                # Eval mode: return a dummy weight instead of creating random one
+                # This prevents random points from polluting eval PPL
+                return QCloudWeight(D=self.D, convergence_threshold=0.0, expansion_rate=0.0)
             w = QCloudWeight(
                 D=self.D,
                 convergence_threshold=self.convergence_threshold,
@@ -131,10 +138,13 @@ class QCloudNetwork(nn.Module):
         return w
     
     def points_for(self, tokens: torch.Tensor,
-                   mask: Optional[torch.Tensor] = None) -> torch.Tensor:
+                   mask: Optional[torch.Tensor] = None,
+                   eval_mode: bool = False) -> torch.Tensor:
         """
         (B, T, D): her token'ın QUANN noktası (kimlik bazlı).
         Padding/EOS pozisyonları 0.
+        
+        FIXED: eval_mode=True ile eğitilmemiş tokenlar için rastgele weight oluşturulmaz.
         """
         B, T = tokens.shape
         pts = torch.zeros(B, T, self.D, device=tokens.device)
@@ -145,7 +155,8 @@ class QCloudNetwork(nn.Module):
                     continue
                 if mask is not None and not mask[b, i].item():
                     continue
-                w = self.get_weight(t)
+                # FIXED: eval_mode'da create_if_missing=False (rastgele weight yok)
+                w = self.get_weight(t, create_if_missing=not eval_mode)
                 pts[b, i] = torch.tensor(w.value.tolist(), device=tokens.device)
         return pts
     
