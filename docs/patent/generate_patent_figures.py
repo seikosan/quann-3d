@@ -87,18 +87,19 @@ def fig2_pair_geometry():
     """Çift-geometri ve simetrik birleştirme"""
     fig, axes = plt.subplots(1, 3, figsize=(15, 4))
     
-    # Nokta bulutu
+    # Nokta bulutu (FIXED: 2D panel için 2D scatter kullan)
     ax = axes[0]
     np.random.seed(42)
-    points = np.random.randn(10, 3) * 0.5
-    ax.scatter(points[:, 0], points[:, 1], points[:, 2], c='#4A90D9', alpha=0.8)
+    points = np.random.randn(10, 2) * 0.5  # FIXED: 2D noktalar
+    ax.scatter(points[:, 0], points[:, 1], c='#4A90D9', alpha=0.8)
     for i in range(len(points)):
         for j in range(i+1, len(points)):
             ax.plot([points[i, 0], points[j, 0]], 
                    [points[i, 1], points[j, 1]], 
-                   [points[i, 2], points[j, 2]], 
                    'gray', alpha=0.3, lw=0.5)
     ax.set_title('Nokta Bulutu', fontweight='bold')
+    ax.set_xlabel('Dim 1')
+    ax.set_ylabel('Dim 2')
     
     # Çift-geometri vektörü
     ax = axes[1]

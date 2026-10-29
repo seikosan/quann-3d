@@ -1,5 +1,6 @@
 #!/bin/bash
 cd "$(dirname "$0")/../.."  # repo kökü
+set -euo pipefail
 echo "[B-waiter] C + karşılaştırma bitene kadar bekleniyorum..." | tee -a logs/queue_B.log
 while [ ! -f logs/run_compare.log ]; do
   sleep 60

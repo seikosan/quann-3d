@@ -48,11 +48,20 @@ def log(msg: str):
 
 
 def hexw(path: str, a: np.ndarray, width: int):
+    """Write values to hex file for $readmemh.
+    
+    FIXED: Properly mask negative values for unsigned hex format.
+    Negative int8 values use 2's complement (e.g., -1 = 0xFF for width=1).
+    """
     os.makedirs(os.path.dirname(path), exist_ok=True)
     fmt = {1: "%02x", 2: "%04x", 4: "%08x"}[width]
+    # Mask for unsigned representation
+    mask = {1: 0xFF, 2: 0xFFFF, 4: 0xFFFFFFFF}[width]
     with open(path, "w") as f:
         for v in np.asarray(a).reshape(-1):
-            f.write((fmt % int(v)) + "\n")
+            # FIXED: Mask negative values for proper hex representation
+            v_masked = int(v) & mask
+            f.write((fmt % v_masked) + "\n")
 
 
 def main():

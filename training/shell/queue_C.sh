@@ -1,5 +1,6 @@
 #!/bin/bash
 cd "$(dirname "$0")/../.."  # repo kökü
+set -euo pipefail
 echo "[C-waiter] A'nın 50. epoch checkpoint'ını bekliyorum..." | tee -a logs/queue_C.log
 while [ ! -f checkpoints/wiki_checkpoints_200k/wiki_cloud_epoch50.pt ]; do
   sleep 120

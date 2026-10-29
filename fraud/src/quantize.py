@@ -139,10 +139,13 @@ class FeatureQuantizer:
                 b[miss] = self.n_per_feature[key] - 1  # dedicated missing bucket
             return b
         if kind == "int":
-            return np.clip(s.astype("int64"), 0, n - 1).values
+            # FIXED: Handle NaN before astype("int64")
+            s_clean = s.fillna(0)
+            return np.clip(s_clean.astype("int64"), 0, n - 1).values
         # cat / cat_topn
         v = s.astype(str).values
         cmap = self.cat_map[key]
+        # FIXED: Keep Python loop (np.vectorize had issues)
         out = np.full(len(v), self.n_per_feature[key] - 1, dtype=np.int64)  # 'other'
         for i, val in enumerate(v):
             if val in cmap:
