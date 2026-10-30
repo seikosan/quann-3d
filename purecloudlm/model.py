@@ -110,7 +110,7 @@ class GlobalGeometryEncoder(nn.Module):
             # Use expand to broadcast mean across N dimension
             mean_expanded = mean.unsqueeze(1).expand(-1, N, -1)  # (B, N, D)
             diff = points - mean_expanded  # (B, N, D)
-            variance = (diff ** 2).masked_fill(~mask.unsqueeze(-1), 0).sum(dim=1) / counts.squeeze(-1).unsqueeze(-1)  # (B, D)
+            variance = (diff ** 2).masked_fill(~mask.unsqueeze(-1), 0).sum(dim=1) / counts  # (B, D)
             std = variance.sqrt()
         else:
             mean = points.mean(dim=1)
@@ -185,9 +185,9 @@ class PairSampler(nn.Module):
                 
                 diff = p_i - p_j  # (K, D)
                 dist = diff.norm(dim=-1)  # (K,)
-                norm_i = p_i.norm(dim=-1, keepdim=True).clamp(min=1e-8)
-                norm_j = p_j.norm(dim=-1, keepdim=True).clamp(min=1e-8)
-                cos_ang = (p_i * p_j).sum(dim=-1) / (norm_i.squeeze() * norm_j.squeeze())  # (K,)
+                norm_i = p_i.norm(dim=-1, keepdim=True).clamp(min=1e-8)  # (K, 1)
+                norm_j = p_j.norm(dim=-1, keepdim=True).clamp(min=1e-8)  # (K, 1)
+                cos_ang = (p_i * p_j).sum(dim=-1) / (norm_i.squeeze(-1) * norm_j.squeeze(-1))  # (K,)
                 
                 pair_feat = torch.cat([diff, dist.unsqueeze(-1), cos_ang.unsqueeze(-1)], dim=-1)
                 pair_features.append(pair_feat)
@@ -220,9 +220,9 @@ class PairSampler(nn.Module):
                 
                 diff = p_i - p_j
                 dist = diff.norm(dim=-1)
-                norm_i = p_i.norm(dim=-1, keepdim=True).clamp(min=1e-8)
-                norm_j = p_j.norm(dim=-1, keepdim=True).clamp(min=1e-8)
-                cos_ang = (p_i * p_j).sum(dim=-1) / (norm_i.squeeze() * norm_j.squeeze())
+                norm_i = p_i.norm(dim=-1, keepdim=True).clamp(min=1e-8)  # (K, 1)
+                norm_j = p_j.norm(dim=-1, keepdim=True).clamp(min=1e-8)  # (K, 1)
+                cos_ang = (p_i * p_j).sum(dim=-1) / (norm_i.squeeze(-1) * norm_j.squeeze(-1))  # (K,)
                 
                 pair_feat = torch.cat([diff, dist.unsqueeze(-1), cos_ang.unsqueeze(-1)], dim=-1)
                 pair_features.append(pair_feat)

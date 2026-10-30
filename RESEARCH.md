@@ -47,7 +47,8 @@ hassasiyet değil. Bulut (10×32=320 sayı), transformer gizli durumunun
 
 | Tarih | Run | Sonuç | Ders | Log |
 |---|---|---|---|---|
-| 2026-10-29 | R2 D=64, Nokta=20 × 1.5M (FULL) | **6.92** PPL (epoch 98), loss=1.93 | Tüm 1.3M corpus ile tam eğitim, plateau yok | `logs/run_simple_r2_v2_full_100ep.log` |
+| 2026-10-30 | R2 D=64, Nokta=20 × 1.5M (FULL 300ep) | **12.43** train PPL, **21.91** test PPL | 300 epoch tam eğitim, held-out testte 21.91 | `logs/run_resume_r2_fixed.log` + `logs/run_evaluate_cloudlm.log` |
+| 2026-10-29 | R2 D=64, Nokta=20 × 1.5M (OVERFIT) | **6.92** PPL (epoch 98) | ❌ Sadece ilk 1000 cümle ile overfitting - geçersiz | `logs/run_simple_r2_v2_full_100ep.log` |
 | 2026-10-29 | R2 D=64, Nokta=20 × 1.5M (V2) | **15.60** PPL (epoch 100) | CloudLM v2 ile temiz yeniden eğitim | `logs/run_simple_r2_v2_100ep.log` |
 | 2026-10-29 | R2 D=64, Nokta=20 × 1.5M | **15.27** PPL (epoch 100) | 1.5M veri ile ciddi performans artışı | `logs/run_simple_r2_100ep.log` |
 | 2026-10-26 | Baseline 200K (10ep) | **53.95** PPL (10/10) | Causal baseline 200K referansı | `logs/run_baseline_200k_v2.log` |
