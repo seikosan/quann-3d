@@ -141,3 +141,33 @@ Commit öncesi kontrol listesi:
 2. **Yeni feature:** İlgili section'a 2-3 satır ekle.
 3. **_archive/:** Ayda 1 kez gözden geçir, gereksizi sil.
 4. **Çapraz referans:** Değişiklik → ilgili doc güncelle (README, ARCHITECTURE).
+
+## 13. Sayı Kanıtı Disiplini (2026-10-31 — uydurma olayı sonrası)
+
+§7'deki "uydurma" ilkesi bir niyet; aşağıdakiler **mekanik** kural. Gözlenen kusur:
+`RESEARCH.md`'ye "6.92 overfitting — sadece ilk 1000 cümle ile eğitildi" yazıldı,
+oysa atfedilen günlüğün 4. satırı `Corpus: 1500000 cümle` diyor ve eğitim script'inde
+kesme yok. Aynı turda 25.900 s "25,9 saat" diye okundu.
+
+1. **Her sayı kaynaklı olur.** Rapor/tablo/RESEARCH.md'deki her sayının yanına kaynağı
+   yazılır: `<dosya>:<satır>` ya da çalıştırılan komut. Kaynağı gösterilemeyen sayı
+   çıkar ya da açıkça `DOĞRULANMADI` etiketiyle yazılır — asla düz sayı olarak.
+2. **Günlük hatırlanmaz, yeniden okunur.** Durum sayıları için önce
+   `python3 scripts/durum.py` koşulur; rapor o çıktıdan kopyalanır. "Önceki turda
+   okumuştum" yeterli değil — dosya büyümüş olabilir (bu olayda 188 → 300).
+3. **Birim çevirimi elle yapılmaz.** Ham değer ve türetilmiş değer birlikte yazılır:
+   `62815 s = 17,45 saat`. Tek başına "17,45 saat" yazılmaz; "25,9 saat"/"161 dakika"
+   gibi ikinci bir türetme de yazılmaz.
+4. **Çelişkide sebep uydurulmaz.** İki sayı uyuşmuyorsa doğru cevap
+   "**sebep doğrulanmadı**"dır; ardından kanıt toplanır. Uydurulmuş sebep, gerçek
+   sebebi aramayı durdurur ve yanlış bir "Ders" satırı olarak kalıcılaşır.
+5. **Metrik adı zorunlu.** Hedef karşılaştırmasında hangi metrik olduğu yazılır:
+   train PPL 12,43 ✓ ↔ hedef 13,48 ama held-out test PPL 21,91 ✗. "Hedefe ulaşıldı"
+   cümlesi metrik adı olmadan kurulamaz.
+6. **Doğrulayıcı kapısı.** Kullanıcıya giden sonuç raporu, `tester`/`reviewer`
+   subagent'ının her iddiayı ham dosyaya karşı ✓/✗ işaretlediği turdan SONRA yazılır.
+   Doğrulayıcı, doğrulanamayan iddiayı "yanlış" değil "kanıtsız" diye işaretler.
+7. **Düzeltme repo'ya yazılır.** Yanlış bir iddia bulunduğunda doğrusu
+   `RESEARCH.md`/`AGENTS.md`'ye geçirilir: model kendi önceki cümlesini okumaya devam
+   ederse hata sonraki turlarda çoğalır (bu olayda "Evet, fark var!" turu, bir önceki
+   turun uydurduğu hikâyeyi kanıt sanarak üstüne kurdu).
