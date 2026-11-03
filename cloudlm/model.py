@@ -174,6 +174,25 @@ class CloudEncoderND(nn.Module):
         return self.fusion(torch.cat([point_pooled, pair_pooled], dim=-1))
 
 
+class PositionalEncoding(nn.Module):
+    """Dinamik sine/cosine positional encoding - her sequence uzunluğu için çalışır."""
+
+    def __init__(self, d_model: int, max_len: int = 2048):
+        super().__init__()
+        pe = torch.zeros(max_len, d_model)
+        position = torch.arange(0, max_len, dtype=torch.float).unsqueeze(1)
+        div_term = torch.exp(torch.arange(0, d_model, 2).float() * (-math.log(10000.0) / d_model))
+        
+        pe[:, 0::2] = torch.sin(position * div_term)
+        pe[:, 1::2] = torch.cos(position * div_term)
+        self.register_buffer('pe', pe)  # Shape: (max_len, d_model)
+    
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        """x: (B, N, D) → (B, N, D) + positional encoding"""
+        # pe shape: (max_len, D), need to index [0:N, :] then add to x
+        return x + self.pe[:x.size(1), :]
+
+
 class CloudLM(nn.Module):
     """
     Cümle Bulutu Dil Modeli.
@@ -186,7 +205,7 @@ class CloudLM(nn.Module):
 
     def __init__(self, vocab_size: int, d_model: int = 256, d_cloud: int = 512,
                  d_cloud_dim: int = 16, n_layers: int = 8,
-                 nhead: Optional[int] = None, pos_len: int = 256,
+                 nhead: Optional[int] = None, max_pos_len: int = 2048,
                  hidden: int = 256, proj_hidden: Optional[int] = None,
                  point_hidden: int = 128, pool: str = "max",
                  cloud_attn: bool = False, cloud_attn_heads: int = 8,
@@ -196,6 +215,7 @@ class CloudLM(nn.Module):
         proj_hidden: WordToND projeksiyon gizli boyutu — None → d_model
         point_hidden: point_head gizli boyutu — vars. 128
         n_layers:    Transformer katman sayısı — vars. 8 (önceki: 4)
+        max_pos_len: Maksimum pozisyon uzunluğu (vars. 2048, eskiden 256)
         cloud_attn_heads: Cloud self-attention head sayısı — vars. 8 (önceki: 4)
         attn_scale_init: Cloud attention scale başlangıç değeri — vars. 1.0
         """
@@ -205,7 +225,7 @@ class CloudLM(nn.Module):
         nhead = nhead or max(1, d_model // 16)
 
         self.embedding = nn.Embedding(vocab_size, d_model)
-        self.pos_enc = nn.Parameter(torch.randn(1, pos_len, d_model) * 0.02)
+        self.pos_enc = PositionalEncoding(d_model, max_len=max_pos_len)
         enc = nn.TransformerEncoderLayer(
             d_model=d_model, nhead=nhead,
             dim_feedforward=d_model * 4, dropout=0.1,
@@ -243,7 +263,7 @@ class CloudLM(nn.Module):
 
     def forward(self, tokens: torch.Tensor, mask: Optional[torch.Tensor] = None):
         x = self.embedding(tokens) * math.sqrt(self.embedding.embedding_dim)
-        x = x + self.pos_enc[:, :tokens.size(1), :]
+        x = self.pos_enc(x)
         if mask is not None:
             x = x.masked_fill(~mask.unsqueeze(-1), 0)
         x = self.encoder(x, src_key_padding_mask=~mask if mask is not None else None)

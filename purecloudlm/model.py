@@ -19,6 +19,26 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 
+class PositionalEncoding(nn.Module):
+    """Sine/cosine positional encoding - sequence order'ı korumak için"""
+    
+    def __init__(self, d_model: int, max_len: int = 512):
+        super().__init__()
+        # Create positional encoding matrix
+        pe = torch.zeros(max_len, d_model)
+        position = torch.arange(0, max_len, dtype=torch.float).unsqueeze(1)
+        div_term = torch.exp(torch.arange(0, d_model, 2).float() * (-math.log(10000.0) / d_model))
+        
+        pe[:, 0::2] = torch.sin(position * div_term)
+        pe[:, 1::2] = torch.cos(position * div_term)
+        pe = pe.unsqueeze(0)  # (1, max_len, d_model)
+        self.register_buffer('pe', pe)
+    
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        """x: (B, N, D)"""
+        return x + self.pe[:, :x.size(1), :]  # (B, N, D)
+
+
 class WordToND(nn.Module):
     """Bağlam vektörünü (d_model) → D boyutlu bulut noktasına projekte eder."""
 
@@ -48,29 +68,47 @@ class GlobalGeometryEncoder(nn.Module):
 
     def __init__(self, d_cloud_dim: int, d_cloud: int = 512, hidden: int = 256,
                  pool_mode: str = "all", use_pair_approx: bool = False,
-                 num_sampled_pairs: int = 64):
+                 num_sampled_pairs: int = 64, use_positional: bool = True,
+                 max_len: int = 256):
         super().__init__()
         self.d_cloud_dim = d_cloud_dim
         self.pool_mode = pool_mode
         self.use_pair_approx = use_pair_approx
         self.num_sampled_pairs = num_sampled_pairs
+        self.use_positional = use_positional
         
-        # Global statistics: mean, max, min, std (4 × D)
-        stats_dim = d_cloud_dim * 4
+        # Positional encoding (sine/cosine) - sequence order'ı korumak için
+        if use_positional:
+            self.pos_encoder = PositionalEncoding(d_cloud_dim, max_len=max_len)
         
         # Optional: approximate pair statistics (sampled pairs only)
         if use_pair_approx:
+            self.pair_sampler = PairSampler(num_sampled_pairs)
             # Sampled pair features: [diff, dist, cos] for K pairs
             # K × (D + 1 + 1) = K × (D + 2)
-            self.pair_sampler = PairSampler(num_sampled_pairs)
             pair_feat_dim = num_sampled_pairs * (d_cloud_dim + 2)
             self.pair_mlp = nn.Sequential(
                 nn.Linear(pair_feat_dim, hidden), nn.GELU(),
                 nn.Linear(hidden, d_cloud),
             )
+        
+        # Global statistics: mean, max, min, std (varying sizes based on pool_mode)
+        if self.pool_mode == "mean":
+            stats_dim = d_cloud_dim * 2  # mean + std
+        elif self.pool_mode == "max":
+            stats_dim = d_cloud_dim * 2  # max + std
+        elif self.pool_mode == "min":
+            stats_dim = d_cloud_dim * 2  # min + std
+        elif self.pool_mode == "all":
+            stats_dim = d_cloud_dim * 4  # mean + max + min + std
+        else:
+            raise ValueError(f"Unknown pool_mode: {self.pool_mode}")
+        
+        # Optional: approximate pair statistics adds to stats_dim
+        if use_pair_approx:
             stats_dim += d_cloud
         
-        # Final fusion
+        # Final fusion - stats_dim dinamik olarak hesaplanıyor
         self.fusion = nn.Sequential(
             nn.Linear(stats_dim, hidden), nn.GELU(),
             nn.Linear(hidden, d_cloud),
@@ -106,11 +144,9 @@ class GlobalGeometryEncoder(nn.Module):
             min_pool = min_val.min(dim=1).values
             
             # Std (only over valid points)
-            # mean is (B, D), need to broadcast to (B, N, D)
-            # Use expand to broadcast mean across N dimension
-            mean_expanded = mean.unsqueeze(1).expand(-1, N, -1)  # (B, N, D)
-            diff = points - mean_expanded  # (B, N, D)
-            variance = (diff ** 2).masked_fill(~mask.unsqueeze(-1), 0).sum(dim=1) / counts  # (B, D)
+            mean_expanded = mean.unsqueeze(1).expand(-1, N, -1)
+            diff = points - mean_expanded
+            variance = (diff ** 2).masked_fill(~mask.unsqueeze(-1), 0).sum(dim=1) / counts
             std = variance.sqrt()
         else:
             mean = points.mean(dim=1)
@@ -118,8 +154,17 @@ class GlobalGeometryEncoder(nn.Module):
             min_pool = points.min(dim=1).values
             std = points.std(dim=1)
         
-        # Concatenate global statistics: [mean, max, min, std] (4 × D)
-        global_stats = torch.cat([mean, max_pool, min_pool, std], dim=-1)
+        # pool_mode'a göre global statistics seçimi
+        if self.pool_mode == "mean":
+            global_stats = torch.cat([mean, std], dim=-1)
+        elif self.pool_mode == "max":
+            global_stats = torch.cat([max_pool, std], dim=-1)
+        elif self.pool_mode == "min":
+            global_stats = torch.cat([min_pool, std], dim=-1)
+        elif self.pool_mode == "all":
+            global_stats = torch.cat([mean, max_pool, min_pool, std], dim=-1)
+        else:
+            raise ValueError(f"Unknown pool_mode: {self.pool_mode}")
         
         # Optional: approximate pair statistics (sampled pairs only)
         if self.use_pair_approx:
@@ -259,9 +304,9 @@ class PureCloudLM(nn.Module):
         self.d_cloud_dim = d_cloud_dim
         self.vocab_size = vocab_size
         
-        # Embedding + Positional Encoding (NO Transformer!)
+        # Embedding + Dynamic Positional Encoding (NO Transformer!)
         self.embedding = nn.Embedding(vocab_size, d_model)
-        self.pos_enc = nn.Parameter(torch.randn(1, pos_len, d_model) * 0.02)
+        self.pos_enc = PositionalEncoding(d_model, max_len=2048)
         
         # Word to ND projection
         self.to_nd = WordToND(d_model, d_cloud_dim, hidden=proj_hidden)
@@ -291,14 +336,14 @@ class PureCloudLM(nn.Module):
         PureCloudLM forward pass (NO Transformer!)
         
         Steps:
-          1. Embedding + Positional Encoding
+          1. Embedding + Dynamic Positional Encoding
           2. Word → ND projection
           3. Global Geometry Encoding (O(N))
           4. Prediction
         """
-        # Step 1: Embedding + Positional Encoding
+        # Step 1: Embedding + Dynamic Positional Encoding
         x = self.embedding(tokens) * math.sqrt(self.embedding.embedding_dim)
-        x = x + self.pos_enc[:, :tokens.size(1), :]
+        x = self.pos_enc(x)
         
         # Optional: Mask padding
         if mask is not None:

@@ -1,9 +1,11 @@
 # TÜRKİYE CUMHURİYETİ — PATENT BAŞVURU METNİ
-## v2.4: Nokta-Sayı Artışı ile İyileştirilmiş Bulut Dil Modeli
+## v2.5: Nokta-Bulutu Geometrisi ile Birleşik Dil Modelleme
+
+**Dosya:** `patent_application_v2.5.md`
 
 **Başvuru Tarihi:** [2026]  
 **Başvuru No:** [TR 2026/...]  
-**İcat Başlığı:** Nokta-Bulutu Temsili ile Birleşik Dil Modelleme Sistemi, Yöntemi ve Bilgisayar Programı  
+**İcat Başlığı:** Nokta-Bulutu Geometrisi ile Birleşik Dil Modelleme Sistemi, Yöntemi ve Bilgisayar Programı  
 **İcatçı:** [Ad Soyad, adres, T.C. Kimlik]  
 **Başvuru Sahibi:** [Unvan, adres]  
 
@@ -114,36 +116,15 @@ x_ij = [pᵢ - pⱼ, ‖pᵢ - pⱼ‖, cos(θᵢⱼ), ‖pᵢ‖, ‖pⱼ‖] �
 
 ## 5. TEKNİK ETKİLER
 
-### 5.1 Ölçülen Performans
+### 5.1 Mimari Avantajlar
 
-**200K Türkçe cümle korpusu üzerinde:**
+1. **Düşük boyutlu temsil:** D=32/64 boyutu, geleneksel transformer'ın d_model=256-1024'e göre %75-94 daha az boyut
+2. **Kompakt dağıtım:** INT8 kantizasyon ile ~5-6 MB
+3. **Native açıklama:** Post-hoc değil, model içi açıklama
+4. **Permütasyon-değişmezlik:** Nokta sırası tahmini etkilemez
+5. **Çift-geometri kodlama:** Mesafe + açı + norm bileşenleri ile dönüşüm-eşdeğişken temsil
 
-| Model | Config | PPL | Baseline'a Göre |
-|---|---|---|---|
-| **CloudLM (D=32)** | 200K, 50ep, max-pool | 58.88 | +8.8% |
-| **CloudLM (D=64)** | 200K, 50ep, max-pool | **57.04** | +5.5% |
-| **CloudLM (D=128)** | 200K, 50ep, max-pool | 58.55 | +8.5% |
-| **CloudLM (D=64, Nokta=20)** | 200K, max-pool | **37.63** | **-30.2%** ✅ |
-| **Causal Baseline** | d=384, 4L, 200K | 53.95 | referans |
-
-**R2b Keşfi:** Nokta sayısı 10'dan 20'ye çıkarıldığında **%34 iyileşme** (57.04 → 37.63).  
-**Optimum nokta sayısı:** 20 (30'da performans düşer: 134.31 PPL)
-
-### 5.2 Max-Pool vs Attention-Pool
-
-**20K korpus (disjoint holdout):**
-- Max-pool: **315.99** PPL
-- Attention-pool: **334.89** PPL
-- **Max-pool kazandı (Δ18.90)**
-
-**200K korpus:**
-- Max-pool: **61.91** PPL
-- Attention-pool: **66.85** PPL
-- **Max-pool kazandı (Δ5.91)**
-
-**Ders:** Attention-pool küçük korpusta overfitting'e yol açar; max-pool daha stabil.
-
-### 5.3 Edge Dağıtım
+### 5.2 Edge Dağıtım
 
 - **Model boyutu:** ~21M parametre (D=32) / ~22M (D=64)
 - **INT8 kantizasyon:** ~5-6 MB (okuyucu)
@@ -161,11 +142,11 @@ Aynı buluttan:
 
 ## 6. ŞEKİLLERİN KISA AÇIKLAMASI
 
-- **Şekil 1:** Evrensel mimari ve modül akışı (100-290)
+- **Şekil 1:** Evrensel mimari ve modül akışı
 - **Şekil 2:** Çift-geometri ve simetrik birleştirme
 - **Şekil 3:** Aynı buluttan skor, ablation, prototip ve drift
-- **Şekil 4:** D=64 + Nokta=20 optimizasyonu (PPL 37.63)
-- **Şekil 5:** Max-pool vs attention-pool karşılaştırması
+- **Şekil 4:** Nokta-sayı optimizasyonu ve geometri zenginliği
+- **Şekil 5:** Küme agregasyonu karşılaştırması
 - **Şekil 6:** Bulut geometri vizualizasyonu (3D)
 
 ---
@@ -212,27 +193,23 @@ loss = word_loss + 0.1 × point_loss
 - **Weight decay:** 0.01
 - **Scheduler:** Cosine annealing
 
-### 7.4 Nokta-Sayı Optimizasyonu (R2b)
+### 7.4 Nokta-Sayı Optimizasyonu
 
-**Keşif:** Nokta sayısı 10 → 20 artırıldığında:
-- **PPL:** 57.04 → 37.63 (**%34 iyileşme**)
-- **Baseline'a göre:** %30 daha iyi
+Nokta sayısı bulut geometrisinin zenginliğini belirler:
+- **Daha fazla nokta:** Daha detaylı geometrik temsil
+- **Optimum nokta sayısı:** Uygulama ve veriye göre belirlenir
+- **Aşırı nokta:** Geometrik gürültüye yol açabilir
 
-**Mekanizma:**
-- Daha fazla nokta → daha zengin bulut geometrisi
-- **Optimum:** 20 nokta (30'da overfit: 134.31 PPL)
+### 7.5 Küme Agregasyonu
 
-### 7.5 Max-Pool Tercihi
-
-**Attention-pool sorunları:**
-- Küçük korpusta overfitting
-- Train PPL: 124.22 vs Max-pool: 88.19
-- Holdout PPL: 334.89 vs Max-pool: 315.99
-
-**Max-pool avantajları:**
-- Daha stabil
+**Max-pool tercih nedeni:**
 - Daha az parametre
-- Daha hızlı
+- Daha hızlı hesaplama
+- Daha stabil yakınsama
+
+**Attention-pool alternatif:**
+- Bağlam-ağırlıklı agregasyon
+- Ek parametre gerektirir
 
 ---
 
@@ -284,15 +261,17 @@ adımlarını içermektedir.
 
 **İddia 9:** İddia 1'deki sistem olup, **decoder tam sözlük** eşlemesi taşır ve hiçbir token/bucket kimliğini "other" kovasına atmaz.
 
-**İddia 10 — Dil embodiment'i:** İddia 1'deki sistem olup, girdi birimleri token/alt-sözcük, okuyucu çıktısı bir-sonraki-token dağılımıdır; **D=64, Nokta=20 konfigürasyonunda 200K korpus üzerinde PPL 37.63** ölçülmüştür (causal baseline 53.95'e göre %30 daha iyi).
+**İddia 10 — Dil embodiment'i:** İddia 1'deki sistem olup, girdi birimleri token/alt-sözcük ve okuyucu çıktısı bir-sonraki-token dağılımıdır.
+
+**İddia 11 — Nokta sayısı:** İddia 1'deki sistem olup, nokta sayısı 10 ile 30 arasında seçilir, optimum değer uygulama ve veriye göre belirlenir.
+
+**İddia 12 — Küme agregasyonu:** İddia 1'deki sistem olup, nokta özellikleri için max-pool, çift-geometri özellikleri için mean-pool kullanılır.
 
 ---
 
 ## 9. ÖZET (ABSTRACT)
 
 Sistem, token veya girdi birimlerini düşük boyutlu (3 ≤ D ≤ 64) noktalar olarak temsil eder; nokta özellikleri ile mesafe/açı temelli çift-geometriyi simetrik küme agregasyonuyla birleştirir ve küme durumundan okuyucuyla görev skoru üretir. Aynı nokta bulutu, leave-one-point-out ablation, bölge/prototip isimlendirme ve bölge-kayması/drift incelemesi için native açıklama nesnesidir.
-
-**Önemli bulgu:** Nokta sayısı 10'dan 20'ye çıkarıldığında performans **%34 iyileşir** (PPL 57.04 → 37.63). **Max-pool**, attention-pool'dan daha stabil performans gösterir (200K'da Δ5.91 PPL iyileşme).
 
 Sistem, dil modelleme alanında uygulanabilir; doğruluk-üstünlüğü iddia edilmez, açıklama geometriye dayalı denetim yüzeyidir.
 
@@ -318,7 +297,7 @@ Sistem, dil modelleme alanında uygulanabilir; doğruluk-üstünlüğü iddia ed
 1. **PointNet ayrımı:** PointNet'te noktalar ham 3B sensör/görüntü girdisidir; burada nokta, farklı alan verilerinden **öğrenilmiş temsildir**.
 2. **Çift-geometri ayrımı:** Tercih edilen D+4 vektör — fark, mesafe, kosinüs ve iki norm — burada belirginleştirilmiştir.
 3. **Native açıklama ayrımı:** Aynı karar bulutundan ablation, prototip ve drift incelemesi yapılır; bu, SHAP özellik listesinin aynısı olarak sunulmaz.
-4. **Nokta-sayı optimizasyonu (R2b):** Nokta sayısı 10→20 artırıldığında %34 iyileşme — bu, beklenmedik teknik etkidir.
+4. **Nokta-sayı optimizasyonu:** Nokta sayısı bulut geometrisinin zenginliğini belirler; optimum değer uygulama ve veriye göre belirlenir.
 
 **Barizlik riski:**
 - Transformer + PointNet kombinasyonu bariz görünebilir
@@ -330,7 +309,7 @@ Sistem, dil modelleme alanında uygulanabilir; doğruluk-üstünlüğü iddia ed
 1. **Düşük boyutlu temsil:** D=32/64 boyutu, transformer'ın d_model=256-1024'e göre %75-94 daha az boyut
 2. **Kompakt dağıtım:** INT8 kantizasyon ile ~5-6 MB
 3. **Native açıklama:** Post-hoc değil, model içi açıklama
-4. **Perplexity iyileşmesi:** Nokta sayısı optimizasyonu ile %34 iyileşme
+4. **Geometri zenginliği:** Nokta sayısı ile temsil kapasitesi kontrol edilebilir
 
 ### 10.3 İddia Kapsamı ve Sınırlamalar
 
@@ -353,9 +332,9 @@ Sistem, dil modelleme alanında uygulanabilir; doğruluk-üstünlüğü iddia ed
 ### 10.5 Öncelik ve Tarih
 
 **TR ulusal başvuru:** `TURKPATENT_basvuru_v2.3.md` (dil odaklı)  
-**Bu başvuru:** v2.4 (nokta-sayı optimizasyonu + max-pool vurgusu)
+**Bu başvuru:** v2.5 (claim odaklı, teknik özellik vurgusu)
 
-**Öncelik ilişkisi:** Bu v2.4, v2.3'ten **yeni özellikler** içerir (R2b keşfi, max-pool duel sonuçları). Öncelik tarihi T1 (v2.3) korunur, ancak yeni özellikler için T2 (v2.4) tarihi geçerlidir.
+**Öncelik ilişkisi:** Bu v2.5, v2.3'ten **genelleştirilmiş iddialar** içerir (nokta sayısı aralığı, küme agregasyonu varyantları). Öncelik tarihi T1 (v2.3) korunur, ancak yeni özellikler için T2 (v2.5) tarihi geçerlidir.
 
 ### 10.6 Şekil Hazırlığı
 
@@ -372,3 +351,14 @@ Sistem, dil modelleme alanında uygulanabilir; doğruluk-üstünlüğü iddia ed
 ---
 
 **NOT:** Bu metin TÜRKPATENT formuna uygun olarak hazırlanmıştır. Resmi başvuru öncesi patent vekili değerlendirmesi gereklidir.
+
+---
+
+## DEĞİŞİKLİKLER (v2.4 → v2.5)
+
+1. **İddia 10:** Spesifik PPL değerleri kaldırıldı, genel dil embodiment'i olarak güncellendi
+2. **İddia 11 eklendi:** Nokta sayısı aralığı (10-30) ve optimum belirleme mekanizması
+3. **İddia 12 eklendi:** Küme agregasyonu tercihleri (max-pool / mean-pool)
+4. **Bölüm 5:** Deneysel sonuç tabloları kaldırıldı, mimari avantajlara odaklanıldı
+5. **Bölüm 7.4-7.5:** Spesifik sayısal sonuçlar yerine teknik mekanizmalar açıklandı
+6. **Özet:** Performans değerleri kaldırıldı, teknik özellikler korundu
