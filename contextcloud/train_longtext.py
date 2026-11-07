@@ -105,7 +105,8 @@ def train_epoch(model, dataloader, optimizer, criterion, device):
                 targets.append(0)
         target = torch.tensor(targets).to(device)
 
-        loss = criterion(logits, target)
+        loss = loss / GRADIENT_ACCUMULATION_STEPS
+        loss.backward()
 
         # Gradient monitoring
         total_norm = 0.0
@@ -114,20 +115,22 @@ def train_epoch(model, dataloader, optimizer, criterion, device):
                 total_norm += p.grad.data.norm(2).item() ** 2
         total_norm = total_norm ** 0.5
 
-        if total_norm > 50.0:
-            logger.warning("Large gradient: %.2f", total_norm)
-        elif total_norm < 1e-5:
-            logger.warning("Vanishing gradient: %.6f", total_norm)
+        if (batch_idx + 1) % GRADIENT_ACCUMULATION_STEPS == 0:
+            if total_norm > 50.0:
+                logger.warning("Large gradient: %.2f", total_norm)
+            elif total_norm < 1e-5:
+                logger.warning("Vanishing gradient: %.6f", total_norm)
 
-        torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
-        optimizer.step()
+            torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
+            optimizer.step()
+            optimizer.zero_grad()
 
-        total_loss += loss.item()
+        total_loss += loss.item() * GRADIENT_ACCUMULATION_STEPS
         num_batches += 1
 
         if batch_idx % 50 == 0:
             logger.info("Batch %d/%d | Loss: %.4f | Grad: %.2f",
-                        batch_idx, len(dataloader), loss.item(), total_norm)
+                        batch_idx, len(dataloader), loss.item() * GRADIENT_ACCUMULATION_STEPS, total_norm)
 
     return total_loss / num_batches
 
@@ -168,9 +171,10 @@ def main():
     MAX_TOKENS = 256  # Longer sequences
     MIN_SENTENCES = 5  # At least 5 sentences per sample
     BATCH_SIZE = 8
-    LEARNING_RATE = 3e-4
+    LEARNING_RATE = 1e-3  # Increased for better gradient flow
     EARLY_STOPPING_PATIENCE = 3
     MAX_EPOCHS = 50
+    GRADIENT_ACCUMULATION_STEPS = 4  # Effective batch size = 32
 
     device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
     logger.info("Using device: %s", device)
@@ -204,6 +208,9 @@ def main():
 
     optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE)
     criterion = torch.nn.CrossEntropyLoss()
+
+    # Initialize optimizer state
+    optimizer.zero_grad()
 
     # Training
     os.makedirs(OUTPUT_DIR, exist_ok=True)
