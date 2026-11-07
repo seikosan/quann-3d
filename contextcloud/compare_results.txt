@@ -1,0 +1,21 @@
+2026-11-07 08:22:23,274 INFO __main__: Using device: mps
+2026-11-07 08:22:24,145 INFO __main__: Loaded 199860 sentences, vocab size: 280151
+/Users/serkankose/Documents/quann-3d/cloudlm/model.py:234: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  self.encoder = nn.TransformerEncoder(enc, num_layers=n_layers)
+2026-11-07 08:22:25,475 INFO __main__: Evaluating CloudLM...
+2026-11-07 08:22:25,475 INFO __main__:   Parameters: 108853672
+2026-11-07 08:25:29,589 INFO __main__:   CloudLM Loss: 12.5567
+2026-11-07 08:25:29,604 INFO __main__: Evaluating PureCloudLM...
+2026-11-07 08:25:29,604 INFO __main__:   Parameters: 107996199
+2026-11-07 08:27:35,185 INFO __main__: Using device: mps
+2026-11-07 08:27:36,465 INFO __main__: Loaded 199860 sentences, vocab size: 280151
+/Users/serkankose/Documents/quann-3d/cloudlm/model.py:234: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  self.encoder = nn.TransformerEncoder(enc, num_layers=n_layers)
+2026-11-07 08:27:38,057 INFO __main__: Evaluating CloudLM...
+2026-11-07 08:27:38,058 INFO __main__:   Parameters: 108853672
+2026-11-07 08:32:27,189 INFO __main__:   CloudLM Loss: 12.5629
+2026-11-07 08:32:27,293 INFO __main__: Evaluating PureCloudLM...
+2026-11-07 08:32:27,293 INFO __main__:   Parameters: 107996199
+2026-11-07 08:35:34,656 INFO __main__:   PureCloudLM Loss: 12.5623
+2026-11-07 08:35:35,034 INFO __main__: Evaluating ContextCloudLM...
+2026-11-07 08:35:35,034 INFO __main__:   Parameters: 323739759

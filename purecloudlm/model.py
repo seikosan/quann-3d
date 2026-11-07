@@ -147,7 +147,10 @@ class GlobalGeometryEncoder(nn.Module):
             mean_expanded = mean.unsqueeze(1).expand(-1, N, -1)
             diff = points - mean_expanded
             variance = (diff ** 2).masked_fill(~mask.unsqueeze(-1), 0).sum(dim=1) / counts
-            std = variance.sqrt()
+            # Keep the derivative finite when a masked sequence has one valid
+            # point (zero variance), while preserving an exact zero std value.
+            epsilon = torch.finfo(variance.dtype).eps
+            std = (variance + epsilon).sqrt() - math.sqrt(epsilon)
         else:
             mean = points.mean(dim=1)
             max_pool = points.max(dim=1).values

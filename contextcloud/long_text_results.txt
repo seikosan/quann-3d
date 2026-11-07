@@ -1,0 +1,15 @@
+2026-11-07 08:30:27,710 INFO __main__: Using device: mps
+2026-11-07 08:30:28,442 INFO __main__: Created 6516 long texts (min=500, max=800 words)
+2026-11-07 08:30:28,443 INFO __main__: Vocab size: 280151
+/Users/serkankose/Documents/quann-3d/cloudlm/model.py:234: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  self.encoder = nn.TransformerEncoder(enc, num_layers=n_layers)
+2026-11-07 08:30:29,726 INFO __main__: 
+=== LONG TEXT TEST (min=500 words) ===
+2026-11-07 08:30:29,727 INFO __main__: Model              | Avg Loss | Avg PPL  | Samples
+2026-11-07 08:30:29,727 INFO __main__: -------------------|----------|----------|--------
+2026-11-07 08:30:29,817 INFO __main__: Evaluating CloudLM on long texts...
+2026-11-07 08:32:48,576 INFO __main__: CloudLM           | 12.5740    | 294969.40     | 6516
+2026-11-07 08:32:48,661 INFO __main__: Evaluating PureCloudLM on long texts...
+2026-11-07 08:33:23,839 INFO __main__: PureCloudLM       | 12.5657    | 291931.32     | 6516
+2026-11-07 08:33:24,008 INFO __main__: Evaluating ContextCloudLM on long texts...
+2026-11-07 08:34:59,894 INFO __main__: ContextCloudLM    | 12.5508    | 285467.06     | 6516
