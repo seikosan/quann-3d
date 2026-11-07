@@ -1,0 +1,30 @@
+2026-11-07 22:44:50,779 INFO __main__: Using device: mps
+2026-11-07 22:44:50,882 INFO __main__: Loaded checkpoint from epoch 2, val_loss=5.9360
+2026-11-07 22:44:51,382 INFO __main__: Created 6516 long texts (min=500, max=128 words)
+2026-11-07 22:44:51,383 INFO __main__: Vocab size: 280151
+2026-11-07 22:44:51,984 INFO __main__: Model loaded with 283358756 parameters
+2026-11-07 22:44:51,984 INFO __main__: 
+=== TRAINED CONTEXT CLOUDLM TEST (min=500 words) ===
+2026-11-07 22:44:52,105 INFO __main__: Batch 0/1629
+2026-11-07 22:44:54,667 INFO __main__: Batch 100/1629
+2026-11-07 22:44:56,953 INFO __main__: Batch 200/1629
+2026-11-07 22:44:59,243 INFO __main__: Batch 300/1629
+2026-11-07 22:45:01,537 INFO __main__: Batch 400/1629
+2026-11-07 22:45:03,830 INFO __main__: Batch 500/1629
+2026-11-07 22:45:06,138 INFO __main__: Batch 600/1629
+2026-11-07 22:45:08,424 INFO __main__: Batch 700/1629
+2026-11-07 22:45:10,753 INFO __main__: Batch 800/1629
+2026-11-07 22:45:13,135 INFO __main__: Batch 900/1629
+2026-11-07 22:45:15,487 INFO __main__: Batch 1000/1629
+2026-11-07 22:45:17,783 INFO __main__: Batch 1100/1629
+2026-11-07 22:45:20,081 INFO __main__: Batch 1200/1629
+2026-11-07 22:45:22,420 INFO __main__: Batch 1300/1629
+2026-11-07 22:45:24,746 INFO __main__: Batch 1400/1629
+2026-11-07 22:45:27,064 INFO __main__: Batch 1500/1629
+2026-11-07 22:45:29,386 INFO __main__: Batch 1600/1629
+2026-11-07 22:45:30,028 INFO __main__: 
+=== RESULTS ===
+2026-11-07 22:45:30,028 INFO __main__: Trained ContextCloudLM (Epoch 2)
+2026-11-07 22:45:30,028 INFO __main__: Avg Loss: 22.2523
+2026-11-07 22:45:30,028 INFO __main__: Avg PPL: 13098953083526686.00
+2026-11-07 22:45:30,028 INFO __main__: Samples: 6516

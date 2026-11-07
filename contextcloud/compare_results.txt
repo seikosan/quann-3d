@@ -19,3 +19,13 @@
 2026-11-07 08:35:34,656 INFO __main__:   PureCloudLM Loss: 12.5623
 2026-11-07 08:35:35,034 INFO __main__: Evaluating ContextCloudLM...
 2026-11-07 08:35:35,034 INFO __main__:   Parameters: 323739759
+2026-11-07 08:43:20,643 INFO __main__:   ContextCloudLM Loss: 12.5522
+2026-11-07 08:43:20,643 INFO __main__: 
+=== COMPARISON SUMMARY ===
+2026-11-07 08:43:20,643 INFO __main__: Model              | Loss     | Params
+2026-11-07 08:43:20,643 INFO __main__: -------------------|----------|--------
+2026-11-07 08:43:20,644 INFO __main__: CloudLM           | 12.5629   | 108853672
+2026-11-07 08:43:20,644 INFO __main__: PureCloudLM       | 12.5623   | 107996199
+2026-11-07 08:43:20,644 INFO __main__: ContextCloudLM    | 12.5522   | 323739759
+2026-11-07 08:43:20,644 INFO __main__: 
+Best performer: ContextCloudLM (loss=12.5522)
