@@ -182,6 +182,19 @@ def train_epoch(model, dataloader, optimizer, criterion, device):
         loss = criterion(logits, target)
 
         loss.backward()
+        
+        # Debug: Check gradient norms
+        total_norm = 0.0
+        for p in model.parameters():
+            if p.grad is not None:
+                total_norm += p.grad.data.norm(2).item() ** 2
+        total_norm = total_norm ** 0.5
+        
+        if total_norm > 100.0:
+            logger.warning("Large gradient norm: %.4f, clipping", total_norm)
+        elif total_norm < 1e-6:
+            logger.warning("Vanishing gradient norm: %.6f", total_norm)
+        
         torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
         optimizer.step()
 
@@ -199,7 +212,7 @@ def main():
     OUTPUT_DIR = "contextcloud/checkpoints"
     MAX_TOKENS = 128
     BATCH_SIZE = 16
-    LEARNING_RATE = 1e-3
+    LEARNING_RATE = 5e-4  # Reduced from 1e-3 for stability
     EARLY_STOPPING_PATIENCE = 3  # Epochs without improvement
     MIN_LOSS_THRESHOLD = 4.0  # Stop if loss goes below this (good performance)
 
@@ -214,26 +227,36 @@ def main():
     logger.info("Creating 80/10/10 splits...")
     train_data, val_data, test_data, vocab_size = create_splits(DATA_FILE, MAX_TOKENS)
 
-    # Create datasets
-    train_dataset = SplitDataset(train_data, MAX_TOKENS)
-    val_dataset = SplitDataset(val_data, MAX_TOKENS)
-    test_dataset = SplitDataset(test_data, MAX_TOKENS)
+    # Create vocab from training data
+    vocab = {"<pad>": 0, "<unk>": 1}
+    for sentence in train_data:
+        for word in sentence:
+            if word not in vocab:
+                vocab[word] = len(vocab)
+
+    # Create datasets with vocab
+    train_dataset = SplitDataset(train_data, MAX_TOKENS, vocab)
+    val_dataset = SplitDataset(val_data, MAX_TOKENS, vocab)
+    test_dataset = SplitDataset(test_data, MAX_TOKENS, vocab)
 
     train_loader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True, collate_fn=collate_fn)
     val_loader = DataLoader(val_dataset, batch_size=BATCH_SIZE, shuffle=False, collate_fn=collate_fn)
     test_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False, collate_fn=collate_fn)
 
-    # Model (larger for full training)
+    vocab_size = len(vocab)
+    logger.info("Final vocab size: %d", vocab_size)
+
+    # Model (smaller for stability)
     model = ContextCloudLM(
         vocab_size=vocab_size,
-        d_model=256,
-        d_sentence=512,
-        d_window=512,
+        d_model=128,  # Smaller
+        d_sentence=256,  # Smaller
+        d_window=256,  # Smaller
         d_cloud_dim=16,
-        d_window_dim=32,
+        d_window_dim=16,  # Smaller
         window_size=5,
         window_stride=2,
-        hidden=256,
+        hidden=128,  # Smaller
         max_tokens=MAX_TOKENS,
     )
     model = model.to(device)
