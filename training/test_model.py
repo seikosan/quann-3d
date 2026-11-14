@@ -43,7 +43,7 @@ def build_model_from_checkpoint(ckpt):
         d_cloud_dim=config.get("d_cloud_dim", 16),
         n_layers=config.get("n_layers", 2),
         nhead=config.get("nhead"),
-        pos_len=config.get("pos_len", 256),
+        max_pos_len=config.get("max_pos_len", config.get("pos_len", 2048)),
         hidden=config.get("hidden", 256),
         proj_hidden=config.get("proj_hidden"),
         point_hidden=config.get("point_hidden", 128),

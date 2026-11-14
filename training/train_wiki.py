@@ -280,6 +280,7 @@ def step_train(args, tok):
                        "d_cloud_dim": args.d_dim, "n_layers": args.layers,
                        "pool": args.pool, "cloud_attn": args.cloud_attn,
                        "cloud_attn_heads": args.cloud_attn_heads,
+                       "max_pos_len": model.pos_enc.pe.shape[0],
                        "attn_scale_init": 1.0},
             "ppl": ppl,
             "best_ppl": best_ppl,

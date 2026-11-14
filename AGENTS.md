@@ -51,11 +51,35 @@ kurallarla korunur — her oturum bu dosya + `RESEARCH.md` ile başlar.
 
 ## 4. Veri
 
-- `data/turkish_sentences.txt` (200K, ana corpus), `turkish_wiki_1500k.txt`,
-  `bilkent_texts.csv` (word-tokenizer run'ları).
-- BPE: `checkpoints/wiki_checkpoints_200k/wiki_bpe.json` ortak referans —
-  varyant run'lar aynı BPE'yi `cp` ile kendi dizinine kopyalar
-  (bkz. `run_rev1_20k.sh`).
+### 4.1 Veri Bölümü Kuralları (ZORUNLU)
+
+**Tüm deneylerde veri seti şu şekilde bölünmek zorundadır:**
+
+| Bölüm | Oran | Kullanım |
+|-------|------|----------|
+| **Training** | 80% | Model eğitimi |
+| **Validation** | 10% | Hyperparameter tuning, early stopping |
+| **Test** | 10% | Final değerlendirme (sadece bir kez) |
+
+**Uygulama:**
+```python
+# Veri bölme örneği (80/10/10, seed=42)
+import random
+random.seed(42); random.shuffle(all_texts)
+n = len(all_texts); tr, va = int(n * 0.8), int(n * 0.1)
+train_data, val_data, test_data = all_texts[:tr], all_texts[tr:tr + va], all_texts[tr + va:]
+```
+
+**Kurallar:**
+1. Test seti **asla** eğitimde kullanılmaz
+2. Validation seti hyperparameter tuning için kullanılır
+3. Final PPL sadece test seti üzerinde raporlanır
+4. Rastgelelik için `random.seed(42)` kullanılır
+
+### 4.2 Veri Kaynakları
+
+- `data/turkish_sentences.txt` (200K, ana corpus), `turkish_wiki_1500k.txt`, `bilkent_texts.csv` (word-tokenizer run'ları).
+- BPE: `checkpoints/wiki_checkpoints_200k/wiki_bpe.json` ortak referans — varyant run'lar aynı BPE'yi `cp` ile kendi dizinine kopyalar (bkz. `run_rev1_20k.sh`).
 
 ## 5. RESEARCH.md Güncelleme Protokolü
 

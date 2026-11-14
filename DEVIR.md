@@ -4,18 +4,18 @@ baslik: DEVIR — quann-3d (makine üretimi durum + sıradaki iş)
 konu: [devir, handover, durum]
 durum: güncel
 sahiplik: koordinator
-guncellendi: 2026-11-07
+guncellendi: 2026-11-14
 kunye-kaynak: otomatik (devir_yaz.py)
 ---
 
 # DEVIR — quann-3d
 
 <!-- MAKINE:BASLA -->
-## Durum (makine üretti · 2026-11-07 08:05)
+## Durum (makine üretti · 2026-11-14 08:31)
 Bu blok elle düzenlenmez; `devir_yaz.py --repo /Users/serkankose/Documents/quann-3d` ile yenilenir.
 
-- HEAD: 738e527 PureCloudLM ve eğitim altyapısı güncellemeleri
-- Değişen dosya: 35 → GENTS.md, DEVIR.md, docs/patent/README.md, docs/patent/build_docx.py, docs/patent/dil/TURKPATENT_basvuru_v2.3.docx
+- HEAD: 4f54648 Memory Network for long-context learning
+- Değişen dosya: 62 → GENTS.md, contextcloud/train_memory_context.py, contextcloud/train_stable.log, docs/patent/README.md, docs/patent/build_docx.py
 - Kod kapısı: bulgu 0 · uyarı 0 · bilgi 0 · düzeltme planı: 0 (ayrıntı: python3 ~/.config/opencode/denetim/denetim_plan.py)
 - Doküman kapısı: bulgu 0 · uyarı 0 · bilgi 2 · düzeltme planı: 0 (ayrıntı: python3 ~/.config/opencode/denetim/denetim_plan.py)
 - ölçüm: === EĞİTİM DURUMU (kaynak: ham dosya) ===
@@ -26,6 +26,7 @@ Bu blok elle düzenlenmez; `devir_yaz.py --repo /Users/serkankose/Documents/quan
 - ölçüm: geçen süre    : 62815 s = 17.45 saat
 - Açık kartlar (pano yok): (belirtilmedi)
 <!-- MAKINE:BITIR -->
+
 
 
 

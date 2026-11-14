@@ -21,9 +21,13 @@ def test_resume_restores_optimizer_scheduler_rng_and_epoch(tmp_path, monkeypatch
         layers=1,
         pool="max",
         cloud_attn=False,
+        cloud_attn_heads=8,
         batch=4,
         lr=1e-3,
+        grad_clip=0.5,
+        point_loss_weight=0.1,
         save_dir=str(tmp_path),
+        seed=42,
     )
     torch.manual_seed(151)
     initial_model = train_wiki.CloudLM(

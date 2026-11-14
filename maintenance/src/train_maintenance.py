@@ -67,7 +67,12 @@ class MaintenanceCloud(nn.Module):
 
     def load_state_dict(self, state_dict, strict=True):
         """Load state dict with backward compatibility for legacy checkpoints."""
+        state_dict = dict(state_dict)
         cloud_prefix = "cloud_encoder."
+        # Legacy checkpoints used pair_in = d_cloud_dim + 4; current uses 3*d + 2.
+        # nn.Module.load_state_dict walks params directly, so the child encoder's
+        # own load_state_dict override is bypassed — apply its legacy fix here.
+        self.cloud_encoder._fix_legacy_pair_mlp_weight(state_dict, cloud_prefix)
         if cloud_prefix + "attn_proj.weight" not in state_dict:
             actual_d_cloud = self.cloud_encoder.point_mlp[-1].out_features
             state_dict[cloud_prefix + "attn_proj.weight"] = torch.zeros(1, actual_d_cloud)
