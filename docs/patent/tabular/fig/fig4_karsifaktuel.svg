@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 820" width="1000" height="820">
+  <defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="4" orient="auto"><path d="M0,0 L0,8 L11,4 z" fill="#000"/></marker></defs>
+  <style>
+    text { font-family: Arial, Helvetica, sans-serif; fill: #000; }
+    .box { fill: #fff; stroke: #000; stroke-width: 3; }
+    .line { fill: none; stroke: #000; stroke-width: 3; marker-end: url(#arrow); }
+    .title { font-size: 30px; font-weight: bold; }
+    .ref { font-size: 24px; font-weight: bold; }
+    .label { font-size: 22px; }
+    .small { font-size: 19px; }
+  </style>
+  <text class="title" x="500" y="48" text-anchor="middle">Şekil 4 — Karşı-faktürel maske denetimi</text>
+  <rect class="box" x="330" y="85" width="340" height="80" rx="8"/>
+  <text class="ref" x="350" y="120">280</text><text class="label" x="510" y="145" text-anchor="middle">Maske ve skor denetimi</text>
+  <path class="line" d="M500 165 V220 H250 V260"/>
+  <path class="line" d="M500 220 H750 V260"/>
+  <rect class="box" x="80" y="265" width="340" height="100" rx="8"/>
+  <text class="ref" x="100" y="305">Tekli maske</text><text class="small" x="250" y="340" text-anchor="middle">bir özellik noktası çıkarılır</text>
+  <rect class="box" x="580" y="265" width="340" height="100" rx="8"/>
+  <text class="ref" x="600" y="305">İkili maske</text><text class="small" x="750" y="340" text-anchor="middle">iki özellik noktası çıkarılır</text>
+  <path class="line" d="M250 365 V425"/><path class="line" d="M750 365 V425"/>
+  <rect class="box" x="100" y="430" width="300" height="100" rx="8"/>
+  <text class="ref" x="120" y="468">250</text><text class="label" x="260" y="500" text-anchor="middle">Skor eşiğiyle karşılaştır</text>
+  <rect class="box" x="600" y="430" width="300" height="100" rx="8"/>
+  <text class="ref" x="620" y="468">250</text><text class="label" x="760" y="500" text-anchor="middle">Skor eşiğiyle karşılaştır</text>
+  <path class="line" d="M250 530 V590 H500"/><path class="line" d="M750 530 V590 H500"/>
+  <rect class="box" x="300" y="595" width="400" height="85" rx="8"/>
+  <text class="label" x="500" y="630" text-anchor="middle">Bayrak durumu ve logit farkı</text>
+  <path class="line" d="M500 680 V720"/>
+  <rect class="box" x="270" y="725" width="460" height="75" rx="8"/>
+  <text class="label" x="500" y="758" text-anchor="middle">280 — Popülasyon sürücülerini ayır</text>
+  <text class="small" x="500" y="785" text-anchor="middle">yaygın token / nadir token</text>
+</svg>

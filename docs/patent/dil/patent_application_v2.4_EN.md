@@ -127,7 +127,7 @@ x_ij = [pᵢ - pⱼ, ‖pᵢ - pⱼ‖, cos(θᵢⱼ), ‖pᵢ‖, ‖pⱼ‖] �
 | **Causal Baseline** | d=384, 4L, 200K | 53.95 | reference |
 
 **R2b Discovery:** Increasing point count from 10 to 20 yields **34% improvement** (57.04 → 37.63).  
-**Optimal point count:** 20 (performance degrades at 30: 134.31 PPL)
+**Selected point count:** 20 (performance degrades at 30: 134.31 PPL)
 
 ### 5.2 Max-Pool vs Attention-Pool
 
@@ -252,7 +252,7 @@ loss = word_loss + 0.1 × point_loss
 
 (e) an explanation system that produces native explanation from the **same point cloud** (leave-one-point-out ablation, region/prototype labeling, or region-shift/drift examination)
 
-wherein **the same point-cloud geometry serves as both the computation substrate for the task score and the source of native explanation**.
+wherein **the same point-cloud geometry serves as both a computation substrate for the task score and a source of native explanation**.
 
 **Claim 2 — Method:** A computer-implemented method that generates task output and native explanation using point-cloud geometry, **characterized by** the steps of:
 
@@ -266,7 +266,7 @@ wherein **the same point-cloud geometry serves as both the computation substrate
 
 (e) performing at least one of leave-one-point-out logit-ablation, region/prototype labeling, or region-shift/drift examination on the **same cloud**
 
-wherein permutation-invariance applies only to the symmetric aggregation in step (c), and points generated from context or history may be order-sensitive.
+wherein permutation-invariance applies to the set aggregation in step (c), and points generated from context or history may be order-sensitive.
 
 **Claim 3 — Computer Program:** A non-transitory computer-readable recording medium containing program instructions that, when executed on a processor, perform the method steps of Claim 2.
 
@@ -282,7 +282,7 @@ wherein permutation-invariance applies only to the symmetric aggregation in step
 
 **Claim 8:** The system of Claim 1, wherein the reader is represented with **INT8 quantization**.
 
-**Claim 9:** The system of Claim 1, wherein the decoder carries a **full vocabulary mapping** and does not assign any token/bucket ID to an "other" bucket.
+**Claim 9:** The system of Claim 1, wherein the reader carries a **full vocabulary mapping** and does not assign any token/bucket ID to an "other" bucket.
 
 **Claim 10 — Language embodiment:** The system of Claim 1, wherein input units are tokens/subwords and the reader output is a next-token distribution; **PPL of 37.63 was measured on 200K corpus with D=64, Points=20 configuration** (30% better than causal baseline of 53.95).
 

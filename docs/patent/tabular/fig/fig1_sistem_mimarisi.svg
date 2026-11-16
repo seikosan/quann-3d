@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1120" width="1000" height="1120">
+  <defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="4" orient="auto"><path d="M0,0 L0,8 L11,4 z" fill="#000"/></marker></defs>
+  <style>
+    text { font-family: Arial, Helvetica, sans-serif; fill: #000; }
+    .box { fill: #fff; stroke: #000; stroke-width: 3; }
+    .line { fill: none; stroke: #000; stroke-width: 3; marker-end: url(#arrow); }
+    .title { font-size: 30px; font-weight: bold; }
+    .ref { font-size: 25px; font-weight: bold; }
+    .label { font-size: 23px; }
+    .small { font-size: 20px; }
+  </style>
+  <text class="title" x="500" y="48" text-anchor="middle">Şekil 1 — Kimlik-bulut sistemi</text>
+  <rect class="box" x="300" y="80" width="400" height="88" rx="8"/>
+  <text class="ref" x="325" y="115">200</text><text class="label" x="500" y="145" text-anchor="middle">Tabular girdi kaydı</text>
+  <path class="line" d="M500 168 V205"/>
+  <rect class="box" x="300" y="210" width="400" height="88" rx="8"/>
+  <text class="ref" x="325" y="245">210</text><text class="label" x="510" y="275" text-anchor="middle">Özellik-kantizasyonu</text>
+  <path class="line" d="M500 298 V335"/>
+  <rect class="box" x="300" y="340" width="400" height="88" rx="8"/>
+  <text class="ref" x="325" y="375">220</text><text class="label" x="510" y="405" text-anchor="middle">Kimlik-nokta projeksiyonu</text>
+  <path class="line" d="M500 428 V465"/>
+  <rect class="box" x="170" y="470" width="660" height="220" rx="8"/>
+  <text class="ref" x="195" y="510">230</text><text class="label" x="500" y="510" text-anchor="middle">Bulut kodlayıcı</text>
+  <rect class="box" x="215" y="540" width="170" height="85" rx="6"/>
+  <text class="ref" x="235" y="575">231</text><text class="small" x="300" y="610" text-anchor="middle">Nokta MLP</text>
+  <rect class="box" x="415" y="540" width="170" height="85" rx="6"/>
+  <text class="ref" x="435" y="575">232</text><text class="small" x="500" y="610" text-anchor="middle">Çift MLP</text>
+  <rect class="box" x="615" y="540" width="170" height="85" rx="6"/>
+  <text class="ref" x="635" y="575">233</text><text class="small" x="700" y="610" text-anchor="middle">Birleştirme</text>
+  <path class="line" d="M500 690 V730"/>
+  <rect class="box" x="300" y="735" width="400" height="88" rx="8"/>
+  <text class="ref" x="325" y="770">250</text><text class="label" x="510" y="800" text-anchor="middle">Skor okuyucu</text>
+  <path class="line" d="M500 823 V855"/>
+  <rect class="box" x="300" y="860" width="400" height="75" rx="8"/>
+  <text class="label" x="500" y="907" text-anchor="middle">Risk skoru / karar</text>
+  <path class="line" d="M300 777 H125 V978 H250"/>
+  <rect class="box" x="250" y="965" width="270" height="90" rx="8"/>
+  <text class="ref" x="270" y="1002">260 / 270</text><text class="small" x="385" y="1033" text-anchor="middle">Ablation / decoder</text>
+  <rect class="box" x="570" y="965" width="300" height="90" rx="8"/>
+  <text class="ref" x="590" y="1002">280 / 290</text><text class="small" x="720" y="1033" text-anchor="middle">Denetim / dağıtım paketi</text>
+  <path class="line" d="M520 1010 H565"/>
+</svg>

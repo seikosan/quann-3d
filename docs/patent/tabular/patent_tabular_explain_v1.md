@@ -1,16 +1,16 @@
-# PATENT BAŞVURU DOSYASI — Tabular Kimlik-Bulut Yorumlama (v1, Taze İcat)
+# PATENT BAŞVURU DOSYASI — Tabular Kimlik-Bulut Yorumlama (v1, Yeni Buluş)
 
-> **Kapsam notu:** Bu başvuru, dil modelleme icadının (`../dil/patent_application_v2.3.md`,
-> cümle → nokta-bulut → bir sonraki token) **ayrık** bir uygulamasıdır. İcat, aynı
+> **Kapsam notu:** Bu başvuru, dil modelleme buluşunun (`../dil/patent_application_v2.3.md`,
+> cümle → nokta-bulut → bir sonraki token) **ayrık** bir uygulamasıdır. Buluş, aynı
 > nokta-bulut (CloudEncoder) çekirdeğini **tabloları/kayıtları** (ör. kredi kartı
 > işlemleri) hedef alan, **kimlik-tabanlı özellik noktaları + native set-ablation
 > düz-metin açıklama + karşı-faktürel hatalı-uyarı denetimi + self-contained kenar
 > dağıtımı** bileşenleriyle birleştiren bağımsız bir sistem/yöntem olarak sunulur.
-> Bulut kodlayıcı + 0. sıra daraltma çekirdeği, bitişik (bilinen) icat olarak
+> Bulut kodlayıcı + 0. sıra daraltma çekirdeği, bitişik (bilinen) buluş olarak
 > referans verilir; burada yeni olan **tablolar arası kimlik-bucket projeksiyonu,
 > çözümlenen ablation açıklaması, karşı-faktürel denetim ve self-contained paket**tir.
 
-> **Kapsam notu (2026-10-22):** Bu dosya, `geometry_dual_use_core_v1.md`'deki evrensel çekirdeğin **tabular/fraud** uygulamasıdır. Bağımsız İddia 1'in (a)-(c) çekirdek paragrafları genel dosyaya çapraz-referans taşır; bu dosyaya özgü yeni olan kimlik-bucket projeksiyon + karşı-faktürel hatalı-uyarı denetimi + self-contained edge embodiment'idir.
+> **Kapsam notu (2026-10-22):** Bu dosya, `geometry_dual_use_core_v1.md`'deki evrensel çekirdeğin **tabular/fraud** uygulamasıdır. Bağımsız İstem 1'in (a)-(c) çekirdek paragrafları genel dosyaya çapraz-referans taşır; bu dosyaya özgü yeni olan kimlik-bucket projeksiyon + karşı-faktürel hatalı-uyarı denetimi + self-contained edge embodiment'idir.
 
 ---
 
@@ -26,7 +26,7 @@ sistem ve yöntemi**
 
 ### 2.1 Teknik Alan
 
-Bu icat, makine öğrenmesi alanına; özellikle **tablolar veri** (sayısal + kategorik
+Bu buluş, makine öğrenmesi alanına; özellikle **tablolar veri** (sayısal + kategorik
 özellik satırları) üzerindeki **aykırı değer / dolandırıcılık (fraud) tespiti** ve
 **yorumlanabilir makine öğrenmesi (explainable ML)** alanlarına ilişkindir.
 Özellikle, bir kararın **kayıt düzeyinde düz-metin olarak açıklanabilmesini**,
@@ -34,14 +34,14 @@ Bu icat, makine öğrenmesi alanına; özellikle **tablolar veri** (sayısal + k
 ve tümünün **tek bir self-contained, kenar-cihaza taşınabilir artifact** olarak
 dağıtılmasını sağlayan bir sistem ve yöntemi ileri sürer.
 
-### 2.2 Ön Teknik (Prior Art)
+### 2.2 Önceki Teknik (Prior Art)
 
 #### 2.2.1 Baskın Paradigma: Dereceli Ağaç Aileleri + SHAP
 
 Üretimdeki standart dolandırıcılık/aykırı-değer dedektörleri, dereceli ağaç
 ensamblesıdır (Gradient Boosting, XGBoost, LightGBM), ayrık orman (isolation
 forest), otocodek (autoencoder) veya dönüşümlü sinir ağlarıdır. Bu dedektörler bir
-risk skoru üretir ve en iyi durumda **özellik düzeyinde** atfı (GBM için SHAP
+risk skoru üretir ve uygun araçlarla **özellik düzeyinde** atfı (GBM için SHAP
 katkıları) sunar: *hangi özellik* satırı riskli kıldı.
 
 Bu yaklaşımın sınırlamaları:
@@ -67,16 +67,16 @@ Bu yaklaşımın sınırlamaları:
   sıralamasız kümeyi tek vektöre havuzlar. Noktaların **uzaysal konumu girdi
   olarak var değildir** — geometri korunmaz, dolayısıyla nokta-düzeyinde
   ablation açıklaması tanımlanamaz.
-- **QUANN nokta-bulut çekirdeği** (bitişik icat, `../dil/patent_application_v2.3.md`):
+- **QUANN nokta-bulut çekirdeği** (bitişik buluş, `../dil/patent_application_v2.3.md`):
   token'ları düşük-boyutlu noktalara projekte edip bulut geometrisinden karar
   alan ve 0. sıra (backprop'suz) daraltma ile eğiten çekirdek. Bu çekirdek burada
   **bilinen** olarak referans verilir; yeni olan onun **tablolar kaydına**
   (kimlik-bucket) uygulanması ve **açıklama/denetim/dağıtım** bileşenleridir.
 - **0. sıra (backprop-free) optimizasyon:** Fonksiyon değerlerinden (gradyansız)
-  ağırlık/nokta güncelleyen yöntemler; icatta nokta daraltması için tercihen
+  ağırlık/nokta güncelleyen yöntemler; buluşta nokta daraltması için tercihen
   kullanılır (okuyucu yine de backprop ile eğitilebilir — hibrit rejim).
 
-#### 2.2.3 Ön Teknikteki Boşluk
+#### 2.2.3 Önceki Teknikteki Boşluk
 
 Hiçbir mevcut yöntem, aşağıdaki dört bileşeni **tek bir, self-contained** sistemde
 birleştirmemektedir: (a) tablolar kaydın özelliklerinin **kimlik-tabanlı
@@ -90,7 +90,7 @@ olarak kenara taşıyan bir dağıtım paketi.
 
 ### 2.3 Teknik Sorun
 
-İcat, aşağıdaki teknik sorunları çözmeyi amaçlar:
+Buluş, aşağıdaki teknik sorunları çözmeyi amaçlar:
 
 1. Bir kaydın skoru, **özellik-ağırlığı listesi** yerine, **kayıt düzeyinde ve
    doğrudan okunabilen düz-metin** (ör. "amount>100, MCC=5311, Merchant
@@ -103,7 +103,7 @@ olarak kenara taşıyan bir dağıtım paketi.
 4. Modelin, **sub-megabyte**, self-contained, kenar-cihaza taşınabilir ve
    düz-metin üreten tek bir artifact olarak dağıtılması.
 
-### 2.4 İcadın Özü (Çözüm)
+### 2.4 Buluşun Kısa Açıklaması (Çözüm)
 
 İcadın özü: bir tablolar kaydın her özelliği, ölçülen değer-bucket'ına göre
 bir **kimlik token'ına** `(özellik, değer-bucket)` dönüştürülür; her kimlik
@@ -151,7 +151,7 @@ Yeni üç bileşen:
    sub-megabyte bir artifact olarak kenar-cihaza taşınır.
 5. **Tercihi 0. sıra geometri:** Nokta daraltması 0. sıra (backprop'suz) yapılabilir;
    okuyucu backprop ile eğitilerek hibrit rejim elde edilir (saf 0. sıra gerçek
-   görevlerde rastgele yakın kalır — icat hibrit rejimi iddia eder).
+   görevlerde rastgele yakın kalır — buluş hibrit rejimi iddia eder).
 
 ### 2.6 Şekillerin Kısa Açıklaması
 
@@ -168,7 +168,7 @@ Yeni üç bileşen:
 - **Şekil 5:** Self-contained dağıtım paketi (onnx + quantizer + decoder +
   manifest) ve ham-satır bit-kesinlik kontrolü.
 
-### 2.7 İcadın Detaylı Açıklaması
+### 2.7 Buluşun Detaylı Açıklaması
 
 #### 2.7.1 Girdi Kaydı (200)
 
@@ -187,7 +187,7 @@ veri setine uygulanır; checkpoint içine gömülür (bit-kesin AUC için).
 #### 2.7.3 Kimlik-Nokta Projeksiyonu (220)
 
 Her kimlik token'ı, 3 ≤ D ≤ 64 boyutlu uzayda bir noktaya projekte edilir (tercihe
-göre 0. sıra daraltma ile, İddia 12). D=8 güçlü-okuyucu rejimi, d_cloud=128,
+göre 0. sıra daraltma ile, İstem 12). D=8 güçlü-okuyucu rejimi, d_cloud=128,
 d_model=32, 214 yığılmış nokta örneklemi kullanır.
 
 #### 2.7.4 Bulut Kodlayıcı (230)
@@ -196,7 +196,7 @@ Bilinen CloudEncoder: (231) her nokta için paylaşılan nokta MLP + max-pool;
 (232) her nokta çifti için `[pᵢ−pⱼ, ‖pᵢ−pⱼ‖, cos(θᵢⱼ), ‖pᵢ‖, ‖pⱼ‖]` girdili çift
 MLP + mean-pool; (233) ikisinin birleştirilmesiyle permütasyon-değişmez küme
 durumu. Çift-geometri terimi, katkılarının **non-additive** olmasının kaynağıdır
-(İddia 13).
+(İstem 13).
 
 #### 2.7.5 0. Sıra Nokta Daraltma (240) — tercihe bağlı
 
@@ -237,11 +237,11 @@ Girdi sözleşmesi: `ids (B,K) int64` + `mask (B,K) bool` → `p (B) = P(aykır�
 
 ---
 
-## 3. İDDİALAR
+## 3. İSTEMLER
 
-### Bağımsız İddialar
+### Bağımsız İstemler
 
-**İddia 1**
+**İstem 1**
 
 Ön teknikte bilinen, bir tablolar kaydın özelliklerini işleyerek bir risk skoru
 üreten bir makine öğrenmesi dedektörünü içeren bir sistem,
@@ -252,22 +252,22 @@ Girdi sözleşmesi: `ids (B,K) int64` + `mask (B,K) bool` → `p (B) = P(aykır�
 işleyerek bir `(özellik, değer-bucket)` kimlik token'ı üreten bir özellik-kantizasyon
 modülü (210);
 
-(b) her adı geçen kimlik token'ını, 3 ≤ D ≤ 64 boyutlu öklid uzayda bir noktaya
-projekte eden ve adı geçen noktaları bir permütasyon-değişmez bulut olarak
+(b) her kimlik token'ını, 3 ≤ D ≤ 64 boyutlu öklid uzayda bir noktaya
+projekte eden ve bu noktaları bir permütasyon-değişmez bulut olarak
 birleştiren bir kimlik-nokta modülü (220);
 
-(c) adı geçen buluttan bir küme durumu üreten ve adı geçen küme durumundan bir
+(c) bu buluttan bir küme durumu üreten ve bu küme durumundan bir
 skor veren bir okuyucu (250);
 
-(d) adı geçen buluttan, **tek nokta çıkarıldığında** skorun logit-değişimini ölçen
-ve adı geçen noktaları bir token decoder (270) üzerinden **düz-metin etiketlere**
+(d) bu buluttan, **tek nokta çıkarıldığında** skorun logit-değişimini ölçen
+ve bu noktaları bir token decoder (270) üzerinden **düz-metin etiketlere**
 çözen bir açıklama modülü (260);
 
-(e) adı geçen kayıtların bir alt-kümesi üzerinde, bir veya birden fazla token'ın
+(e) işlenen kayıtların bir alt-kümesi üzerinde, bir veya birden fazla token'ın
 **yok** sayılması durumunda skorun eşik üstünde kalıp kalmadığını test eden bir
 karşı-faktürel denetim modülü (280); ve
 
-(f) adı geçen okuyucuyu, özellik-kantizasyon modülünü, token decoder'ı ve her
+(f) bu okuyucuyu, özellik-kantizasyon modülünü, token decoder'ı ve her
 artifact'ın kimlik/kod-bütünlüğü kaydını birlikte içeren **tek bir self-contained
 dağıtım paketi** (290) olarak derleyen bir modül
 
@@ -275,7 +275,7 @@ içermekte olup, adı geçen sistem, bir kaydın skorunu bir **okunabilir
 özellik-ifadesi** olarak, popülasyon düzeyinde bir **karşı-faktürel** ölçümle ve
 kenara taşınabilir **tek artifact** olarak birlikte sunmaktadır.
 
-**İddia 2**
+**İstem 2**
 
 Ön teknikte bilinen, tablolar kayıtlardan risk skoru üreten bir yöntem,
 
@@ -300,72 +300,70 @@ temsilinde katkıların non-additive olduğunu **karşı-faktürel** olarak rapo
 özellik-ağırlığı listesi yerine kayıt-düzeyi okunabilir bir açıklama
 sağlamaktadır.
 
-**İddia 3**
+**İstem 3**
 
-Bir bilgisayar programı, bir işlemci tarafından çalıştırıldığında İddia 2'deki
+Bir bilgisayar programı, bir işlemci tarafından çalıştırıldığında İstem 2'deki
 yöntemin adımlarını gerçekleştiren program talimatlarını içermekte olup, adı
 geçen program talimatları, tablolar kayıt açıklamasını düz-metin olarak ve
 self-contained bir artifact olarak üretmektedir.
 
-### Bağımlı İddialar
+### Bağımlı İstemler
 
-**İddia 4:** İddia 1'e bağımlı, burada çift-geometri girdi vektörü, her nokta
+**İstem 4:** İstem 1'e bağımlı, burada çift-geometri girdi vektörü, her nokta
 çifti için `[pᵢ − pⱼ, ‖pᵢ − pⱼ‖, cos(θᵢⱼ), ‖pᵢ‖, ‖pⱼ‖]` biçimindedir ve
 döndürmeye karşı değişmezdir.
 
-**İddia 5:** İddia 1'e bağımlı, burada okuyucu (250), küçük bir MLP'dir ve tercihen
-INT8'a kantizlenmiştir.
+**İstem 5:** İstem 1'e bağımlı, burada okuyucu (250), küçük bir MLP'dir ve INT8'a kantizlenmiştir.
 
-**İddia 6:** İddia 1'e bağımlı, burada token decoder (270), **tam-sözlük**tür: her
+**İstem 6:** İstem 1'e bağımlı, burada token decoder (270), **tam-sözlük**tür: her
 `(özellik, değer-bucket)` kimliği bir insan-okunur etikete eşlenir ve hiçbir
 bucket "diğer" olarak atılmaz.
 
-**İddia 7:** İddia 1'e bağımlı, burada açıklama modülü (260), leave-one-point-out
+**İstem 7:** İstem 1'e bağımlı, burada açıklama modülü (260), leave-one-point-out
 logit-değişimini, tek-özellik değerlerinin toplam skoru yeniden üretmediği
 (non-additive) durumda bir *karşı-faktürel duyarlılık* olarak raporlar.
 
-**İddia 8:** İddia 1'e bağımlı, burada karşı-faktürel denetim modülü (280), hem
+**İstem 8:** İstem 1'e bağımlı, burada karşı-faktürel denetim modülü (280), hem
 tek-maske hem de çift-maske (iki token birlikte) testlerini çalıştırır.
 
-**İddia 9:** İddia 8'e bağımlı, burada bir token'ın tek başına kararı
+**İstem 9:** İstem 8'e bağımlı, burada bir token'ın tek başına kararı
 etkilemediği, ancak ikinci bir token ile birlikte etkilediği durumlar
 belirlenerek kararın bulut-konfigürasyonuna bağımlılığı (non-additivity)
 kanıtlanır.
 
-**İddia 10:** İddia 1'e bağımlı, burada karşı-faktürel denetim modülü (280),
+**İstem 10:** İstem 1'e bağımlı, burada karşı-faktürel denetim modülü (280),
 eşik-üstü hatalı-uyarı popülasyonunu, **genel** (büyük popülasyon-payı) token'larla
 **nadir** (satır-başına büyük katkı) token'lara ayırır.
 
-**İddia 11:** İddia 1'e bağımlı, burada kimlik-nokta modülü (220), nokta
+**İstem 11:** İstem 1'e bağımlı, burada kimlik-nokta modülü (220), nokta
 konumlarını 0. sıra (gradyansız) bir daraltmayla üretmekte olup, okuyucu (250)
 backprop ile eğitilerek hibrit bir rejim oluşturulur.
 
-**İddia 12:** İddia 11'e bağımlı, burada D = 8, d_cloud = 128, d_model = 32 ve 214
+**İstem 12:** İstem 11'e bağımlı, burada D = 8, d_cloud = 128, d_model = 32 ve 214
 yığılmış nokta kullanılmaktadır.
 
-**İddia 13:** İddia 1'e bağımlı, burada bulut kodlayıcı, nokta özellikleri üzerinde
+**İstem 13:** İstem 1'e bağımlı, burada bulut kodlayıcı, nokta özellikleri üzerinde
 max-pool ve çift özellikleri üzerinde mean-pool alarak ikisini birleştirir.
 
-**İddia 14:** İddia 1'e bağımlı, burada dağıtım paketi (290), `model.onnx`,
+**İstem 14:** İstem 1'e bağımlı, burada dağıtım paketi (290), `model.onnx`,
 `quantizer.json`, `token_decoder.json` ve bir `manifest.json` içerir; manifest,
 kaynak checkpoint'in ve her artifact'ın kimlik (sha256) ve boyut kaydını, model
 yapılandırmasını ve bir self-test sonucunu taşır.
 
-**İddia 15:** İddia 14'e bağımlı, burada ham satırlarda `model.onnx` çıktısı,
+**İstem 15:** İstem 14'e bağımlı, burada ham satırlarda `model.onnx` çıktısı,
 referans (torch) çıktısıyla **bit-kesin** olarak (max |Δp| eşiğinin altında)
 doğrulanır.
 
-**İddia 16:** İddia 1'e bağımlı, burada girdi sözleşmesi, `ids (B,K) int64` +
+**İstem 16:** İstem 1'e bağımlı, burada girdi sözleşmesi, `ids (B,K) int64` +
 `mask (B,K) bool` → `p (B)` biçimindedir ve dinamik batch taşır.
 
-**İddia 17:** İddia 3'e bağımlı, burada program talimatları, geçici olmayan bir
-bilgisayar-okunur kayıt ortamında depolanmıştır.
+**İstem 17:** İstem 3'e bağımlı, burada program talimatları, geçici olmayan, bilgisayarca okunabilir bir kayıt ortamında depolanmıştır.
 
-**İddia 18:** İddia 1'e bağımlı, burada D, d_cloud ve d_model değerleri, görevin
+**İstem 18:** İstem 1'e bağımlı, burada D, d_cloud ve d_model değerleri, görevin
 ölçülen karmaşıklığı (bölge sayısı, bulut yayılımı) esas alınarak önceden
 tanımlı bir değer kümesinden seçilir.
 
-**İddia 19:** İddia 1'e bağımlı, burada sistem, kredi kartı işlemleri, bankacılık
+**İstem 19:** İstem 1'e bağımlı, burada sistem, kredi kartı işlemleri, bankacılık
 işlemleri veya herhangi bir `(sayısal, kategorik)` tablolar kaydı alanı
 için uygulanabilir.
 
@@ -400,7 +398,7 @@ metin üreten, sub-megabyte bir artifact olarak dağıtılır.
 | 5 | Şekil 5 | Self-contained paket + ham-satır bit-kesinlik | `fraud/results/deploy/` |
 
 > **Vekil notu:** Şekiller siyah-beyaz çizgi, referans numaralarıyla, ayrı sayfalarda
-> PDF çizim formatında hazırlanmalıdır. Bu dosya taze bir icat (v1) olup, dil
+> PDF çizim formatında hazırlanmalıdır. Bu dosya yeni bir buluş (v1) olup, dil
 > modelleme patentinden (`../dil/patent_application_v2.3.md`) ayrık bir başvuru olarak
 > sunulur; ikisi arasındaki bulut kodlayıcı çekirdeği çakışması, vekil tarafından
 > çapraz-referans / öncelik (priority) açısından değerlendirilmelidir.
@@ -411,8 +409,8 @@ metin üreten, sub-megabyte bir artifact olarak dağıtılır.
 
 ### 6.1 Neden ayrı başvuru?
 
-Dil modelleme icadı (`../dil/patent_application_v2.3.md`) **cümle → word-token → bulut →
-bir sonraki token** idi. Bu icat, aynı çekirdeği **tablolar kayıt** hedefine
+Dil modelleme buluşu (`../dil/patent_application_v2.3.md`) **cümle → word-token → bulut →
+bir sonraki token** idi. Bu buluş, aynı çekirdeği **tablolar kayıt** hedefine
 kaydırır ve asıl yeniliği **açıklama yüzeyinde** (kimlik-bucket + çözümlenen
 ablation + karşı-faktürel denetim + self-contained dağıtım) taşır. Ayrı dosya:
 (a) iddia kapsamını dil alanından koparıp **tablolar/uyum (compliance)** alanına
@@ -425,8 +423,8 @@ başvuruyu aşırı genişletip (dil + tabular) reddedilirlik riskini düşürü
   paket *bileşimi* tek artifact olarak — SHAP/GBM ve set-tablolar edebiyatında
   bu dörtlü birlikte bilinmemektedir.
 - **Dikkat:** Bulut kodlayıcı + 0. sıra daraltma, bitişik patentin (v2.3)
-  kapsamındadır; bağımsız İddia 1, bu çekirdeği **bilinen** gibi referans
-  vermektedir. Vekil, İddia 1'deki (b)(c) paragraflarının v2.3'le çakışıp
+  kapsamındadır; bağımsız İstem 1, bu çekirdeği **bilinen** gibi referans
+  vermektedir. Vekil, İstem 1'deki (b)(c) paragraflarının v2.3'le çakışıp
   çakışmadığını ve gerekirse (b)(c)'yi bağımlı'ya alıp bağımsızı salt
   açıklama/denetim/dağıtım üçlüsüne çekmesini değerlendirmelidir.
 - **Veri:** IBM kredi kartı (24.4M), eş-ayrım 1.02M/100K/4.7M; AUC-PR 0.256
@@ -436,9 +434,9 @@ başvuruyu aşırı genişletip (dil + tabular) reddedilirlik riskini düşürü
 
 ### 6.3 Sonraki adımlar
 
-- EN çevirisi (`patent_tabular_explain_v1_EN.md`) — v2.3_EN ile aynı bölüm
+- EN çevirisi (`patent_tabular_explain_v1_EN.md`) — `_archive/docs_patent/patent_application_v2.3_EN.md` ile aynı bölüm
   şemasında.
 - Şekiller 1, 3, 4 yeni çizim gerektirir; 2 ve 5 mevcut görsel/artifact
   temellidir.
-- Vekile: bağımsız İddia 1'in (b)(c) paragraflarının v2.3 çakışması +
+- Vekile: bağımsız İstem 1'in (b)(c) paragraflarının v2.3 çakışması +
   öncelik (priority date) stratejisi.

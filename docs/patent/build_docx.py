@@ -9,7 +9,7 @@ page).
 
 Usage:  python3 docs/patent/build_docx.py
 """
-import os, re
+import os, re, shutil, subprocess
 from docx import Document
 from docx.shared import Pt, Cm, RGBColor
 from docx.enum.text import WD_ALIGN_PARAGRAPH
@@ -229,8 +229,17 @@ def render_block(doc, kind, val, in_appendix=False):
 # ---------------------------------------------------------------------------
 # section splitting (keyed by canonical name) + figure embedding
 # ---------------------------------------------------------------------------
-from PIL import Image
+from PIL import Image, ImageOps
 from docx.shared import Cm
+
+LOG_PATH = os.path.join(RENDER, "build_docx.log")
+_LOG = None
+
+def log(message: str) -> None:
+    print(message)
+    if _LOG is not None:
+        _LOG.write(message + "\n")
+        _LOG.flush()
 
 def split_sections(blocks):
     """Return (cover, {canonical_key: [blocks]})."""
@@ -259,34 +268,126 @@ def _canon(title):
     if "FORM" in t or "REQUEST" in t: return "form"
     if "ICINDEK" in t or "CONTENT" in t: return "toc"
     if t.startswith("1.") or "BASLIK" in t or "TITLE" in t: return "title"
+    if "CIZIM" in t or "SEKIL" in t or "DRAWING" in t or "FIGURE" in t: return "drawings"
     if "ACIKLAMA" in t or "DESCRIPTION" in t: return "description"
     if "IDDI" in t or "CLAIM" in t: return "claims"
     if "OZET" in t or "ABSTRACT" in t: return "abstract"
-    if "CIZIM" in t or "DRAWING" in t or "FIGURE" in t: return "drawings"
     if "ATIF" in t or "BIBLIOGRAPH" in t: return "bib"
     if "VEKI" in t or "AGENT" in t: return "agent"
     return t[:12]
 
 def fit_size(path, max_w_cm=15.0, max_h_cm=20.0):
-    im = Image.open(path)
-    w, h = im.size
-    scale = min(max_w_cm / (w / 28.35), max_h_cm / (h / 28.35))  # px->inch->cm
+    with Image.open(path) as im:
+        w, h = im.size
     # 28.35 cm per inch; treat px ~ 96/inch for a target
     w_in = w / 96.0; h_in = h / 96.0
     s = min(max_w_cm / (w_in * 2.54), max_h_cm / (h_in * 2.54))
     return Cm(w_in * 2.54 * s), Cm(h_in * 2.54 * s)
 
-def add_figure(doc, png, caption, page_first=False):
+def add_figure_group(doc, pngs, caption, page_first=False):
     if page_first:
         page_break(doc)
-    # figure page: centered
-    pc = doc.add_paragraph(); pc.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    pc.paragraph_format.space_before = Pt(6)
-    w, h = fit_size(png)
-    pc.add_run().add_picture(png, width=w, height=h)
+    for png in pngs:
+        pc = doc.add_paragraph(); pc.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        pc.paragraph_format.space_before = Pt(6)
+        w, h = fit_size(png)
+        pc.add_run().add_picture(png, width=w, height=h)
     cap = doc.add_paragraph(); cap.alignment = WD_ALIGN_PARAGRAPH.CENTER
     cap.paragraph_format.space_before = Pt(8)
     r = cap.add_run(caption); r.bold = True; r.font.size = Pt(11); r.font.name = FONT
+
+def add_figure(doc, png, caption, page_first=False):
+    add_figure_group(doc, [png], caption, page_first=page_first)
+
+def _figure_specs(doc, figures):
+    """Add [(caption, [rendered filenames])] as separate figure pages."""
+    for caption, filenames in figures:
+        paths = [os.path.join(RENDER, name) for name in filenames]
+        add_figure_group(doc, paths, caption, page_first=True)
+
+def _save_grayscale_png(source: str, output: str) -> None:
+    os.makedirs(os.path.dirname(output), exist_ok=True)
+    with Image.open(source) as image:
+        rgba = image.convert("RGBA")
+        matte = Image.new("RGBA", rgba.size, "white")
+        matte.alpha_composite(rgba)
+        ImageOps.grayscale(matte).save(output, format="PNG")
+    log(f"RENDER raster  {source} -> {output} [grayscale]")
+
+def _render_svg(source: str, output: str) -> None:
+    os.makedirs(os.path.dirname(output), exist_ok=True)
+    renderer = shutil.which("rsvg-convert")
+    if renderer is None:
+        raise RuntimeError("SVG renderer not found: install rsvg-convert (librsvg)")
+    raw_output = output + ".raw.png"
+    try:
+        subprocess.run([renderer, "-o", raw_output, source], check=True,
+                       capture_output=True, text=True)
+        with Image.open(raw_output) as image:
+            rgba = image.convert("RGBA")
+            matte = Image.new("RGBA", rgba.size, "white")
+            matte.alpha_composite(rgba)
+            ImageOps.grayscale(matte).save(output, format="PNG")
+    finally:
+        if os.path.exists(raw_output):
+            os.remove(raw_output)
+    log(f"RENDER svg     {source} -> {output} [grayscale]")
+
+def render_all_figures() -> None:
+    """Render all patent package figure sources into the ignored _render folder."""
+    for index in range(1, 9):
+        matches = [name for name in os.listdir(os.path.join(REPO, "docs/patent/dil/fig"))
+                   if re.match(rf"fig{index}_.*\.svg$", name)]
+        if len(matches) != 1:
+            raise FileNotFoundError(f"Expected one dil figure {index} SVG, found: {matches}")
+        _render_svg(os.path.join(REPO, "docs/patent/dil/fig", matches[0]),
+                    os.path.join(RENDER, f"sekil_{index}.png"))
+
+    for index, name in enumerate(("fig1_mimari.svg", "fig2_ciftgeometri.svg",
+                                  "fig3_aciklama.svg"), start=1):
+        _render_svg(os.path.join(REPO, "docs/patent/evrensel/fig", name),
+                    os.path.join(RENDER, f"core_fig{index}.png"))
+
+    universal_pngs = {
+        "pct_fig4a.png": "fig4a_aml_tipoloji.png",
+        "pct_fig4b.png": "fig4b_aml_tipoloji.png",
+        "pct_fig5.png": "fig5_fraud_bulut.png",
+        "pct_fig6a.png": "fig6a_bakim_bolge.png",
+        "pct_fig6b.png": "fig6b_bakim_drift.png",
+        "pct_fig7.png": "fig7_deploy.png",
+    }
+    for output_name, source_name in universal_pngs.items():
+        _save_grayscale_png(os.path.join(REPO, "docs/patent/evrensel/fig", source_name),
+                            os.path.join(RENDER, output_name))
+
+    tabular_figures = {
+        "tabular_fig1_architecture.png": "fig1_sistem_mimarisi.svg",
+        "tabular_fig2_fraud_cloud.png": "fig2_fraud_bulut.svg",
+        "tabular_fig3_ablation.png": "fig3_ablation.svg",
+        "tabular_fig4_counterfactual.png": "fig4_karsifaktuel.svg",
+        "tabular_fig5_deployment.png": "fig5_dagitim.svg",
+    }
+    for output_name, source_name in tabular_figures.items():
+        _render_svg(os.path.join(REPO, "docs/patent/tabular/fig", source_name),
+                    os.path.join(RENDER, output_name))
+
+def verify_docx(path: str, expected_images: int) -> None:
+    doc = Document(path)
+    actual_images = len(doc.inline_shapes)
+    if actual_images != expected_images:
+        raise AssertionError(f"{path}: expected {expected_images} images, found {actual_images}")
+    for section in doc.sections:
+        if abs(section.page_width.cm - 21.0) > 0.1 or abs(section.page_height.cm - 29.7) > 0.1:
+            raise AssertionError(f"{path}: section is not A4 ({section.page_width.cm}x{section.page_height.cm} cm)")
+    if doc.styles["Normal"].font.name != FONT:
+        raise AssertionError(f"{path}: Normal font is {doc.styles['Normal'].font.name!r}, expected {FONT}")
+    normal_size = doc.styles["Normal"].font.size
+    if normal_size is None or abs(normal_size.pt - 11) > 0.1:
+        raise AssertionError(f"{path}: Normal font size is {normal_size}, expected 11pt")
+    for shape in doc.inline_shapes:
+        if shape.width.cm > 15.1 or shape.height.cm > 20.1:
+            raise AssertionError(f"{path}: embedded figure exceeds fit_size limits")
+    log(f"VERIFY        {path} | images={actual_images} | A4 | Normal={FONT} 11pt")
 
 def add_form_header(doc, kind, val):
     """Render the form's intro + table + confidentiality quote (first section)."""
@@ -341,7 +442,8 @@ def build_tr():
             render_block(doc, kind, val)
     out = os.path.join(REPO, "docs/patent/dil/TURKPATENT_basvuru_v2.3.docx")
     doc.save(out)
-    print("TR dil  ->", out)
+    verify_docx(out, len(TR_FIGS))
+    log("TR dil  -> " + out)
     return out
 
 
@@ -360,15 +462,8 @@ PCT_FIGS = [
 
 def _render_pct_figures(doc):
     for cap, pngs in PCT_FIGS:
-        page_break(doc)
-        for k, png in enumerate(pngs):
-            pc = doc.add_paragraph(); pc.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            pc.paragraph_format.space_before = Pt(4)
-            w, h = fit_size(os.path.join(RENDER, png))
-            pc.add_run().add_picture(os.path.join(RENDER, png), width=w, height=h)
-        capP = doc.add_paragraph(); capP.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        capP.paragraph_format.space_before = Pt(8)
-        r = capP.add_run(cap); r.bold = True; r.font.size = Pt(11); r.font.name = FONT
+        add_figure_group(doc, [os.path.join(RENDER, png) for png in pngs],
+                         cap, page_first=True)
 
 def build_pct():
     md = open(os.path.join(REPO, "docs/patent/evrensel/geometry_dual_use_core_v1_EN.md")).read()
@@ -391,13 +486,99 @@ def build_pct():
             render_block(doc, kind, val)
     out = os.path.join(REPO, "docs/patent/evrensel/geometry_dual_use_core_v1_EN.docx")
     doc.save(out)
-    print("PCT EN  ->", out)
+    verify_docx(out, sum(len(pngs) for _, pngs in PCT_FIGS))
+    log("PCT EN  -> " + out)
     return out
 
 
+def _build_full_source(source: str, output: str,
+                       figures: list[tuple[str, list[str]]]) -> str:
+    """Render all Markdown sections in source order and place figures at drawings."""
+    with open(source, encoding="utf-8") as handle:
+        blocks = parse_blocks(handle.read())
+    cover, sections = split_sections(blocks)
+    doc = setup_doc()
+    _render_cover(doc, cover)
+    first = True
+    for key, section_blocks in sections.items():
+        if not first:
+            page_break(doc)
+        first = False
+        found_figure_table = False
+        for kind, value in section_blocks:
+            if key == "drawings" and kind == "table":
+                _figure_specs(doc, figures)
+                found_figure_table = True
+            else:
+                render_block(doc, kind, value)
+        # v2.5's figures section is a list, not a table; append figures after it.
+        if key == "drawings" and not found_figure_table:
+            _figure_specs(doc, figures)
+    doc.save(output)
+    expected_images = sum(len(filenames) for _, filenames in figures)
+    verify_docx(output, expected_images)
+    log("DOCX          " + output)
+    return output
+
+
+def build_tr_v25() -> str:
+    source = os.path.join(REPO, "docs/patent/dil/patent_application_v2.5.md")
+    output = os.path.join(REPO, "docs/patent/dil/patent_application_v2.5.docx")
+    figures = [(caption, [filename]) for filename, caption in TR_FIGS]
+    return _build_full_source(source, output, figures)
+
+
+EVRENSEL_TR_FIGS = [
+    ("Şekil 1 — Evrensel mimari ve modül akışı (100–290)", ["core_fig1.png"]),
+    ("Şekil 2 — Çift-geometri ve simetrik birleştirme", ["core_fig2.png"]),
+    ("Şekil 3 — Aynı buluttan skor, ablation, prototip ve drift", ["core_fig3.png"]),
+    ("Şekil 4 — AML tipoloji isimlendirme örnekleri", ["pct_fig4a.png", "pct_fig4b.png"]),
+    ("Şekil 5 — Fraud kimlik-bucket bulutu", ["pct_fig5.png"]),
+    ("Şekil 6 — Bakım bulutu ve çalışma koşulu drift'i", ["pct_fig6a.png", "pct_fig6b.png"]),
+    ("Şekil 7 — Self-contained dağıtım ve parite/manifest denetimi", ["pct_fig7.png"]),
+]
+
+def build_evrensel_tr() -> str:
+    source = os.path.join(REPO, "docs/patent/evrensel/geometry_dual_use_core_v1.md")
+    output = os.path.join(REPO, "docs/patent/evrensel/geometry_dual_use_core_v1.docx")
+    return _build_full_source(source, output, EVRENSEL_TR_FIGS)
+
+
+TABULAR_FIGS = [
+    ("Şekil 1 — Kimlik-bulut sistemi ve modülleri (200–290)",
+     ["tabular_fig1_architecture.png"]),
+    ("Şekil 2 — Fraud ve normal kayıt noktalarının bulut görünümü",
+     ["tabular_fig2_fraud_cloud.png"]),
+    ("Şekil 3 — Leave-one-point-out ablation ve logit değişimi",
+     ["tabular_fig3_ablation.png"]),
+    ("Şekil 4 — Tekli/ikili maske karşı-faktürel denetimi",
+     ["tabular_fig4_counterfactual.png"]),
+    ("Şekil 5 — Self-contained dağıtım paketi ve doğrulama",
+     ["tabular_fig5_deployment.png"]),
+]
+
+def build_tabular() -> str:
+    source = os.path.join(REPO, "docs/patent/tabular/patent_tabular_explain_v1.md")
+    output = os.path.join(REPO, "docs/patent/tabular/patent_tabular_explain_v1.docx")
+    return _build_full_source(source, output, TABULAR_FIGS)
+
+
 def main():
-    build_tr()
-    build_pct()
+    global _LOG
+    os.makedirs(RENDER, exist_ok=True)
+    with open(LOG_PATH, "w", encoding="utf-8") as handle:
+        _LOG = handle
+        log("Patent DOCX build started")
+        log(f"Repository: {REPO}")
+        log(f"Render directory: {RENDER}")
+        render_all_figures()
+        build_tr()
+        build_pct()
+        build_tr_v25()
+        build_evrensel_tr()
+        build_tabular()
+        log("Patent DOCX build completed successfully")
+    _LOG = None
 
 if __name__ == "__main__":
     main()

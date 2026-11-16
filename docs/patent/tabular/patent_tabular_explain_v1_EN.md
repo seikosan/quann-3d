@@ -39,7 +39,7 @@ edge-deployable artifact**.
 
 Standard production fraud / anomaly detectors are gradient-boosted ensembles
 (Gradient Boosting, XGBoost, LightGBM), isolation forests, autoencoders, or
-recurrent networks. They output a risk score and, at best, a **feature-level**
+recurrent networks. They output a risk score and, at most, a **feature-level**
 attribution (SHAP contributions for a GBM): *which features* made the record
 risky.
 
@@ -101,7 +101,7 @@ The invention aims to solve the following technical problems:
 4. Distributing the model as a **sub-megabyte, self-contained, edge-deployable**
    artifact that produces plain text.
 
-### 2.4 The Core of the Invention (Solution)
+### 2.4 Summary of the Invention (Solution)
 
 The core: each feature of a tabular record is converted, according to its
 measured value-bucket, into an **identity token** `(feature, value-bucket)`; each
@@ -121,7 +121,7 @@ Three new components:
   *counterfactual sensitivity*, not a linear sum of contributions.
 - **Counterfactual audit module (280):** a token (single-mask) or a pair of tokens
   (pair-mask) is **removed** and the question asked is whether the record remains
-  above the threshold. This answers "does that token decide it alone / only
+  above the threshold. This answers "does that token decide it alone, or
   together with which other point?"; it measures the split of the false-alarm
   population into generic vs rare tokens.
 - **Deployment packager (290):** the model becomes a single self-contained
@@ -247,7 +247,7 @@ records/s) are verified. Input contract: `ids (B,K) int64` + `mask (B,K) bool` �
 **Claim 1**
 
 A system comprising a machine-learning detector known in the prior art that
-processes the features of a tabular record to produce a risk score,
+processes features of a tabular record to produce a risk score,
 
 **characterized in that it comprises**
 
@@ -262,7 +262,7 @@ permutation-invariant point cloud;
 (c) a reader (250) that produces a cloud state from said cloud and produces a score
 from said cloud state;
 
-(d) an explanation module (260) that measures the logit-change of the score on
+(d) an explanation module (260) that measures a logit-change of the score on
 **removing a single point** from said cloud and decodes said points to **plain-text
 labels** through a token decoder (270);
 
@@ -293,14 +293,14 @@ cloud;
 (c) producing a permutation-invariant cloud state from the cloud and predicting a
 score;
 
-(d) measuring the logit-change of the score by removing a single point from the
-cloud and decoding the highest-contribution points to plain text through a
+(d) measuring a logit-change of the score by removing a single point from the
+cloud and decoding highest-contribution points to plain text through a
 decoder; and
 
 (e) testing whether the score remains above a threshold when a token or a pair of
 tokens is removed,
 
-wherein said steps (d) and (e), by reporting the non-additivity of a coupled
+wherein said steps (d) and (e), by reporting non-additivity of a coupled
 point-geometry representation **counterfactually**, provide a record-level,
 readable explanation in place of a feature-weight list.
 
@@ -313,30 +313,30 @@ self-contained artifact.
 
 ### Dependent Claims
 
-**Claim 4:** Dependent on Claim 1, wherein the pair-geometry input vector is, for
-each point pair, of the form `[pᵢ − pⱼ, ‖pᵢ − pⱼ‖, cos(θᵢⱼ), ‖pᵢ‖, ‖pⱼ‖]` and is
+**Claim 4:** Dependent on Claim 1, wherein a pair-geometry input vector is, for
+each point pair, `[pᵢ − pⱼ, ‖pᵢ − pⱼ‖, cos(θᵢⱼ), ‖pᵢ‖, ‖pⱼ‖]` and is
 rotation-invariant.
 
 **Claim 5:** Dependent on Claim 1, wherein the reader (250) is a small MLP,
-optionally quantized to INT8.
+quantized to INT8.
 
 **Claim 6:** Dependent on Claim 1, wherein the token decoder (270) is
 **full-vocabulary**: every `(feature, value-bucket)` identity maps to a
 human-readable label, and no bucket is dropped as "other."
 
 **Claim 7:** Dependent on Claim 1, wherein the explanation module (260) reports
-the leave-one-point-out logit-change, in the case that single-feature values do not
-reconstruct the total score (non-additive), as a *counterfactual sensitivity*.
+a leave-one-point-out logit-change, where single-feature values do not
+reconstruct the score (non-additive), as a *counterfactual sensitivity*.
 
 **Claim 8:** Dependent on Claim 1, wherein the counterfactual-audit module (280)
 runs both single-mask and pair-mask (two tokens together) tests.
 
 **Claim 9:** Dependent on Claim 8, wherein cases in which a token has no effect
 alone but has an effect together with a second token are identified, proving that
-the decision depends on the cloud configuration (non-additivity).
+a decision depends on the cloud configuration (non-additivity).
 
 **Claim 10:** Dependent on Claim 1, wherein the counterfactual-audit module (280)
-separates the above-threshold false-alarm population into **generic** (large
+separates above-threshold false-alarm population into **generic** (large
 population-share) and **rare** (large per-row contribution) tokens.
 
 **Claim 11:** Dependent on Claim 1, wherein the identity-point module (220)
@@ -347,25 +347,25 @@ being trained by backprop, forming a hybrid regime.
 and 214 converged points are used.
 
 **Claim 13:** Dependent on Claim 1, wherein the cloud encoder takes max-pool over
-point features and mean-pool over pair features and combines the two.
+point features and mean-pool over pair features and combines both.
 
 **Claim 14:** Dependent on Claim 1, wherein the deployment package (290) comprises
 `model.onnx`, `quantizer.json`, `token_decoder.json`, and a `manifest.json`; the
-manifest carries the source checkpoint's and each artifact's identity (sha256) and
-size record, the model configuration, and a self-test result.
+`manifest.json` carries a source checkpoint's and each artifact's identity (sha256) and
+size record, a model configuration, and a self-test result.
 
 **Claim 15:** Dependent on Claim 14, wherein the `model.onnx` output on raw rows is
 verified **bit-exact** against a reference (torch) output (below a max |Δp|
 threshold).
 
-**Claim 16:** Dependent on Claim 1, wherein the input contract is `ids (B,K)
+**Claim 16:** Dependent on Claim 1, wherein an input contract is `ids (B,K)
 int64` + `mask (B,K) bool` → `p (B)` and carries a dynamic batch.
 
 **Claim 17:** Dependent on Claim 3, wherein the program instructions are stored on
 a non-transitory computer-readable recording medium.
 
-**Claim 18:** Dependent on Claim 1, wherein the values of D, d_cloud and d_model
-are selected from a predefined set based on the measured complexity of the task
+**Claim 18:** Dependent on Claim 1, wherein values of D, d_cloud and d_model
+are selected from a predefined set based on a measured complexity of a task
 (region count, cloud spread).
 
 **Claim 19:** Dependent on Claim 1, wherein the system is applicable to credit-card
@@ -402,11 +402,11 @@ on raw rows and produces plain text on the edge.
 | 4 | Figure 4 | Single- and pair-mask counterfactual | New drawing (schematic) |
 | 5 | Figure 5 | Self-contained package + raw-row bit-exactness | `fraud/results/deploy/` |
 
-> **Attorney note:** Figures must be prepared as separate pages, black-and-white
+> **Attorney note:** Figures are to be prepared as separate pages, black-and-white
 > line art with reference numbers, in PDF drawing format. This document is a **new
 > invention (v1)**, filed separately from the language-modeling patent
 > (`../dil/patent_application_v2.3.md`); the overlap of the shared cloud-encoder core
-> between the two must be assessed by the attorney for cross-reference / priority.
+> between the two is to be assessed by the attorney for cross-reference / priority.
 
 ---
 
@@ -440,7 +440,7 @@ claims (language + tabular in one application).
 
 ### 6.3 Next steps
 
-- This EN translation mirrors the v2.3_EN section scheme.
+- This EN translation mirrors the `_archive/docs_patent/patent_application_v2.3_EN.md` section scheme.
 - Figures 1, 3, 4 require new drawings; 2 and 5 rest on the existing
   figure / artifact.
 - To the attorney: the v2.3 overlap of independent Claim 1's (b)(c) paragraphs +

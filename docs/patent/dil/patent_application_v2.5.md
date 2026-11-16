@@ -5,8 +5,8 @@
 
 **Başvuru Tarihi:** [2026]  
 **Başvuru No:** [TR 2026/...]  
-**İcat Başlığı:** Nokta-Bulutu Geometrisi ile Birleşik Dil Modelleme Sistemi, Yöntemi ve Bilgisayar Programı  
-**İcatçı:** [Ad Soyad, adres, T.C. Kimlik]  
+**Buluş Başlığı:** Nokta-Bulutu Geometrisi ile Birleşik Dil Modelleme Sistemi, Yöntemi ve Bilgisayar Programı  
+**Buluşçu:** [Ad Soyad, adres, T.C. Kimlik]  
 **Başvuru Sahibi:** [Unvan, adres]  
 
 ---
@@ -14,26 +14,26 @@
 ## İÇİNDEKİLER
 
 1. **Teknik Alan**
-2. **Ön Teknik (Prior Art)**
+2. **Önceki Teknik (Prior Art)**
 3. **Teknik Sorun**
-4. **Buluşun Özü (Çözüm)**
+4. **Buluşun Kısa Açıklaması (Çözüm)**
 5. **Teknik Etkiler**
 6. **Şekillerin Kısa Açıklaması**
 7. **Buluşun Detaylı Açıklaması**
-8. **İddialar**
+8. **İstemler**
 9. **Özet (Abstract)**
 
 ---
 
-## 1. TEKNIK ALAN
+## 1. Teknik Alan
 
 Bu buluş, doğal dil işleme ve makine öğrenmesi sistemlerine ilişkindir; özellikle **düşük boyutlu (3 ≤ D ≤ 64) nokta-bulutu geometrisine** dayanan dil modellerine ilişkindir. Her kelime/alt-sözcük, D-boyutlu Öklid uzayında bir **pᵢ noktasına** projekte edilir; cümle ise bu noktaların oluşturduğu **nokta bulutu** olarak temsil edilir. Tahmin, bu bulutun **geometrisinden** (mesafe + açı + norm) üretilir.
 
-Buluşun temel özelliği, **aynı nokta bulutunun hem hesaplama hem de native açıklama yüzeyi** olarak kullanılmasıdır. Nokta bulutu, transformer'ın "sıralı dikkat + tek vektör" paradigmasının yerine geçer.
+Buluşun temel özelliği, **aynı nokta bulutunun hem hesaplama hem de modelin kendi içinden türetilen açıklama yüzeyi** olarak kullanılmasıdır. Nokta bulutu, transformer'ın "sıralı dikkat + tek vektör" paradigmasının yerine geçer.
 
 ---
 
-## 2. ÖN TEKNİK (PRIOR ART)
+## 2. Önceki Teknik (Prior Art)
 
 ### 2.1 Transformer ve Self-Attention
 
@@ -50,11 +50,11 @@ Buluşun temel özelliği, **aynı nokta bulutunun hem hesaplama hem de native a
 
 **Word2Vec (Mikolov ve ark., 2013)** ve **GloVe (Pennington ve ark., 2014)** tekil kelime vektörlerini üretir; ancak cümle-level nokta-bulutu geometrisi ve bu geometriden tahmin üreten birleşik sistem önermezler.
 
-### 2.4 Ön Teknikteki Boşluk
+### 2.4 Önceki Teknikteki Boşluk
 
 İncelenen yaklaşımlarda:
 1. Nokta-bulutu geometrisi **tahmin substratı** olarak kullanılmaz
-2. Geometri **native açıklama yüzeyi** olarak yeniden kullanılmaz
+2. Geometri **modelin kendi içinden türetilen açıklama yüzeyi** olarak yeniden kullanılmaz
 3. **Çift-geometri** (mesafe + açı + norm) tek bir temsilde birleştirilmez
 
 Bu buluş, bu boşluğu doldurur.
@@ -72,7 +72,7 @@ Bu buluş aşağıdaki teknik sorunlara çözüm sağlamayı amaçlar:
 
 ---
 
-## 4. BULUŞUN ÖZÜ (ÇÖZÜM)
+## 4. Buluşun Kısa Açıklaması (Çözüm)
 
 ### 4.1 Temel Fikir
 
@@ -133,7 +133,7 @@ x_ij = [pᵢ - pⱼ, ‖pᵢ - pⱼ‖, cos(θᵢⱼ), ‖pᵢ‖, ‖pⱼ‖] �
 
 ### 5.4 Native Açıklama
 
-Aynı buluttan:
+Modelin kendi içinden türetilen açıklama verisi aynı buluttan elde edilir:
 1. **Leave-one-point-out ablation:** Token noktası çıkarıldığında logit değişimi
 2. **Bölge/prototip isimlendirme:** En yakın isimli prototip
 3. **Bölge kayması/drift:** Zaman içinde bölge dağılımı değişimi
@@ -197,7 +197,7 @@ loss = word_loss + 0.1 × point_loss
 
 Nokta sayısı bulut geometrisinin zenginliğini belirler:
 - **Daha fazla nokta:** Daha detaylı geometrik temsil
-- **Optimum nokta sayısı:** Uygulama ve veriye göre belirlenir
+- **Seçilen nokta sayısı:** Uygulama ve veriye göre belirlenir
 - **Aşırı nokta:** Geometrik gürültüye yol açabilir
 
 ### 7.5 Küme Agregasyonu
@@ -213,13 +213,13 @@ Nokta sayısı bulut geometrisinin zenginliğini belirler:
 
 ---
 
-## 8. İDDİALAR
+## 8. İSTEMLER
 
-### Bağımsız İddialar
+### Bağımsız İstemler
 
-**İddia 1 — Sistem:** Düşük boyutlu nokta-bulutu geometrisiyle bir girdi biriminden görev çıktısı üreten bilgisayar sistemi olup, **karakterize edici özellik olarak**:
+**İstem 1 — Sistem:** Düşük boyutlu nokta-bulutu geometrisiyle bir girdi biriminden görev çıktısı üreten bilgisayar sistemi olup, **karakterize edici özellik olarak**:
 
-(a) her bir token'ı veya girdi birimini **3 ≤ D ≤ 64** boyutlu Öklid uzayda bir pᵢ noktasına projekte eden bir projeksiyon modülü;
+(a) her bir token'ı veya girdi birimini **32 veya 64 boyutlu** Öklid uzayda bir pᵢ noktasına projekte eden bir projeksiyon modülü;
 
 (b) nokta özelliklerine ek olarak nokta çiftleri için en az **mesafe ve açı bileşenlerini** kodlayan bir çift-geometri kodlayıcısı;
 
@@ -227,11 +227,11 @@ Nokta sayısı bulut geometrisinin zenginliğini belirler:
 
 (d) adı geçen küme durumundan bir görev skoru veya çıktı üreten bir okuyucu; ve
 
-(e) **aynı nokta bulutundan** native açıklama üreten bir yorumlama sistemi (leave-one-point-out ablation, bölge/prototip isimlendirme veya bölge-kayması/drift incelemesi)
+(e) **aynı nokta bulutundan** modelin kendi içinden türetilen açıklama verisi üreten bir yorumlama sistemi; Bölüm 5.4'te açıklanan üretim mekanizmaları kapsamında leave-one-point-out ablation, bölge/prototip isimlendirme veya bölge-kayması/drift incelemesinden en az birini yürütür
 
-içermekte olup, **aynı nokta-bulutu geometrisi hem görev skorunun hesaplama substratı hem de native açıklamanın kaynağıdır**.
+içermekte olup, **aynı nokta-bulutu geometrisi hem görev skorunun hesaplama substratı hem de modelin kendi içinden türetilen açıklama verisinin kaynağıdır**.
 
-**İddia 2 — Yöntem:** Nokta-bulutu geometrisiyle görev çıktısı ve native açıklama üreten bilgisayarla uygulanan bir yöntem olup, **karakterize edici özellik olarak**:
+**İstem 2 — Yöntem:** Nokta-bulutu geometrisiyle görev çıktısı ve native açıklama üreten bilgisayarla uygulanan bir yöntem olup, **karakterize edici özellik olarak**:
 
 (a) token veya girdi birimlerini **3 ≤ D ≤ 64** boyutlu noktalar olarak projekte etme;
 
@@ -245,27 +245,27 @@ içermekte olup, **aynı nokta-bulutu geometrisi hem görev skorunun hesaplama s
 
 adımlarını içermektedir.
 
-**İddia 3 — Bilgisayar programı:** Bir işlemci üzerinde çalıştırıldığında İddia 2'deki yöntem adımlarını gerçekleştiren program talimatlarını içeren, geçici olmayan bilgisayar tarafından okunabilir bir kayıt ortamı.
+**İstem 3 — Bilgisayar programı:** Bir işlemci üzerinde çalıştırıldığında İstem 2'deki yöntem adımlarını gerçekleştiren program talimatlarını içeren, geçici olmayan, bilgisayarca okunabilir bir kayıt ortamı.
 
-### Bağımlı İddialar
+### Bağımlı İstemler
 
-**İddia 4:** İddia 1'deki sistem olup, çift-geometri kodlayıcısı her nokta çifti için **[pᵢ-pⱼ, ‖pᵢ-pⱼ‖, cos(θᵢⱼ), ‖pᵢ‖, ‖pⱼ‖] ∈ ℝ^(D+4)** vektörünü kullanır.
+**İstem 4:** İstem 1'deki sistem olup, çift-geometri kodlayıcısı her nokta çifti için **[pᵢ-pⱼ, ‖pᵢ-pⱼ‖, cos(θᵢⱼ), ‖pᵢ‖, ‖pⱼ‖] ∈ ℝ^(D+4)** vektörünü kullanır.
 
-**İddia 5:** İddia 1'deki sistem olup, **D değeri 32 veya 64** olarak seçilir.
+**İstem 5:** İstem 1'deki sistem olup, **D değeri 32 veya 64** olarak seçilir.
 
-**İddia 6:** İddia 1'deki sistem olup, **nokta sayısı 20** olarak seçilir (R2b optimizasyonu).
+**İstem 6:** İstem 1'deki sistem olup, **nokta sayısı 20** olarak seçilir (R2b optimizasyonu).
 
-**İddia 7:** İddia 1'deki sistem olup, **max-pool** küme agregasyonunda kullanılır (attention-pool yerine).
+**İstem 7:** İstem 1'deki sistem olup, **max-pool** küme agregasyonunda kullanılır (attention-pool yerine).
 
-**İddia 8:** İddia 1'deki sistem olup, okuyucu **INT8 kantizasyon** ile temsil edilir.
+**İstem 8:** İstem 1'deki sistem olup, okuyucu **INT8 kantizasyon** ile temsil edilir.
 
-**İddia 9:** İddia 1'deki sistem olup, **decoder tam sözlük** eşlemesi taşır ve hiçbir token/bucket kimliğini "other" kovasına atmaz.
+**İstem 9:** İstem 1'deki sistem olup, **decoder tam sözlük** eşlemesi taşır ve hiçbir token/bucket kimliğini "other" kovasına atmaz.
 
-**İddia 10 — Dil embodiment'i:** İddia 1'deki sistem olup, girdi birimleri token/alt-sözcük ve okuyucu çıktısı bir-sonraki-token dağılımıdır.
+**İstem 10 — Dil embodiment'i:** İstem 1'deki sistem olup, girdi birimleri token/alt-sözcük ve okuyucu çıktısı bir-sonraki-token dağılımıdır.
 
-**İddia 11 — Nokta sayısı:** İddia 1'deki sistem olup, nokta sayısı 10 ile 30 arasında seçilir, optimum değer uygulama ve veriye göre belirlenir.
+**İstem 11 — Nokta sayısı:** İstem 1'deki sistem olup, nokta sayısı 10 ile 30 arasında seçilir, uygun değer uygulama ve veriye göre belirlenir.
 
-**İddia 12 — Küme agregasyonu:** İddia 1'deki sistem olup, nokta özellikleri için max-pool, çift-geometri özellikleri için mean-pool kullanılır.
+**İstem 12 — Küme agregasyonu:** İstem 1'deki sistem olup, nokta özellikleri için max-pool, çift-geometri özellikleri için mean-pool kullanılır.
 
 ---
 
@@ -289,7 +289,7 @@ Sistem, dil modelleme alanında uygulanabilir; doğruluk-üstünlüğü iddia ed
 
 ---
 
-## 10. VEKİL DEĞERLENDIRMESI (**DOSYAYA EKLENMEZ — strateji notu**)
+## 10. VEKİL DEĞERLENDİRMESİ (**DOSYAYA EKLENMEZ — strateji notu**)
 
 ### 10.1 Yenilik ve Barizlik (m.69)
 
@@ -297,7 +297,7 @@ Sistem, dil modelleme alanında uygulanabilir; doğruluk-üstünlüğü iddia ed
 1. **PointNet ayrımı:** PointNet'te noktalar ham 3B sensör/görüntü girdisidir; burada nokta, farklı alan verilerinden **öğrenilmiş temsildir**.
 2. **Çift-geometri ayrımı:** Tercih edilen D+4 vektör — fark, mesafe, kosinüs ve iki norm — burada belirginleştirilmiştir.
 3. **Native açıklama ayrımı:** Aynı karar bulutundan ablation, prototip ve drift incelemesi yapılır; bu, SHAP özellik listesinin aynısı olarak sunulmaz.
-4. **Nokta-sayı optimizasyonu:** Nokta sayısı bulut geometrisinin zenginliğini belirler; optimum değer uygulama ve veriye göre belirlenir.
+4. **Nokta-sayı optimizasyonu:** Nokta sayısı bulut geometrisinin zenginliğini belirler; uygun değer uygulama ve veriye göre belirlenir.
 
 **Barizlik riski:**
 - Transformer + PointNet kombinasyonu bariz görünebilir
@@ -311,23 +311,23 @@ Sistem, dil modelleme alanında uygulanabilir; doğruluk-üstünlüğü iddia ed
 3. **Native açıklama:** Post-hoc değil, model içi açıklama
 4. **Geometri zenginliği:** Nokta sayısı ile temsil kapasitesi kontrol edilebilir
 
-### 10.3 İddia Kapsamı ve Sınırlamalar
+### 10.3 İstem Kapsamı ve Sınırlamalar
 
-**C1 — Doğruluk sınırlaması:** İddia 10'da PPL 37.63 değeri **bu embodiment'e özeldir**; evrensel performans garantisi değildir.
+**C1 — Doğruluk sınırlaması:** İstem 10'da PPL 37.63 değeri **bu embodiment'e özeldir**; evrensel performans garantisi değildir.
 
-**C2 — Permütasyon:** İddia 1(c) simetrik küme agregasyonunu sınırlar; bağlam/tarihçeden üretilen noktaların sıra-duyarlı olabileceğini açıklar.
+**C2 — Permütasyon:** İstem 1(c) simetrik küme agregasyonunu sınırlar; bağlam/tarihçeden üretilen noktaların sıra-duyarlı olabileceğini açıklar.
 
-**C3 — Dönüşüm:** İddia 4 fark vektörünü eşdeğişken; mesafe/kosinüs/norm bileşenlerini değişmez olarak ayırır.
+**C3 — Dönüşüm:** İstem 4 fark vektörünü eşdeğişken; mesafe/kosinüs/norm bileşenlerini değişmez olarak ayırır.
 
 **C4 — Prior art:** 2.2'de incelenen kaynaklarda özgül birleşimin gösterilmediği söylenir; küresel "hiçbirinde yok" iddiası yapmaz.
 
 ### 10.4 Bölünmüş Başvuru Riski
 
-**Tek icat fikri:** Dual-use geometri mekanizması (aynı bulut hem hesaplama hem açıklama).
+**Tek buluş fikri:** Dual-use geometri mekanizması (aynı bulut hem hesaplama hem açıklama).
 
-**Dikey embodiment'ler:** Dil, fraud, AML, bakım — bunlar aynı icadın uygulamalarıdır, ayrı icatlar değildir.
+**Dikey embodiment'ler:** Dil, fraud, AML, bakım — bunlar aynı buluşun uygulamalarıdır, ayrı buluşlar değildir.
 
-**Öneri:** Eğer inceleme "çok icat" itirazı yaparsa, dikey embodiment'ları **bölünmüş (divisional)** başvurulara ayır.
+**Öneri:** Eğer inceleme "çok buluş" itirazı yaparsa, dikey embodiment'ları **bölünmüş (divisional)** başvurulara ayır.
 
 ### 10.5 Öncelik ve Tarih
 
@@ -356,9 +356,9 @@ Sistem, dil modelleme alanında uygulanabilir; doğruluk-üstünlüğü iddia ed
 
 ## DEĞİŞİKLİKLER (v2.4 → v2.5)
 
-1. **İddia 10:** Spesifik PPL değerleri kaldırıldı, genel dil embodiment'i olarak güncellendi
-2. **İddia 11 eklendi:** Nokta sayısı aralığı (10-30) ve optimum belirleme mekanizması
-3. **İddia 12 eklendi:** Küme agregasyonu tercihleri (max-pool / mean-pool)
+1. **İstem 10:** Spesifik PPL değerleri kaldırıldı, genel dil embodiment'i olarak güncellendi
+2. **İstem 11 eklendi:** Nokta sayısı aralığı (10-30) ve değer belirleme mekanizması
+3. **İstem 12 eklendi:** Küme agregasyonu tercihleri (max-pool / mean-pool)
 4. **Bölüm 5:** Deneysel sonuç tabloları kaldırıldı, mimari avantajlara odaklanıldı
 5. **Bölüm 7.4-7.5:** Spesifik sayısal sonuçlar yerine teknik mekanizmalar açıklandı
 6. **Özet:** Performans değerleri kaldırıldı, teknik özellikler korundu

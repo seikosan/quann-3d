@@ -11,23 +11,23 @@
 | **Başvuru Türü** | Patent — Uluslararası (PCT) başvuru |
 | **Başvuru No** | [PCT tarafından verilecektir: TR 2026/… ] |
 | **Başvuru Tarihi** | [uluslararası başvuru tarihi] |
-| **İcatçı(lar)** | [Ad Soyad, adres, uyrukluk, T.C. Kimlik] |
+| **Buluşçu(lar)** | [Ad Soyad, adres, uyrukluk, T.C. Kimlik] |
 | **Başvuru Sahibi** | [Unvan, adres, uyrukluk] |
 | **Vekil** | [Patent vekili / ofis, PCT yetkili] |
-| **İcat Başlığı** | Çift-Geometri Nokta-Bulutu Temsili ile Birleşik Hesaplama ve Native Açıklanabilirlik Yöneten Evrensel Sistem, Yöntemi ve Bilgisayar Programı |
+| **Buluş Başlığı** | Çift-Geometri Nokta-Bulutu Temsili ile Birleşik Hesaplama ve Native Açıklanabilirlik Yöneten Evrensel Sistem, Yöntemi ve Bilgisayar Programı |
 | **Teknik Alan (IPC)** | G06F 18/00; G06N 3/04; G06N 5/02; G06V 10/77 (öneri) |
-| **Öncelik Beyanı** | [Boş bırakılacaktır — bkz. 6.2: bu evrensel kapsam, TR ulusal (dil) başvurda açıklanmadığından öncelik talep edilemez; bağımsız başvuru] |
+| **Öncelik Beyanı** | [Boş bırakılacaktır — bu evrensel kapsam (dual-use çekirdek + dil/fraud/AML/bakım), TR ulusal (dil) başvuruda (`TURKPATENT_basvuru_v2.3.md`) açıklanmadığından TÜRKPATENT m.31 uyarınca öncelik talep edemez; bağımsız başvuru, kendi öncelik tarihi T2] |
 | **Atanan Sözleşmeci Devletler (Designation)** | [Vekil tarafından PCT'nin tümü veya hedef ülkeler seçilecektir] |
-| **Aranan Usul** | Uluslararası araştırma (IIS: TÜRKPATENT/EPÖ) + 14/16. ay uluslararası yayın + (isteğe bağlı) 22. ay uluslararası ön inceleme |
+| **Aranan Usul** | Uluslararası araştırma (IIS: TÜRKPATENT/EPÖ) + 18. ay uluslararası yayın (PCT Rule 48) + (isteğe bağlı) 22. ay uluslararası ön inceleme |
 
-> **GİZLİLİK / ÖNCELİK UYARISI:** Bu dosya patent başvurusu öncesi hazırlanmıştır. Uluslararası başvuru tarihi (öncelik hakkı) alınana kadar bu icada ilişkin hiçbir yayımlama (arXiv, konferans, dergi, blog, genel erişimli GitHub, podcast, sunum) yapılmamalıdır. Yayımlama, yenilik koşulu açısından yıkıcı etki (self-depublication) yaratabilir. PCT yayınımı (18 ay) öncesinde dahi hiçbir kamuya açıklama yapılmamalıdır.
+> **GİZLİLİK / ÖNCELİK UYARISI:** Bu dosya patent başvurusu öncesi hazırlanmıştır. Uluslararası başvuru tarihi (öncelik hakkı) alınana kadar bu buluşa ilişkin hiçbir yayımlama (arXiv, konferans, dergi, blog, genel erişimli GitHub, podcast, sunum) yapılmamalıdır. Yayımlama, yenilik koşulu açısından yıkıcı etki (self-depublication) yaratabilir. PCT yayınımı (18 ay) öncesinde dahi hiçbir kamuya açıklama yapılmamalıdır.
 
 ## İÇİNDEKİLER
 
 0. **PCT Request** — temel veriler
 1. **Başlık**
 2. **Açıklama** — 2.1 Teknik Alan · 2.2 Ön Teknik · 2.3 Sorun · 2.4 Özü · 2.5 Etkiler · 2.6 Şekiller · 2.7 Detay (2.7.1–2.7.6)
-3. **İddialar** — 3 bağımsız (Sistem, Yöntem, Bilgisayar Programı) + 10 bağımlı (6 mekanizma + 4 dikey embodiment) = 13 iddia
+3. **İstemler** — 3 bağımsız (Sistem, Yöntem, Bilgisayar Programı) + 10 bağımlı (6 mekanizma + 4 dikey embodiment) = 13 istem
 4. **Özet (Abstract)**
 5. **Şekiller** — 7 şekil, ayrı sayfalar
 6. **Atıf Listesi**
@@ -53,7 +53,7 @@ Bu buluş, düşük boyutlu (3 ≤ D ≤ 64) nokta-bulutu geometrisine dayanan m
 
 Çift-geometri temsili, tekil nokta özelliklerini ve nokta çiftlerine ait ilişkileri birlikte kodlar. Nokta geometrisinden elde edilen küme durumu bir okuyucuya verilir. Aynı nokta bulutu ve bu buluta bağlı okuyucu, leave-one-point-out ablation, bölge/prototip isimlendirme ve bölge-kayması/drift incelemesi gibi native açıklama işlemlerinin kaynağıdır. Sistem dil modelleme, işlem dolandırıcılığı (fraud), kara para aklama (AML) tipolojisi ve endüstriyel bakım alanlarına uygulanabilir.
 
-### 2.2 Ön Teknik (Prior Art)
+### 2.2 Önceki Teknik (Prior Art)
 
 #### 2.2.1 Tekil karar temsilleri ve özellik atıfları
 
@@ -68,9 +68,9 @@ Dereceli ağaçlar ve SHAP, çoğunlukla özellik adı ile sayısal atıf değer
 - **Word2Vec** (Mikolov ve ark., 2013, arXiv:1301.3781), **GloVe** (Pennington ve ark., 2014, *EMNLP*, 1532–1543) tekil kelime vektörlerini; **Chung & Abbott** (2021, *Nature* 592(7853), 117–122) nöral popülasyon geometrisi çerçevesini ele alır, ancak burada tarif edilen birleşik karar ve açıklama sistemini tanımlamaz.
 - **Hu ve ark.** (2026, arXiv:2607.04525; DOI 10.48550/arXiv.2607.04525) model içi kavramları point-cloud manifold ve vektör alanlarıyla post-hoc analiz eder. **Xu** (2026, arXiv:2605.17084; DOI 10.48550/arXiv.2605.17084) Subspace PGA ile katman mesafe yapısını inceler. Anılan çalışmalar geometrik analiz sunar; burada tarif edilen geometriyi hem skor hesaplama substratı hem aynı nesneden üretilen native açıklama yüzeyi yapan yeni sistem mimarisini önermez.
 
-İncelenen kaynaklarda (Transformer, GBM+SHAP, DeepSets, Set Transformer, PointNet, Hu-2026 ve Xu-2026) geometrinin hem hesaplama hem native açıklama substratı olduğu bu özgül birleşim gösterilmemektedir. Bu, küresel bir yokluk iddiası değildir; kapsamı yalnızca burada incelenen kaynaklarla sınırlıdır ve daha geniş prior-art taraması yapılmasını gerektirir.
+İncelenen kaynaklarda (Transformer, GBM+SHAP, DeepSets, Set Transformer, PointNet, Hu-2026 ve Xu-2026) geometrinin hem hesaplama hem native açıklama substratı olduğu bu özgül birleşim gösterilmemektedir. Bu, küresel bir yokluk iddiası değildir; kapsamı burada incelenen kaynaklarla sınırlıdır ve daha geniş prior-art taraması yapılmasını gerektirir.
 
-#### 2.2.3 Ön teknikteki teknik boşluk
+#### 2.2.3 Önceki teknikteki teknik boşluk
 
 İncelenen yaklaşımlar, düşük boyutlu öğrenilmiş nokta-bulutu geometrisini karar üretiminde kullanan temsil ile bu aynı temsilin native açıklama nesnesi olarak yeniden kullanılmasını tek bir teknik çekirdekte birleştirmez. Bu nedenle, kararın oluştuğu nesne ile karar sonrasında incelenen açıklama nesnesi çoğu sistemde ayrışır; tekil atıf, popülasyon denetimi ve dağıtım kanıtı da farklı araçlara dağılır.
 
@@ -83,9 +83,9 @@ Bu buluş aşağıdaki teknik sorunlara çözüm sağlamayı amaçlar:
 3. Karar ve açıklama için ayrı temsil ve araç zincirleri kullanılması nedeniyle edge dağıtımının kompakt, self-contained ve bit-kesin doğrulanabilir biçimde kurulamaması.
 4. Metin, tabular işlem/kayıt, AML işlem penceresi ve sensör/şikâyet penceresi gibi farklı girdi türlerine ortak bir geometri çekirdeğinin uygulanamaması.
 
-### 2.4 İcadın Özü (Çözüm)
+### 2.4 Buluşun Kısa Açıklaması (Çözüm)
 
-İcadın özü, tek bir düşük boyutlu nokta bulutunun **aynı anda hesaplama substratı ve native açıklama yüzeyi** olmasıdır. Geometriyi hesaplayıp sonra ayrı bir açıklama modeliyle yaklaşık olarak yorumlamak yerine, skor ve açıklama aynı noktalardan, aynı nokta-çifti ilişkilerinden ve aynı bölge/prototip yapısından türetilir.
+İcadın özü, tek bir düşük boyutlu nokta bulutunun **aynı anda hesaplama substratı ve native açıklama yüzeyi** olmasıdır. Geometriyi hesaplayıp sonra ayrı bir açıklama modeliyle dolaylı olarak yorumlamak yerine, skor ve açıklama aynı noktalardan, aynı nokta-çifti ilişkilerinden ve aynı bölge/prototip yapısından türetilir.
 
 | Sütun | Modül ve işlev | Aynı bulutla bağı |
 |---|---|---|
@@ -94,7 +94,7 @@ Bu buluş aşağıdaki teknik sorunlara çözüm sağlamayı amaçlar:
 | Okuyucu | Okuyucu küme durumundan görev skorunu/çıktısını üretir (130). | Skor aynı bulut geometrisinden hesaplanır. |
 | Native açıklama ve dağıtım | Yorumlama (150), ablation/decoder (260/270), karşı-faktürel denetim (280), paketleyici (290). | Ablation, prototip/bölge ve drift aynı buluttan okunur; okuyucu ve gerekli bileşenler self-contained pakette sunulur. |
 
-Permütasyon-değişmezlik yalnızca paylaşımlı nokta/çift fonksiyonlarının ardından uygulanan simetrik küme agregasyonu için geçerlidir. Bağlamdan veya tarihten üretilen nokta koordinatları sıra-duyarlı olabilir; sistemin tüm aşamalarının sıra-dışı olduğu ileri sürülmez. Fark vektörü dönüşüm altında eşdeğişkendir; mesafe, kosinüs açısı ve normlar koordinat dönüşümüne karşı değişmez bileşenlerdir.
+Permütasyon-değişmezlik, paylaşımlı nokta/çift fonksiyonlarının ardından uygulanan simetrik küme agregasyonu için geçerlidir. Bağlamdan veya tarihten üretilen nokta koordinatları sıra-duyarlı olabilir; sistemin tüm aşamalarının sıra-dışı olduğu ileri sürülmez. Fark vektörü dönüşüm altında eşdeğişkendir; mesafe, kosinüs açısı ve normlar koordinat dönüşümüne karşı değişmez bileşenlerdir.
 
 Dağıtım ilkesi, okuyucu, gerekli kantizör/decoder ve manifestin kompakt, self-contained ve bit-kesin doğrulanabilir bir pakette birleştirilmesidir. Paket boyutu ve sayısal parite, uygulamaya, girdi sözleşmesine ve hedef donanıma bağlıdır; tek bir evrensel boyut veya parite değeri ileri sürülmez.
 
@@ -106,7 +106,7 @@ Dağıtım ilkesi, okuyucu, gerekli kantizör/decoder ve manifestin kompakt, sel
 4. **Kompakt edge dağıtımı:** Okuyucu, kantizör, decoder ve manifest tek bir self-contained paket olarak taşınabilir; ilgili hedefte bit-kesin parite ve kaynak bütünlüğü doğrulanabilir.
 5. **Dikeyler arası aktarılabilir çekirdek:** Temsil kaynağı ve bölge isimleri dikeye göre değişirken geometrik karar ve native inceleme mekanizması dil, fraud, AML ve bakım uygulamalarında kullanılabilir. Bu, dikeyler arasında doğruluk veya genelleme üstünlüğü kanıtı değildir.
 
-**Sonuç sınırları:** Bu buluş doğruluk-üstünlüğü veya SOTA iddiası taşımaz. Fraud ölçümünde matched PR-AUC 0.462 iken XGBoost 0.8047'dir. QUANN, yalnızca küçük ve sınırlı modellerde 0th-order nokta daraltma seçeneğidir; büyük model eğitimi için ölçeklenebilir olduğu gösterilmemiştir. Bir bölge haritası nedensellik, eksiksiz açıklama, düzenleyici onay veya garanti edilen karar doğruluğu değildir. AML'de kaba etiket kararlılığı harita koordinatlarının kararlı olduğu anlamına gelmez; bakım edge paketi ham sensör çerçevelerini değil ölçeklenmiş bulut girdisini alır.
+**Sonuç sınırları:** Bu buluş doğruluk-üstünlüğü veya SOTA iddiası taşımaz. Fraud ölçümünde matched PR-AUC 0.462 iken XGBoost 0.8047'dir. QUANN, küçük ve sınırlı modellerde 0th-order nokta daraltma seçeneğidir; büyük model eğitimi için ölçeklenebilir olduğu gösterilmemiştir. Bir bölge haritası nedensellik, eksiksiz açıklama, düzenleyici onay veya garanti edilen karar doğruluğu değildir. AML'de kaba etiket kararlılığı harita koordinatlarının kararlı olduğu anlamına gelmez; bakım edge paketi ham sensör çerçevelerini değil ölçeklenmiş bulut girdisini alır.
 
 ### 2.6 Şekillerin Kısa Açıklaması
 
@@ -118,7 +118,7 @@ Dağıtım ilkesi, okuyucu, gerekli kantizör/decoder ve manifestin kompakt, sel
 - **Şekil 6:** Bakım sensör penceresi bulutu ve bölge kayması — `fig/fig6a_bakim_bolge.png`, `fig/fig6b_bakim_drift.png`.
 - **Şekil 7:** Self-contained dağıtım ve doğrulama — fraud ONNX/manifest ve bakım INT8 edge örnekleri.
 
-### 2.7 İcadın Detaylı Açıklaması
+### 2.7 Buluşun Detaylı Açıklaması
 
 #### 2.7.1 Ortak mimari (100–150)
 
@@ -154,11 +154,11 @@ Bu sonuçlar bir dikey embodiment kanıtıdır, genel performans garantisi deği
 
 Tabular işlem girdisinde her özellik/değer-bucket çifti kimlik birimi olur (210); kimlik noktası modülü (220) bunları buluta projekte eder. Okuyucu (130) risk logitini, ablation (260) leave-one-point-out farkını, tam-sözlük decoder (270) düz-metin etiketi, karşı-faktürel denetim (280) tek/çift-maske alarm etkisini ve paketleyici (290) ONNX/quantizer/decoder/manifest paketini üretir.
 
-Ölçülen örneklerde tek-maskeli audit'te alarm popülasyonunun %94–100'ü unflag olmuştur. Matched PR-AUC 0.462, XGBoost PR-AUC 0.8047'dir; üstünlük iddia edilmez. Fraud dağıtım örneği 543 KB ONNX, Torch↔ORT paritesi 1.5e-6 ve yaklaşık 45.5k işlem/s ölçmüştür; bunlar yalnızca bu embodiment'in koşullarıdır, evrensel paket sınırı değildir.
+Ölçülen örneklerde tek-maskeli audit'te alarm popülasyonunun %94–100'ü unflag olmuştur. Matched PR-AUC 0.462, XGBoost PR-AUC 0.8047'dir; üstünlük iddia edilmez. Fraud dağıtım örneği 543 KB ONNX, Torch↔ORT paritesi 1.5e-6 ve 45.5k işlem/s ölçmüştür; bunlar bu embodiment'in koşullarıdır, evrensel paket sınırı değildir.
 
 #### 2.7.5 AML embodiment'i
 
-AML'de her işlem veya işlem penceresi nokta-bulutuna projekte edilir; okuyucu tipoloji/riske yönelik çıktı verir; prototip isimlendirme modülü bulutu isimli tipoloji prototipleriyle karşılaştırır. Elliptic held-out örneğinde prototip isimlendirme genel olarak %75, illicit sınıfında %45'tir. Beş-seed pilotta kaba isimli-tipoloji kararlılığı 0.325, SHAP top-1 kararlılığı 0.1025'tir (yaklaşık 3.2×); **bu, harita koordinatlarının kararlı olduğu anlamına gelmez**: koordinatlar ve attribution büyüklükleri retraining-stable olarak gösterilmemiştir. İddia, doğruluk veya SAR gerekçesi garantisi değil, isimli geometrik inceleme yüzeyidir.
+AML'de her işlem veya işlem penceresi nokta-bulutuna projekte edilir; okuyucu tipoloji/riske yönelik çıktı verir; prototip isimlendirme modülü bulutu isimli tipoloji prototipleriyle karşılaştırır. Elliptic held-out örneğinde prototip isimlendirme genel olarak %75, illicit sınıfında %45'tir. Beş-seed pilotta kaba isimli-tipoloji kararlılığı 0.325, SHAP top-1 kararlılığı 0.1025'tir (3.2×); **bu, harita koordinatlarının kararlı olduğu anlamına gelmez**: koordinatlar ve attribution büyüklükleri retraining-stable olarak gösterilmemiştir. İddia, doğruluk veya SAR gerekçesi garantisi değil, isimli geometrik inceleme yüzeyidir.
 
 #### 2.7.6 Bakım embodiment'i
 
@@ -166,17 +166,17 @@ Bakımda ölçüm penceresi veya özellikleri (100/110) sensör-noktalarına dö
 
 ---
 
-## 3. İDDİALAR
+## 3. İSTEMLER
 
-### Bağımsız İddialar
+### Bağımsız İstemler
 
-**İddia 1 — Sistem:** Düşük boyutlu nokta-bulutu geometrisiyle bir girdi biriminden görev çıktısı üreten ve geometrik açıklama sağlayan bir bilgisayar sistemi olup, **karakterize edici özellik olarak**:
+**İstem 1 — Sistem:** Düşük boyutlu nokta-bulutu geometrisiyle bir girdi biriminden görev çıktısı üreten ve geometrik açıklama sağlayan bir bilgisayar sistemi olup, **karakterize edici özellik olarak**:
 
 (a) her bir token'ı veya girdi birimini 3 ≤ D ≤ 64 boyutlu Öklid uzayda bir pᵢ noktasına projekte eden bir projeksiyon modülü (110) ve nokta/çift özelliklerini **permütasyon-değişmez küme agregasyonu** ile bir küme durumuna birleştiren bir modül (123);
 
 (b) nokta özelliklerine ek olarak nokta çiftleri için en az mesafe ve açı bileşenlerini kodlayan bir çift-geometri kodlayıcısı (120);
 
-(c) adı geçen bulutun küme durumundan bir görev skoru veya çıktı üreten bir okuyucu (130);
+(c) bu küme durumundan bir görev skoru veya çıktı üreten bir okuyucu (130);
 
 (d) **aynı nokta bulutundan** native açıklama üreten bir yorumlama sistemi; bu sistemin (i) leave-one-point-out logit-ablationı decoder (270) ile metne çevirmesi, (ii) bölge/prototip isimlendirmesi ve (iii) bölge-kayması/drift incelemesinden en az birini yürütmesi için ablation modülü (260), decoder (270) ve/veya yorumlama modülü (150) ile karşı-faktürel modül (280) içermesi; ve
 
@@ -184,7 +184,7 @@ Bakımda ölçüm penceresi veya özellikleri (100/110) sensör-noktalarına dö
 
 içermekte olup, **aynı nokta-bulutu geometrisi hem görev skorunun hesaplama substratı hem de native açıklamanın kaynağıdır**.
 
-**İddia 2 — Yöntem:** Nokta-bulutu geometrisiyle görev çıktısı ve native açıklama üreten bilgisayarla uygulanan bir yöntem olup, **karakterize edici özellik olarak**:
+**İstem 2 — Yöntem:** Nokta-bulutu geometrisiyle görev çıktısı ve native açıklama üreten bilgisayarla uygulanan bir yöntem olup, **karakterize edici özellik olarak**:
 
 (a) token veya girdi birimlerini 3 ≤ D ≤ 64 boyutlu noktalar olarak projekte etme;
 (b) nokta ve nokta-çifti özelliklerini hesaplama;
@@ -193,37 +193,39 @@ içermekte olup, **aynı nokta-bulutu geometrisi hem görev skorunun hesaplama s
 (e) **aynı bulut** üzerinde leave-one-point-out logit-ablation, decoder ile metin, bölge/prototip isimlendirme veya bölge-kayması/drift incelemesinden en az birini yürütme; ve
 (f) okuyucu ile gerekli kantizör, decoder ve manifesti kompakt, self-contained, doğrulanabilir dağıtım paketinde sunma
 
-adımlarını içermektedir; permütasyon-değişmezlik yalnızca (c)'deki simetrik agregasyon için geçerlidir ve bağlam/tarihçeden üretilen noktalar sıra-duyarlı olabilir.
+adımlarını içermektedir; permütasyon-değişmezlik (c)'deki simetrik agregasyon için geçerlidir ve bağlam/tarihçeden üretilen noktalar sıra-duyarlı olabilir.
 
-**İddia 3 — Bilgisayar programı:** Bir işlemci üzerinde çalıştırıldığında İddia 2'deki yöntem adımlarını gerçekleştiren program talimatlarını içeren, geçici olmayan bilgisayar tarafından okunabilir bir kayıt ortamı.
+**İstem 3 — Bilgisayar programı:** Bir işlemci üzerinde çalıştırıldığında İstem 2'deki yöntem adımlarını gerçekleştiren program talimatlarını içeren, geçici olmayan, bilgisayarca okunabilir bir kayıt ortamı.
 
-### Bağımlı İddialar
+### Bağımlı İstemler
 
-**İddia 4:** İddia 1'deki sistem olup, çift-geometri kodlayıcısı her nokta çifti için `[pᵢ−pⱼ, ‖pᵢ−pⱼ‖, cos(θᵢⱼ), ‖pᵢ‖, ‖pⱼ‖] ∈ ℝ^(D+4)` vektörünü kullanır; mesafe ve kosinüs bileşenleri koordinat dönüşümüne karşı değişmez, fark vektörü ise koordinat dönüşümüyle eşdeğişkendir.
+**İstem 4:** İstem 1'deki sistem olup, çift-geometri kodlayıcısı her nokta çifti için `[pᵢ−pⱼ, ‖pᵢ−pⱼ‖, cos(θᵢⱼ), ‖pᵢ‖, ‖pⱼ‖] ∈ ℝ^(D+4)` vektörünü kullanır; mesafe ve kosinüs bileşenleri koordinat dönüşümüne karşı değişmez, fark vektörü ise koordinat dönüşümüyle eşdeğişkendir.
 
-**İddia 5:** İddia 1'deki sistem olup, D değeri `{8, 16, 32, 64}` kümesinden seçilir veya ölçülen bölge sayısı ve/veya yayılım gibi bulut karmaşıklığına göre dinamik seçilir.
+**İstem 5:** İstem 1'deki sistem olup, D değeri `{8, 16, 32, 64}` kümesinden seçilir veya ölçülen bölge sayısı ve/veya yayılımla belirlenen bulut karmaşıklığına göre dinamik seçilir.
 
-**İddia 6:** İddia 1'deki sistem olup, okuyucu (130) INT8 kantizasyonla temsil edilir ve paritesi hedef dağıtım paketinde doğrulanır.
+**İstem 6:** İstem 1'deki sistem olup, okuyucu (130) INT8 kantizasyonla temsil edilir ve paritesi hedef dağıtım paketinde doğrulanır.
 
-**İddia 7:** İddia 1'deki sistem olup, decoder (270) tam sözlük eşlemesi taşır ve hiçbir token/bucket kimliğini “other” kovasına atmaz.
+**İstem 7:** İstem 1'deki sistem olup, decoder (270) tam sözlük eşlemesi taşır ve hiçbir token/bucket kimliğini “other” kovasına atmaz.
 
-**İddia 8:** İddia 1'deki sistem olup, karşı-faktürel modül (280) tek-nokta ve çift-nokta maskeleme/çıkarma deneylerini çalıştırır ve bunların sonucunu toplamsal katkı değil karşı-faktürel duyarlılık olarak raporlar.
+**İstem 8:** İstem 1'deki sistem olup, karşı-faktürel modül (280) tek-nokta ve çift-nokta maskeleme/çıkarma deneylerini çalıştırır ve bunların sonucunu toplamsal katkı değil karşı-faktürel duyarlılık olarak raporlar.
 
-**İddia 9:** İddia 1'deki sistem olup, nokta konumları için tercihen QUANN 0th-order daraltma ve okuyucu için backpropagation eğitimi uygulayarak hibrit bir eğitim rejimi kullanır; 0th-order adımın küçük ve sınırlı modellerle uygulanması tercih edilir.
+**İstem 9:** İstem 1'deki sistem olup, nokta konumları için QUANN 0th-order daraltma ve okuyucu için backpropagation eğitimi uygulayarak hibrit bir eğitim rejimi kullanır; 0th-order adımın küçük ve sınırlı modellerle uygulanması tercih edilir.
 
-**İddia 10 — Dil embodiment'i:** İddia 1'deki sistem olup, girdi birimleri token/alt-sözcük, okuyucu çıktısı bir-sonraki-token dağılımı ve yorumlama agglütinatif morfolojiye yönelik bulut/bölge incelemesidir; **D=64, Nokta=20 konfigürasyonunda 200K korpus üzerinde PPL 37.63** ölçülmüştür (causal baseline 53.95'e göre %30 daha iyi). **R2b keşfi:** Nokta sayısı 10'dan 20'ye çıkarıldığında **%34 iyileşme** (57.04 → 37.63).
+**İstem 10 — Dil embodiment'i:** İstem 1'deki sistem olup, girdi birimleri token/alt-sözcük, okuyucu çıktısı bir-sonraki-token dağılımı ve yorumlama agglütinatif morfolojiye yönelik bulut/bölge incelemesidir; **D=64, Nokta=20 konfigürasyonunda 200K korpus üzerinde PPL 37.63** ölçülmüştür (causal baseline 53.95'e göre %30 daha iyi). **R2b keşfi:** Nokta sayısı 10'dan 20'ye çıkarıldığında **%34 iyileşme** (57.04 → 37.63).
 
-**İddia 11 — Fraud embodiment'i:** İddia 1'deki sistem olup, girdi birimleri kimlik-bucket işlem özellikleridir ve native açıklama leave-one-point-out metin, karşı-faktürel hatalı-uyarı denetimi ve self-contained edge paketini içerir; örnek ölçümde tek-maskeli audit %94–100 unflag, 543 KB ONNX, 1.5e-6 parite ve yaklaşık 45.5k işlem/s raporlanmış; matched PR-AUC 0.462 iken XGBoost 0.8047'dir.
+Bu sonuçlar bir dikey embodiment kanıtıdır, genel performans garantisi değildir.
 
-**İddia 12 — AML embodiment'i:** İddia 1'deki sistem olup, yorumlama modülü isimli tipoloji prototiplerini ve geometrik gerekçeyi verir; Elliptic held-out örneğinde isimlendirme genel %75 ve illicit sınıfında %45, beş-seed kaba-etiket kararlılığı 0.325 ve SHAP top-1 kararlılığı 0.1025 (yaklaşık 3.2×) olarak raporlanmıştır; bu kararlılık harita koordinatlarının kararlılığı anlamına gelmez.
+**İstem 11 — Fraud embodiment'i:** İstem 1'deki sistem olup, girdi birimleri kimlik-bucket işlem özellikleridir ve native açıklama leave-one-point-out metin, karşı-faktürel hatalı-uyarı denetimi ve self-contained edge paketini içerir; örnek ölçümde tek-maskeli audit %94–100 unflag, 543 KB ONNX, 1.5e-6 parite ve 45.5k işlem/s raporlanmış; matched PR-AUC 0.462 iken XGBoost 0.8047'dir.
 
-**İddia 13 — Bakım embodiment'i:** İddia 1'deki sistem olup, girdi birimleri sensör penceresi/ölçümleri, açıklama bölge/prototip ve bölge-kayması/drift'tir; CWRU record-disjoint ikili ROC/PR 0.999/1.000 (GBT 1.000/1.000), C-MAPSS prototip açıklama kapsamı 1,064 pencerede %81.7, drift 2.4× (1.17%→2.81%) ve INT8 edge okuyucu 79 KB/5.07e-7 parite olarak raporlanmıştır; edge artifact ölçeklenmiş bulut girdisini alır, ham sensör girdisi değildir.
+**İstem 12 — AML embodiment'i:** İstem 1'deki sistem olup, yorumlama modülü isimli tipoloji prototiplerini ve geometrik gerekçeyi verir; Elliptic held-out örneğinde isimlendirme genel %75 ve illicit sınıfında %45, beş-seed kaba-etiket kararlılığı 0.325 ve SHAP top-1 kararlılığı 0.1025 (3.2×) olarak raporlanmıştır; bu kararlılık harita koordinatlarının kararlılığı anlamına gelmez.
+
+**İstem 13 — Bakım embodiment'i:** İstem 1'deki sistem olup, girdi birimleri sensör penceresi/ölçümleri, açıklama bölge/prototip ve bölge-kayması/drift'tir; CWRU record-disjoint ikili ROC/PR 0.999/1.000 (GBT 1.000/1.000), C-MAPSS prototip açıklama kapsamı 1,064 pencerede %81.7, drift 2.4× (1.17%→2.81%) ve INT8 edge okuyucu 79 KB/5.07e-7 parite olarak raporlanmıştır; edge artifact ölçeklenmiş bulut girdisini alır, ham sensör girdisi değildir.
 
 ---
 
 ## 4. ÖZET (ABSTRACT)
 
-Sistem, token, özellik kimliği veya pencere gibi girdi birimlerini düşük boyutlu noktalar olarak temsil eder; nokta özellikleri ile mesafe/açı temelli çift-geometriyi simetrik küme agregasyonuyla birleştirir ve küme durumundan okuyucuyla görev skoru üretir. Aynı nokta bulutu, leave-one-point-out ablationın metne çözülmesi, bölge/prototip isimlendirmesi ve bölge-kayması/drift incelemesi için native açıklama nesnesidir. Okuyucu, gerekli kantizör, decoder ve manifest kompakt, self-contained ve doğrulanabilir pakette dağıtılabilir. Böylece aynı geometri hem hesaplama hem açıklama substratıdır. Dil, fraud, AML ve bakım embodiment'leri ortak çekirdeği farklı birim/isimlendirmelerle uygular. Doğruluk-üstünlüğü iddia edilmez; açıklama, geometriye dayalı denetim yüzeyidir ve nedensellik veya garanti anlamına gelmez.
+Sistem, token, özellik kimliği veya pencere türü girdi birimlerini düşük boyutlu noktalar olarak temsil eder; nokta özellikleri ile mesafe/açı temelli çift-geometriyi simetrik küme agregasyonuyla birleştirir ve küme durumundan okuyucuyla görev skoru üretir. Aynı nokta bulutu, leave-one-point-out ablationın metne çözülmesi, bölge/prototip isimlendirmesi ve bölge-kayması/drift incelemesi için native açıklama nesnesidir. Okuyucu, gerekli kantizör, decoder ve manifest kompakt, self-contained ve doğrulanabilir pakette dağıtılabilir. Böylece aynı geometri hem hesaplama hem açıklama substratıdır. Dil, fraud, AML ve bakım embodiment'leri ortak çekirdeği farklı birim/isimlendirmelerle uygular. Doğruluk-üstünlüğü iddia edilmez; açıklama, geometriye dayalı denetim yüzeyidir ve nedensellik veya garanti anlamına gelmez.
 
 ---
 
@@ -257,7 +259,7 @@ Açıklamanın 2.2 bölümünde atıf verilen öncü teknik kaynaklar:
 8. Hu, Z., Niu, L., & Varma, S., 2026. *Neural population geometry / point-cloud manifold analysis.* arXiv:2607.04525 [cs.CL]; DOI 10.48550/arXiv.2607.04525.
 9. Xu, W., 2026. *Scale/PGA: Subspace Procrustes Geometry alignment analysis.* arXiv:2605.17084 [cs.LG]; DOI 10.48550/arXiv.2605.17084.
 
-> **Atıf kapsamı notu:** 2.2'de açıkça belirtildiği gibi, "özgül birleşimin incelenen kaynaklarda gösterilmediği" ifadesi yalnızca bu listedeki kaynaklarla sınırlıdır; küresel yokluk iddiası değildir. Resmi prior-art taraması (Espacenet, Google Patents, TÜRKPATENT, WIPO) vekil tarafından tamamlanmalıdır.
+> **Atıf kapsamı notu:** 2.2'de açıkça belirtildiği gibi, "özgül birleşimin incelenen kaynaklarda gösterilmediği" ifadesi bu listedeki kaynaklarla sınırlıdır; küresel yokluk iddiası değildir. Resmi prior-art taraması (Espacenet, Google Patents, TÜRKPATENT, WIPO) vekil tarafından tamamlanmalıdır.
 
 ---
 
@@ -265,26 +267,26 @@ Açıklamanın 2.2 bölümünde atıf verilen öncü teknik kaynaklar:
 
 ### 7.1 Birlik (unity) ve bölünmüş başvuru
 
-Dil, fraud, AML ve bakımın tek başvuruda birlikte sunulması “çok icat”/birlik (unity) itirazı riski doğurur. Savunma, tek icat fikrinin İddia 1'deki **dual-use geometri mekanizması** olmasıdır: aynı öğrenilmiş düşük boyutlu bulut okuyucuya skor verir ve native açıklamanın (ablation, prototip/bölge, drift) kaynağı olur; dikeyler bu ortak mekanizmanın uygulamalarıdır. Bağımsız sistem iddiası dikeyden bağımsız, dört dikey ise ayrı bağımlı iddialardadır. İncelemeci birlik itirazı yaparsa dikey embodiment'ları bölünmüş (divisional) başvurulara ayırma seçeneği değerlendirilebilir.
+Dil, fraud, AML ve bakımın tek başvuruda birlikte sunulması “çok buluş”/birlik (unity) itirazı riski doğurur. Savunma, tek buluş fikrinin İstem 1'deki **dual-use geometri mekanizması** olmasıdır: aynı öğrenilmiş düşük boyutlu bulut okuyucuya skor verir ve native açıklamanın (ablation, prototip/bölge, drift) kaynağı olur; dikeyler bu ortak mekanizmanın uygulamalarıdır. Bağımsız sistem istemi dikeyden bağımsız, dört dikey ise ayrı bağımlı istemlerdedir. İncelemeci birlik itirazı yaparsa dikey embodiment'ları bölünmüş (divisional) başvurulara ayırma seçeneği değerlendirilebilir.
 
 ### 7.2 TR ulusal (dil) başvur ile ilişki / öncelik
 
 Bu dosya evrensel dual-use çekirdeğini ifade eder ve iki özel dosyanın üst kümesidir: `../dil/patent_application_v2.3.md` (dil/sonraki-token uygulaması) ve `../tabular/patent_tabular_explain_v1.md` (tabular/fraud kimlik-bucket, açıklama ve edge uygulaması).
 
-**PCT–TR öncelik ilişkisi (kritik):** TR ulusal başvurumuz `TURKPATENT_basvuru_v2.3.md` **yalnızca dil** kapsamındadır. Bu PCT dosyasının kapsamı (dual-use çekirdek + dil/fraud/AML/bakım) TR dil başvurda **açıklanmamış** olduğundan, bu PCT başvurusu TR ulusal (dil) başvurudan **öncelik talep edemez** — iki bağımsız icat/kapsam olarak değerlendirilmelidir. Önerilen strateji: **TR ulusal = dil** (öncelik T1) ve **PCT = evrensel + 4 dikey** (kendi önceliği T2); dosyalar arası metin bağlantısı kendiliğinden önceki tarih yaratmaz. Öncelik tarihi ancak usulüne uygun bir başvuruyla oluşur; hiçbir dosya yayımlanana kadar gizlilik uyarısı korunmalıdır.
+**PCT–TR öncelik ilişkisi (kritik):** TR ulusal başvurumuz `TURKPATENT_basvuru_v2.3.md` **dil** kapsamındadır. Bu PCT dosyasının kapsamı (dual-use çekirdek + dil/fraud/AML/bakım) TR dil başvurda **açıklanmamış** olduğundan, bu PCT başvurusu TR ulusal (dil) başvurudan **öncelik talep edemez** — iki bağımsız buluş/kapsam olarak değerlendirilmelidir. Önerilen strateji: **TR ulusal = dil** (öncelik T1) ve **PCT = evrensel + 4 dikey** (kendi önceliği T2); dosyalar arası metin bağlantısı kendiliğinden önceki tarih yaratmaz. Öncelik tarihi ancak usulüne uygun bir başvuruyla oluşur; hiçbir dosya yayımlanana kadar gizlilik uyarısı korunmalıdır.
 
 ### 7.3 Barizlik ve teknik etki (m.69)
 
 - **PointNet ayrımı:** PointNet'te noktalar ham 3B sensör/görüntü girdisidir; burada nokta, farklı alan verilerinden öğrenilmiş temsildir.
 - **Çift-geometri ayrımı:** Tercih edilen D+4 vektör — fark, mesafe, kosinüs ve iki norm — burada belirginleştirilmiştir; PointNet/Deep Sets'in genel simetrik havuzlaması bu birleşimi tek başına göstermemektedir.
 - **Native açıklama ayrımı:** Aynı karar bulutundan ablation, metin/prototip ve drift incelemesi yapılır; bu, SHAP özellik listesinin aynısı olarak sunulmaz.
-- **Teknik etki:** İddialar okunabilir native denetim yüzeyi ve self-contained, kompakt, doğrulanabilir dağıtım özelliklerine bağlanmıştır. m.69 bakımından açıklamadaki teknik etki, soyut matematiksel yöntem değil, okuyucu ve doğrulanabilir paketle çalışan bilgisayar sistemidir.
+- **Teknik etki:** İstemler okunabilir native denetim yüzeyi ve self-contained, kompakt, doğrulanabilir dağıtım özelliklerine bağlanmıştır. m.69 bakımından açıklamadaki teknik etki, soyut matematiksel yöntem değil, okuyucu ve doğrulanabilir paketle çalışan bilgisayar sistemidir.
 
 ### 7.4 Kapsam ve doğruluk düzeltmeleri
 
-- **C1 — Permütasyon:** İddia 1(a), İddia 2(c) ve 2.7.1 simetrik küme agregasyonunu sınırlar; bağlam/tarihçeden üretilen noktaların sıra-duyarlı olabileceğini açıklar.
-- **C2 — Dönüşüm:** İddia 4 ve 2.7.1 fark vektörünü eşdeğişken; mesafe/kosinüs/norm bileşenlerini değişmez olarak ayırır.
-- **C3 — Paket:** İddia 1(e), 2.4, 2.5 ve 2.7.2 sabit KB/parite iddiası yerine kompakt, self-contained, bit-kesin doğrulanabilir dağıtım ilkesini koyar; fraud ve bakım değerleri yalnız embodiment örnekleridir.
+- **C1 — Permütasyon:** İstem 1(a), İstem 2(c) ve 2.7.1 simetrik küme agregasyonunu sınırlar; bağlam/tarihçeden üretilen noktaların sıra-duyarlı olabileceğini açıklar.
+- **C2 — Dönüşüm:** İstem 4 ve 2.7.1 fark vektörünü eşdeğişken; mesafe/kosinüs/norm bileşenlerini değişmez olarak ayırır.
+- **C3 — Paket:** İstem 1(e), 2.4, 2.5 ve 2.7.2 sabit KB/parite iddiası yerine kompakt, self-contained, bit-kesin doğrulanabilir dağıtım ilkesini koyar; fraud ve bakım değerleri yalnız embodiment örnekleridir.
 - **C4 — Prior art:** 2.2.3, incelenen kaynaklarda özgül birleşimin gösterilmediğini söyler; küresel “hiçbirinde yok” iddiası yapmaz ve daha geniş tarama gereğini kaydeder.
 
 **Kanıt tutarlılığı notu:** Dil için 6.45/2.92 karşılaştırması v2.3'te ortak held-out diye etiketlense de, güncel `RESEARCH.md` 6.45'in eğitim kümesi örneklemi olduğunu ve strict held-out olmadığını bildirir. Başvuru öncesi bu protokol farklılığı çözülmeli; mevcut metin 6.45'i held-out kanıtı olarak ileri sürmemektedir.

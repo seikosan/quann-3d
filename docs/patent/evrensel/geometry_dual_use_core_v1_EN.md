@@ -26,14 +26,14 @@
 
 0. **PCT Request** — basic data
 1. **Title**
-2. **Description** — 2.1 Technical Field · 2.2 Prior Art · 2.3 Problem · 2.4 Essence · 2.5 Effects · 2.6 Figures · 2.7 Detailed Description (2.7.1–2.7.6)
+2. **Description** — 2.1 Technical Field · 2.2 Prior Art · 2.3 Problem · 2.4 Summary · 2.5 Effects · 2.6 Drawings · 2.7 Detailed Description (2.7.1–2.7.6)
 3. **Claims** — 3 independent (System, Method, Computer Program) + 10 dependent (6 mechanism + 4 vertical embodiments) = 13 claims
 4. **Abstract**
 5. **Drawings** — 7 figures, separate pages
 6. **Bibliography**
 7. **Agent Assessment** — unity, priority, non-obviousness, corrections (not part of the filing)
 
-> **TR/PCT relationship (critical):** This **PCT (universal)** application has a **different, broader** scope than the **language** embodiment in our TR national filing `TURKPATENT_basvuru_v2.3.md` (dual-use geometry core + language/fraud/AML/maintenance). Because the universal scope is not disclosed in the TR language filing, this PCT document **cannot claim priority** from the TR filing — as an independent application it has its own priority date (T2). A textual link between the two documents does not, by itself, create an earlier date.
+> **TR/PCT relationship (key):** This **PCT (universal)** application has a **different, broader** scope than the **language** embodiment in our TR national filing `TURKPATENT_basvuru_v2.3.md` (dual-use geometry core + language/fraud/AML/maintenance). Because the universal scope is not disclosed in the TR language filing, this PCT document **cannot claim priority** from the TR filing — as an independent application it has its own priority date (T2). A textual link between the two documents does not, by itself, create an earlier date.
 
 ---
 
@@ -83,7 +83,7 @@ The present invention aims to solve the following technical problems:
 3. Because separate representation and tool chains are used for decision and explanation, edge deployment not being established in a compact, self-contained and bit-exact verifiable manner.
 4. A common geometry core not being applicable to different input types such as text, tabular transaction/record, AML transaction window and sensor/complaint window.
 
-### 2.4 Essence of the Invention (Solution)
+### 2.4 Summary of the Invention (Solution)
 
 The essence of the invention is that a single low-dimensional point cloud is **simultaneously the computation substrate and the native explanation surface**. Instead of computing the geometry and then approximately interpreting it with a separate explanation model, the score and the explanation are derived from the same points, the same point-pair relations and the same region/prototype structure.
 
@@ -94,7 +94,7 @@ The essence of the invention is that a single low-dimensional point cloud is **s
 | Reader | The reader produces the task score/output from the set state (130). | The score is computed from the same cloud geometry. |
 | Native explanation and deployment | Interpretation (150), ablation/decoder (260/270), counterfactual audit (280), packager (290). | Ablation, prototype/region and drift are read from the same cloud; the reader and required components are delivered in a self-contained package. |
 
-Permutation-invariance holds only for the symmetric set aggregation applied after the shared point/pair functions. Point coordinates produced from context or history may be order-sensitive; it is not claimed that all stages of the system are order-free. The difference vector is covariant under a transformation; the distance, the cosine angle and the norms are components invariant to a coordinate transformation.
+Permutation-invariance holds for the symmetric set aggregation applied after the shared point/pair functions. Point coordinates produced from context or history may be order-sensitive; it is not claimed that all stages of the system are order-free. The difference vector is covariant under a transformation; the distance, the cosine angle and the norms are components invariant to a coordinate transformation.
 
 The deployment principle is that the reader, the required quantizer/decoder and the manifest are combined in a compact, self-contained and bit-exactly verifiable package. The package size and numerical parity depend on the application, the input contract and the target hardware; no single universal size or parity value is asserted.
 
@@ -106,9 +106,9 @@ The deployment principle is that the reader, the required quantizer/decoder and 
 4. **Compact edge deployment:** the reader, quantizer, decoder and manifest can be carried as a single self-contained package; bit-exact parity and source integrity can be verified on the relevant target.
 5. **Transferable core across verticals:** while the representation source and region names vary by vertical, the geometric decision and native-inspection mechanism can be used in language, fraud, AML and maintenance applications. This is not a proof of accuracy or generalization superiority across verticals.
 
-**Boundary of the results:** The present invention makes no accuracy-superiority or SOTA claim. In the fraud measurement the matched PR-AUC is 0.462 whereas XGBoost is 0.8047. QUANN is only a 0th-order point-reduction option for small and limited models; it has not been shown to scale to large-model training. A region map is not causality, not a complete explanation, not regulatory approval and not guaranteed decision accuracy. In AML, coarse label stability does not mean the map coordinates are stable; the maintenance edge package takes the scaled cloud input, not raw sensor frames.
+**Boundary of the results:** The present invention makes no accuracy-superiority or SOTA claim. In the fraud measurement the matched PR-AUC is 0.462 whereas XGBoost is 0.8047. QUANN is a 0th-order point-reduction option for small and limited models; it has not been shown to scale to large-model training. A region map is not causality, not a complete explanation, not regulatory approval and not guaranteed decision accuracy. In AML, coarse label stability does not mean the map coordinates are stable; the maintenance edge package takes the scaled cloud input, not raw sensor frames.
 
-### 2.6 Brief Description of the Figures
+### 2.6 Brief Description of the Drawings
 
 - **Figure 1:** Combined architecture — 100 input/context module, 110 point projection, 120 dual-geometry encoder, 123 symmetric fusion, 130 score reader, 150 interpretation, 260 ablation, 270 decoder, 280 counterfactual audit, 290 deployment.
 - **Figure 2:** Point and dual-geometry — D-dimensional points, the [pᵢ−pⱼ, ‖pᵢ−pⱼ‖, cosθ, ‖pᵢ‖, ‖pⱼ‖] vector and symmetric aggregation.
@@ -152,7 +152,7 @@ In the 200K configuration of the v2.3 file the reported D32 PPL is 6.45 and the 
 
 In the tabular transaction input each feature/value-bucket pair becomes an identity unit (210); the identity-point module (220) projects these to the cloud. The reader (130) produces the risk logit, the ablation (260) the leave-one-point-out difference, the full-vocabulary decoder (270) the plain-text label, the counterfactual audit (280) the single/pair-mask alarm effect and the packager (290) the ONNX/quantizer/decoder/manifest package.
 
-In the measured examples the single-masked audit left 94–100% of the alarm population unflagged. The matched PR-AUC is 0.462 and the XGBoost PR-AUC is 0.8047; superiority is not claimed. The fraud deployment example measured 543 KB ONNX, Torch↔ORT parity 1.5e-6 and about 45.5k transactions/s; these are only the conditions of this embodiment, not a universal package bound.
+In the measured examples the single-masked audit left 94–100% of the alarm population unflagged. The matched PR-AUC is 0.462 and the XGBoost PR-AUC is 0.8047; superiority is not claimed. The fraud deployment example measured 543 KB ONNX, Torch↔ORT parity 1.5e-6 and about 45.5k transactions/s; these are the conditions of this embodiment, not a universal package bound.
 
 #### 2.7.5 AML embodiment
 
@@ -170,52 +170,54 @@ In maintenance the measurement window or its features (100/110) are converted to
 
 **Claim 1 — System:** A computer system that produces a task output from an input unit via low-dimensional point-cloud geometry and provides a geometric explanation, **characterized in that** it comprises:
 
-(a) a projection module (110) that projects each token or input unit to a pᵢ point in 3 ≤ D ≤ 64-dimensional Euclidean space, and a module (123) that combines the point/pair features into a set state by **permutation-invariant set aggregation**;
+(a) a projection module (110) that projects each token or input unit to a pᵢ point in 3 ≤ D ≤ 64-dimensional Euclidean space, forming a point cloud;
 
-(b) a dual-geometry encoder (120) that, in addition to the point features, encodes for point pairs at least the distance and angle components;
+(b) a dual-geometry encoder (120) that, in addition to a plurality of point features, encodes for point pairs at least distance and angle components, thereby producing a set of pair features;
 
-(c) a reader (130) that produces a task score or output from the set state of the cloud referred to above;
+(c) a module (123) that combines the point features and the pair features into a set state by a **permutation-invariant set aggregation**;
 
-(d) an interpretation system that produces a native explanation from **the same point cloud**; this system comprising, in order to perform at least one of (i) converting the leave-one-point-out logit-ablation to text via the decoder (270), (ii) region/prototype naming and (iii) region-shift/drift analysis, the ablation module (260), the decoder (270) and/or the interpretation module (150) together with the counterfactual module (280); and
+(d) a reader (130) that produces a task score or output from the set state;
 
-(e) a packager (290) that combines the reader, the required quantizer, the decoder and the manifest in a self-contained compact deployment package
+(e) an interpretation system that produces a native explanation from **the same point cloud**; the interpretation system comprising, in order to perform at least one of (i) converting a leave-one-point-out logit-ablation to text via a decoder (270), (ii) region/prototype naming and (iii) region-shift/drift analysis, an ablation module (260), the decoder (270) and/or an interpretation module (150) together with a counterfactual module (280); and
 
-and in that **the same point-cloud geometry is both the computation substrate of the task score and the source of the native explanation**.
+(f) a packager (290) that combines the reader, a quantizer, the decoder and a manifest in a self-contained compact deployment package
+
+and in that **the same point-cloud geometry is both a computation substrate of the task score and a source of the native explanation**.
 
 **Claim 2 — Method:** A method, implemented by a computer, that produces a task output and a native explanation via point-cloud geometry, **characterized in that** it comprises the steps of:
 
-(a) projecting tokens or input units to points of 3 ≤ D ≤ 64 dimensions;
-(b) computing the point and point-pair features;
-(c) combining the point features and the dual-geometry features into a set state by permutation-invariant set aggregation;
-(d) producing a task score/output from the set state via the reader;
-(e) performing at least one of, on **the same cloud**, a leave-one-point-out logit-ablation, text via the decoder, region/prototype naming or region-shift/drift analysis; and
-(f) delivering the reader together with the required quantizer, decoder and manifest in a compact, self-contained, verifiable deployment package
+(a) projecting tokens or input units to points of 3 ≤ D ≤ 64 dimensions, forming a point cloud;
+(b) computing a plurality of point features and a set of pair features for point pairs;
+(c) combining the point features and the pair features into a set state by a permutation-invariant set aggregation;
+(d) producing a task score or output from the set state via a reader;
+(e) performing at least one of, on **the same cloud**, a leave-one-point-out logit-ablation, text via a decoder, region/prototype naming or region-shift/drift analysis; and
+(f) delivering the reader together with a quantizer, a decoder and a manifest in a compact, self-contained, verifiable deployment package
 
-and in that permutation-invariance holds only for the symmetric aggregation in (c) and the points produced from context/history may be order-sensitive.
+and in that permutation-invariance holds for the set aggregation in (c), and points produced from context or history may be order-sensitive.
 
 **Claim 3 — Computer program:** A non-transitory computer-readable storage medium storing program instructions that, when executed by a processor, perform the method steps of Claim 2.
 
 ### Dependent Claims
 
-**Claim 4:** The system of Claim 1, wherein the dual-geometry encoder uses, for each point pair, the `[pᵢ−pⱼ, ‖pᵢ−pⱼ‖, cos(θᵢⱼ), ‖pᵢ‖, ‖pⱼ‖] ∈ ℝ^(D+4)` vector; the distance and cosine components are invariant to a coordinate transformation and the difference vector is covariant under the coordinate transformation.
+**Claim 4:** The system of Claim 1, wherein the dual-geometry encoder uses, for each point pair, the `[pᵢ−pⱼ, ‖pᵢ−pⱼ‖, cos(θᵢⱼ), ‖pᵢ‖, ‖pⱼ‖] ∈ ℝ^(D+4)` vector; distance and cosine components thereof are invariant to a coordinate transformation, and a difference vector thereof is covariant under the coordinate transformation.
 
-**Claim 5:** The system of Claim 1, wherein the D value is selected from the set `{8, 16, 32, 64}` or is selected dynamically according to the cloud complexity such as the measured region count and/or spread.
+**Claim 5:** The system of Claim 1, wherein a D value is selected from the set `{8, 16, 32, 64}` or is selected dynamically according to a cloud complexity including a measured region count and/or spread.
 
-**Claim 6:** The system of Claim 1, wherein the reader (130) is represented by INT8 quantization and its parity is verified in the target deployment package.
+**Claim 6:** The system of Claim 1, wherein the reader (130) is represented by INT8 quantization and its parity is verified in a target deployment package.
 
 **Claim 7:** The system of Claim 1, wherein the decoder (270) carries a full vocabulary mapping and does not assign any token/bucket identity to an “other” bin.
 
 **Claim 8:** The system of Claim 1, wherein the counterfactual module (280) runs single-point and pair-point masking/removal experiments and reports their outcome as a counterfactual sensitivity rather than an additive contribution.
 
-**Claim 9:** The system of Claim 1, wherein a hybrid training regime is used, applying preferably QUANN 0th-order reduction for the point positions and backpropagation training for the reader; the 0th-order step is preferably applied with small and limited models.
+**Claim 9:** The system of Claim 1, wherein a hybrid training regime is used, applying QUANN 0th-order reduction for the point positions and backpropagation training for the reader; the 0th-order step is applied with small and limited models.
 
-**Claim 10 — Language embodiment:** The system of Claim 1, wherein the input units are tokens/sub-words, the reader output is the next-token distribution and the interpretation is a cloud/region analysis aimed at agglutinative morphology; in the D32 example PPL 6.45 and the causal reference 2.92 are reported. Since the 6.45 value is marked in the current status source as a training sample, this measurement does not constitute a strict held-out performance claim.
+**Claim 10 — Language embodiment:** The system of Claim 1, wherein the input units are tokens/sub-words, the reader output is a next-token distribution and the interpretation is a cloud/region analysis aimed at agglutinative morphology; in a D32 example, PPL 6.45 and a causal reference of 2.92 are reported. Since the 6.45 value is marked as a training sample in a status log, this measurement does not constitute a strict held-out performance claim.
 
-**Claim 11 — Fraud embodiment:** The system of Claim 1, wherein the input units are identity-bucket transaction features and the native explanation comprises leave-one-point-out text, counterfactual false-alarm audit and a self-contained edge package; in the example measurement the single-masked audit is 94–100% unflagged, 543 KB ONNX, 1.5e-6 parity and about 45.5k transactions/s are reported; the matched PR-AUC is 0.462 whereas XGBoost is 0.8047.
+**Claim 11 — Fraud embodiment:** The system of Claim 1, wherein the input units are identity-bucket transaction features and the native explanation comprises leave-one-point-out text, a counterfactual false-alarm audit and a self-contained edge package; in an example measurement, a single-masked audit is 94–100% unflagged, 543 KB ONNX, 1.5e-6 parity and 45.5k transactions/s throughput are reported; a matched PR-AUC of 0.462 is reported whereas XGBoost is 0.8047.
 
-**Claim 12 — AML embodiment:** The system of Claim 1, wherein the interpretation module gives named typology prototypes and the geometric rationale; in the Elliptic held-out example the naming is 75% overall and 45% in the illicit class, the five-seed coarse-label stability is 0.325 and the SHAP top-1 stability is 0.1025 (about 3.2×); this stability does not mean the map coordinates are stable.
+**Claim 12 — AML embodiment:** The system of Claim 1, wherein the interpretation module gives named typology prototypes and a geometric rationale; in an Elliptic held-out example, naming accuracy is 75% overall and 45% in an illicit class, five-seed coarse-label stability is 0.325 and SHAP top-1 stability is 0.1025 (3.2×); this stability does not mean that map coordinates are stable.
 
-**Claim 13 — Maintenance embodiment:** The system of Claim 1, wherein the input units are the sensor window/measurements, the explanation is region/prototype and region-shift/drift; the CWRU record-disjoint binary ROC/PR is 0.999/1.000 (GBT 1.000/1.000), the C-MAPSS prototype-explanation coverage is 81.7% over 1,064 windows, the drift is 2.4× (1.17%→2.81%) and the INT8 edge reader is 79 KB / 5.07e-7 parity; the edge artifact takes the scaled cloud input, not the raw sensor input.
+**Claim 13 — Maintenance embodiment:** The system of Claim 1, wherein the input units are sensor windows/measurements, the explanation is region/prototype and region-shift/drift; CWRU record-disjoint binary ROC/PR is 0.999/1.000 (GBT 1.000/1.000), C-MAPSS prototype-explanation coverage is 81.7% over 1,064 windows, drift is 2.4× (1.17%→2.81%) and an INT8 edge reader is 79 KB / 5.07e-7 parity; an edge artifact takes a scaled cloud input, not a raw sensor input.
 
 ---
 
@@ -227,7 +229,7 @@ The system represents input units such as a token, a feature identity or a windo
 
 ## 5. DRAWINGS (To Be Submitted on Separate Pages)
 
-The drawings must be prepared, on separate pages from the description text, as black-and-white line art with reference numerals.
+The drawings are to be prepared, on separate pages from the description text, as black-and-white line art with reference numerals.
 
 | Page | Figure | Content | Source / preparation note |
 |---|---|---|---|
@@ -239,7 +241,7 @@ The drawings must be prepared, on separate pages from the description text, as b
 | 6 | Figure 6 | Maintenance cloud and operating-condition drift | `fig/fig6a_bakim_bolge.png`; `fig/fig6b_bakim_drift.png` |
 | 7 | Figure 7 | Self-contained deployment and parity/manifest audit | Fraud deploy artifact and maintenance edge example |
 
-> **Note:** Figures 1–3 are new line drawings to be produced (black-and-white, with reference numerals, each on its own page); Figures 4–7 derive from the per-vertical artifact figures cited above and must be reproduced as black-and-white line/paper drawings on separate pages.
+> **Note:** Figures 1–3 are new line drawings to be produced (black-and-white, with reference numerals, each on its own page); Figures 4–7 derive from the per-vertical artifact figures cited above and are to be reproduced as black-and-white line/paper drawings on separate pages.
 
 ---
 
@@ -257,7 +259,7 @@ The prior-art sources cited in section 2.2:
 8. Hu, Z., Niu, L., & Varma, S., 2026. *Neural population geometry / point-cloud manifold analysis.* arXiv:2607.04525 [cs.CL]; DOI 10.48550/arXiv.2607.04525.
 9. Xu, W., 2026. *Scale/PGA: Subspace Procrustes Geometry alignment analysis.* arXiv:2605.17084 [cs.LG]; DOI 10.48550/arXiv.2605.17084.
 
-> **Citation-scope note:** As expressly stated in 2.2, the statement that “the specific combination is not shown in the surveyed sources” is limited to the sources in this list; it is not a global absence claim. A formal prior-art search (Espacenet, Google Patents, TÜRKPATENT, WIPO) must be completed by the agent.
+> **Citation-scope note:** As expressly stated in 2.2, the statement that “the specific combination is not shown in the surveyed sources” is limited to the sources in this list; it is not a global absence claim. A formal prior-art search (Espacenet, Google Patents, TÜRKPATENT, WIPO) is to be completed by the agent.
 
 ---
 
@@ -271,7 +273,7 @@ Presenting language, fraud, AML and maintenance together in a single application
 
 This document expresses the universal dual-use core and is the superset of two specific documents: `../dil/patent_application_v2.3.md` (the language/next-token application) and `../tabular/patent_tabular_explain_v1.md` (the tabular/fraud identity-bucket, explanation and edge application).
 
-**PCT–TR priority relationship (critical):** Our TR national filing `TURKPATENT_basvuru_v2.3.md` is **language-only** in scope. Since the scope of this PCT document (dual-use core + language/fraud/AML/maintenance) is **not disclosed** in the TR language filing, this PCT application **cannot claim priority** from the TR national (language) filing — it must be treated as two independent inventions/scopes. The recommended strategy: **TR national = language** (priority T1) and **PCT = universal + 4 verticals** (its own priority T2); a textual link between the documents does not, by itself, create an earlier date. A priority date arises only from a duly filed application; the confidentiality warning must be maintained until no document is published.
+**PCT–TR priority relationship (key):** Our TR national filing `TURKPATENT_basvuru_v2.3.md` covers the **language** embodiment alone in scope. Since the scope of this PCT document (dual-use core + language/fraud/AML/maintenance) is **not disclosed** in the TR language filing, this PCT application **cannot claim priority** from the TR national (language) filing — it is to be treated as two independent inventions/scopes. The recommended strategy: **TR national = language** (priority T1) and **PCT = universal + 4 verticals** (its own priority T2); a textual link between the documents does not, by itself, create an earlier date. A priority date arises from a duly filed application alone; the confidentiality warning is to be maintained until no document is published.
 
 ### 7.3 Non-obviousness and technical effect (Art. 69)
 
@@ -284,10 +286,10 @@ This document expresses the universal dual-use core and is the superset of two s
 
 - **C1 — Permutation:** Claim 1(a), Claim 2(c) and 2.7.1 limit the symmetric set aggregation; they state that points produced from context/history may be order-sensitive.
 - **C2 — Transformation:** Claim 4 and 2.7.1 make the difference vector covariant and the distance/cosine/norm components invariant.
-- **C3 — Package:** Claim 1(e), 2.4, 2.5 and 2.7.2 set the principle of a compact, self-contained, bit-exact verifiable deployment in place of a fixed KB/parity claim; the fraud and maintenance values are only embodiment examples.
+- **C3 — Package:** Claim 1(e), 2.4, 2.5 and 2.7.2 set the principle of a compact, self-contained, bit-exact verifiable deployment in place of a fixed KB/parity claim; the fraud and maintenance values are embodiment examples.
 - **C4 — Prior art:** 2.2.3 states that the specific combination is not shown in the surveyed sources; it makes no global “nowhere has it” claim and records the need for a broader search.
 
-**Evidence-consistency note:** The 6.45/2.92 comparison for language is labelled in v2.3 as a shared held-out, but the current `RESEARCH.md` records that 6.45 is a sample from the training set and is not a strict held-out. This protocol difference must be resolved before filing; the present text does not advance 6.45 as a held-out proof.
+**Evidence-consistency note:** The 6.45/2.92 comparison for language is labelled in v2.3 as a shared held-out, but the current `RESEARCH.md` records that 6.45 is a sample from the training set and is not a strict held-out. This protocol difference is to be resolved before filing; the present text does not advance 6.45 as a held-out proof.
 
 ---
 
