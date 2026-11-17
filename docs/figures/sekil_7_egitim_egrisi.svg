@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000">
+  <style>
+    text { font-family: Arial, Helvetica, sans-serif; fill: #000; }
+    .axis { stroke: #000; stroke-width: 2; }
+    .curve { stroke: #000; stroke-width: 3; fill: none; }
+    .grid { stroke: #000; stroke-width: 1; stroke-dasharray: 4 6; }
+    .lbl { font-size: 15px; }
+    .ref { font-size: 18px; font-weight: bold; }
+    .title { font-size: 20px; font-weight: bold; }
+  </style>
+
+  <!-- plot area: x 110..700, y 150..750 -->
+  <line class="axis" x1="110" y1="750" x2="700" y2="750"/>
+  <line class="axis" x1="110" y1="750" x2="110" y2="150"/>
+
+  <!-- y ticks (log scale) -->
+  <line class="grid" x1="110" y1="150" x2="700" y2="150"/>
+  <line class="grid" x1="110" y1="350" x2="700" y2="350"/>
+  <line class="grid" x1="110" y1="550" x2="700" y2="550"/>
+  <line class="grid" x1="110" y1="720" x2="700" y2="720"/>
+  <text class="lbl" x="95" y="155" text-anchor="end">2000</text>
+  <text class="lbl" x="95" y="355" text-anchor="end">100</text>
+  <text class="lbl" x="95" y="555" text-anchor="end">10</text>
+  <text class="lbl" x="95" y="725" text-anchor="end">4</text>
+  <text class="lbl" x="55" y="450" text-anchor="middle" transform="rotate(-90 55 450)">PPL (log)</text>
+
+  <!-- x ticks -->
+  <text class="lbl" x="110" y="775" text-anchor="middle">0</text>
+  <text class="lbl" x="268" y="775" text-anchor="middle">10</text>
+  <text class="lbl" x="405" y="775" text-anchor="middle">20</text>
+  <text class="lbl" x="543" y="775" text-anchor="middle">30</text>
+  <text class="lbl" x="680" y="775" text-anchor="middle">50</text>
+  <text class="lbl" x="405" y="805" text-anchor="middle">Epoch</text>
+
+  <!-- PPL curve: 2000 -> 4 over 50 epochs (log scale) -->
+  <path class="curve" d="M 110 150 
+    C 180 300, 240 430, 320 520 
+    S 470 640, 560 685 
+    S 660 715, 700 720"/>
+
+  <text class="ref" x="360" y="470">700</text>
+
+  <!-- Title -->
+  <text class="title" x="400" y="920" text-anchor="middle">&#350;ekil 7: E&#231;itim e&#231;risi (PPL, 50 epoch)</text>
+</svg>

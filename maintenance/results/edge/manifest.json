@@ -1,0 +1,112 @@
+{
+  "generated_utc": "2026-10-22T15:13:40Z",
+  "checkpoint": {
+    "path": "maintenance/results/quann_binary_backprop.pt",
+    "size_bytes": 102633,
+    "sha256": "507ee3bb2914988ee75dd3dfdca0b62b728496635533bd509622b5f890545b2c",
+    "selection": "best saved binary C-MAPSS checkpoint by held-out PR-AUC/F2",
+    "selected": "quann_binary_backprop.pt"
+  },
+  "model": {
+    "D": 36,
+    "window_points": 10,
+    "n_classes": 2,
+    "class_labels": [
+      "rul_gt_30",
+      "rul_le_30"
+    ],
+    "regime": "backprop"
+  },
+  "input": {
+    "name": "cloud",
+    "dtype": "float32",
+    "shape": [
+      "batch",
+      10,
+      36
+    ],
+    "description": "10-step normalized sensor-feature point cloud; input is already scaled",
+    "preprocessing_note": "The training scaler is not included in this checkpoint; raw sensor preprocessing is upstream."
+  },
+  "output": {
+    "name": "probabilities",
+    "dtype": "float32",
+    "shape": [
+      "batch",
+      2
+    ],
+    "activation": "softmax"
+  },
+  "artifacts": {
+    "model_onnx": {
+      "path": "model.onnx",
+      "size_bytes": 120930,
+      "sha256": "6c1bdc6e777e624c3d93d0669a681f45c6338e4f8b5340284ce6e667ebfee320"
+    },
+    "model_int8_onnx": {
+      "path": "model.int8.onnx",
+      "size_bytes": 78924,
+      "sha256": "eb6f5da655c44d69c8d21427a2ded698c6649d54b6fe85050e6e061f3f042638"
+    }
+  },
+  "parity": {
+    "torch_vs_onnx_max_abs_by_batch": {
+      "1": 1.1920928955078125e-07,
+      "16": 1.7881393432617188e-07,
+      "64": 5.066394805908203e-07
+    },
+    "torch_vs_onnx_max_abs": 5.066394805908203e-07,
+    "tolerance": 1e-05,
+    "passed": true,
+    "torch_vs_int8_onnx_max_abs_by_batch": {
+      "1": 0.0025326013565063477,
+      "16": 0.008672118186950684,
+      "64": 0.020676791667938232
+    }
+  },
+  "latency_cpu_onnxruntime_ms": {
+    "fp32": {
+      "1": {
+        "median_ms": 0.0408,
+        "p95_ms": 0.0443,
+        "repeats": 80
+      },
+      "16": {
+        "median_ms": 0.2868,
+        "p95_ms": 0.3281,
+        "repeats": 80
+      },
+      "64": {
+        "median_ms": 1.0405,
+        "p95_ms": 1.1195,
+        "repeats": 80
+      }
+    },
+    "int8": {
+      "1": {
+        "median_ms": 0.0496,
+        "p95_ms": 0.0581,
+        "repeats": 80
+      },
+      "16": {
+        "median_ms": 0.3855,
+        "p95_ms": 0.4222,
+        "repeats": 80
+      },
+      "64": {
+        "median_ms": 1.4725,
+        "p95_ms": 1.5911,
+        "repeats": 80
+      }
+    }
+  },
+  "benchmark": {
+    "provider": "CPUExecutionProvider",
+    "ort_version": "1.31.0",
+    "torch_version": "2.11.0",
+    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "warmup": 10,
+    "repeats": 80,
+    "latency_statistic": "median and p95 per session.run call"
+  }
+}

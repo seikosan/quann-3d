@@ -1,0 +1,143 @@
+{
+  "configs": {
+    "16": {
+      "test": {
+        "n": 100,
+        "n_fraud": 10,
+        "base_rate": 0.1,
+        "threshold": 0.8714309272013212,
+        "auc_pr": 0.7399589490968801,
+        "auc_roc": 0.9544444444444444,
+        "tp": 10,
+        "fp": 23,
+        "fn": 0,
+        "tn": 67,
+        "precision": 0.30303030303030304,
+        "recall": 1.0,
+        "f1": 0.46511627906976744,
+        "fbeta": 0.684931506849315,
+        "beta": 2.0,
+        "predicted_fraud_rate": 0.33,
+        "lift_at_threshold": 3.0303030303030303,
+        "config": "D16",
+        "point_train": {
+          "steps": 3,
+          "elapsed_sec": 0.028844416956417263,
+          "steps_per_sec": 104.00626244353899,
+          "rewarded": 57,
+          "censured": 3,
+          "unchanged": 0,
+          "convergence": {
+            "total_tokens": 39,
+            "converged_tokens": 0,
+            "all_converged": false,
+            "mean_width": 0.5276214044652073
+          }
+        },
+        "reader_train": {
+          "epochs_requested": 1,
+          "steps": 1,
+          "elapsed_sec": 0.08309349999763072
+        },
+        "quann_points": 175,
+        "converged_points": 0,
+        "mean_width": 1.6718699129951036
+      },
+      "checkpoint": "/Users/serkankose/Documents/quann-3d/fraud/results/quann_rich_d16_smoke.pt",
+      "point_train": {
+        "steps": 3,
+        "elapsed_sec": 0.028844416956417263,
+        "steps_per_sec": 104.00626244353899,
+        "rewarded": 57,
+        "censured": 3,
+        "unchanged": 0,
+        "convergence": {
+          "total_tokens": 39,
+          "converged_tokens": 0,
+          "all_converged": false,
+          "mean_width": 0.5276214044652073
+        }
+      },
+      "reader_train": {
+        "epochs_requested": 1,
+        "steps": 1,
+        "elapsed_sec": 0.08309349999763072
+      }
+    },
+    "32": {
+      "test": {
+        "n": 100,
+        "n_fraud": 10,
+        "base_rate": 0.1,
+        "threshold": 0.882928200682303,
+        "auc_pr": 0.7221437386143268,
+        "auc_roc": 0.9455555555555555,
+        "tp": 10,
+        "fp": 36,
+        "fn": 0,
+        "tn": 54,
+        "precision": 0.21739130434782608,
+        "recall": 1.0,
+        "f1": 0.35714285714285715,
+        "fbeta": 0.5813953488372093,
+        "beta": 2.0,
+        "predicted_fraud_rate": 0.46,
+        "lift_at_threshold": 2.1739130434782608,
+        "config": "D32",
+        "point_train": {
+          "steps": 3,
+          "elapsed_sec": 0.026596541982144117,
+          "steps_per_sec": 112.7966185233435,
+          "rewarded": 60,
+          "censured": 0,
+          "unchanged": 0,
+          "convergence": {
+            "total_tokens": 39,
+            "converged_tokens": 0,
+            "all_converged": false,
+            "mean_width": 0.4854964248226877
+          }
+        },
+        "reader_train": {
+          "epochs_requested": 1,
+          "steps": 1,
+          "elapsed_sec": 0.053847458912059665
+        },
+        "quann_points": 175,
+        "converged_points": 0,
+        "mean_width": 1.662482060389056
+      },
+      "checkpoint": "/Users/serkankose/Documents/quann-3d/fraud/results/quann_rich_d32_smoke.pt",
+      "point_train": {
+        "steps": 3,
+        "elapsed_sec": 0.026596541982144117,
+        "steps_per_sec": 112.7966185233435,
+        "rewarded": 60,
+        "censured": 0,
+        "unchanged": 0,
+        "convergence": {
+          "total_tokens": 39,
+          "converged_tokens": 0,
+          "all_converged": false,
+          "mean_width": 0.4854964248226877
+        }
+      },
+      "reader_train": {
+        "epochs_requested": 1,
+        "steps": 1,
+        "elapsed_sec": 0.053847458912059665
+      }
+    }
+  },
+  "split": {
+    "train": 100,
+    "val": 100,
+    "test": 100
+  },
+  "model": {
+    "K": 20,
+    "vocab": 241,
+    "reader": "256/256"
+  },
+  "smoke": true
+}

@@ -1,0 +1,123 @@
+{
+  "experiment": "tiny CWRU normal vs ball fault comparison",
+  "data": "CWRU 12 kHz, motor load 0 HP, bearing ball defect 0.007 inch",
+  "sources": {
+    "official_dataset_page": "https://engineering.case.edu/bearingdatacenter/12k-drive-end-bearing-fault-data",
+    "normal_file": "https://engineering.case.edu/sites/default/files/97.mat",
+    "fault_file": "https://engineering.case.edu/sites/default/files/118.mat",
+    "working_github_data_mirror": "https://github.com/AiChiXiaoXiongBingGan/CWRU-dataset",
+    "mirror_checks": [
+      {
+        "url": "https://github.com/Filters-whynot/CWRU-dataset",
+        "status": "404"
+      },
+      {
+        "url": "https://github.com/rigas/CWRU_Bearing_NumPy",
+        "status": "404"
+      }
+    ]
+  },
+  "recordings": {
+    "normal": {
+      "file": "97.mat",
+      "source_samples": 243938,
+      "segments": 119,
+      "rpm": 1796.0,
+      "load_hp": 0.0,
+      "channels_used": [
+        "DE",
+        "FE"
+      ]
+    },
+    "ball_fault_007": {
+      "file": "118.mat",
+      "source_samples": 122571,
+      "segments": 59,
+      "rpm": 1796.0,
+      "load_hp": 0.0,
+      "channels_used": [
+        "DE",
+        "FE"
+      ]
+    }
+  },
+  "features": {
+    "dimension": 32,
+    "sample_rate_hz": 12000,
+    "segment_samples": 2048,
+    "layout": "DE and FE each: RMS, crest, 13 shaft/bearing-frequency band energies; plus normalized RPM and load"
+  },
+  "split": {
+    "method": "first 70% of non-overlapping segments per recording train, final 30% held out",
+    "train_segments": 124,
+    "test_segments": 54,
+    "class_counts_total": {
+      "normal": 119,
+      "ball_fault_007": 59
+    }
+  },
+  "models": {
+    "gbt": {
+      "n": 54,
+      "accuracy": 1.0,
+      "balanced_accuracy": 1.0,
+      "confusion_matrix_normal_fault": [
+        [
+          36,
+          0
+        ],
+        [
+          0,
+          18
+        ]
+      ]
+    },
+    "hybrid": {
+      "n": 54,
+      "accuracy": 1.0,
+      "balanced_accuracy": 1.0,
+      "confusion_matrix_normal_fault": [
+        [
+          36,
+          0
+        ],
+        [
+          0,
+          18
+        ]
+      ]
+    },
+    "backprop": {
+      "n": 54,
+      "accuracy": 1.0,
+      "balanced_accuracy": 1.0,
+      "confusion_matrix_normal_fault": [
+        [
+          36,
+          0
+        ],
+        [
+          0,
+          18
+        ]
+      ]
+    }
+  },
+  "protocol": {
+    "device": "cpu",
+    "seed": 20261016,
+    "torch_fit": {
+      "hybrid": "one-pass, class-capped CPU fit",
+      "backprop": "one-pass, class-capped CPU fit"
+    },
+    "point_cloud": "one 32D feature point per raw 2048-sample segment"
+  },
+  "figure": "/Users/serkankose/Documents/quann-3d/maintenance/figures/e1_cwru_clouds.png",
+  "pca_explained_variance_percent": 55.75480651855469,
+  "limitations": [
+    "This is a tiny two-recording smoke comparison, not a benchmark: load is fixed at 0 HP and fault type/severity is one 0.007-inch ball defect.",
+    "Held-out segments are contiguous later portions from the same two recordings; this is not recording-disjoint validation.",
+    "DE and FE are the common channels; BA is omitted because it is absent from the normal file.",
+    "Metrics on the small held-out set are high-variance and not tuned estimates."
+  ]
+}

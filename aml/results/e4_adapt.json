@@ -1,0 +1,900 @@
+{
+  "experiment": "AML E4 synthetic weekly adaptation after reporting-threshold change",
+  "data_scope": "fully synthetic account-window data; not bank transaction evidence",
+  "seed": 20261016,
+  "regulatory_change": {
+    "week0_reporting_threshold": 10000,
+    "week1_onward_reporting_threshold": 5000
+  },
+  "generator": {
+    "classes": [
+      "normal",
+      "structuring",
+      "layering",
+      "velocity"
+    ],
+    "window_size": 10,
+    "week0_windows": 1600,
+    "week0_structuring_amount_band": [
+      9200,
+      9900
+    ],
+    "post_change_new_structuring_band": [
+      4200,
+      4900
+    ],
+    "post_change_old_pattern_fraction": 0.5,
+    "evaluation_windows_per_class_per_week": 200,
+    "seeded_deterministic": true
+  },
+  "model": {
+    "architecture": "aml.train_aml.AMLCloud D=8, CloudEncoderND d_cloud=48",
+    "week0_training": "24 reader backprop epochs + one quann_update narrow_search pass on the same week0 train split",
+    "quann_arm": "quann_update only during weekly updates; no gradients/backprop",
+    "retrain_arm": "backprop on trainable token-point codebook + cloud encoder + class reader, 3 epochs/week on week0 labeled train plus accumulated weekly labeled support",
+    "device": "cpu",
+    "quantizer_fit": "week0 training split only",
+    "threshold_share_semantics": "legacy 9.2K-10K band feature remains fixed; 5K evidence wording is computed from synthetic deposit amounts",
+    "reserved_ood_token": "amount_median and amount_p95 in 4.2K-5K share a token reserved before week0 but absent from its training examples",
+    "unseen_token_initialization": "the shared 5K amount-motif token starts at the mean week0 normal point and QUANN search is bounded by normal/10K structuring feature points",
+    "reserved_ood_token_initialization_map": {
+      "78": [
+        5,
+        12
+      ]
+    }
+  },
+  "operating_point": {
+    "definition": "one-vs-rest score threshold from week0 calibration negatives at empirical 99th percentile; fixed for every arm/week",
+    "class_thresholds": {
+      "normal": 0.9998857975006104,
+      "structuring": 0.978857159614563,
+      "layering": 0.00012335143401287496,
+      "velocity": 0.004248220473527908
+    }
+  },
+  "week0_baseline": {
+    "old_10k_holdout": {
+      "n": 320,
+      "new_5k_edge": {
+        "n": 0,
+        "recall_at_1pct_fpr": null
+      },
+      "old_10k_structuring_recall_at_1pct_fpr": 1.0,
+      "class_recall_at_1pct_fpr": {
+        "normal": 0.8,
+        "structuring": 1.0,
+        "layering": 1.0,
+        "velocity": 0.9
+      },
+      "macro_auc_ovr": 0.9931315104166667
+    },
+    "unseen_5k_challenge_before_adaptation": {
+      "n": 200,
+      "new_5k_edge": {
+        "n": 200,
+        "recall_at_1pct_fpr": 0.0
+      },
+      "old_10k_structuring_recall_at_1pct_fpr": null,
+      "class_recall_at_1pct_fpr": {
+        "normal": null,
+        "structuring": 0.0,
+        "layering": null,
+        "velocity": null
+      },
+      "macro_auc_ovr": null
+    }
+  },
+  "weekly_metrics": [
+    {
+      "week": 0,
+      "regulatory_reporting_threshold": 10000,
+      "stream_windows": 320,
+      "adaptation_budget_windows": 0,
+      "unseen_feature_tokens_in_support": 1,
+      "arms": {
+        "frozen": {
+          "n": 320,
+          "new_5k_edge": {
+            "n": 200,
+            "recall_at_1pct_fpr": 0.0
+          },
+          "old_10k_structuring_recall_at_1pct_fpr": 1.0,
+          "class_recall_at_1pct_fpr": {
+            "normal": 0.8,
+            "structuring": 1.0,
+            "layering": 1.0,
+            "velocity": 0.9
+          },
+          "macro_auc_ovr": 0.9931315104166667,
+          "points": 72,
+          "points_converged": 71,
+          "points_converged_delta_vs_week0": 0,
+          "adaptation_sec": 0.0
+        },
+        "quann_0th_order": {
+          "n": 320,
+          "new_5k_edge": {
+            "n": 200,
+            "recall_at_1pct_fpr": 0.0
+          },
+          "old_10k_structuring_recall_at_1pct_fpr": 1.0,
+          "class_recall_at_1pct_fpr": {
+            "normal": 0.8,
+            "structuring": 1.0,
+            "layering": 1.0,
+            "velocity": 0.9
+          },
+          "macro_auc_ovr": 0.9931315104166667,
+          "points": 72,
+          "points_converged": 71,
+          "points_converged_delta_vs_week0": 0,
+          "adaptation_sec": 0.0
+        },
+        "backprop_retrain": {
+          "n": 320,
+          "new_5k_edge": {
+            "n": 200,
+            "recall_at_1pct_fpr": 0.0
+          },
+          "old_10k_structuring_recall_at_1pct_fpr": 1.0,
+          "class_recall_at_1pct_fpr": {
+            "normal": 0.8,
+            "structuring": 1.0,
+            "layering": 1.0,
+            "velocity": 0.9
+          },
+          "macro_auc_ovr": 0.9931315104166667,
+          "points": 72,
+          "points_converged": 71,
+          "points_converged_delta_vs_week0": 0,
+          "adaptation_sec": 0.0
+        }
+      }
+    },
+    {
+      "week": 1,
+      "regulatory_reporting_threshold": 5000,
+      "stream_windows": 800,
+      "adaptation_budget_windows": 192,
+      "unseen_feature_tokens_in_support": 1,
+      "arms": {
+        "frozen": {
+          "n": 800,
+          "new_5k_edge": {
+            "n": 100,
+            "recall_at_1pct_fpr": 0.0
+          },
+          "old_10k_structuring_recall_at_1pct_fpr": 1.0,
+          "class_recall_at_1pct_fpr": {
+            "normal": 0.715,
+            "structuring": 0.5,
+            "layering": 1.0,
+            "velocity": 0.86
+          },
+          "macro_auc_ovr": 0.875109375,
+          "points": 72,
+          "points_converged": 71,
+          "points_converged_delta_vs_week0": 0,
+          "mean_point_width": 0.01668183434958337,
+          "adaptation_sec": 0.0,
+          "points_created_by_scoring": 0,
+          "fraction_of_backprop_gain_captured": null
+        },
+        "quann_0th_order": {
+          "n": 800,
+          "new_5k_edge": {
+            "n": 100,
+            "recall_at_1pct_fpr": 0.0
+          },
+          "old_10k_structuring_recall_at_1pct_fpr": 1.0,
+          "class_recall_at_1pct_fpr": {
+            "normal": 0.715,
+            "structuring": 0.5,
+            "layering": 1.0,
+            "velocity": 0.86
+          },
+          "macro_auc_ovr": 0.8832739583333334,
+          "points": 72,
+          "points_converged": 72,
+          "points_converged_delta_vs_week0": 1,
+          "mean_point_width": 3.7730791922917383e-08,
+          "adaptation_sec": 0.312,
+          "fraction_of_backprop_gain_captured": null
+        },
+        "backprop_retrain": {
+          "n": 800,
+          "new_5k_edge": {
+            "n": 100,
+            "recall_at_1pct_fpr": 0.0
+          },
+          "old_10k_structuring_recall_at_1pct_fpr": 1.0,
+          "class_recall_at_1pct_fpr": {
+            "normal": 0.0,
+            "structuring": 0.5,
+            "layering": 1.0,
+            "velocity": 1.0
+          },
+          "macro_auc_ovr": 0.9910541666666667,
+          "points": 72,
+          "points_converged": 71,
+          "points_converged_delta_vs_week0": 0,
+          "mean_point_width": 0.01668183434958337,
+          "adaptation_sec": 0.312,
+          "fraction_of_backprop_gain_captured": null
+        }
+      }
+    },
+    {
+      "week": 2,
+      "regulatory_reporting_threshold": 5000,
+      "stream_windows": 800,
+      "adaptation_budget_windows": 192,
+      "unseen_feature_tokens_in_support": 1,
+      "arms": {
+        "frozen": {
+          "n": 800,
+          "new_5k_edge": {
+            "n": 100,
+            "recall_at_1pct_fpr": 0.0
+          },
+          "old_10k_structuring_recall_at_1pct_fpr": 1.0,
+          "class_recall_at_1pct_fpr": {
+            "normal": 0.77,
+            "structuring": 0.5,
+            "layering": 1.0,
+            "velocity": 0.835
+          },
+          "macro_auc_ovr": 0.876515625,
+          "points": 72,
+          "points_converged": 71,
+          "points_converged_delta_vs_week0": 0,
+          "mean_point_width": 0.01668183434958337,
+          "adaptation_sec": 0.0,
+          "points_created_by_scoring": 0,
+          "fraction_of_backprop_gain_captured": null
+        },
+        "quann_0th_order": {
+          "n": 800,
+          "new_5k_edge": {
+            "n": 100,
+            "recall_at_1pct_fpr": 0.0
+          },
+          "old_10k_structuring_recall_at_1pct_fpr": 1.0,
+          "class_recall_at_1pct_fpr": {
+            "normal": 0.77,
+            "structuring": 0.5,
+            "layering": 1.0,
+            "velocity": 0.835
+          },
+          "macro_auc_ovr": 0.8852020833333333,
+          "points": 72,
+          "points_converged": 72,
+          "points_converged_delta_vs_week0": 1,
+          "mean_point_width": 3.7730791922917383e-08,
+          "adaptation_sec": 0.343,
+          "fraction_of_backprop_gain_captured": null
+        },
+        "backprop_retrain": {
+          "n": 800,
+          "new_5k_edge": {
+            "n": 100,
+            "recall_at_1pct_fpr": 0.0
+          },
+          "old_10k_structuring_recall_at_1pct_fpr": 1.0,
+          "class_recall_at_1pct_fpr": {
+            "normal": 0.0,
+            "structuring": 0.5,
+            "layering": 1.0,
+            "velocity": 1.0
+          },
+          "macro_auc_ovr": 1.0,
+          "points": 72,
+          "points_converged": 71,
+          "points_converged_delta_vs_week0": 0,
+          "mean_point_width": 0.01668183434958337,
+          "adaptation_sec": 0.343,
+          "fraction_of_backprop_gain_captured": null
+        }
+      }
+    },
+    {
+      "week": 3,
+      "regulatory_reporting_threshold": 5000,
+      "stream_windows": 800,
+      "adaptation_budget_windows": 192,
+      "unseen_feature_tokens_in_support": 1,
+      "arms": {
+        "frozen": {
+          "n": 800,
+          "new_5k_edge": {
+            "n": 100,
+            "recall_at_1pct_fpr": 0.0
+          },
+          "old_10k_structuring_recall_at_1pct_fpr": 1.0,
+          "class_recall_at_1pct_fpr": {
+            "normal": 0.78,
+            "structuring": 0.5,
+            "layering": 1.0,
+            "velocity": 0.79
+          },
+          "macro_auc_ovr": 0.8759645833333334,
+          "points": 72,
+          "points_converged": 71,
+          "points_converged_delta_vs_week0": 0,
+          "mean_point_width": 0.01668183434958337,
+          "adaptation_sec": 0.0,
+          "points_created_by_scoring": 0,
+          "fraction_of_backprop_gain_captured": 0.0
+        },
+        "quann_0th_order": {
+          "n": 800,
+          "new_5k_edge": {
+            "n": 100,
+            "recall_at_1pct_fpr": 0.0
+          },
+          "old_10k_structuring_recall_at_1pct_fpr": 1.0,
+          "class_recall_at_1pct_fpr": {
+            "normal": 0.78,
+            "structuring": 0.5,
+            "layering": 1.0,
+            "velocity": 0.79
+          },
+          "macro_auc_ovr": 0.8832770833333333,
+          "points": 72,
+          "points_converged": 72,
+          "points_converged_delta_vs_week0": 1,
+          "mean_point_width": 3.7730791922917383e-08,
+          "adaptation_sec": 0.376,
+          "fraction_of_backprop_gain_captured": 0.0
+        },
+        "backprop_retrain": {
+          "n": 800,
+          "new_5k_edge": {
+            "n": 100,
+            "recall_at_1pct_fpr": 1.0
+          },
+          "old_10k_structuring_recall_at_1pct_fpr": 1.0,
+          "class_recall_at_1pct_fpr": {
+            "normal": 0.425,
+            "structuring": 1.0,
+            "layering": 1.0,
+            "velocity": 1.0
+          },
+          "macro_auc_ovr": 1.0,
+          "points": 72,
+          "points_converged": 71,
+          "points_converged_delta_vs_week0": 0,
+          "mean_point_width": 0.01668183434958337,
+          "adaptation_sec": 0.376,
+          "fraction_of_backprop_gain_captured": 1.0
+        }
+      }
+    },
+    {
+      "week": 4,
+      "regulatory_reporting_threshold": 5000,
+      "stream_windows": 800,
+      "adaptation_budget_windows": 192,
+      "unseen_feature_tokens_in_support": 1,
+      "arms": {
+        "frozen": {
+          "n": 800,
+          "new_5k_edge": {
+            "n": 100,
+            "recall_at_1pct_fpr": 0.0
+          },
+          "old_10k_structuring_recall_at_1pct_fpr": 1.0,
+          "class_recall_at_1pct_fpr": {
+            "normal": 0.735,
+            "structuring": 0.5,
+            "layering": 1.0,
+            "velocity": 0.84
+          },
+          "macro_auc_ovr": 0.87068125,
+          "points": 72,
+          "points_converged": 71,
+          "points_converged_delta_vs_week0": 0,
+          "mean_point_width": 0.01668183434958337,
+          "adaptation_sec": 0.0,
+          "points_created_by_scoring": 0,
+          "fraction_of_backprop_gain_captured": 0.0
+        },
+        "quann_0th_order": {
+          "n": 800,
+          "new_5k_edge": {
+            "n": 100,
+            "recall_at_1pct_fpr": 0.0
+          },
+          "old_10k_structuring_recall_at_1pct_fpr": 1.0,
+          "class_recall_at_1pct_fpr": {
+            "normal": 0.735,
+            "structuring": 0.5,
+            "layering": 1.0,
+            "velocity": 0.84
+          },
+          "macro_auc_ovr": 0.8788895833333332,
+          "points": 72,
+          "points_converged": 72,
+          "points_converged_delta_vs_week0": 1,
+          "mean_point_width": 3.7730791922917383e-08,
+          "adaptation_sec": 0.41,
+          "fraction_of_backprop_gain_captured": 0.0
+        },
+        "backprop_retrain": {
+          "n": 800,
+          "new_5k_edge": {
+            "n": 100,
+            "recall_at_1pct_fpr": 1.0
+          },
+          "old_10k_structuring_recall_at_1pct_fpr": 1.0,
+          "class_recall_at_1pct_fpr": {
+            "normal": 0.99,
+            "structuring": 1.0,
+            "layering": 1.0,
+            "velocity": 1.0
+          },
+          "macro_auc_ovr": 1.0,
+          "points": 72,
+          "points_converged": 71,
+          "points_converged_delta_vs_week0": 0,
+          "mean_point_width": 0.01668183434958337,
+          "adaptation_sec": 0.41,
+          "fraction_of_backprop_gain_captured": 1.0
+        }
+      }
+    }
+  ],
+  "week0_to_week4_stability_cost_recall_points": {
+    "normal": 0.06500000000000006,
+    "structuring_legacy_10k": 0.0,
+    "layering": 0.0,
+    "velocity": 0.06000000000000005
+  },
+  "week4_5k_gain_capture": {
+    "frozen_recall": 0.0,
+    "quann_0th_order_recall": 0.0,
+    "backprop_retrain_recall": 1.0,
+    "quann_fraction_of_backprop_gain": 0.0
+  },
+  "region_maps": {
+    "projection": "PCA fitted on week0 training CloudEncoderND embeddings; week0 and week4 shown in shared coordinates",
+    "week0_unseen_5k_cluster": {
+      "nearest_existing_region": "normal",
+      "distance_to_nearest_existing_prototype": 0.8428472280502319,
+      "nearest_existing_region_radius_p95": 2.253124713897705,
+      "separated_beyond_nearest_existing_region": false,
+      "distance_to_10k_structuring_prototype": 14.036515235900879,
+      "all_existing_prototype_distances": {
+        "normal": 0.8428472280502319,
+        "structuring": 14.036515235900879,
+        "layering": 11.979467391967773,
+        "velocity": 6.923793792724609
+      }
+    },
+    "week4_adapted_5k_cluster": {
+      "nearest_existing_region": "normal",
+      "distance_to_nearest_existing_prototype": 1.173052430152893,
+      "nearest_existing_region_radius_p95": 2.2531251907348633,
+      "separated_beyond_nearest_existing_region": false,
+      "distance_to_10k_structuring_prototype": 13.992449760437012,
+      "all_existing_prototype_distances": {
+        "normal": 1.173052430152893,
+        "structuring": 13.992449760437012,
+        "layering": 12.112383842468262,
+        "velocity": 6.644018650054932
+      }
+    },
+    "week4_region_source": "class prototypes from week0 train transformed by the week4 QUANN model; 5K edge prototype from labeled week4 support; held-out probes plotted separately"
+  },
+  "explainability_probes": {
+    "count": 12,
+    "prototype_space": "Euclidean distance in CloudEncoderND output; week0 edge reference is leave-one-out from unseen probes, week4 edge prototype uses labeled week4 support",
+    "probes": [
+      {
+        "synthetic_window_id": 1000001,
+        "true_class": "structuring",
+        "pattern": "5K reporting-threshold edge (4.2K-4.9K synthetic deposits)",
+        "week0_unseen_probe": {
+          "nearest_prototype": "normal",
+          "nearest_prototype_distance": 2.921619176864624,
+          "5k_edge_prototype_name": "unseen 5K probe reference (leave-one-out)",
+          "5k_edge_prototype_distance": 2.1412816047668457,
+          "prototype_distances": {
+            "normal": 2.921619176864624,
+            "structuring": 13.778355598449707,
+            "layering": 12.974895477294922,
+            "velocity": 5.350480556488037
+          },
+          "observable_reason": "e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,809; medyan=4,647; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda",
+          "sar_draft": "\u00d6n inceleme tasla\u011f\u0131 \u2014 Hesap bulutu 5K e\u015fik-kenar\u0131 prototipine mesafe 2.141; en yak\u0131n mevcut b\u00f6lge normal d=2.922; gerek\u00e7e: e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,809; medyan=4,647; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda. G\u00f6zlenen \u00f6zellikler tipoloji incelemesine adayd\u0131r; kaynak kay\u0131tlar ve m\u00fc\u015fteri ba\u011flam\u0131 do\u011frulanmadan SAR karar\u0131 de\u011fildir."
+        },
+        "week4_quann_0th_order": {
+          "nearest_prototype": "normal",
+          "nearest_prototype_distance": 3.134258985519409,
+          "5k_edge_prototype_name": "week-4 labeled 5K adaptation support",
+          "5k_edge_prototype_distance": 1.8049285411834717,
+          "prototype_distances": {
+            "normal": 3.134258985519409,
+            "structuring": 13.73720932006836,
+            "layering": 13.069068908691406,
+            "velocity": 5.194091796875
+          },
+          "observable_reason": "e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,809; medyan=4,647; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda",
+          "sar_draft": "\u00d6n inceleme tasla\u011f\u0131 \u2014 Hesap bulutu 5K e\u015fik-kenar\u0131 prototipine mesafe 1.805; en yak\u0131n mevcut b\u00f6lge normal d=3.134; gerek\u00e7e: e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,809; medyan=4,647; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda. G\u00f6zlenen \u00f6zellikler tipoloji incelemesine adayd\u0131r; kaynak kay\u0131tlar ve m\u00fc\u015fteri ba\u011flam\u0131 do\u011frulanmadan SAR karar\u0131 de\u011fildir."
+        }
+      },
+      {
+        "synthetic_window_id": 1000082,
+        "true_class": "structuring",
+        "pattern": "5K reporting-threshold edge (4.2K-4.9K synthetic deposits)",
+        "week0_unseen_probe": {
+          "nearest_prototype": "normal",
+          "nearest_prototype_distance": 0.7601310610771179,
+          "5k_edge_prototype_name": "unseen 5K probe reference (leave-one-out)",
+          "5k_edge_prototype_distance": 0.8939232230186462,
+          "prototype_distances": {
+            "normal": 0.7601310610771179,
+            "structuring": 14.313629150390625,
+            "layering": 12.052971839904785,
+            "velocity": 7.56723690032959
+          },
+          "observable_reason": "e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,712; medyan=4,450; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda",
+          "sar_draft": "\u00d6n inceleme tasla\u011f\u0131 \u2014 Hesap bulutu 5K e\u015fik-kenar\u0131 prototipine mesafe 0.894; en yak\u0131n mevcut b\u00f6lge normal d=0.760; gerek\u00e7e: e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,712; medyan=4,450; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda. G\u00f6zlenen \u00f6zellikler tipoloji incelemesine adayd\u0131r; kaynak kay\u0131tlar ve m\u00fc\u015fteri ba\u011flam\u0131 do\u011frulanmadan SAR karar\u0131 de\u011fildir."
+        },
+        "week4_quann_0th_order": {
+          "nearest_prototype": "normal",
+          "nearest_prototype_distance": 0.9003139734268188,
+          "5k_edge_prototype_name": "week-4 labeled 5K adaptation support",
+          "5k_edge_prototype_distance": 1.0141619443893433,
+          "prototype_distances": {
+            "normal": 0.9003139734268188,
+            "structuring": 14.289144515991211,
+            "layering": 12.181292533874512,
+            "velocity": 7.3704609870910645
+          },
+          "observable_reason": "e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,712; medyan=4,450; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda",
+          "sar_draft": "\u00d6n inceleme tasla\u011f\u0131 \u2014 Hesap bulutu 5K e\u015fik-kenar\u0131 prototipine mesafe 1.014; en yak\u0131n mevcut b\u00f6lge normal d=0.900; gerek\u00e7e: e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,712; medyan=4,450; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda. G\u00f6zlenen \u00f6zellikler tipoloji incelemesine adayd\u0131r; kaynak kay\u0131tlar ve m\u00fc\u015fteri ba\u011flam\u0131 do\u011frulanmadan SAR karar\u0131 de\u011fildir."
+        }
+      },
+      {
+        "synthetic_window_id": 1000146,
+        "true_class": "structuring",
+        "pattern": "5K reporting-threshold edge (4.2K-4.9K synthetic deposits)",
+        "week0_unseen_probe": {
+          "nearest_prototype": "normal",
+          "nearest_prototype_distance": 3.1769635677337646,
+          "5k_edge_prototype_name": "unseen 5K probe reference (leave-one-out)",
+          "5k_edge_prototype_distance": 2.384289503097534,
+          "prototype_distances": {
+            "normal": 3.1769635677337646,
+            "structuring": 13.750345230102539,
+            "layering": 12.973749160766602,
+            "velocity": 5.041098594665527
+          },
+          "observable_reason": "e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,810; medyan=4,555; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda",
+          "sar_draft": "\u00d6n inceleme tasla\u011f\u0131 \u2014 Hesap bulutu 5K e\u015fik-kenar\u0131 prototipine mesafe 2.384; en yak\u0131n mevcut b\u00f6lge normal d=3.177; gerek\u00e7e: e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,810; medyan=4,555; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda. G\u00f6zlenen \u00f6zellikler tipoloji incelemesine adayd\u0131r; kaynak kay\u0131tlar ve m\u00fc\u015fteri ba\u011flam\u0131 do\u011frulanmadan SAR karar\u0131 de\u011fildir."
+        },
+        "week4_quann_0th_order": {
+          "nearest_prototype": "normal",
+          "nearest_prototype_distance": 3.4144887924194336,
+          "5k_edge_prototype_name": "week-4 labeled 5K adaptation support",
+          "5k_edge_prototype_distance": 2.0972862243652344,
+          "prototype_distances": {
+            "normal": 3.4144887924194336,
+            "structuring": 13.693900108337402,
+            "layering": 13.075404167175293,
+            "velocity": 4.851075172424316
+          },
+          "observable_reason": "e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,810; medyan=4,555; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda",
+          "sar_draft": "\u00d6n inceleme tasla\u011f\u0131 \u2014 Hesap bulutu 5K e\u015fik-kenar\u0131 prototipine mesafe 2.097; en yak\u0131n mevcut b\u00f6lge normal d=3.414; gerek\u00e7e: e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,810; medyan=4,555; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda. G\u00f6zlenen \u00f6zellikler tipoloji incelemesine adayd\u0131r; kaynak kay\u0131tlar ve m\u00fc\u015fteri ba\u011flam\u0131 do\u011frulanmadan SAR karar\u0131 de\u011fildir."
+        }
+      },
+      {
+        "synthetic_window_id": 1000235,
+        "true_class": "structuring",
+        "pattern": "5K reporting-threshold edge (4.2K-4.9K synthetic deposits)",
+        "week0_unseen_probe": {
+          "nearest_prototype": "normal",
+          "nearest_prototype_distance": 1.1536897420883179,
+          "5k_edge_prototype_name": "unseen 5K probe reference (leave-one-out)",
+          "5k_edge_prototype_distance": 0.6437137722969055,
+          "prototype_distances": {
+            "normal": 1.1536897420883179,
+            "structuring": 14.05649185180664,
+            "layering": 11.894719123840332,
+            "velocity": 6.813683032989502
+          },
+          "observable_reason": "e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,839; medyan=4,514; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda",
+          "sar_draft": "\u00d6n inceleme tasla\u011f\u0131 \u2014 Hesap bulutu 5K e\u015fik-kenar\u0131 prototipine mesafe 0.644; en yak\u0131n mevcut b\u00f6lge normal d=1.154; gerek\u00e7e: e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,839; medyan=4,514; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda. G\u00f6zlenen \u00f6zellikler tipoloji incelemesine adayd\u0131r; kaynak kay\u0131tlar ve m\u00fc\u015fteri ba\u011flam\u0131 do\u011frulanmadan SAR karar\u0131 de\u011fildir."
+        },
+        "week4_quann_0th_order": {
+          "nearest_prototype": "normal",
+          "nearest_prototype_distance": 1.4768742322921753,
+          "5k_edge_prototype_name": "week-4 labeled 5K adaptation support",
+          "5k_edge_prototype_distance": 0.8120132684707642,
+          "prototype_distances": {
+            "normal": 1.4768742322921753,
+            "structuring": 13.983302116394043,
+            "layering": 12.044875144958496,
+            "velocity": 6.488137245178223
+          },
+          "observable_reason": "e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,839; medyan=4,514; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda",
+          "sar_draft": "\u00d6n inceleme tasla\u011f\u0131 \u2014 Hesap bulutu 5K e\u015fik-kenar\u0131 prototipine mesafe 0.812; en yak\u0131n mevcut b\u00f6lge normal d=1.477; gerek\u00e7e: e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,839; medyan=4,514; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda. G\u00f6zlenen \u00f6zellikler tipoloji incelemesine adayd\u0131r; kaynak kay\u0131tlar ve m\u00fc\u015fteri ba\u011flam\u0131 do\u011frulanmadan SAR karar\u0131 de\u011fildir."
+        }
+      },
+      {
+        "synthetic_window_id": 1000305,
+        "true_class": "structuring",
+        "pattern": "5K reporting-threshold edge (4.2K-4.9K synthetic deposits)",
+        "week0_unseen_probe": {
+          "nearest_prototype": "normal",
+          "nearest_prototype_distance": 1.692484736442566,
+          "5k_edge_prototype_name": "unseen 5K probe reference (leave-one-out)",
+          "5k_edge_prototype_distance": 1.2185235023498535,
+          "prototype_distances": {
+            "normal": 1.692484736442566,
+            "structuring": 14.015334129333496,
+            "layering": 11.802490234375,
+            "velocity": 6.540124893188477
+          },
+          "observable_reason": "e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,827; medyan=4,538; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda",
+          "sar_draft": "\u00d6n inceleme tasla\u011f\u0131 \u2014 Hesap bulutu 5K e\u015fik-kenar\u0131 prototipine mesafe 1.219; en yak\u0131n mevcut b\u00f6lge normal d=1.692; gerek\u00e7e: e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,827; medyan=4,538; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda. G\u00f6zlenen \u00f6zellikler tipoloji incelemesine adayd\u0131r; kaynak kay\u0131tlar ve m\u00fc\u015fteri ba\u011flam\u0131 do\u011frulanmadan SAR karar\u0131 de\u011fildir."
+        },
+        "week4_quann_0th_order": {
+          "nearest_prototype": "normal",
+          "nearest_prototype_distance": 1.9841207265853882,
+          "5k_edge_prototype_name": "week-4 labeled 5K adaptation support",
+          "5k_edge_prototype_distance": 1.3612821102142334,
+          "prototype_distances": {
+            "normal": 1.9841207265853882,
+            "structuring": 13.933817863464355,
+            "layering": 11.95663070678711,
+            "velocity": 6.199188232421875
+          },
+          "observable_reason": "e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,827; medyan=4,538; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda",
+          "sar_draft": "\u00d6n inceleme tasla\u011f\u0131 \u2014 Hesap bulutu 5K e\u015fik-kenar\u0131 prototipine mesafe 1.361; en yak\u0131n mevcut b\u00f6lge normal d=1.984; gerek\u00e7e: e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,827; medyan=4,538; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda. G\u00f6zlenen \u00f6zellikler tipoloji incelemesine adayd\u0131r; kaynak kay\u0131tlar ve m\u00fc\u015fteri ba\u011flam\u0131 do\u011frulanmadan SAR karar\u0131 de\u011fildir."
+        }
+      },
+      {
+        "synthetic_window_id": 1000390,
+        "true_class": "structuring",
+        "pattern": "5K reporting-threshold edge (4.2K-4.9K synthetic deposits)",
+        "week0_unseen_probe": {
+          "nearest_prototype": "normal",
+          "nearest_prototype_distance": 2.1348490715026855,
+          "5k_edge_prototype_name": "unseen 5K probe reference (leave-one-out)",
+          "5k_edge_prototype_distance": 1.4854906797409058,
+          "prototype_distances": {
+            "normal": 2.1348490715026855,
+            "structuring": 14.045065879821777,
+            "layering": 12.84659481048584,
+            "velocity": 6.361082077026367
+          },
+          "observable_reason": "e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,848; medyan=4,615; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda",
+          "sar_draft": "\u00d6n inceleme tasla\u011f\u0131 \u2014 Hesap bulutu 5K e\u015fik-kenar\u0131 prototipine mesafe 1.485; en yak\u0131n mevcut b\u00f6lge normal d=2.135; gerek\u00e7e: e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,848; medyan=4,615; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda. G\u00f6zlenen \u00f6zellikler tipoloji incelemesine adayd\u0131r; kaynak kay\u0131tlar ve m\u00fc\u015fteri ba\u011flam\u0131 do\u011frulanmadan SAR karar\u0131 de\u011fildir."
+        },
+        "week4_quann_0th_order": {
+          "nearest_prototype": "normal",
+          "nearest_prototype_distance": 2.3541417121887207,
+          "5k_edge_prototype_name": "week-4 labeled 5K adaptation support",
+          "5k_edge_prototype_distance": 1.163529634475708,
+          "prototype_distances": {
+            "normal": 2.3541417121887207,
+            "structuring": 14.003562927246094,
+            "layering": 12.943458557128906,
+            "velocity": 6.183093547821045
+          },
+          "observable_reason": "e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,848; medyan=4,615; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda",
+          "sar_draft": "\u00d6n inceleme tasla\u011f\u0131 \u2014 Hesap bulutu 5K e\u015fik-kenar\u0131 prototipine mesafe 1.164; en yak\u0131n mevcut b\u00f6lge normal d=2.354; gerek\u00e7e: e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,848; medyan=4,615; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda. G\u00f6zlenen \u00f6zellikler tipoloji incelemesine adayd\u0131r; kaynak kay\u0131tlar ve m\u00fc\u015fteri ba\u011flam\u0131 do\u011frulanmadan SAR karar\u0131 de\u011fildir."
+        }
+      },
+      {
+        "synthetic_window_id": 1000443,
+        "true_class": "structuring",
+        "pattern": "5K reporting-threshold edge (4.2K-4.9K synthetic deposits)",
+        "week0_unseen_probe": {
+          "nearest_prototype": "normal",
+          "nearest_prototype_distance": 1.132022738456726,
+          "5k_edge_prototype_name": "unseen 5K probe reference (leave-one-out)",
+          "5k_edge_prototype_distance": 0.7736961841583252,
+          "prototype_distances": {
+            "normal": 1.132022738456726,
+            "structuring": 14.223516464233398,
+            "layering": 12.331029891967773,
+            "velocity": 7.144676208496094
+          },
+          "observable_reason": "e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,781; medyan=4,545; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda",
+          "sar_draft": "\u00d6n inceleme tasla\u011f\u0131 \u2014 Hesap bulutu 5K e\u015fik-kenar\u0131 prototipine mesafe 0.774; en yak\u0131n mevcut b\u00f6lge normal d=1.132; gerek\u00e7e: e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,781; medyan=4,545; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda. G\u00f6zlenen \u00f6zellikler tipoloji incelemesine adayd\u0131r; kaynak kay\u0131tlar ve m\u00fc\u015fteri ba\u011flam\u0131 do\u011frulanmadan SAR karar\u0131 de\u011fildir."
+        },
+        "week4_quann_0th_order": {
+          "nearest_prototype": "normal",
+          "nearest_prototype_distance": 1.337235689163208,
+          "5k_edge_prototype_name": "week-4 labeled 5K adaptation support",
+          "5k_edge_prototype_distance": 0.6888340711593628,
+          "prototype_distances": {
+            "normal": 1.337235689163208,
+            "structuring": 14.192296028137207,
+            "layering": 12.445818901062012,
+            "velocity": 6.957554817199707
+          },
+          "observable_reason": "e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,781; medyan=4,545; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda",
+          "sar_draft": "\u00d6n inceleme tasla\u011f\u0131 \u2014 Hesap bulutu 5K e\u015fik-kenar\u0131 prototipine mesafe 0.689; en yak\u0131n mevcut b\u00f6lge normal d=1.337; gerek\u00e7e: e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,781; medyan=4,545; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda. G\u00f6zlenen \u00f6zellikler tipoloji incelemesine adayd\u0131r; kaynak kay\u0131tlar ve m\u00fc\u015fteri ba\u011flam\u0131 do\u011frulanmadan SAR karar\u0131 de\u011fildir."
+        }
+      },
+      {
+        "synthetic_window_id": 1000494,
+        "true_class": "structuring",
+        "pattern": "5K reporting-threshold edge (4.2K-4.9K synthetic deposits)",
+        "week0_unseen_probe": {
+          "nearest_prototype": "normal",
+          "nearest_prototype_distance": 0.976334273815155,
+          "5k_edge_prototype_name": "unseen 5K probe reference (leave-one-out)",
+          "5k_edge_prototype_distance": 0.4371749460697174,
+          "prototype_distances": {
+            "normal": 0.976334273815155,
+            "structuring": 14.046637535095215,
+            "layering": 12.078816413879395,
+            "velocity": 6.927329063415527
+          },
+          "observable_reason": "e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,847; medyan=4,613; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda",
+          "sar_draft": "\u00d6n inceleme tasla\u011f\u0131 \u2014 Hesap bulutu 5K e\u015fik-kenar\u0131 prototipine mesafe 0.437; en yak\u0131n mevcut b\u00f6lge normal d=0.976; gerek\u00e7e: e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,847; medyan=4,613; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda. G\u00f6zlenen \u00f6zellikler tipoloji incelemesine adayd\u0131r; kaynak kay\u0131tlar ve m\u00fc\u015fteri ba\u011flam\u0131 do\u011frulanmadan SAR karar\u0131 de\u011fildir."
+        },
+        "week4_quann_0th_order": {
+          "nearest_prototype": "normal",
+          "nearest_prototype_distance": 1.2856554985046387,
+          "5k_edge_prototype_name": "week-4 labeled 5K adaptation support",
+          "5k_edge_prototype_distance": 0.45286935567855835,
+          "prototype_distances": {
+            "normal": 1.2856554985046387,
+            "structuring": 14.006041526794434,
+            "layering": 12.233092308044434,
+            "velocity": 6.668349742889404
+          },
+          "observable_reason": "e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,847; medyan=4,613; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda",
+          "sar_draft": "\u00d6n inceleme tasla\u011f\u0131 \u2014 Hesap bulutu 5K e\u015fik-kenar\u0131 prototipine mesafe 0.453; en yak\u0131n mevcut b\u00f6lge normal d=1.286; gerek\u00e7e: e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,847; medyan=4,613; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda. G\u00f6zlenen \u00f6zellikler tipoloji incelemesine adayd\u0131r; kaynak kay\u0131tlar ve m\u00fc\u015fteri ba\u011flam\u0131 do\u011frulanmadan SAR karar\u0131 de\u011fildir."
+        }
+      },
+      {
+        "synthetic_window_id": 1000558,
+        "true_class": "structuring",
+        "pattern": "5K reporting-threshold edge (4.2K-4.9K synthetic deposits)",
+        "week0_unseen_probe": {
+          "nearest_prototype": "normal",
+          "nearest_prototype_distance": 1.462720274925232,
+          "5k_edge_prototype_name": "unseen 5K probe reference (leave-one-out)",
+          "5k_edge_prototype_distance": 1.0874342918395996,
+          "prototype_distances": {
+            "normal": 1.462720274925232,
+            "structuring": 14.011849403381348,
+            "layering": 11.706791877746582,
+            "velocity": 6.746152400970459
+          },
+          "observable_reason": "e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,724; medyan=4,585; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda",
+          "sar_draft": "\u00d6n inceleme tasla\u011f\u0131 \u2014 Hesap bulutu 5K e\u015fik-kenar\u0131 prototipine mesafe 1.087; en yak\u0131n mevcut b\u00f6lge normal d=1.463; gerek\u00e7e: e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,724; medyan=4,585; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda. G\u00f6zlenen \u00f6zellikler tipoloji incelemesine adayd\u0131r; kaynak kay\u0131tlar ve m\u00fc\u015fteri ba\u011flam\u0131 do\u011frulanmadan SAR karar\u0131 de\u011fildir."
+        },
+        "week4_quann_0th_order": {
+          "nearest_prototype": "normal",
+          "nearest_prototype_distance": 1.652042269706726,
+          "5k_edge_prototype_name": "week-4 labeled 5K adaptation support",
+          "5k_edge_prototype_distance": 1.203701138496399,
+          "prototype_distances": {
+            "normal": 1.652042269706726,
+            "structuring": 13.972235679626465,
+            "layering": 11.872385025024414,
+            "velocity": 6.477352142333984
+          },
+          "observable_reason": "e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,724; medyan=4,585; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda",
+          "sar_draft": "\u00d6n inceleme tasla\u011f\u0131 \u2014 Hesap bulutu 5K e\u015fik-kenar\u0131 prototipine mesafe 1.204; en yak\u0131n mevcut b\u00f6lge normal d=1.652; gerek\u00e7e: e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,724; medyan=4,585; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda. G\u00f6zlenen \u00f6zellikler tipoloji incelemesine adayd\u0131r; kaynak kay\u0131tlar ve m\u00fc\u015fteri ba\u011flam\u0131 do\u011frulanmadan SAR karar\u0131 de\u011fildir."
+        }
+      },
+      {
+        "synthetic_window_id": 1000618,
+        "true_class": "structuring",
+        "pattern": "5K reporting-threshold edge (4.2K-4.9K synthetic deposits)",
+        "week0_unseen_probe": {
+          "nearest_prototype": "normal",
+          "nearest_prototype_distance": 1.1536897420883179,
+          "5k_edge_prototype_name": "unseen 5K probe reference (leave-one-out)",
+          "5k_edge_prototype_distance": 0.6437138319015503,
+          "prototype_distances": {
+            "normal": 1.1536897420883179,
+            "structuring": 14.05649185180664,
+            "layering": 11.894719123840332,
+            "velocity": 6.813683032989502
+          },
+          "observable_reason": "e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,807; medyan=4,525; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda",
+          "sar_draft": "\u00d6n inceleme tasla\u011f\u0131 \u2014 Hesap bulutu 5K e\u015fik-kenar\u0131 prototipine mesafe 0.644; en yak\u0131n mevcut b\u00f6lge normal d=1.154; gerek\u00e7e: e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,807; medyan=4,525; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda. G\u00f6zlenen \u00f6zellikler tipoloji incelemesine adayd\u0131r; kaynak kay\u0131tlar ve m\u00fc\u015fteri ba\u011flam\u0131 do\u011frulanmadan SAR karar\u0131 de\u011fildir."
+        },
+        "week4_quann_0th_order": {
+          "nearest_prototype": "normal",
+          "nearest_prototype_distance": 1.4768742322921753,
+          "5k_edge_prototype_name": "week-4 labeled 5K adaptation support",
+          "5k_edge_prototype_distance": 0.8120132684707642,
+          "prototype_distances": {
+            "normal": 1.4768742322921753,
+            "structuring": 13.983302116394043,
+            "layering": 12.044875144958496,
+            "velocity": 6.488137245178223
+          },
+          "observable_reason": "e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,807; medyan=4,525; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda",
+          "sar_draft": "\u00d6n inceleme tasla\u011f\u0131 \u2014 Hesap bulutu 5K e\u015fik-kenar\u0131 prototipine mesafe 0.812; en yak\u0131n mevcut b\u00f6lge normal d=1.477; gerek\u00e7e: e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,807; medyan=4,525; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda. G\u00f6zlenen \u00f6zellikler tipoloji incelemesine adayd\u0131r; kaynak kay\u0131tlar ve m\u00fc\u015fteri ba\u011flam\u0131 do\u011frulanmadan SAR karar\u0131 de\u011fildir."
+        }
+      },
+      {
+        "synthetic_window_id": 1000716,
+        "true_class": "structuring",
+        "pattern": "5K reporting-threshold edge (4.2K-4.9K synthetic deposits)",
+        "week0_unseen_probe": {
+          "nearest_prototype": "normal",
+          "nearest_prototype_distance": 1.0986967086791992,
+          "5k_edge_prototype_name": "unseen 5K probe reference (leave-one-out)",
+          "5k_edge_prototype_distance": 0.6100779175758362,
+          "prototype_distances": {
+            "normal": 1.0986967086791992,
+            "structuring": 14.061458587646484,
+            "layering": 11.886065483093262,
+            "velocity": 6.856022834777832
+          },
+          "observable_reason": "e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,800; medyan=4,647; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda",
+          "sar_draft": "\u00d6n inceleme tasla\u011f\u0131 \u2014 Hesap bulutu 5K e\u015fik-kenar\u0131 prototipine mesafe 0.610; en yak\u0131n mevcut b\u00f6lge normal d=1.099; gerek\u00e7e: e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,800; medyan=4,647; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda. G\u00f6zlenen \u00f6zellikler tipoloji incelemesine adayd\u0131r; kaynak kay\u0131tlar ve m\u00fc\u015fteri ba\u011flam\u0131 do\u011frulanmadan SAR karar\u0131 de\u011fildir."
+        },
+        "week4_quann_0th_order": {
+          "nearest_prototype": "normal",
+          "nearest_prototype_distance": 1.4448270797729492,
+          "5k_edge_prototype_name": "week-4 labeled 5K adaptation support",
+          "5k_edge_prototype_distance": 0.7777001261711121,
+          "prototype_distances": {
+            "normal": 1.4448270797729492,
+            "structuring": 13.985513687133789,
+            "layering": 12.051228523254395,
+            "velocity": 6.50875186920166
+          },
+          "observable_reason": "e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,800; medyan=4,647; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda",
+          "sar_draft": "\u00d6n inceleme tasla\u011f\u0131 \u2014 Hesap bulutu 5K e\u015fik-kenar\u0131 prototipine mesafe 0.778; en yak\u0131n mevcut b\u00f6lge normal d=1.445; gerek\u00e7e: e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,800; medyan=4,647; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda. G\u00f6zlenen \u00f6zellikler tipoloji incelemesine adayd\u0131r; kaynak kay\u0131tlar ve m\u00fc\u015fteri ba\u011flam\u0131 do\u011frulanmadan SAR karar\u0131 de\u011fildir."
+        }
+      },
+      {
+        "synthetic_window_id": 1000797,
+        "true_class": "structuring",
+        "pattern": "5K reporting-threshold edge (4.2K-4.9K synthetic deposits)",
+        "week0_unseen_probe": {
+          "nearest_prototype": "normal",
+          "nearest_prototype_distance": 3.0559372901916504,
+          "5k_edge_prototype_name": "unseen 5K probe reference (leave-one-out)",
+          "5k_edge_prototype_distance": 2.2688515186309814,
+          "prototype_distances": {
+            "normal": 3.0559372901916504,
+            "structuring": 13.752618789672852,
+            "layering": 12.992189407348633,
+            "velocity": 5.2006707191467285
+          },
+          "observable_reason": "e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,775; medyan=4,465; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda",
+          "sar_draft": "\u00d6n inceleme tasla\u011f\u0131 \u2014 Hesap bulutu 5K e\u015fik-kenar\u0131 prototipine mesafe 2.269; en yak\u0131n mevcut b\u00f6lge normal d=3.056; gerek\u00e7e: e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,775; medyan=4,465; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda. G\u00f6zlenen \u00f6zellikler tipoloji incelemesine adayd\u0131r; kaynak kay\u0131tlar ve m\u00fc\u015fteri ba\u011flam\u0131 do\u011frulanmadan SAR karar\u0131 de\u011fildir."
+        },
+        "week4_quann_0th_order": {
+          "nearest_prototype": "normal",
+          "nearest_prototype_distance": 3.256619453430176,
+          "5k_edge_prototype_name": "week-4 labeled 5K adaptation support",
+          "5k_edge_prototype_distance": 1.9272165298461914,
+          "prototype_distances": {
+            "normal": 3.256619453430176,
+            "structuring": 13.712610244750977,
+            "layering": 13.083097457885742,
+            "velocity": 5.052349090576172
+          },
+          "observable_reason": "e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,775; medyan=4,465; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda",
+          "sar_draft": "\u00d6n inceleme tasla\u011f\u0131 \u2014 Hesap bulutu 5K e\u015fik-kenar\u0131 prototipine mesafe 1.927; en yak\u0131n mevcut b\u00f6lge normal d=3.257; gerek\u00e7e: e\u015fik-kenar\u0131 k\u00fcmesi (5K): tutar p95=4,775; medyan=4,465; sentetik depozitolar\u0131n %100'\u00fc 4.2K\u20134.9K band\u0131nda. G\u00f6zlenen \u00f6zellikler tipoloji incelemesine adayd\u0131r; kaynak kay\u0131tlar ve m\u00fc\u015fteri ba\u011flam\u0131 do\u011frulanmadan SAR karar\u0131 de\u011fildir."
+        }
+      }
+    ]
+  },
+  "runtime_sec": 4.04,
+  "limitations": [
+    "All typologies, reporting-rule drift, and explanations are synthetic; this is not evidence of real AML detection performance.",
+    "The 1% FPR operating point is an empirical week0 calibration quantile; finite synthetic samples make realized FPR discrete and uncertain.",
+    "The 5K edge is a deliberately clean, controlled amount-motif shift with other features matched to normal activity; real typologies may be overlapping, strategic, and label-delayed.",
+    "The backprop comparator updates trainable token-point coordinates, cloud encoder, and reader on accumulated labeled support; QUANN point updates and backprop are different update mechanisms.",
+    "Prototype maps are descriptive PCA projections, not calibrated decision boundaries or SAR decisions."
+  ]
+}

@@ -1,0 +1,159 @@
+{
+  "date": "2026-10-21",
+  "run": "qat-gate",
+  "source_checkpoint": "fraud/results/quann_online_neutralized.pt",
+  "checkpoint": "fraud/results/quann_qat_gate.pt",
+  "threshold": 0.9969438910484314,
+  "test_n": 4700000,
+  "test_fraud": 6110,
+  "qat_schema": {
+    "source": "fraud/src/edge_eval.py",
+    "weight": "signed INT8 per output channel",
+    "activation": "signed INT8 per tensor, static max-abs calibrated on first 50,000 held-out tokens",
+    "rounding_clipping": "round-to-nearest, clamp[-128,127], scale=max(abs)/127",
+    "fp32_components": [
+      "LayerNorm",
+      "pair geometry",
+      "QUANN point table"
+    ],
+    "calibration_refresh": "same 50K rows after each epoch and final eval"
+  },
+  "diagnostic_first_100k": {
+    "n": 100000,
+    "fp32_mean": 0.14646588265895844,
+    "int8_mean": 0.2055085152387619,
+    "delta_mean": 0.059042643688225656,
+    "delta_median": 0.03592641185969114,
+    "delta_abs_p90": 0.1609543025493622,
+    "delta_abs_p99": 0.2388906756043434,
+    "delta_abs_p999": 0.3070695391297368,
+    "positive_delta_fraction": 0.72273,
+    "fp32_high_n": 221,
+    "high_delta_mean": 5.694131505974817e-05,
+    "high_delta_positive_fraction": 0.4751131221719457,
+    "cross_up_threshold": 57,
+    "cross_down_threshold": 22
+  },
+  "baseline_online_neutralized": {
+    "fp32": {
+      "n": 4700000,
+      "n_fraud": 6110,
+      "base_rate": 0.0013,
+      "threshold": 0.9969438910484314,
+      "auc_pr": 0.2705827147315409,
+      "auc_roc": 0.9473789050569864,
+      "tp": 1930,
+      "fp": 8468,
+      "fn": 4180,
+      "tn": 4685422,
+      "precision": 0.18561261781111751,
+      "recall": 0.3158756137479542,
+      "f1": 0.2338260237460625,
+      "fbeta": 0.276996383259659,
+      "beta": 2.0,
+      "predicted_fraud_rate": 0.002212340425531915,
+      "lift_at_threshold": 142.77893677778272
+    },
+    "int8_channel": {
+      "n": 4700000,
+      "n_fraud": 6110,
+      "base_rate": 0.0013,
+      "threshold": 0.9969438910484314,
+      "auc_pr": 0.25725296144367127,
+      "auc_roc": 0.9389347657857643,
+      "tp": 1922,
+      "fp": 10856,
+      "fn": 4188,
+      "tn": 4683034,
+      "precision": 0.15041477539521053,
+      "recall": 0.31456628477905074,
+      "f1": 0.2035154595510377,
+      "fbeta": 0.2582083937879521,
+      "beta": 2.0,
+      "predicted_fraud_rate": 0.002718723404255319,
+      "lift_at_threshold": 115.70367338093118
+    }
+  },
+  "qat": {
+    "fp32": {
+      "n": 4700000,
+      "n_fraud": 6110,
+      "base_rate": 0.0013,
+      "threshold": 0.9969438910484314,
+      "auc_pr": 0.3097495269284193,
+      "auc_roc": 0.9502212588382168,
+      "tp": 2413,
+      "fp": 6817,
+      "fn": 3697,
+      "tn": 4687073,
+      "precision": 0.26143011917659803,
+      "recall": 0.39492635024549916,
+      "f1": 0.3146023468057366,
+      "fbeta": 0.3583308583308583,
+      "beta": 2.0,
+      "predicted_fraud_rate": 0.0019638297872340425,
+      "lift_at_threshold": 201.10009167430619
+    },
+    "int8_channel": {
+      "n": 4700000,
+      "n_fraud": 6110,
+      "base_rate": 0.0013,
+      "threshold": 0.9969438910484314,
+      "auc_pr": 0.28690632952036355,
+      "auc_roc": 0.9424170238038216,
+      "tp": 2014,
+      "fp": 3834,
+      "fn": 4096,
+      "tn": 4690056,
+      "precision": 0.344391244870041,
+      "recall": 0.32962356792144026,
+      "f1": 0.3368456263589229,
+      "fbeta": 0.3324749075541469,
+      "beta": 2.0,
+      "predicted_fraud_rate": 0.0012442553191489361,
+      "lift_at_threshold": 264.91634220772386
+    }
+  },
+  "training": {
+    "n_hard_negative": 1172,
+    "n_online_fraud": 12470,
+    "n_random_negative": 999666,
+    "n_used": 9172,
+    "epochs": [
+      {
+        "epoch": 1,
+        "loss": 1.0623928010463715,
+        "val_fp": 32,
+        "val_tp": 324,
+        "val_precision": 0.9101123595505618,
+        "val_recall": 0.2559241706161137
+      },
+      {
+        "epoch": 2,
+        "loss": 1.0211676706870396,
+        "val_fp": 39,
+        "val_tp": 339,
+        "val_precision": 0.8968253968253969,
+        "val_recall": 0.2677725118483412
+      },
+      {
+        "epoch": 3,
+        "loss": 0.9994184970855713,
+        "val_fp": 45,
+        "val_tp": 328,
+        "val_precision": 0.8793565683646113,
+        "val_recall": 0.25908372827804105
+      },
+      {
+        "epoch": 4,
+        "loss": 0.9680622468392054,
+        "val_fp": 29,
+        "val_tp": 355,
+        "val_precision": 0.9244791666666666,
+        "val_recall": 0.2804107424960506
+      }
+    ]
+  },
+  "int8_threshold_scan": [],
+  "success": true
+}

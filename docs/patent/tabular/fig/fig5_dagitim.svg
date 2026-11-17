@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 820" width="1000" height="820">
+  <defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="4" orient="auto"><path d="M0,0 L0,8 L11,4 z" fill="#000"/></marker></defs>
+  <style>
+    text { font-family: Arial, Helvetica, sans-serif; fill: #000; }
+    .box { fill: #fff; stroke: #000; stroke-width: 3; }
+    .line { fill: none; stroke: #000; stroke-width: 3; marker-end: url(#arrow); }
+    .title { font-size: 30px; font-weight: bold; }
+    .ref { font-size: 24px; font-weight: bold; }
+    .label { font-size: 22px; }
+    .small { font-size: 19px; }
+  </style>
+  <text class="title" x="500" y="48" text-anchor="middle">Şekil 5 — Self-contained dağıtım ve doğrulama</text>
+  <rect class="box" x="55" y="145" width="210" height="100" rx="8"/>
+  <text class="label" x="160" y="185" text-anchor="middle">Ham kayıt</text><text class="small" x="160" y="215" text-anchor="middle">özellik değerleri</text>
+  <path class="line" d="M265 195 H335"/>
+  <rect class="box" x="340" y="145" width="230" height="100" rx="8"/>
+  <text class="ref" x="360" y="185">210</text><text class="label" x="470" y="215" text-anchor="middle">Girdi kantizörü</text>
+  <path class="line" d="M570 195 H640"/>
+  <rect class="box" x="645" y="145" width="290" height="100" rx="8"/>
+  <text class="ref" x="665" y="185">250</text><text class="label" x="800" y="215" text-anchor="middle">ONNX skor okuyucu</text>
+  <path class="line" d="M790 245 V310"/>
+  <rect class="box" x="645" y="315" width="290" height="95" rx="8"/>
+  <text class="ref" x="665" y="355">260 / 270</text><text class="label" x="800" y="385" text-anchor="middle">Ablation ve decoder</text>
+  <path class="line" d="M790 410 V475"/>
+  <rect class="box" x="645" y="480" width="290" height="95" rx="8"/>
+  <text class="label" x="790" y="520" text-anchor="middle">Düz-metin açıklama</text><text class="small" x="790" y="550" text-anchor="middle">decoded kimlik token'ları</text>
+  <rect class="box" x="105" y="355" width="400" height="205" rx="8"/>
+  <text class="ref" x="130" y="395">290 — Paket</text>
+  <text class="label" x="305" y="440" text-anchor="middle">model.onnx</text>
+  <text class="label" x="305" y="478" text-anchor="middle">quantizer.json + token_decoder.json</text>
+  <text class="label" x="305" y="516" text-anchor="middle">manifest.json (hash / config / self-test)</text>
+  <path class="line" d="M505 455 H580 V195 H640"/>
+  <path class="line" d="M305 560 V635"/>
+  <rect class="box" x="105" y="640" width="400" height="100" rx="8"/>
+  <text class="ref" x="130" y="680">Doğrulama</text>
+  <text class="small" x="305" y="715" text-anchor="middle">torch ↔ ONNX paritesi / artifact hash'i</text>
+</svg>

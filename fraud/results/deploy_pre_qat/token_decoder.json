@@ -1,0 +1,886 @@
+{
+  "0": {
+    "feature": null,
+    "label": "pad"
+  },
+  "1": {
+    "feature": null,
+    "label": "eos"
+  },
+  "2": {
+    "feature": "amount",
+    "label": "amount<2.52"
+  },
+  "3": {
+    "feature": "amount",
+    "label": "amount~[2.52,9.15)"
+  },
+  "4": {
+    "feature": "amount",
+    "label": "amount~[9.15,17.71)"
+  },
+  "5": {
+    "feature": "amount",
+    "label": "amount~[17.71,30.79)"
+  },
+  "6": {
+    "feature": "amount",
+    "label": "amount~[30.79,46.26)"
+  },
+  "7": {
+    "feature": "amount",
+    "label": "amount~[46.26,66.42)"
+  },
+  "8": {
+    "feature": "amount",
+    "label": "amount~[66.42,100.00)"
+  },
+  "9": {
+    "feature": "amount",
+    "label": "amount>100.00"
+  },
+  "10": {
+    "feature": "hour",
+    "label": "hour=0"
+  },
+  "11": {
+    "feature": "hour",
+    "label": "hour=1"
+  },
+  "12": {
+    "feature": "hour",
+    "label": "hour=2"
+  },
+  "13": {
+    "feature": "hour",
+    "label": "hour=3"
+  },
+  "14": {
+    "feature": "hour",
+    "label": "hour=4"
+  },
+  "15": {
+    "feature": "hour",
+    "label": "hour=5"
+  },
+  "16": {
+    "feature": "hour",
+    "label": "hour=6"
+  },
+  "17": {
+    "feature": "hour",
+    "label": "hour=7"
+  },
+  "18": {
+    "feature": "hour",
+    "label": "hour=8"
+  },
+  "19": {
+    "feature": "hour",
+    "label": "hour=9"
+  },
+  "20": {
+    "feature": "hour",
+    "label": "hour=10"
+  },
+  "21": {
+    "feature": "hour",
+    "label": "hour=11"
+  },
+  "22": {
+    "feature": "hour",
+    "label": "hour=12"
+  },
+  "23": {
+    "feature": "hour",
+    "label": "hour=13"
+  },
+  "24": {
+    "feature": "hour",
+    "label": "hour=14"
+  },
+  "25": {
+    "feature": "hour",
+    "label": "hour=15"
+  },
+  "26": {
+    "feature": "hour",
+    "label": "hour=16"
+  },
+  "27": {
+    "feature": "hour",
+    "label": "hour=17"
+  },
+  "28": {
+    "feature": "hour",
+    "label": "hour=18"
+  },
+  "29": {
+    "feature": "hour",
+    "label": "hour=19"
+  },
+  "30": {
+    "feature": "hour",
+    "label": "hour=20"
+  },
+  "31": {
+    "feature": "hour",
+    "label": "hour=21"
+  },
+  "32": {
+    "feature": "hour",
+    "label": "hour=22"
+  },
+  "33": {
+    "feature": "hour",
+    "label": "hour=23"
+  },
+  "34": {
+    "feature": "month",
+    "label": "month=0"
+  },
+  "35": {
+    "feature": "month",
+    "label": "month=1"
+  },
+  "36": {
+    "feature": "month",
+    "label": "month=2"
+  },
+  "37": {
+    "feature": "month",
+    "label": "month=3"
+  },
+  "38": {
+    "feature": "month",
+    "label": "month=4"
+  },
+  "39": {
+    "feature": "month",
+    "label": "month=5"
+  },
+  "40": {
+    "feature": "month",
+    "label": "month=6"
+  },
+  "41": {
+    "feature": "month",
+    "label": "month=7"
+  },
+  "42": {
+    "feature": "month",
+    "label": "month=8"
+  },
+  "43": {
+    "feature": "month",
+    "label": "month=9"
+  },
+  "44": {
+    "feature": "month",
+    "label": "month=10"
+  },
+  "45": {
+    "feature": "month",
+    "label": "month=11"
+  },
+  "46": {
+    "feature": "dayofweek",
+    "label": "dayofweek=0"
+  },
+  "47": {
+    "feature": "dayofweek",
+    "label": "dayofweek=1"
+  },
+  "48": {
+    "feature": "dayofweek",
+    "label": "dayofweek=2"
+  },
+  "49": {
+    "feature": "dayofweek",
+    "label": "dayofweek=3"
+  },
+  "50": {
+    "feature": "dayofweek",
+    "label": "dayofweek=4"
+  },
+  "51": {
+    "feature": "dayofweek",
+    "label": "dayofweek=5"
+  },
+  "52": {
+    "feature": "dayofweek",
+    "label": "dayofweek=6"
+  },
+  "53": {
+    "feature": "is_weekend",
+    "label": "is_weekend=0"
+  },
+  "54": {
+    "feature": "is_weekend",
+    "label": "is_weekend=1"
+  },
+  "55": {
+    "feature": "year",
+    "label": "year<2008.00"
+  },
+  "56": {
+    "feature": "year",
+    "label": "year~[2008.00,2012.00)"
+  },
+  "57": {
+    "feature": "year",
+    "label": "year~[2012.00,2016.00)"
+  },
+  "58": {
+    "feature": "year",
+    "label": "year>2016.00"
+  },
+  "59": {
+    "feature": "zip",
+    "label": "zip<0.00"
+  },
+  "60": {
+    "feature": "zip",
+    "label": "zip~[0.00,0.00)"
+  },
+  "61": {
+    "feature": "zip",
+    "label": "zip~[0.00,8831.00)"
+  },
+  "62": {
+    "feature": "zip",
+    "label": "zip~[8831.00,14559.00)"
+  },
+  "63": {
+    "feature": "zip",
+    "label": "zip~[14559.00,23061.00)"
+  },
+  "64": {
+    "feature": "zip",
+    "label": "zip~[23061.00,30052.00)"
+  },
+  "65": {
+    "feature": "zip",
+    "label": "zip~[30052.00,33309.00)"
+  },
+  "66": {
+    "feature": "zip",
+    "label": "zip~[33309.00,40299.00)"
+  },
+  "67": {
+    "feature": "zip",
+    "label": "zip~[40299.00,46562.00)"
+  },
+  "68": {
+    "feature": "zip",
+    "label": "zip~[46562.00,54302.00)"
+  },
+  "69": {
+    "feature": "zip",
+    "label": "zip~[54302.00,62232.00)"
+  },
+  "70": {
+    "feature": "zip",
+    "label": "zip~[62232.00,75050.00)"
+  },
+  "71": {
+    "feature": "zip",
+    "label": "zip~[75050.00,80122.00)"
+  },
+  "72": {
+    "feature": "zip",
+    "label": "zip~[80122.00,91792.00)"
+  },
+  "73": {
+    "feature": "zip",
+    "label": "zip~[91792.00,94901.00)"
+  },
+  "74": {
+    "feature": "zip",
+    "label": "zip>94901.00"
+  },
+  "75": {
+    "feature": "Use Chip",
+    "label": "Use Chip=Chip Transaction"
+  },
+  "76": {
+    "feature": "Use Chip",
+    "label": "Use Chip=Online Transaction"
+  },
+  "77": {
+    "feature": "Use Chip",
+    "label": "Use Chip=Swipe Transaction"
+  },
+  "78": {
+    "feature": "Use Chip",
+    "label": "Use Chip=other"
+  },
+  "79": {
+    "feature": "MCC",
+    "label": "MCC=5411"
+  },
+  "80": {
+    "feature": "MCC",
+    "label": "MCC=5499"
+  },
+  "81": {
+    "feature": "MCC",
+    "label": "MCC=5541"
+  },
+  "82": {
+    "feature": "MCC",
+    "label": "MCC=5812"
+  },
+  "83": {
+    "feature": "MCC",
+    "label": "MCC=5912"
+  },
+  "84": {
+    "feature": "MCC",
+    "label": "MCC=4829"
+  },
+  "85": {
+    "feature": "MCC",
+    "label": "MCC=5300"
+  },
+  "86": {
+    "feature": "MCC",
+    "label": "MCC=4784"
+  },
+  "87": {
+    "feature": "MCC",
+    "label": "MCC=7538"
+  },
+  "88": {
+    "feature": "MCC",
+    "label": "MCC=4121"
+  },
+  "89": {
+    "feature": "MCC",
+    "label": "MCC=5311"
+  },
+  "90": {
+    "feature": "MCC",
+    "label": "MCC=5814"
+  },
+  "91": {
+    "feature": "MCC",
+    "label": "MCC=5310"
+  },
+  "92": {
+    "feature": "MCC",
+    "label": "MCC=4900"
+  },
+  "93": {
+    "feature": "MCC",
+    "label": "MCC=5942"
+  },
+  "94": {
+    "feature": "MCC",
+    "label": "MCC=4814"
+  },
+  "95": {
+    "feature": "MCC",
+    "label": "MCC=5813"
+  },
+  "96": {
+    "feature": "MCC",
+    "label": "MCC=5211"
+  },
+  "97": {
+    "feature": "MCC",
+    "label": "MCC=7832"
+  },
+  "98": {
+    "feature": "MCC",
+    "label": "MCC=5921"
+  },
+  "99": {
+    "feature": "MCC",
+    "label": "MCC=4111"
+  },
+  "100": {
+    "feature": "MCC",
+    "label": "MCC=7230"
+  },
+  "101": {
+    "feature": "MCC",
+    "label": "MCC=4214"
+  },
+  "102": {
+    "feature": "MCC",
+    "label": "MCC=9402"
+  },
+  "103": {
+    "feature": "MCC",
+    "label": "MCC=5719"
+  },
+  "104": {
+    "feature": "MCC",
+    "label": "MCC=5651"
+  },
+  "105": {
+    "feature": "MCC",
+    "label": "MCC=5815"
+  },
+  "106": {
+    "feature": "MCC",
+    "label": "MCC=5970"
+  },
+  "107": {
+    "feature": "MCC",
+    "label": "MCC=4899"
+  },
+  "108": {
+    "feature": "MCC",
+    "label": "MCC=6300"
+  },
+  "109": {
+    "feature": "MCC",
+    "label": "MCC=7349"
+  },
+  "110": {
+    "feature": "MCC",
+    "label": "MCC=7922"
+  },
+  "111": {
+    "feature": "MCC",
+    "label": "MCC=other"
+  },
+  "112": {
+    "feature": "Merchant State",
+    "label": "Merchant State=ONLINE"
+  },
+  "113": {
+    "feature": "Merchant State",
+    "label": "Merchant State=CA"
+  },
+  "114": {
+    "feature": "Merchant State",
+    "label": "Merchant State=TX"
+  },
+  "115": {
+    "feature": "Merchant State",
+    "label": "Merchant State=FL"
+  },
+  "116": {
+    "feature": "Merchant State",
+    "label": "Merchant State=NY"
+  },
+  "117": {
+    "feature": "Merchant State",
+    "label": "Merchant State=IL"
+  },
+  "118": {
+    "feature": "Merchant State",
+    "label": "Merchant State=OH"
+  },
+  "119": {
+    "feature": "Merchant State",
+    "label": "Merchant State=NC"
+  },
+  "120": {
+    "feature": "Merchant State",
+    "label": "Merchant State=PA"
+  },
+  "121": {
+    "feature": "Merchant State",
+    "label": "Merchant State=IN"
+  },
+  "122": {
+    "feature": "Merchant State",
+    "label": "Merchant State=NJ"
+  },
+  "123": {
+    "feature": "Merchant State",
+    "label": "Merchant State=MI"
+  },
+  "124": {
+    "feature": "Merchant State",
+    "label": "Merchant State=GA"
+  },
+  "125": {
+    "feature": "Merchant State",
+    "label": "Merchant State=WA"
+  },
+  "126": {
+    "feature": "Merchant State",
+    "label": "Merchant State=TN"
+  },
+  "127": {
+    "feature": "Merchant State",
+    "label": "Merchant State=VA"
+  },
+  "128": {
+    "feature": "Merchant State",
+    "label": "Merchant State=MD"
+  },
+  "129": {
+    "feature": "Merchant State",
+    "label": "Merchant State=KY"
+  },
+  "130": {
+    "feature": "Merchant State",
+    "label": "Merchant State=WI"
+  },
+  "131": {
+    "feature": "Merchant State",
+    "label": "Merchant State=MN"
+  },
+  "132": {
+    "feature": "Merchant State",
+    "label": "Merchant State=MA"
+  },
+  "133": {
+    "feature": "Merchant State",
+    "label": "Merchant State=MO"
+  },
+  "134": {
+    "feature": "Merchant State",
+    "label": "Merchant State=IA"
+  },
+  "135": {
+    "feature": "Merchant State",
+    "label": "Merchant State=SC"
+  },
+  "136": {
+    "feature": "Merchant State",
+    "label": "Merchant State=OK"
+  },
+  "137": {
+    "feature": "Merchant State",
+    "label": "Merchant State=LA"
+  },
+  "138": {
+    "feature": "Merchant State",
+    "label": "Merchant State=AL"
+  },
+  "139": {
+    "feature": "Merchant State",
+    "label": "Merchant State=AZ"
+  },
+  "140": {
+    "feature": "Merchant State",
+    "label": "Merchant State=CO"
+  },
+  "141": {
+    "feature": "Merchant State",
+    "label": "Merchant State=MS"
+  },
+  "142": {
+    "feature": "Merchant State",
+    "label": "Merchant State=NV"
+  },
+  "143": {
+    "feature": "Merchant State",
+    "label": "Merchant State=OR"
+  },
+  "144": {
+    "feature": "Merchant State",
+    "label": "Merchant State=other"
+  },
+  "145": {
+    "feature": "Merchant City",
+    "label": "Merchant City=ONLINE"
+  },
+  "146": {
+    "feature": "Merchant City",
+    "label": "Merchant City=Los Angeles"
+  },
+  "147": {
+    "feature": "Merchant City",
+    "label": "Merchant City=Houston"
+  },
+  "148": {
+    "feature": "Merchant City",
+    "label": "Merchant City=Chicago"
+  },
+  "149": {
+    "feature": "Merchant City",
+    "label": "Merchant City=Brooklyn"
+  },
+  "150": {
+    "feature": "Merchant City",
+    "label": "Merchant City=Miami"
+  },
+  "151": {
+    "feature": "Merchant City",
+    "label": "Merchant City=Minneapolis"
+  },
+  "152": {
+    "feature": "Merchant City",
+    "label": "Merchant City=Orlando"
+  },
+  "153": {
+    "feature": "Merchant City",
+    "label": "Merchant City=Atlanta"
+  },
+  "154": {
+    "feature": "Merchant City",
+    "label": "Merchant City=Dallas"
+  },
+  "155": {
+    "feature": "Merchant City",
+    "label": "Merchant City=Indianapolis"
+  },
+  "156": {
+    "feature": "Merchant City",
+    "label": "Merchant City=San Antonio"
+  },
+  "157": {
+    "feature": "Merchant City",
+    "label": "Merchant City=San Francisco"
+  },
+  "158": {
+    "feature": "Merchant City",
+    "label": "Merchant City=Oakland"
+  },
+  "159": {
+    "feature": "Merchant City",
+    "label": "Merchant City=Las Vegas"
+  },
+  "160": {
+    "feature": "Merchant City",
+    "label": "Merchant City=New York"
+  },
+  "161": {
+    "feature": "Merchant City",
+    "label": "Merchant City=Philadelphia"
+  },
+  "162": {
+    "feature": "Merchant City",
+    "label": "Merchant City=Bronx"
+  },
+  "163": {
+    "feature": "Merchant City",
+    "label": "Merchant City=Monroe"
+  },
+  "164": {
+    "feature": "Merchant City",
+    "label": "Merchant City=Garland"
+  },
+  "165": {
+    "feature": "Merchant City",
+    "label": "Merchant City=Richmond"
+  },
+  "166": {
+    "feature": "Merchant City",
+    "label": "Merchant City=Louisville"
+  },
+  "167": {
+    "feature": "Merchant City",
+    "label": "Merchant City=El Paso"
+  },
+  "168": {
+    "feature": "Merchant City",
+    "label": "Merchant City=San Jose"
+  },
+  "169": {
+    "feature": "Merchant City",
+    "label": "Merchant City=Pompano Beach"
+  },
+  "170": {
+    "feature": "Merchant City",
+    "label": "Merchant City=North Hollywood"
+  },
+  "171": {
+    "feature": "Merchant City",
+    "label": "Merchant City=Tucson"
+  },
+  "172": {
+    "feature": "Merchant City",
+    "label": "Merchant City=Memphis"
+  },
+  "173": {
+    "feature": "Merchant City",
+    "label": "Merchant City=Seattle"
+  },
+  "174": {
+    "feature": "Merchant City",
+    "label": "Merchant City=Yorba Linda"
+  },
+  "175": {
+    "feature": "Merchant City",
+    "label": "Merchant City=Jacksonville"
+  },
+  "176": {
+    "feature": "Merchant City",
+    "label": "Merchant City=Rome"
+  },
+  "177": {
+    "feature": "Merchant City",
+    "label": "Merchant City=other"
+  },
+  "178": {
+    "feature": "Merchant Name",
+    "label": "Merchant Name=-4282466774399734331"
+  },
+  "179": {
+    "feature": "Merchant Name",
+    "label": "Merchant Name=1799189980464955940"
+  },
+  "180": {
+    "feature": "Merchant Name",
+    "label": "Merchant Name=2027553650310142703"
+  },
+  "181": {
+    "feature": "Merchant Name",
+    "label": "Merchant Name=-5162038175624867091"
+  },
+  "182": {
+    "feature": "Merchant Name",
+    "label": "Merchant Name=-1288082279022882052"
+  },
+  "183": {
+    "feature": "Merchant Name",
+    "label": "Merchant Name=-2088492411650162548"
+  },
+  "184": {
+    "feature": "Merchant Name",
+    "label": "Merchant Name=1913477460590765860"
+  },
+  "185": {
+    "feature": "Merchant Name",
+    "label": "Merchant Name=-6571010470072147219"
+  },
+  "186": {
+    "feature": "Merchant Name",
+    "label": "Merchant Name=97032797689821735"
+  },
+  "187": {
+    "feature": "Merchant Name",
+    "label": "Merchant Name=4722913068560264812"
+  },
+  "188": {
+    "feature": "Merchant Name",
+    "label": "Merchant Name=-5475680618560174533"
+  },
+  "189": {
+    "feature": "Merchant Name",
+    "label": "Merchant Name=-5467922351692495955"
+  },
+  "190": {
+    "feature": "Merchant Name",
+    "label": "Merchant Name=-5841929396161652653"
+  },
+  "191": {
+    "feature": "Merchant Name",
+    "label": "Merchant Name=-6160036380778658394"
+  },
+  "192": {
+    "feature": "Merchant Name",
+    "label": "Merchant Name=6666504894937430109"
+  },
+  "193": {
+    "feature": "Merchant Name",
+    "label": "Merchant Name=4751695835751691036"
+  },
+  "194": {
+    "feature": "Merchant Name",
+    "label": "Merchant Name=-4334232547381218591"
+  },
+  "195": {
+    "feature": "Merchant Name",
+    "label": "Merchant Name=-3345936507911876459"
+  },
+  "196": {
+    "feature": "Merchant Name",
+    "label": "Merchant Name=5817218446178736267"
+  },
+  "197": {
+    "feature": "Merchant Name",
+    "label": "Merchant Name=-4500542936415012428"
+  },
+  "198": {
+    "feature": "Merchant Name",
+    "label": "Merchant Name=6135208568923449408"
+  },
+  "199": {
+    "feature": "Merchant Name",
+    "label": "Merchant Name=4241336128694185533"
+  },
+  "200": {
+    "feature": "Merchant Name",
+    "label": "Merchant Name=-245178307025547046"
+  },
+  "201": {
+    "feature": "Merchant Name",
+    "label": "Merchant Name=-6458444334611773637"
+  },
+  "202": {
+    "feature": "Merchant Name",
+    "label": "Merchant Name=112925206871091074"
+  },
+  "203": {
+    "feature": "Merchant Name",
+    "label": "Merchant Name=-2744911404133435018"
+  },
+  "204": {
+    "feature": "Merchant Name",
+    "label": "Merchant Name=-727612092139916043"
+  },
+  "205": {
+    "feature": "Merchant Name",
+    "label": "Merchant Name=-1688244360627004732"
+  },
+  "206": {
+    "feature": "Merchant Name",
+    "label": "Merchant Name=-3220758452254689706"
+  },
+  "207": {
+    "feature": "Merchant Name",
+    "label": "Merchant Name=-7146670748125200898"
+  },
+  "208": {
+    "feature": "Merchant Name",
+    "label": "Merchant Name=-7421093378627544099"
+  },
+  "209": {
+    "feature": "Merchant Name",
+    "label": "Merchant Name=8878665205966093747"
+  },
+  "210": {
+    "feature": "Merchant Name",
+    "label": "Merchant Name=other"
+  },
+  "211": {
+    "feature": "error_type",
+    "label": "error_type=bad_card_number"
+  },
+  "212": {
+    "feature": "error_type",
+    "label": "error_type=bad_cvv"
+  },
+  "213": {
+    "feature": "error_type",
+    "label": "error_type=bad_expiration"
+  },
+  "214": {
+    "feature": "error_type",
+    "label": "error_type=bad_pin"
+  },
+  "215": {
+    "feature": "error_type",
+    "label": "error_type=bad_zipcode"
+  },
+  "216": {
+    "feature": "error_type",
+    "label": "error_type=insufficient_balance"
+  },
+  "217": {
+    "feature": "error_type",
+    "label": "error_type=multi"
+  },
+  "218": {
+    "feature": "error_type",
+    "label": "error_type=none"
+  },
+  "219": {
+    "feature": "error_type",
+    "label": "error_type=technical_glitch"
+  },
+  "220": {
+    "feature": "error_type",
+    "label": "error_type=other"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "format": "ONNX",
+  "opset": 17,
+  "files": {
+    "model": "reader.onnx",
+    "tokenizer": "tokenizer.json"
+  },
+  "sha256": {
+    "reader.onnx": "c1d953f23f5173e3723fd40955142e0c4d85782a5be8f315575bf8e3efff7eb5",
+    "tokenizer.json": "915a6ff0635b1b4228f820422f77fe6a9a4b1a02264c81177cce6b099a4b9c1e"
+  },
+  "config": {
+    "n_sample": 20000,
+    "seed": 0,
+    "max_len": 64,
+    "epochs": 2,
+    "batch_size": 16,
+    "proxy_target": "issue",
+    "drift_supervision": false
+  },
+  "model_config": {
+    "vocab_size": 8000,
+    "d_model": 128,
+    "d_cloud_dim": 32,
+    "d_cloud": 128,
+    "hidden": 128,
+    "d_z": 32,
+    "n_issue": 135
+  },
+  "self_test": {
+    "input": "A sample complaint for edge parity.",
+    "max_abs_delta_z": 7.152557373046875e-07,
+    "passed": true
+  },
+  "batch1_cpu_latency_ms": 0.8451866614632308,
+  "latency_repeats": 100
+}

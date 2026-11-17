@@ -1,0 +1,165 @@
+{
+  "models": {
+    "xgboost": {
+      "auc_roc": 0.9933922442255942,
+      "auc_pr": 0.7791995843306028,
+      "fbeta": 0.6595649914631431,
+      "precision": 0.36783274684330364,
+      "recall": 0.8226851851851852,
+      "threshold": 0.9363757573572324,
+      "lift": 267.7049267079126,
+      "trained_rows": 14612758,
+      "config": {
+        "n_estimators": 1200,
+        "best_iteration": 1198,
+        "max_depth": 8,
+        "learning_rate": 0.05,
+        "tree_method": "hist",
+        "n_jobs": 18,
+        "scale_pos_weight": 830.4986912484352,
+        "early_stopping_rounds": 80,
+        "fit_sec": 1620.6
+      },
+      "artifact": "duels_xgboost.joblib"
+    },
+    "lightgbm": {
+      "auc_roc": 0.9364403244701196,
+      "auc_pr": 0.6386681216019218,
+      "fbeta": 0.5944278759144555,
+      "precision": 0.35038689805424084,
+      "recall": 0.7197530864197531,
+      "threshold": 0.028747717533568914,
+      "lift": 255.00801564843334,
+      "trained_rows": 14612758,
+      "config": {
+        "n_estimators": 1200,
+        "best_iteration": 7,
+        "max_depth": 8,
+        "learning_rate": 0.05,
+        "n_jobs": 1,
+        "n_jobs_requested": 18,
+        "scale_pos_weight": 1.0,
+        "raw_scale_pos_weight": 830.4986912484352,
+        "early_stopping_rounds": 80,
+        "eval_metric": "average_precision",
+        "fit_sec": 55.9
+      },
+      "artifact": "duels_lightgbm.joblib"
+    },
+    "ftt": {
+      "auc_roc": 0.9694542323758608,
+      "auc_pr": 0.6870684033172076,
+      "fbeta": 0.5875897845171588,
+      "precision": 0.332392776523702,
+      "recall": 0.7271604938271605,
+      "threshold": 0.3854017770828171,
+      "lift": 241.9120772719672,
+      "trained_rows": 14612758,
+      "config": {
+        "epochs": 3,
+        "batch_size": 2048,
+        "lr": 0.001,
+        "d_model": 128,
+        "layers": 2,
+        "heads": 8,
+        "cat_embedding_dim": 16,
+        "ff_dim": 64,
+        "pos_weight": 20.0,
+        "pos_weight_cap": 20.0,
+        "params": 183137,
+        "continuous_features": 13,
+        "categorical_features": 14,
+        "fit_sec": 14322.3
+      },
+      "artifact": "duels_ftt.pt"
+    }
+  },
+  "validation": {
+    "xgboost": {
+      "auc_roc": 0.9934774094498242,
+      "auc_pr": 0.7927700031937323,
+      "fbeta": 0.6582321282650963,
+      "precision": 0.36854145302516367,
+      "recall": 0.8192179554620376,
+      "threshold": 0.9363757573572324,
+      "lift_at_threshold": 326.8641515087272
+    },
+    "lightgbm": {
+      "auc_roc": 0.93569397024794,
+      "auc_pr": 0.6347401661219795,
+      "fbeta": 0.5810709004157482,
+      "precision": 0.3197205803331542,
+      "recall": 0.7303173768192179,
+      "threshold": 0.028747717533568914,
+      "lift_at_threshold": 283.56429202914876
+    },
+    "ftt": {
+      "auc_roc": 0.969695697673616,
+      "auc_pr": 0.689848314436999,
+      "fbeta": 0.5882104314012793,
+      "precision": 0.3293365938313481,
+      "recall": 0.7320708399088199,
+      "threshold": 0.3854017770828171,
+      "lift_at_threshold": 292.09285799420724
+    }
+  },
+  "data": {
+    "n_rows": 24386900,
+    "fraud": 29757,
+    "split_name": "standard",
+    "split": {
+      "train": 14612758,
+      "val": 5058064,
+      "test": 4716078
+    },
+    "split_full": {
+      "train": 14612758,
+      "val": 5058064,
+      "test": 4716078
+    },
+    "fraud_by_split": {
+      "train": 17574,
+      "val": 5703,
+      "test": 6480
+    },
+    "fraud_by_split_full": {
+      "train": 17574,
+      "val": 5703,
+      "test": 6480
+    },
+    "test_base_rate": 0.0013740230759542145,
+    "feature_count": 27,
+    "features": [
+      "amount",
+      "amount_abs_log",
+      "amount_neg",
+      "hour",
+      "hour_sin",
+      "hour_cos",
+      "month",
+      "day",
+      "dayofweek",
+      "is_weekend",
+      "year",
+      "zip",
+      "zip_missing",
+      "use_chip=Chip Transaction",
+      "use_chip=Online Transaction",
+      "use_chip=Swipe Transaction",
+      "err_insufficient_balance",
+      "err_technical_glitch",
+      "err_bad_pin",
+      "err_bad_expiration",
+      "err_bad_card_number",
+      "err_bad_cvv",
+      "err_bad_zipcode",
+      "mcc_freq",
+      "merchant_city_freq",
+      "merchant_name_freq",
+      "merchant_state_freq"
+    ],
+    "seed": 20261015,
+    "smoke": false,
+    "sampling": "full canonical User-group partitions"
+  }
+}

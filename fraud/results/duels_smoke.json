@@ -1,0 +1,157 @@
+{
+  "models": {
+    "xgboost": {
+      "auc_roc": 0.9442230011684194,
+      "auc_pr": 0.08852990162004357,
+      "fbeta": 0.2459016393442623,
+      "precision": 0.0967741935483871,
+      "recall": 0.4,
+      "threshold": 0.5609567335673604,
+      "lift": 64.51612903225806,
+      "trained_rows": 50000,
+      "config": {
+        "n_estimators": 120,
+        "best_iteration": 96,
+        "max_depth": 8,
+        "learning_rate": 0.05,
+        "tree_method": "hist",
+        "n_jobs": 18,
+        "scale_pos_weight": 683.931506849315,
+        "early_stopping_rounds": 20,
+        "fit_sec": 0.4
+      },
+      "artifact": "duels_smoke_xgboost.joblib"
+    },
+    "lightgbm": {
+      "auc_roc": 0.8876314471707561,
+      "auc_pr": 0.1800814207650273,
+      "fbeta": 0.12875536480686695,
+      "precision": 0.029556650246305417,
+      "recall": 0.8,
+      "threshold": 0.9999999999941205,
+      "lift": 19.704433497536943,
+      "trained_rows": 50000,
+      "config": {
+        "n_estimators": 120,
+        "best_iteration": 1,
+        "max_depth": 8,
+        "learning_rate": 0.05,
+        "n_jobs": 18,
+        "scale_pos_weight": 683.931506849315,
+        "early_stopping_rounds": 20,
+        "eval_metric": "average_precision",
+        "fit_sec": 0.1
+      },
+      "artifact": "duels_smoke_lightgbm.joblib"
+    },
+    "ftt": {
+      "auc_roc": 0.8970789517609749,
+      "auc_pr": 0.043938206596908495,
+      "fbeta": 0.09363295880149813,
+      "precision": 0.024154589371980676,
+      "recall": 0.3333333333333333,
+      "threshold": 0.019160329371242596,
+      "lift": 16.10305958132045,
+      "trained_rows": 50000,
+      "config": {
+        "epochs": 1,
+        "batch_size": 2048,
+        "lr": 0.001,
+        "d_model": 64,
+        "layers": 1,
+        "heads": 4,
+        "cat_embedding_dim": 8,
+        "ff_dim": 32,
+        "pos_weight": 20.0,
+        "pos_weight_cap": 20.0,
+        "params": 29041,
+        "continuous_features": 13,
+        "categorical_features": 14,
+        "fit_sec": 4.7
+      },
+      "artifact": "duels_smoke_ftt.pt"
+    }
+  },
+  "validation": {
+    "xgboost": {
+      "auc_roc": 0.9588449340677683,
+      "auc_pr": 0.18177392722493158,
+      "fbeta": 0.36036036036036034,
+      "precision": 0.1568627450980392,
+      "recall": 0.5333333333333333,
+      "threshold": 0.5609567335673604,
+      "lift_at_threshold": 104.57516339869281
+    },
+    "lightgbm": {
+      "auc_roc": 0.9455583375062594,
+      "auc_pr": 0.10124000863687696,
+      "fbeta": 0.16317016317016317,
+      "precision": 0.037940379403794036,
+      "recall": 0.9333333333333333,
+      "threshold": 0.9999999999941205,
+      "lift_at_threshold": 25.293586269196023
+    },
+    "ftt": {
+      "auc_roc": 0.6472441996327825,
+      "auc_pr": 0.002553939355564064,
+      "fbeta": 0.017482517482517484,
+      "precision": 0.004424778761061947,
+      "recall": 0.06666666666666667,
+      "threshold": 0.019160329371242596,
+      "lift_at_threshold": 2.949852507374631
+    }
+  },
+  "data": {
+    "n_rows": 24386900,
+    "fraud": 29757,
+    "split": {
+      "train": 50000,
+      "val": 10000,
+      "test": 10000
+    },
+    "split_full": {
+      "train": 14612758,
+      "val": 5058064,
+      "test": 4716078
+    },
+    "fraud_by_split": {
+      "train": 73,
+      "val": 15,
+      "test": 15
+    },
+    "test_base_rate": 0.0015,
+    "feature_count": 27,
+    "features": [
+      "amount",
+      "amount_abs_log",
+      "amount_neg",
+      "hour",
+      "hour_sin",
+      "hour_cos",
+      "month",
+      "day",
+      "dayofweek",
+      "is_weekend",
+      "year",
+      "zip",
+      "zip_missing",
+      "use_chip=Chip Transaction",
+      "use_chip=Online Transaction",
+      "use_chip=Swipe Transaction",
+      "err_insufficient_balance",
+      "err_technical_glitch",
+      "err_bad_pin",
+      "err_bad_expiration",
+      "err_bad_card_number",
+      "err_bad_cvv",
+      "err_bad_zipcode",
+      "mcc_freq",
+      "merchant_city_freq",
+      "merchant_name_freq",
+      "merchant_state_freq"
+    ],
+    "seed": 20261015,
+    "smoke": true,
+    "sampling": "deterministic natural-rate sample of canonical User-group partitions"
+  }
+}

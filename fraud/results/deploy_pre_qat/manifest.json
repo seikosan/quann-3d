@@ -1,0 +1,104 @@
+{
+  "generated": "2026-10-19 20:20:49",
+  "checkpoint": {
+    "path": "/Users/serkankose/Documents/quann-3d/fraud/results/quann_full_hybrid.pt",
+    "size_kb": 636.5,
+    "sha256": "2bb6fcdbc0073ad743e81f0bf9a0c1312d0611a8386605b0bede0ba580fd48cd"
+  },
+  "model": {
+    "D": 8,
+    "d_model": 32,
+    "d_cloud": 128,
+    "vocab": 221,
+    "quann_points": 214,
+    "K": 13
+  },
+  "artifacts": {
+    "model_onnx": "model.onnx",
+    "model_onnx_kb": 543.5,
+    "model_onnx_sha256": "85d311d0dee4123871d6135126f7b40d3af894f2780ebf311a0d62541b240497",
+    "quantizer": "quantizer.json",
+    "quantizer_kb": 5.4,
+    "token_decoder": "token_decoder.json",
+    "token_decoder_kb": 16.5,
+    "decoder_entries": 221
+  },
+  "self_test": {
+    "n_rows": 19963,
+    "max_abs_diff": 1.4901161193847656e-06,
+    "p99_abs_diff": 8.344650268554688e-07,
+    "tx_per_s": 45516.451149182685,
+    "cases": [
+      {
+        "row": 9762,
+        "true_class": "fraud",
+        "p_fraud": 0.9999902248382568,
+        "decoded": [
+          "amount>100.00",
+          "hour=12",
+          "month=3",
+          "dayofweek=6",
+          "is_weekend=1",
+          "year>2016.00",
+          "zip~[0.00,8831.00)",
+          "Use Chip=Online Transaction",
+          "MCC=5311",
+          "Merchant State=ONLINE",
+          "Merchant City=ONLINE",
+          "Merchant Name=-3220758452254689706",
+          "error_type=none"
+        ]
+      },
+      {
+        "row": 16503,
+        "true_class": "normal",
+        "p_fraud": 1.0,
+        "decoded": [
+          "amount~[9.15,17.71)",
+          "hour=13",
+          "month=11",
+          "dayofweek=3",
+          "is_weekend=0",
+          "year~[2012.00,2016.00)",
+          "zip~[0.00,8831.00)",
+          "Use Chip=Swipe Transaction",
+          "MCC=5541",
+          "Merchant State=other",
+          "Merchant City=Rome",
+          "Merchant Name=-5162038175624867091",
+          "error_type=none"
+        ]
+      },
+      {
+        "row": 9761,
+        "true_class": "fraud",
+        "p_fraud": 0.02732791379094124,
+        "decoded": [
+          "amount~[66.42,100.00)",
+          "hour=11",
+          "month=3",
+          "dayofweek=6",
+          "is_weekend=1",
+          "year>2016.00",
+          "zip~[80122.00,91792.00)",
+          "Use Chip=Chip Transaction",
+          "MCC=4121",
+          "Merchant State=CA",
+          "Merchant City=other",
+          "Merchant Name=other",
+          "error_type=none"
+        ]
+      }
+    ]
+  },
+  "usage": {
+    "inputs": "ids (B,K) int64 token matrix + mask (B,K) bool (mask = ids not in {0,1})",
+    "output": "p (B) = P(fraud)",
+    "tokenization": "quantizer.json (FeatureQuantizer.to_dict) maps raw rows -> ids",
+    "explanation": "token_decoder.json maps id -> human-readable label"
+  },
+  "method": {
+    "graph": "baked QUANN point table (V,D) + CloudEncoderND + class_head + sigmoid; same graph as edge_deploy.onnx, re-exported into the deploy package",
+    "parity": "real-row torch vs onnxruntime on the bundled User0 CSV"
+  }
+}

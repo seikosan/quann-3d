@@ -1,0 +1,518 @@
+{
+  "experiment": "AML E3 chain-aware features and dual-channel cloud design",
+  "data": "synthetic_aml_typologies",
+  "generator": {
+    "transactions": 20000,
+    "windows": 2000,
+    "window_size": 10,
+    "classes": [
+      "normal",
+      "structuring",
+      "layering",
+      "velocity"
+    ],
+    "seed": 20261016
+  },
+  "split": {
+    "train": 1200,
+    "val": 400,
+    "test": 400,
+    "method": "same account-window stratified split as E0/E1",
+    "train_seed": 20261016,
+    "validation_test_seed": 20261017
+  },
+  "feature_sets": {
+    "base": {
+      "features": [
+        "amount_median",
+        "amount_p95",
+        "threshold_share",
+        "time_of_day_hour",
+        "inter_tx_interval_min",
+        "counterparty_count",
+        "channel",
+        "window_count",
+        "rate_per_hour",
+        "chain_hops",
+        "window_duration_min"
+      ],
+      "raw_counterparty_id": false
+    },
+    "base+chain": {
+      "features": [
+        "amount_median",
+        "amount_p95",
+        "threshold_share",
+        "time_of_day_hour",
+        "inter_tx_interval_min",
+        "counterparty_count",
+        "channel",
+        "window_count",
+        "rate_per_hour",
+        "chain_hops",
+        "window_duration_min",
+        "observed_hop_count",
+        "hop_completion_ratio",
+        "counterparty_shared_ratio",
+        "max_counterparty_degree",
+        "counterparty_transition_rate",
+        "dwell_time_cv",
+        "amount_retention_median",
+        "amount_retention_p10"
+      ],
+      "raw_counterparty_id": false
+    },
+    "chain_definitions": {
+      "observed_hop_count": "distinct counterparties within this account window",
+      "hop_completion_ratio": "distinct counterparties / transfers",
+      "counterparty_shared_ratio": "repeat counterparty events / transfers",
+      "max_counterparty_degree": "maximum undirected event degree; direction unavailable",
+      "counterparty_transition_rate": "fraction of adjacent transfers changing counterparty",
+      "dwell_time_cv": "coefficient of variation of within-window inter-transfer delays",
+      "amount_retention_median": "median adjacent-transfer min(amount)/max(amount), conservation proxy",
+      "amount_retention_p10": "10th percentile adjacent-transfer amount ratio, conservation proxy"
+    },
+    "dual_channel": "each engineered summary becomes a point token; CloudEncoderND pairwise diff/distance/cosine-angle features encode interactions between base and chain points"
+  },
+  "regimes": {
+    "gbt": {
+      "base": {
+        "test": {
+          "n": 400,
+          "n_abnormal": 300,
+          "base_rate": 0.75,
+          "threshold": 0.7492279580957144,
+          "auc_roc": 1.0,
+          "auc_pr": 1.0,
+          "f2": 1.0,
+          "lift": 1.3333333333333333,
+          "class_recall_at_1pct_fpr": {
+            "normal": 1.0,
+            "structuring": 1.0,
+            "layering": 1.0,
+            "velocity": 1.0
+          },
+          "class_thresholds_at_1pct_fpr": {
+            "normal": 3.6599298710876297e-06,
+            "structuring": 2.065032567126721e-06,
+            "layering": 2.370562484093213e-06,
+            "velocity": 3.648105102007645e-06
+          },
+          "accuracy": 1.0,
+          "fit_sec": 0.99
+        },
+        "val": {
+          "n": 400,
+          "n_abnormal": 300,
+          "base_rate": 0.75,
+          "threshold": 0.7492279580957144,
+          "auc_roc": 1.0,
+          "auc_pr": 1.0,
+          "f2": 1.0,
+          "lift": 1.3333333333333333,
+          "class_recall_at_1pct_fpr": {
+            "normal": 1.0,
+            "structuring": 1.0,
+            "layering": 1.0,
+            "velocity": 1.0
+          },
+          "class_thresholds_at_1pct_fpr": {
+            "normal": 3.6599298710876297e-06,
+            "structuring": 2.065032567126721e-06,
+            "layering": 2.370562484093213e-06,
+            "velocity": 3.648105102007645e-06
+          },
+          "accuracy": 1.0
+        }
+      },
+      "base+chain": {
+        "test": {
+          "n": 400,
+          "n_abnormal": 300,
+          "base_rate": 0.75,
+          "threshold": 0.7493877512328541,
+          "auc_roc": 1.0,
+          "auc_pr": 1.0,
+          "f2": 1.0,
+          "lift": 1.3333333333333333,
+          "class_recall_at_1pct_fpr": {
+            "normal": 1.0,
+            "structuring": 1.0,
+            "layering": 1.0,
+            "velocity": 1.0
+          },
+          "class_thresholds_at_1pct_fpr": {
+            "normal": 4.281600768045677e-06,
+            "structuring": 2.402259946379739e-06,
+            "layering": 2.5966791262146034e-06,
+            "velocity": 2.675926854366127e-06
+          },
+          "accuracy": 1.0,
+          "fit_sec": 1.11
+        },
+        "val": {
+          "n": 400,
+          "n_abnormal": 300,
+          "base_rate": 0.75,
+          "threshold": 0.7493877512328541,
+          "auc_roc": 1.0,
+          "auc_pr": 1.0,
+          "f2": 1.0,
+          "lift": 1.3333333333333333,
+          "class_recall_at_1pct_fpr": {
+            "normal": 1.0,
+            "structuring": 1.0,
+            "layering": 1.0,
+            "velocity": 1.0
+          },
+          "class_thresholds_at_1pct_fpr": {
+            "normal": 4.281600768045677e-06,
+            "structuring": 2.402259946379739e-06,
+            "layering": 2.5966791262146034e-06,
+            "velocity": 2.675926854366127e-06
+          },
+          "accuracy": 1.0
+        }
+      }
+    },
+    "hybrid": {
+      "base": {
+        "test": {
+          "n": 400,
+          "n_abnormal": 300,
+          "base_rate": 0.75,
+          "threshold": 0.9817577451467514,
+          "auc_roc": 1.0,
+          "auc_pr": 1.0,
+          "f2": 1.0,
+          "lift": 1.3333333333333333,
+          "class_recall_at_1pct_fpr": {
+            "normal": 1.0,
+            "structuring": 1.0,
+            "layering": 1.0,
+            "velocity": 1.0
+          },
+          "class_thresholds_at_1pct_fpr": {
+            "normal": 0.010969162918627262,
+            "structuring": 0.7340379953384399,
+            "layering": 0.6614363193511963,
+            "velocity": 0.013482421636581421
+          },
+          "accuracy": 0.88,
+          "regime": "hybrid",
+          "train_sec": 0.65,
+          "points": 65,
+          "converged": 65,
+          "mean_width": 3.676731676722948e-08
+        },
+        "val": {
+          "n": 400,
+          "n_abnormal": 300,
+          "base_rate": 0.75,
+          "threshold": 0.9817577451467514,
+          "auc_roc": 1.0,
+          "auc_pr": 1.0,
+          "f2": 1.0,
+          "lift": 1.3333333333333333,
+          "class_recall_at_1pct_fpr": {
+            "normal": 1.0,
+            "structuring": 1.0,
+            "layering": 1.0,
+            "velocity": 1.0
+          },
+          "class_thresholds_at_1pct_fpr": {
+            "normal": 0.010969162918627262,
+            "structuring": 0.7340379953384399,
+            "layering": 0.6614363193511963,
+            "velocity": 0.013482421636581421
+          },
+          "accuracy": 0.9075
+        }
+      },
+      "base+chain": {
+        "test": {
+          "n": 400,
+          "n_abnormal": 300,
+          "base_rate": 0.75,
+          "threshold": 0.6901600444316864,
+          "auc_roc": 0.9544583333333334,
+          "auc_pr": 0.869646790871856,
+          "f2": 0.9765625000000001,
+          "lift": 1.1904761904761905,
+          "class_recall_at_1pct_fpr": {
+            "normal": 0.71,
+            "structuring": 0.32,
+            "layering": 1.0,
+            "velocity": 0.19
+          },
+          "class_thresholds_at_1pct_fpr": {
+            "normal": 0.3098028600215912,
+            "structuring": 0.4000129699707031,
+            "layering": 0.020199472084641457,
+            "velocity": 0.2781260311603546
+          },
+          "accuracy": 0.5,
+          "regime": "hybrid",
+          "train_sec": 0.97,
+          "points": 106,
+          "converged": 106,
+          "mean_width": 3.865098510429544e-08
+        },
+        "val": {
+          "n": 400,
+          "n_abnormal": 300,
+          "base_rate": 0.75,
+          "threshold": 0.6901600444316864,
+          "auc_roc": 0.9626916666666666,
+          "auc_pr": 0.8804504237249096,
+          "f2": 0.9842519685039369,
+          "lift": 1.2345679012345678,
+          "class_recall_at_1pct_fpr": {
+            "normal": 0.82,
+            "structuring": 0.37,
+            "layering": 1.0,
+            "velocity": 0.22
+          },
+          "class_thresholds_at_1pct_fpr": {
+            "normal": 0.3098028600215912,
+            "structuring": 0.4000129699707031,
+            "layering": 0.020199472084641457,
+            "velocity": 0.2781260311603546
+          },
+          "accuracy": 0.5
+        }
+      }
+    },
+    "backprop": {
+      "base": {
+        "test": {
+          "n": 400,
+          "n_abnormal": 300,
+          "base_rate": 0.75,
+          "threshold": 0.5183046567440033,
+          "auc_roc": 0.993375,
+          "auc_pr": 0.9685703899489752,
+          "f2": 0.9859625668449198,
+          "lift": 1.3288288288288288,
+          "class_recall_at_1pct_fpr": {
+            "normal": 0.12,
+            "structuring": 0.96,
+            "layering": 1.0,
+            "velocity": 0.99
+          },
+          "class_thresholds_at_1pct_fpr": {
+            "normal": 0.4857933521270752,
+            "structuring": 0.5024133920669556,
+            "layering": 0.010025386698544025,
+            "velocity": 0.007035907357931137
+          },
+          "accuracy": 0.7475,
+          "regime": "backprop",
+          "train_sec": 0.35,
+          "points": 0,
+          "converged": 0,
+          "mean_width": null
+        },
+        "val": {
+          "n": 400,
+          "n_abnormal": 300,
+          "base_rate": 0.75,
+          "threshold": 0.5183046567440033,
+          "auc_roc": 0.9923916666666667,
+          "auc_pr": 0.9667260424715243,
+          "f2": 0.9839357429718876,
+          "lift": 1.3333333333333333,
+          "class_recall_at_1pct_fpr": {
+            "normal": 0.14,
+            "structuring": 0.95,
+            "layering": 1.0,
+            "velocity": 0.99
+          },
+          "class_thresholds_at_1pct_fpr": {
+            "normal": 0.4857933521270752,
+            "structuring": 0.5024133920669556,
+            "layering": 0.010025386698544025,
+            "velocity": 0.007035907357931137
+          },
+          "accuracy": 0.7475
+        }
+      },
+      "base+chain": {
+        "test": {
+          "n": 400,
+          "n_abnormal": 300,
+          "base_rate": 0.75,
+          "threshold": 0.7460006028413773,
+          "auc_roc": 1.0,
+          "auc_pr": 1.0,
+          "f2": 1.0,
+          "lift": 1.3333333333333333,
+          "class_recall_at_1pct_fpr": {
+            "normal": 1.0,
+            "structuring": 1.0,
+            "layering": 1.0,
+            "velocity": 1.0
+          },
+          "class_thresholds_at_1pct_fpr": {
+            "normal": 0.013077442534267902,
+            "structuring": 0.0008442665566690266,
+            "layering": 0.022865470498800278,
+            "velocity": 0.0127332778647542
+          },
+          "accuracy": 1.0,
+          "regime": "backprop",
+          "train_sec": 0.39,
+          "points": 0,
+          "converged": 0,
+          "mean_width": null
+        },
+        "val": {
+          "n": 400,
+          "n_abnormal": 300,
+          "base_rate": 0.75,
+          "threshold": 0.7460006028413773,
+          "auc_roc": 1.0,
+          "auc_pr": 1.0,
+          "f2": 1.0,
+          "lift": 1.3333333333333333,
+          "class_recall_at_1pct_fpr": {
+            "normal": 1.0,
+            "structuring": 1.0,
+            "layering": 1.0,
+            "velocity": 1.0
+          },
+          "class_thresholds_at_1pct_fpr": {
+            "normal": 0.013077442534267902,
+            "structuring": 0.0008442665566690266,
+            "layering": 0.022865470498800278,
+            "velocity": 0.0127332778647542
+          },
+          "accuracy": 1.0
+        }
+      }
+    }
+  },
+  "base_vs_base_plus_chain": {
+    "gbt": {
+      "layering_recall_delta": 0.0,
+      "auc_roc_delta": 0.0,
+      "auc_pr_delta": 0.0,
+      "f2_delta": 0.0,
+      "class_recall_deltas": {
+        "normal": 0.0,
+        "structuring": 0.0,
+        "layering": 0.0,
+        "velocity": 0.0
+      }
+    },
+    "hybrid": {
+      "layering_recall_delta": 0.0,
+      "auc_roc_delta": -0.04554166666666659,
+      "auc_pr_delta": -0.13035320912814397,
+      "f2_delta": -0.02343749999999989,
+      "class_recall_deltas": {
+        "normal": -0.29000000000000004,
+        "structuring": -0.6799999999999999,
+        "layering": 0.0,
+        "velocity": -0.81
+      }
+    },
+    "backprop": {
+      "layering_recall_delta": 0.0,
+      "auc_roc_delta": 0.006624999999999992,
+      "auc_pr_delta": 0.03142961005102485,
+      "f2_delta": 0.014037433155080214,
+      "class_recall_deltas": {
+        "normal": 0.88,
+        "structuring": 0.040000000000000036,
+        "layering": 0.0,
+        "velocity": 0.010000000000000009
+      }
+    }
+  },
+  "prototypes": {
+    "definition": "train-only class centroid in base+chain hybrid CloudEncoderND output space",
+    "distance_metric": "Euclidean",
+    "class_distance_separation": {
+      "normal": {
+        "n_test": 100,
+        "median_own_distance": 0.19613371789455414,
+        "median_nearest_other_distance": 0.257160484790802,
+        "own_to_other_ratio": 0.7626899480819702,
+        "nearest_prototype_accuracy": 0.97
+      },
+      "structuring": {
+        "n_test": 100,
+        "median_own_distance": 0.09220953285694122,
+        "median_nearest_other_distance": 0.26980355381965637,
+        "own_to_other_ratio": 0.34176546335220337,
+        "nearest_prototype_accuracy": 1.0
+      },
+      "layering": {
+        "n_test": 100,
+        "median_own_distance": 0.1253240555524826,
+        "median_nearest_other_distance": 12.289274215698242,
+        "own_to_other_ratio": 0.010197840631008148,
+        "nearest_prototype_accuracy": 1.0
+      },
+      "velocity": {
+        "n_test": 100,
+        "median_own_distance": 0.1973549723625183,
+        "median_nearest_other_distance": 0.1549982875585556,
+        "own_to_other_ratio": 1.273271918296814,
+        "nearest_prototype_accuracy": 0.27
+      }
+    },
+    "base_ablation_class_distance_separation": {
+      "normal": {
+        "n_test": 100,
+        "median_own_distance": 0.8763967752456665,
+        "median_nearest_other_distance": 7.119654655456543,
+        "own_to_other_ratio": 0.12309540808200836,
+        "nearest_prototype_accuracy": 1.0
+      },
+      "structuring": {
+        "n_test": 100,
+        "median_own_distance": 0.2524392604827881,
+        "median_nearest_other_distance": 6.8783979415893555,
+        "own_to_other_ratio": 0.0367002971470356,
+        "nearest_prototype_accuracy": 1.0
+      },
+      "layering": {
+        "n_test": 100,
+        "median_own_distance": 1.6756341457366943,
+        "median_nearest_other_distance": 8.461194038391113,
+        "own_to_other_ratio": 0.1980375498533249,
+        "nearest_prototype_accuracy": 1.0
+      },
+      "velocity": {
+        "n_test": 100,
+        "median_own_distance": 0.8233863115310669,
+        "median_nearest_other_distance": 11.848081588745117,
+        "own_to_other_ratio": 0.06949532777070999,
+        "nearest_prototype_accuracy": 1.0
+      }
+    },
+    "layering_own_to_other_ratio_delta_chain_minus_base": -0.18783970922231674,
+    "layering_vs_normal_pca_centroid_gap": 12.281022071838379,
+    "layering_vs_normal_gap_fraction_of_map_span": 0.9751321180767213,
+    "pca_explained_variance": [
+      0.9962711334228516,
+      0.0026425495743751526
+    ]
+  },
+  "figure": "/Users/serkankose/Documents/quann-3d/aml/figures/e3_region_map.png",
+  "comparison_notes": [
+    "E3 base and base+chain both achieve layering recall 1.00 in all three regimes; the added chain family contributes 0.00 layering-recall delta on this seed.",
+    "The E0 hybrid reference recall 0.04 is not a controlled direct comparison: E3 removes the raw counterparty_id token present in E0, while retaining E0's other features.",
+    "E3 base retains generator-provided chain_hops, which is label-conditioned in this synthetic generator; perfect GBT/base recall is therefore not evidence that the engineered chain family caused the separation."
+  ],
+  "limitations": [
+    "Synthetic, balanced windows only; these results do not establish real AML performance.",
+    "The generator has no transaction direction or explicit cross-account transfer edges; fan-in/out and in/out speed ratios cannot be recovered.",
+    "Amount retention is a sequential ratio proxy, not true ledger conservation; inferred edges may not reflect real layering chains.",
+    "E0's chain_hops field is retained in base for comparability and is generated with a label-conditioned rule; it is synthetic-label leakage risk.",
+    "Raw counterparty IDs are excluded from both E3 variants; E0's CloudQuantizer included them, so E3 base is ID-safe rather than byte-identical to E0 quantization.",
+    "PCA/KDE regions are descriptive, not calibrated classifier boundaries; prototypes are centroids, not operational thresholds."
+  ]
+}

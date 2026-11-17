@@ -1,0 +1,606 @@
+{
+  "data": "elliptic",
+  "kaggle_slug": "ellipticco/elliptic-data-set",
+  "data_validation": {
+    "labels_rows": 203769,
+    "edge_rows": 234355,
+    "feature_rows": 203769,
+    "labeled_fraud_nodes": 4545,
+    "labeled_normal_nodes": 42019,
+    "unknown_nodes": 157205,
+    "sampled_labeled_nodes": 2000,
+    "sampled_fraud": 200,
+    "sampled_normal": 1800,
+    "point_feature_count_raw": 168,
+    "raw_feature_axes_are_anonymous": true,
+    "named_amount_available": false,
+    "account_unit": "labeled transaction-node proxy; source has no account IDs",
+    "feature_source": "elliptic_txs_features.csv",
+    "label_source": "elliptic_txs_classes.csv",
+    "edge_source": "elliptic_txs_edgelist.csv"
+  },
+  "protocol": {
+    "device": "cpu",
+    "seed": 20261016,
+    "sampled_labeled_nodes": 2000,
+    "split": "same stratified node-level 60/20/20 split across all configs; seed=20261016",
+    "quantization": "per-axis train-only quantile buckets; bucket IDs mapped to [-1,1]",
+    "anonymous_feature_selection": "mutual information on training target nodes only; selected axis is not named amount",
+    "hybrid_training": "same CloudEncoderND/QCloudWeight regime as E2; balanced 120/class, 8-epoch backprop ceiling",
+    "success_criterion": "within one configuration, hybrid is within 0.05 ROC or PR of GBT or backprop"
+  },
+  "grid": [
+    {
+      "design": {
+        "name": "time_anonymous_pair_K10_B8",
+        "window": 10,
+        "buckets": 8,
+        "point_family": "anonymous_pair",
+        "explicit_pair_angles": false
+      },
+      "point_dim": 2,
+      "actual_buckets_per_axis": [
+        8,
+        8
+      ],
+      "anonymous_raw_axis_selected_train_only": 52,
+      "metrics": {
+        "gbt": {
+          "val": {
+            "threshold_f2": 0.1427187903457159,
+            "threshold_at_1pct_fpr": 0.7524266112516524
+          },
+          "test": {
+            "n": 400,
+            "n_fraud": 40,
+            "auc_roc": 0.9238541666666666,
+            "auc_pr": 0.6341600241931907,
+            "f2": 0.6932773109243697,
+            "threshold_f2": 0.1427187903457159,
+            "fraud_recall_at_f2_threshold": 0.825,
+            "normal_recall_at_f2_threshold": 0.875,
+            "lift": 4.230769230769231,
+            "fraud_recall_at_1pct_fpr": 0.225,
+            "fpr_threshold_from_validation": 0.7524266112516524,
+            "train_sec": 1.92
+          }
+        },
+        "backprop": {
+          "val": {
+            "threshold_f2": 0.5015333929657936,
+            "threshold_at_1pct_fpr": 0.8934663534164429
+          },
+          "test": {
+            "n": 400,
+            "n_fraud": 40,
+            "auc_roc": 0.8889236111111111,
+            "auc_pr": 0.5442695277536722,
+            "f2": 0.6164383561643836,
+            "threshold_f2": 0.5015333929657936,
+            "fraud_recall_at_f2_threshold": 0.9,
+            "normal_recall_at_f2_threshold": 0.7333333333333333,
+            "lift": 2.727272727272727,
+            "fraud_recall_at_1pct_fpr": 0.275,
+            "fpr_threshold_from_validation": 0.8934663534164429,
+            "train_sec": 0.65,
+            "points": 0,
+            "converged": 0,
+            "mean_width": null
+          }
+        },
+        "hybrid": {
+          "val": {
+            "threshold_f2": 0.6196904614567758,
+            "threshold_at_1pct_fpr": 0.6666132807731628
+          },
+          "test": {
+            "n": 400,
+            "n_fraud": 40,
+            "auc_roc": 0.7369097222222223,
+            "auc_pr": 0.25710863118886823,
+            "f2": 0.5396825396825395,
+            "threshold_f2": 0.6196904614567758,
+            "fraud_recall_at_f2_threshold": 0.85,
+            "normal_recall_at_f2_threshold": 0.6638888888888889,
+            "lift": 2.193548387096774,
+            "fraud_recall_at_1pct_fpr": 0.175,
+            "fpr_threshold_from_validation": 0.6666132807731628,
+            "train_sec": 0.39,
+            "points": 24,
+            "converged": 21,
+            "mean_width": 0.019994294980199962
+          }
+        }
+      }
+    },
+    {
+      "design": {
+        "name": "time_degree_anonymous_K10_B8",
+        "window": 10,
+        "buckets": 8,
+        "point_family": "dual_channel",
+        "explicit_pair_angles": false
+      },
+      "point_dim": 4,
+      "actual_buckets_per_axis": [
+        8,
+        4,
+        5,
+        8
+      ],
+      "anonymous_raw_axis_selected_train_only": 52,
+      "metrics": {
+        "gbt": {
+          "val": {
+            "threshold_f2": 0.03806469904806179,
+            "threshold_at_1pct_fpr": 0.48171774672227735
+          },
+          "test": {
+            "n": 400,
+            "n_fraud": 40,
+            "auc_roc": 0.9446527777777779,
+            "auc_pr": 0.8018693881818959,
+            "f2": 0.7198443579766538,
+            "threshold_f2": 0.03806469904806179,
+            "fraud_recall_at_f2_threshold": 0.925,
+            "normal_recall_at_f2_threshold": 0.8333333333333334,
+            "lift": 3.8144329896907214,
+            "fraud_recall_at_1pct_fpr": 0.625,
+            "fpr_threshold_from_validation": 0.48171774672227735,
+            "train_sec": 1.58
+          }
+        },
+        "backprop": {
+          "val": {
+            "threshold_f2": 0.6315604496002197,
+            "threshold_at_1pct_fpr": 0.9115267992019653
+          },
+          "test": {
+            "n": 400,
+            "n_fraud": 40,
+            "auc_roc": 0.8920138888888889,
+            "auc_pr": 0.5848082105507243,
+            "f2": 0.6512605042016806,
+            "threshold_f2": 0.6315604496002197,
+            "fraud_recall_at_f2_threshold": 0.775,
+            "normal_recall_at_f2_threshold": 0.8694444444444445,
+            "lift": 3.974358974358974,
+            "fraud_recall_at_1pct_fpr": 0.3,
+            "fpr_threshold_from_validation": 0.9115267992019653,
+            "train_sec": 0.76,
+            "points": 0,
+            "converged": 0,
+            "mean_width": null
+          }
+        },
+        "hybrid": {
+          "val": {
+            "threshold_f2": 0.48980212211608887,
+            "threshold_at_1pct_fpr": 0.5019845366477966
+          },
+          "test": {
+            "n": 400,
+            "n_fraud": 40,
+            "auc_roc": 0.6459722222222223,
+            "auc_pr": 0.20266190165625877,
+            "f2": 0.33073929961089493,
+            "threshold_f2": 0.48980212211608887,
+            "fraud_recall_at_f2_threshold": 0.425,
+            "normal_recall_at_f2_threshold": 0.7777777777777778,
+            "lift": 1.7525773195876286,
+            "fraud_recall_at_1pct_fpr": 0.125,
+            "fpr_threshold_from_validation": 0.5019845366477966,
+            "train_sec": 0.43,
+            "points": 24,
+            "converged": 23,
+            "mean_width": 0.0009136349100032978
+          }
+        }
+      }
+    },
+    {
+      "design": {
+        "name": "dual_pair_angles_K10_B8",
+        "window": 10,
+        "buckets": 8,
+        "point_family": "dual_channel",
+        "explicit_pair_angles": true
+      },
+      "point_dim": 6,
+      "actual_buckets_per_axis": [
+        8,
+        4,
+        5,
+        8
+      ],
+      "anonymous_raw_axis_selected_train_only": 52,
+      "metrics": {
+        "gbt": {
+          "val": {
+            "threshold_f2": 0.13219066303650212,
+            "threshold_at_1pct_fpr": 0.4302415890971508
+          },
+          "test": {
+            "n": 400,
+            "n_fraud": 40,
+            "auc_roc": 0.9434027777777777,
+            "auc_pr": 0.7583049457782177,
+            "f2": 0.7276995305164319,
+            "threshold_f2": 0.13219066303650212,
+            "fraud_recall_at_f2_threshold": 0.775,
+            "normal_recall_at_f2_threshold": 0.9388888888888889,
+            "lift": 5.849056603773584,
+            "fraud_recall_at_1pct_fpr": 0.625,
+            "fpr_threshold_from_validation": 0.4302415890971508,
+            "train_sec": 1.29
+          }
+        },
+        "backprop": {
+          "val": {
+            "threshold_f2": 0.44688498973846436,
+            "threshold_at_1pct_fpr": 0.8759840726852417
+          },
+          "test": {
+            "n": 400,
+            "n_fraud": 40,
+            "auc_roc": 0.9035416666666667,
+            "auc_pr": 0.6210928849190409,
+            "f2": 0.7113821138211383,
+            "threshold_f2": 0.44688498973846436,
+            "fraud_recall_at_f2_threshold": 0.875,
+            "normal_recall_at_f2_threshold": 0.8583333333333333,
+            "lift": 4.069767441860465,
+            "fraud_recall_at_1pct_fpr": 0.3,
+            "fpr_threshold_from_validation": 0.8759840726852417,
+            "train_sec": 0.69,
+            "points": 0,
+            "converged": 0,
+            "mean_width": null
+          }
+        },
+        "hybrid": {
+          "val": {
+            "threshold_f2": 0.4749308228492737,
+            "threshold_at_1pct_fpr": 0.49137282371520996
+          },
+          "test": {
+            "n": 400,
+            "n_fraud": 40,
+            "auc_roc": 0.8380208333333333,
+            "auc_pr": 0.3696060877058614,
+            "f2": 0.549645390070922,
+            "threshold_f2": 0.4749308228492737,
+            "fraud_recall_at_f2_threshold": 0.775,
+            "normal_recall_at_f2_threshold": 0.7472222222222222,
+            "lift": 2.540983606557377,
+            "fraud_recall_at_1pct_fpr": 0.025,
+            "fpr_threshold_from_validation": 0.49137282371520996,
+            "train_sec": 0.4,
+            "points": 24,
+            "converged": 22,
+            "mean_width": 0.03619876061692482
+          }
+        }
+      }
+    },
+    {
+      "design": {
+        "name": "dual_pair_angles_K10_B4",
+        "window": 10,
+        "buckets": 4,
+        "point_family": "dual_channel",
+        "explicit_pair_angles": true
+      },
+      "point_dim": 6,
+      "actual_buckets_per_axis": [
+        4,
+        3,
+        3,
+        4
+      ],
+      "anonymous_raw_axis_selected_train_only": 52,
+      "metrics": {
+        "gbt": {
+          "val": {
+            "threshold_f2": 0.2029101036741403,
+            "threshold_at_1pct_fpr": 0.6576764373857799
+          },
+          "test": {
+            "n": 400,
+            "n_fraud": 40,
+            "auc_roc": 0.9358680555555555,
+            "auc_pr": 0.6434845176740412,
+            "f2": 0.7013574660633484,
+            "threshold_f2": 0.2029101036741403,
+            "fraud_recall_at_f2_threshold": 0.775,
+            "normal_recall_at_f2_threshold": 0.9166666666666666,
+            "lift": 5.081967213114754,
+            "fraud_recall_at_1pct_fpr": 0.325,
+            "fpr_threshold_from_validation": 0.6576764373857799,
+            "train_sec": 1.16
+          }
+        },
+        "backprop": {
+          "val": {
+            "threshold_f2": 0.5150272250175478,
+            "threshold_at_1pct_fpr": 0.878058910369873
+          },
+          "test": {
+            "n": 400,
+            "n_fraud": 40,
+            "auc_roc": 0.8947569444444444,
+            "auc_pr": 0.575257383811037,
+            "f2": 0.6126482213438734,
+            "threshold_f2": 0.5150272250175478,
+            "fraud_recall_at_f2_threshold": 0.775,
+            "normal_recall_at_f2_threshold": 0.8277777777777777,
+            "lift": 3.333333333333333,
+            "fraud_recall_at_1pct_fpr": 0.3,
+            "fpr_threshold_from_validation": 0.878058910369873,
+            "train_sec": 0.73,
+            "points": 0,
+            "converged": 0,
+            "mean_width": null
+          }
+        },
+        "hybrid": {
+          "val": {
+            "threshold_f2": 0.4815983772277832,
+            "threshold_at_1pct_fpr": 0.48511359095573425
+          },
+          "test": {
+            "n": 400,
+            "n_fraud": 40,
+            "auc_roc": 0.7249305555555555,
+            "auc_pr": 0.2238030255156484,
+            "f2": 0.40723981900452483,
+            "threshold_f2": 0.4815983772277832,
+            "fraud_recall_at_f2_threshold": 0.9,
+            "normal_recall_at_f2_threshold": 0.31666666666666665,
+            "lift": 1.276595744680851,
+            "fraud_recall_at_1pct_fpr": 0.05,
+            "fpr_threshold_from_validation": 0.48511359095573425,
+            "train_sec": 0.42,
+            "points": 24,
+            "converged": 24,
+            "mean_width": 0.0002448435123770212
+          }
+        }
+      }
+    },
+    {
+      "design": {
+        "name": "dual_pair_angles_K5_B8",
+        "window": 5,
+        "buckets": 8,
+        "point_family": "dual_channel",
+        "explicit_pair_angles": true
+      },
+      "point_dim": 6,
+      "actual_buckets_per_axis": [
+        8,
+        5,
+        5,
+        8
+      ],
+      "anonymous_raw_axis_selected_train_only": 52,
+      "metrics": {
+        "gbt": {
+          "val": {
+            "threshold_f2": 0.21188810797372315,
+            "threshold_at_1pct_fpr": 0.3566558210221752
+          },
+          "test": {
+            "n": 400,
+            "n_fraud": 40,
+            "auc_roc": 0.943125,
+            "auc_pr": 0.7328455869012014,
+            "f2": 0.7038834951456311,
+            "threshold_f2": 0.21188810797372315,
+            "fraud_recall_at_f2_threshold": 0.725,
+            "normal_recall_at_f2_threshold": 0.9527777777777777,
+            "lift": 6.304347826086956,
+            "fraud_recall_at_1pct_fpr": 0.675,
+            "fpr_threshold_from_validation": 0.3566558210221752,
+            "train_sec": 0.85
+          }
+        },
+        "backprop": {
+          "val": {
+            "threshold_f2": 0.6889857995510101,
+            "threshold_at_1pct_fpr": 0.9155526161193848
+          },
+          "test": {
+            "n": 400,
+            "n_fraud": 40,
+            "auc_roc": 0.9057638888888888,
+            "auc_pr": 0.5541446996943323,
+            "f2": 0.6932773109243697,
+            "threshold_f2": 0.6889857995510101,
+            "fraud_recall_at_f2_threshold": 0.825,
+            "normal_recall_at_f2_threshold": 0.875,
+            "lift": 4.230769230769231,
+            "fraud_recall_at_1pct_fpr": 0.275,
+            "fpr_threshold_from_validation": 0.9155526161193848,
+            "train_sec": 0.39,
+            "points": 0,
+            "converged": 0,
+            "mean_width": null
+          }
+        },
+        "hybrid": {
+          "val": {
+            "threshold_f2": 0.5634032487869263,
+            "threshold_at_1pct_fpr": 0.6141530275344849
+          },
+          "test": {
+            "n": 400,
+            "n_fraud": 40,
+            "auc_roc": 0.6257291666666667,
+            "auc_pr": 0.302117363038384,
+            "f2": 0.42328042328042337,
+            "threshold_f2": 0.5634032487869263,
+            "fraud_recall_at_f2_threshold": 0.4,
+            "normal_recall_at_f2_threshold": 0.9638888888888889,
+            "lift": 5.517241379310344,
+            "fraud_recall_at_1pct_fpr": 0.25,
+            "fpr_threshold_from_validation": 0.6141530275344849,
+            "train_sec": 0.35,
+            "points": 24,
+            "converged": 23,
+            "mean_width": 0.00047698763776379566
+          }
+        }
+      }
+    },
+    {
+      "design": {
+        "name": "dual_pair_angles_K20_B8",
+        "window": 20,
+        "buckets": 8,
+        "point_family": "dual_channel",
+        "explicit_pair_angles": true
+      },
+      "point_dim": 6,
+      "actual_buckets_per_axis": [
+        8,
+        4,
+        5,
+        8
+      ],
+      "anonymous_raw_axis_selected_train_only": 52,
+      "metrics": {
+        "gbt": {
+          "val": {
+            "threshold_f2": 0.07384105212830543,
+            "threshold_at_1pct_fpr": 0.4874132258101514
+          },
+          "test": {
+            "n": 400,
+            "n_fraud": 40,
+            "auc_roc": 0.9558333333333333,
+            "auc_pr": 0.7726484373238197,
+            "f2": 0.7709251101321586,
+            "threshold_f2": 0.07384105212830543,
+            "fraud_recall_at_f2_threshold": 0.875,
+            "normal_recall_at_f2_threshold": 0.9111111111111111,
+            "lift": 5.223880597014925,
+            "fraud_recall_at_1pct_fpr": 0.6,
+            "fpr_threshold_from_validation": 0.4874132258101514,
+            "train_sec": 1.24
+          }
+        },
+        "backprop": {
+          "val": {
+            "threshold_f2": 0.6404274842143056,
+            "threshold_at_1pct_fpr": 0.8702520132064819
+          },
+          "test": {
+            "n": 400,
+            "n_fraud": 40,
+            "auc_roc": 0.9059722222222222,
+            "auc_pr": 0.6121407050912068,
+            "f2": 0.6444444444444445,
+            "threshold_f2": 0.6404274842143056,
+            "fraud_recall_at_f2_threshold": 0.725,
+            "normal_recall_at_f2_threshold": 0.9,
+            "lift": 4.461538461538462,
+            "fraud_recall_at_1pct_fpr": 0.325,
+            "fpr_threshold_from_validation": 0.8702520132064819,
+            "train_sec": 1.8,
+            "points": 0,
+            "converged": 0,
+            "mean_width": null
+          }
+        },
+        "hybrid": {
+          "val": {
+            "threshold_f2": 0.48788661777973175,
+            "threshold_at_1pct_fpr": 0.4913439452648163
+          },
+          "test": {
+            "n": 400,
+            "n_fraud": 40,
+            "auc_roc": 0.7260069444444445,
+            "auc_pr": 0.2581148605404742,
+            "f2": 0.45267489711934156,
+            "threshold_f2": 0.48788661777973175,
+            "fraud_recall_at_f2_threshold": 0.55,
+            "normal_recall_at_f2_threshold": 0.8305555555555556,
+            "lift": 2.6506024096385543,
+            "fraud_recall_at_1pct_fpr": 0.125,
+            "fpr_threshold_from_validation": 0.4913439452648163,
+            "train_sec": 0.59,
+            "points": 24,
+            "converged": 22,
+            "mean_width": 0.0034837315406770733
+          }
+        }
+      }
+    }
+  ],
+  "summary": {
+    "best_hybrid_design": {
+      "name": "dual_pair_angles_K10_B8",
+      "window": 10,
+      "buckets": 8,
+      "point_family": "dual_channel",
+      "explicit_pair_angles": true
+    },
+    "best_hybrid_point_dim": 6,
+    "best_hybrid_metrics": {
+      "val": {
+        "threshold_f2": 0.4749308228492737,
+        "threshold_at_1pct_fpr": 0.49137282371520996
+      },
+      "test": {
+        "n": 400,
+        "n_fraud": 40,
+        "auc_roc": 0.8380208333333333,
+        "auc_pr": 0.3696060877058614,
+        "f2": 0.549645390070922,
+        "threshold_f2": 0.4749308228492737,
+        "fraud_recall_at_f2_threshold": 0.775,
+        "normal_recall_at_f2_threshold": 0.7472222222222222,
+        "lift": 2.540983606557377,
+        "fraud_recall_at_1pct_fpr": 0.025,
+        "fpr_threshold_from_validation": 0.49137282371520996,
+        "train_sec": 0.4,
+        "points": 24,
+        "converged": 22,
+        "mean_width": 0.03619876061692482
+      }
+    },
+    "best_observed_baseline": {
+      "gbt": {
+        "auc_roc": 0.9558333333333333,
+        "auc_pr": 0.8018693881818959
+      },
+      "backprop": {
+        "auc_roc": 0.9059722222222222,
+        "auc_pr": 0.6210928849190409
+      }
+    },
+    "absolute_gap_to_best_baseline_by_regime": {
+      "gbt": {
+        "auc_roc": 0.117812,
+        "auc_pr": 0.432263
+      },
+      "backprop": {
+        "auc_roc": 0.067951,
+        "auc_pr": 0.251487
+      }
+    },
+    "closest_same_configuration_gap": {
+      "design": "dual_pair_angles_K10_B8",
+      "regime": "backprop",
+      "metric": "auc_roc",
+      "gap": 0.065521
+    },
+    "within_5_points_on_roc_or_pr": false
+  },
+  "outputs": {
+    "figure": "/Users/serkankose/Documents/quann-3d/aml/figures/e2p_design.png",
+    "log": "/Users/serkankose/Documents/quann-3d/aml/logs/run_e2p_smoke.log"
+  }
+}

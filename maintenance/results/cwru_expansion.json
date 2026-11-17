@@ -1,0 +1,2366 @@
+{
+  "experiment": "CWRU expanded recording-disjoint bearing fault comparison",
+  "source": "Official Case Western Reserve University 12 kHz drive-end and fan-end datasets; GitHub mirror fallback for DE files only",
+  "catalog": {
+    "n_catalog_recordings": 80,
+    "available_severity_in": [
+      0.007,
+      0.014,
+      0.021,
+      0.028
+    ],
+    "official_sources": [
+      "https://engineering.case.edu/bearingdatacenter/12k-drive-end-bearing-fault-data",
+      "https://engineering.case.edu/bearingdatacenter/12k-fan-end-bearing-fault-data"
+    ],
+    "recordings_by_position_type_size": {
+      "DE/normal/0.000in": 4,
+      "DE/ball/0.007in": 4,
+      "DE/ball/0.014in": 4,
+      "DE/ball/0.021in": 4,
+      "DE/ball/0.028in": 4,
+      "DE/inner/0.007in": 4,
+      "DE/inner/0.014in": 4,
+      "DE/inner/0.021in": 4,
+      "DE/outer/0.007in": 4,
+      "DE/outer/0.014in": 4,
+      "DE/outer/0.021in": 4,
+      "FE/ball/0.007in": 4,
+      "FE/ball/0.014in": 4,
+      "FE/ball/0.021in": 4,
+      "FE/inner/0.007in": 4,
+      "FE/inner/0.014in": 4,
+      "FE/inner/0.021in": 4,
+      "FE/outer/0.007in": 4,
+      "FE/outer/0.014in": 4,
+      "FE/outer/0.021in": 4
+    },
+    "not_available_in_official_12k_tables": [
+      "ball 0.035 inch",
+      "0.028-inch inner/outer race"
+    ]
+  },
+  "download": {
+    "requested": 80,
+    "downloaded": [
+      {
+        "file": "de_12k_normal_normal_load0_97.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/97.mat",
+        "bytes": 3903344
+      },
+      {
+        "file": "de_12k_normal_normal_load1_98.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/98.mat",
+        "bytes": 7742720
+      },
+      {
+        "file": "de_12k_normal_normal_load2_99.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/99.mat",
+        "bytes": 15503928
+      },
+      {
+        "file": "de_12k_normal_normal_load3_100.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/100.mat",
+        "bytes": 7770624
+      },
+      {
+        "file": "de_12k_ball_007_load0_118.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/118.mat",
+        "bytes": 2942112
+      },
+      {
+        "file": "de_12k_ball_007_load1_119.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/119.mat",
+        "bytes": 2914248
+      },
+      {
+        "file": "de_12k_ball_007_load2_120.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/120.mat",
+        "bytes": 2917752
+      },
+      {
+        "file": "de_12k_ball_007_load3_121.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/121.mat",
+        "bytes": 2917752
+      },
+      {
+        "file": "de_12k_ball_014_load0_185.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/185.mat",
+        "bytes": 2924712
+      },
+      {
+        "file": "de_12k_ball_014_load1_186.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/186.mat",
+        "bytes": 2931672
+      },
+      {
+        "file": "de_12k_ball_014_load2_187.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/187.mat",
+        "bytes": 2928192
+      },
+      {
+        "file": "de_12k_ball_014_load3_188.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/188.mat",
+        "bytes": 2931672
+      },
+      {
+        "file": "de_12k_ball_021_load0_222.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/222.mat",
+        "bytes": 2928192
+      },
+      {
+        "file": "de_12k_ball_021_load1_223.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/223.mat",
+        "bytes": 2921232
+      },
+      {
+        "file": "de_12k_ball_021_load2_224.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/224.mat",
+        "bytes": 2931672
+      },
+      {
+        "file": "de_12k_ball_021_load3_225.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/225.mat",
+        "bytes": 2931672
+      },
+      {
+        "file": "de_12k_ball_028_load0_3005.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/3005.mat",
+        "bytes": 966608
+      },
+      {
+        "file": "de_12k_ball_028_load1_3006.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/3006.mat",
+        "bytes": 971008
+      },
+      {
+        "file": "de_12k_ball_028_load2_3007.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/3007.mat",
+        "bytes": 968072
+      },
+      {
+        "file": "de_12k_ball_028_load3_3008.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/3008.mat",
+        "bytes": 968072
+      },
+      {
+        "file": "de_12k_inner_007_load0_105.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/105.mat",
+        "bytes": 2910768
+      },
+      {
+        "file": "de_12k_inner_007_load1_106.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/106.mat",
+        "bytes": 2928192
+      },
+      {
+        "file": "de_12k_inner_007_load2_107.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/107.mat",
+        "bytes": 2931672
+      },
+      {
+        "file": "de_12k_inner_007_load3_108.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/108.mat",
+        "bytes": 2950416
+      },
+      {
+        "file": "de_12k_inner_014_load0_169.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/169.mat",
+        "bytes": 2924712
+      },
+      {
+        "file": "de_12k_inner_014_load1_170.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/170.mat",
+        "bytes": 2924712
+      },
+      {
+        "file": "de_12k_inner_014_load2_171.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/171.mat",
+        "bytes": 2924712
+      },
+      {
+        "file": "de_12k_inner_014_load3_172.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/172.mat",
+        "bytes": 2921232
+      },
+      {
+        "file": "de_12k_inner_021_load0_209.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/209.mat",
+        "bytes": 2931672
+      },
+      {
+        "file": "de_12k_inner_021_load1_210.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/210.mat",
+        "bytes": 2917752
+      },
+      {
+        "file": "de_12k_inner_021_load2_211.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/211.mat",
+        "bytes": 2924712
+      },
+      {
+        "file": "de_12k_inner_021_load3_212.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/212.mat",
+        "bytes": 2928192
+      },
+      {
+        "file": "de_12k_outer_007_load0_130.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/130.mat",
+        "bytes": 2928192
+      },
+      {
+        "file": "de_12k_outer_007_load1_131.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/131.mat",
+        "bytes": 2938632
+      },
+      {
+        "file": "de_12k_outer_007_load2_132.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/132.mat",
+        "bytes": 2914248
+      },
+      {
+        "file": "de_12k_outer_007_load3_133.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/133.mat",
+        "bytes": 2942112
+      },
+      {
+        "file": "de_12k_outer_014_load0_197.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/197.mat",
+        "bytes": 2924712
+      },
+      {
+        "file": "de_12k_outer_014_load1_198.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/198.mat",
+        "bytes": 2931672
+      },
+      {
+        "file": "de_12k_outer_014_load2_199.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/199.mat",
+        "bytes": 2924712
+      },
+      {
+        "file": "de_12k_outer_014_load3_200.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/200.mat",
+        "bytes": 2928192
+      },
+      {
+        "file": "de_12k_outer_021_load0_234.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/234.mat",
+        "bytes": 2938632
+      },
+      {
+        "file": "de_12k_outer_021_load1_235.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/235.mat",
+        "bytes": 2928192
+      },
+      {
+        "file": "de_12k_outer_021_load2_236.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/236.mat",
+        "bytes": 2935152
+      },
+      {
+        "file": "de_12k_outer_021_load3_237.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/237.mat",
+        "bytes": 2928192
+      },
+      {
+        "file": "fe_12k_ball_007_load0_282.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/282.mat",
+        "bytes": 2908440
+      },
+      {
+        "file": "fe_12k_ball_007_load1_283.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/283.mat",
+        "bytes": 2899632
+      },
+      {
+        "file": "fe_12k_ball_007_load2_284.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/284.mat",
+        "bytes": 2921664
+      },
+      {
+        "file": "fe_12k_ball_007_load3_285.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/285.mat",
+        "bytes": 2908440
+      },
+      {
+        "file": "fe_12k_ball_014_load0_286.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/286.mat",
+        "bytes": 2930472
+      },
+      {
+        "file": "fe_12k_ball_014_load1_287.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/287.mat",
+        "bytes": 2921664
+      },
+      {
+        "file": "fe_12k_ball_014_load2_288.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/288.mat",
+        "bytes": 2934864
+      },
+      {
+        "file": "fe_12k_ball_014_load3_289.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/289.mat",
+        "bytes": 2908440
+      },
+      {
+        "file": "fe_12k_ball_021_load0_290.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/290.mat",
+        "bytes": 2912832
+      },
+      {
+        "file": "fe_12k_ball_021_load1_291.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/291.mat",
+        "bytes": 2912832
+      },
+      {
+        "file": "fe_12k_ball_021_load2_292.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/292.mat",
+        "bytes": 2917248
+      },
+      {
+        "file": "fe_12k_ball_021_load3_293.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/293.mat",
+        "bytes": 2899632
+      },
+      {
+        "file": "fe_12k_inner_007_load0_278.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/278.mat",
+        "bytes": 2937304
+      },
+      {
+        "file": "fe_12k_inner_007_load1_279.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/279.mat",
+        "bytes": 2912832
+      },
+      {
+        "file": "fe_12k_inner_007_load2_280.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/280.mat",
+        "bytes": 2912832
+      },
+      {
+        "file": "fe_12k_inner_007_load3_281.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/281.mat",
+        "bytes": 2917248
+      },
+      {
+        "file": "fe_12k_inner_014_load0_274.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/274.mat",
+        "bytes": 2912832
+      },
+      {
+        "file": "fe_12k_inner_014_load1_275.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/275.mat",
+        "bytes": 2912832
+      },
+      {
+        "file": "fe_12k_inner_014_load2_276.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/276.mat",
+        "bytes": 2912832
+      },
+      {
+        "file": "fe_12k_inner_014_load3_277.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/277.mat",
+        "bytes": 2928496
+      },
+      {
+        "file": "fe_12k_inner_021_load0_270.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/270.mat",
+        "bytes": 2908440
+      },
+      {
+        "file": "fe_12k_inner_021_load1_271.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/271.mat",
+        "bytes": 2908440
+      },
+      {
+        "file": "fe_12k_inner_021_load2_272.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/272.mat",
+        "bytes": 2904024
+      },
+      {
+        "file": "fe_12k_inner_021_load3_273.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/273.mat",
+        "bytes": 2908440
+      },
+      {
+        "file": "fe_12k_outer_007_load0_294.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/294.mat",
+        "bytes": 2908440
+      },
+      {
+        "file": "fe_12k_outer_007_load1_295.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/295.mat",
+        "bytes": 2917248
+      },
+      {
+        "file": "fe_12k_outer_007_load2_296.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/296.mat",
+        "bytes": 2908440
+      },
+      {
+        "file": "fe_12k_outer_007_load3_297.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/297.mat",
+        "bytes": 2926056
+      },
+      {
+        "file": "fe_12k_outer_014_load0_310.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/310.mat",
+        "bytes": 2917248
+      },
+      {
+        "file": "fe_12k_outer_014_load1_309.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/309.mat",
+        "bytes": 2908440
+      },
+      {
+        "file": "fe_12k_outer_014_load2_311.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/311.mat",
+        "bytes": 2904024
+      },
+      {
+        "file": "fe_12k_outer_014_load3_312.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/312.mat",
+        "bytes": 2904024
+      },
+      {
+        "file": "fe_12k_outer_021_load0_315.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/315.mat",
+        "bytes": 2895216
+      },
+      {
+        "file": "fe_12k_outer_021_load1_316.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/316.mat",
+        "bytes": 2895216
+      },
+      {
+        "file": "fe_12k_outer_021_load2_317.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/317.mat",
+        "bytes": 2895216
+      },
+      {
+        "file": "fe_12k_outer_021_load3_318.mat",
+        "source": "official",
+        "url": "https://engineering.case.edu/sites/default/files/318.mat",
+        "bytes": 2912832
+      }
+    ],
+    "already_present": [],
+    "failed": [],
+    "bytes_downloaded_this_run": 249041752,
+    "elapsed_seconds": 127.81,
+    "budget_bytes": 1610612736,
+    "budget_seconds": 840
+  },
+  "recordings_loaded": 80,
+  "recordings_loaded_by_position_type_size": {
+    "DE/normal/0.000in": 4,
+    "DE/ball/0.007in": 4,
+    "DE/ball/0.014in": 4,
+    "DE/ball/0.021in": 4,
+    "DE/ball/0.028in": 4,
+    "DE/inner/0.007in": 4,
+    "DE/inner/0.014in": 4,
+    "DE/inner/0.021in": 4,
+    "DE/outer/0.007in": 4,
+    "DE/outer/0.014in": 4,
+    "DE/outer/0.021in": 4,
+    "FE/ball/0.007in": 4,
+    "FE/ball/0.014in": 4,
+    "FE/ball/0.021in": 4,
+    "FE/inner/0.007in": 4,
+    "FE/inner/0.014in": 4,
+    "FE/inner/0.021in": 4,
+    "FE/outer/0.007in": 4,
+    "FE/outer/0.014in": 4,
+    "FE/outer/0.021in": 4
+  },
+  "recording_metadata": [
+    {
+      "recording_id": "de_12k_normal_normal_load0_97.mat",
+      "position": "DE",
+      "fault_type": "normal",
+      "severity_in": 0.0,
+      "fault_location": "healthy",
+      "load_hp": 0,
+      "rpm": 1796.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE"
+      ],
+      "segments": 24,
+      "source_samples": 243938
+    },
+    {
+      "recording_id": "de_12k_normal_normal_load1_98.mat",
+      "position": "DE",
+      "fault_type": "normal",
+      "severity_in": 0.0,
+      "fault_location": "healthy",
+      "load_hp": 1,
+      "rpm": 1772.0,
+      "rpm_source": "catalog_nominal",
+      "channels_available": [
+        "DE",
+        "FE"
+      ],
+      "segments": 24,
+      "source_samples": 483903
+    },
+    {
+      "recording_id": "de_12k_normal_normal_load2_99.mat",
+      "position": "DE",
+      "fault_type": "normal",
+      "severity_in": 0.0,
+      "fault_location": "healthy",
+      "load_hp": 2,
+      "rpm": 1750.0,
+      "rpm_source": "catalog_nominal",
+      "channels_available": [
+        "DE",
+        "FE"
+      ],
+      "segments": 24,
+      "source_samples": 485063
+    },
+    {
+      "recording_id": "de_12k_normal_normal_load3_100.mat",
+      "position": "DE",
+      "fault_type": "normal",
+      "severity_in": 0.0,
+      "fault_location": "healthy",
+      "load_hp": 3,
+      "rpm": 1725.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE"
+      ],
+      "segments": 24,
+      "source_samples": 485643
+    },
+    {
+      "recording_id": "de_12k_ball_007_load0_118.mat",
+      "position": "DE",
+      "fault_type": "ball",
+      "severity_in": 0.007,
+      "fault_location": "bearing",
+      "load_hp": 0,
+      "rpm": 1796.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 122571
+    },
+    {
+      "recording_id": "de_12k_ball_007_load1_119.mat",
+      "position": "DE",
+      "fault_type": "ball",
+      "severity_in": 0.007,
+      "fault_location": "bearing",
+      "load_hp": 1,
+      "rpm": 1772.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121410
+    },
+    {
+      "recording_id": "de_12k_ball_007_load2_120.mat",
+      "position": "DE",
+      "fault_type": "ball",
+      "severity_in": 0.007,
+      "fault_location": "bearing",
+      "load_hp": 2,
+      "rpm": 1748.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121556
+    },
+    {
+      "recording_id": "de_12k_ball_007_load3_121.mat",
+      "position": "DE",
+      "fault_type": "ball",
+      "severity_in": 0.007,
+      "fault_location": "bearing",
+      "load_hp": 3,
+      "rpm": 1722.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121556
+    },
+    {
+      "recording_id": "de_12k_ball_014_load0_185.mat",
+      "position": "DE",
+      "fault_type": "ball",
+      "severity_in": 0.014,
+      "fault_location": "bearing",
+      "load_hp": 0,
+      "rpm": 1796.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121846
+    },
+    {
+      "recording_id": "de_12k_ball_014_load1_186.mat",
+      "position": "DE",
+      "fault_type": "ball",
+      "severity_in": 0.014,
+      "fault_location": "bearing",
+      "load_hp": 1,
+      "rpm": 1772.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 122136
+    },
+    {
+      "recording_id": "de_12k_ball_014_load2_187.mat",
+      "position": "DE",
+      "fault_type": "ball",
+      "severity_in": 0.014,
+      "fault_location": "bearing",
+      "load_hp": 2,
+      "rpm": 1749.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121991
+    },
+    {
+      "recording_id": "de_12k_ball_014_load3_188.mat",
+      "position": "DE",
+      "fault_type": "ball",
+      "severity_in": 0.014,
+      "fault_location": "bearing",
+      "load_hp": 3,
+      "rpm": 1724.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 122136
+    },
+    {
+      "recording_id": "de_12k_ball_021_load0_222.mat",
+      "position": "DE",
+      "fault_type": "ball",
+      "severity_in": 0.021,
+      "fault_location": "bearing",
+      "load_hp": 0,
+      "rpm": 1796.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121991
+    },
+    {
+      "recording_id": "de_12k_ball_021_load1_223.mat",
+      "position": "DE",
+      "fault_type": "ball",
+      "severity_in": 0.021,
+      "fault_location": "bearing",
+      "load_hp": 1,
+      "rpm": 1774.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121701
+    },
+    {
+      "recording_id": "de_12k_ball_021_load2_224.mat",
+      "position": "DE",
+      "fault_type": "ball",
+      "severity_in": 0.021,
+      "fault_location": "bearing",
+      "load_hp": 2,
+      "rpm": 1754.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 122136
+    },
+    {
+      "recording_id": "de_12k_ball_021_load3_225.mat",
+      "position": "DE",
+      "fault_type": "ball",
+      "severity_in": 0.021,
+      "fault_location": "bearing",
+      "load_hp": 3,
+      "rpm": 1729.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 122136
+    },
+    {
+      "recording_id": "de_12k_ball_028_load0_3005.mat",
+      "position": "DE",
+      "fault_type": "ball",
+      "severity_in": 0.028,
+      "fault_location": "bearing",
+      "load_hp": 0,
+      "rpm": 1797.0,
+      "rpm_source": "catalog_nominal",
+      "channels_available": [
+        "DE"
+      ],
+      "segments": 24,
+      "source_samples": 120801
+    },
+    {
+      "recording_id": "de_12k_ball_028_load1_3006.mat",
+      "position": "DE",
+      "fault_type": "ball",
+      "severity_in": 0.028,
+      "fault_location": "bearing",
+      "load_hp": 1,
+      "rpm": 1772.0,
+      "rpm_source": "catalog_nominal",
+      "channels_available": [
+        "DE"
+      ],
+      "segments": 24,
+      "source_samples": 121351
+    },
+    {
+      "recording_id": "de_12k_ball_028_load2_3007.mat",
+      "position": "DE",
+      "fault_type": "ball",
+      "severity_in": 0.028,
+      "fault_location": "bearing",
+      "load_hp": 2,
+      "rpm": 1750.0,
+      "rpm_source": "catalog_nominal",
+      "channels_available": [
+        "DE"
+      ],
+      "segments": 24,
+      "source_samples": 120984
+    },
+    {
+      "recording_id": "de_12k_ball_028_load3_3008.mat",
+      "position": "DE",
+      "fault_type": "ball",
+      "severity_in": 0.028,
+      "fault_location": "bearing",
+      "load_hp": 3,
+      "rpm": 1730.0,
+      "rpm_source": "catalog_nominal",
+      "channels_available": [
+        "DE"
+      ],
+      "segments": 24,
+      "source_samples": 120984
+    },
+    {
+      "recording_id": "de_12k_inner_007_load0_105.mat",
+      "position": "DE",
+      "fault_type": "inner",
+      "severity_in": 0.007,
+      "fault_location": "bearing",
+      "load_hp": 0,
+      "rpm": 1797.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121265
+    },
+    {
+      "recording_id": "de_12k_inner_007_load1_106.mat",
+      "position": "DE",
+      "fault_type": "inner",
+      "severity_in": 0.007,
+      "fault_location": "bearing",
+      "load_hp": 1,
+      "rpm": 1772.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121991
+    },
+    {
+      "recording_id": "de_12k_inner_007_load2_107.mat",
+      "position": "DE",
+      "fault_type": "inner",
+      "severity_in": 0.007,
+      "fault_location": "bearing",
+      "load_hp": 2,
+      "rpm": 1748.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 122136
+    },
+    {
+      "recording_id": "de_12k_inner_007_load3_108.mat",
+      "position": "DE",
+      "fault_type": "inner",
+      "severity_in": 0.007,
+      "fault_location": "bearing",
+      "load_hp": 3,
+      "rpm": 1721.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 122917
+    },
+    {
+      "recording_id": "de_12k_inner_014_load0_169.mat",
+      "position": "DE",
+      "fault_type": "inner",
+      "severity_in": 0.014,
+      "fault_location": "bearing",
+      "load_hp": 0,
+      "rpm": 1796.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121846
+    },
+    {
+      "recording_id": "de_12k_inner_014_load1_170.mat",
+      "position": "DE",
+      "fault_type": "inner",
+      "severity_in": 0.014,
+      "fault_location": "bearing",
+      "load_hp": 1,
+      "rpm": 1774.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121846
+    },
+    {
+      "recording_id": "de_12k_inner_014_load2_171.mat",
+      "position": "DE",
+      "fault_type": "inner",
+      "severity_in": 0.014,
+      "fault_location": "bearing",
+      "load_hp": 2,
+      "rpm": 1752.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121846
+    },
+    {
+      "recording_id": "de_12k_inner_014_load3_172.mat",
+      "position": "DE",
+      "fault_type": "inner",
+      "severity_in": 0.014,
+      "fault_location": "bearing",
+      "load_hp": 3,
+      "rpm": 1728.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121701
+    },
+    {
+      "recording_id": "de_12k_inner_021_load0_209.mat",
+      "position": "DE",
+      "fault_type": "inner",
+      "severity_in": 0.021,
+      "fault_location": "bearing",
+      "load_hp": 0,
+      "rpm": 1797.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 122136
+    },
+    {
+      "recording_id": "de_12k_inner_021_load1_210.mat",
+      "position": "DE",
+      "fault_type": "inner",
+      "severity_in": 0.021,
+      "fault_location": "bearing",
+      "load_hp": 1,
+      "rpm": 1774.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121556
+    },
+    {
+      "recording_id": "de_12k_inner_021_load2_211.mat",
+      "position": "DE",
+      "fault_type": "inner",
+      "severity_in": 0.021,
+      "fault_location": "bearing",
+      "load_hp": 2,
+      "rpm": 1752.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121846
+    },
+    {
+      "recording_id": "de_12k_inner_021_load3_212.mat",
+      "position": "DE",
+      "fault_type": "inner",
+      "severity_in": 0.021,
+      "fault_location": "bearing",
+      "load_hp": 3,
+      "rpm": 1728.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121991
+    },
+    {
+      "recording_id": "de_12k_outer_007_load0_130.mat",
+      "position": "DE",
+      "fault_type": "outer",
+      "severity_in": 0.007,
+      "fault_location": "bearing",
+      "load_hp": 0,
+      "rpm": 1796.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121991
+    },
+    {
+      "recording_id": "de_12k_outer_007_load1_131.mat",
+      "position": "DE",
+      "fault_type": "outer",
+      "severity_in": 0.007,
+      "fault_location": "bearing",
+      "load_hp": 1,
+      "rpm": 1773.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 122426
+    },
+    {
+      "recording_id": "de_12k_outer_007_load2_132.mat",
+      "position": "DE",
+      "fault_type": "outer",
+      "severity_in": 0.007,
+      "fault_location": "bearing",
+      "load_hp": 2,
+      "rpm": 1750.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121410
+    },
+    {
+      "recording_id": "de_12k_outer_007_load3_133.mat",
+      "position": "DE",
+      "fault_type": "outer",
+      "severity_in": 0.007,
+      "fault_location": "bearing",
+      "load_hp": 3,
+      "rpm": 1725.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 122571
+    },
+    {
+      "recording_id": "de_12k_outer_014_load0_197.mat",
+      "position": "DE",
+      "fault_type": "outer",
+      "severity_in": 0.014,
+      "fault_location": "bearing",
+      "load_hp": 0,
+      "rpm": 1796.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121846
+    },
+    {
+      "recording_id": "de_12k_outer_014_load1_198.mat",
+      "position": "DE",
+      "fault_type": "outer",
+      "severity_in": 0.014,
+      "fault_location": "bearing",
+      "load_hp": 1,
+      "rpm": 1772.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 122136
+    },
+    {
+      "recording_id": "de_12k_outer_014_load2_199.mat",
+      "position": "DE",
+      "fault_type": "outer",
+      "severity_in": 0.014,
+      "fault_location": "bearing",
+      "load_hp": 2,
+      "rpm": 1749.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121846
+    },
+    {
+      "recording_id": "de_12k_outer_014_load3_200.mat",
+      "position": "DE",
+      "fault_type": "outer",
+      "severity_in": 0.014,
+      "fault_location": "bearing",
+      "load_hp": 3,
+      "rpm": 1723.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121991
+    },
+    {
+      "recording_id": "de_12k_outer_021_load0_234.mat",
+      "position": "DE",
+      "fault_type": "outer",
+      "severity_in": 0.021,
+      "fault_location": "bearing",
+      "load_hp": 0,
+      "rpm": 1796.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 122426
+    },
+    {
+      "recording_id": "de_12k_outer_021_load1_235.mat",
+      "position": "DE",
+      "fault_type": "outer",
+      "severity_in": 0.021,
+      "fault_location": "bearing",
+      "load_hp": 1,
+      "rpm": 1771.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121991
+    },
+    {
+      "recording_id": "de_12k_outer_021_load2_236.mat",
+      "position": "DE",
+      "fault_type": "outer",
+      "severity_in": 0.021,
+      "fault_location": "bearing",
+      "load_hp": 2,
+      "rpm": 1748.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 122281
+    },
+    {
+      "recording_id": "de_12k_outer_021_load3_237.mat",
+      "position": "DE",
+      "fault_type": "outer",
+      "severity_in": 0.021,
+      "fault_location": "bearing",
+      "load_hp": 3,
+      "rpm": 1721.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121991
+    },
+    {
+      "recording_id": "fe_12k_ball_007_load0_282.mat",
+      "position": "FE",
+      "fault_type": "ball",
+      "severity_in": 0.007,
+      "fault_location": "centered",
+      "load_hp": 0,
+      "rpm": 1798.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121168
+    },
+    {
+      "recording_id": "fe_12k_ball_007_load1_283.mat",
+      "position": "FE",
+      "fault_type": "ball",
+      "severity_in": 0.007,
+      "fault_location": "centered",
+      "load_hp": 1,
+      "rpm": 1777.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 120801
+    },
+    {
+      "recording_id": "fe_12k_ball_007_load2_284.mat",
+      "position": "FE",
+      "fault_type": "ball",
+      "severity_in": 0.007,
+      "fault_location": "centered",
+      "load_hp": 2,
+      "rpm": 1755.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121719
+    },
+    {
+      "recording_id": "fe_12k_ball_007_load3_285.mat",
+      "position": "FE",
+      "fault_type": "ball",
+      "severity_in": 0.007,
+      "fault_location": "centered",
+      "load_hp": 3,
+      "rpm": 1732.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121168
+    },
+    {
+      "recording_id": "fe_12k_ball_014_load0_286.mat",
+      "position": "FE",
+      "fault_type": "ball",
+      "severity_in": 0.014,
+      "fault_location": "centered",
+      "load_hp": 0,
+      "rpm": 1796.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 122086
+    },
+    {
+      "recording_id": "fe_12k_ball_014_load1_287.mat",
+      "position": "FE",
+      "fault_type": "ball",
+      "severity_in": 0.014,
+      "fault_location": "centered",
+      "load_hp": 1,
+      "rpm": 1775.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121719
+    },
+    {
+      "recording_id": "fe_12k_ball_014_load2_288.mat",
+      "position": "FE",
+      "fault_type": "ball",
+      "severity_in": 0.014,
+      "fault_location": "centered",
+      "load_hp": 2,
+      "rpm": 1755.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 122269
+    },
+    {
+      "recording_id": "fe_12k_ball_014_load3_289.mat",
+      "position": "FE",
+      "fault_type": "ball",
+      "severity_in": 0.014,
+      "fault_location": "centered",
+      "load_hp": 3,
+      "rpm": 1732.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121168
+    },
+    {
+      "recording_id": "fe_12k_ball_021_load0_290.mat",
+      "position": "FE",
+      "fault_type": "ball",
+      "severity_in": 0.021,
+      "fault_location": "centered",
+      "load_hp": 0,
+      "rpm": 1796.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121351
+    },
+    {
+      "recording_id": "fe_12k_ball_021_load1_291.mat",
+      "position": "FE",
+      "fault_type": "ball",
+      "severity_in": 0.021,
+      "fault_location": "centered",
+      "load_hp": 1,
+      "rpm": 1775.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121351
+    },
+    {
+      "recording_id": "fe_12k_ball_021_load2_292.mat",
+      "position": "FE",
+      "fault_type": "ball",
+      "severity_in": 0.021,
+      "fault_location": "centered",
+      "load_hp": 2,
+      "rpm": 1756.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121535
+    },
+    {
+      "recording_id": "fe_12k_ball_021_load3_293.mat",
+      "position": "FE",
+      "fault_type": "ball",
+      "severity_in": 0.021,
+      "fault_location": "centered",
+      "load_hp": 3,
+      "rpm": 1734.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 120801
+    },
+    {
+      "recording_id": "fe_12k_inner_007_load0_278.mat",
+      "position": "FE",
+      "fault_type": "inner",
+      "severity_in": 0.007,
+      "fault_location": "centered",
+      "load_hp": 0,
+      "rpm": 1796.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121535
+    },
+    {
+      "recording_id": "fe_12k_inner_007_load1_279.mat",
+      "position": "FE",
+      "fault_type": "inner",
+      "severity_in": 0.007,
+      "fault_location": "centered",
+      "load_hp": 1,
+      "rpm": 1732.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121351
+    },
+    {
+      "recording_id": "fe_12k_inner_007_load2_280.mat",
+      "position": "FE",
+      "fault_type": "inner",
+      "severity_in": 0.007,
+      "fault_location": "centered",
+      "load_hp": 2,
+      "rpm": 1755.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121351
+    },
+    {
+      "recording_id": "fe_12k_inner_007_load3_281.mat",
+      "position": "FE",
+      "fault_type": "inner",
+      "severity_in": 0.007,
+      "fault_location": "centered",
+      "load_hp": 3,
+      "rpm": 1732.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121535
+    },
+    {
+      "recording_id": "fe_12k_inner_014_load0_274.mat",
+      "position": "FE",
+      "fault_type": "inner",
+      "severity_in": 0.014,
+      "fault_location": "centered",
+      "load_hp": 0,
+      "rpm": 1796.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121351
+    },
+    {
+      "recording_id": "fe_12k_inner_014_load1_275.mat",
+      "position": "FE",
+      "fault_type": "inner",
+      "severity_in": 0.014,
+      "fault_location": "centered",
+      "load_hp": 1,
+      "rpm": 1775.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121351
+    },
+    {
+      "recording_id": "fe_12k_inner_014_load2_276.mat",
+      "position": "FE",
+      "fault_type": "inner",
+      "severity_in": 0.014,
+      "fault_location": "centered",
+      "load_hp": 2,
+      "rpm": 1755.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121351
+    },
+    {
+      "recording_id": "fe_12k_inner_014_load3_277.mat",
+      "position": "FE",
+      "fault_type": "inner",
+      "severity_in": 0.014,
+      "fault_location": "centered",
+      "load_hp": 3,
+      "rpm": 1733.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121168
+    },
+    {
+      "recording_id": "fe_12k_inner_021_load0_270.mat",
+      "position": "FE",
+      "fault_type": "inner",
+      "severity_in": 0.021,
+      "fault_location": "centered",
+      "load_hp": 0,
+      "rpm": 1796.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121168
+    },
+    {
+      "recording_id": "fe_12k_inner_021_load1_271.mat",
+      "position": "FE",
+      "fault_type": "inner",
+      "severity_in": 0.021,
+      "fault_location": "centered",
+      "load_hp": 1,
+      "rpm": 1776.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121168
+    },
+    {
+      "recording_id": "fe_12k_inner_021_load2_272.mat",
+      "position": "FE",
+      "fault_type": "inner",
+      "severity_in": 0.021,
+      "fault_location": "centered",
+      "load_hp": 2,
+      "rpm": 1758.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 120984
+    },
+    {
+      "recording_id": "fe_12k_inner_021_load3_273.mat",
+      "position": "FE",
+      "fault_type": "inner",
+      "severity_in": 0.021,
+      "fault_location": "centered",
+      "load_hp": 3,
+      "rpm": 1737.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121168
+    },
+    {
+      "recording_id": "fe_12k_outer_007_load0_294.mat",
+      "position": "FE",
+      "fault_type": "outer",
+      "severity_in": 0.007,
+      "fault_location": "centered",
+      "load_hp": 0,
+      "rpm": 1797.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121168
+    },
+    {
+      "recording_id": "fe_12k_outer_007_load1_295.mat",
+      "position": "FE",
+      "fault_type": "outer",
+      "severity_in": 0.007,
+      "fault_location": "centered",
+      "load_hp": 1,
+      "rpm": 1776.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121535
+    },
+    {
+      "recording_id": "fe_12k_outer_007_load2_296.mat",
+      "position": "FE",
+      "fault_type": "outer",
+      "severity_in": 0.007,
+      "fault_location": "centered",
+      "load_hp": 2,
+      "rpm": 1756.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121168
+    },
+    {
+      "recording_id": "fe_12k_outer_007_load3_297.mat",
+      "position": "FE",
+      "fault_type": "outer",
+      "severity_in": 0.007,
+      "fault_location": "centered",
+      "load_hp": 3,
+      "rpm": 1733.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121902
+    },
+    {
+      "recording_id": "fe_12k_outer_014_load0_310.mat",
+      "position": "FE",
+      "fault_type": "outer",
+      "severity_in": 0.014,
+      "fault_location": "centered",
+      "load_hp": 0,
+      "rpm": 1796.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121535
+    },
+    {
+      "recording_id": "fe_12k_outer_014_load1_309.mat",
+      "position": "FE",
+      "fault_type": "outer",
+      "severity_in": 0.014,
+      "fault_location": "centered",
+      "load_hp": 1,
+      "rpm": 1774.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121168
+    },
+    {
+      "recording_id": "fe_12k_outer_014_load2_311.mat",
+      "position": "FE",
+      "fault_type": "outer",
+      "severity_in": 0.014,
+      "fault_location": "centered",
+      "load_hp": 2,
+      "rpm": 1752.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 120984
+    },
+    {
+      "recording_id": "fe_12k_outer_014_load3_312.mat",
+      "position": "FE",
+      "fault_type": "outer",
+      "severity_in": 0.014,
+      "fault_location": "centered",
+      "load_hp": 3,
+      "rpm": 1728.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 120984
+    },
+    {
+      "recording_id": "fe_12k_outer_021_load0_315.mat",
+      "position": "FE",
+      "fault_type": "outer",
+      "severity_in": 0.021,
+      "fault_location": "centered",
+      "load_hp": 0,
+      "rpm": 1797.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 120617
+    },
+    {
+      "recording_id": "fe_12k_outer_021_load1_316.mat",
+      "position": "FE",
+      "fault_type": "outer",
+      "severity_in": 0.021,
+      "fault_location": "orthogonal",
+      "load_hp": 1,
+      "rpm": 1773.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 120617
+    },
+    {
+      "recording_id": "fe_12k_outer_021_load2_317.mat",
+      "position": "FE",
+      "fault_type": "outer",
+      "severity_in": 0.021,
+      "fault_location": "orthogonal",
+      "load_hp": 2,
+      "rpm": 1751.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 120617
+    },
+    {
+      "recording_id": "fe_12k_outer_021_load3_318.mat",
+      "position": "FE",
+      "fault_type": "outer",
+      "severity_in": 0.021,
+      "fault_location": "orthogonal",
+      "load_hp": 3,
+      "rpm": 1728.0,
+      "rpm_source": "mat_rpm",
+      "channels_available": [
+        "DE",
+        "FE",
+        "BA"
+      ],
+      "segments": 24,
+      "source_samples": 121351
+    }
+  ],
+  "features": {
+    "dimension": 32,
+    "sample_rate_hz": 12000,
+    "segment_samples": 2048,
+    "max_segments_per_recording": 24,
+    "layout": "DE 15 features (RMS, crest, 13 bearing-frequency bands), FE 15 same; RPM and load context; absent channel slots are zero"
+  },
+  "tasks": {
+    "binary_normal_vs_fault": {
+      "class_names": [
+        "normal",
+        "fault"
+      ],
+      "split": {
+        "method": "recording-disjoint stratified 75/25 by target class",
+        "train_recordings": 60,
+        "test_recordings": 20,
+        "train_recording_ids": [
+          "de_12k_ball_007_load0_118.mat",
+          "de_12k_ball_007_load1_119.mat",
+          "de_12k_ball_007_load2_120.mat",
+          "de_12k_ball_014_load0_185.mat",
+          "de_12k_ball_014_load2_187.mat",
+          "de_12k_ball_021_load0_222.mat",
+          "de_12k_ball_021_load1_223.mat",
+          "de_12k_ball_021_load2_224.mat",
+          "de_12k_ball_021_load3_225.mat",
+          "de_12k_ball_028_load0_3005.mat",
+          "de_12k_ball_028_load2_3007.mat",
+          "de_12k_ball_028_load3_3008.mat",
+          "de_12k_inner_007_load0_105.mat",
+          "de_12k_inner_007_load1_106.mat",
+          "de_12k_inner_014_load0_169.mat",
+          "de_12k_inner_014_load1_170.mat",
+          "de_12k_inner_014_load2_171.mat",
+          "de_12k_inner_014_load3_172.mat",
+          "de_12k_inner_021_load0_209.mat",
+          "de_12k_inner_021_load2_211.mat",
+          "de_12k_normal_normal_load0_97.mat",
+          "de_12k_normal_normal_load1_98.mat",
+          "de_12k_normal_normal_load3_100.mat",
+          "de_12k_outer_007_load0_130.mat",
+          "de_12k_outer_007_load1_131.mat",
+          "de_12k_outer_007_load2_132.mat",
+          "de_12k_outer_007_load3_133.mat",
+          "de_12k_outer_014_load0_197.mat",
+          "de_12k_outer_014_load2_199.mat",
+          "de_12k_outer_014_load3_200.mat",
+          "de_12k_outer_021_load0_234.mat",
+          "de_12k_outer_021_load1_235.mat",
+          "de_12k_outer_021_load2_236.mat",
+          "de_12k_outer_021_load3_237.mat",
+          "fe_12k_ball_007_load2_284.mat",
+          "fe_12k_ball_014_load0_286.mat",
+          "fe_12k_ball_014_load1_287.mat",
+          "fe_12k_ball_014_load2_288.mat",
+          "fe_12k_ball_014_load3_289.mat",
+          "fe_12k_ball_021_load0_290.mat",
+          "fe_12k_ball_021_load1_291.mat",
+          "fe_12k_ball_021_load2_292.mat",
+          "fe_12k_ball_021_load3_293.mat",
+          "fe_12k_inner_007_load3_281.mat",
+          "fe_12k_inner_014_load1_275.mat",
+          "fe_12k_inner_014_load2_276.mat",
+          "fe_12k_inner_014_load3_277.mat",
+          "fe_12k_inner_021_load0_270.mat",
+          "fe_12k_inner_021_load1_271.mat",
+          "fe_12k_inner_021_load2_272.mat",
+          "fe_12k_inner_021_load3_273.mat",
+          "fe_12k_outer_007_load0_294.mat",
+          "fe_12k_outer_007_load1_295.mat",
+          "fe_12k_outer_007_load3_297.mat",
+          "fe_12k_outer_014_load0_310.mat",
+          "fe_12k_outer_014_load3_312.mat",
+          "fe_12k_outer_021_load0_315.mat",
+          "fe_12k_outer_021_load1_316.mat",
+          "fe_12k_outer_021_load2_317.mat",
+          "fe_12k_outer_021_load3_318.mat"
+        ],
+        "test_recording_ids": [
+          "de_12k_ball_007_load3_121.mat",
+          "de_12k_ball_014_load1_186.mat",
+          "de_12k_ball_014_load3_188.mat",
+          "de_12k_ball_028_load1_3006.mat",
+          "de_12k_inner_007_load2_107.mat",
+          "de_12k_inner_007_load3_108.mat",
+          "de_12k_inner_021_load1_210.mat",
+          "de_12k_inner_021_load3_212.mat",
+          "de_12k_normal_normal_load2_99.mat",
+          "de_12k_outer_014_load1_198.mat",
+          "fe_12k_ball_007_load0_282.mat",
+          "fe_12k_ball_007_load1_283.mat",
+          "fe_12k_ball_007_load3_285.mat",
+          "fe_12k_inner_007_load0_278.mat",
+          "fe_12k_inner_007_load1_279.mat",
+          "fe_12k_inner_007_load2_280.mat",
+          "fe_12k_inner_014_load0_274.mat",
+          "fe_12k_outer_007_load2_296.mat",
+          "fe_12k_outer_014_load1_309.mat",
+          "fe_12k_outer_014_load2_311.mat"
+        ],
+        "train_segments": 1440,
+        "test_segments": 480
+      },
+      "models": {
+        "gbt": {
+          "n": 480,
+          "accuracy": 0.9958333333333333,
+          "auc_roc": 1.0,
+          "auc_pr": 1.0,
+          "f2": 0.9964881474978051,
+          "class_recall": {
+            "normal": 1.0,
+            "fault": 0.9956140350877193
+          },
+          "points": 0,
+          "points_converged": 0,
+          "mean_width": null
+        },
+        "hybrid": {
+          "n": 480,
+          "accuracy": 0.9958333333333333,
+          "auc_roc": 0.9994517543859649,
+          "auc_pr": 0.9999713335626648,
+          "f2": 0.9964881474978051,
+          "class_recall": {
+            "normal": 1.0,
+            "fault": 0.9956140350877193
+          },
+          "points": 12,
+          "points_converged": 6,
+          "mean_width": 0.27064400513850306,
+          "fit_examples": 140
+        },
+        "backprop": {
+          "n": 480,
+          "accuracy": 0.975,
+          "auc_roc": 1.0,
+          "auc_pr": 1.0,
+          "f2": 0.9788359788359788,
+          "class_recall": {
+            "normal": 1.0,
+            "fault": 0.9736842105263158
+          },
+          "points": 0,
+          "points_converged": 0,
+          "mean_width": null,
+          "fit_examples": 140
+        }
+      },
+      "tokenizer": {
+        "type": "train-only MiniBatchKMeans",
+        "clusters": 12
+      },
+      "scaling": {
+        "fit_on_train_only": true,
+        "mean": [
+          0.31819942593574524,
+          5.011287212371826,
+          0.0006494785193353891,
+          0.00034294521901756525,
+          0.0057798875495791435,
+          1.950794285221491e-05,
+          0.002244525821879506,
+          0.0002668906527105719,
+          0.0015171965351328254,
+          0.00033054276718758047,
+          0.0021563617046922445,
+          0.005178666673600674,
+          0.0015898931305855513,
+          0.005411198828369379,
+          0.0005522646242752671,
+          0.19001442193984985,
+          4.580696105957031,
+          0.0003440745931584388,
+          0.00012860891001764685,
+          0.00524307694286108,
+          3.021470365638379e-05,
+          0.0016409701202064753,
+          0.0014788147527724504,
+          0.0010154438205063343,
+          0.00011570498463697731,
+          0.002900435123592615,
+          0.007842229679226875,
+          0.0010477621108293533,
+          0.0058726961724460125,
+          0.0003914070257451385,
+          0.9797656536102295,
+          0.48888859152793884
+        ],
+        "scale": [
+          0.4426842927932739,
+          1.784852147102356,
+          0.0033311082515865564,
+          0.00157606799621135,
+          0.030015792697668076,
+          7.302328594960272e-05,
+          0.01060422696173191,
+          0.000781657756306231,
+          0.005512695759534836,
+          0.001582569908350706,
+          0.008467113599181175,
+          0.011551463976502419,
+          0.005516442935913801,
+          0.006917102262377739,
+          0.0026203186716884375,
+          0.1475924551486969,
+          1.8269953727722168,
+          0.0016131363809108734,
+          0.0005563257727771997,
+          0.027636701241135597,
+          5.692895865649916e-05,
+          0.007834617048501968,
+          0.007770136464387178,
+          0.0031411894597113132,
+          0.0006352445343509316,
+          0.010120422579348087,
+          0.010133451782166958,
+          0.003150816075503826,
+          0.007446730975061655,
+          0.0018136263824999332,
+          0.014285155571997166,
+          0.3823261559009552
+        ]
+      }
+    },
+    "fault_type_ball_inner_outer": {
+      "class_names": [
+        "ball",
+        "inner",
+        "outer"
+      ],
+      "split": {
+        "method": "recording-disjoint stratified 75/25 by target class",
+        "train_recordings": 57,
+        "test_recordings": 19,
+        "train_recording_ids": [
+          "de_12k_ball_007_load0_118.mat",
+          "de_12k_ball_007_load1_119.mat",
+          "de_12k_ball_007_load2_120.mat",
+          "de_12k_ball_021_load0_222.mat",
+          "de_12k_ball_021_load1_223.mat",
+          "de_12k_ball_021_load2_224.mat",
+          "de_12k_ball_021_load3_225.mat",
+          "de_12k_ball_028_load0_3005.mat",
+          "de_12k_ball_028_load1_3006.mat",
+          "de_12k_ball_028_load2_3007.mat",
+          "de_12k_ball_028_load3_3008.mat",
+          "de_12k_inner_007_load1_106.mat",
+          "de_12k_inner_007_load2_107.mat",
+          "de_12k_inner_014_load0_169.mat",
+          "de_12k_inner_014_load1_170.mat",
+          "de_12k_inner_014_load2_171.mat",
+          "de_12k_inner_014_load3_172.mat",
+          "de_12k_inner_021_load0_209.mat",
+          "de_12k_inner_021_load1_210.mat",
+          "de_12k_inner_021_load3_212.mat",
+          "de_12k_outer_007_load0_130.mat",
+          "de_12k_outer_007_load1_131.mat",
+          "de_12k_outer_007_load2_132.mat",
+          "de_12k_outer_007_load3_133.mat",
+          "de_12k_outer_014_load0_197.mat",
+          "de_12k_outer_014_load1_198.mat",
+          "de_12k_outer_021_load0_234.mat",
+          "de_12k_outer_021_load1_235.mat",
+          "de_12k_outer_021_load2_236.mat",
+          "de_12k_outer_021_load3_237.mat",
+          "fe_12k_ball_007_load0_282.mat",
+          "fe_12k_ball_007_load1_283.mat",
+          "fe_12k_ball_007_load2_284.mat",
+          "fe_12k_ball_007_load3_285.mat",
+          "fe_12k_ball_014_load1_287.mat",
+          "fe_12k_ball_014_load2_288.mat",
+          "fe_12k_ball_014_load3_289.mat",
+          "fe_12k_ball_021_load1_291.mat",
+          "fe_12k_ball_021_load2_292.mat",
+          "fe_12k_ball_021_load3_293.mat",
+          "fe_12k_inner_007_load2_280.mat",
+          "fe_12k_inner_007_load3_281.mat",
+          "fe_12k_inner_014_load1_275.mat",
+          "fe_12k_inner_014_load2_276.mat",
+          "fe_12k_inner_014_load3_277.mat",
+          "fe_12k_inner_021_load0_270.mat",
+          "fe_12k_inner_021_load1_271.mat",
+          "fe_12k_inner_021_load2_272.mat",
+          "fe_12k_inner_021_load3_273.mat",
+          "fe_12k_outer_007_load2_296.mat",
+          "fe_12k_outer_007_load3_297.mat",
+          "fe_12k_outer_014_load1_309.mat",
+          "fe_12k_outer_014_load2_311.mat",
+          "fe_12k_outer_014_load3_312.mat",
+          "fe_12k_outer_021_load0_315.mat",
+          "fe_12k_outer_021_load2_317.mat",
+          "fe_12k_outer_021_load3_318.mat"
+        ],
+        "test_recording_ids": [
+          "de_12k_ball_007_load3_121.mat",
+          "de_12k_ball_014_load0_185.mat",
+          "de_12k_ball_014_load1_186.mat",
+          "de_12k_ball_014_load2_187.mat",
+          "de_12k_ball_014_load3_188.mat",
+          "de_12k_inner_007_load0_105.mat",
+          "de_12k_inner_007_load3_108.mat",
+          "de_12k_inner_021_load2_211.mat",
+          "de_12k_outer_014_load2_199.mat",
+          "de_12k_outer_014_load3_200.mat",
+          "fe_12k_ball_014_load0_286.mat",
+          "fe_12k_ball_021_load0_290.mat",
+          "fe_12k_inner_007_load0_278.mat",
+          "fe_12k_inner_007_load1_279.mat",
+          "fe_12k_inner_014_load0_274.mat",
+          "fe_12k_outer_007_load0_294.mat",
+          "fe_12k_outer_007_load1_295.mat",
+          "fe_12k_outer_014_load0_310.mat",
+          "fe_12k_outer_021_load1_316.mat"
+        ],
+        "train_segments": 1368,
+        "test_segments": 456
+      },
+      "models": {
+        "gbt": {
+          "n": 456,
+          "accuracy": 0.7521929824561403,
+          "auc_roc_macro_ovr": 0.9072849893162394,
+          "auc_pr_macro": 0.8377520843748352,
+          "f2_macro": 0.7514662361172245,
+          "class_recall": {
+            "ball": 0.6726190476190477,
+            "inner": 0.9444444444444444,
+            "outer": 0.6527777777777778
+          },
+          "points": 0,
+          "points_converged": 0,
+          "mean_width": null
+        },
+        "hybrid": {
+          "n": 456,
+          "accuracy": 0.3684210526315789,
+          "auc_roc_macro_ovr": 0.5716111386684304,
+          "auc_pr_macro": 0.4060450184812927,
+          "f2_macro": 0.3152792930573198,
+          "class_recall": {
+            "ball": 0.7202380952380952,
+            "inner": 0.0,
+            "outer": 0.3263888888888889
+          },
+          "points": 11,
+          "points_converged": 8,
+          "mean_width": 0.024339489289438968,
+          "fit_examples": 210
+        },
+        "backprop": {
+          "n": 456,
+          "accuracy": 0.6535087719298246,
+          "auc_roc_macro_ovr": 0.7492819198548366,
+          "auc_pr_macro": 0.5841730066524673,
+          "f2_macro": 0.6160133383512053,
+          "class_recall": {
+            "ball": 0.7916666666666666,
+            "inner": 0.9444444444444444,
+            "outer": 0.2013888888888889
+          },
+          "points": 0,
+          "points_converged": 0,
+          "mean_width": null,
+          "fit_examples": 210
+        }
+      },
+      "tokenizer": {
+        "type": "train-only MiniBatchKMeans",
+        "clusters": 12
+      },
+      "scaling": {
+        "fit_on_train_only": true,
+        "mean": [
+          0.36800044775009155,
+          5.025393009185791,
+          2.0514509742497467e-05,
+          2.481508818164002e-05,
+          1.1919794815185014e-05,
+          1.4452939467446413e-05,
+          8.701357728568837e-05,
+          0.00018824334256350994,
+          0.003142226254567504,
+          2.0645471522584558e-05,
+          0.0005939961411058903,
+          0.0031982865184545517,
+          0.002935819560661912,
+          0.00553363561630249,
+          2.2177873688633554e-05,
+          0.19364780187606812,
+          4.546909809112549,
+          5.023742778575979e-05,
+          2.2966705728322268e-05,
+          2.193862928834278e-05,
+          0.00018751368043012917,
+          9.20129896258004e-05,
+          0.00031944160582497716,
+          0.0014492039335891604,
+          1.6454703654744662e-05,
+          0.0012540792813524604,
+          0.007942370139062405,
+          0.0013969725696370006,
+          0.005714291241019964,
+          2.5779205316212028e-05,
+          0.9781656265258789,
+          0.5380125045776367
+        ],
+        "scale": [
+          0.5004192590713501,
+          1.7560254335403442,
+          9.876113472273573e-05,
+          9.891107038129121e-05,
+          0.00012434626114554703,
+          0.00028570430004037917,
+          0.00022245888249017298,
+          0.00048121323925442994,
+          0.01109148096293211,
+          0.00010016926535172388,
+          0.0010724030435085297,
+          0.004015023820102215,
+          0.009901889599859715,
+          0.00742740835994482,
+          8.485386933898553e-05,
+          0.14705879986286163,
+          1.9270906448364258,
+          0.0006935815908946097,
+          0.0002001378743443638,
+          0.00011928899766644463,
+          0.004478037357330322,
+          0.00014891910541336983,
+          0.0009594341390766203,
+          0.004619678482413292,
+          0.00010069236304843798,
+          0.0017663051839917898,
+          0.011626427993178368,
+          0.004261563066393137,
+          0.00802858266979456,
+          0.0003225755936000496,
+          0.013203569687902927,
+          0.35734936594963074
+        ]
+      }
+    }
+  },
+  "protocol": {
+    "device": "cpu",
+    "seed": 20261016,
+    "split_group": "source .mat recording",
+    "points_converged": "hybrid QUANN point count and convergence; GBT/backprop have no QUANN points"
+  },
+  "figure": "/Users/serkankose/Documents/quann-3d/maintenance/figures/e1_cwru_exp_clouds.png",
+  "figure_pca_explained_variance_percent": 97.74073028564453,
+  "limitations": [
+    "The public 12 kHz tables provide 0.007/0.014/0.021 inch faults plus 0.028 inch ball at DE; no official 0.035 inch CWRU recording was listed, so it was not fabricated.",
+    "Fault location is CWRU drive-end versus fan-end dataset provenance; available vibration channels vary by .mat file, and the channel availability is recorded per recording.",
+    "At most 24 evenly distributed segments per source file are used; segments are not independent experimental units, while the train/test assignment is disjoint by full source recording.",
+    "The 12 kHz official catalog has only one healthy recording per load; binary test estimates therefore have few independent normal recordings."
+  ]
+}

@@ -1,0 +1,1179 @@
+{
+  "experiment": "E5 CWRU three-class fault-type point/feature design grid",
+  "classes": [
+    "ball",
+    "inner",
+    "outer"
+  ],
+  "grid": [
+    {
+      "config": {
+        "name": "rms_crest_B8_K1",
+        "feature_pair_set": "rms_crest",
+        "representation": "raw_pair",
+        "pairs_per_channel": 1,
+        "points_per_segment": 2,
+        "buckets_per_pair_channel": 8,
+        "window_segments": 1,
+        "window_policy": "non-overlapping consecutive extracted segments within each recording; incomplete tail dropped"
+      },
+      "n_train_windows": 1368,
+      "n_test_windows": 456,
+      "split": {
+        "method": "recording-disjoint stratified 75/25 by target class",
+        "train_recordings": 57,
+        "test_recordings": 19,
+        "train_recording_ids": [
+          "de_12k_ball_007_load0_118.mat",
+          "de_12k_ball_007_load1_119.mat",
+          "de_12k_ball_007_load2_120.mat",
+          "de_12k_ball_021_load0_222.mat",
+          "de_12k_ball_021_load1_223.mat",
+          "de_12k_ball_021_load2_224.mat",
+          "de_12k_ball_021_load3_225.mat",
+          "de_12k_ball_028_load0_3005.mat",
+          "de_12k_ball_028_load1_3006.mat",
+          "de_12k_ball_028_load2_3007.mat",
+          "de_12k_ball_028_load3_3008.mat",
+          "de_12k_inner_007_load1_106.mat",
+          "de_12k_inner_007_load2_107.mat",
+          "de_12k_inner_014_load0_169.mat",
+          "de_12k_inner_014_load1_170.mat",
+          "de_12k_inner_014_load2_171.mat",
+          "de_12k_inner_014_load3_172.mat",
+          "de_12k_inner_021_load0_209.mat",
+          "de_12k_inner_021_load1_210.mat",
+          "de_12k_inner_021_load3_212.mat",
+          "de_12k_outer_007_load0_130.mat",
+          "de_12k_outer_007_load1_131.mat",
+          "de_12k_outer_007_load2_132.mat",
+          "de_12k_outer_007_load3_133.mat",
+          "de_12k_outer_014_load0_197.mat",
+          "de_12k_outer_014_load1_198.mat",
+          "de_12k_outer_021_load0_234.mat",
+          "de_12k_outer_021_load1_235.mat",
+          "de_12k_outer_021_load2_236.mat",
+          "de_12k_outer_021_load3_237.mat",
+          "fe_12k_ball_007_load0_282.mat",
+          "fe_12k_ball_007_load1_283.mat",
+          "fe_12k_ball_007_load2_284.mat",
+          "fe_12k_ball_007_load3_285.mat",
+          "fe_12k_ball_014_load1_287.mat",
+          "fe_12k_ball_014_load2_288.mat",
+          "fe_12k_ball_014_load3_289.mat",
+          "fe_12k_ball_021_load1_291.mat",
+          "fe_12k_ball_021_load2_292.mat",
+          "fe_12k_ball_021_load3_293.mat",
+          "fe_12k_inner_007_load2_280.mat",
+          "fe_12k_inner_007_load3_281.mat",
+          "fe_12k_inner_014_load1_275.mat",
+          "fe_12k_inner_014_load2_276.mat",
+          "fe_12k_inner_014_load3_277.mat",
+          "fe_12k_inner_021_load0_270.mat",
+          "fe_12k_inner_021_load1_271.mat",
+          "fe_12k_inner_021_load2_272.mat",
+          "fe_12k_inner_021_load3_273.mat",
+          "fe_12k_outer_007_load2_296.mat",
+          "fe_12k_outer_007_load3_297.mat",
+          "fe_12k_outer_014_load1_309.mat",
+          "fe_12k_outer_014_load2_311.mat",
+          "fe_12k_outer_014_load3_312.mat",
+          "fe_12k_outer_021_load0_315.mat",
+          "fe_12k_outer_021_load2_317.mat",
+          "fe_12k_outer_021_load3_318.mat"
+        ],
+        "test_recording_ids": [
+          "de_12k_ball_007_load3_121.mat",
+          "de_12k_ball_014_load0_185.mat",
+          "de_12k_ball_014_load1_186.mat",
+          "de_12k_ball_014_load2_187.mat",
+          "de_12k_ball_014_load3_188.mat",
+          "de_12k_inner_007_load0_105.mat",
+          "de_12k_inner_007_load3_108.mat",
+          "de_12k_inner_021_load2_211.mat",
+          "de_12k_outer_014_load2_199.mat",
+          "de_12k_outer_014_load3_200.mat",
+          "fe_12k_ball_014_load0_286.mat",
+          "fe_12k_ball_021_load0_290.mat",
+          "fe_12k_inner_007_load0_278.mat",
+          "fe_12k_inner_007_load1_279.mat",
+          "fe_12k_inner_014_load0_274.mat",
+          "fe_12k_outer_007_load0_294.mat",
+          "fe_12k_outer_007_load1_295.mat",
+          "fe_12k_outer_014_load0_310.mat",
+          "fe_12k_outer_021_load1_316.mat"
+        ],
+        "train_segments": 1368,
+        "test_segments": 456
+      },
+      "models": {
+        "gbt": {
+          "n": 456,
+          "accuracy": 0.756578947368421,
+          "auc_roc_macro_ovr": 0.9059495192307692,
+          "auc_pr_macro": 0.8301739854753866,
+          "f2_macro": 0.7552628531773791,
+          "class_recall": {
+            "ball": 0.7738095238095238,
+            "inner": 0.8402777777777778,
+            "outer": 0.6527777777777778
+          }
+        },
+        "hybrid": {
+          "n": 456,
+          "accuracy": 0.44298245614035087,
+          "auc_roc_macro_ovr": 0.6009013893128478,
+          "auc_pr_macro": 0.4681000844864247,
+          "f2_macro": 0.39995254031851085,
+          "class_recall": {
+            "ball": 0.42857142857142855,
+            "inner": 0.8888888888888888,
+            "outer": 0.013888888888888888
+          },
+          "points": 16,
+          "points_converged": 12,
+          "mean_width": 0.0019088866058372877,
+          "fit_examples": 210
+        },
+        "backprop": {
+          "n": 456,
+          "accuracy": 0.4166666666666667,
+          "auc_roc_macro_ovr": 0.6367351784018451,
+          "auc_pr_macro": 0.49649182401656994,
+          "f2_macro": 0.4091825657884062,
+          "class_recall": {
+            "ball": 0.5059523809523809,
+            "inner": 0.22916666666666666,
+            "outer": 0.5
+          },
+          "points": 0,
+          "points_converged": 0,
+          "mean_width": null,
+          "fit_examples": 210
+        }
+      },
+      "tokenizer": {
+        "fit": "train-only MiniBatchKMeans independently per channel-feature pair",
+        "requested_buckets": 8,
+        "vocabulary_tokens": 16
+      }
+    },
+    {
+      "config": {
+        "name": "bearing_energy_B8_K1",
+        "feature_pair_set": "bearing_energy",
+        "representation": "angle_pair",
+        "pairs_per_channel": 3,
+        "points_per_segment": 6,
+        "buckets_per_pair_channel": 8,
+        "window_segments": 1,
+        "window_policy": "non-overlapping consecutive extracted segments within each recording; incomplete tail dropped"
+      },
+      "n_train_windows": 1368,
+      "n_test_windows": 456,
+      "split": {
+        "method": "recording-disjoint stratified 75/25 by target class",
+        "train_recordings": 57,
+        "test_recordings": 19,
+        "train_recording_ids": [
+          "de_12k_ball_007_load0_118.mat",
+          "de_12k_ball_007_load1_119.mat",
+          "de_12k_ball_007_load2_120.mat",
+          "de_12k_ball_021_load0_222.mat",
+          "de_12k_ball_021_load1_223.mat",
+          "de_12k_ball_021_load2_224.mat",
+          "de_12k_ball_021_load3_225.mat",
+          "de_12k_ball_028_load0_3005.mat",
+          "de_12k_ball_028_load1_3006.mat",
+          "de_12k_ball_028_load2_3007.mat",
+          "de_12k_ball_028_load3_3008.mat",
+          "de_12k_inner_007_load1_106.mat",
+          "de_12k_inner_007_load2_107.mat",
+          "de_12k_inner_014_load0_169.mat",
+          "de_12k_inner_014_load1_170.mat",
+          "de_12k_inner_014_load2_171.mat",
+          "de_12k_inner_014_load3_172.mat",
+          "de_12k_inner_021_load0_209.mat",
+          "de_12k_inner_021_load1_210.mat",
+          "de_12k_inner_021_load3_212.mat",
+          "de_12k_outer_007_load0_130.mat",
+          "de_12k_outer_007_load1_131.mat",
+          "de_12k_outer_007_load2_132.mat",
+          "de_12k_outer_007_load3_133.mat",
+          "de_12k_outer_014_load0_197.mat",
+          "de_12k_outer_014_load1_198.mat",
+          "de_12k_outer_021_load0_234.mat",
+          "de_12k_outer_021_load1_235.mat",
+          "de_12k_outer_021_load2_236.mat",
+          "de_12k_outer_021_load3_237.mat",
+          "fe_12k_ball_007_load0_282.mat",
+          "fe_12k_ball_007_load1_283.mat",
+          "fe_12k_ball_007_load2_284.mat",
+          "fe_12k_ball_007_load3_285.mat",
+          "fe_12k_ball_014_load1_287.mat",
+          "fe_12k_ball_014_load2_288.mat",
+          "fe_12k_ball_014_load3_289.mat",
+          "fe_12k_ball_021_load1_291.mat",
+          "fe_12k_ball_021_load2_292.mat",
+          "fe_12k_ball_021_load3_293.mat",
+          "fe_12k_inner_007_load2_280.mat",
+          "fe_12k_inner_007_load3_281.mat",
+          "fe_12k_inner_014_load1_275.mat",
+          "fe_12k_inner_014_load2_276.mat",
+          "fe_12k_inner_014_load3_277.mat",
+          "fe_12k_inner_021_load0_270.mat",
+          "fe_12k_inner_021_load1_271.mat",
+          "fe_12k_inner_021_load2_272.mat",
+          "fe_12k_inner_021_load3_273.mat",
+          "fe_12k_outer_007_load2_296.mat",
+          "fe_12k_outer_007_load3_297.mat",
+          "fe_12k_outer_014_load1_309.mat",
+          "fe_12k_outer_014_load2_311.mat",
+          "fe_12k_outer_014_load3_312.mat",
+          "fe_12k_outer_021_load0_315.mat",
+          "fe_12k_outer_021_load2_317.mat",
+          "fe_12k_outer_021_load3_318.mat"
+        ],
+        "test_recording_ids": [
+          "de_12k_ball_007_load3_121.mat",
+          "de_12k_ball_014_load0_185.mat",
+          "de_12k_ball_014_load1_186.mat",
+          "de_12k_ball_014_load2_187.mat",
+          "de_12k_ball_014_load3_188.mat",
+          "de_12k_inner_007_load0_105.mat",
+          "de_12k_inner_007_load3_108.mat",
+          "de_12k_inner_021_load2_211.mat",
+          "de_12k_outer_014_load2_199.mat",
+          "de_12k_outer_014_load3_200.mat",
+          "fe_12k_ball_014_load0_286.mat",
+          "fe_12k_ball_021_load0_290.mat",
+          "fe_12k_inner_007_load0_278.mat",
+          "fe_12k_inner_007_load1_279.mat",
+          "fe_12k_inner_014_load0_274.mat",
+          "fe_12k_outer_007_load0_294.mat",
+          "fe_12k_outer_007_load1_295.mat",
+          "fe_12k_outer_014_load0_310.mat",
+          "fe_12k_outer_021_load1_316.mat"
+        ],
+        "train_segments": 1368,
+        "test_segments": 456
+      },
+      "models": {
+        "gbt": {
+          "n": 456,
+          "accuracy": 0.5921052631578947,
+          "auc_roc_macro_ovr": 0.7757798721340388,
+          "auc_pr_macro": 0.6485532083964001,
+          "f2_macro": 0.5866181726403882,
+          "class_recall": {
+            "ball": 0.6845238095238095,
+            "inner": 0.5694444444444444,
+            "outer": 0.5069444444444444
+          }
+        },
+        "hybrid": {
+          "n": 456,
+          "accuracy": 0.3684210526315789,
+          "auc_roc_macro_ovr": 0.6591053622303623,
+          "auc_pr_macro": 0.5263966079904447,
+          "f2_macro": 0.24822695035460993,
+          "class_recall": {
+            "ball": 1.0,
+            "inner": 0.0,
+            "outer": 0.0
+          },
+          "points": 48,
+          "points_converged": 34,
+          "mean_width": 0.03983777624506548,
+          "fit_examples": 210
+        },
+        "backprop": {
+          "n": 456,
+          "accuracy": 0.41228070175438597,
+          "auc_roc_macro_ovr": 0.6082896655813322,
+          "auc_pr_macro": 0.4422240527802616,
+          "f2_macro": 0.358955926687508,
+          "class_recall": {
+            "ball": 0.7440476190476191,
+            "inner": 0.0,
+            "outer": 0.4375
+          },
+          "points": 0,
+          "points_converged": 0,
+          "mean_width": null,
+          "fit_examples": 210
+        }
+      },
+      "tokenizer": {
+        "fit": "train-only MiniBatchKMeans independently per channel-feature pair",
+        "requested_buckets": 8,
+        "vocabulary_tokens": 48
+      }
+    },
+    {
+      "config": {
+        "name": "mixed_raw_B8_K1",
+        "feature_pair_set": "mixed",
+        "representation": "raw_pair",
+        "pairs_per_channel": 4,
+        "points_per_segment": 8,
+        "buckets_per_pair_channel": 8,
+        "window_segments": 1,
+        "window_policy": "non-overlapping consecutive extracted segments within each recording; incomplete tail dropped"
+      },
+      "n_train_windows": 1368,
+      "n_test_windows": 456,
+      "split": {
+        "method": "recording-disjoint stratified 75/25 by target class",
+        "train_recordings": 57,
+        "test_recordings": 19,
+        "train_recording_ids": [
+          "de_12k_ball_007_load0_118.mat",
+          "de_12k_ball_007_load1_119.mat",
+          "de_12k_ball_007_load2_120.mat",
+          "de_12k_ball_021_load0_222.mat",
+          "de_12k_ball_021_load1_223.mat",
+          "de_12k_ball_021_load2_224.mat",
+          "de_12k_ball_021_load3_225.mat",
+          "de_12k_ball_028_load0_3005.mat",
+          "de_12k_ball_028_load1_3006.mat",
+          "de_12k_ball_028_load2_3007.mat",
+          "de_12k_ball_028_load3_3008.mat",
+          "de_12k_inner_007_load1_106.mat",
+          "de_12k_inner_007_load2_107.mat",
+          "de_12k_inner_014_load0_169.mat",
+          "de_12k_inner_014_load1_170.mat",
+          "de_12k_inner_014_load2_171.mat",
+          "de_12k_inner_014_load3_172.mat",
+          "de_12k_inner_021_load0_209.mat",
+          "de_12k_inner_021_load1_210.mat",
+          "de_12k_inner_021_load3_212.mat",
+          "de_12k_outer_007_load0_130.mat",
+          "de_12k_outer_007_load1_131.mat",
+          "de_12k_outer_007_load2_132.mat",
+          "de_12k_outer_007_load3_133.mat",
+          "de_12k_outer_014_load0_197.mat",
+          "de_12k_outer_014_load1_198.mat",
+          "de_12k_outer_021_load0_234.mat",
+          "de_12k_outer_021_load1_235.mat",
+          "de_12k_outer_021_load2_236.mat",
+          "de_12k_outer_021_load3_237.mat",
+          "fe_12k_ball_007_load0_282.mat",
+          "fe_12k_ball_007_load1_283.mat",
+          "fe_12k_ball_007_load2_284.mat",
+          "fe_12k_ball_007_load3_285.mat",
+          "fe_12k_ball_014_load1_287.mat",
+          "fe_12k_ball_014_load2_288.mat",
+          "fe_12k_ball_014_load3_289.mat",
+          "fe_12k_ball_021_load1_291.mat",
+          "fe_12k_ball_021_load2_292.mat",
+          "fe_12k_ball_021_load3_293.mat",
+          "fe_12k_inner_007_load2_280.mat",
+          "fe_12k_inner_007_load3_281.mat",
+          "fe_12k_inner_014_load1_275.mat",
+          "fe_12k_inner_014_load2_276.mat",
+          "fe_12k_inner_014_load3_277.mat",
+          "fe_12k_inner_021_load0_270.mat",
+          "fe_12k_inner_021_load1_271.mat",
+          "fe_12k_inner_021_load2_272.mat",
+          "fe_12k_inner_021_load3_273.mat",
+          "fe_12k_outer_007_load2_296.mat",
+          "fe_12k_outer_007_load3_297.mat",
+          "fe_12k_outer_014_load1_309.mat",
+          "fe_12k_outer_014_load2_311.mat",
+          "fe_12k_outer_014_load3_312.mat",
+          "fe_12k_outer_021_load0_315.mat",
+          "fe_12k_outer_021_load2_317.mat",
+          "fe_12k_outer_021_load3_318.mat"
+        ],
+        "test_recording_ids": [
+          "de_12k_ball_007_load3_121.mat",
+          "de_12k_ball_014_load0_185.mat",
+          "de_12k_ball_014_load1_186.mat",
+          "de_12k_ball_014_load2_187.mat",
+          "de_12k_ball_014_load3_188.mat",
+          "de_12k_inner_007_load0_105.mat",
+          "de_12k_inner_007_load3_108.mat",
+          "de_12k_inner_021_load2_211.mat",
+          "de_12k_outer_014_load2_199.mat",
+          "de_12k_outer_014_load3_200.mat",
+          "fe_12k_ball_014_load0_286.mat",
+          "fe_12k_ball_021_load0_290.mat",
+          "fe_12k_inner_007_load0_278.mat",
+          "fe_12k_inner_007_load1_279.mat",
+          "fe_12k_inner_014_load0_274.mat",
+          "fe_12k_outer_007_load0_294.mat",
+          "fe_12k_outer_007_load1_295.mat",
+          "fe_12k_outer_014_load0_310.mat",
+          "fe_12k_outer_021_load1_316.mat"
+        ],
+        "train_segments": 1368,
+        "test_segments": 456
+      },
+      "models": {
+        "gbt": {
+          "n": 456,
+          "accuracy": 0.8114035087719298,
+          "auc_roc_macro_ovr": 0.9367692010921177,
+          "auc_pr_macro": 0.8843745628742267,
+          "f2_macro": 0.811327928782212,
+          "class_recall": {
+            "ball": 0.8095238095238095,
+            "inner": 0.875,
+            "outer": 0.75
+          }
+        },
+        "hybrid": {
+          "n": 456,
+          "accuracy": 0.4057017543859649,
+          "auc_roc_macro_ovr": 0.5853203750339168,
+          "auc_pr_macro": 0.4134975186103816,
+          "f2_macro": 0.346683017049169,
+          "class_recall": {
+            "ball": 0.7857142857142857,
+            "inner": 0.0,
+            "outer": 0.3680555555555556
+          },
+          "points": 62,
+          "points_converged": 46,
+          "mean_width": 0.0918296833327774,
+          "fit_examples": 210
+        },
+        "backprop": {
+          "n": 456,
+          "accuracy": 0.33114035087719296,
+          "auc_roc_macro_ovr": 0.3446350139058472,
+          "auc_pr_macro": 0.2857398128865407,
+          "f2_macro": 0.2764285997639661,
+          "class_recall": {
+            "ball": 0.08928571428571429,
+            "inner": 0.8888888888888888,
+            "outer": 0.05555555555555555
+          },
+          "points": 0,
+          "points_converged": 0,
+          "mean_width": null,
+          "fit_examples": 210
+        }
+      },
+      "tokenizer": {
+        "fit": "train-only MiniBatchKMeans independently per channel-feature pair",
+        "requested_buckets": 8,
+        "vocabulary_tokens": 64
+      }
+    },
+    {
+      "config": {
+        "name": "mixed_angle_B8_K1",
+        "feature_pair_set": "mixed",
+        "representation": "angle_pair",
+        "pairs_per_channel": 4,
+        "points_per_segment": 8,
+        "buckets_per_pair_channel": 8,
+        "window_segments": 1,
+        "window_policy": "non-overlapping consecutive extracted segments within each recording; incomplete tail dropped"
+      },
+      "n_train_windows": 1368,
+      "n_test_windows": 456,
+      "split": {
+        "method": "recording-disjoint stratified 75/25 by target class",
+        "train_recordings": 57,
+        "test_recordings": 19,
+        "train_recording_ids": [
+          "de_12k_ball_007_load0_118.mat",
+          "de_12k_ball_007_load1_119.mat",
+          "de_12k_ball_007_load2_120.mat",
+          "de_12k_ball_021_load0_222.mat",
+          "de_12k_ball_021_load1_223.mat",
+          "de_12k_ball_021_load2_224.mat",
+          "de_12k_ball_021_load3_225.mat",
+          "de_12k_ball_028_load0_3005.mat",
+          "de_12k_ball_028_load1_3006.mat",
+          "de_12k_ball_028_load2_3007.mat",
+          "de_12k_ball_028_load3_3008.mat",
+          "de_12k_inner_007_load1_106.mat",
+          "de_12k_inner_007_load2_107.mat",
+          "de_12k_inner_014_load0_169.mat",
+          "de_12k_inner_014_load1_170.mat",
+          "de_12k_inner_014_load2_171.mat",
+          "de_12k_inner_014_load3_172.mat",
+          "de_12k_inner_021_load0_209.mat",
+          "de_12k_inner_021_load1_210.mat",
+          "de_12k_inner_021_load3_212.mat",
+          "de_12k_outer_007_load0_130.mat",
+          "de_12k_outer_007_load1_131.mat",
+          "de_12k_outer_007_load2_132.mat",
+          "de_12k_outer_007_load3_133.mat",
+          "de_12k_outer_014_load0_197.mat",
+          "de_12k_outer_014_load1_198.mat",
+          "de_12k_outer_021_load0_234.mat",
+          "de_12k_outer_021_load1_235.mat",
+          "de_12k_outer_021_load2_236.mat",
+          "de_12k_outer_021_load3_237.mat",
+          "fe_12k_ball_007_load0_282.mat",
+          "fe_12k_ball_007_load1_283.mat",
+          "fe_12k_ball_007_load2_284.mat",
+          "fe_12k_ball_007_load3_285.mat",
+          "fe_12k_ball_014_load1_287.mat",
+          "fe_12k_ball_014_load2_288.mat",
+          "fe_12k_ball_014_load3_289.mat",
+          "fe_12k_ball_021_load1_291.mat",
+          "fe_12k_ball_021_load2_292.mat",
+          "fe_12k_ball_021_load3_293.mat",
+          "fe_12k_inner_007_load2_280.mat",
+          "fe_12k_inner_007_load3_281.mat",
+          "fe_12k_inner_014_load1_275.mat",
+          "fe_12k_inner_014_load2_276.mat",
+          "fe_12k_inner_014_load3_277.mat",
+          "fe_12k_inner_021_load0_270.mat",
+          "fe_12k_inner_021_load1_271.mat",
+          "fe_12k_inner_021_load2_272.mat",
+          "fe_12k_inner_021_load3_273.mat",
+          "fe_12k_outer_007_load2_296.mat",
+          "fe_12k_outer_007_load3_297.mat",
+          "fe_12k_outer_014_load1_309.mat",
+          "fe_12k_outer_014_load2_311.mat",
+          "fe_12k_outer_014_load3_312.mat",
+          "fe_12k_outer_021_load0_315.mat",
+          "fe_12k_outer_021_load2_317.mat",
+          "fe_12k_outer_021_load3_318.mat"
+        ],
+        "test_recording_ids": [
+          "de_12k_ball_007_load3_121.mat",
+          "de_12k_ball_014_load0_185.mat",
+          "de_12k_ball_014_load1_186.mat",
+          "de_12k_ball_014_load2_187.mat",
+          "de_12k_ball_014_load3_188.mat",
+          "de_12k_inner_007_load0_105.mat",
+          "de_12k_inner_007_load3_108.mat",
+          "de_12k_inner_021_load2_211.mat",
+          "de_12k_outer_014_load2_199.mat",
+          "de_12k_outer_014_load3_200.mat",
+          "fe_12k_ball_014_load0_286.mat",
+          "fe_12k_ball_021_load0_290.mat",
+          "fe_12k_inner_007_load0_278.mat",
+          "fe_12k_inner_007_load1_279.mat",
+          "fe_12k_inner_014_load0_274.mat",
+          "fe_12k_outer_007_load0_294.mat",
+          "fe_12k_outer_007_load1_295.mat",
+          "fe_12k_outer_014_load0_310.mat",
+          "fe_12k_outer_021_load1_316.mat"
+        ],
+        "train_segments": 1368,
+        "test_segments": 456
+      },
+      "models": {
+        "gbt": {
+          "n": 456,
+          "accuracy": 0.7741228070175439,
+          "auc_roc_macro_ovr": 0.9000109169380003,
+          "auc_pr_macro": 0.7991711944159196,
+          "f2_macro": 0.7711158409798141,
+          "class_recall": {
+            "ball": 0.8392857142857143,
+            "inner": 0.7430555555555556,
+            "outer": 0.7291666666666666
+          }
+        },
+        "hybrid": {
+          "n": 456,
+          "accuracy": 0.37280701754385964,
+          "auc_roc_macro_ovr": 0.6779664924196175,
+          "auc_pr_macro": 0.5302033141941155,
+          "f2_macro": 0.25665998983160904,
+          "class_recall": {
+            "ball": 0.9940476190476191,
+            "inner": 0.0,
+            "outer": 0.020833333333333332
+          },
+          "points": 64,
+          "points_converged": 46,
+          "mean_width": 0.01656475744886506,
+          "fit_examples": 210
+        },
+        "backprop": {
+          "n": 456,
+          "accuracy": 0.3157894736842105,
+          "auc_roc_macro_ovr": 0.5653622515601682,
+          "auc_pr_macro": 0.4398597958715633,
+          "f2_macro": 0.23255813953488372,
+          "class_recall": {
+            "ball": 0.0,
+            "inner": 0.0,
+            "outer": 1.0
+          },
+          "points": 0,
+          "points_converged": 0,
+          "mean_width": null,
+          "fit_examples": 210
+        }
+      },
+      "tokenizer": {
+        "fit": "train-only MiniBatchKMeans independently per channel-feature pair",
+        "requested_buckets": 8,
+        "vocabulary_tokens": 64
+      }
+    },
+    {
+      "config": {
+        "name": "mixed_angle_B4_K1",
+        "feature_pair_set": "mixed",
+        "representation": "angle_pair",
+        "pairs_per_channel": 4,
+        "points_per_segment": 8,
+        "buckets_per_pair_channel": 4,
+        "window_segments": 1,
+        "window_policy": "non-overlapping consecutive extracted segments within each recording; incomplete tail dropped"
+      },
+      "n_train_windows": 1368,
+      "n_test_windows": 456,
+      "split": {
+        "method": "recording-disjoint stratified 75/25 by target class",
+        "train_recordings": 57,
+        "test_recordings": 19,
+        "train_recording_ids": [
+          "de_12k_ball_007_load0_118.mat",
+          "de_12k_ball_007_load1_119.mat",
+          "de_12k_ball_007_load2_120.mat",
+          "de_12k_ball_021_load0_222.mat",
+          "de_12k_ball_021_load1_223.mat",
+          "de_12k_ball_021_load2_224.mat",
+          "de_12k_ball_021_load3_225.mat",
+          "de_12k_ball_028_load0_3005.mat",
+          "de_12k_ball_028_load1_3006.mat",
+          "de_12k_ball_028_load2_3007.mat",
+          "de_12k_ball_028_load3_3008.mat",
+          "de_12k_inner_007_load1_106.mat",
+          "de_12k_inner_007_load2_107.mat",
+          "de_12k_inner_014_load0_169.mat",
+          "de_12k_inner_014_load1_170.mat",
+          "de_12k_inner_014_load2_171.mat",
+          "de_12k_inner_014_load3_172.mat",
+          "de_12k_inner_021_load0_209.mat",
+          "de_12k_inner_021_load1_210.mat",
+          "de_12k_inner_021_load3_212.mat",
+          "de_12k_outer_007_load0_130.mat",
+          "de_12k_outer_007_load1_131.mat",
+          "de_12k_outer_007_load2_132.mat",
+          "de_12k_outer_007_load3_133.mat",
+          "de_12k_outer_014_load0_197.mat",
+          "de_12k_outer_014_load1_198.mat",
+          "de_12k_outer_021_load0_234.mat",
+          "de_12k_outer_021_load1_235.mat",
+          "de_12k_outer_021_load2_236.mat",
+          "de_12k_outer_021_load3_237.mat",
+          "fe_12k_ball_007_load0_282.mat",
+          "fe_12k_ball_007_load1_283.mat",
+          "fe_12k_ball_007_load2_284.mat",
+          "fe_12k_ball_007_load3_285.mat",
+          "fe_12k_ball_014_load1_287.mat",
+          "fe_12k_ball_014_load2_288.mat",
+          "fe_12k_ball_014_load3_289.mat",
+          "fe_12k_ball_021_load1_291.mat",
+          "fe_12k_ball_021_load2_292.mat",
+          "fe_12k_ball_021_load3_293.mat",
+          "fe_12k_inner_007_load2_280.mat",
+          "fe_12k_inner_007_load3_281.mat",
+          "fe_12k_inner_014_load1_275.mat",
+          "fe_12k_inner_014_load2_276.mat",
+          "fe_12k_inner_014_load3_277.mat",
+          "fe_12k_inner_021_load0_270.mat",
+          "fe_12k_inner_021_load1_271.mat",
+          "fe_12k_inner_021_load2_272.mat",
+          "fe_12k_inner_021_load3_273.mat",
+          "fe_12k_outer_007_load2_296.mat",
+          "fe_12k_outer_007_load3_297.mat",
+          "fe_12k_outer_014_load1_309.mat",
+          "fe_12k_outer_014_load2_311.mat",
+          "fe_12k_outer_014_load3_312.mat",
+          "fe_12k_outer_021_load0_315.mat",
+          "fe_12k_outer_021_load2_317.mat",
+          "fe_12k_outer_021_load3_318.mat"
+        ],
+        "test_recording_ids": [
+          "de_12k_ball_007_load3_121.mat",
+          "de_12k_ball_014_load0_185.mat",
+          "de_12k_ball_014_load1_186.mat",
+          "de_12k_ball_014_load2_187.mat",
+          "de_12k_ball_014_load3_188.mat",
+          "de_12k_inner_007_load0_105.mat",
+          "de_12k_inner_007_load3_108.mat",
+          "de_12k_inner_021_load2_211.mat",
+          "de_12k_outer_014_load2_199.mat",
+          "de_12k_outer_014_load3_200.mat",
+          "fe_12k_ball_014_load0_286.mat",
+          "fe_12k_ball_021_load0_290.mat",
+          "fe_12k_inner_007_load0_278.mat",
+          "fe_12k_inner_007_load1_279.mat",
+          "fe_12k_inner_014_load0_274.mat",
+          "fe_12k_outer_007_load0_294.mat",
+          "fe_12k_outer_007_load1_295.mat",
+          "fe_12k_outer_014_load0_310.mat",
+          "fe_12k_outer_021_load1_316.mat"
+        ],
+        "train_segments": 1368,
+        "test_segments": 456
+      },
+      "models": {
+        "gbt": {
+          "n": 456,
+          "accuracy": 0.7741228070175439,
+          "auc_roc_macro_ovr": 0.9000109169380003,
+          "auc_pr_macro": 0.7991711944159196,
+          "f2_macro": 0.7711158409798141,
+          "class_recall": {
+            "ball": 0.8392857142857143,
+            "inner": 0.7430555555555556,
+            "outer": 0.7291666666666666
+          }
+        },
+        "hybrid": {
+          "n": 456,
+          "accuracy": 0.3815789473684211,
+          "auc_roc_macro_ovr": 0.6027278566341067,
+          "auc_pr_macro": 0.437585853560771,
+          "f2_macro": 0.34558212348338796,
+          "class_recall": {
+            "ball": 0.7083333333333334,
+            "inner": 0.006944444444444444,
+            "outer": 0.375
+          },
+          "points": 32,
+          "points_converged": 32,
+          "mean_width": 6.596506065462574e-05,
+          "fit_examples": 210
+        },
+        "backprop": {
+          "n": 456,
+          "accuracy": 0.3157894736842105,
+          "auc_roc_macro_ovr": 0.5653622515601682,
+          "auc_pr_macro": 0.4398597958715633,
+          "f2_macro": 0.23255813953488372,
+          "class_recall": {
+            "ball": 0.0,
+            "inner": 0.0,
+            "outer": 1.0
+          },
+          "points": 0,
+          "points_converged": 0,
+          "mean_width": null,
+          "fit_examples": 210
+        }
+      },
+      "tokenizer": {
+        "fit": "train-only MiniBatchKMeans independently per channel-feature pair",
+        "requested_buckets": 4,
+        "vocabulary_tokens": 32
+      }
+    },
+    {
+      "config": {
+        "name": "mixed_angle_B8_K3",
+        "feature_pair_set": "mixed",
+        "representation": "angle_pair",
+        "pairs_per_channel": 4,
+        "points_per_segment": 8,
+        "buckets_per_pair_channel": 8,
+        "window_segments": 3,
+        "window_policy": "non-overlapping consecutive extracted segments within each recording; incomplete tail dropped"
+      },
+      "n_train_windows": 456,
+      "n_test_windows": 152,
+      "split": {
+        "method": "recording-disjoint stratified 75/25 by target class",
+        "train_recordings": 57,
+        "test_recordings": 19,
+        "train_recording_ids": [
+          "de_12k_ball_007_load0_118.mat",
+          "de_12k_ball_007_load1_119.mat",
+          "de_12k_ball_007_load2_120.mat",
+          "de_12k_ball_021_load0_222.mat",
+          "de_12k_ball_021_load1_223.mat",
+          "de_12k_ball_021_load2_224.mat",
+          "de_12k_ball_021_load3_225.mat",
+          "de_12k_ball_028_load0_3005.mat",
+          "de_12k_ball_028_load1_3006.mat",
+          "de_12k_ball_028_load2_3007.mat",
+          "de_12k_ball_028_load3_3008.mat",
+          "de_12k_inner_007_load1_106.mat",
+          "de_12k_inner_007_load2_107.mat",
+          "de_12k_inner_014_load0_169.mat",
+          "de_12k_inner_014_load1_170.mat",
+          "de_12k_inner_014_load2_171.mat",
+          "de_12k_inner_014_load3_172.mat",
+          "de_12k_inner_021_load0_209.mat",
+          "de_12k_inner_021_load1_210.mat",
+          "de_12k_inner_021_load3_212.mat",
+          "de_12k_outer_007_load0_130.mat",
+          "de_12k_outer_007_load1_131.mat",
+          "de_12k_outer_007_load2_132.mat",
+          "de_12k_outer_007_load3_133.mat",
+          "de_12k_outer_014_load0_197.mat",
+          "de_12k_outer_014_load1_198.mat",
+          "de_12k_outer_021_load0_234.mat",
+          "de_12k_outer_021_load1_235.mat",
+          "de_12k_outer_021_load2_236.mat",
+          "de_12k_outer_021_load3_237.mat",
+          "fe_12k_ball_007_load0_282.mat",
+          "fe_12k_ball_007_load1_283.mat",
+          "fe_12k_ball_007_load2_284.mat",
+          "fe_12k_ball_007_load3_285.mat",
+          "fe_12k_ball_014_load1_287.mat",
+          "fe_12k_ball_014_load2_288.mat",
+          "fe_12k_ball_014_load3_289.mat",
+          "fe_12k_ball_021_load1_291.mat",
+          "fe_12k_ball_021_load2_292.mat",
+          "fe_12k_ball_021_load3_293.mat",
+          "fe_12k_inner_007_load2_280.mat",
+          "fe_12k_inner_007_load3_281.mat",
+          "fe_12k_inner_014_load1_275.mat",
+          "fe_12k_inner_014_load2_276.mat",
+          "fe_12k_inner_014_load3_277.mat",
+          "fe_12k_inner_021_load0_270.mat",
+          "fe_12k_inner_021_load1_271.mat",
+          "fe_12k_inner_021_load2_272.mat",
+          "fe_12k_inner_021_load3_273.mat",
+          "fe_12k_outer_007_load2_296.mat",
+          "fe_12k_outer_007_load3_297.mat",
+          "fe_12k_outer_014_load1_309.mat",
+          "fe_12k_outer_014_load2_311.mat",
+          "fe_12k_outer_014_load3_312.mat",
+          "fe_12k_outer_021_load0_315.mat",
+          "fe_12k_outer_021_load2_317.mat",
+          "fe_12k_outer_021_load3_318.mat"
+        ],
+        "test_recording_ids": [
+          "de_12k_ball_007_load3_121.mat",
+          "de_12k_ball_014_load0_185.mat",
+          "de_12k_ball_014_load1_186.mat",
+          "de_12k_ball_014_load2_187.mat",
+          "de_12k_ball_014_load3_188.mat",
+          "de_12k_inner_007_load0_105.mat",
+          "de_12k_inner_007_load3_108.mat",
+          "de_12k_inner_021_load2_211.mat",
+          "de_12k_outer_014_load2_199.mat",
+          "de_12k_outer_014_load3_200.mat",
+          "fe_12k_ball_014_load0_286.mat",
+          "fe_12k_ball_021_load0_290.mat",
+          "fe_12k_inner_007_load0_278.mat",
+          "fe_12k_inner_007_load1_279.mat",
+          "fe_12k_inner_014_load0_274.mat",
+          "fe_12k_outer_007_load0_294.mat",
+          "fe_12k_outer_007_load1_295.mat",
+          "fe_12k_outer_014_load0_310.mat",
+          "fe_12k_outer_021_load1_316.mat"
+        ],
+        "train_segments": 1368,
+        "test_segments": 456
+      },
+      "models": {
+        "gbt": {
+          "n": 152,
+          "accuracy": 0.8289473684210527,
+          "auc_roc_macro_ovr": 0.9616243131868131,
+          "auc_pr_macro": 0.9394340493226089,
+          "f2_macro": 0.8248482652564867,
+          "class_recall": {
+            "ball": 0.8571428571428571,
+            "inner": 0.9583333333333334,
+            "outer": 0.6666666666666666
+          }
+        },
+        "hybrid": {
+          "n": 152,
+          "accuracy": 0.5131578947368421,
+          "auc_roc_macro_ovr": 0.6529542506105006,
+          "auc_pr_macro": 0.48165898108692756,
+          "f2_macro": 0.43804734537493156,
+          "class_recall": {
+            "ball": 0.9821428571428571,
+            "inner": 0.0,
+            "outer": 0.4791666666666667
+          },
+          "points": 64,
+          "points_converged": 60,
+          "mean_width": 0.002039107662087065,
+          "fit_examples": 210
+        },
+        "backprop": {
+          "n": 152,
+          "accuracy": 0.375,
+          "auc_roc_macro_ovr": 0.7271014575702076,
+          "auc_pr_macro": 0.619650982661548,
+          "f2_macro": 0.3409417043437662,
+          "class_recall": {
+            "ball": 0.5178571428571429,
+            "inner": 0.041666666666666664,
+            "outer": 0.5416666666666666
+          },
+          "points": 0,
+          "points_converged": 0,
+          "mean_width": null,
+          "fit_examples": 210
+        }
+      },
+      "tokenizer": {
+        "fit": "train-only MiniBatchKMeans independently per channel-feature pair",
+        "requested_buckets": 8,
+        "vocabulary_tokens": 64
+      }
+    }
+  ],
+  "best_configuration": {
+    "name": "mixed_angle_B8_K1",
+    "models": {
+      "gbt": {
+        "n": 456,
+        "accuracy": 0.7741228070175439,
+        "auc_roc_macro_ovr": 0.9000109169380003,
+        "auc_pr_macro": 0.7991711944159196,
+        "f2_macro": 0.7711158409798141,
+        "class_recall": {
+          "ball": 0.8392857142857143,
+          "inner": 0.7430555555555556,
+          "outer": 0.7291666666666666
+        }
+      },
+      "hybrid": {
+        "n": 456,
+        "accuracy": 0.37280701754385964,
+        "auc_roc_macro_ovr": 0.6779664924196175,
+        "auc_pr_macro": 0.5302033141941155,
+        "f2_macro": 0.25665998983160904,
+        "class_recall": {
+          "ball": 0.9940476190476191,
+          "inner": 0.0,
+          "outer": 0.020833333333333332
+        },
+        "points": 64,
+        "points_converged": 46,
+        "mean_width": 0.01656475744886506,
+        "fit_examples": 210
+      },
+      "backprop": {
+        "n": 456,
+        "accuracy": 0.3157894736842105,
+        "auc_roc_macro_ovr": 0.5653622515601682,
+        "auc_pr_macro": 0.4398597958715633,
+        "f2_macro": 0.23255813953488372,
+        "class_recall": {
+          "ball": 0.0,
+          "inner": 0.0,
+          "outer": 1.0
+        },
+        "points": 0,
+        "points_converged": 0,
+        "mean_width": null,
+        "fit_examples": 210
+      }
+    },
+    "selection": "maximum hybrid macro-OvR ROC; ties by inner recall then PR",
+    "geometry_figure": "/Users/serkankose/Documents/quann-3d/maintenance/figures/e5_type_design.png",
+    "figure_details": {
+      "pca_explained_variance_percent": [
+        11.67733383178711,
+        9.496354103088379,
+        8.060922622680664
+      ],
+      "region_map": "nearest class centroid in 2D PCA of per-window hybrid cloud means",
+      "plotted_test_windows": 456,
+      "hybrid_cloud_points_per_window": 8
+    }
+  },
+  "design_effects": {
+    "hybrid_roc_angle_vs_raw_mixed_B8_K1": 0.09264611738570072,
+    "hybrid_roc_B8_minus_B4_mixed_angle_K1": 0.07523863578551082,
+    "hybrid_roc_K3_minus_K1_mixed_angle_B8": -0.025012241809116875,
+    "interpretation": "paired grid contrasts isolate angle encoding, bucket count, and temporal window length; feature-pair budget contrasts compare RMS/crest, bearing-frequency pairs, and mixed."
+  },
+  "e5_vs_cwru_exp": {
+    "reference": "maintenance/results/cwru_expansion.json; same 20261016 seed and 75/25 recording-disjoint split",
+    "cwru_exp_fault_type": {
+      "gbt": {
+        "auc_roc_macro_ovr": 0.9072849893162394,
+        "auc_pr_macro": 0.8377520843748352,
+        "f2_macro": 0.7514662361172245,
+        "class_recall": {
+          "ball": 0.6726190476190477,
+          "inner": 0.9444444444444444,
+          "outer": 0.6527777777777778
+        }
+      },
+      "hybrid": {
+        "auc_roc_macro_ovr": 0.5716111386684304,
+        "auc_pr_macro": 0.4060450184812927,
+        "f2_macro": 0.3152792930573198,
+        "class_recall": {
+          "ball": 0.7202380952380952,
+          "inner": 0.0,
+          "outer": 0.3263888888888889
+        }
+      },
+      "backprop": {
+        "auc_roc_macro_ovr": 0.7492819198548366,
+        "auc_pr_macro": 0.5841730066524673,
+        "f2_macro": 0.6160133383512053,
+        "class_recall": {
+          "ball": 0.7916666666666666,
+          "inner": 0.9444444444444444,
+          "outer": 0.2013888888888889
+        }
+      }
+    },
+    "e5_best": {
+      "gbt": {
+        "auc_roc_macro_ovr": 0.9000109169380003,
+        "auc_pr_macro": 0.7991711944159196,
+        "f2_macro": 0.7711158409798141,
+        "class_recall": {
+          "ball": 0.8392857142857143,
+          "inner": 0.7430555555555556,
+          "outer": 0.7291666666666666
+        }
+      },
+      "hybrid": {
+        "auc_roc_macro_ovr": 0.6779664924196175,
+        "auc_pr_macro": 0.5302033141941155,
+        "f2_macro": 0.25665998983160904,
+        "class_recall": {
+          "ball": 0.9940476190476191,
+          "inner": 0.0,
+          "outer": 0.020833333333333332
+        }
+      },
+      "backprop": {
+        "auc_roc_macro_ovr": 0.5653622515601682,
+        "auc_pr_macro": 0.4398597958715633,
+        "f2_macro": 0.23255813953488372,
+        "class_recall": {
+          "ball": 0.0,
+          "inner": 0.0,
+          "outer": 1.0
+        }
+      }
+    },
+    "best_hybrid_delta_vs_cwru_exp": {
+      "auc_roc_macro_ovr": 0.1063553537511871,
+      "auc_pr_macro": 0.12415829571282277,
+      "inner_recall": 0.0
+    },
+    "cwru_exp_hybrid_gbt_roc_gap": 0.33567385064780897,
+    "best_configuration_hybrid_minus_gbt_roc_gap": -0.2220444245183828,
+    "criteria": {
+      "inner_recall_at_least_0_5": false,
+      "hybrid_gbt_roc_gap_at_most_0_10": false,
+      "both_met": false
+    },
+    "grid_goal_scan": {
+      "best_inner_recall": {
+        "configuration": "rms_crest_B8_K1",
+        "hybrid_gbt_roc_gap": 0.3050481299179214,
+        "inner_recall": 0.8888888888888888
+      },
+      "smallest_hybrid_gbt_roc_gap": {
+        "configuration": "bearing_energy_B8_K1",
+        "hybrid_gbt_roc_gap": 0.11667450990367645,
+        "inner_recall": 0.0
+      },
+      "any_configuration_meets_inner_recall": true,
+      "any_configuration_meets_roc_gap": false,
+      "any_configuration_meets_both": false
+    }
+  },
+  "protocol": {
+    "device": "cpu",
+    "seed": 20261016,
+    "split": "recording-disjoint stratified 75/25 fault-type split, identical recording IDs to run_cwru_exp.py",
+    "channels": "DE and FE kept as separate point roles; missing FE feature slots remain loader zero-values",
+    "input_mapping": "per-channel feature-pair descriptor -> train-only pair tokenizer -> one learned 32D QUANN point per pair/channel/bucket -> multi-point cloud; backprop uses measured descriptor points in the same role-tagged 32D geometry",
+    "split_recording_ids": {
+      "train": [
+        "de_12k_ball_007_load0_118.mat",
+        "de_12k_ball_007_load1_119.mat",
+        "de_12k_ball_007_load2_120.mat",
+        "de_12k_ball_021_load0_222.mat",
+        "de_12k_ball_021_load1_223.mat",
+        "de_12k_ball_021_load2_224.mat",
+        "de_12k_ball_021_load3_225.mat",
+        "de_12k_ball_028_load0_3005.mat",
+        "de_12k_ball_028_load1_3006.mat",
+        "de_12k_ball_028_load2_3007.mat",
+        "de_12k_ball_028_load3_3008.mat",
+        "de_12k_inner_007_load1_106.mat",
+        "de_12k_inner_007_load2_107.mat",
+        "de_12k_inner_014_load0_169.mat",
+        "de_12k_inner_014_load1_170.mat",
+        "de_12k_inner_014_load2_171.mat",
+        "de_12k_inner_014_load3_172.mat",
+        "de_12k_inner_021_load0_209.mat",
+        "de_12k_inner_021_load1_210.mat",
+        "de_12k_inner_021_load3_212.mat",
+        "de_12k_outer_007_load0_130.mat",
+        "de_12k_outer_007_load1_131.mat",
+        "de_12k_outer_007_load2_132.mat",
+        "de_12k_outer_007_load3_133.mat",
+        "de_12k_outer_014_load0_197.mat",
+        "de_12k_outer_014_load1_198.mat",
+        "de_12k_outer_021_load0_234.mat",
+        "de_12k_outer_021_load1_235.mat",
+        "de_12k_outer_021_load2_236.mat",
+        "de_12k_outer_021_load3_237.mat",
+        "fe_12k_ball_007_load0_282.mat",
+        "fe_12k_ball_007_load1_283.mat",
+        "fe_12k_ball_007_load2_284.mat",
+        "fe_12k_ball_007_load3_285.mat",
+        "fe_12k_ball_014_load1_287.mat",
+        "fe_12k_ball_014_load2_288.mat",
+        "fe_12k_ball_014_load3_289.mat",
+        "fe_12k_ball_021_load1_291.mat",
+        "fe_12k_ball_021_load2_292.mat",
+        "fe_12k_ball_021_load3_293.mat",
+        "fe_12k_inner_007_load2_280.mat",
+        "fe_12k_inner_007_load3_281.mat",
+        "fe_12k_inner_014_load1_275.mat",
+        "fe_12k_inner_014_load2_276.mat",
+        "fe_12k_inner_014_load3_277.mat",
+        "fe_12k_inner_021_load0_270.mat",
+        "fe_12k_inner_021_load1_271.mat",
+        "fe_12k_inner_021_load2_272.mat",
+        "fe_12k_inner_021_load3_273.mat",
+        "fe_12k_outer_007_load2_296.mat",
+        "fe_12k_outer_007_load3_297.mat",
+        "fe_12k_outer_014_load1_309.mat",
+        "fe_12k_outer_014_load2_311.mat",
+        "fe_12k_outer_014_load3_312.mat",
+        "fe_12k_outer_021_load0_315.mat",
+        "fe_12k_outer_021_load2_317.mat",
+        "fe_12k_outer_021_load3_318.mat"
+      ],
+      "test": [
+        "de_12k_ball_007_load3_121.mat",
+        "de_12k_ball_014_load0_185.mat",
+        "de_12k_ball_014_load1_186.mat",
+        "de_12k_ball_014_load2_187.mat",
+        "de_12k_ball_014_load3_188.mat",
+        "de_12k_inner_007_load0_105.mat",
+        "de_12k_inner_007_load3_108.mat",
+        "de_12k_inner_021_load2_211.mat",
+        "de_12k_outer_014_load2_199.mat",
+        "de_12k_outer_014_load3_200.mat",
+        "fe_12k_ball_014_load0_286.mat",
+        "fe_12k_ball_021_load0_290.mat",
+        "fe_12k_inner_007_load0_278.mat",
+        "fe_12k_inner_007_load1_279.mat",
+        "fe_12k_inner_014_load0_274.mat",
+        "fe_12k_outer_007_load0_294.mat",
+        "fe_12k_outer_007_load1_295.mat",
+        "fe_12k_outer_014_load0_310.mat",
+        "fe_12k_outer_021_load1_316.mat"
+      ]
+    },
+    "elapsed_seconds": 16.15
+  },
+  "limitations": [
+    "The 80 CWRU files are the source recordings, but fault-type evaluation excludes the four healthy recordings as in cwru_exp.",
+    "K3 groups consecutive extracted rows; loader rows are distributed through each source recording rather than a continuous overlapping stream, and incomplete tails are dropped.",
+    "Feature-pair role tags use a deterministic fixed 32D embedding; hybrid QUANN centers are learned only by the existing zero-order point update, not by gradient descent.",
+    "A single held-out recording split and one seed provide a design probe, not a robust estimate across split replicates."
+  ]
+}

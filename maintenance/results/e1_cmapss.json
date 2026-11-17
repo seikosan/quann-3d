@@ -1,0 +1,225 @@
+{
+  "experiment": "maintenance E1 real C-MAPSS FD001 explainability and drift",
+  "data": "cmapss_fd001",
+  "sources": {
+    "train": "/Users/serkankose/Documents/quann-3d/maintenance/data/cmapss/CMaps/train_FD001.txt",
+    "test": "/Users/serkankose/Documents/quann-3d/maintenance/data/cmapss/CMaps/test_FD001.txt",
+    "rul": "/Users/serkankose/Documents/quann-3d/maintenance/data/cmapss/CMaps/RUL_FD001.txt"
+  },
+  "split": {
+    "train_windows": 1386,
+    "validation_windows": 305,
+    "official_test_windows": 1064,
+    "train_grouping": "engine-disjoint, E0b 80/20 split"
+  },
+  "encoder": {
+    "pipeline": "E0b train-only MiniBatchKMeans tokens + hybrid MaintenanceCloud",
+    "embedding": "CloudEncoderND output",
+    "embedding_dim": 48,
+    "prototype": "mean training embedding by RUL stage",
+    "distance": "Euclidean"
+  },
+  "heldout_test": {
+    "n": 1064,
+    "nearest_prototype_accuracy": 0.8167293233082706,
+    "stage_distance_summary": {
+      "critical_0_30": {
+        "n": 25,
+        "nearest_prototype_accuracy": 0.64,
+        "median_own_distance": 1.1310654878616333,
+        "median_nearest_other_distance": 4.353259086608887,
+        "median_own_to_nearest_other_ratio": 0.2587163746356964,
+        "mean_own_to_nearest_other_ratio": 0.9012595415115356
+      },
+      "high_31_60": {
+        "n": 72,
+        "nearest_prototype_accuracy": 0.4444444444444444,
+        "median_own_distance": 4.409899711608887,
+        "median_nearest_other_distance": 2.477112293243408,
+        "median_own_to_nearest_other_ratio": 1.8558917045593262,
+        "mean_own_to_nearest_other_ratio": 3.158862590789795
+      },
+      "moderate_61_90": {
+        "n": 114,
+        "nearest_prototype_accuracy": 0.18421052631578946,
+        "median_own_distance": 3.2563629150390625,
+        "median_nearest_other_distance": 1.5797450542449951,
+        "median_own_to_nearest_other_ratio": 2.4832210540771484,
+        "mean_own_to_nearest_other_ratio": 2.375014305114746
+      },
+      "healthy_gt_90": {
+        "n": 853,
+        "nearest_prototype_accuracy": 0.9378663540445487,
+        "median_own_distance": 1.4697272777557373,
+        "median_nearest_other_distance": 3.493273973464966,
+        "median_own_to_nearest_other_ratio": 0.4189574420452118,
+        "mean_own_to_nearest_other_ratio": 0.5234072804450989
+      }
+    },
+    "explanation_examples": [
+      {
+        "test_window_id": 972,
+        "true_stage": "critical_0_30",
+        "nearest_prototype_stage": "critical_0_30",
+        "nearest_prototype_distance": 0.6617648601531982,
+        "second_prototype_stage": "high_31_60",
+        "second_prototype_distance": 4.681844711303711,
+        "nearest_prototype_correct": true,
+        "reason": "Sensör 4 RMS %29 azalmış, sensör 21 crest 1.41× (artmış); critical_0_30 prototipine mesafe 0.662. İstatistikler bu pencerenin ölçeklenmiş sensör değerlerinden türetilmiştir."
+      },
+      {
+        "test_window_id": 417,
+        "true_stage": "critical_0_30",
+        "nearest_prototype_stage": "high_31_60",
+        "nearest_prototype_distance": 2.2999417781829834,
+        "second_prototype_stage": "critical_0_30",
+        "second_prototype_distance": 3.6875855922698975,
+        "nearest_prototype_correct": false,
+        "reason": "Sensör 14 RMS %119 artmış, sensör 4 crest 1.26× (artmış); high_31_60 prototipine mesafe 2.300. İstatistikler bu pencerenin ölçeklenmiş sensör değerlerinden türetilmiştir."
+      },
+      {
+        "test_window_id": 197,
+        "true_stage": "critical_0_30",
+        "nearest_prototype_stage": "critical_0_30",
+        "nearest_prototype_distance": 0.9447867274284363,
+        "second_prototype_stage": "high_31_60",
+        "second_prototype_distance": 4.423760414123535,
+        "nearest_prototype_correct": true,
+        "reason": "Sensör 14 RMS %83 azalmış, sensör 17 crest 1.38× (artmış); critical_0_30 prototipine mesafe 0.945. İstatistikler bu pencerenin ölçeklenmiş sensör değerlerinden türetilmiştir."
+      },
+      {
+        "test_window_id": 194,
+        "true_stage": "high_31_60",
+        "nearest_prototype_stage": "healthy_gt_90",
+        "nearest_prototype_distance": 0.8765609264373779,
+        "second_prototype_stage": "moderate_61_90",
+        "second_prototype_distance": 2.764434576034546,
+        "nearest_prototype_correct": false,
+        "reason": "Sensör 20 RMS %50 azalmış, sensör 13 crest 0.76× (azalmış); healthy_gt_90 prototipine mesafe 0.877. İstatistikler bu pencerenin ölçeklenmiş sensör değerlerinden türetilmiştir."
+      },
+      {
+        "test_window_id": 312,
+        "true_stage": "high_31_60",
+        "nearest_prototype_stage": "high_31_60",
+        "nearest_prototype_distance": 2.161353588104248,
+        "second_prototype_stage": "critical_0_30",
+        "second_prototype_distance": 3.9608938694000244,
+        "nearest_prototype_correct": true,
+        "reason": "Sensör 3 RMS %34 azalmış, sensör 14 crest 1.31× (artmış); high_31_60 prototipine mesafe 2.161. İstatistikler bu pencerenin ölçeklenmiş sensör değerlerinden türetilmiştir."
+      },
+      {
+        "test_window_id": 707,
+        "true_stage": "high_31_60",
+        "nearest_prototype_stage": "high_31_60",
+        "nearest_prototype_distance": 1.7311934232711792,
+        "second_prototype_stage": "moderate_61_90",
+        "second_prototype_distance": 5.385540962219238,
+        "nearest_prototype_correct": true,
+        "reason": "Sensör 9 RMS %70 artmış, sensör 3 crest 1.55× (artmış); high_31_60 prototipine mesafe 1.731. İstatistikler bu pencerenin ölçeklenmiş sensör değerlerinden türetilmiştir."
+      },
+      {
+        "test_window_id": 14,
+        "true_stage": "moderate_61_90",
+        "nearest_prototype_stage": "high_31_60",
+        "nearest_prototype_distance": 3.5157253742218018,
+        "second_prototype_stage": "critical_0_30",
+        "second_prototype_distance": 5.1453399658203125,
+        "nearest_prototype_correct": false,
+        "reason": "Sensör 4 RMS %55 azalmış, sensör 15 crest 1.52× (artmış); high_31_60 prototipine mesafe 3.516. İstatistikler bu pencerenin ölçeklenmiş sensör değerlerinden türetilmiştir."
+      },
+      {
+        "test_window_id": 505,
+        "true_stage": "moderate_61_90",
+        "nearest_prototype_stage": "high_31_60",
+        "nearest_prototype_distance": 3.5069363117218018,
+        "second_prototype_stage": "critical_0_30",
+        "second_prototype_distance": 4.733373165130615,
+        "nearest_prototype_correct": false,
+        "reason": "Sensör 21 RMS %57 azalmış, sensör 12 crest 0.78× (azalmış); high_31_60 prototipine mesafe 3.507. İstatistikler bu pencerenin ölçeklenmiş sensör değerlerinden türetilmiştir."
+      },
+      {
+        "test_window_id": 642,
+        "true_stage": "moderate_61_90",
+        "nearest_prototype_stage": "healthy_gt_90",
+        "nearest_prototype_distance": 1.1565836668014526,
+        "second_prototype_stage": "moderate_61_90",
+        "second_prototype_distance": 3.43756365776062,
+        "nearest_prototype_correct": false,
+        "reason": "Sensör 9 RMS %53 azalmış, sensör 9 crest 1.31× (artmış); healthy_gt_90 prototipine mesafe 1.157. İstatistikler bu pencerenin ölçeklenmiş sensör değerlerinden türetilmiştir."
+      },
+      {
+        "test_window_id": 807,
+        "true_stage": "healthy_gt_90",
+        "nearest_prototype_stage": "healthy_gt_90",
+        "nearest_prototype_distance": 1.7720600366592407,
+        "second_prototype_stage": "moderate_61_90",
+        "second_prototype_distance": 4.105012893676758,
+        "nearest_prototype_correct": true,
+        "reason": "Sensör 9 RMS %86 artmış, sensör 8 crest 1.29× (artmış); healthy_gt_90 prototipine mesafe 1.772. İstatistikler bu pencerenin ölçeklenmiş sensör değerlerinden türetilmiştir."
+      },
+      {
+        "test_window_id": 1033,
+        "true_stage": "healthy_gt_90",
+        "nearest_prototype_stage": "healthy_gt_90",
+        "nearest_prototype_distance": 1.1615709066390991,
+        "second_prototype_stage": "moderate_61_90",
+        "second_prototype_distance": 2.656294822692871,
+        "nearest_prototype_correct": true,
+        "reason": "Sensör 6 RMS %234 artmış, sensör 6 crest 3.03× (artmış); healthy_gt_90 prototipine mesafe 1.162. İstatistikler bu pencerenin ölçeklenmiş sensör değerlerinden türetilmiştir."
+      },
+      {
+        "test_window_id": 319,
+        "true_stage": "healthy_gt_90",
+        "nearest_prototype_stage": "healthy_gt_90",
+        "nearest_prototype_distance": 1.9682629108428955,
+        "second_prototype_stage": "moderate_61_90",
+        "second_prototype_distance": 3.2541213035583496,
+        "nearest_prototype_correct": true,
+        "reason": "Sensör 6 RMS %234 artmış, sensör 6 crest 3.03× (artmış); healthy_gt_90 prototipine mesafe 1.968. İstatistikler bu pencerenin ölçeklenmiş sensör değerlerinden türetilmiştir."
+      }
+    ]
+  },
+  "drift_demo": {
+    "reference_population": "training windows with RUL > 90 cycles",
+    "distance": "Euclidean distance to healthy_gt_90 training centroid",
+    "alarm_threshold": {
+      "quantile": 0.95,
+      "distance": 8.460468292236328
+    },
+    "heldout_healthy_n": 853,
+    "unchanged_alarm_rate": 0.011723329425556858,
+    "shifted_alarm_rate": 0.02813599062133646,
+    "shifted_to_unchanged_alarm_rate_ratio": 2.4,
+    "alarm_counts": {
+      "unchanged": 10,
+      "shifted": 24
+    },
+    "changed_token_fraction": 0.8083235638921453,
+    "applied_standardized_shift": {
+      "dimensions": [
+        0,
+        1,
+        2
+      ],
+      "values": [
+        6.0,
+        6.0,
+        -6.0
+      ],
+      "meaning": "controlled operating-setting shift on raw setting columns 1-3"
+    },
+    "feature_mapping_note": "The loader keeps the three operating settings at dimensions 0-2; dimensions 33-35 are engineered baseline deltas, not fan/load settings."
+  },
+  "region_map": {
+    "path": "/Users/serkankose/Documents/quann-3d/maintenance/figures/e1_region_map.png",
+    "pca_explained_variance_percent": 97.57254123687744,
+    "kde_population": "training windows by stage; contours are descriptive, not calibrated boundaries"
+  },
+  "drift_figure": "/Users/serkankose/Documents/quann-3d/maintenance/figures/e1_drift.png",
+  "limitations": [
+    "Nearest-centroid results are retrieval metrics, not classifier accuracy or calibrated confidence.",
+    "Feature-based reason sentences compare normalized sensor RMS/crest statistics with the training reference for the nearest-prototype stage; they are review aids, not causal diagnoses.",
+    "FD001 is a single operating-condition subset; the standardized setting shift is a controlled stress test, not an observed field drift event.",
+    "KDE/PCA regions are descriptive projections and do not define decision boundaries."
+  ]
+}

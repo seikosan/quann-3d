@@ -1,0 +1,3683 @@
+{
+  "experiment": "E2 Elliptic hybrid CloudEncoderND nearest-prototype explainability probe",
+  "data": "Elliptic transaction-node/account-proxy clouds",
+  "protocol": {
+    "device": "cpu",
+    "seed": 20261016,
+    "sampled_labeled_nodes": 2000,
+    "window_K": 10,
+    "split": "same stratified node-level 60/20/20 as e2_elliptic; prototypes fit on train only",
+    "embedding": "hybrid CloudEncoderND output; class centroid / Euclidean distance",
+    "caveat": "one-hop graph features are transductive; source data has transaction nodes, not account IDs"
+  },
+  "summary": {
+    "test_n": 400,
+    "test_illicit_n": 40,
+    "heldout_nearest_prototype_accuracy": 0.75,
+    "class_nearest_prototype_accuracy": {
+      "licit": 0.7833333333333333,
+      "illicit": 0.45
+    },
+    "pca2_train_variance_ratio": [
+      0.9609778523445129,
+      0.03591226041316986
+    ],
+    "probes": [
+      {
+        "transaction_node_id": "294455185",
+        "true_label": "illicit",
+        "nearest_prototype": "illicit",
+        "nearest_prototype_distance": 4.317474842071533,
+        "second_prototype": "licit",
+        "second_prototype_distance": 7.362341403961182,
+        "nearest_prototype_correct": true,
+        "pca2": [
+          7.027932167053223,
+          -0.6268386840820312
+        ],
+        "observable_reason": "1-hop işlem-komşuluğu proxy: observed_hop_count=1, hop_completion_ratio=0.111, max_counterparty_degree=3, counterparty_transition_rate=0.000, dwell_time_cv=0.000; özellikler anonimleştirilmiş, ham tutar ve hesap kimliği mevcut değil.",
+        "caveat": "Nearest-centroid rationale is descriptive, not a calibrated AML/SAR decision."
+      },
+      {
+        "transaction_node_id": "339264938",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "nearest_prototype_distance": 2.091330051422119,
+        "second_prototype": "illicit",
+        "second_prototype_distance": 5.124600887298584,
+        "nearest_prototype_correct": true,
+        "pca2": [
+          -2.343831777572632,
+          -0.42348480224609375
+        ],
+        "observable_reason": "1-hop işlem-komşuluğu proxy: observed_hop_count=3, hop_completion_ratio=0.333, max_counterparty_degree=29, counterparty_transition_rate=0.000, dwell_time_cv=0.000; özellikler anonimleştirilmiş, ham tutar ve hesap kimliği mevcut değil.",
+        "caveat": "Nearest-centroid rationale is descriptive, not a calibrated AML/SAR decision."
+      }
+    ]
+  },
+  "region_map_data": {
+    "projection": "PCA-2 fit on train embeddings only",
+    "test_points": [
+      {
+        "transaction_node_id": "339264938",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.343831777572632,
+          -0.42348480224609375
+        ]
+      },
+      {
+        "transaction_node_id": "115059310",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          7.027932167053223,
+          -0.6268386840820312
+        ]
+      },
+      {
+        "transaction_node_id": "162500985",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.9502413272857666,
+          -0.002964496612548828
+        ]
+      },
+      {
+        "transaction_node_id": "188900799",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.724212884902954,
+          0.17159605026245117
+        ]
+      },
+      {
+        "transaction_node_id": "154554082",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -0.8941659927368164,
+          0.7206339836120605
+        ]
+      },
+      {
+        "transaction_node_id": "191394882",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.31218147277832,
+          0.03666973114013672
+        ]
+      },
+      {
+        "transaction_node_id": "339499208",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.0260794162750244,
+          -0.08404731750488281
+        ]
+      },
+      {
+        "transaction_node_id": "105787565",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.852627754211426,
+          -0.44993019104003906
+        ]
+      },
+      {
+        "transaction_node_id": "331565741",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -0.7441353797912598,
+          0.8124604225158691
+        ]
+      },
+      {
+        "transaction_node_id": "339383741",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.2333900928497314,
+          0.5315694808959961
+        ]
+      },
+      {
+        "transaction_node_id": "155593277",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.786822557449341,
+          -0.880709171295166
+        ]
+      },
+      {
+        "transaction_node_id": "218124060",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.829023361206055,
+          -0.42688846588134766
+        ]
+      },
+      {
+        "transaction_node_id": "96302545",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.7693736553192139,
+          0.13626432418823242
+        ]
+      },
+      {
+        "transaction_node_id": "121743499",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.9480111598968506,
+          -1.1690411567687988
+        ]
+      },
+      {
+        "transaction_node_id": "248926808",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.3252599239349365,
+          0.4698338508605957
+        ]
+      },
+      {
+        "transaction_node_id": "245257627",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.824267625808716,
+          -0.992884635925293
+        ]
+      },
+      {
+        "transaction_node_id": "94588332",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          4.490252494812012,
+          1.0776152610778809
+        ]
+      },
+      {
+        "transaction_node_id": "86500037",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.1052277088165283,
+          -0.1476726531982422
+        ]
+      },
+      {
+        "transaction_node_id": "54492383",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -0.4909801483154297,
+          0.9253349304199219
+        ]
+      },
+      {
+        "transaction_node_id": "121657415",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.4640214443206787,
+          -0.5627565383911133
+        ]
+      },
+      {
+        "transaction_node_id": "93259603",
+        "true_label": "illicit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.3373231887817383,
+          0.4611482620239258
+        ]
+      },
+      {
+        "transaction_node_id": "29720076",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.3979334831237793,
+          0.42995119094848633
+        ]
+      },
+      {
+        "transaction_node_id": "148568948",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.1052277088165283,
+          -0.1476726531982422
+        ]
+      },
+      {
+        "transaction_node_id": "234559676",
+        "true_label": "illicit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.2352471351623535,
+          0.5313425064086914
+        ]
+      },
+      {
+        "transaction_node_id": "70818430",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.485717535018921,
+          -0.5754241943359375
+        ]
+      },
+      {
+        "transaction_node_id": "224746179",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.4462785720825195,
+          0.39244747161865234
+        ]
+      },
+      {
+        "transaction_node_id": "200637797",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.8781259059906006,
+          -1.0351471900939941
+        ]
+      },
+      {
+        "transaction_node_id": "827907",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.341064214706421,
+          -0.41983890533447266
+        ]
+      },
+      {
+        "transaction_node_id": "98421333",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.786822557449341,
+          -0.880709171295166
+        ]
+      },
+      {
+        "transaction_node_id": "339648613",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.424806833267212,
+          -0.5056695938110352
+        ]
+      },
+      {
+        "transaction_node_id": "209694819",
+        "true_label": "illicit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.0723717212677002,
+          0.6337728500366211
+        ]
+      },
+      {
+        "transaction_node_id": "148790971",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.786822557449341,
+          -0.880709171295166
+        ]
+      },
+      {
+        "transaction_node_id": "100803539",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.851404190063477,
+          -0.44765806198120117
+        ]
+      },
+      {
+        "transaction_node_id": "294455185",
+        "true_label": "illicit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          7.027932167053223,
+          -0.6268386840820312
+        ]
+      },
+      {
+        "transaction_node_id": "9330904",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.851404190063477,
+          -0.44765806198120117
+        ]
+      },
+      {
+        "transaction_node_id": "115324291",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.7693736553192139,
+          0.13626432418823242
+        ]
+      },
+      {
+        "transaction_node_id": "98072232",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.7656924724578857,
+          0.14162921905517578
+        ]
+      },
+      {
+        "transaction_node_id": "12830020",
+        "true_label": "illicit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.0741324424743652,
+          0.6289248466491699
+        ]
+      },
+      {
+        "transaction_node_id": "82072649",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          1.0198379755020142,
+          1.3858556747436523
+        ]
+      },
+      {
+        "transaction_node_id": "317009270",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.4761574268341064,
+          -0.5676870346069336
+        ]
+      },
+      {
+        "transaction_node_id": "390769896",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.812831878662109,
+          -0.41204214096069336
+        ]
+      },
+      {
+        "transaction_node_id": "190450470",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -0.9116942882537842,
+          0.7200284004211426
+        ]
+      },
+      {
+        "transaction_node_id": "191549341",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.609123229980469,
+          -0.2109837532043457
+        ]
+      },
+      {
+        "transaction_node_id": "339089079",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          1.0263718366622925,
+          1.3975591659545898
+        ]
+      },
+      {
+        "transaction_node_id": "232468870",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.3974077701568604,
+          -0.4902520179748535
+        ]
+      },
+      {
+        "transaction_node_id": "69984099",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.768277883529663,
+          0.13817834854125977
+        ]
+      },
+      {
+        "transaction_node_id": "346393764",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.31218147277832,
+          0.03666973114013672
+        ]
+      },
+      {
+        "transaction_node_id": "399842485",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          1.0235161781311035,
+          1.3862910270690918
+        ]
+      },
+      {
+        "transaction_node_id": "36892884",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.5374677181243896,
+          -0.6422886848449707
+        ]
+      },
+      {
+        "transaction_node_id": "339093176",
+        "true_label": "illicit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.31218147277832,
+          0.03666973114013672
+        ]
+      },
+      {
+        "transaction_node_id": "101575750",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.851404190063477,
+          -0.44765806198120117
+        ]
+      },
+      {
+        "transaction_node_id": "244690761",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.8265326023101807,
+          -0.9860734939575195
+        ]
+      },
+      {
+        "transaction_node_id": "310468407",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.3423821926116943,
+          -0.42189836502075195
+        ]
+      },
+      {
+        "transaction_node_id": "310510629",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.4410583972930908,
+          0.3844308853149414
+        ]
+      },
+      {
+        "transaction_node_id": "4733566",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.7279345989227295,
+          0.16884946823120117
+        ]
+      },
+      {
+        "transaction_node_id": "57411873",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -0.9055564403533936,
+          0.7152175903320312
+        ]
+      },
+      {
+        "transaction_node_id": "195419589",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -0.6359961032867432,
+          0.8703093528747559
+        ]
+      },
+      {
+        "transaction_node_id": "73265345",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.851404190063477,
+          -0.44765806198120117
+        ]
+      },
+      {
+        "transaction_node_id": "232437943",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.0060298442840576,
+          0.6634774208068848
+        ]
+      },
+      {
+        "transaction_node_id": "67628472",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.829023361206055,
+          -0.42688894271850586
+        ]
+      },
+      {
+        "transaction_node_id": "372825396",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.0571811199188232,
+          -0.11432695388793945
+        ]
+      },
+      {
+        "transaction_node_id": "119584234",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          0.8674163818359375,
+          1.359365463256836
+        ]
+      },
+      {
+        "transaction_node_id": "63819321",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.7693731784820557,
+          0.13626432418823242
+        ]
+      },
+      {
+        "transaction_node_id": "378599229",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.4425735473632812,
+          0.3793220520019531
+        ]
+      },
+      {
+        "transaction_node_id": "224964637",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.682215929031372,
+          0.18202924728393555
+        ]
+      },
+      {
+        "transaction_node_id": "73021894",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.829023361206055,
+          -0.42688846588134766
+        ]
+      },
+      {
+        "transaction_node_id": "355005783",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.7775294780731201,
+          0.13058805465698242
+        ]
+      },
+      {
+        "transaction_node_id": "70789667",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.255981206893921,
+          -0.3377213478088379
+        ]
+      },
+      {
+        "transaction_node_id": "209893004",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.7481975555419922,
+          0.16154050827026367
+        ]
+      },
+      {
+        "transaction_node_id": "26484117",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.2294809818267822,
+          -0.31139183044433594
+        ]
+      },
+      {
+        "transaction_node_id": "565334",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.3386013507843018,
+          -0.41467952728271484
+        ]
+      },
+      {
+        "transaction_node_id": "234177348",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.9775035381317139,
+          -0.03622150421142578
+        ]
+      },
+      {
+        "transaction_node_id": "31945218",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.738051176071167,
+          0.16051006317138672
+        ]
+      },
+      {
+        "transaction_node_id": "299081568",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.362146377563477,
+          -0.0020303726196289062
+        ]
+      },
+      {
+        "transaction_node_id": "12666420",
+        "true_label": "illicit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.7693736553192139,
+          0.13626432418823242
+        ]
+      },
+      {
+        "transaction_node_id": "87202973",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.738051176071167,
+          0.16051006317138672
+        ]
+      },
+      {
+        "transaction_node_id": "230847079",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.3866000175476074,
+          0.43549060821533203
+        ]
+      },
+      {
+        "transaction_node_id": "372750895",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.2333910465240479,
+          0.5315699577331543
+        ]
+      },
+      {
+        "transaction_node_id": "390510822",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.0532610416412354,
+          0.6427698135375977
+        ]
+      },
+      {
+        "transaction_node_id": "159044411",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.8410484790802002,
+          0.07681608200073242
+        ]
+      },
+      {
+        "transaction_node_id": "155651533",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.5010943412780762,
+          0.3497786521911621
+        ]
+      },
+      {
+        "transaction_node_id": "8905170",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -0.4896097183227539,
+          0.9230470657348633
+        ]
+      },
+      {
+        "transaction_node_id": "201006709",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -0.20276260375976562,
+          1.0566902160644531
+        ]
+      },
+      {
+        "transaction_node_id": "94261335",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.7765963077545166,
+          0.13263559341430664
+        ]
+      },
+      {
+        "transaction_node_id": "115108221",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          7.126665115356445,
+          -0.7467451095581055
+        ]
+      },
+      {
+        "transaction_node_id": "331545943",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.395879030227661,
+          -0.48047590255737305
+        ]
+      },
+      {
+        "transaction_node_id": "339648620",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.287298202514648,
+          0.05498313903808594
+        ]
+      },
+      {
+        "transaction_node_id": "84712300",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.317567825317383,
+          0.03293037414550781
+        ]
+      },
+      {
+        "transaction_node_id": "163901640",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.7775294780731201,
+          0.13058805465698242
+        ]
+      },
+      {
+        "transaction_node_id": "94572572",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          4.790903568267822,
+          0.941035270690918
+        ]
+      },
+      {
+        "transaction_node_id": "99206829",
+        "true_label": "illicit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          1.2184813022613525,
+          1.4376745223999023
+        ]
+      },
+      {
+        "transaction_node_id": "68804943",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.0746686458587646,
+          0.6313838958740234
+        ]
+      },
+      {
+        "transaction_node_id": "40623301",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.4626944065093994,
+          -0.5601458549499512
+        ]
+      },
+      {
+        "transaction_node_id": "261272976",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.7693736553192139,
+          0.13626432418823242
+        ]
+      },
+      {
+        "transaction_node_id": "106391932",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.786822557449341,
+          -0.880709171295166
+        ]
+      },
+      {
+        "transaction_node_id": "49107501",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          4.5476603507995605,
+          1.031834602355957
+        ]
+      },
+      {
+        "transaction_node_id": "72603109",
+        "true_label": "illicit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          7.027932167053223,
+          -0.6268386840820312
+        ]
+      },
+      {
+        "transaction_node_id": "105595870",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.774376630783081,
+          0.1339244842529297
+        ]
+      },
+      {
+        "transaction_node_id": "87026579",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -0.8060739040374756,
+          0.7754931449890137
+        ]
+      },
+      {
+        "transaction_node_id": "3308477",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.0073320865631104,
+          -0.05663871765136719
+        ]
+      },
+      {
+        "transaction_node_id": "75679851",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          4.6070637702941895,
+          1.0279483795166016
+        ]
+      },
+      {
+        "transaction_node_id": "85898753",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.2579028606414795,
+          -0.34045839309692383
+        ]
+      },
+      {
+        "transaction_node_id": "299156142",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.84670352935791,
+          -0.44362640380859375
+        ]
+      },
+      {
+        "transaction_node_id": "22837790",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          4.4252028465271,
+          1.091446876525879
+        ]
+      },
+      {
+        "transaction_node_id": "86427857",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.1730701923370361,
+          0.5711102485656738
+        ]
+      },
+      {
+        "transaction_node_id": "16315018",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.774376630783081,
+          0.1339244842529297
+        ]
+      },
+      {
+        "transaction_node_id": "164659365",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.224863290786743,
+          -0.30741167068481445
+        ]
+      },
+      {
+        "transaction_node_id": "29007692",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.5010943412780762,
+          0.3497786521911621
+        ]
+      },
+      {
+        "transaction_node_id": "3602885",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -0.8941659927368164,
+          0.7206339836120605
+        ]
+      },
+      {
+        "transaction_node_id": "105590287",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.768277883529663,
+          0.13817834854125977
+        ]
+      },
+      {
+        "transaction_node_id": "201003773",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.967625617980957,
+          -0.5699982643127441
+        ]
+      },
+      {
+        "transaction_node_id": "17037534",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.609123229980469,
+          -0.2109837532043457
+        ]
+      },
+      {
+        "transaction_node_id": "244285053",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.682215929031372,
+          0.18202924728393555
+        ]
+      },
+      {
+        "transaction_node_id": "382980847",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.7775294780731201,
+          0.13058805465698242
+        ]
+      },
+      {
+        "transaction_node_id": "24640314",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.1763057708740234,
+          0.5661110877990723
+        ]
+      },
+      {
+        "transaction_node_id": "225922672",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -0.4345664978027344,
+          0.955254077911377
+        ]
+      },
+      {
+        "transaction_node_id": "87106621",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.8492028713226318,
+          0.0709691047668457
+        ]
+      },
+      {
+        "transaction_node_id": "15431495",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -0.7363564968109131,
+          0.8156013488769531
+        ]
+      },
+      {
+        "transaction_node_id": "105848951",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.7775294780731201,
+          0.13058805465698242
+        ]
+      },
+      {
+        "transaction_node_id": "133591920",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.2333910465240479,
+          0.5315699577331543
+        ]
+      },
+      {
+        "transaction_node_id": "96681142",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.847541093826294,
+          0.07457923889160156
+        ]
+      },
+      {
+        "transaction_node_id": "106387795",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.016101598739624,
+          -0.07071876525878906
+        ]
+      },
+      {
+        "transaction_node_id": "159049871",
+        "true_label": "illicit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.7621886730194092,
+          0.14195966720581055
+        ]
+      },
+      {
+        "transaction_node_id": "72301311",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.481370210647583,
+          -0.5715622901916504
+        ]
+      },
+      {
+        "transaction_node_id": "199597768",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.4176371097564697,
+          -0.5038909912109375
+        ]
+      },
+      {
+        "transaction_node_id": "265372317",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.317567825317383,
+          0.03293037414550781
+        ]
+      },
+      {
+        "transaction_node_id": "73014363",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.0073320865631104,
+          -0.05663871765136719
+        ]
+      },
+      {
+        "transaction_node_id": "207061251",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.2571585178375244,
+          -0.33678245544433594
+        ]
+      },
+      {
+        "transaction_node_id": "272702740",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -0.7363564968109131,
+          0.8156013488769531
+        ]
+      },
+      {
+        "transaction_node_id": "269962457",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.6500003337860107,
+          -0.7480578422546387
+        ]
+      },
+      {
+        "transaction_node_id": "99261661",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.851404190063477,
+          -0.44765806198120117
+        ]
+      },
+      {
+        "transaction_node_id": "38538087",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.2931888103485107,
+          -0.38270092010498047
+        ]
+      },
+      {
+        "transaction_node_id": "149159056",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.1052277088165283,
+          -0.1476726531982422
+        ]
+      },
+      {
+        "transaction_node_id": "232354183",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -0.903902530670166,
+          0.7260904312133789
+        ]
+      },
+      {
+        "transaction_node_id": "378155020",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.642914056777954,
+          0.2481365203857422
+        ]
+      },
+      {
+        "transaction_node_id": "127437645",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.4425735473632812,
+          0.3793220520019531
+        ]
+      },
+      {
+        "transaction_node_id": "244645357",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.0016067028045654,
+          0.6649737358093262
+        ]
+      },
+      {
+        "transaction_node_id": "87658538",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.7742230892181396,
+          -0.9312958717346191
+        ]
+      },
+      {
+        "transaction_node_id": "96976090",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.1052277088165283,
+          -0.1476726531982422
+        ]
+      },
+      {
+        "transaction_node_id": "96959547",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          4.435672283172607,
+          1.0844073295593262
+        ]
+      },
+      {
+        "transaction_node_id": "390782091",
+        "true_label": "illicit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.0677447319030762,
+          0.6361041069030762
+        ]
+      },
+      {
+        "transaction_node_id": "8865428",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.7328517436981201,
+          0.17502641677856445
+        ]
+      },
+      {
+        "transaction_node_id": "148841991",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          7.027932167053223,
+          -0.6268386840820312
+        ]
+      },
+      {
+        "transaction_node_id": "203073853",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.1960299015045166,
+          0.5582752227783203
+        ]
+      },
+      {
+        "transaction_node_id": "288091194",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.007331609725952,
+          -0.05663871765136719
+        ]
+      },
+      {
+        "transaction_node_id": "391079770",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.4540135860443115,
+          -0.5502958297729492
+        ]
+      },
+      {
+        "transaction_node_id": "105590208",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.7323057651519775,
+          0.1653127670288086
+        ]
+      },
+      {
+        "transaction_node_id": "190460913",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.0677447319030762,
+          0.6361041069030762
+        ]
+      },
+      {
+        "transaction_node_id": "232472220",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.8209855556488037,
+          -0.978642463684082
+        ]
+      },
+      {
+        "transaction_node_id": "84361787",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.0741324424743652,
+          0.6289248466491699
+        ]
+      },
+      {
+        "transaction_node_id": "269459825",
+        "true_label": "illicit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.84670352935791,
+          -0.44362640380859375
+        ]
+      },
+      {
+        "transaction_node_id": "67670945",
+        "true_label": "illicit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          7.027932167053223,
+          -0.6268386840820312
+        ]
+      },
+      {
+        "transaction_node_id": "309944269",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          0.5891239643096924,
+          1.255075454711914
+        ]
+      },
+      {
+        "transaction_node_id": "144189050",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.682215929031372,
+          0.18202924728393555
+        ]
+      },
+      {
+        "transaction_node_id": "378065243",
+        "true_label": "illicit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          1.0198379755020142,
+          1.3858556747436523
+        ]
+      },
+      {
+        "transaction_node_id": "209531334",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          7.027932167053223,
+          -0.6268386840820312
+        ]
+      },
+      {
+        "transaction_node_id": "43038026",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.002570629119873,
+          0.6644911766052246
+        ]
+      },
+      {
+        "transaction_node_id": "67627099",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.7323057651519775,
+          0.1653127670288086
+        ]
+      },
+      {
+        "transaction_node_id": "94303462",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.0013859272003174,
+          -0.05168962478637695
+        ]
+      },
+      {
+        "transaction_node_id": "276210361",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.865169525146484,
+          -0.462313175201416
+        ]
+      },
+      {
+        "transaction_node_id": "12692249",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.2778356075286865,
+          -0.3566403388977051
+        ]
+      },
+      {
+        "transaction_node_id": "42675024",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.39043927192688,
+          -0.47408246994018555
+        ]
+      },
+      {
+        "transaction_node_id": "94979167",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.0620310306549072,
+          -0.09725713729858398
+        ]
+      },
+      {
+        "transaction_node_id": "179023750",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          1.0150706768035889,
+          1.3861465454101562
+        ]
+      },
+      {
+        "transaction_node_id": "234785036",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.341740846633911,
+          -0.42142391204833984
+        ]
+      },
+      {
+        "transaction_node_id": "58505819",
+        "true_label": "illicit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.7693736553192139,
+          0.13626432418823242
+        ]
+      },
+      {
+        "transaction_node_id": "94599580",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.865199089050293,
+          -0.4623403549194336
+        ]
+      },
+      {
+        "transaction_node_id": "244315536",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -0.5834758281707764,
+          0.8867769241333008
+        ]
+      },
+      {
+        "transaction_node_id": "96973980",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.2571418285369873,
+          -0.33731889724731445
+        ]
+      },
+      {
+        "transaction_node_id": "98637064",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -0.9028818607330322,
+          0.7248120307922363
+        ]
+      },
+      {
+        "transaction_node_id": "68466304",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.4649851322174072,
+          -0.5636682510375977
+        ]
+      },
+      {
+        "transaction_node_id": "12683134",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.0482614040374756,
+          0.6464943885803223
+        ]
+      },
+      {
+        "transaction_node_id": "217605178",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          4.526157379150391,
+          1.0510144233703613
+        ]
+      },
+      {
+        "transaction_node_id": "97488487",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.149118185043335,
+          -0.1918172836303711
+        ]
+      },
+      {
+        "transaction_node_id": "310091298",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          4.962655544281006,
+          0.8505640029907227
+        ]
+      },
+      {
+        "transaction_node_id": "67594170",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.0078108310699463,
+          -0.05685091018676758
+        ]
+      },
+      {
+        "transaction_node_id": "73390493",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.505152702331543,
+          0.35008716583251953
+        ]
+      },
+      {
+        "transaction_node_id": "105588481",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.7775294780731201,
+          0.13058805465698242
+        ]
+      },
+      {
+        "transaction_node_id": "30166755",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          7.027932167053223,
+          -0.6268386840820312
+        ]
+      },
+      {
+        "transaction_node_id": "73021459",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.829023361206055,
+          -0.42688846588134766
+        ]
+      },
+      {
+        "transaction_node_id": "343569898",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -0.9102718830108643,
+          0.7218961715698242
+        ]
+      },
+      {
+        "transaction_node_id": "372696469",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.671625852584839,
+          -0.8203449249267578
+        ]
+      },
+      {
+        "transaction_node_id": "226667662",
+        "true_label": "illicit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.317566871643066,
+          0.03292989730834961
+        ]
+      },
+      {
+        "transaction_node_id": "146002007",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.039241075515747,
+          0.6507349014282227
+        ]
+      },
+      {
+        "transaction_node_id": "73271339",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.7359387874603271,
+          0.16419124603271484
+        ]
+      },
+      {
+        "transaction_node_id": "94073632",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.108607530593872,
+          -0.14663171768188477
+        ]
+      },
+      {
+        "transaction_node_id": "99947115",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.851404190063477,
+          -0.44765806198120117
+        ]
+      },
+      {
+        "transaction_node_id": "270265736",
+        "true_label": "illicit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          7.126665115356445,
+          -0.7467451095581055
+        ]
+      },
+      {
+        "transaction_node_id": "310467552",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.0200140476226807,
+          -0.07779216766357422
+        ]
+      },
+      {
+        "transaction_node_id": "114641963",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.7775294780731201,
+          0.13058805465698242
+        ]
+      },
+      {
+        "transaction_node_id": "230464945",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.398977041244507,
+          -0.48253345489501953
+        ]
+      },
+      {
+        "transaction_node_id": "368735936",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.317567825317383,
+          0.03293037414550781
+        ]
+      },
+      {
+        "transaction_node_id": "378416704",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.31218147277832,
+          0.03666973114013672
+        ]
+      },
+      {
+        "transaction_node_id": "368735974",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.317567825317383,
+          0.03293037414550781
+        ]
+      },
+      {
+        "transaction_node_id": "12201019",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -0.8941659927368164,
+          0.7206339836120605
+        ]
+      },
+      {
+        "transaction_node_id": "209522034",
+        "true_label": "illicit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.84670352935791,
+          -0.44362640380859375
+        ]
+      },
+      {
+        "transaction_node_id": "234890876",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.9716861248016357,
+          -0.031864166259765625
+        ]
+      },
+      {
+        "transaction_node_id": "372878303",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.484238862991333,
+          -0.5801882743835449
+        ]
+      },
+      {
+        "transaction_node_id": "225280861",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.682215929031372,
+          0.18202924728393555
+        ]
+      },
+      {
+        "transaction_node_id": "298682292",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.363677024841309,
+          -0.0044403076171875
+        ]
+      },
+      {
+        "transaction_node_id": "115107506",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          7.126665115356445,
+          -0.7467451095581055
+        ]
+      },
+      {
+        "transaction_node_id": "244338657",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -0.5834758281707764,
+          0.8867769241333008
+        ]
+      },
+      {
+        "transaction_node_id": "86761325",
+        "true_label": "illicit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.3681294918060303,
+          0.4225602149963379
+        ]
+      },
+      {
+        "transaction_node_id": "232471961",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.7299516201019287,
+          -0.861720085144043
+        ]
+      },
+      {
+        "transaction_node_id": "148838603",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.7693736553192139,
+          0.13626432418823242
+        ]
+      },
+      {
+        "transaction_node_id": "245201332",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.5129766464233398,
+          0.3430056571960449
+        ]
+      },
+      {
+        "transaction_node_id": "288543740",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.786822557449341,
+          -0.880709171295166
+        ]
+      },
+      {
+        "transaction_node_id": "149568452",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.3780829906463623,
+          0.44038820266723633
+        ]
+      },
+      {
+        "transaction_node_id": "12805710",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.851404190063477,
+          -0.44765806198120117
+        ]
+      },
+      {
+        "transaction_node_id": "209531037",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.84670352935791,
+          -0.44362640380859375
+        ]
+      },
+      {
+        "transaction_node_id": "182223312",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.851404190063477,
+          -0.44765806198120117
+        ]
+      },
+      {
+        "transaction_node_id": "304713417",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.714010000228882,
+          -0.8383517265319824
+        ]
+      },
+      {
+        "transaction_node_id": "246379788",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.264875650405884,
+          -0.2913656234741211
+        ]
+      },
+      {
+        "transaction_node_id": "109128784",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.851404190063477,
+          -0.44765806198120117
+        ]
+      },
+      {
+        "transaction_node_id": "179033940",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.2428529262542725,
+          0.5282125473022461
+        ]
+      },
+      {
+        "transaction_node_id": "273326334",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.4823615550994873,
+          -0.5789036750793457
+        ]
+      },
+      {
+        "transaction_node_id": "368735928",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.317567825317383,
+          0.03293037414550781
+        ]
+      },
+      {
+        "transaction_node_id": "248885469",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          1.210410475730896,
+          1.436647891998291
+        ]
+      },
+      {
+        "transaction_node_id": "232047417",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.682215929031372,
+          0.18202924728393555
+        ]
+      },
+      {
+        "transaction_node_id": "355005439",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.7693731784820557,
+          0.13626432418823242
+        ]
+      },
+      {
+        "transaction_node_id": "224730517",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.0016067028045654,
+          0.6649737358093262
+        ]
+      },
+      {
+        "transaction_node_id": "11957000",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.7110793590545654,
+          -0.8344202041625977
+        ]
+      },
+      {
+        "transaction_node_id": "105847397",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.851404190063477,
+          -0.44765806198120117
+        ]
+      },
+      {
+        "transaction_node_id": "85001791",
+        "true_label": "illicit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.7693736553192139,
+          0.13626432418823242
+        ]
+      },
+      {
+        "transaction_node_id": "230969365",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.6413178443908691,
+          0.21483516693115234
+        ]
+      },
+      {
+        "transaction_node_id": "7960124",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.2287819385528564,
+          0.5376310348510742
+        ]
+      },
+      {
+        "transaction_node_id": "179036892",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.609123229980469,
+          -0.2109837532043457
+        ]
+      },
+      {
+        "transaction_node_id": "97888626",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.786822557449341,
+          -0.880709171295166
+        ]
+      },
+      {
+        "transaction_node_id": "96584303",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.0871250629425049,
+          0.622342586517334
+        ]
+      },
+      {
+        "transaction_node_id": "382989917",
+        "true_label": "illicit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.0073320865631104,
+          -0.05663871765136719
+        ]
+      },
+      {
+        "transaction_node_id": "97103615",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.2230823040008545,
+          -0.30463171005249023
+        ]
+      },
+      {
+        "transaction_node_id": "308243860",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.1197540760040283,
+          0.6050281524658203
+        ]
+      },
+      {
+        "transaction_node_id": "5484969",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -0.8995795249938965,
+          0.7192983627319336
+        ]
+      },
+      {
+        "transaction_node_id": "163815360",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.3758394718170166,
+          -0.4717097282409668
+        ]
+      },
+      {
+        "transaction_node_id": "191660343",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.0677447319030762,
+          0.6361041069030762
+        ]
+      },
+      {
+        "transaction_node_id": "155822532",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.7644193172454834,
+          0.14116287231445312
+        ]
+      },
+      {
+        "transaction_node_id": "63683376",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          4.490252494812012,
+          1.0776152610778809
+        ]
+      },
+      {
+        "transaction_node_id": "279146566",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.682215929031372,
+          0.18202924728393555
+        ]
+      },
+      {
+        "transaction_node_id": "199336962",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.011728048324585,
+          -0.0599675178527832
+        ]
+      },
+      {
+        "transaction_node_id": "105858057",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.7693736553192139,
+          0.13626432418823242
+        ]
+      },
+      {
+        "transaction_node_id": "363460544",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.3998701572418213,
+          -0.48465681076049805
+        ]
+      },
+      {
+        "transaction_node_id": "298954278",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.84670352935791,
+          -0.44362640380859375
+        ]
+      },
+      {
+        "transaction_node_id": "337172319",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.3790199756622314,
+          -0.4028449058532715
+        ]
+      },
+      {
+        "transaction_node_id": "163687309",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.5371384620666504,
+          0.33391761779785156
+        ]
+      },
+      {
+        "transaction_node_id": "386306752",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.967625617980957,
+          -0.5699982643127441
+        ]
+      },
+      {
+        "transaction_node_id": "244298099",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.609123229980469,
+          -0.2109837532043457
+        ]
+      },
+      {
+        "transaction_node_id": "92708841",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.851404190063477,
+          -0.44765806198120117
+        ]
+      },
+      {
+        "transaction_node_id": "399668760",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          1.0070825815200806,
+          1.3857321739196777
+        ]
+      },
+      {
+        "transaction_node_id": "230405597",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.7519190311431885,
+          0.15794849395751953
+        ]
+      },
+      {
+        "transaction_node_id": "272192278",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.463968276977539,
+          0.3813614845275879
+        ]
+      },
+      {
+        "transaction_node_id": "130739472",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.40708327293396,
+          -0.49884700775146484
+        ]
+      },
+      {
+        "transaction_node_id": "200457195",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.738051176071167,
+          0.16051006317138672
+        ]
+      },
+      {
+        "transaction_node_id": "355110121",
+        "true_label": "illicit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          7.126665115356445,
+          -0.7467451095581055
+        ]
+      },
+      {
+        "transaction_node_id": "232037098",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.6507561206817627,
+          -0.7804112434387207
+        ]
+      },
+      {
+        "transaction_node_id": "22649404",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.22678542137146,
+          -0.305208683013916
+        ]
+      },
+      {
+        "transaction_node_id": "363217249",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.9516160488128662,
+          -0.003986835479736328
+        ]
+      },
+      {
+        "transaction_node_id": "163586398",
+        "true_label": "illicit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          7.126665115356445,
+          -0.7467451095581055
+        ]
+      },
+      {
+        "transaction_node_id": "279437581",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -0.9051704406738281,
+          0.7246537208557129
+        ]
+      },
+      {
+        "transaction_node_id": "96577996",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          7.027932167053223,
+          -0.6268386840820312
+        ]
+      },
+      {
+        "transaction_node_id": "176016321",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.4387552738189697,
+          -0.5371689796447754
+        ]
+      },
+      {
+        "transaction_node_id": "25306105",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          0.8474057912826538,
+          1.3561482429504395
+        ]
+      },
+      {
+        "transaction_node_id": "94196491",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.832397699356079,
+          -1.0038275718688965
+        ]
+      },
+      {
+        "transaction_node_id": "114520044",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.948009729385376,
+          -1.147676944732666
+        ]
+      },
+      {
+        "transaction_node_id": "402911317",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.7386090755462646,
+          0.1615314483642578
+        ]
+      },
+      {
+        "transaction_node_id": "296926618",
+        "true_label": "illicit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          7.126665115356445,
+          -0.7467451095581055
+        ]
+      },
+      {
+        "transaction_node_id": "191116692",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.0521936416625977,
+          0.6411786079406738
+        ]
+      },
+      {
+        "transaction_node_id": "69016574",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.3822543621063232,
+          -0.47753238677978516
+        ]
+      },
+      {
+        "transaction_node_id": "108623828",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.84670352935791,
+          -0.44362640380859375
+        ]
+      },
+      {
+        "transaction_node_id": "224252863",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.6425960063934326,
+          0.2478160858154297
+        ]
+      },
+      {
+        "transaction_node_id": "190082321",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.0723717212677002,
+          0.6337728500366211
+        ]
+      },
+      {
+        "transaction_node_id": "218285924",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.967625617980957,
+          -0.5699982643127441
+        ]
+      },
+      {
+        "transaction_node_id": "218306958",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          4.962655544281006,
+          0.8505640029907227
+        ]
+      },
+      {
+        "transaction_node_id": "363774350",
+        "true_label": "illicit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.294731140136719,
+          0.05675029754638672
+        ]
+      },
+      {
+        "transaction_node_id": "12686058",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.011728048324585,
+          -0.0599675178527832
+        ]
+      },
+      {
+        "transaction_node_id": "17182700",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.84670352935791,
+          -0.44362640380859375
+        ]
+      },
+      {
+        "transaction_node_id": "2947436",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.2509829998016357,
+          -0.33036088943481445
+        ]
+      },
+      {
+        "transaction_node_id": "339553019",
+        "true_label": "illicit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          1.0198379755020142,
+          1.3858556747436523
+        ]
+      },
+      {
+        "transaction_node_id": "106397435",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.2307674884796143,
+          -0.30980587005615234
+        ]
+      },
+      {
+        "transaction_node_id": "12672146",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -0.6737179756164551,
+          0.8306460380554199
+        ]
+      },
+      {
+        "transaction_node_id": "163832322",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.423145055770874,
+          -0.5031595230102539
+        ]
+      },
+      {
+        "transaction_node_id": "339099988",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.413712739944458,
+          -0.5109639167785645
+        ]
+      },
+      {
+        "transaction_node_id": "106789142",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.738051176071167,
+          0.16051006317138672
+        ]
+      },
+      {
+        "transaction_node_id": "272454304",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.0723717212677002,
+          0.6337728500366211
+        ]
+      },
+      {
+        "transaction_node_id": "96406457",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.7742230892181396,
+          -0.9312958717346191
+        ]
+      },
+      {
+        "transaction_node_id": "73390487",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          4.406821250915527,
+          1.1086020469665527
+        ]
+      },
+      {
+        "transaction_node_id": "132859923",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          4.53549861907959,
+          1.061488151550293
+        ]
+      },
+      {
+        "transaction_node_id": "155709876",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.962794303894043,
+          -0.5655961036682129
+        ]
+      },
+      {
+        "transaction_node_id": "314861108",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.3355202674865723,
+          0.4657268524169922
+        ]
+      },
+      {
+        "transaction_node_id": "246371375",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.204709768295288,
+          -0.2425084114074707
+        ]
+      },
+      {
+        "transaction_node_id": "149753145",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.786822557449341,
+          -0.880709171295166
+        ]
+      },
+      {
+        "transaction_node_id": "248254",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.3243372440338135,
+          0.4708099365234375
+        ]
+      },
+      {
+        "transaction_node_id": "71493745",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.1052277088165283,
+          -0.1476726531982422
+        ]
+      },
+      {
+        "transaction_node_id": "52291382",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.786822557449341,
+          -0.880709171295166
+        ]
+      },
+      {
+        "transaction_node_id": "386137244",
+        "true_label": "illicit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          7.027932167053223,
+          -0.6268386840820312
+        ]
+      },
+      {
+        "transaction_node_id": "5275129",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          1.0235161781311035,
+          1.3862910270690918
+        ]
+      },
+      {
+        "transaction_node_id": "12780122",
+        "true_label": "illicit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.7693736553192139,
+          0.13626432418823242
+        ]
+      },
+      {
+        "transaction_node_id": "355153420",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -0.30911731719970703,
+          1.0067481994628906
+        ]
+      },
+      {
+        "transaction_node_id": "94245058",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.786822557449341,
+          -0.880709171295166
+        ]
+      },
+      {
+        "transaction_node_id": "70372168",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.7680299282073975,
+          0.1391453742980957
+        ]
+      },
+      {
+        "transaction_node_id": "225739576",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.0677447319030762,
+          0.6361041069030762
+        ]
+      },
+      {
+        "transaction_node_id": "114770297",
+        "true_label": "illicit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.712315797805786,
+          -0.8365597724914551
+        ]
+      },
+      {
+        "transaction_node_id": "3582360",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.002570629119873,
+          0.6644911766052246
+        ]
+      },
+      {
+        "transaction_node_id": "22283488",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -0.5917809009552002,
+          0.8819589614868164
+        ]
+      },
+      {
+        "transaction_node_id": "339103203",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.3367843627929688,
+          0.46136951446533203
+        ]
+      },
+      {
+        "transaction_node_id": "232377112",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.4680140018463135,
+          -0.5655455589294434
+        ]
+      },
+      {
+        "transaction_node_id": "199944394",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.7621886730194092,
+          0.14195966720581055
+        ]
+      },
+      {
+        "transaction_node_id": "84755099",
+        "true_label": "illicit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.2527735233306885,
+          -0.33600807189941406
+        ]
+      },
+      {
+        "transaction_node_id": "376200611",
+        "true_label": "illicit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.84670352935791,
+          -0.44362640380859375
+        ]
+      },
+      {
+        "transaction_node_id": "372980337",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -3.1057040691375732,
+          -1.4221293926239014
+        ]
+      },
+      {
+        "transaction_node_id": "94660913",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.455186605453491,
+          -0.5526833534240723
+        ]
+      },
+      {
+        "transaction_node_id": "33295931",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.0046703815460205,
+          -0.05489969253540039
+        ]
+      },
+      {
+        "transaction_node_id": "382964967",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.7093164920806885,
+          -0.8334712982177734
+        ]
+      },
+      {
+        "transaction_node_id": "7981490",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.804931402206421,
+          -0.9597592353820801
+        ]
+      },
+      {
+        "transaction_node_id": "54845178",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.011094808578491,
+          -0.05934476852416992
+        ]
+      },
+      {
+        "transaction_node_id": "94207560",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.4369664192199707,
+          0.3827357292175293
+        ]
+      },
+      {
+        "transaction_node_id": "94208738",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.6034672260284424,
+          -0.7123475074768066
+        ]
+      },
+      {
+        "transaction_node_id": "224240406",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.8193671703338623,
+          -0.9864130020141602
+        ]
+      },
+      {
+        "transaction_node_id": "72015084",
+        "true_label": "illicit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.7693731784820557,
+          0.13626432418823242
+        ]
+      },
+      {
+        "transaction_node_id": "241518607",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.9502413272857666,
+          -0.002964496612548828
+        ]
+      },
+      {
+        "transaction_node_id": "200032992",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.7101049423217773,
+          0.1832718849182129
+        ]
+      },
+      {
+        "transaction_node_id": "39344069",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.786822557449341,
+          -0.880709171295166
+        ]
+      },
+      {
+        "transaction_node_id": "205248696",
+        "true_label": "illicit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.3998701572418213,
+          -0.48465681076049805
+        ]
+      },
+      {
+        "transaction_node_id": "208948655",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.8707621097564697,
+          0.04754781723022461
+        ]
+      },
+      {
+        "transaction_node_id": "210627663",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          0.5891239643096924,
+          1.255075454711914
+        ]
+      },
+      {
+        "transaction_node_id": "95570439",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.851404190063477,
+          -0.44765806198120117
+        ]
+      },
+      {
+        "transaction_node_id": "245177803",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.682215929031372,
+          0.18202924728393555
+        ]
+      },
+      {
+        "transaction_node_id": "98651476",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.0073320865631104,
+          -0.05663871765136719
+        ]
+      },
+      {
+        "transaction_node_id": "123344679",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.8707621097564697,
+          0.04754781723022461
+        ]
+      },
+      {
+        "transaction_node_id": "94244220",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.2583205699920654,
+          -0.34029054641723633
+        ]
+      },
+      {
+        "transaction_node_id": "30898207",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.9516160488128662,
+          -0.003986835479736328
+        ]
+      },
+      {
+        "transaction_node_id": "234557841",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.7593019008636475,
+          -0.9148526191711426
+        ]
+      },
+      {
+        "transaction_node_id": "232014505",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.3986966609954834,
+          -0.48194313049316406
+        ]
+      },
+      {
+        "transaction_node_id": "336434288",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -0.7335829734802246,
+          0.8192214965820312
+        ]
+      },
+      {
+        "transaction_node_id": "58063221",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.682215929031372,
+          0.18202924728393555
+        ]
+      },
+      {
+        "transaction_node_id": "230525697",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.0243189334869385,
+          -0.07137346267700195
+        ]
+      },
+      {
+        "transaction_node_id": "29185909",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.2275660037994385,
+          -0.3099665641784668
+        ]
+      },
+      {
+        "transaction_node_id": "310073044",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -0.5834758281707764,
+          0.8867769241333008
+        ]
+      },
+      {
+        "transaction_node_id": "111691229",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.7693736553192139,
+          0.13626432418823242
+        ]
+      },
+      {
+        "transaction_node_id": "321139138",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.491253137588501,
+          -0.598907470703125
+        ]
+      },
+      {
+        "transaction_node_id": "72759066",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.793562650680542,
+          -0.9396214485168457
+        ]
+      },
+      {
+        "transaction_node_id": "212259150",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.7118141651153564,
+          0.18232011795043945
+        ]
+      },
+      {
+        "transaction_node_id": "1003609",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.4149177074432373,
+          -0.5112318992614746
+        ]
+      },
+      {
+        "transaction_node_id": "232431904",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.5923247337341309,
+          0.28800201416015625
+        ]
+      },
+      {
+        "transaction_node_id": "355126069",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.738051176071167,
+          0.16051006317138672
+        ]
+      },
+      {
+        "transaction_node_id": "115187058",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          4.53549861907959,
+          1.061488151550293
+        ]
+      },
+      {
+        "transaction_node_id": "200469204",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.0871250629425049,
+          0.622342586517334
+        ]
+      },
+      {
+        "transaction_node_id": "6138366",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.011728048324585,
+          -0.0599675178527832
+        ]
+      },
+      {
+        "transaction_node_id": "94189129",
+        "true_label": "illicit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.60517954826355,
+          -0.7153506278991699
+        ]
+      },
+      {
+        "transaction_node_id": "106402217",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.7311792373657227,
+          0.1677417755126953
+        ]
+      },
+      {
+        "transaction_node_id": "399667932",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          1.0235159397125244,
+          1.3862910270690918
+        ]
+      },
+      {
+        "transaction_node_id": "300936857",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.865169525146484,
+          -0.462313175201416
+        ]
+      },
+      {
+        "transaction_node_id": "164097575",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          7.126665115356445,
+          -0.7467451095581055
+        ]
+      },
+      {
+        "transaction_node_id": "148847783",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.786822557449341,
+          -0.880709171295166
+        ]
+      },
+      {
+        "transaction_node_id": "116193002",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.7404210567474365,
+          0.15877151489257812
+        ]
+      },
+      {
+        "transaction_node_id": "71306396",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          4.962655544281006,
+          0.8505640029907227
+        ]
+      },
+      {
+        "transaction_node_id": "309951030",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.7282111644744873,
+          -0.8568401336669922
+        ]
+      },
+      {
+        "transaction_node_id": "73427689",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          4.962655544281006,
+          0.8505640029907227
+        ]
+      },
+      {
+        "transaction_node_id": "155816196",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.657533884048462,
+          -0.7151689529418945
+        ]
+      },
+      {
+        "transaction_node_id": "231996110",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          0.8674163818359375,
+          1.359365463256836
+        ]
+      },
+      {
+        "transaction_node_id": "218094265",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.2527735233306885,
+          -0.33600807189941406
+        ]
+      },
+      {
+        "transaction_node_id": "42960772",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          1.0198380947113037,
+          1.3858551979064941
+        ]
+      },
+      {
+        "transaction_node_id": "372965514",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.851404190063477,
+          -0.44765806198120117
+        ]
+      },
+      {
+        "transaction_node_id": "175046935",
+        "true_label": "illicit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.317567825317383,
+          0.03293037414550781
+        ]
+      },
+      {
+        "transaction_node_id": "279056091",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.391756296157837,
+          -0.47518014907836914
+        ]
+      },
+      {
+        "transaction_node_id": "4860508",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          4.962655544281006,
+          0.8505640029907227
+        ]
+      },
+      {
+        "transaction_node_id": "94408143",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.9635107517242432,
+          -0.016102313995361328
+        ]
+      },
+      {
+        "transaction_node_id": "84360926",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.7323057651519775,
+          0.1653127670288086
+        ]
+      },
+      {
+        "transaction_node_id": "163667623",
+        "true_label": "illicit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          7.126665115356445,
+          -0.7467451095581055
+        ]
+      },
+      {
+        "transaction_node_id": "66437997",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.774200201034546,
+          0.13387489318847656
+        ]
+      },
+      {
+        "transaction_node_id": "225867527",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.774796724319458,
+          -0.9313826560974121
+        ]
+      },
+      {
+        "transaction_node_id": "245243928",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.73055100440979,
+          -0.8597278594970703
+        ]
+      },
+      {
+        "transaction_node_id": "378058507",
+        "true_label": "illicit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.317567825317383,
+          0.03293037414550781
+        ]
+      },
+      {
+        "transaction_node_id": "378120377",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -0.4965245723724365,
+          0.9212756156921387
+        ]
+      },
+      {
+        "transaction_node_id": "243308042",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -0.7404270172119141,
+          0.8159694671630859
+        ]
+      },
+      {
+        "transaction_node_id": "249281344",
+        "true_label": "illicit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.84670352935791,
+          -0.44362640380859375
+        ]
+      },
+      {
+        "transaction_node_id": "310483463",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -0.9055564403533936,
+          0.7152175903320312
+        ]
+      },
+      {
+        "transaction_node_id": "163822979",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          7.126665115356445,
+          -0.7467451095581055
+        ]
+      },
+      {
+        "transaction_node_id": "121743514",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.9480111598968506,
+          -1.1690411567687988
+        ]
+      },
+      {
+        "transaction_node_id": "355005979",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.768277883529663,
+          0.13817834854125977
+        ]
+      },
+      {
+        "transaction_node_id": "94296275",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.425776243209839,
+          -0.5064101219177246
+        ]
+      },
+      {
+        "transaction_node_id": "246600938",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          0.5891239643096924,
+          1.255075454711914
+        ]
+      },
+      {
+        "transaction_node_id": "106765077",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -0.8069126605987549,
+          0.7744321823120117
+        ]
+      },
+      {
+        "transaction_node_id": "12675145",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.5793840885162354,
+          -0.6371283531188965
+        ]
+      },
+      {
+        "transaction_node_id": "155601022",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.2107737064361572,
+          -0.29244375228881836
+        ]
+      },
+      {
+        "transaction_node_id": "94590977",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.225261926651001,
+          -0.307098388671875
+        ]
+      },
+      {
+        "transaction_node_id": "94153016",
+        "true_label": "illicit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.2579166889190674,
+          -0.3399362564086914
+        ]
+      },
+      {
+        "transaction_node_id": "158277527",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.851404190063477,
+          -0.44765806198120117
+        ]
+      },
+      {
+        "transaction_node_id": "67341780",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.851404190063477,
+          -0.44765806198120117
+        ]
+      },
+      {
+        "transaction_node_id": "99632314",
+        "true_label": "illicit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -0.20276308059692383,
+          1.0566906929016113
+        ]
+      },
+      {
+        "transaction_node_id": "157617732",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.730842113494873,
+          0.16724824905395508
+        ]
+      },
+      {
+        "transaction_node_id": "67629541",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.84670352935791,
+          -0.44362640380859375
+        ]
+      },
+      {
+        "transaction_node_id": "3584067",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          1.0123112201690674,
+          1.38580322265625
+        ]
+      },
+      {
+        "transaction_node_id": "42637881",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.31218147277832,
+          0.03666973114013672
+        ]
+      },
+      {
+        "transaction_node_id": "94254215",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.7775294780731201,
+          0.13058805465698242
+        ]
+      },
+      {
+        "transaction_node_id": "105850635",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          4.527046203613281,
+          1.0631723403930664
+        ]
+      },
+      {
+        "transaction_node_id": "288415810",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.6170122623443604,
+          -0.7042179107666016
+        ]
+      },
+      {
+        "transaction_node_id": "155663799",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -1.7775294780731201,
+          0.13058805465698242
+        ]
+      },
+      {
+        "transaction_node_id": "288079929",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.84670352935791,
+          -0.44362640380859375
+        ]
+      },
+      {
+        "transaction_node_id": "198800811",
+        "true_label": "licit",
+        "nearest_prototype": "licit",
+        "pca2": [
+          -2.8781259059906006,
+          -1.0351471900939941
+        ]
+      },
+      {
+        "transaction_node_id": "190463296",
+        "true_label": "licit",
+        "nearest_prototype": "illicit",
+        "pca2": [
+          6.300045967102051,
+          0.04575824737548828
+        ]
+      }
+    ],
+    "prototype_points": [
+      {
+        "label": "licit",
+        "pca2": [
+          -0.306535005569458,
+          -0.0006885528564453125
+        ]
+      },
+      {
+        "label": "illicit",
+        "pca2": [
+          2.7588229179382324,
+          0.00620269775390625
+        ]
+      }
+    ]
+  },
+  "outputs": {
+    "log": "/Users/serkankose/Documents/quann-3d/aml/logs/run_e2_explain.log",
+    "source_metrics": "/Users/serkankose/Documents/quann-3d/aml/results/e2_elliptic.json"
+  }
+}

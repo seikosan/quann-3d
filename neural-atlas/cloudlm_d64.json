@@ -1,0 +1,550 @@
+{
+  "name": "CloudLM (D=64)",
+  "description": "CloudLM architecture with 4 transformer layers, d_model=256, d_cloud=512, d_cloud_dim=64, vocab=20000",
+  "nodes": [
+    {
+      "id": "input",
+      "label": "Input (tokens)",
+      "type": "input",
+      "shape": [
+        10
+      ],
+      "description": "Tokenized input sequence"
+    },
+    {
+      "id": "embedding",
+      "label": "Embedding (20000×256)",
+      "type": "embedding",
+      "shape": [
+        10,
+        256
+      ],
+      "params": 5120000,
+      "description": "Token embeddings: 20000 vocab × 256 dim"
+    },
+    {
+      "id": "pos_enc",
+      "label": "Pos Encoding",
+      "type": "custom",
+      "shape": [
+        10,
+        256
+      ],
+      "description": "Learned positional embeddings"
+    },
+    {
+      "id": "layer_0_norm1",
+      "label": "Layer Norm 1",
+      "type": "norm",
+      "shape": [
+        10,
+        256
+      ],
+      "description": "Transformer layer 1 normalization"
+    },
+    {
+      "id": "layer_0_attn",
+      "label": "Self Attention",
+      "type": "attention",
+      "shape": [
+        10,
+        256
+      ],
+      "description": "Multi-head self-attention (layer 1)"
+    },
+    {
+      "id": "layer_0_add1",
+      "label": "Residual Add",
+      "type": "add",
+      "shape": [
+        10,
+        256
+      ],
+      "description": "Residual connection (layer 1)"
+    },
+    {
+      "id": "layer_0_norm2",
+      "label": "Layer Norm 2",
+      "type": "norm",
+      "shape": [
+        10,
+        256
+      ],
+      "description": "Feed-forward normalization (layer 1)"
+    },
+    {
+      "id": "layer_0_ff_up",
+      "label": "FFN Up",
+      "type": "linear",
+      "shape": [
+        10,
+        1024
+      ],
+      "params": 262144,
+      "description": "Feed-forward up-projection (layer 1)"
+    },
+    {
+      "id": "layer_0_ff_down",
+      "label": "FFN Down",
+      "type": "linear",
+      "shape": [
+        10,
+        256
+      ],
+      "params": 262144,
+      "description": "Feed-forward down-projection (layer 1)"
+    },
+    {
+      "id": "layer_0_add2",
+      "label": "Residual Add",
+      "type": "add",
+      "shape": [
+        10,
+        256
+      ],
+      "description": "Residual connection (layer 1)"
+    },
+    {
+      "id": "layer_1_norm1",
+      "label": "Layer Norm 1",
+      "type": "norm",
+      "shape": [
+        10,
+        256
+      ],
+      "description": "Transformer layer 2 normalization"
+    },
+    {
+      "id": "layer_1_attn",
+      "label": "Self Attention",
+      "type": "attention",
+      "shape": [
+        10,
+        256
+      ],
+      "description": "Multi-head self-attention (layer 2)"
+    },
+    {
+      "id": "layer_1_add1",
+      "label": "Residual Add",
+      "type": "add",
+      "shape": [
+        10,
+        256
+      ],
+      "description": "Residual connection (layer 2)"
+    },
+    {
+      "id": "layer_1_norm2",
+      "label": "Layer Norm 2",
+      "type": "norm",
+      "shape": [
+        10,
+        256
+      ],
+      "description": "Feed-forward normalization (layer 2)"
+    },
+    {
+      "id": "layer_1_ff_up",
+      "label": "FFN Up",
+      "type": "linear",
+      "shape": [
+        10,
+        1024
+      ],
+      "params": 262144,
+      "description": "Feed-forward up-projection (layer 2)"
+    },
+    {
+      "id": "layer_1_ff_down",
+      "label": "FFN Down",
+      "type": "linear",
+      "shape": [
+        10,
+        256
+      ],
+      "params": 262144,
+      "description": "Feed-forward down-projection (layer 2)"
+    },
+    {
+      "id": "layer_1_add2",
+      "label": "Residual Add",
+      "type": "add",
+      "shape": [
+        10,
+        256
+      ],
+      "description": "Residual connection (layer 2)"
+    },
+    {
+      "id": "layer_2_norm1",
+      "label": "Layer Norm 1",
+      "type": "norm",
+      "shape": [
+        10,
+        256
+      ],
+      "description": "Transformer layer 3 normalization"
+    },
+    {
+      "id": "layer_2_attn",
+      "label": "Self Attention",
+      "type": "attention",
+      "shape": [
+        10,
+        256
+      ],
+      "description": "Multi-head self-attention (layer 3)"
+    },
+    {
+      "id": "layer_2_add1",
+      "label": "Residual Add",
+      "type": "add",
+      "shape": [
+        10,
+        256
+      ],
+      "description": "Residual connection (layer 3)"
+    },
+    {
+      "id": "layer_2_norm2",
+      "label": "Layer Norm 2",
+      "type": "norm",
+      "shape": [
+        10,
+        256
+      ],
+      "description": "Feed-forward normalization (layer 3)"
+    },
+    {
+      "id": "layer_2_ff_up",
+      "label": "FFN Up",
+      "type": "linear",
+      "shape": [
+        10,
+        1024
+      ],
+      "params": 262144,
+      "description": "Feed-forward up-projection (layer 3)"
+    },
+    {
+      "id": "layer_2_ff_down",
+      "label": "FFN Down",
+      "type": "linear",
+      "shape": [
+        10,
+        256
+      ],
+      "params": 262144,
+      "description": "Feed-forward down-projection (layer 3)"
+    },
+    {
+      "id": "layer_2_add2",
+      "label": "Residual Add",
+      "type": "add",
+      "shape": [
+        10,
+        256
+      ],
+      "description": "Residual connection (layer 3)"
+    },
+    {
+      "id": "layer_3_norm1",
+      "label": "Layer Norm 1",
+      "type": "norm",
+      "shape": [
+        10,
+        256
+      ],
+      "description": "Transformer layer 4 normalization"
+    },
+    {
+      "id": "layer_3_attn",
+      "label": "Self Attention",
+      "type": "attention",
+      "shape": [
+        10,
+        256
+      ],
+      "description": "Multi-head self-attention (layer 4)"
+    },
+    {
+      "id": "layer_3_add1",
+      "label": "Residual Add",
+      "type": "add",
+      "shape": [
+        10,
+        256
+      ],
+      "description": "Residual connection (layer 4)"
+    },
+    {
+      "id": "layer_3_norm2",
+      "label": "Layer Norm 2",
+      "type": "norm",
+      "shape": [
+        10,
+        256
+      ],
+      "description": "Feed-forward normalization (layer 4)"
+    },
+    {
+      "id": "layer_3_ff_up",
+      "label": "FFN Up",
+      "type": "linear",
+      "shape": [
+        10,
+        1024
+      ],
+      "params": 262144,
+      "description": "Feed-forward up-projection (layer 4)"
+    },
+    {
+      "id": "layer_3_ff_down",
+      "label": "FFN Down",
+      "type": "linear",
+      "shape": [
+        10,
+        256
+      ],
+      "params": 262144,
+      "description": "Feed-forward down-projection (layer 4)"
+    },
+    {
+      "id": "layer_3_add2",
+      "label": "Residual Add",
+      "type": "add",
+      "shape": [
+        10,
+        256
+      ],
+      "description": "Residual connection (layer 4)"
+    },
+    {
+      "id": "final_norm",
+      "label": "Final Layer Norm",
+      "type": "norm",
+      "shape": [
+        10,
+        256
+      ],
+      "description": "Final layer normalization"
+    },
+    {
+      "id": "to_nd",
+      "label": "Word → ND",
+      "type": "custom",
+      "shape": [
+        10,
+        64
+      ],
+      "params": 16384,
+      "description": "Project hidden to 64-D cloud space"
+    },
+    {
+      "id": "cloud_encoder",
+      "label": "Cloud Encoder",
+      "type": "custom",
+      "shape": [
+        10,
+        64
+      ],
+      "params": 67584,
+      "description": "PointNet-style cloud encoder (512 hidden)"
+    },
+    {
+      "id": "word_head",
+      "label": "Word Head",
+      "type": "linear",
+      "shape": [
+        512,
+        20000
+      ],
+      "params": 10240000,
+      "description": "Predict next token (20000 vocab)"
+    },
+    {
+      "id": "output",
+      "label": "Output (logits)",
+      "type": "output",
+      "shape": [
+        20000
+      ],
+      "description": "Next token logits (20000 vocab)"
+    }
+  ],
+  "edges": [
+    {
+      "source": "input",
+      "target": "embedding"
+    },
+    {
+      "source": "embedding",
+      "target": "pos_enc"
+    },
+    {
+      "source": "pos_enc",
+      "target": "layer_0_norm1"
+    },
+    {
+      "source": "layer_0_norm1",
+      "target": "layer_0_attn"
+    },
+    {
+      "source": "layer_0_attn",
+      "target": "layer_0_add1"
+    },
+    {
+      "source": "pos_enc",
+      "target": "layer_0_add1"
+    },
+    {
+      "source": "layer_0_add1",
+      "target": "layer_0_norm2"
+    },
+    {
+      "source": "layer_0_norm2",
+      "target": "layer_0_ff_up"
+    },
+    {
+      "source": "layer_0_ff_up",
+      "target": "layer_0_ff_down"
+    },
+    {
+      "source": "layer_0_ff_down",
+      "target": "layer_0_add2"
+    },
+    {
+      "source": "layer_0_add1",
+      "target": "layer_0_add2"
+    },
+    {
+      "source": "layer_0_add2",
+      "target": "layer_1_norm1"
+    },
+    {
+      "source": "layer_1_norm1",
+      "target": "layer_1_attn"
+    },
+    {
+      "source": "layer_1_attn",
+      "target": "layer_1_add1"
+    },
+    {
+      "source": "layer_0_add2",
+      "target": "layer_1_add1"
+    },
+    {
+      "source": "layer_1_add1",
+      "target": "layer_1_norm2"
+    },
+    {
+      "source": "layer_1_norm2",
+      "target": "layer_1_ff_up"
+    },
+    {
+      "source": "layer_1_ff_up",
+      "target": "layer_1_ff_down"
+    },
+    {
+      "source": "layer_1_ff_down",
+      "target": "layer_1_add2"
+    },
+    {
+      "source": "layer_1_add1",
+      "target": "layer_1_add2"
+    },
+    {
+      "source": "layer_1_add2",
+      "target": "layer_2_norm1"
+    },
+    {
+      "source": "layer_2_norm1",
+      "target": "layer_2_attn"
+    },
+    {
+      "source": "layer_2_attn",
+      "target": "layer_2_add1"
+    },
+    {
+      "source": "layer_1_add2",
+      "target": "layer_2_add1"
+    },
+    {
+      "source": "layer_2_add1",
+      "target": "layer_2_norm2"
+    },
+    {
+      "source": "layer_2_norm2",
+      "target": "layer_2_ff_up"
+    },
+    {
+      "source": "layer_2_ff_up",
+      "target": "layer_2_ff_down"
+    },
+    {
+      "source": "layer_2_ff_down",
+      "target": "layer_2_add2"
+    },
+    {
+      "source": "layer_2_add1",
+      "target": "layer_2_add2"
+    },
+    {
+      "source": "layer_2_add2",
+      "target": "layer_3_norm1"
+    },
+    {
+      "source": "layer_3_norm1",
+      "target": "layer_3_attn"
+    },
+    {
+      "source": "layer_3_attn",
+      "target": "layer_3_add1"
+    },
+    {
+      "source": "layer_2_add2",
+      "target": "layer_3_add1"
+    },
+    {
+      "source": "layer_3_add1",
+      "target": "layer_3_norm2"
+    },
+    {
+      "source": "layer_3_norm2",
+      "target": "layer_3_ff_up"
+    },
+    {
+      "source": "layer_3_ff_up",
+      "target": "layer_3_ff_down"
+    },
+    {
+      "source": "layer_3_ff_down",
+      "target": "layer_3_add2"
+    },
+    {
+      "source": "layer_3_add1",
+      "target": "layer_3_add2"
+    },
+    {
+      "source": "layer_3_add2",
+      "target": "final_norm"
+    },
+    {
+      "source": "final_norm",
+      "target": "to_nd"
+    },
+    {
+      "source": "to_nd",
+      "target": "cloud_encoder"
+    },
+    {
+      "source": "cloud_encoder",
+      "target": "word_head"
+    },
+    {
+      "source": "word_head",
+      "target": "output"
+    }
+  ]
+}
