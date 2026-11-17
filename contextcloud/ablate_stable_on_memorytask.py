@@ -17,8 +17,8 @@ from torch.utils.data import DataLoader
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from contextcloud import ContextCloudLM
+from contextcloud.dataset import ChunkedVocabDataset, collate_chunks
 from contextcloud.task_utils import shift_target_3d, split_sentences
-from contextcloud.train_memory_context import MemoryContextDataset, collate_fn
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
@@ -86,15 +86,15 @@ def main():
     logger.info("Split: train %d / val %d / test %d (seed=42)",
                 len(train_lines), len(val_lines), len(test_lines))
 
-    dataset = MemoryContextDataset(train_lines, chunk_size=CHUNK_SIZE, max_tokens=MAX_TOKENS,
+    dataset = ChunkedVocabDataset(train_lines, chunk_size=CHUNK_SIZE, max_tokens=MAX_TOKENS,
                                    num_chunks=NUM_CHUNKS, vocab_size=VOCAB_SIZE)
-    val_dataset = MemoryContextDataset(val_lines, chunk_size=CHUNK_SIZE, max_tokens=MAX_TOKENS,
+    val_dataset = ChunkedVocabDataset(val_lines, chunk_size=CHUNK_SIZE, max_tokens=MAX_TOKENS,
                                        num_chunks=NUM_CHUNKS, vocab=dataset.vocab)
-    test_dataset = MemoryContextDataset(test_lines, chunk_size=CHUNK_SIZE, max_tokens=MAX_TOKENS,
+    test_dataset = ChunkedVocabDataset(test_lines, chunk_size=CHUNK_SIZE, max_tokens=MAX_TOKENS,
                                         num_chunks=NUM_CHUNKS, vocab=dataset.vocab)
-    dataloader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True, collate_fn=collate_fn)
-    val_loader = DataLoader(val_dataset, batch_size=BATCH_SIZE, shuffle=False, collate_fn=collate_fn)
-    test_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False, collate_fn=collate_fn)
+    dataloader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True, collate_fn=collate_chunks)
+    val_loader = DataLoader(val_dataset, batch_size=BATCH_SIZE, shuffle=False, collate_fn=collate_chunks)
+    test_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False, collate_fn=collate_chunks)
 
     vocab_size = len(dataset.vocab)
     logger.info("Vocab size: %d", vocab_size)

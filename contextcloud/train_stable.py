@@ -5,64 +5,18 @@ import logging
 import os
 import sys
 from pathlib import Path
-from typing import Optional
 
 import torch
-from torch.utils.data import DataLoader, Dataset
+from torch.utils.data import DataLoader
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from contextcloud import ContextCloudLM
+from contextcloud.dataset import WordVocabDataset, collate_tokens
 from contextcloud.task_utils import shift_target_2d, split_sentences
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
-
-
-class SimpleDataset(Dataset):
-    """Simple text dataset with controlled vocab."""
-
-    def __init__(self, sentences, max_tokens: int = 128, vocab_size: int = 10000,
-                 vocab: Optional[dict] = None):
-        super().__init__()
-        self.max_tokens = max_tokens
-
-        if isinstance(sentences, str):
-            with open(sentences, "r", encoding="utf-8") as f:
-                sentences = [line.strip() for line in f if line.strip()]
-        self.data = [line.split() for line in sentences if line.strip()]
-
-        if vocab is not None:
-            self.vocab = vocab
-        else:
-            self.vocab = {"<pad>": 0, "<unk>": 1}
-            for words in self.data:
-                for word in words:
-                    if len(self.vocab) < vocab_size and word not in self.vocab:
-                        self.vocab[word] = len(self.vocab)
-            while len(self.vocab) < vocab_size:
-                self.vocab[f"<extra_{len(self.vocab)}>"] = len(self.vocab)
-
-        logger.info("Vocab size: %d, Samples: %d", len(self.vocab), len(self.data))
-
-    def __len__(self):
-        return len(self.data)
-
-    def __getitem__(self, idx: int):
-        words = self.data[idx][:self.max_tokens]
-        token_ids = [min(self.vocab.get(w, 1), len(self.vocab) - 1) for w in words]
-        token_ids = token_ids + [0] * (self.max_tokens - len(token_ids))
-        return torch.tensor(token_ids, dtype=torch.long)
-
-
-def collate_fn(batch):
-    tokens_list = batch
-    max_len = max(len(t) for t in tokens_list)
-    tokens = torch.zeros(len(batch), max_len, dtype=torch.long)
-    for i, t in enumerate(tokens_list):
-        tokens[i, :len(t)] = t
-    mask = tokens.ne(0)
-    return tokens, mask
 
 
 def train_epoch(model, dataloader, optimizer, scheduler, criterion, device, grad_clip, epoch):
@@ -151,12 +105,12 @@ def main():
     logger.info("Split: train %d / val %d / test %d (seed=42)",
                 len(train_lines), len(val_lines), len(test_lines))
 
-    dataset = SimpleDataset(train_lines, max_tokens=MAX_TOKENS, vocab_size=VOCAB_SIZE)
-    val_dataset = SimpleDataset(val_lines, max_tokens=MAX_TOKENS, vocab=dataset.vocab)
-    test_dataset = SimpleDataset(test_lines, max_tokens=MAX_TOKENS, vocab=dataset.vocab)
-    dataloader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True, collate_fn=collate_fn)
-    val_loader = DataLoader(val_dataset, batch_size=BATCH_SIZE, shuffle=False, collate_fn=collate_fn)
-    test_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False, collate_fn=collate_fn)
+    dataset = WordVocabDataset(train_lines, max_tokens=MAX_TOKENS, vocab_size=VOCAB_SIZE)
+    val_dataset = WordVocabDataset(val_lines, max_tokens=MAX_TOKENS, vocab=dataset.vocab)
+    test_dataset = WordVocabDataset(test_lines, max_tokens=MAX_TOKENS, vocab=dataset.vocab)
+    dataloader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True, collate_fn=collate_tokens)
+    val_loader = DataLoader(val_dataset, batch_size=BATCH_SIZE, shuffle=False, collate_fn=collate_tokens)
+    test_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False, collate_fn=collate_tokens)
 
     vocab_size = len(dataset.vocab)
     logger.info("Final vocab size: %d", vocab_size)

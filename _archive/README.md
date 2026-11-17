@@ -1,2 +1,68 @@
 test_model.py — kök scratch çıkarım script'i, pytest kapsamı dışı (2026-11-14)
 docs_patent/patent_application_v2.3_EN.md — TR karşılığı patent_application_v2.3.md silinmiş, güncel EN sürüm patent_application_v2.4_EN.md; v2.3_EN linter'da 55 hata · 9 uyarı ile bayat taslak.
+
+## Refactor 2026-11
+
+- `purecloudlm/train_1m.py` → `refactor_2026_11/purecloudlm/` — tek-atışlık eğitim varyantı; yinelenen iskelet, canonical eğitim akışı Adım 3'te gelecek.
+- `purecloudlm/train_1m_100epochs.py` → `refactor_2026_11/purecloudlm/` — tek-atışlık eğitim varyantı; yinelenen iskelet, canonical eğitim akışı Adım 3'te gelecek.
+- `purecloudlm/train_1m_100epochs_stable.py` → `refactor_2026_11/purecloudlm/` — tek-atışlık eğitim varyantı; yinelenen iskelet, canonical eğitim akışı Adım 3'te gelecek.
+- `purecloudlm/train_1m_200epochs.py` → `refactor_2026_11/purecloudlm/` — tek-atışlık eğitim varyantı; yinelenen iskelet, canonical eğitim akışı Adım 3'te gelecek.
+- `purecloudlm/train_1m_cpu.py` → `refactor_2026_11/purecloudlm/` — tek-atışlık eğitim varyantı; yinelenen iskelet, canonical eğitim akışı Adım 3'te gelecek.
+- `purecloudlm/train_1m_float32.py` → `refactor_2026_11/purecloudlm/` — tek-atışlık eğitim varyantı; yinelenen iskelet, canonical eğitim akışı Adım 3'te gelecek.
+- `purecloudlm/train_1m_large_aggressive.py` → `refactor_2026_11/purecloudlm/` — tek-atışlık eğitim varyantı; yinelenen iskelet, canonical eğitim akışı Adım 3'te gelecek.
+- `purecloudlm/train_1m_large_model.py` → `refactor_2026_11/purecloudlm/` — tek-atışlık eğitim varyantı; yinelenen iskelet, canonical eğitim akışı Adım 3'te gelecek.
+- `purecloudlm/train_1m_large_stable.py` → `refactor_2026_11/purecloudlm/` — tek-atışlık eğitim varyantı; yinelenen iskelet, canonical eğitim akışı Adım 3'te gelecek.
+- `purecloudlm/train_1m_large_warmup.py` → `refactor_2026_11/purecloudlm/` — tek-atışlık eğitim varyantı; yinelenen iskelet, canonical eğitim akışı Adım 3'te gelecek.
+- `purecloudlm/train_1m_many_epochs.py` → `refactor_2026_11/purecloudlm/` — tek-atışlık eğitim varyantı; yinelenen iskelet, canonical eğitim akışı Adım 3'te gelecek.
+- `purecloudlm/train_1m_stable.py` → `refactor_2026_11/purecloudlm/` — tek-atışlık eğitim varyantı; yinelenen iskelet, canonical eğitim akışı Adım 3'te gelecek.
+- `purecloudlm/train_1m_ultra_stable.py` → `refactor_2026_11/purecloudlm/` — tek-atışlık eğitim varyantı; yinelenen iskelet, canonical eğitim akışı Adım 3'te gelecek.
+- `purecloudlm/train_30m_200epochs.py` → `refactor_2026_11/purecloudlm/` — tek-atışlık eğitim varyantı; yinelenen iskelet, canonical eğitim akışı Adım 3'te gelecek.
+- `purecloudlm/train_500k_low_lr.py` → `refactor_2026_11/purecloudlm/` — tek-atışlık eğitim varyantı; yinelenen iskelet, canonical eğitim akışı Adım 3'te gelecek.
+- `purecloudlm/train_7.8m_80_10_10.py` → `refactor_2026_11/purecloudlm/` — tek-atışlık eğitim varyantı; yinelenen iskelet, canonical eğitim akışı Adım 3'te gelecek.
+- `purecloudlm/train_full.py` → `refactor_2026_11/purecloudlm/` — tek-atışlık eğitim varyantı; yinelenen iskelet, canonical eğitim akışı Adım 3'te gelecek.
+- `purecloudlm/train_full_corpus.py` → `refactor_2026_11/purecloudlm/` — tek-atışlık eğitim varyantı; yinelenen iskelet, canonical eğitim akışı Adım 3'te gelecek.
+- `purecloudlm/train_large_model_large_corpus.py` → `refactor_2026_11/purecloudlm/` — tek-atışlık eğitim varyantı; yinelenen iskelet, canonical eğitim akışı Adım 3'te gelecek.
+- `purecloudlm/train_optimized.py` → `refactor_2026_11/purecloudlm/` — tek-atışlık eğitim varyantı; yinelenen iskelet, canonical eğitim akışı Adım 3'te gelecek.
+- `purecloudlm/train_simple.py` → `refactor_2026_11/purecloudlm/` — tek-atışlık eğitim varyantı; yinelenen iskelet, canonical eğitim akışı Adım 3'te gelecek.
+- `training/train_simple.py` → `refactor_2026_11/training/` — R2 dönemi, tek-seferlik ve eski BPE/yol varsayımlarına bağlı eğitim script'i.
+- `training/train_simple_r2.py` → `refactor_2026_11/training/` — R2 dönemi, tek-seferlik ve eski BPE/yol varsayımlarına bağlı eğitim script'i.
+- `training/train_simple_r2_v2.py` → `refactor_2026_11/training/` — R2 dönemi, tek-seferlik ve eski BPE/yol varsayımlarına bağlı eğitim script'i.
+- `training/train_resume_r2.py` → `refactor_2026_11/training/` — R2 dönemi, tek-seferlik ve eski BPE/yol varsayımlarına bağlı resume script'i.
+- `training/train_resume_r2_fixed.py` → `refactor_2026_11/training/` — R2 dönemi, tek-seferlik ve eski BPE/yol varsayımlarına bağlı resume script'i.
+- `training/train_gpu.py` → `refactor_2026_11/training/` — eski bağımsız eğitim varyantı; güncel canonical eğitim akışına bağlı değil.
+- `training/train_and_compare.py` → `refactor_2026_11/training/` — eski birleşik eğitim/kıyas script'i; güncel canonical akışın dışında.
+- `training/train_streaming.py` → `refactor_2026_11/training/` — eski bağımsız eğitim varyantı; güncel canonical eğitim akışına bağlı değil.
+- `training/train_baseline_1500k.py` → `refactor_2026_11/training/` — eski baseline deneyi; güncel canonical baseline'dan ayrı.
+- `training/evaluate_cloudlm.py` → `refactor_2026_11/training/` — eski değerlendirme script'i; depo genelinde aktif import bulunmadı.
+- `training/generate_samples.py` → `refactor_2026_11/training/` — eski örnek üretim script'i; depo genelinde aktif import bulunmadı.
+- `training/shell/run_r2_200k.sh` → `refactor_2026_11/training/shell/` — R2 dönemi çalıştırıcısı; R4/R5 kuyruklarınca çağrılmıyor.
+- `training/shell/run_r2_cloud_attn_20k.sh` → `refactor_2026_11/training/shell/` — R2 dönemi çalıştırıcısı; R4/R5 kuyruklarınca çağrılmıyor.
+- `training/shell/run_r2_v2_1500k.sh` → `refactor_2026_11/training/shell/` — R2 dönemi çalıştırıcısı; R4/R5 kuyruklarınca çağrılmıyor.
+- `training/shell/run_d32_200k.sh` → `refactor_2026_11/training/shell/` — eski D32/R1 deneyi çalıştırıcısı; R4/R5 kuyruklarınca çağrılmıyor.
+- `training/shell/run_d32_wiki200k.sh` → `refactor_2026_11/training/shell/` — eski D32/R1 deneyi çalıştırıcısı; R4/R5 kuyruklarınca çağrılmıyor.
+- `training/shell/run_d64_200k.sh` → `refactor_2026_11/training/shell/` — eski boyut-deneyi çalıştırıcısı; R4/R5 kuyruklarınca çağrılmıyor.
+- `training/shell/run_d128_200k.sh` → `refactor_2026_11/training/shell/` — eski boyut-deneyi çalıştırıcısı; R4/R5 kuyruklarınca çağrılmıyor.
+- `training/shell/run_200k.sh` → `refactor_2026_11/training/shell/` — eski 200K deney kuyruğu; R4/R5 kuyruklarınca çağrılmıyor.
+- `training/shell/run_baseline_200k.sh` → `refactor_2026_11/training/shell/` — eski baseline kuyruğu; R4/R5 kuyruklarınca çağrılmıyor.
+- `training/shell/run_rev1_20k.sh` → `refactor_2026_11/training/shell/` — Rev1 dönemi deney kuyruğu; R4/R5 kuyruklarınca çağrılmıyor.
+- `training/shell/queue_B.sh` → `refactor_2026_11/training/shell/` — eski deney kuyruğu; R4/R5 kuyruklarınca çağrılmıyor.
+- `training/shell/queue_C.sh` → `refactor_2026_11/training/shell/` — eski deney kuyruğu; R4/R5 kuyruklarınca çağrılmıyor.
+- `training/shell/queue_compare_B.sh` → `refactor_2026_11/training/shell/` — eski kıyas kuyruğu; R4/R5 kuyruklarınca çağrılmıyor.
+- `training/shell/queue_hybrid.sh` → `refactor_2026_11/training/shell/` — eski deney kuyruğu; R4/R5 kuyruklarınca çağrılmıyor.
+- `training/shell/queue_wiki1500k.sh` → `refactor_2026_11/training/shell/` — eski wiki deney kuyruğu; R4/R5 kuyruklarınca çağrılmıyor.
+- `training/shell/monitor_wiki1500k.sh` → `refactor_2026_11/training/shell/` — eski wiki koşusu izleyicisi; güncel R4/R5 kuyruklarının parçası değil.
+- `training/shell/monitor_wiki1500k_resume.sh` → `refactor_2026_11/training/shell/` — eski wiki resume izleyicisi; güncel R4/R5 kuyruklarının parçası değil.
+- `contextcloud/train_context.py` → `refactor_2026_11/contextcloud/` — hedef sızıntılı eski görev için yazılmış; `task_utils` kullanmıyor.
+- `contextcloud/train_full.py` → `refactor_2026_11/contextcloud/` — hedef sızıntılı eski görev için yazılmış; `task_utils` kullanmıyor.
+- `contextcloud/train_simple.py` → `refactor_2026_11/contextcloud/` — hedef sızıntılı eski görev için yazılmış; `task_utils` kullanmıyor.
+- `contextcloud/train_tiny.py` → `refactor_2026_11/contextcloud/` — hedef sızıntılı eski görev için yazılmış; `task_utils` kullanmıyor.
+- `contextcloud/train_longtext.py` → `refactor_2026_11/contextcloud/` — hedef sızıntılı eski görev için yazılmış; `task_utils` kullanmıyor.
+- `contextcloud/train_long_context.py` → `refactor_2026_11/contextcloud/` — hedef sızıntılı eski görev için yazılmış; `task_utils` kullanmıyor.
+- `contextcloud/train_advanced_long_context.py` → `refactor_2026_11/contextcloud/` — hedef sızıntılı eski görev için yazılmış; `task_utils` kullanmıyor.
+- `src/cloud_lm.py` → `refactor_2026_11/src/` — eski demo paketi; kaynak kodundan import edilmediği için arşivlendi.
+- `src/cloud_lm_full.py` → `refactor_2026_11/src/` — eski demo paketi; kaynak kodundan import edilmediği için arşivlendi.
+- `src/cloud_lm_nd.py` → `refactor_2026_11/src/` — eski demo paketi; kaynak kodundan import edilmediği için arşivlendi.
+- `src/cloud_lm_real.py` → `refactor_2026_11/src/` — eski demo paketi; kaynak kodundan import edilmediği için arşivlendi.
+- `src/visualizer/export_data.py` → `refactor_2026_11/src/visualizer/` — eski demo görselleştiricisi; kaynak kodundan import edilmediği için arşivlendi.
+- `src/visualizer/index.html` → `refactor_2026_11/src/visualizer/` — eski demo görselleştiricisinin statik arayüzü.
+- `src/visualizer/template.html` → `refactor_2026_11/src/visualizer/` — eski demo görselleştiricisinin HTML şablonu.

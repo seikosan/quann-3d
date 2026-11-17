@@ -8,10 +8,11 @@ from pathlib import Path
 
 import torch
 import torch.nn as nn
-from torch.utils.data import DataLoader, Dataset
+from torch.utils.data import DataLoader
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
+from contextcloud.dataset import ChunkedVocabDataset, collate_chunks
 from contextcloud.task_utils import shift_target_3d, split_sentences
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s: %(message)s")
@@ -117,62 +118,6 @@ class GlobalContextModel(nn.Module):
         return self.final_head(final_state)
 
 
-class GlobalContextDataset(Dataset):
-    def __init__(self, sentences, chunk_size=5, max_tokens=256, num_chunks=4, vocab=None):
-        super().__init__()
-        self.chunk_size = chunk_size
-        self.max_tokens = max_tokens
-        self.num_chunks = num_chunks
-        self.vocab = vocab if vocab is not None else {"<pad>": 0, "<unk>": 1}
-        self.data = []
-        
-        if isinstance(sentences, str):
-            with open(sentences, "r", encoding="utf-8") as f:
-                sentences = [line.strip() for line in f if line.strip()]
-        sentences = [line.split() for line in sentences if line.strip()]
-        
-        if vocab is None:
-            for sent in sentences:
-                for word in sent:
-                    if word not in self.vocab:
-                        self.vocab[word] = len(self.vocab)
-        
-        for i in range(0, len(sentences) - chunk_size * (num_chunks - 1), chunk_size):
-            sample = []
-            for c in range(num_chunks):
-                start = i + c * chunk_size
-                chunk = sentences[start:start + chunk_size]
-                tokens = [w for sent in chunk for w in sent][:max_tokens]
-                sample.append(tokens)
-            if all(len(s) > 0 for s in sample):
-                self.data.append(sample)
-        
-        logger.info("Vocab size: %d, Samples: %d", len(self.vocab), len(self.data))
-    
-    def __len__(self):
-        return len(self.data)
-    
-    def __getitem__(self, idx):
-        sample = self.data[idx]
-        token_ids = []
-        for chunk in sample:
-            ids = [min(self.vocab.get(w, 1), len(self.vocab) - 1) for w in chunk]
-            ids = ids + [0] * (self.max_tokens - len(ids))
-            token_ids.append(ids)
-        return torch.tensor(token_ids, dtype=torch.long)
-
-
-def collate_fn(batch):
-    max_tokens = max(len(chunk) for sample in batch for chunk in sample)
-    batch_chunks = len(batch[0])
-    chunks = torch.zeros(len(batch), batch_chunks, max_tokens, dtype=torch.long)
-    for i, sample in enumerate(batch):
-        for j, chunk in enumerate(sample):
-            chunks[i, j, :len(chunk)] = chunk
-    masks = chunks.ne(0)
-    return chunks, masks
-
-
 def train_epoch(model, dataloader, optimizer, criterion, device):
     model.train()
     total_loss = 0.0
@@ -245,12 +190,12 @@ def main():
     logger.info("Split: train %d / val %d / test %d (seed=42)",
                 len(train_lines), len(val_lines), len(test_lines))
 
-    dataset = GlobalContextDataset(train_lines, chunk_size=CHUNK_SIZE, max_tokens=MAX_TOKENS, num_chunks=NUM_CHUNKS)
-    val_dataset = GlobalContextDataset(val_lines, chunk_size=CHUNK_SIZE, max_tokens=MAX_TOKENS, num_chunks=NUM_CHUNKS, vocab=dataset.vocab)
-    test_dataset = GlobalContextDataset(test_lines, chunk_size=CHUNK_SIZE, max_tokens=MAX_TOKENS, num_chunks=NUM_CHUNKS, vocab=dataset.vocab)
-    dataloader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True, collate_fn=collate_fn)
-    val_loader = DataLoader(val_dataset, batch_size=BATCH_SIZE, shuffle=False, collate_fn=collate_fn)
-    test_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False, collate_fn=collate_fn)
+    dataset = ChunkedVocabDataset(train_lines, chunk_size=CHUNK_SIZE, max_tokens=MAX_TOKENS, num_chunks=NUM_CHUNKS)
+    val_dataset = ChunkedVocabDataset(val_lines, chunk_size=CHUNK_SIZE, max_tokens=MAX_TOKENS, num_chunks=NUM_CHUNKS, vocab=dataset.vocab)
+    test_dataset = ChunkedVocabDataset(test_lines, chunk_size=CHUNK_SIZE, max_tokens=MAX_TOKENS, num_chunks=NUM_CHUNKS, vocab=dataset.vocab)
+    dataloader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True, collate_fn=collate_chunks)
+    val_loader = DataLoader(val_dataset, batch_size=BATCH_SIZE, shuffle=False, collate_fn=collate_chunks)
+    test_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False, collate_fn=collate_chunks)
     
     vocab_size = len(dataset.vocab)
     logger.info("Vocab size: %d", vocab_size)

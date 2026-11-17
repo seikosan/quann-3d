@@ -27,23 +27,23 @@ quann-3d/
 │   └── tokenizer.py            #   Tok (kelime) + BPETokenizer
 │                               #   NOTE: state_dict ana adları checkpoint uyumluluğu
 │                               #   için sabittir — değiştirilmez!
-├── src/                        # DEMO'lar (model'i cloudlm/ paketinden import eder)
-│   ├── cloud_lm.py             #   Temel 3D model + demo (3D varyant kendi kendine yetiyor)
-│   ├── cloud_lm_nd.py          #   ND genelleme + boyut karşılaştırması (3D/7D/14D)
-│   ├── cloud_lm_full.py        #   Tam boyut (16D/32D, 256D model, 512D cloud) + görselleştirme
-│   ├── cloud_lm_real.py        #   Gerçek corpus (Bilkent) üzerinde eğitim + analiz
-│   └── visualizer/             #   3B çalışma görünümü (tek dosya web): index.html + export_data.py
+├── purecloudlm/                # PureCloudLM paketi (geometri-odaklı varyant)
+│   ├── model.py                #   state_dict anahtarları donmuş (contextcloud bağımlı)
+│   └── train.py                #   canonical eğitmen (21 tek-atış script → _archive)
+├── contextcloud/               # ContextCloudLM — pencere/bulut + memory/global görevleri
+│   ├── model.py                #   ContextCloudLM (+ generate)
+│   ├── dataset.py              #   WordVocab/ChunkedVocab dataset + collate (ortak)
+│   ├── task_utils.py           #   80/10/10 seed=42 split + sızıntısız hedef kaydırma
+│   └── train_{stable,memory_context,global_context}.py   # R5 aktif akış
 ├── training/                   # DENEMELER / GELİŞTİRMELER — eğitim + karşılaştırma pipeline'ları
 │   ├── train_wiki.py           #   BPE + CloudLM wiki eğitimi (ana pipeline, --resume)
 │   ├── train_baseline.py       #   Causal/Bidir baseline (param-eşleşen) + karşılaştırma (--resume)
-│   ├── train_gpu.py            #   MPS uzun eğitim (Bilkent, word-tokenizer)
 │   ├── train_bpe.py            #   BPE pipeline (tokenizers kütüphanesi)
-│   ├── train_and_compare.py    #   CloudLM + baseline eğit & karşılaştır pipeline
 │   ├── compare_llm.py          #   Kapsamlı LLM karşılaştırma + edge benchmark
 │   ├── compare_16_32.py        #   16D vs 32D geometri (bölge haritaları, KMeans)
 │   ├── test_model.py           #   Checkpoint testi + etkileşimli üretim aracı
 │   ├── download_wiki.py        #   Wikipedia corpus indirici
-│   └── shell/                  #   run_*.sh, queue_*.sh (uzun eğitim kuyrukları)
+│   └── shell/                  #   run_r4_*/run_r5_cc.sh (güncel kuyruklar)
 ├── data/                       # Corpus'lar
 │   ├── turkish_sentences.txt   #   200K cümle (ana eğitim corpusu)
 │   ├── turkish_wiki_1500k.txt  #   1.5M cümle (ölçek testi)
@@ -69,7 +69,7 @@ quann-3d/
 │                               #   experiments/, data/, logs/, checkpoints/, docs/
 │                               #   (QCloudNetwork, cloudlm/'in WordToND/CloudEncoderND
 │                               #    alt-modüllerini yeniden kullanır)
-└── _archive/                   # Eski workspace kopyası (arch/)
+└── _archive/                   # Bayat/elenmiş içerik (arch/, refactor_2026_11/, src_legacy/)
 ```
 
 ## Mimari
@@ -90,17 +90,11 @@ Token → [ContextEncoder (Transformer)] → [WordToND (MLP→D)]
 ## Çalıştırma
 
 ```bash
-# Temel demo (3D, küçük corpus)
-python3 src/cloud_lm.py
+# Canonical PureCloudLM eğitimi (stable reçetesi)
+python3 -u purecloudlm/train.py --epochs 15
 
-# Boyut karşılaştırması (3D vs 7D vs 14D)
-python3 src/cloud_lm_nd.py
-
-# Tam boyut + görselleştirme
-python3 src/cloud_lm_full.py
-
-# Gerçek corpus (Bilkent CSV gerekli)
-python3 src/cloud_lm_real.py
+# ContextCloudLM R5 görevleri (stable/memory/global kuyruğu)
+bash training/shell/run_r5_cc.sh
 
 # Ana eğitim pipeline (BPE + CloudLM)
 python3 training/train_wiki.py --step all --corpus data/turkish_sentences.txt
@@ -126,17 +120,13 @@ python3 quann_cloud/experiments/real_data_test.py --quick
 
 ## 3B Çalışma Görünümü (web)
 
-Quann-3D'nin nasıl çalıştığını etkileşimli 3B olarak gösteren tek-dosya arayüz
-(Mimari şeması · gerçek CloudLM bulutu 32D→3B · QUANN 0th-order araması animasyonu
-· bulgular kartları). Veriler gerçek checkpoint/çalışmalardan üretilir:
-
-```bash
-python3 src/visualizer/export_data.py   # → src/visualizer/index.html
-open src/visualizer/index.html          # tarayıcıda aç (WebGL)
-```
+Etkileşimli 3B arayüz (Mimari şeması · gerçek CloudLM bulutu 32D→3B · QUANN
+0th-order araması animasyonu) `_archive/src_legacy/visualizer/` altındadır —
+koddan çıkarım yapılıyor ama aktif akışta değil; yeniden canlandırmak isteyen
+`export_data.py` + `index.html`yi oradan alabilir.
 
 Python scriptleri `ROOT`'u kendi konumundan çözer — herhangi bir dizinden çalıştırılabilir.
-`.sh` kuyruk scriptleri de repo köküne `cd` eder: `bash training/shell/run_200k.sh`.
+`.sh` kuyruk scriptleri de repo köküne `cd` eder: `bash training/shell/run_r5_cc.sh`.
 
 ## Bağımlılıklar
 
