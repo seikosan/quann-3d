@@ -4,19 +4,19 @@ baslik: DEVIR — quann-3d (makine üretimi durum + sıradaki iş)
 konu: [devir, handover, durum]
 durum: güncel
 sahiplik: koordinator
-guncellendi: 2026-11-16
+guncellendi: 2026-11-18
 kunye-kaynak: otomatik (devir_yaz.py)
 ---
 
 # DEVIR — quann-3d
 
 <!-- MAKINE:BASLA -->
-## Durum (makine üretti · 2026-11-16 22:00)
+## Durum (makine üretti · 2026-11-18 00:08)
 Bu blok elle düzenlenmez; `devir_yaz.py --repo /Users/serkankose/Documents/quann-3d` ile yenilenir.
 
-- HEAD: 3efcdd6 Patent docs: lint-clean TR+EN (locale-aware linter fixes); archive stale v2.3_EN
-- Değişen dosya: 44 → .gitignore, DEVIR.md, RESEARCH.md, test_model.py -> _archive/test_model.py, cloudlm/model.py
-- Kod kapısı: bulgu 0 · uyarı 0 · bilgi 0 · düzeltme planı: 0 (ayrıntı: python3 ~/.config/opencode/denetim/denetim_plan.py)
+- HEAD: 9674916 Refactor step 3: shared dataset module + canonical purecloudlm trainer
+- Değişen dosya: 0
+- Kod kapısı: bulgu 0 · uyarı 0 · bilgi 1 · düzeltme planı: 0 (ayrıntı: python3 ~/.config/opencode/denetim/denetim_plan.py)
 - Doküman kapısı: bulgu 0 · uyarı 0 · bilgi 2 · düzeltme planı: 0 (ayrıntı: python3 ~/.config/opencode/denetim/denetim_plan.py)
 - ölçüm: === EĞİTİM DURUMU (kaynak: ham dosya) ===
 - ölçüm: kaynak        : logs/run_resume_r2_fixed.log:212
@@ -26,6 +26,7 @@ Bu blok elle düzenlenmez; `devir_yaz.py --repo /Users/serkankose/Documents/quan
 - ölçüm: geçen süre    : 62815 s = 17.45 saat
 - Açık kartlar (pano yok): (belirtilmedi)
 <!-- MAKINE:BITIR -->
+
 
 
 
