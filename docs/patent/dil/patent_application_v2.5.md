@@ -145,7 +145,7 @@ Modelin kendi içinden türetilen açıklama verisi aynı buluttan elde edilir:
 - **Şekil 1:** Evrensel mimari ve modül akışı
 - **Şekil 2:** Çift-geometri ve simetrik birleştirme
 - **Şekil 3:** Aynı buluttan skor, ablation, prototip ve drift
-- **Şekil 4:** Nokta-sayı optimizasyonu ve geometri zenginliği
+- **Şekil 4:** Bağlam penceresi taraması (D=64, 200K) — üç ölçülmüş run
 - **Şekil 5:** Küme agregasyonu karşılaştırması
 - **Şekil 6:** Bulut geometri vizualizasyonu (3D)
 
@@ -193,12 +193,20 @@ loss = word_loss + 0.1 × point_loss
 - **Weight decay:** 0.01
 - **Scheduler:** Cosine annealing
 
-### 7.4 Nokta-Sayı Optimizasyonu
+### 7.4 Nokta-Sayı (Bağlam Penceresi) Taraması
 
-Nokta sayısı bulut geometrisinin zenginliğini belirler:
-- **Daha fazla nokta:** Daha detaylı geometrik temsil
-- **Seçilen nokta sayısı:** Uygulama ve veriye göre belirlenir
-- **Aşırı nokta:** Geometrik gürültüye yol açabilir
+Bu mimaride nokta sayısı token sayısına eşittir (`cloudlm/model.py:312`), ayrı bir düğme değildir; ölçülen tarama bağlam penceresi taramasıdır:
+
+| Pencere (= nokta) | Eğitim cümlesi | PPL | Kaynak |
+|---|---|---|---|
+| 10 | 198.596 | 57.04 | `logs/run_r2_cloud_attn_200k_d64.log:26` |
+| 20 | 144.317 | 37.63 | `logs/run_r2_cloud_attn_200k_d64_n20.log:26` |
+| 30 | 28.825 | 134.31 | `logs/run_r2_cloud_attn_200k_d64_n30.log:26` |
+
+- **Ölçülen:** 10→20 arası Δ19.41 PPL düşüş (%34,0); 30'da 134.31'e çıkış.
+- **Sınır:** eğitim cümlesi pencere büyüdükçe daralıyor; tarama kontrollü ablation değildir.
+- **Doğrulanmayan:** 30'daki bozulmanın sebebi doğrulanmadı — aynı andaki ~5× eğitim cümlesi kaybı dışlanmamış alternatif açıklamadır; "aşırı nokta geometrik gürültü yaratır" iddiası kurulmaz.
+- **Genel ifade:** uygun nokta sayısı uygulama ve veriye göre belirlenir.
 
 ### 7.5 Küme Agregasyonu
 
@@ -253,7 +261,7 @@ adımlarını içermektedir.
 
 **İstem 5:** İstem 1'deki sistem olup, **D değeri 32 veya 64** olarak seçilir.
 
-**İstem 6:** İstem 1'deki sistem olup, **nokta sayısı 20** olarak seçilir (R2b optimizasyonu).
+**İstem 6:** İstem 1'deki sistem olup, **nokta sayısı 20** olarak seçilir (Bölüm 7.4'te ölçülen üç değer arasında en düşük PPL'i veren değer).
 
 **İstem 7:** İstem 1'deki sistem olup, **max-pool** küme agregasyonunda kullanılır (attention-pool yerine).
 
@@ -342,7 +350,7 @@ Sistem, dil modelleme alanında uygulanabilir; doğruluk-üstünlüğü iddia ed
 - fig1_mimari.png — Evrensel mimari
 - fig2_ciftgeometri.png — Çift-geometri ve simetrik birleştirme
 - fig3_aciklama.png — Aynı buluttan native açıklama
-- fig4_nokta_optimizasyon.png — D=64 + Nokta=20 optimizasyonu
+- fig4_nokta_optimizasyon.png — D=64 bağlam penceresi taraması (üç ölçülmüş run)
 - fig5_max_vs_attn_pool.png — Max-pool vs attention-pool
 - fig6_bulut_vizualizasyon.png — Bulut geometri vizualizasyonu
 

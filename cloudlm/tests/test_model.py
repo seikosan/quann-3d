@@ -165,3 +165,25 @@ def test_cloud_attn_produces_different_outputs():
     assert torch.isfinite(attn_state).all()
     # Cloud attention should produce different output
     assert not torch.allclose(max_state, attn_state)
+
+
+def test_legacy_learned_pos_enc_checkpoint_loads_strictly() -> None:
+    """Pre-refactor checkpoints stored pos_enc as a learned (1, L, d_model)
+    buffer and predate cloud.attn_proj; CloudLM.load_state_dict must remap
+    and fill so strict loading succeeds and values are preserved."""
+    saved_model = _model("max")
+    state = dict(saved_model.state_dict())
+    learned_pe = torch.randn(1, 4, 16)
+    state["pos_enc"] = learned_pe
+    del state["pos_enc.pe"]
+    legacy_state = {k: v for k, v in state.items() if not k.startswith("cloud.attn_proj.")}
+
+    reloaded_model = _model("max").eval()
+    reloaded_model.load_state_dict(legacy_state)  # strict=True
+
+    torch.testing.assert_close(reloaded_model.pos_enc.pe[:4], learned_pe[0])
+    assert torch.equal(reloaded_model.cloud.attn_proj.weight, torch.zeros(1, 12))
+    tokens = torch.tensor([[2, 3, 0, 0, 0], [4, 5, 6, 0, 0]])
+    with torch.no_grad():
+        outputs = reloaded_model(tokens, tokens != 0)
+    assert all(torch.isfinite(output).all() for output in outputs)

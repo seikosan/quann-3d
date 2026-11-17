@@ -5,7 +5,7 @@ v2.4 için 6 patent şekli:
 1. Şekil 1: Evrensel mimari ve modül akışı
 2. Şekil 2: Çift-geometri ve simetrik birleştirme
 3. Şekil 3: Aynı buluttan skor, ablation, prototip ve drift
-4. Şekil 4: D=64 + Nokta=20 optimizasyonu
+4. Şekil 4: D=64 + bağlam penceresi taraması (nokta = token, 3 ölçülmüş run)
 5. Şekil 5: Max-pool vs attention-pool karşılaştırması
 6. Şekil 6: Bulut geometri vizualizasyonu (3D)
 """
@@ -214,35 +214,42 @@ def fig3_explanation():
     print("✅ Şekil 3: fig3_aciklama.png")
 
 # ─────────────────────────────────────────────
-# ŞEKİL 4: Nokta Sayısı Optimizasyonu
+# ŞEKİL 4: Bağlam Penceresi (Nokta Sayısı) Taraması
 # ─────────────────────────────────────────────
 
 def fig4_point_count_optimization():
-    """D=64 + Nokta sayısı optimizasyonu"""
+    """D=64 + bağlam penceresi taraması — yalnız log'da kaydı olan üç run."""
     fig, ax = plt.subplots(figsize=(10, 6))
-    
-    point_counts = [10, 15, 20, 25, 30]
-    ppl_scores = [57.04, 45.2, 37.63, 42.1, 134.31]
-    
+
+    # CloudLM'de nokta sayısı = token sayısı (cloudlm/model.py:312), ayrı bir düğme değil.
+    # 10 → logs/run_r2_cloud_attn_200k_d64.log:26, 20 → ..._n20.log:26, 30 → ..._n30.log:26.
+    # 15 ve 25 için hiçbir log/checkpoint kaydı yok → çizilmez.
+    point_counts = [10, 20, 30]
+    ppl_scores = [57.04, 37.63, 134.31]
+
     ax.plot(point_counts, ppl_scores, 'o-', linewidth=2, markersize=10, color='#4A90D9')
     ax.fill_between(point_counts, ppl_scores, alpha=0.3, color='#4A90D9')
-    
-    # Optimum vurgusu
+
+    # En iyi ölçüm vurgusu
     ax.axvline(20, color='#28A745', linestyle='--', linewidth=2, alpha=0.7)
-    ax.annotate('OPTIMUM\n(37.63 PPL)', xy=(20, 37.63), xytext=(25, 50),
+    ax.annotate('en iyi ölçüm\n(37.63 PPL)', xy=(20, 37.63), xytext=(22, 62),
                arrowprops=dict(arrowstyle='->', color='#28A745', lw=2),
                fontsize=12, fontweight='bold', color='#28A745')
-    
-    ax.set_xlabel('Nokta Sayısı', fontsize=12, fontweight='bold')
+
+    ax.set_xlabel('Bağlam penceresi — nokta sayısı (= token sayısı)', fontsize=12, fontweight='bold')
     ax.set_ylabel('Perplexity (PPL)', fontsize=12, fontweight='bold')
-    ax.set_title('Şekil 4: Nokta Sayısı Optimizasyonu (D=64)', fontsize=14, fontweight='bold')
+    ax.set_title('Şekil 4: Bağlam penceresi taraması (D=64, 200K)', fontsize=14, fontweight='bold')
     ax.grid(True, alpha=0.3)
     ax.set_xticks(point_counts)
-    
-    # İyileşme metni
-    ax.text(0.5, 0.95, '20 nokta: %34 iyileşme (57.04 → 37.63)\nBaseline a göre %30 daha iyi',
-           transform=ax.transAxes, fontsize=11, fontweight='bold',
-           verticalalignment='top', bbox=dict(boxstyle='round', facecolor='#D4EDDA', alpha=0.9))
+
+    # Karşılaştırmanın sınırlı olduğu kutuda yazılı: eğitim cümlesi run'lar arasında farklı
+    ax.text(0.03, 0.95,
+            '10 → 20: 57.04 → 37.63 PPL (Δ19.41 = %34,0 düşüş)\n'
+            'Uyarı: eğitim cümlesi run başına 198596 / 144317 / 28825\n'
+            '(logs/run_r2_cloud_attn_200k_d64*.log:9) — fark tek başına\n'
+            'nokta sayısına atfedilemez; kontrollü ablation değildir.',
+           transform=ax.transAxes, fontsize=10, fontweight='bold',
+           verticalalignment='top', bbox=dict(boxstyle='round', facecolor='#FFF3CD', alpha=0.9))
     
     plt.tight_layout()
     fig.savefig(FIG_DIR / 'fig4_nokta_optimizasyon.png', dpi=150, bbox_inches='tight')

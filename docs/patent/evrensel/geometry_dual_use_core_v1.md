@@ -146,7 +146,24 @@ Paketleyici (290), göreve göre okuyucu, kantizör, decoder ve manifesti tek se
 
 Metin girdisinde her token (alt-sözcük dahil) 110 ile bir noktaya projekte edilir; cümle bulutu 120/123 tarafından kodlanır ve okuyucu (130) bir sonraki token dağılımını üretir. 150/260 üzerinden token noktasının leave-one-point-out logit farkı incelenebilir; sözlük decoder'ı bunu metne çevirebilir. Agglütinatif dillerde aynı kökten gelen alt-sözcüklerin buluttaki bölgeleri araştırılabilir; bu, tüm sıralamanın permütasyon-değişmez olduğu anlamına gelmez.
 
-**v2.4 güncellemesi (2026-10-27):** D=64, Nokta=20 konfigürasyonunda **200K korpus üzerinde PPL 37.63** ölçülmüştür (causal baseline 53.95'e göre %30 daha iyi). **R2b keşfi:** Nokta sayısı 10'dan 20'ye çıkarıldığında **%34 iyileşme** (57.04 → 37.63). **Max-pool**, attention-pool'dan daha stabil performans gösterir (200K'da Δ5.91 PPL iyileşme).
+**v2.4 güncellemesi (2026-10-27):** geniş bulut boyutu ve 20 nokta konfigürasyonunda 200K korpus üzerinde ölçülmüştür.
+
+- PPL 37.63 ölçüldü (`logs/run_r2_cloud_attn_200k_d64_n20.log:26`).
+- Causal baseline PPL 53.95 ölçtü (`logs/run_baseline_200k_v2.log:26`).
+- Fark Δ16.32 PPL; iki run pencere açısından eşleşmez, fark tek başına mimariye atfedilmez.
+
+**R2b gözlemi:** kontrollü ablation değil, gözlemdir.
+
+- Dar pencere koşusu PPL 57.04 ölçtü (`logs/run_r2_cloud_attn_200k_d64.log:26`).
+- Geniş pencere koşusu PPL 37.63 ölçtü (`logs/run_r2_cloud_attn_200k_d64_n20.log:26`).
+- En geniş pencere koşusu PPL 134.31 ölçtü (`logs/run_r2_cloud_attn_200k_d64_n30.log:26`).
+- Eğitim cümlesi koşullar arasında farklıdır (`logs/run_r2_cloud_attn_200k_d64.log:9`).
+
+**Max-pool**, attention-pool'dan daha stabil ölçülmüştür; iki run aynı korpus, bulut boyutu, katman sayısı ve epoch
+bütçesini paylaşır, havuzlama yöntemi farklıdır.
+
+- Max-pool koşusu PPL 49.84 ölçtü (`logs/run_r3_200k_max.log:27`).
+- Attention-pool koşusu PPL 55.75 ölçtü (`logs/run_r3_200k_attn.log:27`).
 
 Bu sonuçlar bir dikey embodiment kanıtıdır, genel performans garantisi değildir.
 
@@ -211,7 +228,7 @@ adımlarını içermektedir; permütasyon-değişmezlik (c)'deki simetrik agrega
 
 **İstem 9:** İstem 1'deki sistem olup, nokta konumları için QUANN 0th-order daraltma ve okuyucu için backpropagation eğitimi uygulayarak hibrit bir eğitim rejimi kullanır; 0th-order adımın küçük ve sınırlı modellerle uygulanması tercih edilir.
 
-**İstem 10 — Dil embodiment'i:** İstem 1'deki sistem olup, girdi birimleri token/alt-sözcük, okuyucu çıktısı bir-sonraki-token dağılımı ve yorumlama agglütinatif morfolojiye yönelik bulut/bölge incelemesidir; **D=64, Nokta=20 konfigürasyonunda 200K korpus üzerinde PPL 37.63** ölçülmüştür (causal baseline 53.95'e göre %30 daha iyi). **R2b keşfi:** Nokta sayısı 10'dan 20'ye çıkarıldığında **%34 iyileşme** (57.04 → 37.63).
+**İstem 10 — Dil embodiment'i:** İstem 1'deki sistem olup, girdi birimleri token/alt-sözcük, okuyucu çıktısı bir-sonraki-token dağılımı ve yorumlama agglütinatif morfolojiye yönelik bulut/bölge incelemesidir; dil embodiment'inde ölçülen PPL değeri Bölüm 2.7.3'te kayıtlıdır.
 
 Bu sonuçlar bir dikey embodiment kanıtıdır, genel performans garantisi değildir.
 

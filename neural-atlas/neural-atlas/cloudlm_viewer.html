@@ -61,32 +61,44 @@
     let renderer;
     
     function initRenderer() {
-      if (renderer) renderer.dispose();
-      renderer = new NeuralRenderer(container, {
-        labels: document.getElementById('node-info'),
-        onSelect: node => {
-          nodeInfo.innerHTML = `
-            <h3>${node.label}</h3>
-            <p><strong>ID:</strong> ${node.id}</p>
-            <p><strong>Tür:</strong> ${node.type}</p>
-            <p><strong>Shape:</strong> [${node.shape.join(', ')}]</p>
-            ${node.params ? `<p class="params"><strong>Parametre:</strong> ${node.params.toLocaleString()}</p>` : ''}
-            <p>${node.description || ''}</p>
-          `;
-        }
-      });
+      try {
+        if (renderer) renderer.dispose();
+        renderer = new NeuralRenderer(container, {
+          labels: document.getElementById('node-info'),
+          onSelect: node => {
+            nodeInfo.innerHTML = `
+              <h3>${node.label}</h3>
+              <p><strong>ID:</strong> ${node.id}</p>
+              <p><strong>Tür:</strong> ${node.type}</p>
+              <p><strong>Shape:</strong> [${node.shape.join(', ')}]</p>
+              ${node.params ? `<p class="params"><strong>Parametre:</strong> ${node.params.toLocaleString()}</p>` : ''}
+              <p>${node.description || ''}</p>
+            `;
+          }
+        });
+        console.log('Renderer initialized successfully');
+      } catch (e) {
+        console.error('Error initializing renderer:', e);
+        nodeInfo.innerHTML = `<h3>Renderer Başlatma Hatası!</h3><p>${e.message}</p><p>Three.js yüklenememiş olabilir.</p>`;
+      }
     }
     
     async function loadModel(filename) {
       try {
+        console.log('Loading model:', filename);
         const response = await fetch(filename);
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
         const data = await response.json();
+        console.log('Model data loaded:', data.name);
         const model = validateModel(data);
         renderer.load(model);
         renderer.fit();
+        console.log('Model loaded successfully');
       } catch (e) {
         console.error('Error loading model:', e);
-        nodeInfo.innerHTML = `<h3>Hata!</h3><p>${e.message}</p>`;
+        nodeInfo.innerHTML = `<h3>Hata!</h3><p>${e.message}</p><p>Dosya: ${filename}</p>`;
       }
     }
     
@@ -98,6 +110,10 @@
     });
     
     exportBtn.addEventListener('click', () => {
+      if (!renderer) {
+        nodeInfo.innerHTML = `<h3>Uyarı!</h3><p>Önce bir model yükleyin.</p>`;
+        return;
+      }
       const dataUrl = renderer.exportPNG();
       const a = document.createElement('a');
       a.href = dataUrl;

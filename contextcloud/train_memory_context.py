@@ -23,6 +23,8 @@ from torch.utils.data import DataLoader, Dataset
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
+from contextcloud.task_utils import shift_target_3d, split_sentences
+
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
 
@@ -80,25 +82,28 @@ class MemoryBank(nn.Module):
 
 
 class SimpleCloudEncoder(nn.Module):
-    """Simple chunk encoder (standalone)."""
+    """Simple chunk encoder (standalone) with moderate regularization."""
     
     def __init__(self, vocab_size, d_model=128, d_cloud=256, max_tokens=256,
-                 nhead=4, n_layers=2):
+                 nhead=4, n_layers=2, dropout=0.2):
         super().__init__()
         self.embedding = nn.Embedding(vocab_size, d_model)
         self.pos_enc = nn.Parameter(torch.zeros(1, max_tokens, d_model))
         
         encoder_layer = nn.TransformerEncoderLayer(
             d_model=d_model, nhead=nhead, dim_feedforward=d_model*2,
-            dropout=0.1, batch_first=True
+            dropout=dropout, batch_first=True
         )
         self.encoder = nn.TransformerEncoderLayer(
             d_model=d_model, nhead=nhead,
-            dim_feedforward=d_model*2, dropout=0.1, batch_first=True
+            dim_feedforward=d_model*2, dropout=dropout, batch_first=True
         )
         self.encoder_stack = nn.Sequential(*[encoder_layer for _ in range(n_layers)])
         
-        self.cloud_proj = nn.Linear(d_model, d_cloud)
+        self.cloud_proj = nn.Sequential(
+            nn.Linear(d_model, d_cloud),
+            nn.Dropout(dropout)
+        )
     
     def forward(self, tokens, mask=None):
         x = self.embedding(tokens)
@@ -112,26 +117,28 @@ class SimpleCloudEncoder(nn.Module):
 
 class MemoryContextModel(nn.Module):
     """
-    Context model with Memory Network.
+    Context model with Memory Network + Model Küçültme.
     Processes chunks sequentially, reading/writing to memory.
     """
     
     def __init__(self, vocab_size, d_model=128, d_sentence=256, max_tokens=256,
-                 num_chunks=4, num_memory=64):
+                 num_chunks=4, num_memory=64, dropout=0.2):
         super().__init__()
         self.num_chunks = num_chunks
         
         # Chunk encoder
         self.chunk_encoder = SimpleCloudEncoder(
-            vocab_size, d_model=d_model, d_cloud=d_sentence, max_tokens=max_tokens
+            vocab_size, d_model=d_model, d_cloud=d_sentence, max_tokens=max_tokens,
+            dropout=dropout
         )
         
         # Memory bank
         self.memory = MemoryBank(num_memory=num_memory, dim=d_sentence)
         
-        # Final prediction head
+        # Final prediction head with dropout
         self.final_head = nn.Sequential(
             nn.Linear(d_sentence * 2, d_sentence),  # chunk_state + memory_read
+            nn.Dropout(dropout),
             nn.GELU(),
             nn.Linear(d_sentence, vocab_size)
         )
@@ -179,21 +186,27 @@ class MemoryContextModel(nn.Module):
 class MemoryContextDataset(Dataset):
     """Dataset with fixed-size chunks for memory training."""
     
-    def __init__(self, filepath, chunk_size=5, max_tokens=256, num_chunks=4):
+    def __init__(self, sentences, chunk_size=5, max_tokens=256, num_chunks=4, vocab=None,
+                 vocab_size=None):
         super().__init__()
         self.chunk_size = chunk_size
         self.max_tokens = max_tokens
         self.num_chunks = num_chunks
-        self.vocab = {"<pad>": 0, "<unk>": 1}
+        self.vocab = vocab if vocab is not None else {"<pad>": 0, "<unk>": 1}
         self.data = []
         
-        with open(filepath, "r", encoding="utf-8") as f:
-            sentences = [line.strip().split() for line in f if line.strip()]
+        if isinstance(sentences, str):
+            with open(sentences, "r", encoding="utf-8") as f:
+                sentences = [line.strip() for line in f if line.strip()]
+        sentences = [line.split() for line in sentences if line.strip()]
         
-        for sent in sentences:
-            for word in sent:
-                if word not in self.vocab:
-                    self.vocab[word] = len(self.vocab)
+        if vocab is None:
+            for sent in sentences:
+                for word in sent:
+                    if vocab_size is not None and len(self.vocab) >= vocab_size:
+                        break
+                    if word not in self.vocab:
+                        self.vocab[word] = len(self.vocab)
         
         for i in range(0, len(sentences) - chunk_size * (num_chunks - 1), chunk_size):
             sample = []
@@ -231,7 +244,7 @@ def collate_fn(batch):
     return chunks, masks
 
 
-def train_epoch(model, dataloader, optimizer, criterion, device):
+def train_epoch(model, dataloader, optimizer, criterion, device, grad_clip=1.0):
     model.train()
     total_loss = 0.0
     num_batches = 0
@@ -241,23 +254,12 @@ def train_epoch(model, dataloader, optimizer, criterion, device):
         masks = masks.to(device)
         
         optimizer.zero_grad()
+        chunks, masks, target = shift_target_3d(chunks, masks)
         logits = model(chunks, masks)
-        
-        # Target: last token of last chunk
-        targets = []
-        for i in range(chunks.size(0)):
-            last_chunk = chunks[i, -1, :]
-            mask = masks[i, -1, :]
-            valid_indices = torch.where(mask)[0]
-            if len(valid_indices) > 0:
-                targets.append(last_chunk[valid_indices[-1]].item())
-            else:
-                targets.append(0)
-        target = torch.tensor(targets).to(device)
-        
+
         loss = criterion(logits, target)
         loss.backward()
-        torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=0.5)
+        torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=grad_clip)
         optimizer.step()
         
         total_loss += loss.item()
@@ -279,19 +281,9 @@ def evaluate(model, dataloader, criterion, device):
             chunks = chunks.to(device)
             masks = masks.to(device)
             
+            chunks, masks, target = shift_target_3d(chunks, masks)
             logits = model(chunks, masks)
-            
-            targets = []
-            for i in range(chunks.size(0)):
-                last_chunk = chunks[i, -1, :]
-                mask = masks[i, -1, :]
-                valid_indices = torch.where(mask)[0]
-                if len(valid_indices) > 0:
-                    targets.append(last_chunk[valid_indices[-1]].item())
-                else:
-                    targets.append(0)
-            target = torch.tensor(targets).to(device)
-            
+
             loss = criterion(logits, target)
             total_loss += loss.item()
             num_batches += 1
@@ -300,42 +292,71 @@ def evaluate(model, dataloader, criterion, device):
 
 
 def main():
+    import argparse
+    parser = argparse.ArgumentParser(description="Memory-context eğitimi")
+    parser.add_argument("--vocab-size", type=int, default=0,
+                        help="Vocab sınırı (0 = sınırsız); stable ile kontrollü kıyas için 10000")
+    parser.add_argument("--ckpt-name", default="context_memory_best.pt")
+    parser.add_argument("--d-model", type=int, default=64,
+                        help="Gömme boyutu; stable boyut kontrolü için 128")
+    parser.add_argument("--d-sentence", type=int, default=128,
+                        help="Cümle boyutu; stable boyut kontrolü için 256")
+    args = parser.parse_args()
+
     DATA_FILE = "data/turkish_sentences.txt"
     OUTPUT_DIR = "contextcloud/checkpoints"
     CHUNK_SIZE = 5
     MAX_TOKENS = 256
     NUM_CHUNKS = 4
-    NUM_MEMORY = 64
-    BATCH_SIZE = 8
-    LEARNING_RATE = 1e-3
+    NUM_MEMORY = 32  # 64 → 32 (model küçültme)
+    BATCH_SIZE = 16
+    LEARNING_RATE = 5e-4  # 1e-3 → 5e-4 (daha stabil)
     EPOCHS = 30
     PATIENCE = 5
+    DROPOUT = 0.2  # 0.4 → 0.2 (moderate)
+    WEIGHT_DECAY = 0.02  # 0.1 → 0.02 (moderate L2)
+    GRAD_CLIP = 1.0
     
     device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
     logger.info("Using device: %s", device)
+    logger.info("=== MODEL KÜÇÜLTME STRATEJİSİ ===")
+    logger.info("Memory: %d, Dropout: %.2f, Weight Decay: %.2f, LR: %.5f", NUM_MEMORY, DROPOUT, WEIGHT_DECAY, LEARNING_RATE)
     
     if not os.path.exists(DATA_FILE):
         logger.error("Data file not found: %s", DATA_FILE)
         return
     
-    dataset = MemoryContextDataset(DATA_FILE, chunk_size=CHUNK_SIZE, max_tokens=MAX_TOKENS, num_chunks=NUM_CHUNKS)
+    # Ayrık 80/10/10 bölme (AGENTS §4.1, seed=42); vocab yalnız train'den
+    with open(DATA_FILE, "r", encoding="utf-8") as f:
+        lines = [line.strip() for line in f if line.strip()]
+    train_lines, val_lines, test_lines = split_sentences(lines)
+    logger.info("Split: train %d / val %d / test %d (seed=42)",
+                len(train_lines), len(val_lines), len(test_lines))
+
+    dataset = MemoryContextDataset(train_lines, chunk_size=CHUNK_SIZE, max_tokens=MAX_TOKENS, num_chunks=NUM_CHUNKS,
+                                   vocab_size=args.vocab_size or None)
+    val_dataset = MemoryContextDataset(val_lines, chunk_size=CHUNK_SIZE, max_tokens=MAX_TOKENS, num_chunks=NUM_CHUNKS, vocab=dataset.vocab)
+    test_dataset = MemoryContextDataset(test_lines, chunk_size=CHUNK_SIZE, max_tokens=MAX_TOKENS, num_chunks=NUM_CHUNKS, vocab=dataset.vocab)
     dataloader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True, collate_fn=collate_fn)
+    val_loader = DataLoader(val_dataset, batch_size=BATCH_SIZE, shuffle=False, collate_fn=collate_fn)
+    test_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False, collate_fn=collate_fn)
     
     vocab_size = len(dataset.vocab)
     logger.info("Vocab size: %d", vocab_size)
     
     model = MemoryContextModel(
         vocab_size=vocab_size,
-        d_model=128,
-        d_sentence=256,
+        d_model=args.d_model,  # varsayılan 64 (küçültme); kontrollü koşuda 128
+        d_sentence=args.d_sentence,  # varsayılan 128 (küçültme); kontrollü koşuda 256
         max_tokens=MAX_TOKENS,
         num_chunks=NUM_CHUNKS,
-        num_memory=NUM_MEMORY
+        num_memory=NUM_MEMORY,
+        dropout=DROPOUT
     )
     model = model.to(device)
     logger.info("Model parameters: %d", sum(p.numel() for p in model.parameters()))
     
-    optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE)
+    optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
     criterion = nn.CrossEntropyLoss()
     
     os.makedirs(OUTPUT_DIR, exist_ok=True)
@@ -345,15 +366,15 @@ def main():
     for epoch in range(1, EPOCHS + 1):
         logger.info("\n=== Epoch %d/%d ===", epoch, EPOCHS)
         
-        train_loss = train_epoch(model, dataloader, optimizer, criterion, device)
-        val_loss = evaluate(model, dataloader, criterion, device)
+        train_loss = train_epoch(model, dataloader, optimizer, criterion, device, grad_clip=GRAD_CLIP)
+        val_loss = evaluate(model, val_loader, criterion, device)
         
         logger.info("Epoch %d | Train Loss: %.4f | Val Loss: %.4f", epoch, train_loss, val_loss)
         
         if val_loss < best_val_loss:
             best_val_loss = val_loss
             patience_counter = 0
-            checkpoint_path = os.path.join(OUTPUT_DIR, "context_memory_best.pt")
+            checkpoint_path = os.path.join(OUTPUT_DIR, args.ckpt_name)
             torch.save({
                 "model_state_dict": model.state_dict(),
                 "vocab_size": vocab_size,
@@ -372,6 +393,13 @@ def main():
     
     logger.info("\n=== TRAINING COMPLETE ===")
     logger.info("Best val loss: %.4f", best_val_loss)
+
+    checkpoint_path = os.path.join(OUTPUT_DIR, args.ckpt_name)
+    if os.path.exists(checkpoint_path):
+        ckpt = torch.load(checkpoint_path, map_location=device, weights_only=False)
+        model.load_state_dict(ckpt["model_state_dict"])
+    test_loss = evaluate(model, test_loader, criterion, device)
+    logger.info("TEST loss (best ckpt, ayrık holdout): %.4f", test_loss)
 
 
 if __name__ == "__main__":

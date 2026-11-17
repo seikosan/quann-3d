@@ -111,7 +111,7 @@ FT-Transformer (183K) 0.687/0.969/242x (AUC-PR/AUC-ROC/lift; `results/duels.json
 
 | model | AUC-PR | AUC-ROC | F2 / lift / note |
 |---|---:|---:|---|
-| hybrid (full scale; balanced 100K test) | **0.2673** | **0.9351** | 0.1564; 29.0x; 214 converged points |
+| hybrid (full scale; natural-rate 100K test, base 0.13%) | **0.2673** | **0.9351** | 0.1564; 29.0x; 214 converged points |
 | backprop | 0.080 | 0.894 | — |
 | pure 0th-order | 0.001 | 0.450 | near-random; predicts almost all fraud |
 | strong reader 64/64, D=8 points frozen | 0.383 | 0.969 | 188x |
@@ -139,7 +139,8 @@ about 0.34 below matched XGBoost (0.8047); more data does not explain the gap (t
 broadly flat between the 1.02M and 14.6M training runs); reader capacity, not point dimension, is the lever.
 
 **Full-scale hybrid + edge (2026-10-18; bundled quantizer):** full 4.7M natural test: AUC-ROC **0.9451 FP32**, **0.9367 INT8 channel-wise** (Δ −0.0084), **0.9365
-INT8 tensor-wise**; RF 0.973 / GBT 0.981 remain above hybrid. Balanced 100K test:
+INT8 tensor-wise**; RF 0.973 / GBT 0.981 remain above hybrid. Natural-rate 100K test subsample
+(130 fraud, base 0.13%; `src/train_quann.py:85-93` `--test-fraud-frac 0.0013`):
 AUC-PR 0.2673, AUC-ROC 0.9351, F2 0.1564, lift 29.0×, 214 converged points. The
 checkpoint bundles its trained quantizer (bit-level AUC reproducible); the old
 0.9581/0.9745 readings (no saved quantizer) are not reproducible. The `D=8/d_cloud=128/d_model=32` artifact is **529 KB FP32 / 138 KB INT8**, ONNX max error `1.0e-7`, about **63k tx/s** native (ORT ~39k). Sources: `results/edge_eval_full_scale.json`, `results/full_scale_hybrid.json`, `results/MANIFEST.md`, `REVISION.md`.

@@ -95,7 +95,10 @@ python3 quann_cloud/experiments/real_data_test.py \
     --epochs 5 --quann-k 80 --quann-batch 8 --bpe-vocab 1024
 ```
 
-Çıktı: `quann_cloud/logs/real_data_test.json` + `full_run.log` · Kod:
+Çıktı (yukarıdaki PPL tablosu): `quann_cloud/logs/full_run.log` · Not:
+`quann_cloud/logs/real_data_test.json` sonraki **quick run**'dır
+(`:6,10`: 800 cümle, 2 epoch; `:19,21`: QUANN 1060.6666985473823 / random
+1043.7127560926344 — tablodaki sayıları üretmez) · Kod:
 `src/qcloud_quann.py` (aralık-daraltma, mini-batch ödül, dinamik base, sigma, plato) ·
 `experiments/real_data_test.py`
 

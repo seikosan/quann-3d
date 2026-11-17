@@ -5,6 +5,7 @@ import logging
 import os
 import sys
 from pathlib import Path
+from typing import Optional
 
 import torch
 from torch.utils.data import DataLoader, Dataset
@@ -12,6 +13,7 @@ from torch.utils.data import DataLoader, Dataset
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from contextcloud import ContextCloudLM
+from contextcloud.task_utils import shift_target_2d, split_sentences
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
@@ -20,26 +22,26 @@ logger = logging.getLogger(__name__)
 class SimpleDataset(Dataset):
     """Simple text dataset with controlled vocab."""
 
-    def __init__(self, filepath: str, max_tokens: int = 128, vocab_size: int = 10000):
+    def __init__(self, sentences, max_tokens: int = 128, vocab_size: int = 10000,
+                 vocab: Optional[dict] = None):
         super().__init__()
         self.max_tokens = max_tokens
-        self.vocab = {"<pad>": 0, "<unk>": 1}
-        self.data = []
 
-        with open(filepath, "r", encoding="utf-8") as f:
-            for line in f:
-                words = line.strip().split()
-                if len(words) == 0:
-                    continue
-                # Limit vocab size
+        if isinstance(sentences, str):
+            with open(sentences, "r", encoding="utf-8") as f:
+                sentences = [line.strip() for line in f if line.strip()]
+        self.data = [line.split() for line in sentences if line.strip()]
+
+        if vocab is not None:
+            self.vocab = vocab
+        else:
+            self.vocab = {"<pad>": 0, "<unk>": 1}
+            for words in self.data:
                 for word in words:
                     if len(self.vocab) < vocab_size and word not in self.vocab:
                         self.vocab[word] = len(self.vocab)
-                self.data.append(words)
-
-        # Ensure vocab_size is reached
-        while len(self.vocab) < vocab_size:
-            self.vocab[f"<extra_{len(self.vocab)}>"] = len(self.vocab)
+            while len(self.vocab) < vocab_size:
+                self.vocab[f"<extra_{len(self.vocab)}>"] = len(self.vocab)
 
         logger.info("Vocab size: %d, Samples: %d", len(self.vocab), len(self.data))
 
@@ -72,21 +74,14 @@ def train_epoch(model, dataloader, optimizer, scheduler, criterion, device, grad
         tokens = tokens.to(device)
         mask = mask.to(device)
 
+        # Shift: hedef = son geçerli token, girdiden çıkarılır (sızdırma yok)
+        tokens, mask, target = shift_target_2d(tokens, mask, model.vocab_size)
+
         tokens_3d = tokens.unsqueeze(1)
         mask_3d = mask.unsqueeze(1)
 
         optimizer.zero_grad()
         logits = model(tokens_3d, sentence_mask=mask_3d)
-
-        # Target: last valid token
-        targets = []
-        for i in range(tokens.size(0)):
-            valid_count = mask[i].sum().item()
-            if valid_count > 0:
-                targets.append(min(tokens[i, valid_count - 1].item(), model.vocab_size - 1))
-            else:
-                targets.append(0)
-        target = torch.tensor(targets).to(device)
 
         loss = criterion(logits, target)
 
@@ -117,18 +112,11 @@ def evaluate(model, dataloader, criterion, device):
             tokens = tokens.to(device)
             mask = mask.to(device)
 
+            tokens, mask, target = shift_target_2d(tokens, mask, model.vocab_size)
+
             tokens_3d = tokens.unsqueeze(1)
             mask_3d = mask.unsqueeze(1)
             logits = model(tokens_3d, sentence_mask=mask_3d)
-
-            targets = []
-            for i in range(tokens.size(0)):
-                valid_count = mask[i].sum().item()
-                if valid_count > 0:
-                    targets.append(min(tokens[i, valid_count - 1].item(), model.vocab_size - 1))
-                else:
-                    targets.append(0)
-            target = torch.tensor(targets).to(device)
 
             loss = criterion(logits, target)
             total_loss += loss.item()
@@ -156,9 +144,19 @@ def main():
         logger.error("Data file not found: %s", DATA_FILE)
         return
 
-    # Dataset
-    dataset = SimpleDataset(DATA_FILE, max_tokens=MAX_TOKENS, vocab_size=VOCAB_SIZE)
+    # Dataset: ayrık 80/10/10 bölme (AGENTS §4.1, seed=42); vocab yalnız train'den
+    with open(DATA_FILE, "r", encoding="utf-8") as f:
+        lines = [line.strip() for line in f if line.strip()]
+    train_lines, val_lines, test_lines = split_sentences(lines)
+    logger.info("Split: train %d / val %d / test %d (seed=42)",
+                len(train_lines), len(val_lines), len(test_lines))
+
+    dataset = SimpleDataset(train_lines, max_tokens=MAX_TOKENS, vocab_size=VOCAB_SIZE)
+    val_dataset = SimpleDataset(val_lines, max_tokens=MAX_TOKENS, vocab=dataset.vocab)
+    test_dataset = SimpleDataset(test_lines, max_tokens=MAX_TOKENS, vocab=dataset.vocab)
     dataloader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True, collate_fn=collate_fn)
+    val_loader = DataLoader(val_dataset, batch_size=BATCH_SIZE, shuffle=False, collate_fn=collate_fn)
+    test_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False, collate_fn=collate_fn)
 
     vocab_size = len(dataset.vocab)
     logger.info("Final vocab size: %d", vocab_size)
@@ -202,7 +200,7 @@ def main():
         logger.info("\n=== Epoch %d/%d ===", epoch, TOTAL_EPOCHS)
 
         train_loss = train_epoch(model, dataloader, optimizer, scheduler, criterion, device, GRAD_CLIP, epoch)
-        val_loss = evaluate(model, dataloader, criterion, device)
+        val_loss = evaluate(model, val_loader, criterion, device)
 
         logger.info("Epoch %d | Train Loss: %.4f | Val Loss: %.4f", epoch, train_loss, val_loss)
 
@@ -228,6 +226,13 @@ def main():
 
     logger.info("\n=== TRAINING COMPLETE ===")
     logger.info("Best val loss: %.4f", best_val_loss)
+
+    checkpoint_path = os.path.join(OUTPUT_DIR, "context_stable_best.pt")
+    if os.path.exists(checkpoint_path):
+        ckpt = torch.load(checkpoint_path, map_location=device, weights_only=False)
+        model.load_state_dict(ckpt["model_state_dict"])
+    test_loss = evaluate(model, test_loader, criterion, device)
+    logger.info("TEST loss (best ckpt, ayrık holdout): %.4f", test_loss)
 
 
 if __name__ == "__main__":

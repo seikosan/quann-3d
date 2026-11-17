@@ -12,6 +12,8 @@ from torch.utils.data import DataLoader, Dataset
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
+from contextcloud.task_utils import shift_target_3d, split_sentences
+
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
 
@@ -29,7 +31,9 @@ class SimpleCloudLM(nn.Module):
             d_model=d_model, nhead=nhead, dim_feedforward=d_model*2,
             dropout=0.1, batch_first=True
         )
-        self.encoder = nn.TransformerEncoder(encoder_layer, num_layers=n_layers)
+        self.encoder = nn.TransformerEncoder(
+            encoder_layer, num_layers=n_layers, enable_nested_tensor=False
+        )
         
         # Cloud encoding (simplified)
         self.to_cloud = nn.Linear(d_model, d_cloud_dim)
@@ -114,21 +118,24 @@ class GlobalContextModel(nn.Module):
 
 
 class GlobalContextDataset(Dataset):
-    def __init__(self, filepath, chunk_size=5, max_tokens=256, num_chunks=4):
+    def __init__(self, sentences, chunk_size=5, max_tokens=256, num_chunks=4, vocab=None):
         super().__init__()
         self.chunk_size = chunk_size
         self.max_tokens = max_tokens
         self.num_chunks = num_chunks
-        self.vocab = {"<pad>": 0, "<unk>": 1}
+        self.vocab = vocab if vocab is not None else {"<pad>": 0, "<unk>": 1}
         self.data = []
         
-        with open(filepath, "r", encoding="utf-8") as f:
-            sentences = [line.strip().split() for line in f if line.strip()]
+        if isinstance(sentences, str):
+            with open(sentences, "r", encoding="utf-8") as f:
+                sentences = [line.strip() for line in f if line.strip()]
+        sentences = [line.split() for line in sentences if line.strip()]
         
-        for sent in sentences:
-            for word in sent:
-                if word not in self.vocab:
-                    self.vocab[word] = len(self.vocab)
+        if vocab is None:
+            for sent in sentences:
+                for word in sent:
+                    if word not in self.vocab:
+                        self.vocab[word] = len(self.vocab)
         
         for i in range(0, len(sentences) - chunk_size * (num_chunks - 1), chunk_size):
             sample = []
@@ -176,20 +183,9 @@ def train_epoch(model, dataloader, optimizer, criterion, device):
         masks = masks.to(device)
         
         optimizer.zero_grad()
+        chunks, masks, target = shift_target_3d(chunks, masks)
         logits = model(chunks, masks)
-        
-        # Target: last token of last chunk
-        targets = []
-        for i in range(chunks.size(0)):
-            last_chunk = chunks[i, -1, :]
-            mask = masks[i, -1, :]
-            valid_indices = torch.where(mask)[0]
-            if len(valid_indices) > 0:
-                targets.append(last_chunk[valid_indices[-1]].item())
-            else:
-                targets.append(0)
-        target = torch.tensor(targets).to(device)
-        
+
         loss = criterion(logits, target)
         loss.backward()
         torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=0.5)
@@ -214,19 +210,9 @@ def evaluate(model, dataloader, criterion, device):
             chunks = chunks.to(device)
             masks = masks.to(device)
             
+            chunks, masks, target = shift_target_3d(chunks, masks)
             logits = model(chunks, masks)
-            
-            targets = []
-            for i in range(chunks.size(0)):
-                last_chunk = chunks[i, -1, :]
-                mask = masks[i, -1, :]
-                valid_indices = torch.where(mask)[0]
-                if len(valid_indices) > 0:
-                    targets.append(last_chunk[valid_indices[-1]].item())
-                else:
-                    targets.append(0)
-            target = torch.tensor(targets).to(device)
-            
+
             loss = criterion(logits, target)
             total_loss += loss.item()
             num_batches += 1
@@ -252,8 +238,19 @@ def main():
         logger.error("Data file not found: %s", DATA_FILE)
         return
     
-    dataset = GlobalContextDataset(DATA_FILE, chunk_size=CHUNK_SIZE, max_tokens=MAX_TOKENS, num_chunks=NUM_CHUNKS)
+    # Ayrık 80/10/10 bölme (AGENTS §4.1, seed=42); vocab yalnız train'den
+    with open(DATA_FILE, "r", encoding="utf-8") as f:
+        lines = [line.strip() for line in f if line.strip()]
+    train_lines, val_lines, test_lines = split_sentences(lines)
+    logger.info("Split: train %d / val %d / test %d (seed=42)",
+                len(train_lines), len(val_lines), len(test_lines))
+
+    dataset = GlobalContextDataset(train_lines, chunk_size=CHUNK_SIZE, max_tokens=MAX_TOKENS, num_chunks=NUM_CHUNKS)
+    val_dataset = GlobalContextDataset(val_lines, chunk_size=CHUNK_SIZE, max_tokens=MAX_TOKENS, num_chunks=NUM_CHUNKS, vocab=dataset.vocab)
+    test_dataset = GlobalContextDataset(test_lines, chunk_size=CHUNK_SIZE, max_tokens=MAX_TOKENS, num_chunks=NUM_CHUNKS, vocab=dataset.vocab)
     dataloader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True, collate_fn=collate_fn)
+    val_loader = DataLoader(val_dataset, batch_size=BATCH_SIZE, shuffle=False, collate_fn=collate_fn)
+    test_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False, collate_fn=collate_fn)
     
     vocab_size = len(dataset.vocab)
     logger.info("Vocab size: %d", vocab_size)
@@ -273,7 +270,7 @@ def main():
         logger.info("\n=== Epoch %d/%d ===", epoch, EPOCHS)
         
         train_loss = train_epoch(model, dataloader, optimizer, criterion, device)
-        val_loss = evaluate(model, dataloader, criterion, device)
+        val_loss = evaluate(model, val_loader, criterion, device)
         
         logger.info("Epoch %d | Train Loss: %.4f | Val Loss: %.4f", epoch, train_loss, val_loss)
         
@@ -293,6 +290,13 @@ def main():
     
     logger.info("\n=== TRAINING COMPLETE ===")
     logger.info("Best val loss: %.4f", best_val_loss)
+
+    checkpoint_path = os.path.join(OUTPUT_DIR, "context_global_best.pt")
+    if os.path.exists(checkpoint_path):
+        ckpt = torch.load(checkpoint_path, map_location=device, weights_only=False)
+        model.load_state_dict(ckpt["model_state_dict"])
+    test_loss = evaluate(model, test_loader, criterion, device)
+    logger.info("TEST loss (best ckpt, ayrık holdout): %.4f", test_loss)
 
 
 if __name__ == "__main__":

@@ -43,16 +43,24 @@ Bu blok elle düzenlenmez; `devir_yaz.py --repo /Users/serkankose/Documents/quan
 - **Patent tarafı kapandı (16 Kas):** 6 güncel doküman (3 TR + 3 EN) `patent_lint`
   0 hata · 0 uyarı; commit `3efcdd6` (bu depo) + `24e1d62` (patent-hatti linter
   dil-desteği). Açık patent işi yok; push bekliyor.
-- **CC global yeniden koşusunu izle:** CANLI pid 33076 (başlatma çıktısı, bu
-  oturum); log `logs/run_r4_contextcloud_global2.log`; bitince val loss'u
-  RESEARCH.md'ye işle
-- **CC memory val loss 9.4801 = ln(10000)=9.21 rastgele seviyesinin üstünde**
-  (`logs/run_r4_contextcloud_memory.log:550`) — kök neden incelemesi gerekli
-  (sebep doğrulanmadı; uydurma açıklama yazılmayacak)
-- **R4 duel hükmünü paper/patent notlarına yansıt:** D64 61.19 < D32 61.94
-  (`logs/run_r4_resume.log:71`)
-- **R4 sonrası hüküm:** D32/D64 karşılaştırması R4 eval'iyle doğrulandı
-  (eski sayılar yalnız eski kodda geçerli — aşağıdaki teşhis)
+- **Tamamlandı (17 Kas):** CC ayrık holdout (80/10/10, seed=42) üç script'e eklendi,
+  R5 koşuları bitti; vocab=10000 kontrollü memory rerun da bitti (aşağıda Kanıt).
+- **Tamamlandı (17 Kas):** Model-boyutu kontrollü memory koşusu bitti; boyut
+  farkı önemsiz (Δ0.0024), kalan ~0.4 fark görev+mechanizma karışımı (Kanıt).
+- **Tamamlandı (17 Kas):** Görev-sabit ablation bitti; farkın ayrımı: görev 0.31 +
+  mekanizma 0.08 (Kanıt). Memory mekanizması üstünlük kanıtlayamadı (tek seed).
+- **Seed tekrarı (opsiyonel):** ablation + memory koşularını 2. seed'la tekrarla;
+  0.08'lik mekanizma farkı tek seed'li, istatistiksel sağlamlık ölçülmedi
+- **Patent paket düzeltmesi (vekil sorusuyla bulundu, 17 Kas):** (1)
+  `docs/patent/dil/TURKPATENT_basvuru_v2.3.md:2` başlığı fiilen v2.5 diyor —
+  gerçek v2.3 docx/`_archive`'te; vekil paket listesiyle senkronla. (2) Üç farklı
+  aralık kuralı var (QUANN motor: ödülde aralık sabit+sigma×0.82
+  `quann_cloud/src/qcloud_quann.py:212-228`; classic: ödülde genişlet
+  `quann_cloud/src/qcloud_weight.py:115-133`; hybrid: ödülde segmente daralt
+  `:172-191`) — başvuru metnine hangi varyantın yazılacağı netleştirilmeli;
+  "hata azalınca aralık daralıyor" cümlesinin kaynağı v2.3 metninde bulunamadı
+- **R4 duel hükmü paper'a işlendi** (0.76, 61.94/61.19); patent dokümanlarında
+  duel sayısı geçen yer varsa kontrol edilmeli
 - **Fraud deploy kararı:** kullanıcı onayı bekliyor; paket `fraud/results/deploy/`
 
 ## Kanıt
@@ -92,9 +100,42 @@ Bu blok elle düzenlenmez; `devir_yaz.py --repo /Users/serkankose/Documents/quan
   R4 d32 epoch50 ve tüm R1 dizinleri korundu); boş alan 19Gi → 123Gi
   (`df -h /System/Volumes/Data`); resume `training/shell/run_r4_resume.sh`
   15 Kas 23:00'de başladı (`logs/run_r4_resume.log` Resume satırı)
+- CC global BİTTİ (16 Kas, erken durdurma epoch 22/30): best val loss —
+  `logs/run_r4_contextcloud_global2.log:2296` satırında 7.7961; vocab —
+  `logs/run_r4_contextcloud_global2.log:2` satırında 280151
+  (ln=12.5431, hesap bu oturumda) → öğreniyor. "memory rastgele üstü" iddiası
+  referans vocab yanlıştı (memory vocab 280151, ln=12.5431; 9.4801 altında)
 - R4 DUEL SONUCU (güncel kod): D32 heldout_PPL 61.94 — `logs/run_r4_resume.log:67`
   ; D64 heldout_PPL 61.19 — `logs/run_r4_resume.log:70`
   ; kazanan D64, delta 0.76 — `logs/run_r4_resume.log:71`
+- R5 CC AYRIK HOLDOUT (17 Kas, 80/10/10 seed=42; split üç logda da
+  `Split: train 159888 / val 19986 / test 19986`): TEST loss stable 3.2318 —
+  `logs/run_r5_cc_stable.log:1236`
+  ; memory 9.5559 — `logs/run_r5_cc_memory.log:586`
+  ; global 8.6610 — `logs/run_r5_cc_global.log:516`
+  ; vocab artık train-only: 10000 / 245124 / 245124; ln(245124)=12.4095 ve
+  ln(10000)=9.2103 (hesap bu oturumda) → üçü de rastgele altında, öğreniyor
+- R5 MEMORY VOCAB=10000 KONTROLLÜ RERUN (17 Kas): vocab stable ile birebir aynı
+  (eşitlik kontrolü bu oturumda True); TEST loss 3.6295 —
+  `logs/run_r5_cc_memory_v10k.log:454`
+  ; best val 3.5735 — `logs/run_r5_cc_memory_v10k.log:453`
+  ; son epoch 10'da erken durdurma — `logs/run_r5_cc_memory_v10k.log:448`
+  ; hüküm: 9.5559→3.6295 düşüşün baskın nedeni vocab boyutu; stable'a kalan
+  ~0.4 fark model boyutu (d_model 64 vs 128) + görev farkıyla karışık
+- R5 MEMORY STABLE-BOYUTU KONTROLÜ (17 Kas, d_model 128 d_sentence 256,
+  vocab stable ile eşitlenmiş): TEST loss 3.6271 —
+  `logs/run_r5_cc_memory_stablesz.log:894`
+  ; best val 3.5578 ep 15 — `logs/run_r5_cc_memory_stablesz.log:668`
+  ; küçük boyutlu koşuya (3.6295) göre Δ0.0024 → boyut farkı önemsiz; stable'a
+  kalan ~0.4 görev zorluğu + mekanizma karışımı, tek başına mekanizma kusuru
+  iddiası YOK (ayrım için görev-sabit ablation gerekir)
+- R5 GÖREV-SABİT ABLATION (17 Kas, stable pencere/bulut mekanizması memory
+  görevinde, vocab 10000, reçete memory ile birebir): TEST loss 3.5425 —
+  `logs/run_r5_ablate_stable_on_memorytask.log:1332`
+  ; best val 3.4802 ep 26 — `logs/run_r5_ablate_stable_on_memorytask.log:1151`
+  ; ayrım: görev zorluğu 0.3107 (3.5425−3.2318) + mekanizma 0.0846
+  (3.6271−3.5425) (hesap bu oturumda); memory mekanizması kendi görevinde
+  pencere/bulut'tan 0.08 kötü (tek seed) — çürük değil, üstün de değil
 - CC sızdırmasız görev sonuçları: stable Best val loss 3.1327 —
   `logs/run_r4_contextcloud_stable.log:1532`
   ; memory Best val loss 9.4801 — `logs/run_r4_contextcloud_memory.log:550`

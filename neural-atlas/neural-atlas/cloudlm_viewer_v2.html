@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CloudLM Neural Atlas</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: #f4f5ef; }
+    #container { width: 100vw; height: 100vh; }
+    .controls {
+      position: absolute; top: 10px; left: 10px; z-index: 10;
+      background: rgba(255,255,255,0.95); padding: 10px; border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .controls select, .controls button {
+      padding: 6px 12px; margin: 4px; border: 1px solid #ccc; border-radius: 4px;
+      font-size: 14px; cursor: pointer;
+    }
+    .controls button { background: #699779; color: white; border: none; }
+    .controls button:hover { background: #5a8266; }
+    .node-info {
+      position: absolute; bottom: 10px; left: 10px; z-index: 10;
+      background: rgba(255,255,255,0.95); padding: 10px; border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1); max-width: 400px;
+    }
+    .node-info h3 { margin-bottom: 5px; color: #2c5137; }
+    .node-info p { font-size: 13px; color: #333; margin: 3px 0; }
+    .node-info .params { color: #666; font-size: 12px; }
+    .error { color: #c47d86; }
+  </style>
+</head>
+<body>
+  <div id="container"></div>
+  
+  <div class="controls">
+    <label for="model-select">Model:</label>
+    <select id="model-select">
+      <option value="cloudlm_d32.json">CloudLM D=32</option>
+      <option value="cloudlm_d64.json">CloudLM D=64</option>
+      <option value="dist/ornek-mimari.json">Mini Transformer (Örnek)</option>
+    </select>
+    <button id="load-btn">Yükle</button>
+    <button id="play-btn">▶ Oynat</button>
+    <button id="pause-btn">Ⅱ Duraklat</button>
+    <button id="step-btn">⇥ Adım</button>
+    <button id="export-btn">PNG Export</button>
+    <div style="margin-top: 8px; font-size: 12px; color: #666;">
+      <span id="flow-status">Hazır</span>
+    </div>
+  </div>
+  
+  <div class="node-info" id="node-info">
+    <h3>Model Seçin</h3>
+    <p>Yüklemek için bir model seçin ve "Yükle" butonuna basın.</p>
+  </div>
+
+  <!-- Three.js ve OrbitControls CDN'den -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+  
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+    
+    // Basit Neural Renderer (THREE.js ile)
+    class NeuralRenderer {
+      constructor(container, { labels, onSelect = () => {} } = {}) {
+        this.container = container;
+        this.labels = labels;
+        this.onSelect = onSelect;
+        this.items = new Map();
+        this.links = [];
+        this.selected = null;
+        this.animationFrame = null;
+        this.simulation = null;
+        this.isPlaying = false;
+        this.currentStep = 0;
+        
+        // Scene
+        this.scene = new THREE.Scene();
+        this.scene.background = new THREE.Color(0xf4f5ef);
+        
+        // Camera
+        this.camera = new THREE.PerspectiveCamera(38, 1, 0.1, 10000);
+        this.camera.position.set(50, 20, 100);
+        
+        // Renderer
+        this.renderer = new THREE.WebGLRenderer({ antialias: true });
+        this.renderer.setSize(container.clientWidth, container.clientHeight);
+        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        container.appendChild(this.renderer.domElement);
+        
+        // Controls
+        this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+        this.controls.enableDamping = true;
+        
+        // Lighting
+        const ambient = new THREE.AmbientLight(0xffffff, 1.3);
+        this.scene.add(ambient);
+        const directional = new THREE.DirectionalLight(0xffffff, 1.6);
+        directional.position.set(-15, 30, 40);
+        this.scene.add(directional);
+        
+        // Group for nodes
+        this.root = new THREE.Group();
+        this.scene.add(this.root);
+        
+        // Raycaster
+        this.raycaster = new THREE.Raycaster();
+        this.pointer = new THREE.Vector2();
+        
+        // Event listeners
+        this.renderer.domElement.addEventListener('pointerup', (e) => this.handleClick(e));
+        
+        // Resize
+        const resizeObserver = new ResizeObserver(() => {
+          const { width, height } = container.getBoundingClientRect();
+          this.camera.aspect = width / height;
+          this.camera.updateProjectionMatrix();
+          this.renderer.setSize(width, height);
+        });
+        resizeObserver.observe(container);
+        
+        // Animation loop
+        this.tick = () => {
+          this.animationFrame = requestAnimationFrame(this.tick);
+          this.controls.update();
+          this.updateSimulation();
+          this.renderer.render(this.scene, this.camera);
+        };
+        this.tick();
+        
+        console.log('NeuralRenderer initialized');
+      }
+      
+      handleClick(e) {
+        const rect = this.renderer.domElement.getBoundingClientRect();
+        this.pointer.set(
+          ((e.clientX - rect.left) / rect.width) * 2 - 1,
+          -((e.clientY - rect.top) / rect.height) * 2 + 1
+        );
+        this.raycaster.setFromCamera(this.pointer, this.camera);
+        const hits = this.raycaster.intersectObjects([...this.items.values()].map(v => v.mesh));
+        if (hits[0]) {
+          const id = hits[0].object.userData.id;
+          this.select(id);
+        }
+      }
+      
+      select(id) {
+        if (!this.items.has(id)) return;
+        this.selected = id;
+        const item = this.items.get(id);
+        this.onSelect(item.node);
+      }
+      
+      load(data) {
+        // Clear existing
+        this.root.clear();
+        this.items.clear();
+        this.links = [];
+        
+        const model = data;
+        const nodes = model.nodes;
+        const edges = model.edges;
+        
+        // Organize nodes by layer (transformer style)
+        const layerGroups = {};
+        nodes.forEach((node, idx) => {
+          // Group transformer layers together
+          let layer = 0;
+          if (node.id.includes('layer_')) {
+            const match = node.id.match(/layer_(\d+)/);
+            if (match) layer = parseInt(match[1]) + 1;
+          }
+          if (!layerGroups[layer]) layerGroups[layer] = [];
+          layerGroups[layer].push({ node, idx, globalIdx: idx });
+        });
+        
+        const maxLayer = Math.max(...Object.keys(layerGroups).map(Number));
+        const layerSpacing = 25;
+        const nodeSpacing = 8;
+        
+        // Position nodes
+        const positions = new Map();
+        Object.entries(layerGroups).forEach(([layer, group]) => {
+          const layerNum = parseInt(layer);
+          const x = layerNum * layerSpacing - (maxLayer * layerSpacing / 2);
+          const yStart = -((group.length - 1) * nodeSpacing) / 2;
+          
+          group.forEach((item, localIdx) => {
+            const y = yStart + localIdx * nodeSpacing;
+            positions.set(item.node.id, { x, y, z: 0 });
+          });
+        });
+        
+        // Create nodes
+        nodes.forEach((node, idx) => {
+          const pos = positions.get(node.id) || { x: idx * 10, y: 0, z: 0 };
+          
+          // Size based on shape
+          const shape = node.shape || [10, 10];
+          const width = Math.min((shape[shape.length - 1] || 10) * 0.3 + 2, 8);
+          const height = Math.min((shape[shape.length - 2] || 10) * 0.2 + 1, 4);
+          const depth = 1;
+          
+          const geometry = new THREE.BoxGeometry(width, height, depth);
+          const color = this.getNodeColor(node.type);
+          const material = new THREE.MeshStandardMaterial({ color, roughness: 0.65 });
+          const mesh = new THREE.Mesh(geometry, material);
+          mesh.position.set(pos.x, pos.y, pos.z);
+          mesh.userData = { id: node.id, node };
+          
+          this.root.add(mesh);
+          this.items.set(node.id, { mesh, node });
+          
+          // Border
+          const borderGeo = new THREE.EdgesGeometry(geometry);
+          const borderMat = new THREE.LineBasicMaterial({ color, transparent: true, opacity: 0.5 });
+          const border = new THREE.LineSegments(borderGeo, borderMat);
+          border.position.copy(mesh.position);
+          this.root.add(border);
+          
+          // Label (using simple text sprite)
+          this.createLabel(node.label, pos);
+        });
+        
+        // Draw edges with curves
+        edges.forEach(edge => {
+          const source = this.items.get(edge.source);
+          const target = this.items.get(edge.target);
+          if (source && target) {
+            const start = source.mesh.position.clone();
+            const end = target.mesh.position.clone();
+            
+            // Create curved edge
+            const midX = (start.x + end.x) / 2;
+            const midY = Math.max(start.y, end.y) + 5;
+            
+            const curve = new THREE.CubicBezierCurve3(
+              start,
+              new THREE.Vector3(midX, midY, 0),
+              new THREE.Vector3(midX, midY, 0),
+              end
+            );
+            
+            const points = curve.getPoints(20);
+            const lineGeo = new THREE.BufferGeometry().setFromPoints(points);
+            const lineMat = new THREE.LineBasicMaterial({ color: 0x98aa8d, transparent: true, opacity: 0.7 });
+            const line = new THREE.Line(lineGeo, lineMat);
+            this.root.add(line);
+            this.links.push({ line, source: edge.source, target: edge.target });
+          }
+        });
+        
+        this.fit();
+        
+        // Create simulation
+        this.simulation = this.createSimulation(model);
+      }
+      
+      createLabel(text, pos) {
+        const canvas = document.createElement('canvas');
+        canvas.width = 256;
+        canvas.height = 64;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#f4f5ef';
+        ctx.fillRect(0, 0, 256, 64);
+        ctx.fillStyle = '#2c5137';
+        ctx.font = 'bold 20px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText(text, 128, 35);
+        
+        const texture = new THREE.CanvasTexture(canvas);
+        const material = new THREE.SpriteMaterial({ map: texture });
+        const sprite = new THREE.Sprite(material);
+        sprite.scale.set(15, 4, 1);
+        sprite.position.set(pos.x, pos.y + 3, pos.z + 1);
+        this.scene.add(sprite);
+        
+        return sprite;
+      }
+      
+      // Simülasyon sistemi
+      createSimulation(model) {
+        const nodes = model.nodes;
+        const edges = model.edges;
+        
+        // Build dependency graph
+        const nodeMap = new Map();
+        nodes.forEach((node, idx) => {
+          nodeMap.set(node.id, { ...node, index: idx, activated: false, activationTime: -1 });
+        });
+        
+        // Calculate activation order (topological sort)
+        const activationOrder = [];
+        const visited = new Set();
+        const visiting = new Set();
+        
+        function visit(nodeId) {
+          if (visited.has(nodeId)) return;
+          if (visiting.has(nodeId)) return; // Cycle detected
+          
+          visiting.add(nodeId);
+          
+          // Visit all dependencies first
+          const deps = edges.filter(e => e.target === nodeId).map(e => e.source);
+          deps.forEach(depId => visit(depId));
+          
+          visiting.delete(nodeId);
+          visited.add(nodeId);
+          activationOrder.push(nodeId);
+        }
+        
+        nodes.forEach(node => visit(node.id));
+        
+        // Create particle animations for each edge
+        const particles = [];
+        const particleSpeed = 0.02;
+        
+        edges.forEach((edge, idx) => {
+          const source = nodeMap.get(edge.source);
+          const target = nodeMap.get(edge.target);
+          
+          if (source && target) {
+            particles.push({
+              edge,
+              source,
+              target,
+              progress: 0,
+              active: false,
+              color: this.getNodeColor(edge.type || 'linear')
+            });
+          }
+        });
+        
+        return {
+          nodes: nodeMap,
+          edges,
+          activationOrder,
+          particles,
+          particleSpeed,
+          currentStep: 0,
+          totalSteps: activationOrder.length
+        };
+      }
+      
+      updateSimulation() {
+        if (!this.simulation || !this.isPlaying) return;
+        
+        const { particles, particleSpeed } = this.simulation;
+        
+        // Update particles
+        particles.forEach(p => {
+          if (p.active) {
+            p.progress += particleSpeed;
+            
+            if (p.progress >= 1) {
+              p.progress = 0;
+              p.active = false;
+              
+              // Activate target node
+              if (this.simulation) {
+                const targetNode = this.simulation.nodes.get(p.target.node.id);
+                if (targetNode && !targetNode.activated) {
+                  targetNode.activated = true;
+                  targetNode.activationTime = this.simulation.currentStep;
+                  this.highlightNode(p.target.node.id, true);
+                }
+              }
+            }
+          }
+        });
+        
+        // Draw particle animations
+        this.drawParticles();
+      }
+      
+      drawParticles() {
+        if (!this.simulation) return;
+        
+        this.simulation.particles.forEach(p => {
+          if (p.active) {
+            const { source, target, progress } = p;
+            const sourcePos = source.mesh.position.clone();
+            const targetPos = target.mesh.position.clone();
+            
+            // Calculate mid point with curve
+            const midX = (sourcePos.x + targetPos.x) / 2;
+            const midY = Math.max(sourcePos.y, targetPos.y) + 5;
+            
+            // Interpolate position
+            const t = progress;
+            const t2 = t * t;
+            const t3 = t2 * t;
+            
+            // Cubic bezier interpolation
+            const x = (1-t)*(1-t)*(1-t)*sourcePos.x + 
+                      3*(1-t)*(1-t)*t*midX + 
+                      3*(1-t)*t*t*midX + 
+                      t*t*t*targetPos.x;
+            const y = (1-t)*(1-t)*(1-t)*sourcePos.y + 
+                      3*(1-t)*(1-t)*t*midY + 
+                      3*(1-t)*t*t*midY + 
+                      t*t*t*targetPos.y;
+            
+            // Create particle
+            if (!p.particleMesh) {
+              const particleGeo = new THREE.SphereGeometry(0.3, 8, 8);
+              const particleMat = new THREE.MeshBasicMaterial({ color: p.color });
+              p.particleMesh = new THREE.Mesh(particleGeo, particleMat);
+              this.scene.add(p.particleMesh);
+            }
+            
+            p.particleMesh.position.set(x, y, 0.5);
+          }
+        });
+      }
+      
+      highlightNode(nodeId, active) {
+        const item = this.items.get(nodeId);
+        if (item) {
+          const emissiveColor = active ? 0x699779 : 0x000000;
+          item.mesh.material.emissive.setHex(emissiveColor);
+        }
+      }
+      
+      startSimulation() {
+        if (!this.simulation) return;
+        
+        this.isPlaying = true;
+        this.simulation.currentStep = 0;
+        
+        // Reset all nodes
+        this.simulation.nodes.forEach(node => {
+          node.activated = false;
+          node.activationTime = -1;
+          this.highlightNode(node.id, false);
+        });
+        
+        // Reset particles
+        this.simulation.particles.forEach(p => {
+          p.progress = 0;
+          p.active = false;
+        });
+        
+        // Start first node
+        if (this.simulation.activationOrder.length > 0) {
+          const firstNode = this.simulation.activationOrder[0];
+          this.simulation.nodes.get(firstNode).activated = true;
+          this.highlightNode(firstNode, true);
+          
+          // Activate outgoing edges
+          this.simulation.particles.forEach(p => {
+            if (p.source.node.id === firstNode) {
+              p.active = true;
+            }
+          });
+        }
+      }
+      
+      pauseSimulation() {
+        this.isPlaying = false;
+      }
+      
+      stepSimulation() {
+        if (!this.simulation) return;
+        
+        // Find next inactive node
+        const nextNode = this.simulation.activationOrder.find(
+          id => !this.simulation.nodes.get(id).activated
+        );
+        
+        if (nextNode) {
+          this.simulation.nodes.get(nextNode).activated = true;
+          this.highlightNode(nextNode, true);
+          
+          // Activate outgoing edges
+          this.simulation.particles.forEach(p => {
+            if (p.source.node.id === nextNode) {
+              p.active = true;
+            }
+          });
+        }
+      }
+      
+      dispose() {
+        cancelAnimationFrame(this.animationFrame);
+        this.root.clear();
+        this.scene.clear();
+        this.renderer.dispose();
+      }
+      
+      getNodeColor(type) {
+        const palette = {
+          input: 0x699779,
+          embedding: 0xa78bc3,
+          linear: 0x708bc3,
+          attention: 0xcc9a52,
+          norm: 0x7caea4,
+          add: 0xa9957b,
+          output: 0xc47d86,
+          custom: 0x89939c
+        };
+        return palette[type] || palette.custom;
+      }
+      
+      fit() {
+        const box = new THREE.Box3().setFromObject(this.root);
+        const size = box.getSize(new THREE.Vector3());
+        const center = box.getCenter(new THREE.Vector3());
+        
+        const maxDim = Math.max(size.x, size.y, size.z);
+        const dist = Math.max(maxDim * 2, 50);
+        
+        this.camera.position.set(center.x, center.y + dist * 0.3, center.z + dist);
+        this.camera.lookAt(center);
+        this.controls.target.copy(center);
+        this.controls.update();
+      }
+      
+      exportPNG() {
+        this.renderer.render(this.scene, this.camera);
+        return this.renderer.domElement.toDataURL('image/png');
+      }
+      
+      dispose() {
+        cancelAnimationFrame(this.frame);
+        this.renderer.dispose();
+      }
+    }
+    
+    // Validate model
+    function validateModel(value) {
+      if (!value || typeof value !== 'object' || Array.isArray(value)) {
+        throw new Error('Mimari bir JSON nesnesi olmalı.');
+      }
+      if (!Array.isArray(value.nodes) || !value.nodes.length) {
+        throw new Error('nodes alanında 1+ katman bulunmalı.');
+      }
+      if (!Array.isArray(value.edges)) {
+        throw new Error('edges alanı bir liste olmalı.');
+      }
+      return value;
+    }
+    
+    // Initialize
+    const container = document.getElementById('container');
+    const nodeInfo = document.getElementById('node-info');
+    const modelSelect = document.getElementById('model-select');
+    const loadBtn = document.getElementById('load-btn');
+    const exportBtn = document.getElementById('export-btn');
+    
+    let renderer;
+    
+    function initRenderer() {
+      try {
+        renderer = new NeuralRenderer(container, {
+          onSelect: node => {
+            nodeInfo.innerHTML = `
+              <h3>${node.label}</h3>
+              <p><strong>ID:</strong> ${node.id}</p>
+              <p><strong>Tür:</strong> ${node.type}</p>
+              <p><strong>Shape:</strong> [${(node.shape || []).join(', ')}]</p>
+              ${node.params ? `<p class="params"><strong>Parametre:</strong> ${node.params.toLocaleString()}</p>` : ''}
+              <p>${node.description || ''}</p>
+            `;
+          }
+        });
+        console.log('Renderer initialized successfully');
+      } catch (e) {
+        console.error('Error initializing renderer:', e);
+        nodeInfo.innerHTML = `<h3 class="error">Renderer Başlatma Hatası!</h3><p>${e.message}</p>`;
+      }
+    }
+    
+    async function loadModel(filename) {
+      try {
+        console.log('Loading model:', filename);
+        const response = await fetch(filename);
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        const data = await response.json();
+        console.log('Model data loaded:', data.name);
+        const model = validateModel(data);
+        renderer.load(model);
+        renderer.fit();
+        console.log('Model loaded successfully');
+      } catch (e) {
+        console.error('Error loading model:', e);
+        nodeInfo.innerHTML = `<h3 class="error">Hata!</h3><p>${e.message}</p><p>Dosya: ${filename}</p>`;
+      }
+    }
+    
+    initRenderer();
+    
+    loadBtn.addEventListener('click', () => {
+      const filename = modelSelect.value;
+      loadModel(filename);
+    });
+    
+    const playBtn = document.getElementById('play-btn');
+    const pauseBtn = document.getElementById('pause-btn');
+    const stepBtn = document.getElementById('step-btn');
+    const flowStatus = document.getElementById('flow-status');
+    
+    playBtn.addEventListener('click', () => {
+      if (renderer && renderer.simulation) {
+        renderer.startSimulation();
+        flowStatus.textContent = '▶ Akış oynatılıyor...';
+      }
+    });
+    
+    pauseBtn.addEventListener('click', () => {
+      if (renderer && renderer.simulation) {
+        renderer.pauseSimulation();
+        flowStatus.textContent = '⏸ Duraklatıldı';
+      }
+    });
+    
+    stepBtn.addEventListener('click', () => {
+      if (renderer && renderer.simulation) {
+        renderer.stepSimulation();
+        const step = renderer.simulation.currentStep;
+        const total = renderer.simulation.activationOrder.length;
+        flowStatus.textContent = `⇥ Adım ${step + 1}/${total}`;
+      }
+    });
+    
+    exportBtn.addEventListener('click', () => {
+      if (!renderer) {
+        nodeInfo.innerHTML = `<h3 class="error">Uyarı!</h3><p>Önce bir model yükleyin.</p>`;
+        return;
+      }
+      const dataUrl = renderer.exportPNG();
+      const a = document.createElement('a');
+      a.href = dataUrl;
+      a.download = 'cloudlm_architecture.png';
+      a.click();
+    });
+    
+    // Load default model
+    loadModel('cloudlm_d32.json');
+  </script>
+</body>
+</html>

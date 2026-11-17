@@ -145,7 +145,7 @@ Aynı buluttan:
 - **Şekil 1:** Evrensel mimari ve modül akışı
 - **Şekil 2:** Çift-geometri ve simetrik birleştirme
 - **Şekil 3:** Aynı buluttan skor, ablation, prototip ve drift
-- **Şekil 4:** Nokta-sayı optimizasyonu ve geometri zenginliği
+- **Şekil 4:** Bağlam penceresi taraması (D=64, 200K) — üç ölçülmüş run
 - **Şekil 5:** Küme agregasyonu karşılaştırması
 - **Şekil 6:** Bulut geometri vizualizasyonu (3D)
 
@@ -193,12 +193,20 @@ loss = word_loss + 0.1 × point_loss
 - **Weight decay:** 0.01
 - **Scheduler:** Cosine annealing
 
-### 7.4 Nokta-Sayı Optimizasyonu
+### 7.4 Nokta-Sayı (Bağlam Penceresi) Taraması
 
-Nokta sayısı bulut geometrisinin zenginliğini belirler:
-- **Daha fazla nokta:** Daha detaylı geometrik temsil
-- **Optimum nokta sayısı:** Uygulama ve veriye göre belirlenir
-- **Aşırı nokta:** Geometrik gürültüye yol açabilir
+Bu mimaride nokta sayısı token sayısına eşittir (`cloudlm/model.py:312`), ayrı bir düğme değildir; ölçülen tarama bağlam penceresi taramasıdır:
+
+| Pencere (= nokta) | Eğitim cümlesi | PPL | Kaynak |
+|---|---|---|---|
+| 10 | 198.596 | 57.04 | `logs/run_r2_cloud_attn_200k_d64.log:26` |
+| 20 | 144.317 | 37.63 | `logs/run_r2_cloud_attn_200k_d64_n20.log:26` |
+| 30 | 28.825 | 134.31 | `logs/run_r2_cloud_attn_200k_d64_n30.log:26` |
+
+- **Ölçülen:** 10→20 arası Δ19.41 PPL düşüş (%34,0); 30'da 134.31'e çıkış.
+- **Sınır:** eğitim cümlesi pencere büyüdükçe daralıyor; tarama kontrollü ablation değildir.
+- **Doğrulanmayan:** 30'daki bozulmanın sebebi doğrulanmadı — aynı andaki ~5× eğitim cümlesi kaybı dışlanmamış alternatif açıklamadır, bu yüzden "aşırı nokta geometrik gürültü yaratır" ya da "overfitting" iddiası kurulmaz.
+- **Genel ifade:** uygun nokta sayısı uygulama ve veriye göre belirlenir.
 
 ### 7.5 Küme Agregasyonu
 
@@ -253,7 +261,7 @@ adımlarını içermektedir.
 
 **İddia 5:** İddia 1'deki sistem olup, **D değeri 32 veya 64** olarak seçilir.
 
-**İddia 6:** İddia 1'deki sistem olup, **nokta sayısı 20** olarak seçilir (R2b optimizasyonu).
+**İddia 6:** İddia 1'deki sistem olup, **nokta sayısı 20** olarak seçilir (Bölüm 7.4'te ölçülen üç değer arasında en düşük PPL'i veren değer).
 
 **İddia 7:** İddia 1'deki sistem olup, **max-pool** küme agregasyonunda kullanılır (attention-pool yerine).
 
@@ -263,7 +271,7 @@ adımlarını içermektedir.
 
 **İddia 10 — Dil embodiment'i:** İddia 1'deki sistem olup, girdi birimleri token/alt-sözcük, okuyucu çıktısı bir-sonraki-token dağılımıdır; **ölçüm sınırlaması:** v2.3'te "ortak held-out" diye etiketlense de güncel RESEARCH.md 6.45'in eğitim kümesi örneklemi olduğunu kaydeder, strict held-out değildir.
 
-**İddia 11 — Nokta sayısı:** İddia 1'deki sistem olup, nokta sayısı 10 ile 30 arasında seçilir, optimum değer uygulama ve veriye göre belirlenir; **R2b keşfi:** Nokta sayısı 10'dan 20'ye çıkarıldığında **%34 iyileşme** (57.04 → 37.63 PPL).
+**İddia 11 — Nokta sayısı:** İddia 1'deki sistem olup, nokta sayısı 10 ile 30 arasında seçilir, uygun değer uygulama ve veriye göre belirlenir; **R2b gözlemi:** nokta/pencere sayısı 10 iken PPL 57.04 (`logs/run_r2_cloud_attn_200k_d64.log:26`), 20 iken 37.63 (`logs/run_r2_cloud_attn_200k_d64_n20.log:26`), 30 iken 134.31 (`logs/run_r2_cloud_attn_200k_d64_n30.log:26`) ölçülmüştür (10→20 arası Δ19.41 = %34,0 düşüş). Bu mimaride nokta sayısı token sayısına eşittir (`cloudlm/model.py:312`) ve üç run 198.596 / 144.317 / 28.825 eğitim cümlesiyle koşmuştur (`logs/run_r2_cloud_attn_200k_d64*.log:9`); dolayısıyla fark kontrollü bir nokta-sayı ablation'ı değil, bağlam penceresiyle birlikte değişen bir gözlemdir.
 
 **İddia 12 — Küme agregasyonu:** İddia 1'deki sistem olup, nokta özellikleri için max-pool, çift-geometri özellikleri için mean-pool kullanılır.
 
@@ -273,7 +281,7 @@ adımlarını içermektedir.
 
 Sistem, token veya girdi birimlerini düşük boyutlu (3 ≤ D ≤ 64) noktalar olarak temsil eder; nokta özellikleri ile mesafe/açı temelli çift-geometriyi simetrik küme agregasyonuyla birleştirir ve küme durumundan okuyucuyla görev skoru üretir. Aynı nokta bulutu, leave-one-point-out ablation, bölge/prototip isimlendirme ve bölge-kayması/drift incelemesi için native açıklama nesnesidir.
 
-Dil embodiment'inde **D=64, Nokta=20 konfigürasyonunda 200K korpus üzerinde PPL 37.63** ölçülmüştür (causal baseline 53.95'e göre %30 daha iyi). Doğruluk-üstünlüğü iddia edilmez, açıklama geometriye dayalı denetim yüzeyidir.
+Dil embodiment'inde **D=64, Nokta=20 konfigürasyonunda 200K korpus üzerinde PPL 37.63** ölçülmüştür (`logs/run_r2_cloud_attn_200k_d64_n20.log:26`). Causal baseline 53.95 ölçmüştür (`logs/run_baseline_200k_v2.log:26`); fark Δ16.32 PPL'dir, ancak baseline 10-token penceresiyle ve 198.596 eğitim cümlesiyle koştuğu için iki run pencere açısından eşleşmez ve fark tek başına mimariye atfedilmez. Doğruluk-üstünlüğü iddia edilmez, açıklama geometriye dayalı denetim yüzeyidir.
 
 ---
 
@@ -342,7 +350,7 @@ Dil embodiment'inde **D=64, Nokta=20 konfigürasyonunda 200K korpus üzerinde PP
 - fig1_mimari.png — Evrensel mimari
 - fig2_ciftgeometri.png — Çift-geometri ve simetrik birleştirme
 - fig3_aciklama.png — Aynı buluttan native açıklama
-- fig4_nokta_optimizasyon.png — D=64 + Nokta=20 optimizasyonu
+- fig4_nokta_optimizasyon.png — D=64 bağlam penceresi taraması (üç ölçülmüş run)
 - fig5_max_vs_attn_pool.png — Max-pool vs attention-pool
 - fig6_bulut_vizualizasyon.png — Bulut geometri vizualizasyonu
 

@@ -10,12 +10,15 @@ Token → [Transformer] → [WordToND] → [CloudEncoderND] → [word_head + poi
 Sıralama: set (unordered) — nokta çiftleri üzerinden pozisyonsuz.
 """
 
+import logging
 import math
 from typing import Optional
 
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+
+logger = logging.getLogger(__name__)
 
 
 class WordToND(nn.Module):
@@ -116,7 +119,9 @@ class CloudEncoderND(nn.Module):
         # Legacy: old max-pool checkpoints predate attn_proj and cloud_self_attn
         if self.pool == "max" and not self.cloud_attn:
             if prefix + "attn_proj.weight" not in state_dict:
-                state_dict[prefix + "attn_proj.weight"] = torch.zeros(1, self.d_cloud)
+                state_dict[prefix + "attn_proj.weight"] = torch.zeros(
+                    1, self.attn_proj.in_features
+                )
             if prefix + "attn_proj.bias" not in state_dict:
                 state_dict[prefix + "attn_proj.bias"] = torch.zeros(1)
         
@@ -258,7 +263,43 @@ class CloudLM(nn.Module):
         state_dict = dict(state_dict)
         cloud_prefix = "cloud."
         self.cloud._fix_legacy_pair_mlp_weight(state_dict, cloud_prefix)
-        
+
+        # Legacy: old checkpoints stored pos_enc as a learned (1, L, d_model)
+        # buffer; current model uses PositionalEncoding with buffer "pos_enc.pe".
+        if "pos_enc" in state_dict and "pos_enc.pe" not in state_dict:
+            logger.warning(
+                "Legacy checkpoint: learned 'pos_enc' buffer remapped to "
+                "'pos_enc.pe'; forward semantics may differ from training time."
+            )
+            old = state_dict.pop("pos_enc")
+            if old.ndim == 3:
+                old = old.squeeze(0)
+            pe = self.pos_enc.pe
+            if old.shape != pe.shape and old.shape[1] != pe.shape[1]:
+                raise RuntimeError(
+                    f"legacy pos_enc d_model {old.shape[1]} != model d_model {pe.shape[1]}"
+                )
+            new_pe = pe.clone()
+            length = min(old.shape[0], pe.shape[0])
+            new_pe[:length] = old[:length]
+            state_dict["pos_enc.pe"] = new_pe
+
+        # Legacy: old max-pool checkpoints predate attn_proj. The child
+        # CloudEncoderND.load_state_dict shim is bypassed when loading through
+        # CloudLM (nn.Module.load_state_dict recurses without calling child
+        # load_state_dict), so replicate the fill here. Unused when pool="max".
+        if self.cloud.pool == "max" and not self.cloud.cloud_attn:
+            if cloud_prefix + "attn_proj.weight" not in state_dict:
+                logger.warning(
+                    "Legacy checkpoint: cloud.attn_proj missing; zero-filled "
+                    "(unused when pool='max')."
+                )
+                state_dict[cloud_prefix + "attn_proj.weight"] = torch.zeros(
+                    1, self.cloud.attn_proj.in_features
+                )
+            if cloud_prefix + "attn_proj.bias" not in state_dict:
+                state_dict[cloud_prefix + "attn_proj.bias"] = torch.zeros(1)
+
         super().load_state_dict(state_dict, strict=strict)
 
     def forward(self, tokens: torch.Tensor, mask: Optional[torch.Tensor] = None):

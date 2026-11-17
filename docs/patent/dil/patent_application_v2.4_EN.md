@@ -118,16 +118,30 @@ x_ij = [pᵢ - pⱼ, ‖pᵢ - pⱼ‖, cos(θᵢⱼ), ‖pᵢ‖, ‖pⱼ‖] �
 
 **On 200K Turkish sentence corpus:**
 
-| Model | Config | PPL | vs Baseline |
-|---|---|---|---|
-| **CloudLM (D=32)** | 200K, 50ep, max-pool | 58.88 | +8.8% |
-| **CloudLM (D=64)** | 200K, 50ep, max-pool | **57.04** | +5.5% |
-| **CloudLM (D=128)** | 200K, 50ep, max-pool | 58.55 | +8.5% |
-| **CloudLM (D=64, Points=20)** | 200K, max-pool | **37.63** | **-30.2%** ✅ |
-| **Causal Baseline** | d=384, 4L, 200K | 53.95 | reference |
+All rows are 10-epoch runs on the 200K Turkish corpus (`Epochs=10` in each log header). "Window" is the
+token/point count per sentence; the training sentence count follows from it.
 
-**R2b Discovery:** Increasing point count from 10 to 20 yields **34% improvement** (57.04 → 37.63).  
-**Selected point count:** 20 (performance degrades at 30: 134.31 PPL)
+| Model | Config | Window | Train sentences | PPL | Δ vs baseline | Log |
+|---|---|---|---|---|---|---|
+| **Causal Baseline** | d=384, 4L, max-pool | 10 | 198,596 | 53.95 | reference | `logs/run_baseline_200k_v2.log:26` |
+| **CloudLM (D=32)** | 10ep, max-pool | 10 | 198,596 | 58.88 | +4.93 (worse) | `logs/run_r2_cloud_attn_200k_d32.log:26` |
+| **CloudLM (D=64)** | 10ep, max-pool | 10 | 198,596 | 57.04 | +3.09 (worse) | `logs/run_r2_cloud_attn_200k_d64.log:26` |
+| **CloudLM (D=128)** | 10ep, max-pool | 10 | 198,596 | 58.55 | +4.60 (worse) | `logs/run_r2_cloud_attn_200k_d128.log:26` |
+| **CloudLM (D=64, Points=20)** | 10ep, max-pool | 20 | 144,317 | **37.63** | −16.32 = −30.2% | `logs/run_r2_cloud_attn_200k_d64_n20.log:26` |
+
+**Comparability note:** the D=32/64/128 rows and the baseline share window 10 and 198,596 training sentences, so
+they are directly comparable to each other. The Points=20 row is **not** matched to the baseline: it trains on a
+different sentence count (144,317) with a longer window, so its −30.2% gap mixes the window change with the
+architecture change.
+
+**R2b observation:** the narrow-window run measures PPL 57.04 (`logs/run_r2_cloud_attn_200k_d64.log:26`); the
+wider-window run measures PPL 37.63 (`logs/run_r2_cloud_attn_200k_d64_n20.log:26`).
+**Selected point count:** 20.
+The widest-window run measures PPL 134.31 (`logs/run_r2_cloud_attn_200k_d64_n30.log:26`).
+**Limitation:** in this architecture the point count equals the token count (`cloudlm/model.py:312`), so it is not an
+independent knob, and the runs train on different sentence counts (`logs/run_r2_cloud_attn_200k_d64.log:9`,
+`logs/run_r2_cloud_attn_200k_d64_n20.log:9`, `logs/run_r2_cloud_attn_200k_d64_n30.log:9`). The delta is therefore an
+observation, not a controlled point-count ablation.
 
 ### 5.2 Max-Pool vs Attention-Pool
 
@@ -164,7 +178,7 @@ From the same cloud:
 - **Figure 1:** Universal architecture and module flow (100-290)
 - **Figure 2:** Pair-geometry and symmetric fusion
 - **Figure 3:** Score, ablation, prototype, and drift from the same cloud
-- **Figure 4:** D=64 + Points=20 optimization (PPL 37.63)
+- **Figure 4:** D=64 context-window sweep, three measured runs (57.04 / 37.63 / 134.31 PPL)
 - **Figure 5:** Max-pool vs attention-pool comparison
 - **Figure 6:** Cloud geometry visualization (3D)
 
@@ -212,15 +226,18 @@ loss = word_loss + 0.1 × point_loss
 - **Weight decay:** 0.01
 - **Scheduler:** Cosine annealing
 
-### 7.4 Point-Count Optimization (R2b)
+### 7.4 Point-Count Sweep (R2b)
 
-**Discovery:** When point count increases from 10 to 20:
-- **PPL:** 57.04 → 37.63 (**34% improvement**)
-- **vs Baseline:** 30% better
+**Measured:** as the point/window count goes 10 → 20 → 30, PPL measures 57.04 → 37.63 → 134.31
+(`logs/run_r2_cloud_attn_200k_d64.log:26`, `..._n20.log:26`, `..._n30.log:26`).
 
-**Mechanism:**
-- More points → richer cloud geometry
-- **Optimum:** 20 points (overfit at 30: 134.31 PPL)
+**Reading of the curve:**
+- In this architecture the point count is the token count (`cloudlm/model.py:312`); there is no separate
+  point-count knob, so the sweep is a context-window sweep.
+- The three runs train on 198,596 / 144,317 / 28,825 sentences respectively (`logs/...:9`), i.e. the training
+  set shrinks as the window grows. The curve is therefore **not** a controlled ablation of point count.
+- The reason the 30-point run degrades to 134.31 PPL is **not verified**; the concurrent 5× drop in training
+  sentences is an unexcluded alternative explanation, so no overfitting claim is made here.
 
 ### 7.5 Max-Pool Preference
 
@@ -276,7 +293,7 @@ wherein permutation-invariance applies to the set aggregation in step (c), and p
 
 **Claim 5:** The system of Claim 1, wherein **D is selected as 32 or 64**.
 
-**Claim 6:** The system of Claim 1, wherein **the point count is selected as 20** (R2b optimization).
+**Claim 6:** The system of Claim 1, wherein **the point count is selected as 20**.
 
 **Claim 7:** The system of Claim 1, wherein **max-pool** is used in set aggregation (instead of attention-pool).
 
@@ -284,7 +301,7 @@ wherein permutation-invariance applies to the set aggregation in step (c), and p
 
 **Claim 9:** The system of Claim 1, wherein the reader carries a **full vocabulary mapping** and does not assign any token/bucket ID to an "other" bucket.
 
-**Claim 10 — Language embodiment:** The system of Claim 1, wherein input units are tokens/subwords and the reader output is a next-token distribution; **PPL of 37.63 was measured on 200K corpus with D=64, Points=20 configuration** (30% better than causal baseline of 53.95).
+**Claim 10 — Language embodiment:** The system of Claim 1, wherein input units are tokens/subwords and the reader output is a next-token distribution; **a PPL of 37.63 was measured on a 200K corpus with D=64 and a point count of 20**.
 
 ---
 
@@ -292,7 +309,14 @@ wherein permutation-invariance applies to the set aggregation in step (c), and p
 
 The system represents tokens or input units as low-dimensional (3 ≤ D ≤ 64) points; combines point features with distance/angle-based pair-geometry using symmetric set aggregation; and generates task score from the set state using a reader. The same point cloud serves as a native explanation object for leave-one-point-out ablation, region/prototype labeling, and region-shift/drift examination.
 
-**Key finding:** When point count increases from 10 to 20, performance improves by **34%** (PPL 57.04 → 37.63). **Max-pool** demonstrates more stable performance than attention-pool (Δ5.91 PPL improvement on 200K).
+**Key findings:**
+
+- The narrow-window run measures PPL 57.04 (`logs/run_r2_cloud_attn_200k_d64.log:26`).
+- The wider-window run measures PPL 37.63 (`logs/run_r2_cloud_attn_200k_d64_n20.log:26`).
+- The two runs train on different sentence counts, so this is an observation, not a controlled point-count ablation.
+- The max-pool run measures PPL 49.84 (`logs/run_r3_200k_max.log:27`).
+- The attention-pool run measures PPL 55.75 (`logs/run_r3_200k_attn.log:27`).
+- The two pooling runs share corpus, cloud width, depth and epoch budget, and differ in the pooling method.
 
 The system is applicable to language modeling; no accuracy superiority is claimed, and explanation is a geometry-based examination surface.
 
