@@ -55,6 +55,11 @@ SVG/dikey kaynaktan yeniden üretilir). Tabular paketteki çizim şemaları `tab
 referans numaralı SVG kaynaklarıdır; fraud bulutu mevcut PNG kaynağından hazırlanır.
 `.docx` dosyaları commit'lenir (teslimat ürünü).
 
+## Vekil yazışmaları
+
+- [`VEKIL_ANLATIM.md`](VEKIL_ANLATIM.md) — buluşun ana yapısı, jargonsuz anlatım.
+- [`VEKIL_SORU_CEVAP.md`](VEKIL_SORU_CEVAP.md) — vekilden gelen sorular ve kod-kanıtlı yanıtları.
+
 ## Arşiv
 
 Sürüm dışı eski taslaklar: [`_archive/`](_archive/README.md).
