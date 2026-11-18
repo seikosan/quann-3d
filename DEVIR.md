@@ -11,10 +11,10 @@ kunye-kaynak: otomatik (devir_yaz.py)
 # DEVIR — quann-3d
 
 <!-- MAKINE:BASLA -->
-## Durum (makine üretti · 2026-11-18 00:08)
+## Durum (makine üretti · 2026-11-18 14:05)
 Bu blok elle düzenlenmez; `devir_yaz.py --repo /Users/serkankose/Documents/quann-3d` ile yenilenir.
 
-- HEAD: 9674916 Refactor step 3: shared dataset module + canonical purecloudlm trainer
+- HEAD: 1afc688 docs/patent: final_v3 nihai başvuru paketi — sıfırdan yazım, ölçümlü şekiller, bağımsız denetim turu
 - Değişen dosya: 0
 - Kod kapısı: bulgu 0 · uyarı 0 · bilgi 1 · düzeltme planı: 0 (ayrıntı: python3 ~/.config/opencode/denetim/denetim_plan.py)
 - Doküman kapısı: bulgu 0 · uyarı 0 · bilgi 2 · düzeltme planı: 0 (ayrıntı: python3 ~/.config/opencode/denetim/denetim_plan.py)
@@ -39,11 +39,20 @@ Bu blok elle düzenlenmez; `devir_yaz.py --repo /Users/serkankose/Documents/quan
 
 
 
+
 ## Sıradaki iş (ajan)
 
-- **Patent tarafı kapandı (16 Kas):** 6 güncel doküman (3 TR + 3 EN) `patent_lint`
-  0 hata · 0 uyarı; commit `3efcdd6` (bu depo) + `24e1d62` (patent-hatti linter
-  dil-desteği). Açık patent işi yok; push bekliyor.
+- **Patent v3 NİHAİ paket hazır (18 Kas, commit `1afc688`):** `docs/patent/final_v3/`
+  — ISTEMLER (15 istem, 3 bağımsız) + TARIFNAME (237 satır, §12 dürüstlük kayıtları)
+  + OZET + TEKNIK_ETKI + 8 SVG (Şekil 6/7 ölçümlü, gerçek JSON'dan) + build_v3.py
+  kapılarıyla; 5 DOCX + 5 PDF üretildi. Bağımsız reviewer turu: 71 sayı-atıf ✓,
+  kırmızı çizgi ihlali 0, bulunan 2 atıf hatası + 5 künye boşluğu giderildi.
+  Eski `patent-cikti/basvuru_paketi` ve `docs/patent/dil` artık yalnız referans.
+- **Vekil kararları (v3, kullanıcı tarafı):** özet uzunluğu (265 kelime), 3 bağımsız
+  istemin birliği, iki-bölümlü kalıp tercihi — `BLUS_NOTU.md` kırmızı çizgileriyle
+  birlikte vekile götürülecek (vekil raporu §d).
+- **Push bekliyor:** refactor commit'leri (`1f21cec`…`64555cc`) + `1afc688`
+  `deneme_context_cloud` dalında, kullanıcı onayı olmadan push edilmedi.
 - **Tamamlandı (17 Kas):** CC ayrık holdout (80/10/10, seed=42) üç script'e eklendi,
   R5 koşuları bitti; vocab=10000 kontrollü memory rerun da bitti (aşağıda Kanıt).
 - **Tamamlandı (17 Kas):** Model-boyutu kontrollü memory koşusu bitti; boyut
