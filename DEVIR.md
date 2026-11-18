@@ -51,8 +51,15 @@ Bu blok elle düzenlenmez; `devir_yaz.py --repo /Users/serkankose/Documents/quan
 - **Vekil kararları (v3, kullanıcı tarafı):** özet uzunluğu (265 kelime), 3 bağımsız
   istemin birliği, iki-bölümlü kalıp tercihi — `BLUS_NOTU.md` kırmızı çizgileriyle
   birlikte vekile götürülecek (vekil raporu §d).
-- **Push bekliyor:** refactor commit'leri (`1f21cec`…`64555cc`) + `1afc688`
-  `deneme_context_cloud` dalında, kullanıcı onayı olmadan push edilmedi.
+- **Push BLOCKED — kullanıcı kararı "şimdilik push yok" (18 Kas):** refactor
+  commit'leri (`1f21cec`…`64555cc`) + v3 paket commit'leri `deneme_context_cloud`
+  dalında yerel. Push denemesi GitHub'ın 100 MB tek-dosya sınırına takıldı: geçmişte
+  `quann-3d-backup-20261028.tar.gz` = 1.891.553.280 B ≈ 1,76 GiB (ekleyen commit
+  `e33deb7`; `git rev-list --objects origin/main..HEAD` taraması — gönderilecek
+  1238 nesne, 10 MB üstü TEK dosya bu). Kalan ~10 MB. İki seçenek: (a) geçmişi
+  yeniden yaz (dal hiç push edilmediği için güvenli; diskteki dosyaya dokunulmaz,
+  `.gitignore`'a eklenir) → push saniyeler; (b) Git LFS. Kullanıcı (a)'yı reddetti,
+  push ertelendi.
 - **Tamamlandı (17 Kas):** CC ayrık holdout (80/10/10, seed=42) üç script'e eklendi,
   R5 koşuları bitti; vocab=10000 kontrollü memory rerun da bitti (aşağıda Kanıt).
 - **Tamamlandı (17 Kas):** Model-boyutu kontrollü memory koşusu bitti; boyut
