@@ -11,12 +11,12 @@ kunye-kaynak: otomatik (devir_yaz.py)
 # DEVIR — quann-3d
 
 <!-- MAKINE:BASLA -->
-## Durum (makine üretti · 2026-11-18 14:05)
+## Durum (makine üretti · 2026-11-18 15:47)
 Bu blok elle düzenlenmez; `devir_yaz.py --repo /Users/serkankose/Documents/quann-3d` ile yenilenir.
 
-- HEAD: 1afc688 docs/patent: final_v3 nihai başvuru paketi — sıfırdan yazım, ölçümlü şekiller, bağımsız denetim turu
-- Değişen dosya: 0
-- Kod kapısı: bulgu 0 · uyarı 0 · bilgi 1 · düzeltme planı: 0 (ayrıntı: python3 ~/.config/opencode/denetim/denetim_plan.py)
+- HEAD: 3dc1ad6 DEVIR: push kaydi BLOCKED'ya gecti — GitHub 100MB siniri + gecmisteki 1,76GiB backup tarball (e33deb7); kullanici karari 'simdilik push yok'
+- Değişen dosya: 3 → README.md, docs/patent/final_v3/Archive/, docs/patent/final_v3/son_draft.zip
+- Kod kapısı: bulgu 0 · uyarı 0 · bilgi 0 · düzeltme planı: 0 (ayrıntı: python3 ~/.config/opencode/denetim/denetim_plan.py)
 - Doküman kapısı: bulgu 0 · uyarı 0 · bilgi 2 · düzeltme planı: 0 (ayrıntı: python3 ~/.config/opencode/denetim/denetim_plan.py)
 - ölçüm: === EĞİTİM DURUMU (kaynak: ham dosya) ===
 - ölçüm: kaynak        : logs/run_resume_r2_fixed.log:212
@@ -26,6 +26,7 @@ Bu blok elle düzenlenmez; `devir_yaz.py --repo /Users/serkankose/Documents/quan
 - ölçüm: geçen süre    : 62815 s = 17.45 saat
 - Açık kartlar (pano yok): (belirtilmedi)
 <!-- MAKINE:BITIR -->
+
 
 
 

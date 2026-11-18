@@ -65,12 +65,22 @@ quann-3d/
 │   ├── figures/                #   Makale/patent SVG şekilleri (sekil_1..8)
 │   └── patent/                 #   Patent taslakları (3 sürüm)
 ├── logs/                       # Tüm eğitim/çalıştırma logları
+├── fraud/                      # İşlem fraud + edge (INT8) — kanıtlar results/ altında
+├── aml/                        # AML tipoloji + açıklanabilirlik probe'u (results/, figures/)
+├── maintenance/                # Endüstriyel bakım / sensör bulutları (results/, figures/)
+├── complaints/                 # Şikâyet ölçek kararlılığı (results/)
+├── fpga/                       # Sabit-nokta golden referans araçları (tools/)
+├── neural-atlas/               # Eski 3B web görselleştiricisi (bayat — aktif akışta değil)
+├── scripts/                    # durum.py, yedekleme (backup_ssd.sh), doküman denetimi
 ├── quann_cloud/                # QUANN-Cloud paketi (backprop'suz eğitim) — src/, tests/,
 │                               #   experiments/, data/, logs/, checkpoints/, docs/
 │                               #   (QCloudNetwork, cloudlm/'in WordToND/CloudEncoderND
 │                               #    alt-modüllerini yeniden kullanır)
 └── _archive/                   # Bayat/elenmiş içerik (arch/, refactor_2026_11/, src_legacy/)
 ```
+
+Kökteki `patent-cikti/`, `*.zip` ve `*.tar.gz` üretim artefaktları `.gitignore`'dadır —
+depo haritasına dahil değildir.
 
 ## Mimari
 
