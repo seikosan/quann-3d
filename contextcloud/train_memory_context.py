@@ -86,11 +86,16 @@ class SimpleCloudEncoder(nn.Module):
     """Simple chunk encoder (standalone) with moderate regularization."""
     
     def __init__(self, vocab_size, d_model=128, d_cloud=256, max_tokens=256,
-                 nhead=4, n_layers=2, dropout=0.2):
+                 nhead=4, n_layers=2, dropout=0.2,
+                 masked_pool: bool = False, unshared_encoder: bool = False):
         super().__init__()
         self.embedding = nn.Embedding(vocab_size, d_model)
         self.pos_enc = nn.Parameter(torch.zeros(1, max_tokens, d_model))
-        
+        # R6 katkı bayrakları: varsayılanlar MEVCUT davranışı birebir korur.
+        # masked_pool=False → padding'li ortalama (R5 davranışı)
+        # unshared_encoder=False → tek instance n_layers kez paylaşılan stack (R5)
+        self.masked_pool = masked_pool
+
         encoder_layer = nn.TransformerEncoderLayer(
             d_model=d_model, nhead=nhead, dim_feedforward=d_model*2,
             dropout=dropout, batch_first=True
@@ -99,7 +104,18 @@ class SimpleCloudEncoder(nn.Module):
             d_model=d_model, nhead=nhead,
             dim_feedforward=d_model*2, dropout=dropout, batch_first=True
         )
-        self.encoder_stack = nn.Sequential(*[encoder_layer for _ in range(n_layers)])
+        if unshared_encoder:
+            # Bağımsız katmanlar; state_dict ana adları aynı kalır (§3.1):
+            # encoder_stack.0.* / encoder_stack.1.* (paylaşımlıda aynı tensörün iki yolu)
+            self.encoder_stack = nn.Sequential(*[
+                nn.TransformerEncoderLayer(
+                    d_model=d_model, nhead=nhead, dim_feedforward=d_model*2,
+                    dropout=dropout, batch_first=True
+                )
+                for _ in range(n_layers)
+            ])
+        else:
+            self.encoder_stack = nn.Sequential(*[encoder_layer for _ in range(n_layers)])
         
         self.cloud_proj = nn.Sequential(
             nn.Linear(d_model, d_cloud),
@@ -112,7 +128,13 @@ class SimpleCloudEncoder(nn.Module):
         if mask is not None:
             x = x.masked_fill(~mask.unsqueeze(-1), 0)
         x = self.encoder_stack(x)
-        cloud_state = self.cloud_proj(x).mean(dim=1)  # (B, Dim)
+        h = self.cloud_proj(x)
+        if mask is not None and self.masked_pool:
+            # Yalnız geçerli tokenlar üzerinde ortalama (padding payı yok)
+            m = mask.unsqueeze(-1).to(h.dtype)
+            cloud_state = (h * m).sum(dim=1) / m.sum(dim=1).clamp(min=1.0)
+        else:
+            cloud_state = h.mean(dim=1)  # (B, Dim)
         return cloud_state
 
 
@@ -123,14 +145,15 @@ class MemoryContextModel(nn.Module):
     """
     
     def __init__(self, vocab_size, d_model=128, d_sentence=256, max_tokens=256,
-                 num_chunks=4, num_memory=64, dropout=0.2):
+                 num_chunks=4, num_memory=64, dropout=0.2,
+                 masked_pool: bool = False, unshared_encoder: bool = False):
         super().__init__()
         self.num_chunks = num_chunks
         
         # Chunk encoder
         self.chunk_encoder = SimpleCloudEncoder(
             vocab_size, d_model=d_model, d_cloud=d_sentence, max_tokens=max_tokens,
-            dropout=dropout
+            dropout=dropout, masked_pool=masked_pool, unshared_encoder=unshared_encoder
         )
         
         # Memory bank
@@ -244,6 +267,12 @@ def main():
     parser.add_argument("--seed", type=int, default=None,
                         help="torch RNG seedi (model init + shuffle); None = tohumlanmamış "
                              "(R5 orijinal davranışıyla birebir)")
+    parser.add_argument("--masked-pool", action="store_true",
+                        help="Chunk havuzlamada yalnız geçerli tokenların ortalaması "
+                             "(varsayılan kapalı = R5 padding'li ortalama davranışı)")
+    parser.add_argument("--unshared-encoder", action="store_true",
+                        help="encoder_stack katmanları bağımsız ağırlıklı olsun "
+                             "(varsayılan kapalı = R5 tek instance paylaşımlı stack)")
     args = parser.parse_args()
     if args.seed is not None:
         torch.manual_seed(args.seed)
@@ -268,6 +297,8 @@ def main():
     logger.info("Memory: %d, Dropout: %.2f, Weight Decay: %.2f, LR: %.5f", NUM_MEMORY, DROPOUT, WEIGHT_DECAY, LEARNING_RATE)
     logger.info("Torch seed: %s | ckpt: %s | veri bölme seed=42 sabit (AGENTS §4.1)",
                 args.seed, args.ckpt_name)
+    logger.info("R6 katkı bayrakları: masked_pool=%s unshared_encoder=%s",
+                args.masked_pool, args.unshared_encoder)
     
     if not os.path.exists(DATA_FILE):
         logger.error("Data file not found: %s", DATA_FILE)
@@ -298,7 +329,9 @@ def main():
         max_tokens=MAX_TOKENS,
         num_chunks=NUM_CHUNKS,
         num_memory=NUM_MEMORY,
-        dropout=DROPOUT
+        dropout=DROPOUT,
+        masked_pool=args.masked_pool,
+        unshared_encoder=args.unshared_encoder
     )
     model = model.to(device)
     logger.info("Model parameters: %d", sum(p.numel() for p in model.parameters()))
