@@ -2,7 +2,7 @@
 
 > Her oturum başında okunur. Ağır log/checkpoint/kod incelemesi alan agent'larında kalır.
 > Güncelleme protokolü: `AGENTS.md` §5. Dosya bütçesi: en çok 150 satır.
-> Son güncelleme: 2026-11-16 — CC global sonucu işlendi
+> Son güncelleme: 2026-11-18 akşam — R5 seed2 tamamlandı
 
 ## Bir Cümle
 
@@ -13,12 +13,14 @@ gradyan geri yayılımı olmadan eğitmeyi araştırır.
 
 | Run | Durum / PID | Başlangıç | Plan / beklenen süre | Log |
 |---|---|---|---|---|
+| Yok | — | — | — | — |
 
 ## Son Deneyler
 
 | Tarih | Run | Tek satır sonuç | Ders | Log |
 |---|---|---|---|---|
-| 2026-11-17 | Görev-sabit ablation: stable mekanizma memory görevinde | TEST loss 3.5425 (`logs/run_r5_ablate_stable_on_memorytask.log:1332`); best val 3.4802 ep 26 (`logs/run_r5_ablate_stable_on_memorytask.log:1151`); 30 ep doldu. | ~0.4'lik farkın ayrımı: görev zorluğu 0.3107 (3.5425−3.2318) + mekanizma 0.0846 (3.6271−3.5425); memory mekanizması kendi görevinde pencere/bulut'tan tek seed'le 0.08 kötü — çürük değil ama üstün de değil. | `logs/run_r5_ablate_stable_on_memorytask.log` |
+| 2026-11-18 | R5 seed=43 tekrarı — mekanizma farkı 0.0846→0.0755 tekrarlandı | Memory TEST: ablation 3.5425→3.5581, memory-stablesz 3.6271→3.6336; fark 0.0846→0.0755. Stable TEST: 3.2318→3.2131 (Δ0.0187). | Yaklaşık 0.08 mekanizma farkı iki bağımsız örnekte aynı yön ve büyüklükte tekrarlandı; orijinal koşular tohumlanmamış, seed=43 ayrı örnektir, aynı-seed tekrarı değildir. | Orijinal: `logs/run_r5_ablate_stable_on_memorytask.log:1332`, `logs/run_r5_cc_memory_stablesz.log:894`, `logs/run_r5_cc_stable.log:1236`; seed=43: `logs/run_r5_seed2_ablate_s43.log:982`, `logs/run_r5_seed2_memory_stablesz_s43.log:631`, `logs/run_r5_seed2_cc_stable_s43.log:1237` |
+| 2026-11-17 | Görev-sabit ablation: stable mekanizma memory görevinde | TEST loss 3.5425 (`logs/run_r5_ablate_stable_on_memorytask.log:1332`); best val 3.4802 ep 26 (`logs/run_r5_ablate_stable_on_memorytask.log:1151`); 30 ep doldu. | İlk örnekte görev zorluğu/mekanizma farkı ayrıştırıldı; ikinci bağımsız örnek sonucu yukarıda. | `logs/run_r5_ablate_stable_on_memorytask.log` |
 | 2026-11-17 | Memory stable-boyutu kontrolü (d_model 128, d_sentence 256, vocab 10000) | TEST loss 3.6271 (`logs/run_r5_cc_memory_stablesz.log:894`); best val 3.5578 ep 15 (`logs/run_r5_cc_memory_stablesz.log:668`); erken durdurma ep 20. | Model boyutu farkı önemsiz (3.6295→3.6271, Δ0.0024); stable'a kalan ~0.4 fark boyuttan değil — görev zorluğu (4-chunk hedef) + mekanizma karışımı; ayrım için görev-sabit mekanizma ablation'ı gerekir. | `logs/run_r5_cc_memory_stablesz.log` |
 | 2026-11-17 | R5 memory vocab=10000 kontrollü rerun | Aynı split/seed/vocab (10000, stable ile birebir): memory TEST loss 3.6295 vs stable 3.2318; best val 3.5735, erken durdurma ep 10 (`logs/run_r5_cc_memory_v10k.log:453`). | Vocab-eşleşik kıyas: 9.56→3.63 düşüşün baskın nedeni vocab boyutu; kalan ~0.4 fark model boyutu (memory d_model 64 vs stable 128) + görev farkıyla karışık, mekanizma kusuru kanıtı değil. | `logs/run_r5_cc_memory_v10k.log` |
 
@@ -74,6 +76,8 @@ gradyan geri yayılımı olmadan eğitmeyi araştırır.
 - Nokta sayısı varyantı logunda PPL 37.63 (`logs/run_r2_cloud_attn_200k_d64_n20.log:26`); satır held-out olarak etiketlenmediğinden held-out sonucu sayılmamalıdır.
 - Fraud doğal testinde FP32 AUC-ROC 0.9451 (`fraud/logs/run_full_scale_edge_eval.log:52`).
 - Fraud doğal testinde INT8-channel AUC-ROC 0.9367 (`fraud/logs/run_full_scale_edge_eval.log:54`).
+- Stable train-loss sıçramaları: seed=43 Epoch 3 5.6595, Epoch 5 15.2557; orijinal Epoch 4 8.1102. Her iki koşuda best checkpoint Epoch 1'de seçildi; sıçramalar TEST'e yansımadı (best-ckpt TEST 3.2131/3.2318); sebebi doğrulanmadı (`logs/run_r5_seed2_cc_stable_s43.log:211,619,1027,1237`; `logs/run_r5_cc_stable.log:211,822,1236`).
+- R5 memory mekanizma farkı iki bağımsız örneğe dayanır: orijinal tohumlanmamış, seed=43 ayrı örnek olup aynı-seed tekrarı değildir (`logs/run_r5_ablate_stable_on_memorytask.log:1332`; `logs/run_r5_seed2_ablate_s43.log:982`).
 
 Detay: `quann_cloud/REVISION.md`.
 
@@ -95,8 +99,7 @@ Detay: `quann_cloud/REVISION.md`.
 - Tamamlandı (17 Kas): vocab=10000 eşitlenmiş kontrollü memory rerun bitti;
   memory TEST 3.6295 (`logs/run_r5_cc_memory_v10k.log:454`) ve stable TEST
   3.2318 (`logs/run_r5_cc_stable.log:1236`).
-- Kalan ~0.4 farkı ayırmak için memory'yi stable boyutunda (d_model 128,
-  d_sentence 256) vocab=10000 ile koş; model boyutu vs görev farkı ayrışır.
+- Tamamlandı (18 Kas): R5 seed=43 ablation → memory-stablesz → stable kuyruğu; mekanizma farkı 0.0846→0.0755 (`logs/run_r5_seed2.log` son satırı; TEST satırları yukarıda).
 - Kullanıcı D=128'i önceliklendirirse kapasite adayı olarak ayrıca dene.
 - Padding-pool ve paylaşılan `encoder_layer` katkılarını kontrollü deneyle ölç;
   etkileri henüz ölçülmedi (`contextcloud/train_memory_context.py:93`; `contextcloud/train_memory_context.py:108`).

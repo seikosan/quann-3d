@@ -11,11 +11,11 @@ kunye-kaynak: otomatik (devir_yaz.py)
 # DEVIR — quann-3d
 
 <!-- MAKINE:BASLA -->
-## Durum (makine üretti · 2026-11-18 15:47)
+## Durum (makine üretti · 2026-11-18 17:14)
 Bu blok elle düzenlenmez; `devir_yaz.py --repo /Users/serkankose/Documents/quann-3d` ile yenilenir.
 
-- HEAD: 3dc1ad6 DEVIR: push kaydi BLOCKED'ya gecti — GitHub 100MB siniri + gecmisteki 1,76GiB backup tarball (e33deb7); kullanici karari 'simdilik push yok'
-- Değişen dosya: 3 → README.md, docs/patent/final_v3/Archive/, docs/patent/final_v3/son_draft.zip
+- HEAD: 51fa24a contextcloud: --seed ve --ckpt-name desteigi + run_r5_seed2 kuyrugu
+- Değişen dosya: 3 → RESEARCH.md, docs/patent/final_v3/Archive/, docs/patent/final_v3/son_draft.zip
 - Kod kapısı: bulgu 0 · uyarı 0 · bilgi 0 · düzeltme planı: 0 (ayrıntı: python3 ~/.config/opencode/denetim/denetim_plan.py)
 - Doküman kapısı: bulgu 0 · uyarı 0 · bilgi 2 · düzeltme planı: 0 (ayrıntı: python3 ~/.config/opencode/denetim/denetim_plan.py)
 - ölçüm: === EĞİTİM DURUMU (kaynak: ham dosya) ===
@@ -26,6 +26,7 @@ Bu blok elle düzenlenmez; `devir_yaz.py --repo /Users/serkankose/Documents/quan
 - ölçüm: geçen süre    : 62815 s = 17.45 saat
 - Açık kartlar (pano yok): (belirtilmedi)
 <!-- MAKINE:BITIR -->
+
 
 
 
@@ -63,12 +64,10 @@ Bu blok elle düzenlenmez; `devir_yaz.py --repo /Users/serkankose/Documents/quan
   push ertelendi.
 - **Tamamlandı (17 Kas):** CC ayrık holdout (80/10/10, seed=42) üç script'e eklendi,
   R5 koşuları bitti; vocab=10000 kontrollü memory rerun da bitti (aşağıda Kanıt).
-- **Tamamlandı (17 Kas):** Model-boyutu kontrollü memory koşusu bitti; boyut
-  farkı önemsiz (Δ0.0024), kalan ~0.4 fark görev+mechanizma karışımı (Kanıt).
-- **Tamamlandı (17 Kas):** Görev-sabit ablation bitti; farkın ayrımı: görev 0.31 +
-  mekanizma 0.08 (Kanıt). Memory mekanizması üstünlük kanıtlayamadı (tek seed).
-- **Seed tekrarı (opsiyonel):** ablation + memory koşularını 2. seed'la tekrarla;
-  0.08'lik mekanizma farkı tek seed'li, istatistiksel sağlamlık ölçülmedi
+- **Tamamlandı (17 Kas):** Model-boyutu kontrollü memory koşusu bitti; boyut farkı önemsiz (Δ0.0024), kalan ~0.4 fark görev+mekanizma karışımı (Kanıt).
+- **Tamamlandı (17 Kas):** Görev-sabit ablation bitti; ayrım: görev 0.31 + mekanizma 0.08 (Kanıt). Memory mekanizması üstünlük kanıtlayamadı; fark artık iki bağımsız örnekli (aşağıdaki seed=43 satırı).
+- **Tamamlandı (18 Kas):** seed=43 kuyruğu bitti (ablation→memory-stablesz→stable;
+  commit `51fa24a`, `logs/run_r5_seed2.log`); ~0.08 mekanizma farkı tekrarlandı (Kanıt).
 - **Patent paket düzeltmesi (vekil sorusuyla bulundu, 17 Kas):** (1)
   `docs/patent/dil/TURKPATENT_basvuru_v2.3.md:2` başlığı fiilen v2.5 diyor —
   gerçek v2.3 docx/`_archive`'te; vekil paket listesiyle senkronla. (2) Üç farklı
@@ -154,6 +153,7 @@ Bu blok elle düzenlenmez; `devir_yaz.py --repo /Users/serkankose/Documents/quan
   ; ayrım: görev zorluğu 0.3107 (3.5425−3.2318) + mekanizma 0.0846
   (3.6271−3.5425) (hesap bu oturumda); memory mekanizması kendi görevinde
   pencere/bulut'tan 0.08 kötü (tek seed) — çürük değil, üstün de değil
+- R5 SEED=43 TEKRARI (18 Kas, bağımsız ikinci örnek; commit `51fa24a`, kod kilidi `logs/run_r5_seed2.log:2-6`): TEST ablation 3.5581 — `logs/run_r5_seed2_ablate_s43.log:982`; memory-stablesz 3.6336 — `logs/run_r5_seed2_memory_stablesz_s43.log:631` → mekanizma farkı 0.0755 ↔ orijinal 0.0846 (yön+büyüklük korundu); stable kontrolü 3.2131 — `logs/run_r5_seed2_cc_stable_s43.log:1237` vs 3.2318 (Δ0.0187); orijinal checkpoint'ler korundu (yalnız `*_s43_best.pt` yazıldı); tekrarlanan epoch-ort. train-loss sıçraması iki koşuda da var (s43 5.66/15.26 — `logs/run_r5_seed2_cc_stable_s43.log:619,1027`; orijinal 8.11 — `logs/run_r5_cc_stable.log:822`), best ckpt ikisinde de ep 1, TEST'e yansımadı, sebep doğrulanmadı. Bağımsız tester turu: 8/8 ✓
 - CC sızdırmasız görev sonuçları: stable Best val loss 3.1327 —
   `logs/run_r4_contextcloud_stable.log:1532`
   ; memory Best val loss 9.4801 — `logs/run_r4_contextcloud_memory.log:550`
