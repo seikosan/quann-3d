@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Train ContextCloudLM with gradient clipping and warmup for stability."""
 
+import argparse
 import logging
 import os
 import sys
@@ -80,6 +81,16 @@ def evaluate(model, dataloader, criterion, device):
 
 
 def main():
+    parser = argparse.ArgumentParser(description="Stable CC eğitimi (R5 akışı)")
+    parser.add_argument("--seed", type=int, default=None,
+                        help="torch RNG seedi (model init + shuffle); None = tohumlanmamış "
+                             "(R5 orijinal davranışıyla birebir)")
+    parser.add_argument("--ckpt-name", default="context_stable_best.pt",
+                        help="best checkpoint adı; seed tekrarlarında ayrı ad orijinal kanıtı korur")
+    args = parser.parse_args()
+    if args.seed is not None:
+        torch.manual_seed(args.seed)
+
     DATA_FILE = "data/turkish_sentences.txt"
     OUTPUT_DIR = "contextcloud/checkpoints"
     MAX_TOKENS = 128
@@ -93,6 +104,8 @@ def main():
 
     device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
     logger.info("Using device: %s", device)
+    logger.info("Torch seed: %s | ckpt: %s | veri bölme seed=42 sabit (AGENTS §4.1)",
+                args.seed, args.ckpt_name)
 
     if not os.path.exists(DATA_FILE):
         logger.error("Data file not found: %s", DATA_FILE)
@@ -161,7 +174,7 @@ def main():
         if val_loss < best_val_loss:
             best_val_loss = val_loss
             patience_counter = 0
-            checkpoint_path = os.path.join(OUTPUT_DIR, "context_stable_best.pt")
+            checkpoint_path = os.path.join(OUTPUT_DIR, args.ckpt_name)
             torch.save({
                 "model_state_dict": model.state_dict(),
                 "vocab_size": vocab_size,
@@ -181,7 +194,7 @@ def main():
     logger.info("\n=== TRAINING COMPLETE ===")
     logger.info("Best val loss: %.4f", best_val_loss)
 
-    checkpoint_path = os.path.join(OUTPUT_DIR, "context_stable_best.pt")
+    checkpoint_path = os.path.join(OUTPUT_DIR, args.ckpt_name)
     if os.path.exists(checkpoint_path):
         ckpt = torch.load(checkpoint_path, map_location=device, weights_only=False)
         model.load_state_dict(ckpt["model_state_dict"])

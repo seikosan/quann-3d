@@ -241,7 +241,12 @@ def main():
                         help="Gömme boyutu; stable boyut kontrolü için 128")
     parser.add_argument("--d-sentence", type=int, default=128,
                         help="Cümle boyutu; stable boyut kontrolü için 256")
+    parser.add_argument("--seed", type=int, default=None,
+                        help="torch RNG seedi (model init + shuffle); None = tohumlanmamış "
+                             "(R5 orijinal davranışıyla birebir)")
     args = parser.parse_args()
+    if args.seed is not None:
+        torch.manual_seed(args.seed)
 
     DATA_FILE = "data/turkish_sentences.txt"
     OUTPUT_DIR = "contextcloud/checkpoints"
@@ -261,6 +266,8 @@ def main():
     logger.info("Using device: %s", device)
     logger.info("=== MODEL KÜÇÜLTME STRATEJİSİ ===")
     logger.info("Memory: %d, Dropout: %.2f, Weight Decay: %.2f, LR: %.5f", NUM_MEMORY, DROPOUT, WEIGHT_DECAY, LEARNING_RATE)
+    logger.info("Torch seed: %s | ckpt: %s | veri bölme seed=42 sabit (AGENTS §4.1)",
+                args.seed, args.ckpt_name)
     
     if not os.path.exists(DATA_FILE):
         logger.error("Data file not found: %s", DATA_FILE)

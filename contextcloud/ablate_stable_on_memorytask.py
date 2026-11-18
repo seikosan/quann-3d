@@ -6,6 +6,7 @@ veri/bölme/vocab/görev memory koşusuyla birebir, eğitim reçetesi memory ile
 birebir; tek fark mekanizma (ContextCloudLM pencere/bulut vs memory slotları).
 """
 
+import argparse
 import logging
 import os
 import sys
@@ -62,9 +63,19 @@ def evaluate(model, dataloader, criterion, device):
 
 
 def main():
+    parser = argparse.ArgumentParser(description="Görev-sabit ablation (stable mekanizma, memory görevi)")
+    parser.add_argument("--seed", type=int, default=None,
+                        help="torch RNG seedi (model init + shuffle); None = tohumlanmamış "
+                             "(R5 orijinal davranışıyla birebir)")
+    parser.add_argument("--ckpt-name", default="ablate_stable_on_memorytask_best.pt",
+                        help="best checkpoint adı; seed tekrarlarında ayrı ad orijinal kanıtı korur")
+    args = parser.parse_args()
+    if args.seed is not None:
+        torch.manual_seed(args.seed)
+
     DATA_FILE = "data/turkish_sentences.txt"
     OUTPUT_DIR = "contextcloud/checkpoints"
-    CKPT_NAME = "ablate_stable_on_memorytask_best.pt"
+    CKPT_NAME = args.ckpt_name
     CHUNK_SIZE = 5
     MAX_TOKENS = 256
     NUM_CHUNKS = 4
@@ -79,6 +90,8 @@ def main():
     device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
     logger.info("Using device: %s", device)
     logger.info("Ablation: stable pencere/bulut mekanizması, memory görevi/reçetesi")
+    logger.info("Torch seed: %s | ckpt: %s | veri bölme seed=42 sabit (AGENTS §4.1)",
+                args.seed, CKPT_NAME)
 
     with open(DATA_FILE, "r", encoding="utf-8") as f:
         lines = [line.strip() for line in f if line.strip()]
