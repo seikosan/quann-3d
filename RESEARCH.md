@@ -2,7 +2,7 @@
 
 > Her oturum başında okunur. Ağır log/checkpoint/kod incelemesi alan agent'larında kalır.
 > Güncelleme protokolü: `AGENTS.md` §5. Dosya bütçesi: en çok 150 satır.
-> Son güncelleme: 2026-11-18 18:31 — R6 kapandı; R7 held-out koşuyor
+> Son güncelleme: 2026-11-18 23:12 — R7 kapandı (R2 kollar geçersiz); R8 koşuyor
 
 ## Bir Cümle
 
@@ -13,7 +13,7 @@ gradyan geri yayılımı olmadan eğitmeyi araştırır.
 
 | Run | Durum / PID | Başlangıç | Plan / beklenen süre | Log |
 |---|---|---|---|---|
-| R7 cloud-attn held-out | Koşuyor / 79322 (`ps -p 79322 -o pid=,stat=,command=`, 18 Kas kontrolü) | 18 Kas 18:31 (`logs/run_r7_cloud_attn_heldout.log:1`) | eval-only, 5 checkpoint × 5000 örnek (`training/shell/run_r7_cloud_attn_heldout.sh:41-45`; `logs/run_r7_cloud_attn_heldout.log:10-11`) | `logs/run_r7_cloud_attn_heldout.log` |
+| R8 QUANN pair/freeze (2 kol × 10 epoch) | Koşuyor / kabuk 9727 + python 9759 (`ps -p 9727 -o pid=,etime=`, `pgrep -f quann_pair_experiment`, 18 Kas 23:11 kontrolü) | 18 Kas 23:05:40 (`logs/run_r8_quann_pair.log:16`) | 20K cümle, seed=42, split 80/10/10; kontrol + pair-freeze kolu (`training/shell/run_r8_quann_pair.sh:37,43`) | `logs/run_r8_quann_pair.log` |
 
 ## Son Deneyler
 
@@ -21,7 +21,7 @@ gradyan geri yayılımı olmadan eğitmeyi araştırır.
 |---|---|---|---|---|
 | 2026-11-18 | R5 seed=43 tekrarı — mekanizma farkı 0.0846→0.0755 tekrarlandı | Memory TEST: ablation 3.5425→3.5581, memory-stablesz 3.6271→3.6336; fark 0.0846→0.0755. Stable TEST: 3.2318→3.2131 (Δ0.0187). | Yaklaşık 0.08 mekanizma farkı iki bağımsız örnekte aynı yön ve büyüklükte tekrarlandı; orijinal koşular tohumlanmamış, seed=43 ayrı örnektir, aynı-seed tekrarı değildir. | Orijinal: `logs/run_r5_ablate_stable_on_memorytask.log:1332`, `logs/run_r5_cc_memory_stablesz.log:894`, `logs/run_r5_cc_stable.log:1236`; seed=43: `logs/run_r5_seed2_ablate_s43.log:982`, `logs/run_r5_seed2_memory_stablesz_s43.log:631`, `logs/run_r5_seed2_cc_stable_s43.log:1237` |
 | 2026-11-17 | Görev-sabit ablation: stable mekanizma memory görevinde | TEST loss 3.5425 (`logs/run_r5_ablate_stable_on_memorytask.log:1332`); best val 3.4802 ep 26 (`logs/run_r5_ablate_stable_on_memorytask.log:1151`); 30 ep doldu. | İlk örnekte görev zorluğu/mekanizma farkı ayrıştırıldı; ikinci bağımsız örnek sonucu yukarıda. | `logs/run_r5_ablate_stable_on_memorytask.log` |
-| 2026-11-17 | Memory stable-boyutu kontrolü (d_model 128, d_sentence 256, vocab 10000) | TEST loss 3.6271 (`logs/run_r5_cc_memory_stablesz.log:894`); best val 3.5578 ep 15 (`logs/run_r5_cc_memory_stablesz.log:668`); erken durdurma ep 20. | Model boyutu farkı önemsiz (3.6295→3.6271, Δ0.0024); stable'a kalan ~0.4 fark boyuttan değil — görev zorluğu (4-chunk hedef) + mekanizma karışımı; ayrım için görev-sabit mekanizma ablation'ı gerekir. | `logs/run_r5_cc_memory_stablesz.log` |
+| 2026-11-18 | R7 cloud-attn held-out (eval-only, protokol `logs/run_r7_cloud_attn_heldout.log:11`) | R4 kontrolleri heldout_PPL: D32 69.7113 (`logs/run_r7_cloud_attn_heldout.log:14`), D64 69.1251 (`logs/run_r7_cloud_attn_heldout.log:17`); R2_attn kolları 61438.8713 (`logs/run_r7_cloud_attn_heldout.log:19`), 110738.9649 (`logs/run_r7_cloud_attn_heldout.log:21`), 991073.3084 (`logs/run_r7_cloud_attn_heldout.log:23`) — üçünden de önce legacy pos_enc remap uyarısı (`logs/run_r7_cloud_attn_heldout.log:18`). | Değerlendirme hattı sağlam: R4 kontrolleri aynı protokolün orijinal duel koşusuyla aynı mertebede — D32 61.94 (`logs/run_r4_resume.log:67`), D64 61.19 (`logs/run_r4_resume.log:70`). R2 attention sayıları bu kıyas için GEÇERSİZ: legacy forward uyumsuzluğu (`cloudlm/model.py:267-285`; bkz. yukarıda 814a468 notu); sapmanın kesin nedeni doğrulanmadı. | `logs/run_r7_cloud_attn_heldout.log` |
 | 2026-11-18 | R6 pool/encoder katkıları, seed=43 (queue HEAD `7e13dae`, `logs/run_r6_pool_enc.log:2`; masked_pool / unshared flags `logs/run_r6_maskpool_s43.log:5`, `logs/run_r6_unshared_s43.log:5`, `logs/run_r6_both_s43.log:5`) | Held-out TEST: maskpool 3.6431 (Δ+0.0095), unshared 3.6363 (Δ+0.0027), both 3.6762 (Δ+0.0426), kontrol 3.6336 (`logs/run_r6_maskpool_s43.log:588`; `logs/run_r6_unshared_s43.log:456`; `logs/run_r6_both_s43.log:412`; kontrol `logs/run_r5_seed2_memory_stablesz_s43.log:631`; Δ hesapları bu TEST değerlerinden). | Üç varyant da kontrolün gerisinde; tek seedde katkı negatif/yararsız, neden doğrulanmadı. | `logs/run_r6_maskpool_s43.log`; `logs/run_r6_unshared_s43.log`; `logs/run_r6_both_s43.log` |
 
 ## Ölçülmüş Bulgular
@@ -94,8 +94,7 @@ Detay: `quann_cloud/REVISION.md`.
 
 ## Sıradaki Aksiyonlar
 
-- Tamamlandı (17 Kas): ayrık 80/10/10 holdout bölmesi (seed=42) üç CC script'ine
-  eklendi ve R5 koşuları bitti; gerçek TEST loss'lar `logs/run_r5_cc_*.log` içinde.
+- Tamamlandı (17 Kas): ayrık 80/10/10 holdout bölmesi (seed=42) üç CC script'ine eklendi ve R5 koşuları bitti; gerçek TEST loss'lar `logs/run_r5_cc_*.log` içinde.
 - Tamamlandı (17 Kas): vocab=10000 eşitlenmiş kontrollü memory rerun bitti;
   memory TEST 3.6295 (`logs/run_r5_cc_memory_v10k.log:454`) ve stable TEST
   3.2318 (`logs/run_r5_cc_stable.log:1236`).
@@ -104,10 +103,8 @@ Detay: `quann_cloud/REVISION.md`.
 - Tamamlandı (18 Kas): R6 üç varyant da kontrol 3.6336'nın gerisinde (`logs/run_r5_seed2_memory_stablesz_s43.log:631`), NEGATİF katkı (delta +0,0027…+0,0426; hesap kontrol ve varyant TEST satırlarından: `logs/run_r6_unshared_s43.log:456`, `logs/run_r6_maskpool_s43.log:588`, `logs/run_r6_both_s43.log:412`); tek seed, neden doğrulanmadı.
 - Tamamlandı (18 Kas): R4 hükmü paper §6.8 ile `BLUS_NOTU.md:31`/`TARIFNAME.md:167`
   içinde zaten var; ham log doğrulandı: winner=D64, delta=0.76 (`logs/run_r4_resume.log:71`).
-- R7 cloud-attn held-out koşuyor; eval-only, eğitim yok; protokol satırı
-  `logs/run_r7_cloud_attn_heldout.log:11` (PID: Canlı Runlar tablosundaki `ps` kanıtında).
-- Sırada (kullanıcı onayı bu oturumda): R7 ardından R8 QUANN pair/freeze — çalıştırıcı
-  `training/quann_pair_experiment.py` hazır, `quann_cloud` motor testleri geçti.
+- Tamamlandı (18 Kas, koşu başlangıcı `logs/run_r7_cloud_attn_heldout.log:1`): R7 cloud-attn held-out bitti; R4 kontrolleri aynı mertebede: 69.7113 (`logs/run_r7_cloud_attn_heldout.log:14`), 69.1251 (`logs/run_r7_cloud_attn_heldout.log:17`). R2 attention kolları legacy pos_enc uyumsuzluğu nedeniyle GEÇERSİZ (`cloudlm/model.py:267-285`) — attention-vs-no-attn sorusu bu checkpoint'lerle yanıtlanamaz; çözüm adayları (uyumlu değerlendirici ya da güncel kodla yeniden eğitim) kullanıcı kararı adayıdır.
+- Koşuyor (18 Kas 23:05:40, `logs/run_r8_quann_pair.log:16`): R8 QUANN pair/freeze; ilk deneme kontrol kolunda öldü — shell `Killed: 9` bildirdi, logda izi `R8 control FAILED` (`logs/run_r8_quann_pair.log:15`); bellek kıtlığı şüphesi, sebep doğrulanmadı (jetsam kaydı bulunamadı). İkinci deneme kullanıcı onayıyla mlx_lm kapatıldıktan sonra başladı.
 - Tamamlandı (18 Kas): Fraud deploy kullanıcı onayıyla tazelendi (paket 18 Kas 17:30,
   parity max=1.27e-07); tester 5/5 ✓ (manifest↔sha, ORT sözleşme, FP32 0.9451 ham
   satırı `fraud/logs/run_full_scale_edge_eval.log:52`).
