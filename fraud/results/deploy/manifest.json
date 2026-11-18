@@ -1,9 +1,9 @@
 {
-  "generated": "2026-10-21 23:06:19",
+  "generated": "2026-11-18 17:30:43",
   "checkpoint": {
-    "path": "/Users/serkankose/Documents/quann-3d/fraud/results/quann_qat_gate.pt",
-    "size_kb": 636.1,
-    "sha256": "7330f5ed9475789569c580b5bcf9d59cc90e7a5f3b31eabfb88f46a796bf66eb"
+    "path": "/Users/serkankose/Documents/quann-3d/fraud/results/quann_full_hybrid.pt",
+    "size_kb": 636.5,
+    "sha256": "2bb6fcdbc0073ad743e81f0bf9a0c1312d0611a8386605b0bede0ba580fd48cd"
   },
   "model": {
     "D": 8,
@@ -15,8 +15,8 @@
   },
   "artifacts": {
     "model_onnx": "model.onnx",
-    "model_onnx_kb": 543.5,
-    "model_onnx_sha256": "b87ac519f085e1eec20ceb4e53fa81d2cc543fcba5969bb98c7eac0d28b4785f",
+    "model_onnx_kb": 548.4,
+    "model_onnx_sha256": "f0251f9d9176c23bcfa384ae32e4413b3cb046320606ba348c9eae6bcf52b34d",
     "quantizer": "quantizer.json",
     "quantizer_kb": 5.4,
     "token_decoder": "token_decoder.json",
@@ -25,14 +25,14 @@
   },
   "self_test": {
     "n_rows": 19963,
-    "max_abs_diff": 1.4603137969970703e-06,
-    "p99_abs_diff": 8.848309676068311e-07,
-    "tx_per_s": 54063.57846211642,
+    "max_abs_diff": 1.2814998626708984e-06,
+    "p99_abs_diff": 8.401274840252881e-07,
+    "tx_per_s": 26473.303851652894,
     "cases": [
       {
         "row": 9762,
         "true_class": "fraud",
-        "p_fraud": 0.9999920129776001,
+        "p_fraud": 0.955578088760376,
         "decoded": [
           "amount>100.00",
           "hour=12",
@@ -50,42 +50,42 @@
         ]
       },
       {
-        "row": 16503,
+        "row": 9291,
         "true_class": "normal",
-        "p_fraud": 1.0,
+        "p_fraud": 0.9878572225570679,
         "decoded": [
-          "amount~[9.15,17.71)",
-          "hour=13",
+          "amount~[46.26,66.42)",
+          "hour=6",
           "month=11",
-          "dayofweek=3",
+          "dayofweek=2",
           "is_weekend=0",
           "year~[2012.00,2016.00)",
           "zip~[0.00,8831.00)",
           "Use Chip=Swipe Transaction",
-          "MCC=5541",
+          "MCC=5411",
           "Merchant State=other",
           "Merchant City=Rome",
-          "Merchant Name=-5162038175624867091",
+          "Merchant Name=-727612092139916043",
           "error_type=none"
         ]
       },
       {
-        "row": 13678,
+        "row": 9761,
         "true_class": "fraud",
-        "p_fraud": 0.01760190725326538,
+        "p_fraud": 0.13868360221385956,
         "decoded": [
-          "amount~[9.15,17.71)",
-          "hour=9",
-          "month=10",
-          "dayofweek=4",
-          "is_weekend=0",
-          "year~[2008.00,2012.00)",
+          "amount~[66.42,100.00)",
+          "hour=11",
+          "month=3",
+          "dayofweek=6",
+          "is_weekend=1",
+          "year>2016.00",
           "zip~[80122.00,91792.00)",
-          "Use Chip=Swipe Transaction",
-          "MCC=5300",
+          "Use Chip=Chip Transaction",
+          "MCC=4121",
           "Merchant State=CA",
           "Merchant City=other",
-          "Merchant Name=1913477460590765860",
+          "Merchant Name=other",
           "error_type=none"
         ]
       }

@@ -2,7 +2,7 @@
 
 > Her oturum başında okunur. Ağır log/checkpoint/kod incelemesi alan agent'larında kalır.
 > Güncelleme protokolü: `AGENTS.md` §5. Dosya bütçesi: en çok 150 satır.
-> Son güncelleme: 2026-11-18 akşam — R5 seed2 tamamlandı
+> Son güncelleme: 2026-11-18 akşam — R5 seed2 kapandı; R6 koşuyor; fraud deploy onaylandı
 
 ## Bir Cümle
 
@@ -13,7 +13,7 @@ gradyan geri yayılımı olmadan eğitmeyi araştırır.
 
 | Run | Durum / PID | Başlangıç | Plan / beklenen süre | Log |
 |---|---|---|---|---|
-| Yok | — | — | — | — |
+| R6 pool/enc (3 varyant, seed=43) | Koşuyor / 68623 | 18 Kas 17:22 (`logs/run_r6_pool_enc.log:1`) | ~75–90 dk (stablesz koşusu ≈25 dk × 3) | `logs/run_r6_pool_enc.log` |
 
 ## Son Deneyler
 
@@ -101,13 +101,18 @@ Detay: `quann_cloud/REVISION.md`.
   3.2318 (`logs/run_r5_cc_stable.log:1236`).
 - Tamamlandı (18 Kas): R5 seed=43 ablation → memory-stablesz → stable kuyruğu; mekanizma farkı 0.0846→0.0755 (`logs/run_r5_seed2.log` son satırı; TEST satırları yukarıda).
 - Kullanıcı D=128'i önceliklendirirse kapasite adayı olarak ayrıca dene.
-- Padding-pool ve paylaşılan `encoder_layer` katkılarını kontrollü deneyle ölç;
-  etkileri henüz ölçülmedi (`contextcloud/train_memory_context.py:93`; `contextcloud/train_memory_context.py:108`).
-- R4 duel hükmünü paper/patent notlarına yansıt (`logs/run_r4_resume.log:71`).
-- Cloud attention varyantlarını held-out protokolüyle karşılaştır; mevcut PPL
-  loglarını test PPL'i olarak yorumlama.
-- QUANN pair-kanalı/freeze adayını ayrı bir deney olarak planla.
-- Fraud deploy kararı kullanıcıda; deney kanıtları `fraud/results/` altındadır.
+- R6 koşuyor (18 Kas): katkı bayrakları `--masked-pool`/`--unshared-encoder`
+  (commit `7e13dae`) üç varyant seed=43 (`logs/run_r6_pool_enc.log`); kontrol =
+  stablesz s43 TEST 3.6336.
+- Tamamlandı (18 Kas): R4 hükmü paper §6.8 ile `BLUS_NOTU.md:31`/`TARIFNAME.md:167`
+  içinde zaten var; ham log doğrulandı: winner=D64, delta=0.76 (`logs/run_r4_resume.log:71`).
+- Sırada (onay 18 Kas): R7 cloud-attn held-out — mevcut checkpoint'ler eğitim-dışı
+  dilimde, eğitim yok (`training/shell/run_r7_cloud_attn_heldout.sh`); ardından R8
+  QUANN pair/freeze (`training/quann_pair_experiment.py` hazır, test 17 geçti) —
+  MPS'ye bu sıra.
+- Tamamlandı (18 Kas): Fraud deploy kullanıcı onayıyla tazelendi (paket 18 Kas 17:30,
+  parity max=1.27e-07); tester 5/5 ✓ (manifest↔sha, ORT sözleşme, FP32 0.9451 ham
+  satırı `fraud/logs/run_full_scale_edge_eval.log:52`).
 
 ## Alt-Projeler
 
@@ -122,6 +127,8 @@ Detay: `quann_cloud/REVISION.md`.
   `docs/market_priorities.md`.
 - Patent: evrensel çekirdek `docs/patent/evrensel/geometry_dual_use_core_v1.md`
   (dual-use geometri); dil ve tabular embodiment'ları `docs/patent/` altında.
+- Vekil taslağı kullanici onayıyla üretiliyor → `docs/patent/vekil_v1/` (18 Kas);
+  final_v3 dosyaları ve `son_draft.zip` dokunulmaz.
 
 ## Alt-Proje Kanıt Pointer'ları
 

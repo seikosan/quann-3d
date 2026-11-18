@@ -66,6 +66,7 @@
       null
     ]
   ],
+  "base_fn": "derive_base",
   "feature_order": [
     "amount",
     "hour",
