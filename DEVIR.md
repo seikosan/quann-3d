@@ -4,18 +4,18 @@ baslik: DEVIR — quann-3d (makine üretimi durum + sıradaki iş)
 konu: [devir, handover, durum]
 durum: güncel
 sahiplik: koordinator
-guncellendi: 2026-11-18
+guncellendi: 2026-11-19
 kunye-kaynak: otomatik (devir_yaz.py)
 ---
 
 # DEVIR — quann-3d
 
 <!-- MAKINE:BASLA -->
-## Durum (makine üretti · 2026-11-18 17:14)
+## Durum (makine üretti · 2026-11-19 22:23)
 Bu blok elle düzenlenmez; `devir_yaz.py --repo /Users/serkankose/Documents/quann-3d` ile yenilenir.
 
-- HEAD: 51fa24a contextcloud: --seed ve --ckpt-name desteigi + run_r5_seed2 kuyrugu
-- Değişen dosya: 3 → RESEARCH.md, docs/patent/final_v3/Archive/, docs/patent/final_v3/son_draft.zip
+- HEAD: 36dab46 R8 kapandi: pair-freeze 5233.4086 vs kontrol 19770.644 (tester 6/6); varyant-kolu kuyruk betigi; docs kapisi patent-cikti/ (gitignore) istisnasi - kullanici karari
+- Değişen dosya: 4 → DEVIR.md, docs/patent/final_v3/Archive/, docs/patent/final_v3/son_draft.zip, docs/patent/pct_v2/
 - Kod kapısı: bulgu 0 · uyarı 0 · bilgi 0 · düzeltme planı: 0 (ayrıntı: python3 ~/.config/opencode/denetim/denetim_plan.py)
 - Doküman kapısı: bulgu 0 · uyarı 0 · bilgi 2 · düzeltme planı: 0 (ayrıntı: python3 ~/.config/opencode/denetim/denetim_plan.py)
 - ölçüm: === EĞİTİM DURUMU (kaynak: ham dosya) ===
@@ -34,16 +34,21 @@ Bu blok elle düzenlenmez; `devir_yaz.py --repo /Users/serkankose/Documents/quan
 
 
 
-
-
-
-
-
-
-
-
 ## Sıradaki iş (ajan)
 
+- **PCT v2 paketi hazır (19 Kas, commit YOK — `docs/patent/pct_v2/` untracked):** EN asıl +
+  TR eş kopya (15 istem, 70 paragraf tarifname, özet) + `filing/` 6 kopya. Defterler:
+  `docs/patent/pct_v2/UYGUNLUK_NOTU.md` (177 satır; §1 matrisi 22 satır, 6'sı `eksik`/`bekleniyor`)
+  + `OLCUM_KAYITLARI.md` (226 satır). Kapı `bash patent-cikti/pct/pct_v2-pct-inceleme/kapilar.sh`
+  → çıkış 0; 5 KARAR kapısı da 0 (üretim · atıf · rapor · tablo · ölçüm) — künyeler Patent İşleri'nde.
+- **PCT v2 anomali (kaynak doğrulanmadı):** §1 matrisi 12:09'da kuruldu, 12:14 yazımında 9 satıra
+  döndü; hangi sürecin yazdığını kanıtlayamadık. Onarım üretime çevrildi: `yeniden_bolum1.py`
+  (`patent-cikti/pct/pct_v2-pct-inceleme/`) her künyeyi ham kaynakta açar, tutmazsa yazmaz.
+- **PCT açık işler (vekil + insan):** ön sanat araması YAPILMADI; fiziksel Rule 11.2–11.16, özetle
+  yayınlanacak şekil, PCT/RO/101, ücret/vekaletname, SVG çizim kalitesi DENETLENMEDİ (§5 listesi
+  `UYGUNLUK_NOTU.md`). Vekil onayı olmadan başvuru yapılmaz.
+- **Kapı istisnası (kullanıcı kararı):** `patent-cikti/` (`.gitignore`'da üretilmiş
+  çıktı) `scripts/check_docs_lines.sh`'den tek satırlık istisnayla çıkarıldı; kapı yeşil.
 - **Patent v3 NİHAİ paket hazır (18 Kas, commit `1afc688`):** `docs/patent/final_v3/`
   — ISTEMLER (15 istem, 3 bağımsız) + TARIFNAME (237 satır, §12 dürüstlük kayıtları)
   + OZET + TEKNIK_ETKI + 8 SVG (Şekil 6/7 ölçümlü, gerçek JSON'dan) + build_v3.py
@@ -62,23 +67,20 @@ Bu blok elle düzenlenmez; `devir_yaz.py --repo /Users/serkankose/Documents/quan
   yeniden yaz (dal hiç push edilmediği için güvenli; diskteki dosyaya dokunulmaz,
   `.gitignore`'a eklenir) → push saniyeler; (b) Git LFS. Kullanıcı (a)'yı reddetti,
   push ertelendi.
-- **Tamamlandı (17 Kas):** CC ayrık holdout (80/10/10, seed=42) üç script'e eklendi,
-  R5 koşuları bitti; vocab=10000 kontrollü memory rerun da bitti (aşağıda Kanıt).
-- **Tamamlandı (17 Kas):** Model-boyutu kontrollü memory koşusu bitti; boyut farkı önemsiz (Δ0.0024), kalan ~0.4 fark görev+mekanizma karışımı (Kanıt).
-- **Tamamlandı (17 Kas):** Görev-sabit ablation bitti; ayrım: görev 0.31 + mekanizma 0.08 (Kanıt). Memory mekanizması üstünlük kanıtlayamadı; fark artık iki bağımsız örnekli (aşağıdaki seed=43 satırı).
-- **Tamamlandı (18 Kas):** seed=43 kuyruğu bitti (ablation→memory-stablesz→stable;
-  commit `51fa24a`, `logs/run_r5_seed2.log`); ~0.08 mekanizma farkı tekrarlandı (Kanıt).
+- **Tamamlandı (17-18 Kas):** CC ayrık holdout (80/10/10, seed=42) üç script'e eklendi, R5 koşuları
+  bitti; seed=43 kuyruğu tekrarladı (Kanıt).
+- **Tamamlandı (17 Kas):** Model-boyutu kontrollü memory koşusu bitti (Δ0.0024 → boyut önemsiz);
+  görev-sabit ablation bitti (görev 0.31 + mekanizma 0.08). Memory üstünlüğü kanıtlanamadı (Kanıt).
+- **Tamamlandı (18 Kas):** seed=43 kuyruğu bitti (ablation→memory-stablesz→stable; commit `51fa24a`);
+  ham TEST satırları: 3.6336 (`logs/run_r5_seed2_memory_stablesz_s43.log:631`) ↔ 3.5581 (`logs/run_r5_seed2_ablate_s43.log:982`) (Kanıt).
 - **Patent paket düzeltmesi (vekil sorusuyla bulundu, 17 Kas):** (1)
-  `docs/patent/dil/TURKPATENT_basvuru_v2.3.md:2` başlığı fiilen v2.5 diyor —
-  gerçek v2.3 docx/`_archive`'te; vekil paket listesiyle senkronla. (2) Üç farklı
-  aralık kuralı var (QUANN motor: ödülde aralık sabit+sigma×0.82
-  `quann_cloud/src/qcloud_quann.py:212-228`; classic: ödülde genişlet
-  `quann_cloud/src/qcloud_weight.py:115-133`; hybrid: ödülde segmente daralt
-  `:172-191`) — başvuru metnine hangi varyantın yazılacağı netleştirilmeli;
-  "hata azalınca aralık daralıyor" cümlesinin kaynağı v2.3 metninde bulunamadı
-- **R4 duel hükmü paper'a işlendi** (0.76, 61.94/61.19); patent dokümanlarında
-  duel sayısı geçen yer varsa kontrol edilmeli
-- **Fraud deploy kararı:** kullanıcı onayı bekliyor; paket `fraud/results/deploy/`
+  `docs/patent/dil/TURKPATENT_basvuru_v2.3.md:2` başlığı fiilen v2.5 diyor — gerçek v2.3
+  docx/`_archive`'te; vekil paket listesiyle senkronla. (2) Üç aralık kuralı var: QUANN
+  `quann_cloud/src/qcloud_quann.py:212-228` sabit+sigma×0.82 · classic `quann_cloud/src/qcloud_weight.py:115-133`
+  genişlet · hybrid `quann_cloud/src/qcloud_weight.py:172-191` segmente daralt — hangisinin yazılacağı
+  net; "hata azalınca aralık daralıyor" cümlesinin kaynağı v2.3 metninde bulunamadı
+- **R4 duel hükmü paper'a işlendi** (0.76, 61.94/61.19 — Kanıt); patent dokümanlarında duel sayısı
+  geçen yer kontrol edilmeli. **Fraud deploy tamam (kullanıcı onayı, commit `a52ddc1`):** paket + parity doğrulandı, tester 5/5 ✓. **R8 tamam (19 Kas):** pair-freeze 5233.4086 (`logs/run_r8_pair_freeze_only.log:12`) vs kontrol 19770.644 (`logs/run_r8_quann_pair.log:30`), tester 6/6 ✓; tekrar adayı kullanıcı kararı.
 
 ## Kanıt
 
@@ -127,16 +129,14 @@ Bu blok elle düzenlenmez; `devir_yaz.py --repo /Users/serkankose/Documents/quan
   ; kazanan D64, delta 0.76 — `logs/run_r4_resume.log:71`
 - R5 CC AYRIK HOLDOUT (17 Kas, 80/10/10 seed=42; split üç logda da
   `Split: train 159888 / val 19986 / test 19986`): TEST loss stable 3.2318 —
-  `logs/run_r5_cc_stable.log:1236`
-  ; memory 9.5559 — `logs/run_r5_cc_memory.log:586`
-  ; global 8.6610 — `logs/run_r5_cc_global.log:516`
+  `logs/run_r5_cc_stable.log:1236`; memory 9.5559 — `logs/run_r5_cc_memory.log:586`; global
+  8.6610 — `logs/run_r5_cc_global.log:516`
   ; vocab artık train-only: 10000 / 245124 / 245124; ln(245124)=12.4095 ve
   ln(10000)=9.2103 (hesap bu oturumda) → üçü de rastgele altında, öğreniyor
-- R5 MEMORY VOCAB=10000 KONTROLLÜ RERUN (17 Kas): vocab stable ile birebir aynı
-  (eşitlik kontrolü bu oturumda True); TEST loss 3.6295 —
-  `logs/run_r5_cc_memory_v10k.log:454`
-  ; best val 3.5735 — `logs/run_r5_cc_memory_v10k.log:453`
-  ; son epoch 10'da erken durdurma — `logs/run_r5_cc_memory_v10k.log:448`
+- R5 MEMORY VOCAB=10000 KONTROLLÜ RERUN (17 Kas): vocab stable ile birebir aynı (eşitlik
+  kontrolü bu oturumda True); TEST loss 3.6295 — `logs/run_r5_cc_memory_v10k.log:454`; best val
+  3.5735 — `logs/run_r5_cc_memory_v10k.log:453`; son epoch 10'da erken durdurma —
+  `logs/run_r5_cc_memory_v10k.log:448`
   ; hüküm: 9.5559→3.6295 düşüşün baskın nedeni vocab boyutu; stable'a kalan
   ~0.4 fark model boyutu (d_model 64 vs 128) + görev farkıyla karışık
 - R5 MEMORY STABLE-BOYUTU KONTROLÜ (17 Kas, d_model 128 d_sentence 256,
@@ -193,6 +193,8 @@ ContextCloudLM vs CloudLM: PPL farkı 294969.40 − 285467.06 = 9502.34 → %3,2
 
 ### Patent İşleri
 
-- İstem linter'ı: `patent_patent_lint` → `patent-cikti/basvuru_paketi/istemler_final.md`
-- PDF üretimi: `python3 patent-cikti/basvuru_paketi/build_package.py`
-- Sekiz siyah-beyaz şekil, A4 PDF: `pdfinfo patent-cikti/basvuru_paketi/sekiller.pdf`
+- PCT v2 kapısı (9 kapı, 6 KARAR): `bash patent-cikti/pct/pct_v2-pct-inceleme/kapilar.sh`
+  (tam hat `kapilar_taze.txt:51` `SONUC: yeşil`); defter düzenlemesi sonrası taze kapı kararı
+  `patent-cikti/pct/pct_v2-pct-inceleme/KAPI_KARARI_2026-11-19.md`; bağımsız doğrulayıcı kapanışı
+  `7 ✓ / 0 ✗ / 0 KANITSIZ`. Sıradaki iş vekilde: PCT/RO/101 + ücret + vekâletname + gönderim
+  (`docs/patent/pct_v2/BASVURU_PAKETI.md` §3 ve §6); patent DB yenilik taraması YAPILMADI.
