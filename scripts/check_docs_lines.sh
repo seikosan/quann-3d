@@ -1,7 +1,9 @@
 #!/bin/bash
 # Doküman satır bütçesi (AGENTS.md §3.7): tüm *.md ≤200 satır.
 # İstisna (formal teslimat): docs/patent/**, docs/paper_draft.md
-# _archive/ hariç (bakımsız içerik).
+# _archive/ hariç (bakımsız içerik). patent-cikti/ hariç: .gitignore'da
+# tanımlı üretilmiş çıktı (patent hattı raporu), depo dokümanı değil
+# (kullanıcı kararı 2026-11-19).
 cd "$(dirname "$0")/.." || exit 2
 max=200
 fail=0
@@ -15,6 +17,7 @@ done < <(find . -name "*.md" \
   -not -path "./.git/*" \
   -not -path "./.opencode/node_modules/*" \
   -not -path "./_archive/*" \
+  -not -path "./patent-cikti/*" \
   -not -path "./docs/patent/*" \
   -not -path "./docs/paper_draft.md")
 if [ "$fail" -eq 1 ]; then
