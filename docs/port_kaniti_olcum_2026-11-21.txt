@@ -1,0 +1,36 @@
+Karar deneyi — ham çıktı kaydı (2026-11-21, bu oturumda koşuldu)
+
+AMAÇ: Alarm çelişkisi: Ekim denetimi (fraud/results/false_alarm_audit.json) eşik
+0.9969438910484314'te 11.784 alarm derken mevcut deploy kutusu tüm te üzerinde 0
+alarm veriyor (kara_kutu/runs/alarm_farki_20261121-232405/ozet.json).
+
+YÖNTEM: git worktree 5f66aed (19 Eki kodu) + kara_kutu/tools/port_kaniti.py
+(score_oct.py); ilk 1M CSV satırı, user_folds(seed=20261015) ile te=fold>=8;
+checkpoint fraud/results/quann_full_hybrid.pt (mtime 17 Eki, sha256 2bb6fcd…,
+deploy manifest ile aynı); quantizer = checkpoint sözlüğü.
+
+1) 19 EKİM KODU (5f66aed) — ham çıktı (shell sh_2007b1ab5001AFXBqHYBMMelet):
+[fold] n_user=2000 user0_fold=5
+[veri] te=234,686 fraud=197 (1s)
+{'kaynak': '19 EKİM kodu (5f66aed) + ckpt bundled quantizer', 'n_te': 234686,
+ 'fraud': 197, 'maks_p': 1.0, 'alarm_thr': 693, 'p_0_99_ustu': 1843, 'auc': 0.95971}
+
+2) AYNI SATIR KÜMESİNDE KUTU (bugünkü FP32 ONNX) — aynı faz, duman taraması:
+kara_kutu/runs/alarm_farki_20261121-232335/ozet.json faz2.bolgeler[0]:
+satir=1.000.000 te=234.686 fraud=197 maks_p=0.9908732175827026 alarm=0
+(bolgeler[0]); AUC (bu kesitte) 0,961135 (aynı dosya faz2_tarama.genel.auc_kutu_tum_te)
+
+3) PARITE: FP32-torch ↔ kutu aynı token'larda 1,4305e-06 fark
+(alarm_farki_20261121-232405/ozet.json faz1_ab.parity_max_mutlak_fark, n=400.000) —
+fark niceliklendirme/ONNX'tan değil, FONKSİYON farkından.
+
+MEKANİZMA (kod satırı): pair_in d+4 → 3d+2 (cloudlm/model.py:64) ve eski skaler
+|i|,|j| ağırlıklarının D-boyutlu bloğa yayılması (cloudlm/model.py:105-106);
+havuzlama değişmedi (max: 5f66aed:cloudlm/model.py:71 ↔ cloudlm/model.py:155).
+
+HÜKÜM: Deploy kutusu ≠ Ekim fonksiyonu. Eşik 0,9969 Ekim FP32 olasılıklarıyla
+kalibre; kutuda geçersiz. Karar (A kutu-yerel kalibrasyon / B Ekim fonksiyonuyla
+re-export / C eşiksiz rapor) kullanıcıda — docs/KARA_KUTU_PLAN.md §9.
+
+TEKRAR: git worktree add <tmp> 5f66aed; port_kaniti.py'yı worktree köküne kopyala
+(CKPT/BIG mutlak yol), python3 -u score_oct.py.
