@@ -85,7 +85,9 @@
 
 - **Uygulandı A/B:** A1 (commit 78351b7) · A2 (d944dbc) · B1+A3 (3aa1eb7).
 - **Uygulandı C (kullanıcı onayı 2026-11-21, "c1-c7 tamamla"):** C1 17 script →
-  `_archive/refactor_2026_11_21/` (2c68ebb; `eval_trained_model.py` listeden çıkarıldı —
+  `_archive/refactor_2026_11_21/` (2c68ebb; commit stat'inde 18 R = 17 çalıştırılabilir
+  script + `examples/__init__.py` paket dosyası, gerekçe `_archive/README.md:76`;
+  `eval_trained_model.py` listeden çıkarıldı —
   KARA_KUTU_PLAN referansı; `aml/src/e5_stability.py` kaldı — TEKNIK_ETKI atfı) ·
   C2 bayat üst-düzey kopyalar silindi, tek kaynak `neural-atlas/neural-atlas/` (55649dc) ·
   C3 `run_qat_gate.py` + `eval_online_int8_baseline.py` arsiv (a531d3e;

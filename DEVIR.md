@@ -33,7 +33,7 @@ Bu blok elle düzenlenmez; `devir_yaz.py --repo /Users/serkankose/Documents/quan
 
 - **Refactor 2026-11-21 (A/B/C TAMAMLANDI):** tam plan + kanıtlar `docs/REFACTOR_PLAN_2026-11-21.md`.
   A1 ruff 180 düzeltme (78351b7) · A2 step_test NameError (d944dbc) · B1+A3 eval_* adlandırma
-  (3aa1eb7) · C1 17 script arsiv (2c68ebb) · C2 neural-atlas tek kaynak (55649dc) · C3 fraud/results
+  (3aa1eb7) · C1 17 script arsiv, 18 R (+examples/__init__) (2c68ebb) · C2 tek kaynak atlas (55649dc) · C3 fraud/results
   kod arsiv (a531d3e) · C5 §4.1 80/10/10: eğitim %80, best=val-PPL, %10 test held-out · C6 kapsam
   başlığı · C7 sys.path KEEP. pytest 128 passed ✓ · denetim exit 0 koşusu bkz. MAKINE bloğu.
 - **Kara kutu arayüzü tasarlandı (21 Kas):** `docs/KARA_KUTU_PLAN.md` — adapter çerçevesi + web
