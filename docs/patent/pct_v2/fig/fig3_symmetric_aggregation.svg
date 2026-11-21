@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="465.399675pt" height="258.336pt" viewBox="0 0 465.399675 258.336" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-11-19T23:45:33.381502</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.8, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 258.336 
+L 465.399675 258.336 
+L 465.399675 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 19.2528 81.19392 
+L 93.5784 81.19392 
+Q 94.38192 81.19392 94.38192 80.3808 
+L 94.38192 47.856 
+Q 94.38192 47.04288 93.5784 47.04288 
+L 19.2528 47.04288 
+Q 18.44928 47.04288 18.44928 47.856 
+L 18.44928 80.3808 
+Q 18.44928 81.19392 19.2528 81.19392 
+z
+" clip-path="url(#p3083c199c2)" style="fill: #ffffff; stroke: #000000; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 19.2528 140.14512 
+L 93.5784 140.14512 
+Q 94.38192 140.14512 94.38192 139.332 
+L 94.38192 106.8072 
+Q 94.38192 105.99408 93.5784 105.99408 
+L 19.2528 105.99408 
+Q 18.44928 105.99408 18.44928 106.8072 
+L 18.44928 139.332 
+Q 18.44928 140.14512 19.2528 140.14512 
+z
+" clip-path="url(#p3083c199c2)" style="fill: #ffffff; stroke: #000000; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 113.6664 81.19392 
+L 183.9744 81.19392 
+Q 184.77792 81.19392 184.77792 80.3808 
+L 184.77792 47.856 
+Q 184.77792 47.04288 183.9744 47.04288 
+L 113.6664 47.04288 
+Q 112.86288 47.04288 112.86288 47.856 
+L 112.86288 80.3808 
+Q 112.86288 81.19392 113.6664 81.19392 
+z
+" clip-path="url(#p3083c199c2)" style="fill: #ffffff; stroke: #000000; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 113.6664 140.14512 
+L 183.9744 140.14512 
+Q 184.77792 140.14512 184.77792 139.332 
+L 184.77792 106.8072 
+Q 184.77792 105.99408 183.9744 105.99408 
+L 113.6664 105.99408 
+Q 112.86288 105.99408 112.86288 106.8072 
+L 112.86288 139.332 
+Q 112.86288 140.14512 113.6664 140.14512 
+z
+" clip-path="url(#p3083c199c2)" style="fill: #ffffff; stroke: #000000; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 206.0712 109.65312 
+L 270.3528 109.65312 
+Q 271.15632 109.65312 271.15632 108.84 
+L 271.15632 76.3152 
+Q 271.15632 75.50208 270.3528 75.50208 
+L 206.0712 75.50208 
+Q 205.26768 75.50208 205.26768 76.3152 
+L 205.26768 108.84 
+Q 205.26768 109.65312 206.0712 109.65312 
+z
+" clip-path="url(#p3083c199c2)" style="fill: #ffffff; stroke: #000000; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 294.4584 109.65312 
+L 368.784 109.65312 
+Q 369.58752 109.65312 369.58752 108.84 
+L 369.58752 76.3152 
+Q 369.58752 75.50208 368.784 75.50208 
+L 294.4584 75.50208 
+Q 293.65488 75.50208 293.65488 76.3152 
+L 293.65488 108.84 
+Q 293.65488 109.65312 294.4584 109.65312 
+z
+" clip-path="url(#p3083c199c2)" style="fill: #ebebeb; stroke: #000000; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 95.574449 64.1184 
+Q 103.619978 64.1184 110.435671 64.1184 
+" clip-path="url(#p3083c199c2)" style="fill: none; stroke: #000000; stroke-width: 1.1; stroke-linecap: round"/>
+    <path d="M 105.635671 61.7184 
+L 110.435671 64.1184 
+L 105.635671 66.5184 
+z
+" clip-path="url(#p3083c199c2)" style="stroke: #000000; stroke-width: 1.1; stroke-linecap: round"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 95.574449 123.0696 
+Q 103.619978 123.0696 110.435671 123.0696 
+" clip-path="url(#p3083c199c2)" style="fill: none; stroke: #000000; stroke-width: 1.1; stroke-linecap: round"/>
+    <path d="M 105.635671 120.6696 
+L 110.435671 123.0696 
+L 105.635671 125.4696 
+z
+" clip-path="url(#p3083c199c2)" style="stroke: #000000; stroke-width: 1.1; stroke-linecap: round"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 185.379726 67.573316 
+Q 195.022024 77.330814 203.799874 86.213538 
+" clip-path="url(#p3083c199c2)" style="fill: none; stroke: #000000; stroke-width: 1.1; stroke-linecap: round"/>
+    <path d="M 202.13308 81.112381 
+L 203.799874 86.213538 
+L 198.718872 84.486279 
+z
+" clip-path="url(#p3083c199c2)" style="stroke: #000000; stroke-width: 1.1; stroke-linecap: round"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 185.379726 121.647484 
+Q 195.022024 111.889986 203.799874 103.007262 
+" clip-path="url(#p3083c199c2)" style="fill: none; stroke: #000000; stroke-width: 1.1; stroke-linecap: round"/>
+    <path d="M 198.718872 104.734521 
+L 203.799874 103.007262 
+L 202.13308 108.108419 
+z
+" clip-path="url(#p3083c199c2)" style="stroke: #000000; stroke-width: 1.1; stroke-linecap: round"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 272.350811 92.5776 
+Q 282.404744 92.5776 291.22884 92.5776 
+" clip-path="url(#p3083c199c2)" style="fill: none; stroke: #000000; stroke-width: 1.1; stroke-linecap: round"/>
+    <path d="M 286.42884 90.1776 
+L 291.22884 92.5776 
+L 286.42884 94.9776 
+z
+" clip-path="url(#p3083c199c2)" style="stroke: #000000; stroke-width: 1.1; stroke-linecap: round"/>
+   </g>
+   <g id="patch_13">
+    <path d="M 19.2528 221.45712 
+L 264.3264 221.45712 
+Q 265.12992 221.45712 265.12992 220.644 
+L 265.12992 173.8896 
+Q 265.12992 173.07648 264.3264 173.07648 
+L 19.2528 173.07648 
+Q 18.44928 173.07648 18.44928 173.8896 
+L 18.44928 220.644 
+Q 18.44928 221.45712 19.2528 221.45712 
+z
+" clip-path="url(#p3083c199c2)" style="fill: #ffffff; stroke: #000000; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_14">
+    <path d="M 276.3792 213.32592 
+L 368.784 213.32592 
+Q 369.58752 213.32592 369.58752 212.5128 
+L 369.58752 182.0208 
+Q 369.58752 181.20768 368.784 181.20768 
+L 276.3792 181.20768 
+Q 275.57568 181.20768 275.57568 182.0208 
+L 275.57568 212.5128 
+Q 275.57568 213.32592 276.3792 213.32592 
+z
+" clip-path="url(#p3083c199c2)" style="fill: #ffffff; stroke: #000000; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_15">
+    <path d="M 94.507519 141.10797 
+Q 102.618846 156.612417 110.160074 171.027144 
+" clip-path="url(#p3083c199c2)" style="fill: none; stroke-dasharray: 4.4,3.3; stroke-dashoffset: 0; stroke: #000000; stroke-width: 1.1; stroke-linecap: round"/>
+    <path d="M 110.061566 165.661485 
+L 110.160074 171.027144 
+L 105.808442 167.886555 
+z
+" clip-path="url(#p3083c199c2)" style="stroke-dasharray: 4.4,3.3; stroke-dashoffset: 0; stroke: #000000; stroke-width: 1.1; stroke-linecap: round"/>
+   </g>
+   <g id="patch_16">
+    <path d="M 266.324411 197.06352 
+Q 270.352709 197.06352 273.15117 197.06352 
+" clip-path="url(#p3083c199c2)" style="fill: none; stroke-dasharray: 4.4,3.3; stroke-dashoffset: 0; stroke: #000000; stroke-width: 1.1; stroke-linecap: round"/>
+    <path d="M 268.35117 194.66352 
+L 273.15117 197.06352 
+L 268.35117 199.46352 
+z
+" clip-path="url(#p3083c199c2)" style="stroke-dasharray: 4.4,3.3; stroke-dashoffset: 0; stroke: #000000; stroke-width: 1.1; stroke-linecap: round"/>
+   </g>
+   <g id="patch_17">
+    <path d="M 322.799841 180.033162 
+Q 326.599301 145.429479 330.264532 112.048286 
+" clip-path="url(#p3083c199c2)" style="fill: none; stroke-dasharray: 4.4,3.3; stroke-dashoffset: 0; stroke: #000000; stroke-width: 1.1; stroke-linecap: round"/>
+    <path d="M 327.354982 116.557667 
+L 330.264532 112.048286 
+L 332.126307 117.081555 
+z
+" clip-path="url(#p3083c199c2)" style="stroke-dasharray: 4.4,3.3; stroke-dashoffset: 0; stroke: #000000; stroke-width: 1.1; stroke-linecap: round"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 13px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle" x="208.08" y="20.737009" transform="rotate(-0 208.08 20.737009)">FIG. 3</text>
+   </g>
+   <g id="text_2">
+    <text style="font-style: italic; font-size: 8px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: end" x="404.9424" y="247.47696" transform="rotate(-0 404.9424 247.47696)">Schematic; no measurement.</text>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 9px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle" x="56.4156" y="66.601838" transform="rotate(-0 56.4156 66.601838)">point features</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 6.8px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif" transform="translate(31.96535 121.042031)">pair-geometry</text>
+    <text style="font-size: 6.8px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif" transform="translate(42.179163 128.753231)">features</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 6.8px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif" transform="translate(127.750494 62.139175)">max-pooling</text>
+    <text style="font-size: 6.8px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif" transform="translate(122.873619 69.850375)">over the points</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 6.8px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif" transform="translate(121.057806 117.283119)">average-pooling</text>
+    <text style="font-size: 6.8px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif" transform="translate(124.618244 124.994319)">over the point</text>
+    <text style="font-size: 6.8px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif" transform="translate(140.159431 132.608831)">pairs</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 6.8px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif" transform="translate(213.853656 90.598375)">concatenation</text>
+    <text style="font-size: 6.8px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif" transform="translate(229.538813 98.212888)">layer</text>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 6.8px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif" transform="translate(319.168169 90.646719)">one set</text>
+    <text style="font-size: 6.8px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif" transform="translate(306.138731 98.261231)">representation</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 8px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif" transform="translate(61.661475 185.8663)">variant replacing the pair computation:</text>
+    <text style="font-size: 8px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif" transform="translate(35.7821 194.9383)">global set statistics — maximum · minimum · mean ·</text>
+    <text style="font-size: 8px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif" transform="translate(43.8496 204.0103)">standard deviation pooling, cloud centre, centre</text>
+    <text style="font-size: 8px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif" transform="translate(123.06585 213.0823)">deviation</text>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 6.8px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif" transform="translate(288.442944 195.335919)">cost proportional to</text>
+    <text style="font-size: 6.8px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif" transform="translate(286.436413 202.950431)">the number of points</text>
+   </g>
+   <g id="text_11">
+    <text style="font-style: italic; font-size: 7.5px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: start" x="19.2528" y="232.441228" transform="rotate(-0 19.2528 232.441228)">both poolings are operations over a set: the set representation is independent of the numbering order of the points</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p3083c199c2">
+   <rect x="7.2" y="7.2" width="401.76" height="243.936"/>
+  </clipPath>
+ </defs>
+</svg>

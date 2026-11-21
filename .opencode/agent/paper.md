@@ -1,7 +1,7 @@
 ---
 description: Makale/patent yazarı: distile edilmiş bulgulardan paper_draft ve patent bölümleri üretir. Sadece docs/ altına yazar.
 mode: subagent
-model: openrouter/openai/gpt-6-luna
+model: splash/unsloth/Qwen3.8-Flash-Next-GGUF:UD-Q4_K_XL
 permission:
   edit:
     docs/**: allow

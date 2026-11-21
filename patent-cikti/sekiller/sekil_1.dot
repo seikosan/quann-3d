@@ -1,0 +1,14 @@
+digraph G {
+  graph [rankdir=TB, splines=ortho, nodesep=0.45, ranksep=0.55, bgcolor="white", pad=0.2];
+  node [fontname="Times New Roman", fontsize=11, width=1.1];
+  edge [fontname="Times New Roman", fontsize=9, arrowsize=0.7];
+  "A" [label="Okuyucu\n(16)", shape=box, style="filled", fillcolor="white", color="#000000", fontcolor="#000000", penwidth=1.2, margin="0.18,0.10"];
+  "B" [label="Projeksiyon modülü\n(10)", shape=box, style="filled", fillcolor="white", color="#000000", fontcolor="#000000", penwidth=1.2, margin="0.18,0.10"];
+  "C" [label="Çift-geometri kodlayıcı\n(12)", shape=box, style="filled", fillcolor="white", color="#000000", fontcolor="#000000", penwidth=1.2, margin="0.18,0.10"];
+  "D" [label="Küme agregasyonu modülü\n(14)", shape=box, style="filled", fillcolor="white", color="#000000", fontcolor="#000000", penwidth=1.2, margin="0.18,0.10"];
+  "E" [label="Yorumlama sistemi\n(18)", shape=box, style="filled", fillcolor="white", color="#000000", fontcolor="#000000", penwidth=1.2, margin="0.18,0.10"];
+  "A" -> "B" [color="#000000", penwidth=1.2];
+  "B" -> "C" [color="#000000", penwidth=1.2];
+  "C" -> "D" [color="#000000", penwidth=1.2];
+  "D" -> "E" [color="#000000", penwidth=1.2];
+}

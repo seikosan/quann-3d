@@ -1,0 +1,92 @@
+[
+  {
+    "rule": "antecedent_basis",
+    "severity": "error",
+    "message": "'söz konusu aynı fiziksel veri' için önceki metinde tanıtım yok (önce 'bir …' veya numaralı tanım gerekir)",
+    "line": 1,
+    "snippet": "söz konusu küme durumundan bir görev skoru üretmek; ve söz konusu aynı fiziksel veri bloğu üzerinden sistem iç",
+    "section": "istem",
+    "extra": {}
+  },
+  {
+    "rule": "antecedent_basis",
+    "severity": "error",
+    "message": "'söz konusu çift' için önceki metinde tanıtım yok (önce 'bir …' veya numaralı tanım gerekir)",
+    "line": 3,
+    "snippet": "İstem 1'e göre, söz konusu çift-geometri özelliklerini türetme adımının",
+    "section": "istem",
+    "extra": {}
+  },
+  {
+    "rule": "antecedent_basis",
+    "severity": "error",
+    "message": "'söz konusu permütasyon' için önceki metinde tanıtım yok (önce 'bir …' veya numaralı tanım gerekir)",
+    "line": 4,
+    "snippet": "İstem 1'e göre, söz konusu permütasyon-değişmez bir küme durumu oluştur",
+    "section": "istem",
+    "extra": {}
+  },
+  {
+    "rule": "antecedent_basis",
+    "severity": "error",
+    "message": "'söz konusu sistem içi hata' için önceki metinde tanıtım yok (önce 'bir …' veya numaralı tanım gerekir)",
+    "line": 6,
+    "snippet": "İstem 1'e göre, söz konusu sistem içi hata analizi ve drift izleme veri",
+    "section": "istem",
+    "extra": {}
+  },
+  {
+    "rule": "antecedent_basis",
+    "severity": "error",
+    "message": "'söz konusu işlemciye bağlı bir' için önceki metinde tanıtım yok (önce 'bir …' veya numaralı tanım gerekir)",
+    "line": 7,
+    "snippet": "En az bir donanım işlemcisi ve söz konusu işlemciye bağlı bir bellek içeren bilgi işle",
+    "section": "istem",
+    "extra": {}
+  },
+  {
+    "rule": "antecedent_basis",
+    "severity": "error",
+    "message": "'söz konusu Projeksiyon modülünün' için önceki metinde tanıtım yok (önce 'bir …' veya numaralı tanım gerekir)",
+    "line": 8,
+    "snippet": "İstem 7'ye göre, söz konusu Projeksiyon modülünün, girdi metni dizisinde",
+    "section": "istem",
+    "extra": {}
+  },
+  {
+    "rule": "antecedent_basis",
+    "severity": "error",
+    "message": "'söz konusu Okuyucunun' için önceki metinde tanıtım yok (önce 'bir …' veya numaralı tanım gerekir)",
+    "line": 11,
+    "snippet": "İstem 7'ye göre, söz konusu Okuyucunun, söz konusu küme durumundan türet",
+    "section": "istem",
+    "extra": {}
+  },
+  {
+    "rule": "antecedent_basis",
+    "severity": "error",
+    "message": "'söz konusu Yorumlama sisteminin' için önceki metinde tanıtım yok (önce 'bir …' veya numaralı tanım gerekir)",
+    "line": 12,
+    "snippet": "İstem 7'ye göre, söz konusu Yorumlama sisteminin, söz konusu nokta bulut",
+    "section": "istem",
+    "extra": {}
+  },
+  {
+    "rule": "buzzword",
+    "severity": "warn",
+    "message": "'sadece' — kapsamı daraltır (dışlayıcı dil)",
+    "line": 9,
+    "snippet": "ı post-hoc yöntemlerle sınırlıdır. Önceki teknikler ya sadece simgesel cebir kullanır ya da tahmin ve açıklama",
+    "section": "tarifname",
+    "extra": {}
+  },
+  {
+    "rule": "claim_unity",
+    "severity": "info",
+    "message": "3 bağımsız istem var (ek ücret / birlik itirazı riski)",
+    "line": 0,
+    "snippet": "",
+    "section": "istem",
+    "extra": {}
+  }
+]

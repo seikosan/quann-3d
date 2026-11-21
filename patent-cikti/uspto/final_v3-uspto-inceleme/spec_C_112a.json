@@ -1,0 +1,23 @@
+{
+  "ok": true,
+  "parsed_claim_count": 15,
+  "result": {
+    "specification_paragraphs": 143,
+    "indexed_terms": 918,
+    "total_issues": 0,
+    "critical_issues": 0,
+    "important_issues": 0,
+    "written_description_issues": 0,
+    "enablement_issues": 0,
+    "input_warnings": [],
+    "issues": [],
+    "summary": "[OK] Specification provides adequate support for all claims",
+    "compliant": true,
+    "spec_coverage": {
+      "percentage": 100,
+      "supported_claims": 15,
+      "total_claims": 15,
+      "unsupported_claims": []
+    }
+  }
+}

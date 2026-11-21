@@ -1,0 +1,8 @@
+total 2040
+-rw-r--r--  1 serkankose  staff     864 Nov 19 17:17 ABSTRACT_FILING-COPY_EN.txt
+-rw-r--r--  1 serkankose  staff   10988 Nov 19 17:17 CLAIMS_FILING-COPY_EN.txt
+-rw-r--r--  1 serkankose  staff   36677 Nov 19 17:17 DESCRIPTION_FILING-COPY_EN.txt
+-rw-r--r--  1 serkankose  staff   11715 Nov 19 17:17 ISTEMLER_FILING-COPY_TR.txt
+-rw-r--r--  1 serkankose  staff     828 Nov 19 17:17 OZET_FILING-COPY_TR.txt
+-rw-r--r--@ 1 serkankose  staff  930301 Nov 19 17:17 SEKILLER_FILING-COPY.pdf
+-rw-r--r--  1 serkankose  staff   37279 Nov 19 17:17 TARIFNAME_FILING-COPY_TR.txt

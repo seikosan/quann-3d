@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/4qZcRA7e/lRh5qNpYEFNVNRtk5s</id>
+  <title>arXiv Query: search_query=all:"total variation" AND all:"cluster" AND all:"distribution shift"&amp;id_list=&amp;start=0&amp;max_results=5</title>
+  <updated>2026-11-19T18:56:07Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22total+variation%22+AND+(all:%22cluster%22+AND+all:%22distribution+shift%22)&amp;start=0&amp;max_results=5&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>5</opensearch:itemsPerPage>
+  <opensearch:totalResults>1</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2310.00027v2</id>
+    <title>Out-Of-Domain Unlabeled Data Improves Generalization</title>
+    <updated>2024-02-15T18:23:41Z</updated>
+    <link href="https://arxiv.org/abs/2310.00027v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2310.00027v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We propose a novel framework for incorporating unlabeled data into semi-supervised classification problems, where scenarios involving the minimization of either i) adversarially robust or ii) non-robust loss functions have been considered. Notably, we allow the unlabeled samples to deviate slightly (in total variation sense) from the in-domain distribution. The core idea behind our framework is to combine Distributionally Robust Optimization (DRO) with self-supervised training. As a result, we also leverage efficient polynomial-time algorithms for the training stage. From a theoretical standpoint, we apply our framework on the classification problem of a mixture of two Gaussians in $\mathbb{R}^d$, where in addition to the $m$ independent and labeled samples from the true distribution, a set of $n$ (usually with $n\gg m$) out of domain and unlabeled samples are given as well. Using only the labeled data, it is known that the generalization error can be bounded by $\propto\left(d/m\right)^{1/2}$. However, using our method on both isotropic and non-isotropic Gaussian mixture models, one can derive a new set of analytically explicit and non-asymptotic bounds which show substantial improvement on the generalization error compared to ERM. Our results underscore two significant insights: 1) out-of-domain samples, even when unlabeled, can be harnessed to narrow the generalization gap, provided that the true data distribution adheres to a form of the ``cluster assumption", and 2) the semi-supervised learning paradigm can be regarded as a special case of our framework when there are no distributional shifts. We validate our claims through experiments conducted on a variety of synthetic and real-world datasets.</summary>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-09-29T02:00:03Z</published>
+    <arxiv:comment>Published at ICLR 2024 (Spotlight), 29 pages, no figures</arxiv:comment>
+    <arxiv:primary_category term="stat.ML"/>
+    <author>
+      <name>Amir Hossein Saberi</name>
+    </author>
+    <author>
+      <name>Amir Najafi</name>
+    </author>
+    <author>
+      <name>Alireza Heidari</name>
+    </author>
+    <author>
+      <name>Mohammad Hosein Movasaghinia</name>
+    </author>
+    <author>
+      <name>Abolfazl Motahari</name>
+    </author>
+    <author>
+      <name>Babak H. Khalaj</name>
+    </author>
+  </entry>
+</feed>

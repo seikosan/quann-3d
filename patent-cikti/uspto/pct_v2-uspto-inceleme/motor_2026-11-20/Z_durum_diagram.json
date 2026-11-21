@@ -1,0 +1,11 @@
+{
+  "tool": "Z_durum_diagram",
+  "kayit_zamani": "2026-11-19T23:22:21.246Z",
+  "result": {
+    "python_package": true,
+    "system_command": true,
+    "version": "16.1.0",
+    "ready": true,
+    "message": "Diagram tools ready. Graphviz version 16.1.0"
+  }
+}

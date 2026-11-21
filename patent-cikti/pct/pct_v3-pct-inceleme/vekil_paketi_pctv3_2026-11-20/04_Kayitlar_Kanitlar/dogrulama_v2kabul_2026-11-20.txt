@@ -1,0 +1,35 @@
+== V2 YENI TABAN KUNYESI — kullanici karari (a), 2026-11-20 aksam ==
+Karar (a): paralel build oturumunun DESCRIPTION_EN.md master'ini 84 paragraflik adayla
+degistirmesi ve filing copy'lerini yeniden uretmesi KABUL EDILDI. Sabahki v2 kunyesi
+dogrulama.txt:29-36'da tarihsel kayit olarak durur; pct_v3 metni o sabahki tabandan uretilmistir.
+
+-- v2 filing sha1 (yeni; shasum, 2026-11-20 aksam) --
+3b17a39246875f0bd31b0fcff0343323fe613c30  docs/patent/pct_v2/filing/ABSTRACT_FILING-COPY_EN.txt
+ba25baaebc19c207d03114de27d9858712c3a7a9  docs/patent/pct_v2/filing/CLAIMS_FILING-COPY_EN.txt
+c6db3c9ef0184310a4948060ed6fbfe5aeeb672f  docs/patent/pct_v2/filing/DESCRIPTION_FILING-COPY_EN.txt
+b040c9a52ba0376ac4ea0f465d0361dfb9dcd25a  docs/patent/pct_v2/filing/ISTEMLER_FILING-COPY_TR.txt
+716e83fa2247aa60c02549005f7472c89ebc47f0  docs/patent/pct_v2/filing/OZET_FILING-COPY_TR.txt
+63913bb33765595d1f9a3550d63b4037545e4810  docs/patent/pct_v2/filing/TARIFNAME_FILING-COPY_TR.txt
+6b19b5f347f713da8bfe05563475ecfd8756bd85  docs/patent/pct_v2/filing/SEKILLER_FILING-COPY.pdf
+267026b1b70b829b77425fd1b869672fd2adfb61  docs/patent/pct_v2/fig/fig_manifest.json
+Eslesen 7/8 sha sabahki kunyeyle ayni; tek degisen DESCRIPTION (d339bbb2 dogrulama.txt:31 -> yukaridaki).
+
+-- v2 filing olcumleri (wc -c; grep -c '^\[00'; wc -l) --
+DESCRIPTION_FILING-COPY_EN.txt: 49553 B, 84 paragraf, 182 satir
+TARIFNAME_FILING-COPY_TR.txt:   37279 B, 70 paragraf, 155 satir
+UYARI (envanter): v2 EN 84 != TR 70 — aday EN metni benimsendi, TR kopya 70 paragrafta kaldi
+  (fark 14 paragraf = 84 - 70). pct_v3'te ayni tutarsizlik YOK: EN=TR 98/98 (dogrulama.txt:12).
+ABSTRACT 864 B, CLAIMS 10988 B, ISTEMLER_TR 11715 B, OZET_TR 828 B — boyutlar sabahkiyle ayni.
+
+-- master ve yedek --
+DESCRIPTION_EN.md (yeni master): 55210 B, 84 paragraf
+DESCRIPTION_EN.md.bak-20261120 (sabahki master yedegi): 39987 B,
+  sha1 507561bebdf1d59eb90d3c76920209bc42f888c3
+
+-- pct_v3 paketi dokunulmadi --
+docs/patent/pct_v3/filing/DESCRIPTION_FILING-COPY_EN.txt: 59789 B, mtime 2026-11-20 10:44,
+  sha1 4ef0d32a3ef836a07d3df9b5fb52e981c3bd4521
+v3 kunyeleri kendi dosyalarina baglidir; v2 taban degisimi v3 metinlerini degistirmedi.
+v2'deki yeni paragraflarin (aday metin) 3 basamakli referans isareti icerip icermedigi ayni
+aksam kontrol edildi: grep -oE '\([0-9]{3}\)' docs/patent/pct_v2/filing/DESCRIPTION_FILING-COPY_EN.txt
+→ 0 eslesme; yani REFERANS_NUMARALARI.md:4-6 iddiası v2'nin yeni hali icin de gecerli.

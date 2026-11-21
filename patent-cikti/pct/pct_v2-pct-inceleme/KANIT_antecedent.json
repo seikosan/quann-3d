@@ -1,0 +1,117 @@
+[
+  {
+    "dosya": "patent/pct_v2/filing/CLAIMS_FILING-COPY_EN.txt",
+    "istem_sayisi": 15,
+    "toplam_bulgu": 15,
+    "ozet": {
+      "A_articleless_cogul_tanim": 5,
+      "B_artikel-terim_arasi_3+": 8,
+      "C_ifadeye_sifat_eklenmis": 2,
+      "D_GECEK_KUSUR": 0
+    },
+    "satirlar": [
+      {
+        "istem": 1,
+        "ifade": "the method comprising",
+        "sinif": "B_artikel-terim_arasi_3+",
+        "kanit_parca": "A computer-implemented machine learning method"
+      },
+      {
+        "istem": 1,
+        "ifade": "the derived reader input",
+        "sinif": "C_ifadeye_sifat_eklenmis",
+        "kanit_parca": "a task input"
+      },
+      {
+        "istem": 1,
+        "ifade": "the method further comprises",
+        "sinif": "B_artikel-terim_arasi_3+",
+        "kanit_parca": "A computer-implemented machine learning method"
+      },
+      {
+        "istem": 1,
+        "ifade": "the pair",
+        "sinif": "A_articleless_cogul_tanim",
+        "kanit_parca": ", for each point pair"
+      },
+      {
+        "istem": 1,
+        "ifade": "the points and of",
+        "sinif": "B_artikel-terim_arasi_3+",
+        "kanit_parca": "a point cloud consisting of N points"
+      },
+      {
+        "istem": 1,
+        "ifade": "the regions by a",
+        "sinif": "B_artikel-terim_arasi_3+",
+        "kanit_parca": "a plurality of records into geometric regions"
+      },
+      {
+        "istem": 3,
+        "ifade": "the pair",
+        "sinif": "A_articleless_cogul_tanim",
+        "kanit_parca": ", for each point pair"
+      },
+      {
+        "istem": 3,
+        "ifade": "the two point vectors",
+        "sinif": "B_artikel-terim_arasi_3+",
+        "kanit_parca": "a difference vector between two point vectors"
+      },
+      {
+        "istem": 3,
+        "ifade": "the two point vectors",
+        "sinif": "B_artikel-terim_arasi_3+",
+        "kanit_parca": "a difference vector between two point vectors"
+      },
+      {
+        "istem": 4,
+        "ifade": "the max",
+        "sinif": "A_articleless_cogul_tanim",
+        "kanit_parca": "by applying max"
+      },
+      {
+        "istem": 4,
+        "ifade": "the average",
+        "sinif": "A_articleless_cogul_tanim",
+        "kanit_parca": "and average"
+      },
+      {
+        "istem": 6,
+        "ifade": "the contribution data in",
+        "sinif": "C_ifadeye_sifat_eklenmis",
+        "kanit_parca": "a reference data"
+      },
+      {
+        "istem": 11,
+        "ifade": "the method comprises computing",
+        "sinif": "B_artikel-terim_arasi_3+",
+        "kanit_parca": "A computer-implemented machine learning method"
+      },
+      {
+        "istem": 13,
+        "ifade": "the at least one",
+        "sinif": "B_artikel-terim_arasi_3+",
+        "kanit_parca": "a by applying at least one"
+      },
+      {
+        "istem": 15,
+        "ifade": "the steps further comprise",
+        "sinif": "A_articleless_cogul_tanim",
+        "kanit_parca": "to perform steps"
+      }
+    ]
+  },
+  {
+    "dosya": "patent/pct_v2/filing/ISTEMLER_FILING-COPY_TR.txt",
+    "istem_sayisi": 15,
+    "toplam_bulgu": 0,
+    "ozet": {
+      "A_articleless_cogul_tanim": 0,
+      "B_artikel-terim_arasi_3+": 0,
+      "C_ifadeye_sifat_eklenmis": 0,
+      "D_GECEK_KUSUR": 0
+    },
+    "satirlar": []
+  }
+]

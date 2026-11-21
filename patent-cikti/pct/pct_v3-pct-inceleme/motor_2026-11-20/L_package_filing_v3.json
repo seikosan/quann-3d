@@ -1,0 +1,12 @@
+{
+  "_girdi": "check_package directory=docs/patent/pct_v3/filing",
+  "total_issues": 0,
+  "critical_issues": 0,
+  "important_issues": 0,
+  "minor_issues": 0,
+  "issues": [],
+  "summary": "[OK] Package is internally consistent: 6 documents scanned, no issues found.",
+  "package_integrity_score": 100,
+  "files_scanned": 6,
+  "stamps": []
+}

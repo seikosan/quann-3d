@@ -1,0 +1,2 @@
+patent/pct_v2/filing/CLAIMS_FILING-COPY_EN.txt istem=15 bulgu=15 {'A_articleless_cogul_tanim': 5, 'B_artikel-terim_arasi_3+': 8, 'C_ifadeye_sifat_eklenmis': 2, 'D_GECEK_KUSUR': 0}
+patent/pct_v2/filing/ISTEMLER_FILING-COPY_TR.txt istem=15 bulgu=0 {'A_articleless_cogul_tanim': 0, 'B_artikel-terim_arasi_3+': 0, 'C_ifadeye_sifat_eklenmis': 0, 'D_GECEK_KUSUR': 0}

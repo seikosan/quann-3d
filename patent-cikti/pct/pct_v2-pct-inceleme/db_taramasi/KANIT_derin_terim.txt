@@ -1,0 +1,48 @@
+# KANIT — derin incelenen patentlarda terim sayimi (uretim: derin_terim_say.py)
+# sayim = ham dosyada kucuk/harf duyarsiz alt-dizi sayisi; anlam iddiasi degil
+# ham: db_taramasi/patentlar/<NO>.md
+
+## US12639556B2
+- karakter | 174059 | ham: patentlar/US12639556B2.md
+- atfedilen | (The listed assignees may be inaccurate. Google has not perf | onculluk | 2020-06-03
+- terim sayimi: language model=0 · language=6 · text=39 · next token=0 · point cloud=5 · permutation=15 · deep set=4 · slot=519 · set aggregation=0 · pooling=8 · explanation=0 · attention=271 · cluster=9 · surprisal=0 · exclu=3 · quantiz=0 · int8=0 · lookup table=0 · backpropagat=0
+
+## US12510888B2
+- karakter | 508081 | ham: patentlar/US12510888B2.md
+- atfedilen | (The listed assignees may be inaccurate. Google has not perf | onculluk | 2018-04-09
+- terim sayimi: language model=0 · language=1 · text=455 · next token=0 · point cloud=0 · permutation=0 · deep set=0 · slot=0 · set aggregation=0 · pooling=0 · explanation=11 · attention=0 · cluster=5 · surprisal=392 · exclu=278 · quantiz=0 · int8=0 · lookup table=0 · backpropagat=0
+
+## CN117392424A
+- karakter | 95177 | ham: patentlar/CN117392424A.md
+- atfedilen | (The listed assignees may be inaccurate. Google has not perf | onculluk | 2022-06-29
+- terim sayimi: language model=0 · language=1 · text=11 · next token=0 · point cloud=197 · permutation=5 · deep set=2 · slot=0 · set aggregation=0 · pooling=31 · explanation=0 · attention=254 · cluster=1 · surprisal=0 · exclu=0 · quantiz=0 · int8=0 · lookup table=0 · backpropagat=0
+
+## US12190228B2
+- karakter | 205103 | ham: patentlar/US12190228B2.md
+- atfedilen | (The listed assignees may be inaccurate. Google has not perf | onculluk | 2019-09-13
+- terim sayimi: language model=2 · language=4 · text=276 · next token=0 · point cloud=0 · permutation=0 · deep set=0 · slot=0 · set aggregation=0 · pooling=7 · explanation=10 · attention=0 · cluster=8 · surprisal=0 · exclu=0 · quantiz=73 · int8=2 · lookup table=3 · backpropagat=0
+
+## US20250156898A1
+- karakter | 877365 | ham: patentlar/US20250156898A1.md
+- atfedilen | (The listed assignees may be inaccurate. Google has not perf | onculluk | 2023-07-19
+- terim sayimi: language model=54 · language=192 · text=642 · next token=2 · point cloud=3 · permutation=0 · deep set=0 · slot=0 · set aggregation=0 · pooling=4 · explanation=7 · attention=79 · cluster=82 · surprisal=0 · exclu=20 · quantiz=2 · int8=0 · lookup table=2 · backpropagat=2
+
+## WO2026046480A1
+- karakter | 157685 | ham: patentlar/WO2026046480A1.md
+- atfedilen | (The listed assignees may be inaccurate. Google has not perf | onculluk | 2024-08-29
+- terim sayimi: language model=8 · language=82 · text=174 · next token=0 · point cloud=0 · permutation=0 · deep set=0 · slot=0 · set aggregation=0 · pooling=0 · explanation=0 · attention=0 · cluster=0 · surprisal=0 · exclu=1 · quantiz=0 · int8=0 · lookup table=0 · backpropagat=0
+
+## WO2026170161A1
+- karakter | 215464 | ham: patentlar/WO2026170161A1.md
+- atfedilen | - | onculluk | -
+- terim sayimi: language model=17 · language=33 · text=110 · next token=0 · point cloud=2 · permutation=0 · deep set=0 · slot=0 · set aggregation=0 · pooling=0 · explanation=4 · attention=32 · cluster=0 · surprisal=0 · exclu=7 · quantiz=0 · int8=0 · lookup table=0 · backpropagat=0
+
+## US20260017347A1
+- karakter | 422724 | ham: patentlar/US20260017347A1.md
+- atfedilen | (The listed assignees may be inaccurate. Google has not perf | onculluk | 2024-07-10
+- terim sayimi: language model=2 · language=54 · text=267 · next token=0 · point cloud=0 · permutation=0 · deep set=0 · slot=0 · set aggregation=0 · pooling=0 · explanation=7 · attention=139 · cluster=11 · surprisal=0 · exclu=0 · quantiz=1 · int8=0 · lookup table=0 · backpropagat=4
+
+## US12039636B2
+- karakter | 138846 | ham: patentlar/US12039636B2.md
+- atfedilen | (The listed assignees may be inaccurate. Google has not perf | onculluk | 2021-09-13
+- terim sayimi: language model=0 · language=0 · text=17 · next token=0 · point cloud=0 · permutation=12 · deep set=20 · slot=0 · set aggregation=0 · pooling=16 · explanation=0 · attention=0 · cluster=0 · surprisal=0 · exclu=0 · quantiz=0 · int8=0 · lookup table=0 · backpropagat=3

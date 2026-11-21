@@ -1,0 +1,26 @@
+Linter: 15 hata · 6 uyarı · 1 bilgi
+
+| # | Önem | Kural | Yer | Bulgu |
+|---|------|-------|-----|-------|
+| 1 | error | antecedent_basis | istem 1 | 'the method comprising' için önceki metinde tanıtım yok (önce 'bir …' veya numaralı tanım gerekir) |
+| 2 | error | antecedent_basis | istem 1 | 'the derived reader input' için önceki metinde tanıtım yok (önce 'bir …' veya numaralı tanım gerekir) |
+| 3 | error | antecedent_basis | istem 1 | 'the method further comprises' için önceki metinde tanıtım yok (önce 'bir …' veya numaralı tanım gerekir) |
+| 4 | error | antecedent_basis | istem 1 | 'the pair' için önceki metinde tanıtım yok (önce 'bir …' veya numaralı tanım gerekir) |
+| 5 | error | antecedent_basis | istem 1 | 'the points and of' için önceki metinde tanıtım yok (önce 'bir …' veya numaralı tanım gerekir) |
+| 6 | error | antecedent_basis | istem 1 | 'the regions by a' için önceki metinde tanıtım yok (önce 'bir …' veya numaralı tanım gerekir) |
+| 7 | error | antecedent_basis | istem 3 | 'the pair' için önceki metinde tanıtım yok (önce 'bir …' veya numaralı tanım gerekir) |
+| 8 | error | antecedent_basis | istem 3 | 'the two point vectors' için önceki metinde tanıtım yok (önce 'bir …' veya numaralı tanım gerekir) |
+| 9 | error | antecedent_basis | istem 3 | 'the two point vectors' için önceki metinde tanıtım yok (önce 'bir …' veya numaralı tanım gerekir) |
+| 10 | error | antecedent_basis | istem 4 | 'the max' için önceki metinde tanıtım yok (önce 'bir …' veya numaralı tanım gerekir) |
+| 11 | error | antecedent_basis | istem 4 | 'the average' için önceki metinde tanıtım yok (önce 'bir …' veya numaralı tanım gerekir) |
+| 12 | error | antecedent_basis | istem 6 | 'the contribution data in' için önceki metinde tanıtım yok (önce 'bir …' veya numaralı tanım gerekir) |
+| 13 | error | antecedent_basis | istem 11 | 'the method comprises computing' için önceki metinde tanıtım yok (önce 'bir …' veya numaralı tanım gerekir) |
+| 14 | error | antecedent_basis | istem 13 | 'the at least one' için önceki metinde tanıtım yok (önce 'bir …' veya numaralı tanım gerekir) |
+| 15 | error | antecedent_basis | istem 15 | 'the steps further comprise' için önceki metinde tanıtım yok (önce 'bir …' veya numaralı tanım gerekir) |
+| 16 | warn | section_missing | tarifname | Tarifnamede 'technical field' bölümü yok |
+| 17 | warn | section_missing | tarifname | Tarifnamede 'background' bölümü yok |
+| 18 | warn | section_missing | tarifname | Tarifnamede 'summary of the invention' bölümü yok |
+| 19 | warn | section_missing | tarifname | Tarifnamede 'brief description of the drawings' bölümü yok |
+| 20 | warn | section_missing | tarifname | Tarifnamede 'detailed description' bölümü yok |
+| 21 | warn | section_missing | tarifname | Tarifnamede 'abstract' bölümü yok |
+| 22 | info | claim_unity | istem | 3 bağımsız istem var (ek ücret / birlik itirazı riski) |

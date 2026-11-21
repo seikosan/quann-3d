@@ -1,0 +1,8 @@
+{
+  "tool": "Z_durum_bigquery",
+  "kayit_zamani": "2026-11-19T23:22:21.221Z",
+  "result": {
+    "available": false,
+    "error": "No Google Cloud project ID found.\nBigQuery requires a Google Cloud project ID for billing.\nSetup (5 minutes, no credit card needed):\n  1. Install gcloud: https://cloud.google.com/sdk/docs/install\n  2. Run: gcloud auth login\n  3. Run: gcloud auth application-default login --project YOUR_PROJECT_ID\n  4. Or set env var: GOOGLE_CLOUD_PROJECT=your-project-id\n\nFree tier: 1TB queries/month"
+  }
+}

@@ -1,0 +1,76 @@
+{
+ "kapilar": [
+  {
+   "ad": "A SVG == kunya",
+   "bulgu": [],
+   "olcu": {
+    "sekil": 8,
+    "kunyi_metin": 142
+   },
+   "durum": "TEMIZ"
+  },
+  {
+   "ad": "B terim (DESCRIPTION_EN.md hakem)",
+   "bulgu": [],
+   "olcu": {
+    "kontrol_edilen_kelime": 339,
+    "tarifname_kelime": 954
+   },
+   "durum": "TEMIZ"
+  },
+  {
+   "ad": "C olcu izlenebilirligi",
+   "bulgu": [],
+   "olcu": {
+    "olcu_deger": 15,
+    "kaynak_dosya": 3
+   },
+   "durum": "TEMIZ"
+  },
+  {
+   "ad": "D sema/olcu ayrimi ([0028])",
+   "bulgu": [],
+   "olcu": {
+    "sema": 6,
+    "olcumlu": 2
+   },
+   "durum": "TEMIZ"
+  },
+  {
+   "ad": "E fizik + PCT 11.13 + FIG eslemesi",
+   "bulgu": [],
+   "olcu": {
+    "pdf": {
+     "karakter": 0,
+     "sayfa": 8,
+     "pt": [
+      595.304,
+      841.89
+     ],
+     "murekkep_yuzde": [
+      1.89,
+      1.94,
+      1.33,
+      0.92,
+      1.0,
+      1.34,
+      1.3,
+      1.69
+     ]
+    },
+    "min_yazi_cm": 0.2175
+   },
+   "durum": "TEMIZ"
+  }
+ ],
+ "kaynak": {
+  "manifest": "/Users/serkankose/Documents/quann-3d/docs/patent/pct_v2/fig/fig_manifest.json",
+  "tarifname": "/Users/serkankose/Documents/quann-3d/docs/patent/pct_v2/DESCRIPTION_EN.md",
+  "pdf": "/Users/serkankose/Documents/quann-3d/docs/patent/pct_v2/filing/SEKILLER_FILING-COPY.pdf",
+  "uretic": "docs/patent/pct_v2/generate_figures_pct.py"
+ },
+ "ozet": {
+  "bulgu_toplam": 0,
+  "durum": "TEMIZ"
+ }
+}

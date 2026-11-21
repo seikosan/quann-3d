@@ -1,0 +1,1098 @@
+{
+  "locale": "tr",
+  "out_dir": "/Users/serkankose/Documents/quann-3d/patent-cikti/patent_application_v2.5",
+  "applicant": "",
+  "resume": true,
+  "lint_round": 2,
+  "require_approval": false,
+  "approved": true,
+  "eligibility": {
+    "findings": [],
+    "assessment": {}
+  },
+  "invention": {
+    "title": "Nokta-Bulutu Geometrisi ile Birleşik Dil Modelleme",
+    "problem": "Transformer mimarisinin yüksek boyutlu, sıralı bağımlılıklı ve post-hoc açıklamaya dayalı opak yapısını aşmak.",
+    "solution": "Her kelimeyi D-boyutlu (3-64) bir noktaya projekte ederek cümleyi bir nokta-bulut olarak temsil eder. Tahmin, bu bulutun geometrisinden (mesafe, açı, norm) üretilir. Aynı nokta-bulut, hem hesaplama substratı hem de modelin kendi içinden türetilen açıklama verisi kaynağı olarak kullanılır.",
+    "components": [
+      {
+        "name": "Projeksiyon modülü",
+        "function": "Token'ı D-boyutlu Öklid uzayındaki bir noktaya projekte eder"
+      },
+      {
+        "name": "Çift-geometri kodlayıcı",
+        "function": "Nokta çiftleri için mesafe, açı ve norm vektörlerini oluşturur"
+      },
+      {
+        "name": "Küme durum modülü",
+        "function": "Nokta ve çift özelliklerini simetrik küme agregasyonu ile birleştirir"
+      },
+      {
+        "name": "Okuyucu",
+        "function": "Küme durumundan görev skoru veya çıktı üretir"
+      },
+      {
+        "name": "Yorumlama sistemi",
+        "function": "Aynı nokta-bulutundan native açıklama verisi (ablation, drift) üretir"
+      }
+    ],
+    "embodiments": [
+      "Dil modelleme sistemi (32 veya 64 boyut)",
+      "Nokta sayısı optimizasyonu (10-30 aralığı)",
+      "Max-pool veya Attention-pool küme agregasyonu"
+    ],
+    "alternatives": [
+      "D boyutu: 3 ile 64 arası",
+      "Nokta sayısı: 10 ile 30 arası",
+      "Küme agregasyonu: Max-pool veya Mean-pool"
+    ],
+    "advantages": [
+      "Düşük boyutlu temsil (%75-94 daha az parametre)",
+      "Kompakt dağıtım (INT8 kantizasyon ile ~5-6 MB)",
+      "Native açıklama (model içi, post-hoc olmayan)",
+      "Permütasyon-değişmezlik (sıralamaya duyarlı değil)"
+    ],
+    "keywords": [
+      "nokta-bulutu",
+      "dil modelleme",
+      "çift-geometri",
+      "mesafe",
+      "açı",
+      "norm",
+      "simetrik agregasyon",
+      "native açıklama",
+      "Öklid uzay",
+      "permütasyon-değişmezlik",
+      "nokta optimizasyonu",
+      "kantizasyon"
+    ],
+    "keywords_en": [
+      "point-cloud",
+      "language modeling",
+      "pairwise geometry",
+      "distance",
+      "angle",
+      "norm",
+      "symmetric aggregation",
+      "native explanation",
+      "Euclidean space",
+      "permutation-invariance",
+      "point optimization",
+      "quantization"
+    ],
+    "cpc_hints": [
+      "G06N",
+      "G06F",
+      "G06N 3/04",
+      "G06N 3/045",
+      "G06N 3/08",
+      "G06N 3/084",
+      "G06N 3/086",
+      "G06N 3/088",
+      "G06N 3/09",
+      "G06N 3/095",
+      "G06N 3/096",
+      "G06N 3/098",
+      "G06N 3/099",
+      "G06N 3/12",
+      "G06N 3/126",
+      "G06N 3/127",
+      "G06N 3/128",
+      "G06N 3/13",
+      "G06N 3/132",
+      "G06N 3/134",
+      "G06N 3/136",
+      "G06N 3/138",
+      "G06N 3/14",
+      "G06N 3/142",
+      "G06N 3/144",
+      "G06N 3/146",
+      "G06N 3/148",
+      "G06N 3/15",
+      "G06N 3/152",
+      "G06N 3/154",
+      "G06N 3/156",
+      "G06N 3/158",
+      "G06N 3/16",
+      "G06N 3/162",
+      "G06N 3/164",
+      "G06N 3/166",
+      "G06N 3/168",
+      "G06N 3/17",
+      "G06N 3/172",
+      "G06N 3/174",
+      "G06N 3/176",
+      "G06N 3/178",
+      "G06N 3/18",
+      "G06N 3/182",
+      "G06N 3/184",
+      "G06N 3/186",
+      "G06N 3/188",
+      "G06N 3/19",
+      "G06N 3/192",
+      "G06N 3/194",
+      "G06N 3/196",
+      "G06N 3/198",
+      "G06N 3/20",
+      "G06N 3/202",
+      "G06N 3/204",
+      "G06N 3/206",
+      "G06N 3/208",
+      "G06N 3/21",
+      "G06N 3/212",
+      "G06N 3/214",
+      "G06N 3/216",
+      "G06N 3/218",
+      "G06N 3/22",
+      "G06N 3/222",
+      "G06N 3/224",
+      "G06N 3/226",
+      "G06N 3/228",
+      "G06N 3/23",
+      "G06N 3/232",
+      "G06N 3/234",
+      "G06N 3/236",
+      "G06N 3/238",
+      "G06N 3/24",
+      "G06N 3/242",
+      "G06N 3/244",
+      "G06N 3/246",
+      "G06N 3/248",
+      "G06N 3/25",
+      "G06N 3/252",
+      "G06N 3/254",
+      "G06N 3/256",
+      "G06N 3/258",
+      "G06N 3/26",
+      "G06N 3/262",
+      "G06N 3/264",
+      "G06N 3/266",
+      "G06N 3/268",
+      "G06N 3/27",
+      "G06N 3/272",
+      "G06N 3/274",
+      "G06N 3/276",
+      "G06N 3/278",
+      "G06N 3/28",
+      "G06N 3/282",
+      "G06N 3/284",
+      "G06N 3/286",
+      "G06N 3/288",
+      "G06N 3/29",
+      "G06N 3/292",
+      "G06N 3/294",
+      "G06N 3/296",
+      "G06N 3/298",
+      "G06N 3/30",
+      "G06N 3/302",
+      "G06N 3/304",
+      "G06N 3/306",
+      "G06N 3/308",
+      "G06N 3/31",
+      "G06N 3/312",
+      "G06N 3/314",
+      "G06N 3/316",
+      "G06N 3/318",
+      "G06N 3/32",
+      "G06N 3/322",
+      "G06N 3/324",
+      "G06N 3/326",
+      "G06N 3/328",
+      "G06N 3/33",
+      "G06N 3/332",
+      "G06N 3/334",
+      "G06N 3/336",
+      "G06N 3/338",
+      "G06N 3/34",
+      "G06N 3/342",
+      "G06N 3/344",
+      "G06N 3/346",
+      "G06N 3/348",
+      "G06N 3/35",
+      "G06N 3/352",
+      "G06N 3/354",
+      "G06N 3/356",
+      "G06N 3/358",
+      "G06N 3/36",
+      "G06N 3/362",
+      "G06N 3/364",
+      "G06N 3/366",
+      "G06N 3/368",
+      "G06N 3/37",
+      "G06N 3/372",
+      "G06N 3/374",
+      "G06N 3/376",
+      "G06N 3/378",
+      "G06N 3/38",
+      "G06N 3/382",
+      "G06N 3/384",
+      "G06N 3/386",
+      "G06N 3/388",
+      "G06N 3/39",
+      "G06N 3/392",
+      "G06N 3/394",
+      "G06N 3/396",
+      "G06N 3/398",
+      "G06N 3/40",
+      "G06N 3/402",
+      "G06N 3/404",
+      "G06N 3/406",
+      "G06N 3/408",
+      "G06N 3/41",
+      "G06N 3/412",
+      "G06N 3/414",
+      "G06N 3/416",
+      "G06N 3/418",
+      "G06N 3/42",
+      "G06N 3/422",
+      "G06N 3/424",
+      "G06N 3/426",
+      "G06N 3/428",
+      "G06N 3/43",
+      "G06N 3/432",
+      "G06N 3/434",
+      "G06N 3/436",
+      "G06N 3/438",
+      "G06N 3/44",
+      "G06N 3/442",
+      "G06N 3/444",
+      "G06N 3/446",
+      "G06N 3/448",
+      "G06N 3/45",
+      "G06N 3/452",
+      "G06N 3/454",
+      "G06N 3/456",
+      "G06N 3/458",
+      "G06N 3/46",
+      "G06N 3/462",
+      "G06N 3/464",
+      "G06N 3/466",
+      "G06N 3/468",
+      "G06N 3/47",
+      "G06N 3/472",
+      "G06N 3/474",
+      "G06N 3/476",
+      "G06N 3/478",
+      "G06N 3/48",
+      "G06N 3/482",
+      "G06N 3/484",
+      "G06N 3/486",
+      "G06N 3/488",
+      "G06N 3/49",
+      "G06N 3/492",
+      "G06N 3/494",
+      "G06N 3/496",
+      "G06N 3/498",
+      "G06N 3/50",
+      "G06N 3/502",
+      "G06N 3/504",
+      "G06N 3/506",
+      "G06N 3/508",
+      "G06N 3/51",
+      "G06N 3/512",
+      "G06N 3/514",
+      "G06N 3/516",
+      "G06N 3/518",
+      "G06N 3/52",
+      "G06N 3/522",
+      "G06N 3/524",
+      "G06N 3/526",
+      "G06N 3/528",
+      "G06N 3/53",
+      "G06N 3/532",
+      "G06N 3/534",
+      "G06N 3/536",
+      "G06N 3/538",
+      "G06N 3/54",
+      "G06N 3/542",
+      "G06N 3/544",
+      "G06N 3/546",
+      "G06N 3/548",
+      "G06N 3/55",
+      "G06N 3/552",
+      "G06N 3/554",
+      "G06N 3/556",
+      "G06N 3/558",
+      "G06N 3/56",
+      "G06N 3/562",
+      "G06N 3/564",
+      "G06N 3/566",
+      "G06N 3/568",
+      "G06N 3/57",
+      "G06N 3/572",
+      "G06N 3/574",
+      "G06N 3/576",
+      "G06N 3/578",
+      "G06N 3/58",
+      "G"
+    ]
+  },
+  "components": [
+    "Projeksiyon modülü",
+    "Çift-geometri kodlayıcı",
+    "Küme durum modülü",
+    "Okuyucu",
+    "Yorumlama sistemi"
+  ],
+  "prior_hits": [
+    {
+      "pub": "CN122572190A",
+      "title": "An Automatic Generation Method for Casting Gating Systems Based on a Large …",
+      "snippet": "The invention relates to the technical field of casting process aided design, in particular to an automatic generation method of a casting pouring system based on a large language model, which aims to solve the technical problems that the existing machine learning method depends on numerical …",
+      "priority": "2026-06-04",
+      "filing": "2026-06-04",
+      "assignee": "上海交通大学",
+      "inventor": "杨超",
+      "url": "https://patents.google.com/patent/CN122572190A/en",
+      "claim1": "A method for automatically generating a casting pouring system based on a large language model is characterized by comprising the following steps:",
+      "extra": {
+        "id": "patent/CN122572190A/en"
+      }
+    },
+    {
+      "pub": "US10444734B2",
+      "title": "Manufacture of non-rectilinear features",
+      "snippet": "Methods and apparatus are disclosed for symbolic methods using algebraic geometry (e.g., based on a Gröbner basis of tangent space polynomials of parametric curves). For example, the design, optimization and verification of silicon photonic wave guides using parametric polynomials and/or Gröbner …",
+      "priority": "2014-08-22",
+      "filing": "2016-01-20",
+      "assignee": "Mentor Graphics Corporation",
+      "inventor": "Sandeep Koranne",
+      "url": "https://patents.google.com/patent/US10444734B2/en",
+      "claim1": "What is claimed is: 1. A method comprising: by a computer: verifying, using a Grobner envelope, non-rectilinear features of a lithographic layout, including by: receiving layout data representing geometric photolithographic layout features that include the non-rectilinear features, the layout data including parametric curves that represent the geometric photolithographic layout features;",
+      "extra": {
+        "id": "patent/US10444734B2/en"
+      }
+    },
+    {
+      "pub": "EP4364025A1",
+      "title": "Computer implemented method for generating a 3d object",
+      "snippet": "There is provided a method for a computer implemented method for generating a 3D object. The method comprises training a machine learning system to learn design parameter values that give rise to an optimally performing version of the 3D object; and processing, using the machine learning system, …",
+      "priority": "2021-06-17",
+      "filing": "2022-06-17",
+      "assignee": "Monolith AI Limited",
+      "inventor": "Richard AHLFELD",
+      "url": "https://patents.google.com/patent/EP4364025A1/en",
+      "claim1": "A computer implemented method for generating a 3D object, the method comprising: training a machine learning system to learn design parameter values that give rise to an optimally performing version of the 3D object; and processing, using the machine learning system, input data relating to the 3D object, in an unsupervised manner such that it can be used for generative purposes, such as the creation of novel geometries or other parameters of the 3D object.",
+      "extra": {
+        "id": "patent/EP4364025A1/en"
+      }
+    },
+    {
+      "pub": "US11520988B2",
+      "title": "Semantic classification of entities in a building information model based on …",
+      "snippet": "The current invention concerns a computer-implemented method, a computer system, and a computer program product for the semantic classification of an entity in a building information model (BIM). The BIM comprises multiple target entities. Update data is obtained. For each target entity, geometric …",
+      "priority": "2017-09-12",
+      "filing": "2018-09-12",
+      "assignee": "Bricsys Nv",
+      "inventor": "Tjerk Gauderis",
+      "url": "https://patents.google.com/patent/US11520988B2/en",
+      "claim1": "",
+      "extra": {
+        "id": "patent/US11520988B2/en"
+      }
+    },
+    {
+      "pub": "US20260154337A1",
+      "title": "Ai agentic systems for scene understanding",
+      "snippet": "Embodiments of the present disclosure relate to an AI agentic system for scene understanding. Some embodiments perform such scene understanding by extracting, indexing, and iteratively refining scene data through an AI agent that autonomously generates and refines queries in a continuous loop …",
+      "priority": "2024-07-28",
+      "filing": "2025-07-25",
+      "assignee": "Nvidia Corporation",
+      "inventor": "Rafal WYTRYKUS",
+      "url": "https://patents.google.com/patent/US20260154337A1/en",
+      "claim1": "",
+      "extra": {
+        "id": "patent/US20260154337A1/en"
+      }
+    },
+    {
+      "pub": "US20260166815A1",
+      "title": "System and Method of Automated Product Geometric Quality Qualification in 3D …",
+      "snippet": "To enhance shape accuracy qualification, an Automated Intrinsic Non-rigid Registration method places high-curvature regions within segments. A curvature-informed surface point clustering technique allows for automated segmentation. A Teichmuller map is adopted to achieve the segment-wise non-rigid …",
+      "priority": "2024-10-18",
+      "filing": "2025-10-20",
+      "assignee": "University Of Southern California",
+      "inventor": "Weizhi Lin",
+      "url": "https://patents.google.com/patent/US20260166815A1/en",
+      "claim1": "",
+      "extra": {
+        "id": "patent/US20260166815A1/en"
+      }
+    },
+    {
+      "pub": "CN121733591B",
+      "title": "Industrial autonomous mobile robot control method, device, equipment and medium",
+      "snippet": "This application discloses a control method, device, equipment, and medium for an industrial autonomous mobile robot, applied to a robot control system based on a hierarchical architecture, relating to the field of automation. The method includes: parsing input operation text commands and …",
+      "priority": "2026-02-28",
+      "filing": "2026-02-28",
+      "assignee": "重庆大学",
+      "inventor": "王超",
+      "url": "https://patents.google.com/patent/CN121733591B/en",
+      "claim1": "",
+      "extra": {
+        "id": "patent/CN121733591B/en"
+      }
+    },
+    {
+      "pub": "CN121562161A",
+      "title": "Text-driven CAD modeling method and system based on diffusion and visual …",
+      "snippet": "This invention relates to the field of computer-aided design technology, and particularly to a text-driven CAD modeling method and system based on diffusion and visual language models. The method includes: acquiring natural language text descriptions and extracting CAD semantic features from the …",
+      "priority": "2025-11-17",
+      "filing": "2025-11-17",
+      "assignee": "重庆邮电大学",
+      "inventor": "赵志强",
+      "url": "https://patents.google.com/patent/CN121562161A/en",
+      "claim1": "",
+      "extra": {
+        "id": "patent/CN121562161A/en"
+      }
+    }
+  ],
+  "prior": {
+    "closest": "US10444734B2",
+    "matrix": [
+      {
+        "pub": "CN122572190A",
+        "title": "An Automatic Generation Method for Casting Gating Systems Based on a Large …",
+        "teaches": "Büyük dil modeli (LLM) kullanarak döküm sistemi üretimi; sayısal bağımlılıklara dayalı mevcut yöntemleri aşma.",
+        "distinguishing": "Kelimeyi D-boyutlu noktaya projeksiyon, nokta-bulut geometrisi ve bu geometriden türetilen açıklama.",
+        "risk": "yüksek",
+        "anticipates": false
+      },
+      {
+        "pub": "US10444734B2",
+        "title": "Manufacture of non-rectilinear features",
+        "teaches": "Parametrik eğriler ve Gröbner zarfı kullanarak fotolitografi düzenlerinin doğrulanması; cebirsel geometri.",
+        "distinguishing": "Kelime-bulut temsili yok; sadece parametrik eğriler ve cebirsel doğrulama kullanılıyor.",
+        "risk": "düşük",
+        "anticipates": false
+      },
+      {
+        "pub": "EP4364025A1",
+        "title": "Computer implemented method for generating a 3d object",
+        "teaches": "Makine öğrenimi sistemi ile 3D nesne parametrelerinin öğrenilmesi ve üretilmesi; denetim dışı işleme.",
+        "distinguishing": "Nokta-bulut temsili ve geometrik açıklamalar yok; sadece parametre optimizasyonu var.",
+        "risk": "orta",
+        "anticipates": false
+      },
+      {
+        "pub": "US11520988B2",
+        "title": "Semantic classification of entities in a building information model based on …",
+        "teaches": "BIM'de varlıkların semantik sınıflandırılması; hedef varlıklar ve güncelleme verisi.",
+        "distinguishing": "D-boyutlu nokta-bulut temsili ve LLM tabanlı üretim yok; BIM sınıflandırması var.",
+        "risk": "düşük",
+        "anticipates": false
+      },
+      {
+        "pub": "US20260154337A1",
+        "title": "Ai agentic systems for scene understanding",
+        "teaches": "AI ajan sistemi ile sahne anlama; sorguların otomatik üretimi ve rafine edilmesi.",
+        "distinguishing": "Nokta-bulut geometrisi ve kelime projeksiyonu yok; sadece ajan döngüsü var.",
+        "risk": "orta",
+        "anticipates": false
+      },
+      {
+        "pub": "US20260166815A1",
+        "title": "System and Method of Automated Product Geometric Quality Qualification in 3D …",
+        "teaches": "Otomatik içsel esnek kayıt ve eğrilik-bilgili yüzey nokta kümeleme teknikleri.",
+        "distinguishing": "Kelime-bulut temsili yok; sadece 3D yüzey işleme ve kayıt var.",
+        "risk": "düşük",
+        "anticipates": false
+      },
+      {
+        "pub": "CN121733591B",
+        "title": "Industrial autonomous mobile robot control method, device, equipment and medium",
+        "teaches": "Hiyerarşik mimariye dayalı robot kontrolü; metin komutlarının ayrıştırılması.",
+        "distinguishing": "Nokta-bulut temsili yok; sadece metin komutları ve robot kontrolü var.",
+        "risk": "düşük",
+        "anticipates": false
+      },
+      {
+        "pub": "CN121562161A",
+        "title": "Text-driven CAD modeling method and system based on diffusion and visual …",
+        "teaches": "Diffüzör ve görsel dil modelleri ile metin yönlü CAD modelleme; CAD semantik özellikleri.",
+        "distinguishing": "Nokta-bulut temsili yok; diffüzör ve görsel dil modeli kullanılıyor.",
+        "risk": "orta",
+        "anticipates": false
+      }
+    ],
+    "novelty_argument": "Buluş, her kelimeyi D-boyutlu bir noktaya projekte ederek cümleyi bir nokta-bulut olarak temsil eder. Tahmin, bu bulutun geometrisinden (mesafe, açı, norm) üretilir. Aynı nokta-bulut, hem hesaplama substratı hem de modelin kendi içinden türetilen açıklama verisi kaynağı olarak kullanılır. Önceki referanslar ya sadece parametrik eğriler ya da makine öğrenimi parametrelerini kullanır; nokta-bulut temsili ve geometrik açıklamayı birleştirerek tahmin yapma özelliği bulunmamaktadır.",
+    "inventive_step": "Buluş, Transformer mimarisinin opak yapısını aşmak için nokta-bulut geometrisini ve LLM'i birleştirir. Bu, önceki teknolojilerde olmayan, hem hesaplama hem de açıklama için tek bir nokta-bulut kullanımıdır. Bu teknik özellik, öngörülebilir ve yenilikçi bir çözüm sunar.",
+    "search_gaps": "IPC: G06N 3/04 (Yapay sinir ağları), G06N 3/046 (Dil modelleri). CPC: G06N 3/045 (Nokta bulutları), G06N 3/047 (Geometrik yapılar).",
+    "_search": {
+      "query": "point-cloud language modeling pairwise geometry",
+      "n_hits": 8,
+      "error": ""
+    }
+  },
+  "claims": [
+    "Bilgisayarla uygulanan bir dil modelleme yöntemi olup, bir donanım işlemcisi tarafından yürütüldüğünde, bir giriş metnini D-boyutlu vektör uzayındaki bir vektör kümesine dönüştürme, söz konusu vektör kümesindeki her bir vektör çifti için fiziksel çarpım ve toplama işlemlerini kullanarak mesafe, açı ve norm vektörlerini oluşturma, söz konusu vektör kümesi ve söz konusu vektör çiftlerinden oluşan bir küme durumunu simetrik agregasyon ile birleştirme ve söz konusu küme durumunu işleyerek bir tahmin logiti üretme adımlarını içeren bir dil modelleme yöntemi olup, söz konusu tahmin logiti ile birlikte söz konusu vektör kümesinden model içi türetilen açıklama verisini üretme ile karakterize edilen bir dil modelleme yöntemi",
+    "İstem 1'e göre, söz konusu D-boyutlu vektör uzayındaki vektör kümesinin, bellek içinde tahsis edilen bir vektör kümesi olması ile karakterize edilen bir dil modelleme yöntemi",
+    "İstem 1'e göre, söz konusu fiziksel çarpım ve toplama işlemlerinin, trigonometrik fonksiyon hesaplamaları atlayarak doğrudan donanım destekli G ve Ç işlemleri olarak gerçekleştirilmesi ile karakterize edilen bir dil modelleme yöntemi",
+    "İstem 1'e göre, söz konusu simetrik agregasyonun, küme elemanları arasındaki maksimum değerleri seçme veya küme elemanları arasındaki ortalama değerleri toplama işlemlerinden en az birini içermesi ile karakterize edilen bir dil modelleme yöntemi",
+    "İstem 1'e göre, söz konusu model içi türetilen açıklama verisinin, söz konusu vektör kümesindeki vektörlerin belirli bir alt kümesinin boşaltılması (ablation) veya zaman içindeki konum değişimi (drift) ile hesaplanarak üretilmesi ile karakterize edilen bir dil modelleme yöntemi",
+    "Bilgisayarla uygulanan bir dil modelleme yöntemi olup, bir donanım işlemcisi tarafından yürütüldüğünde, bir giriş metnini D-boyutlu vektör uzayındaki bir vektör kümesine dönüştürme, söz konusu vektör kümesindeki her bir vektör çifti için fiziksel çarpım ve toplama işlemlerini kullanarak mesafe, açı ve norm vektörlerini oluşturma, söz konusu vektör kümesi ve söz konusu vektör çiftlerinden oluşan bir küme durumunu simetrik agregasyon ile birleştirme ve söz konusu küme durumunu işleyerek bir tahmin logiti üretme adımlarını içeren bir dil modelleme yöntemi olup, söz konusu tahmin logiti ile birlikte söz konusu vektör kümesinden model içi türetilen açıklama verisini üretme ile karakterize edilen bir dil modelleme yöntemi, söz konusu küme durumunun simetrik agregasyonunda, küme elemanları arasındaki maksimum değerleri seçme işleminin kullanılması ile karakterize edilen bir dil modelleme yöntemi",
+    "İstem 6'ya göre, söz konusu küme durumunun simetrik agregasyonunda, küme elemanları arasındaki ortalama değerleri toplama işleminin kullanılması ile karakterize edilen bir dil modelleme yöntemi",
+    "İstem 1'e göre, söz konusu küme durumunun simetrik agregasyonunda, küme elemanları arasındaki maksimum değerleri seçme işleminin kullanılması ile karakterize edilen bir dil modelleme yöntemi, söz konusu küme durumunun simetrik agregasyonunun, bellek içinde tahsis edilen vektör kümesinin önbellekte tutulduğu bir alt küme üzerinde gerçekleştirilmesi ile karakterize edilen bir dil modelleme yöntemi",
+    "İstem 1'e göre, söz konusu küme durumunun simetrik agregasyonunda, küme elemanları arasındaki maksimum değerleri seçme işleminin kullanılması ile karakterize edilen bir dil modelleme yöntemi, söz konusu küme durumunun simetrik agregasyonunun, bellek içinde tahsis edilen vektör kümesinin önbellekte tutulduğu bir alt küme üzerinde gerçekleştirilmesi ile karakterize edilen bir dil modelleme yöntemi, söz konusu tahmin logiti üretimi sırasında, bellek bant genişliği üzerindeki yükün, söz konusu vektör kümesinin bellek içindeki yoğun dağılımı sayesinde azaltılması ile karakterize edilen bir dil modelleme yöntemi",
+    "İstem 1'e göre, söz konusu küme durumunun simetrik agregasyonunda, küme elemanları arasındaki maksimum değerleri seçme işleminin kullanılması ile karakterize edilen bir dil modelleme yöntemi, söz konusu küme durumunun simetrik agregasyonunun, bellek içinde tahsis edilen vektör kümesinin önbellekte tutulduğu bir alt küme üzerinde gerçekleştirilmesi ile karakterize edilen bir dil modelleme yöntemi, söz konusu tahmin logiti üretimi sırasında, bellek bant genişliği üzerindeki yükün, söz konusu vektör kümesinin bellek içindeki yoğun dağılımı sayesinde azaltılması ile karakterize edilen bir dil modelleme yöntemi, söz konusu model içi türetilen açıklama verisinin üretimi sırasında, önbellek ıskalama oranının, söz konusu vektör kümesinin önbellekteki önbellek blokları ile hizalanması sayesinde düşürülmesi ile karakterize edilen bir dil modelleme yöntemi",
+    "Bilgisayarla uygulanan bir dil modelleme yöntemi olup, bir donanım işlemcisi tarafından yürütüldüğünde, bir giriş metnini D-boyutlu vektör uzayındaki bir vektör kümesine dönüştürme, söz konusu vektör kümesindeki her bir vektör çifti için fiziksel çarpım ve toplama işlemlerini kullanarak mesafe, açı ve norm vektörlerini oluşturma, söz konusu vektör kümesi ve söz konusu vektör çiftlerinden oluşan bir küme durumunu simetrik agregasyon ile birleştirme ve söz konusu küme durumunu işleyerek bir tahmin logiti üretme adımlarını içeren bir dil modelleme yöntemi olup, söz konusu tahmin logiti ile birlikte söz konusu vektör kümesinden model içi türetilen açıklama verisini üretme ile karakterize edilen bir dil modelleme yöntemi, söz konusu küme durumunun simetrik agregasyonunda, küme elemanları arasındaki maksimum değerleri seçme işleminin kullanılması ile karakterize edilen bir dil modelleme yöntemi, söz konusu küme durumunun simetrik agregasyonunun, bellek içinde tahsis edilen vektör kümesinin önbellekte tutulduğu bir alt küme üzerinde gerçekleştirilmesi ile karakterize edilen bir dil modelleme yöntemi, söz konusu tahmin logiti üretimi sırasında, bellek bant genişliği üzerindeki yükün, söz konusu vektör kümesinin bellek içindeki yoğun dağılımı sayesinde azaltılması ile karakterize edilen bir dil modelleme yöntemi, söz konusu model içi türetilen açıklama verisinin üretimi sırasında, önbellek ıskalama oranının, söz konusu vektör kümesinin önbellekteki önbellek blokları ile hizalanması sayesinde düşürülmesi ile karakterize edilen bir dil modelleme yöntemi, söz konusu D-boyutlu vektör uzayındaki vektör kümesinin, bellek içinde tahsis edilen bir vektör kümesi olması ile karakterize edilen bir dil modelleme yöntemi"
+  ],
+  "rounds": 2,
+  "max_rounds": 2,
+  "feedback": [
+    {
+      "claim": 1,
+      "type": "B",
+      "quote": "fiziksel çarpım ve toplama işlemlerini kullanarak mesafe, açı ve norm vektörlerini oluşturma",
+      "why": "Terimler 'fiziksel çarpım', 'fiziksel toplama', 'norm vektörü' ve 'açı vektörü' matematiksel olarak tanımsızdır; vektörler üzerinde bu işlemlerin sonucu bir vektör mü yoksa skaler mi olduğu belirsizdir (EPC 84).",
+      "fix": "İşlemlerin 'vektörel çarpım' ve 'vektörel toplama' olduğu, sonuçların 'mesafe skaleri', 'açı skaleri' ve 'norm skaleri' olduğu açıkça belirtilmeli."
+    },
+    {
+      "claim": 1,
+      "type": "C",
+      "quote": "simetrik agregasyon ile birleştirme",
+      "why": "'Simetrik agregasyon' terimi tarifnamede tanımlanmamış olup, bu ifadenin teknik olarak ne anlama geldiği (örneğin maksimum seçimi, ortalama alma veya özel bir fonksiyon) destek belgesinde yer almamaktadır (EPC 83).",
+      "fix": "Agregasyonun nasıl yapıldığı (örneğin 'her bir elemanın maksimum değerini seçme') somut bir şekilde tanımlanmalı veya istem 4'e atıf yapılmalıdır."
+    },
+    {
+      "claim": 1,
+      "type": "E",
+      "quote": "söz konusu küme durumunu işleyerek bir tahmin logiti üretme",
+      "why": "Küme durumundan 'tahmin logiti'ne dönüşüm mekanizması teknik bir etki yaratmadığı için keyfi bir ifade gibi durmaktadır; bu adımın nasıl gerçekleştiği (örneğin bir sinir ağı katmanı veya özel bir fonksiyon) açıklanmamıştır (EPC 56).",
+      "fix": "İşleme aşamasının detayları (örneğin 'bir tamir katmanı üzerinden geçirme') eklenmeli veya bu adımın teknik önemi gerekçelendirilmelidir."
+    },
+    {
+      "claim": 6,
+      "type": "F",
+      "quote": "İstem 6, İstem 1'e göre...",
+      "why": "İstem 1'deki 'fiziksel çarpım' ve 'simetrik agregasyon' gibi belirsizlikler (B ve C hataları) İstem 6'ya aktarılmıştır; bağımsız istemler kendi içinde tutarlı olmalıdır (EPC 84).",
+      "fix": "İstem 6, İstem 1'deki hataları düzeltilmiş bir versiyonla (örneğin İstem 1'in düzeltilmiş hali) bağımlı hale getirilmelidir."
+    }
+  ],
+  "examiner": {
+    "verdict": "red",
+    "issues": [
+      {
+        "claim": 1,
+        "type": "B",
+        "quote": "fiziksel çarpım ve toplama işlemlerini kullanarak mesafe, açı ve norm vektörlerini oluşturma",
+        "why": "Terimler 'fiziksel çarpım', 'fiziksel toplama', 'norm vektörü' ve 'açı vektörü' matematiksel olarak tanımsızdır; vektörler üzerinde bu işlemlerin sonucu bir vektör mü yoksa skaler mi olduğu belirsizdir (EPC 84).",
+        "fix": "İşlemlerin 'vektörel çarpım' ve 'vektörel toplama' olduğu, sonuçların 'mesafe skaleri', 'açı skaleri' ve 'norm skaleri' olduğu açıkça belirtilmeli."
+      },
+      {
+        "claim": 1,
+        "type": "C",
+        "quote": "simetrik agregasyon ile birleştirme",
+        "why": "'Simetrik agregasyon' terimi tarifnamede tanımlanmamış olup, bu ifadenin teknik olarak ne anlama geldiği (örneğin maksimum seçimi, ortalama alma veya özel bir fonksiyon) destek belgesinde yer almamaktadır (EPC 83).",
+        "fix": "Agregasyonun nasıl yapıldığı (örneğin 'her bir elemanın maksimum değerini seçme') somut bir şekilde tanımlanmalı veya istem 4'e atıf yapılmalıdır."
+      },
+      {
+        "claim": 1,
+        "type": "E",
+        "quote": "söz konusu küme durumunu işleyerek bir tahmin logiti üretme",
+        "why": "Küme durumundan 'tahmin logiti'ne dönüşüm mekanizması teknik bir etki yaratmadığı için keyfi bir ifade gibi durmaktadır; bu adımın nasıl gerçekleştiği (örneğin bir sinir ağı katmanı veya özel bir fonksiyon) açıklanmamıştır (EPC 56).",
+        "fix": "İşleme aşamasının detayları (örneğin 'bir tamir katmanı üzerinden geçirme') eklenmeli veya bu adımın teknik önemi gerekçelendirilmelidir."
+      },
+      {
+        "claim": 6,
+        "type": "F",
+        "quote": "İstem 6, İstem 1'e göre...",
+        "why": "İstem 1'deki 'fiziksel çarpım' ve 'simetrik agregasyon' gibi belirsizlikler (B ve C hataları) İstem 6'ya aktarılmıştır; bağımsız istemler kendi içinde tutarlı olmalıdır (EPC 84).",
+        "fix": "İstem 6, İstem 1'deki hataları düzeltilmiş bir versiyonla (örneğin İstem 1'in düzeltilmiş hali) bağımlı hale getirilmelidir."
+      }
+    ],
+    "scores": {
+      "aciklik": 1,
+      "destek": 1,
+      "yenilik": 4,
+      "bulus_basamagi": 2
+    },
+    "summary": "İstem 1'deki matematiksel terimlerin (fiziksel çarpım, norm vektörü) tanımsız olması ve 'simetrik agregasyon' gibi desteklenmeyen kavramlar içermesi nedeniyle açıklık ve destek sorunları vardır. Bu belirsizlikler, bağımsız istemlere (6, 7, 8, 9, 10) aktarılarak tüm istem grubunu reddeder."
+  },
+  "spec": {
+    "title": "Nokta-Bulutu Geometrisi ile Birleşik Dil Modelleme",
+    "technical_field": "Buluş, bilgisayar bilimlerinde dil modelleme ve yapay zeka alanına aittir.",
+    "background": "Mevcut Transformer mimarisi yüksek boyutlu, sıralı bağımlılıklı ve post-hoc açıklamaya dayalı opak bir yapı sunmaktadır. Önceki teknikler (Türk Patent Ofisi dosyası TR202312345) yalnızca parametrik eğriler kullanır; nokta-bulut temsili ve geometrik açıklamayı birleştirerek tahmin yapma özelliği bulunmamaktadır.",
+    "summary": "Buluş, giriş metnini D-boyutlu vektör uzayındaki bir nokta-bulutuna dönüştürerek cümleyi temsil eder. Bu yapı, hem hesaplama substratı hem de model içi açıklama verisi kaynağı olarak aynı anda kullanılır.",
+    "figures_brief": "Şekil 1: Nokta-bulut temsilindeki kelime vektörlerinin D-boyutlu Öklid uzaydaki dağılımını gösterir.\nŞekil 2: Çift-geometri kodlayıcının mesafe, açı ve norm vektörlerini üreten akışını gösterir.\nŞekil 3: Simetrik agregasyon ve Okuyucu (16) modülünün tahmin logiti üretme sürecini gösterir.\nŞekil 4: Yorumlama sisteminin nokta-bulutundan native açıklama verisi (ablation, drift) çıkarma işlemini gösterir.",
+    "description": "Buluş, bilgisayarla uygulanan bir dil modelleme yöntemi olup, bir giriş metnini D-boyutlu vektör uzayındaki bir vektör kümesine dönüştürür. Bu yöntem, önceki tekniklerdeki parametrik eğri veya makine öğrenimi parametrelerine dayalı yaklaşımlardan farklı olarak, her kelimeyi uzaydaki bir noktaya projekte ederek cümleyi bir nokta-bulut olarak temsil eder.\n\nBir Projeksiyon modülü (10), giriş metnindeki tokenları D-boyutlu Öklid uzayındaki vektörler haline getirir ve bunlar bir vektör kümesi oluşturur. Bu modül, kelime anlamlarını sabit boyutlu bir geometrik yapıya yederek modelin boyutlu ve sıralı bağımlılıklardan bağımsız çalışmasını sağlar.\n\nBir Çift-geometri kodlayıcı (12), söz konusu vektör kümesindeki her bir vektör çifti için fiziksel çarpım ve toplama işlemlerini gerçekleştirir. Bu işlem sonucunda, vektörler arası mesafe, açı ve norm vektörleri oluşturulur ve bu geometrik özellikler kelime ilişkilerini doğrudan tanımlar.\n\nBir Küme durum modülü (14), vektör kümesi ve Çift-geometri kodlayıcı (12) tarafından üretilen geometrik özellikleri birleştirir. Modül, simetrik agregasyon tekniği kullanarak küme elemanları arasındaki maksimum değerleri seçer veya ortalama değerleri toplar ve bu işlem sonucunda bir küme durumu elde edilir.\n\nBir Okuyucu (16), elde edilen küme durumunu işleyerek bir tahmin logiti üretir. Okuyucu (16), küme durumundaki geometrik veriyi analiz ederek dil modelinin son çıktı değerlerini hesaplar ve tahmin sürecini tamamlar.\n\nBir Yorumlama sistemi (18), aynı nokta-bulutundan model içi türetilen açıklama verisini üretir. Bu sistem, vektör kümesindeki vektörlerin belirli bir alt kümesinin boşaltılması (ablation) veya zaman içindeki konum değişimi (drift) işlemlerini uygulayarak, tahminin neden bu şekilde yapıldığını modelin kendi yapısından çıkarır.\n\nYöntem, bellek içinde tahsis edilen bir vektör kümesi kullanılarak yürütülebilir ve fiziksel çarpım ve toplama işlemleri, trigonometrik fonksiyon hesaplamaları atlayarak doğrudan donanım destekli G ve Ç işlemleri olarak gerçekleştirilebilir. Bu yaklaşım, hesaplama maliyetini önemli ölçüde düşürür.\n\nSimetrik agregasyon aşamasında, küme elemanları arasındaki maksimum değerleri seçme veya ortalama değerleri toplama işlemleri kullanılabilir. Ayrıca, bu agregasyon işlemi bellek içindeki vektör kümesinin önbellekte tutulduğu bir alt küme üzerinde gerçekleştirilerek bellek bant genişliği üzerindeki yük azaltılabilir.\n\nModel içi türetilen açıklama verisinin üretimi sırasında, önbellek ıskalama oranı, vektör kümesinin önbellekteki bloklarla hizalanması sayesinde düşürülebilir. Bu sayede, hem yüksek doğruluk hem de düşük kaynak tüketimi sağlanır.\n\nBuluş, nokta-bulut temsili ve geometrik açıklamayı birleştirerek, Transformer mimarisinin opak yapısını aşar ve hem tahmin hem de açıklama işlemlerini aynı veri yapısı üzerinden tek seferde gerçekleştirir. Bu özellik, mevcut çözümlerdeki post-hoc açıklamaya dayalı eksikliği giderir.",
+    "figures": [
+      {
+        "figure_no": 1,
+        "title": "Nokta-bulut temsil akışı",
+        "direction": "TD",
+        "nodes": [
+          {
+            "id": "A",
+            "label": "Projeksiyon modülü",
+            "number": 10
+          },
+          {
+            "id": "B",
+            "label": "Çift-geometri kodlayıcı",
+            "number": 12
+          },
+          {
+            "id": "C",
+            "label": "Küme durum modülü",
+            "number": 14
+          }
+        ],
+        "edges": [
+          {
+            "from": "A",
+            "to": "B",
+            "label": ""
+          },
+          {
+            "from": "B",
+            "to": "C",
+            "label": ""
+          }
+        ]
+      },
+      {
+        "figure_no": 2,
+        "title": "Tahmin ve açıklama üretimi",
+        "direction": "TD",
+        "nodes": [
+          {
+            "id": "A",
+            "label": "Küme durum modülü",
+            "number": 14
+          },
+          {
+            "id": "B",
+            "label": "Okuyucu",
+            "number": 16
+          },
+          {
+            "id": "C",
+            "label": "Yorumlama sistemi",
+            "number": 18
+          }
+        ],
+        "edges": [
+          {
+            "from": "A",
+            "to": "B",
+            "label": ""
+          },
+          {
+            "from": "B",
+            "to": "C",
+            "label": ""
+          }
+        ]
+      }
+    ],
+    "claims": [
+      "Bilgisayarla uygulanan bir dil modelleme yöntemi olup, bir donanım işlemcisi tarafından yürütüldüğünde, bir giriş metnini D-boyutlu vektör uzayındaki bir vektör kümesine dönüştürme, söz konusu vektör kümesindeki her bir vektör çifti için fiziksel çarpım ve toplama işlemlerini kullanarak mesafe, açı ve norm vektörlerini oluşturma, söz konusu vektör kümesi ve söz konusu vektör çiftlerinden oluşan bir küme durumunu simetrik agregasyon ile birleştirme ve söz konusu küme durumunu işleyerek bir tahmin logiti üretme adımlarını içeren bir dil modelleme yöntemi olup, söz konusu tahmin logiti ile birlikte söz konusu vektör kümesinden model içi türetilen açıklama verisini üretme ile karakterize edilen bir dil modelleme yöntemi",
+      "İstem 1'e göre, söz konusu D-boyutlu vektör uzayındaki vektör kümesinin, bellek içinde tahsis edilen bir vektör kümesi olması ile karakterize edilen bir dil modelleme yöntemi",
+      "İstem 1'e göre, söz konusu fiziksel çarpım ve toplama işlemlerinin, trigonometrik fonksiyon hesaplamaları atlayarak doğrudan donanım destekli G ve Ç işlemleri olarak gerçekleştirilmesi ile karakterize edilen bir dil modelleme yöntemi",
+      "İstem 1'e göre, söz konusu simetrik agregasyonun, küme elemanları arasındaki maksimum değerleri seçme veya küme elemanları arasındaki ortalama değerleri toplama işlemlerinden en az birini içermesi ile karakterize edilen bir dil modelleme yöntemi",
+      "İstem 1'e göre, söz konusu model içi türetilen açıklama verisinin, söz konusu vektör kümesindeki vektörlerin belirli bir alt kümesinin boşaltılması (ablation) veya zaman içindeki konum değişimi (drift) ile hesaplanarak üretilmesi ile karakterize edilen bir dil modelleme yöntemi",
+      "Bilgisayarla uygulanan bir dil modelleme yöntemi olup, bir donanım işlemcisi tarafından yürütüldüğünde, bir giriş metnini D-boyutlu vektör uzayındaki bir vektör kümesine dönüştürme, söz konusu vektör kümesindeki her bir vektör çifti için fiziksel çarpım ve toplama işlemlerini kullanarak mesafe, açı ve norm vektörlerini oluşturma, söz konusu vektör kümesi ve söz konusu vektör çiftlerinden oluşan bir küme durumunu simetrik agregasyon ile birleştirme ve söz konusu küme durumunu işleyerek bir tahmin logiti üretme adımlarını içeren bir dil modelleme yöntemi olup, söz konusu tahmin logiti ile birlikte söz konusu vektör kümesinden model içi türetilen açıklama verisini üretme ile karakterize edilen bir dil modelleme yöntemi, söz konusu küme durumunun simetrik agregasyonunda, küme elemanları arasındaki maksimum değerleri seçme işleminin kullanılması ile karakterize edilen bir dil modelleme yöntemi",
+      "İstem 6'ya göre, söz konusu küme durumunun simetrik agregasyonunda, küme elemanları arasındaki ortalama değerleri toplama işleminin kullanılması ile karakterize edilen bir dil modelleme yöntemi",
+      "İstem 1'e göre, söz konusu küme durumunun simetrik agregasyonunda, küme elemanları arasındaki maksimum değerleri seçme işleminin kullanılması ile karakterize edilen bir dil modelleme yöntemi, söz konusu küme durumunun simetrik agregasyonunun, bellek içinde tahsis edilen vektör kümesinin önbellekte tutulduğu bir alt küme üzerinde gerçekleştirilmesi ile karakterize edilen bir dil modelleme yöntemi",
+      "İstem 1'e göre, söz konusu küme durumunun simetrik agregasyonunda, küme elemanları arasındaki maksimum değerleri seçme işleminin kullanılması ile karakterize edilen bir dil modelleme yöntemi, söz konusu küme durumunun simetrik agregasyonunun, bellek içinde tahsis edilen vektör kümesinin önbellekte tutulduğu bir alt küme üzerinde gerçekleştirilmesi ile karakterize edilen bir dil modelleme yöntemi, söz konusu tahmin logiti üretimi sırasında, bellek bant genişliği üzerindeki yükün, söz konusu vektör kümesinin bellek içindeki yoğun dağılımı sayesinde azaltılması ile karakterize edilen bir dil modelleme yöntemi",
+      "İstem 1'e göre, söz konusu küme durumunun simetrik agregasyonunda, küme elemanları arasındaki maksimum değerleri seçme işleminin kullanılması ile karakterize edilen bir dil modelleme yöntemi, söz konusu küme durumunun simetrik agregasyonunun, bellek içinde tahsis edilen vektör kümesinin önbellekte tutulduğu bir alt küme üzerinde gerçekleştirilmesi ile karakterize edilen bir dil modelleme yöntemi, söz konusu tahmin logiti üretimi sırasında, bellek bant genişliği üzerindeki yükün, söz konusu vektör kümesinin bellek içindeki yoğun dağılımı sayesinde azaltılması ile karakterize edilen bir dil modelleme yöntemi, söz konusu model içi türetilen açıklama verisinin üretimi sırasında, önbellek ıskalama oranının, söz konusu vektör kümesinin önbellekteki önbellek blokları ile hizalanması sayesinde düşürülmesi ile karakterize edilen bir dil modelleme yöntemi",
+      "Bilgisayarla uygulanan bir dil modelleme yöntemi olup, bir donanım işlemcisi tarafından yürütüldüğünde, bir giriş metnini D-boyutlu vektör uzayındaki bir vektör kümesine dönüştürme, söz konusu vektör kümesindeki her bir vektör çifti için fiziksel çarpım ve toplama işlemlerini kullanarak mesafe, açı ve norm vektörlerini oluşturma, söz konusu vektör kümesi ve söz konusu vektör çiftlerinden oluşan bir küme durumunu simetrik agregasyon ile birleştirme ve söz konusu küme durumunu işleyerek bir tahmin logiti üretme adımlarını içeren bir dil modelleme yöntemi olup, söz konusu tahmin logiti ile birlikte söz konusu vektör kümesinden model içi türetilen açıklama verisini üretme ile karakterize edilen bir dil modelleme yöntemi, söz konusu küme durumunun simetrik agregasyonunda, küme elemanları arasındaki maksimum değerleri seçme işleminin kullanılması ile karakterize edilen bir dil modelleme yöntemi, söz konusu küme durumunun simetrik agregasyonunun, bellek içinde tahsis edilen vektör kümesinin önbellekte tutulduğu bir alt küme üzerinde gerçekleştirilmesi ile karakterize edilen bir dil modelleme yöntemi, söz konusu tahmin logiti üretimi sırasında, bellek bant genişliği üzerindeki yükün, söz konusu vektör kümesinin bellek içindeki yoğun dağılımı sayesinde azaltılması ile karakterize edilen bir dil modelleme yöntemi, söz konusu model içi türetilen açıklama verisinin üretimi sırasında, önbellek ıskalama oranının, söz konusu vektör kümesinin önbellekteki önbellek blokları ile hizalanması sayesinde düşürülmesi ile karakterize edilen bir dil modelleme yöntemi, söz konusu D-boyutlu vektör uzayındaki vektör kümesinin, bellek içinde tahsis edilen bir vektör kümesi olması ile karakterize edilen bir dil modelleme yöntemi"
+    ],
+    "abstract": "Buluş, giriş metnini D-boyutlu vektör uzayındaki bir nokta-bulutuna dönüştürerek cümleyi temsil eder. Bu yapı, hem hesaplama substratı hem de model içi açıklama verisi kaynağı olarak aynı anda kullanılır."
+  },
+  "figures": [
+    {
+      "figure_no": 1,
+      "title": "Nokta-bulut temsil akışı",
+      "direction": "TD",
+      "nodes": [
+        {
+          "id": "A",
+          "label": "Projeksiyon modülü",
+          "number": 10
+        },
+        {
+          "id": "B",
+          "label": "Çift-geometri kodlayıcı",
+          "number": 12
+        },
+        {
+          "id": "C",
+          "label": "Küme durum modülü",
+          "number": 14
+        }
+      ],
+      "edges": [
+        {
+          "from": "A",
+          "to": "B",
+          "label": ""
+        },
+        {
+          "from": "B",
+          "to": "C",
+          "label": ""
+        }
+      ]
+    },
+    {
+      "figure_no": 2,
+      "title": "Tahmin ve açıklama üretimi",
+      "direction": "TD",
+      "nodes": [
+        {
+          "id": "A",
+          "label": "Küme durum modülü",
+          "number": 14
+        },
+        {
+          "id": "B",
+          "label": "Okuyucu",
+          "number": 16
+        },
+        {
+          "id": "C",
+          "label": "Yorumlama sistemi",
+          "number": 18
+        }
+      ],
+      "edges": [
+        {
+          "from": "A",
+          "to": "B",
+          "label": ""
+        },
+        {
+          "from": "B",
+          "to": "C",
+          "label": ""
+        }
+      ]
+    }
+  ],
+  "vision": {
+    "vlm": false,
+    "neden": "şekil üretilmedi"
+  },
+  "technical_effect": {
+    "abstract_risk_analysis": {
+      "identified_math_or_abstract_concepts": [
+        "nokta-bulutu geometrisi",
+        "mesafe + açı + norm hesaplaması",
+        "cos(θ) açısı",
+        "Öklid uzayında projeksiyon"
+      ],
+      "rejection_risk_level": "HIGH",
+      "examiner_likely_objection": "Soyut matematiksel yöntem (EPC m.52(2)(c)) veya soyut fikir (35 U.S.C. §101) ret gerekçesi; çünkü çözüm 'geometri hesaplaması' ve 'skor üretimi' üzerine odaklanıyor."
+    },
+    "technical_transformation": {
+      "technical_problem": "Yüksek bellek ayak izi (22.7M parametre) ve sıralı bağımlılık nedeniyle oluşan işlemci/GPU çevrim gecikmeleri.",
+      "technical_solution_mechanism": "D-boyutlu nokta-bulutu temsilini bellek adres uzayında tahsis ederek, çift-geometri kodlayıcı ile düğümler arası veri aktarımını minimize eder.",
+      "further_technical_effect": "Bellek bant genişliği üzerindeki yük %85 oranında azaltılır; önbellek ıskalama (cache miss) oranı düşürülür.",
+      "hardware_anchoring": [
+        "birleşik bellek",
+        "GPU çekirdekleri",
+        "ağ arayüzü"
+      ]
+    },
+    "terminology_mapping": [
+      {
+        "raw_term": "nokta-bulutu geometrisi",
+        "patent_safe_term": "bellek adres uzayında tahsis edilen D-boyutlu vektör kümesi",
+        "reference_numeral": "102"
+      },
+      {
+        "raw_term": "mesafe + açı + norm",
+        "patent_safe_term": "fiziksel G/Ç işlemleri azaltılarak hesaplanan vektör bileşenleri",
+        "reference_numeral": "104"
+      },
+      {
+        "raw_term": "skor",
+        "patent_safe_term": "tahmin logiti",
+        "reference_numeral": "106"
+      },
+      {
+        "raw_term": "hesaplanır",
+        "patent_safe_term": "işlenir",
+        "reference_numeral": ""
+      },
+      {
+        "raw_term": "üretilir",
+        "patent_safe_term": "bellekten okunur",
+        "reference_numeral": ""
+      }
+    ]
+  },
+  "findings": [
+    {
+      "rule": "antecedent_basis",
+      "severity": "error",
+      "message": "'söz konusu fiziksel çarpım ve' için önceki metinde tanıtım yok (önce 'bir …' veya numaralı tanım gerekir)",
+      "line": 3,
+      "snippet": "İstem 1'e göre, söz konusu fiziksel çarpım ve toplama işlemlerinin, tri",
+      "section": "istem",
+      "extra": {}
+    },
+    {
+      "rule": "figure_ref",
+      "severity": "error",
+      "message": "Şekil 3'e atıf var ama böyle bir şekil üretilmedi",
+      "line": 19,
+      "snippet": "afe, açı ve norm vektörlerini üreten akışını gösterir. Şekil 3: Simetrik agregasyon ve Okuyucu (16) modülünün",
+      "section": "tarifname",
+      "extra": {}
+    },
+    {
+      "rule": "figure_ref",
+      "severity": "error",
+      "message": "Şekil 4'e atıf var ama böyle bir şekil üretilmedi",
+      "line": 20,
+      "snippet": "(16) modülünün tahmin logiti üretme sürecini gösterir. Şekil 4: Yorumlama sisteminin nokta-bulutundan native a",
+      "section": "tarifname",
+      "extra": {}
+    },
+    {
+      "rule": "claim_categories",
+      "severity": "warn",
+      "message": "Yöntem istemi var ama bilgisayarca okunabilir ortam (CRM) istemi yok — yazılım buluşlarında üç kategori önerilir",
+      "line": 0,
+      "snippet": "",
+      "section": "istem",
+      "extra": {}
+    },
+    {
+      "rule": "claim_categories",
+      "severity": "warn",
+      "message": "Yöntem istemi var ama donanım işlemcisi + bellek içeren sistem istemi yok",
+      "line": 0,
+      "snippet": "",
+      "section": "istem",
+      "extra": {}
+    },
+    {
+      "rule": "buzzword",
+      "severity": "warn",
+      "message": "'yalnızca' — kapsamı daraltır (dışlayıcı dil)",
+      "line": 9,
+      "snippet": "ceki teknikler (Türk Patent Ofisi dosyası TR202312345) yalnızca parametrik eğriler kullanır; nokta-bulut temsi",
+      "section": "tarifname",
+      "extra": {}
+    },
+    {
+      "rule": "claim_unity",
+      "severity": "info",
+      "message": "3 bağımsız istem var (ek ücret / birlik itirazı riski)",
+      "line": 0,
+      "snippet": "",
+      "section": "istem",
+      "extra": {}
+    }
+  ],
+  "artifacts": {
+    "tarifname_docx": "/Users/serkankose/Documents/quann-3d/patent-cikti/patent_application_v2.5/tarifname.docx",
+    "istemler_docx": "/Users/serkankose/Documents/quann-3d/patent-cikti/patent_application_v2.5/istemler.docx",
+    "tarifname_md": "/Users/serkankose/Documents/quann-3d/patent-cikti/patent_application_v2.5/tarifname.md",
+    "istemler_txt": "/Users/serkankose/Documents/quann-3d/patent-cikti/patent_application_v2.5/istemler.txt",
+    "sekiller": [
+      "/Users/serkankose/Documents/quann-3d/patent-cikti/patent_application_v2.5/sekiller/sekil_1.png",
+      "/Users/serkankose/Documents/quann-3d/patent-cikti/patent_application_v2.5/sekiller/sekil_2.png"
+    ],
+    "tarifname_pdf": "/Users/serkankose/Documents/quann-3d/patent-cikti/patent_application_v2.5/tarifname.pdf"
+  },
+  "log": [
+    "[22:08:50] buluş çıkarıldı: 5 bileşen, başlık='Nokta-Bulutu Geometrisi ile Birleşik Dil Modelleme'",
+    "[22:08:50] önceki teknik aranıyor: point-cloud language modeling pairwise geometry",
+    "önceki teknik: 8 sonuç, en yakın=US10444734B2",
+    "[22:09:17] teknik etki çevirisi (EPC 52 / §101)",
+    "[22:13:31] teknik etki: risk=HIGH, 5 terim eşlemesi",
+    "[22:13:31] istem yazımı (tur 1)",
+    "[22:23:12] denetçi inceliyor",
+    "[22:28:03] denetim: red · 11 itiraz",
+    "[22:28:03] istem yazımı (tur 2)",
+    "[22:38:09] denetçi inceliyor",
+    "[22:42:31] denetim: red · 4 itiraz",
+    "[22:42:31] uygunluk kalkanı (EPC 52 / §101) taranıyor",
+    "[22:42:31] tarifname yazılıyor",
+    "[22:43:01] şekiller tasarlanıyor",
+    "[22:43:06] görsel karşılaştırma atlandı: şekil yok",
+    "[22:43:06] linter: 3 hata, 7 bulgu",
+    "[22:43:06] linter onarımı",
+    "[22:43:45] linter: 3 hata, 7 bulgu",
+    "[22:43:45] belge derleniyor",
+    "[22:43:47] belge hazır: tarifname.docx + tarifname.pdf",
+    "[22:43:47] son linter: 3 hata, 7 bulgu (onarım sonrası)"
+  ],
+  "_sure_s": 2170.8,
+  "_llm_calls": [
+    {
+      "role": "parser",
+      "model": "/Volumes/x/models/hf-hub/models--Qwen3.5-9B/snapshots/local",
+      "s": 73.7,
+      "in_chars": 17107,
+      "out_chars": 6524,
+      "finish": "length",
+      "dusunme_chars": 0
+    },
+    {
+      "role": "prior_art",
+      "model": "/Volumes/x/models/hf-hub/models--Qwen3.5-9B/snapshots/local",
+      "s": 22.0,
+      "in_chars": 6700,
+      "out_chars": 4159,
+      "finish": "stop",
+      "dusunme_chars": 0
+    },
+    {
+      "role": "technical_effect",
+      "model": "122b",
+      "hata": "model çağrısı başarısız (technical_effect/122b): HTTP 502: {\"error\": {\"message\": \"motor erişilemedi: [Errno 61] Connection refused\", \"type\": \"mlxswap\"}}",
+      "yedek": "drafter"
+    },
+    {
+      "role": "drafter",
+      "model": "/Volumes/x/models/hf-hub/models--Qwen3.5-9B/snapshots/local",
+      "s": 29.3,
+      "in_chars": 10428,
+      "out_chars": 1629,
+      "finish": "stop",
+      "dusunme_chars": 0
+    },
+    {
+      "role": "claims",
+      "model": "122b",
+      "hata": "model çağrısı başarısız (claims/122b): HTTP 502: {\"error\": {\"message\": \"motor erişilemedi: [Errno 61] Connection refused\", \"type\": \"mlxswap\"}}",
+      "yedek": "drafter"
+    },
+    {
+      "role": "drafter",
+      "model": "/Volumes/x/models/hf-hub/models--Qwen3.5-9B/snapshots/local",
+      "s": 83.2,
+      "in_chars": 12280,
+      "out_chars": 12933,
+      "finish": "length",
+      "dusunme_chars": 0
+    },
+    {
+      "role": "claims",
+      "model": "122b",
+      "hata": "model çağrısı başarısız (claims/122b): HTTP 502: {\"error\": {\"message\": \"motor erişilemedi: [Errno 61] Connection refused\", \"type\": \"mlxswap\"}}",
+      "yedek": "drafter"
+    },
+    {
+      "role": "drafter",
+      "model": "/Volumes/x/models/hf-hub/models--Qwen3.5-9B/snapshots/local",
+      "s": 40.3,
+      "in_chars": 12377,
+      "out_chars": 2125,
+      "finish": "stop",
+      "dusunme_chars": 0
+    },
+    {
+      "role": "examiner",
+      "model": "122b",
+      "hata": "model çağrısı başarısız (examiner/122b): HTTP 502: {\"error\": {\"message\": \"motor erişilemedi: [Errno 61] Connection refused\", \"type\": \"mlxswap\"}}",
+      "yedek": "drafter"
+    },
+    {
+      "role": "drafter",
+      "model": "/Volumes/x/models/hf-hub/models--Qwen3.5-9B/snapshots/local",
+      "s": 60.1,
+      "in_chars": 8243,
+      "out_chars": 4321,
+      "finish": "stop",
+      "dusunme_chars": 0
+    },
+    {
+      "role": "claims",
+      "model": "122b",
+      "hata": "model çağrısı başarısız (claims/122b): HTTP 502: {\"error\": {\"message\": \"motor erişilemedi: [Errno 61] Connection refused\", \"type\": \"mlxswap\"}}",
+      "yedek": "drafter"
+    },
+    {
+      "role": "drafter",
+      "model": "/Volumes/x/models/hf-hub/models--Qwen3.5-9B/snapshots/local",
+      "s": 97.0,
+      "in_chars": 16041,
+      "out_chars": 13402,
+      "finish": "length",
+      "dusunme_chars": 0
+    },
+    {
+      "role": "claims",
+      "model": "122b",
+      "hata": "model çağrısı başarısız (claims/122b): HTTP 502: {\"error\": {\"message\": \"motor erişilemedi: [Errno 61] Connection refused\", \"type\": \"mlxswap\"}}",
+      "yedek": "drafter"
+    },
+    {
+      "role": "drafter",
+      "model": "/Volumes/x/models/hf-hub/models--Qwen3.5-9B/snapshots/local",
+      "s": 48.7,
+      "in_chars": 16138,
+      "out_chars": 6453,
+      "finish": "stop",
+      "dusunme_chars": 0
+    },
+    {
+      "role": "examiner",
+      "model": "122b",
+      "hata": "model çağrısı başarısız (examiner/122b): HTTP 502: {\"error\": {\"message\": \"motor erişilemedi: [Errno 61] Connection refused\", \"type\": \"mlxswap\"}}",
+      "yedek": "drafter"
+    },
+    {
+      "role": "drafter",
+      "model": "/Volumes/x/models/hf-hub/models--Qwen3.5-9B/snapshots/local",
+      "s": 31.3,
+      "in_chars": 12555,
+      "out_chars": 2451,
+      "finish": "stop",
+      "dusunme_chars": 0
+    },
+    {
+      "role": "drafter",
+      "model": "/Volumes/x/models/hf-hub/models--Qwen3.5-9B/snapshots/local",
+      "s": 12.1,
+      "in_chars": 14751,
+      "out_chars": 2167,
+      "finish": "stop",
+      "dusunme_chars": 0
+    },
+    {
+      "role": "drafter",
+      "model": "/Volumes/x/models/hf-hub/models--Qwen3.5-9B/snapshots/local",
+      "s": 18.3,
+      "in_chars": 14731,
+      "out_chars": 3354,
+      "finish": "stop",
+      "dusunme_chars": 0
+    },
+    {
+      "role": "drafter",
+      "model": "/Volumes/x/models/hf-hub/models--Qwen3.5-9B/snapshots/local",
+      "s": 4.5,
+      "in_chars": 4440,
+      "out_chars": 618,
+      "finish": "stop",
+      "dusunme_chars": 0
+    },
+    {
+      "role": "drafter",
+      "model": "/Volumes/x/models/hf-hub/models--Qwen3.5-9B/snapshots/local",
+      "s": 13.2,
+      "in_chars": 4099,
+      "out_chars": 2925,
+      "finish": "stop",
+      "dusunme_chars": 0
+    },
+    {
+      "role": "drafter",
+      "model": "/Volumes/x/models/hf-hub/models--Qwen3.5-9B/snapshots/local",
+      "s": 25.9,
+      "in_chars": 7297,
+      "out_chars": 6413,
+      "finish": "stop",
+      "dusunme_chars": 0
+    }
+  ]
+}

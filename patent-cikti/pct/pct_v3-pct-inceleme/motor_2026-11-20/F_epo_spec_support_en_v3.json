@@ -1,0 +1,270 @@
+{
+  "_girdi": "GET /claims+/description (ham bayt)",
+  "analysis_type": "automated",
+  "jurisdiction": "EPO",
+  "specification_paragraphs": 98,
+  "indexed_terms": 1927,
+  "total_issues": 17,
+  "critical_issues": 0,
+  "important_issues": 17,
+  "sufficiency_issues": 17,
+  "section_issues": 0,
+  "spec_coverage": {
+    "percentage": 100,
+    "supported_claims": 15,
+    "total_claims": 15,
+    "unsupported_claims": []
+  },
+  "summary": "[WARNING] Found 17 IMPORTANT issues in Art. 83 EPC sufficiency analysis",
+  "compliant": true,
+  "issues": [
+    {
+      "severity": "IMPORTANT",
+      "type": "sufficiency",
+      "claim": 1,
+      "element": "point in a D-dimensional space",
+      "problem": "Claim element \"point in a D-dimensional space\" has limited description (only Para. 10)",
+      "spec_refs": [
+        "[0010]"
+      ],
+      "fix": "Consider adding more detailed description of \"point in a D-dimensional space\" for stronger Art. 83 support",
+      "legal_ref": "Art. 83 EPC",
+      "confidence": "MEDIUM"
+    },
+    {
+      "severity": "IMPORTANT",
+      "type": "sufficiency",
+      "claim": 1,
+      "element": "tabular record",
+      "problem": "Claim element \"tabular record\" has limited description (only Para. 10)",
+      "spec_refs": [
+        "[0010]"
+      ],
+      "fix": "Consider adding more detailed description of \"tabular record\" for stronger Art. 83 support",
+      "legal_ref": "Art. 83 EPC",
+      "confidence": "MEDIUM"
+    },
+    {
+      "severity": "IMPORTANT",
+      "type": "sufficiency",
+      "claim": 1,
+      "element": "point cloud of",
+      "problem": "Claim element \"point cloud of\" has limited description (only Para. 11)",
+      "spec_refs": [
+        "[0011]"
+      ],
+      "fix": "Consider adding more detailed description of \"point cloud of\" for stronger Art. 83 support",
+      "legal_ref": "Art. 83 EPC",
+      "confidence": "MEDIUM"
+    },
+    {
+      "severity": "IMPORTANT",
+      "type": "sufficiency",
+      "claim": 1,
+      "element": "clustering operation",
+      "problem": "Claim element \"clustering operation\" has limited description (only Para. 43)",
+      "spec_refs": [
+        "[0043]"
+      ],
+      "fix": "Consider adding more detailed description of \"clustering operation\" for stronger Art. 83 support",
+      "legal_ref": "Art. 83 EPC",
+      "confidence": "MEDIUM"
+    },
+    {
+      "severity": "IMPORTANT",
+      "type": "sufficiency",
+      "claim": 3,
+      "element": "pair-geometry features",
+      "problem": "Claim element \"pair-geometry features\" has limited description (only Para. 91)",
+      "spec_refs": [
+        "[0091]"
+      ],
+      "fix": "Consider adding more detailed description of \"pair-geometry features\" for stronger Art. 83 support",
+      "legal_ref": "Art. 83 EPC",
+      "confidence": "MEDIUM"
+    },
+    {
+      "severity": "IMPORTANT",
+      "type": "sufficiency",
+      "claim": 4,
+      "element": "pair-geometry features",
+      "problem": "Claim element \"pair-geometry features\" has limited description (only Para. 91)",
+      "spec_refs": [
+        "[0091]"
+      ],
+      "fix": "Consider adding more detailed description of \"pair-geometry features\" for stronger Art. 83 support",
+      "legal_ref": "Art. 83 EPC",
+      "confidence": "MEDIUM"
+    },
+    {
+      "severity": "IMPORTANT",
+      "type": "sufficiency",
+      "claim": 5,
+      "element": "context length of the task input",
+      "problem": "Claim element \"context length of the task input\" has limited description (only Para. 39)",
+      "spec_refs": [
+        "[0039]"
+      ],
+      "fix": "Consider adding more detailed description of \"context length of the task input\" for stronger Art. 83 support",
+      "legal_ref": "Art. 83 EPC",
+      "confidence": "MEDIUM"
+    },
+    {
+      "severity": "IMPORTANT",
+      "type": "sufficiency",
+      "claim": 10,
+      "element": "sentence cloud state",
+      "problem": "Claim element \"sentence cloud state\" has limited description (only Para. 65)",
+      "spec_refs": [
+        "[0065]"
+      ],
+      "fix": "Consider adding more detailed description of \"sentence cloud state\" for stronger Art. 83 support",
+      "legal_ref": "Art. 83 EPC",
+      "confidence": "MEDIUM"
+    },
+    {
+      "severity": "IMPORTANT",
+      "type": "sufficiency",
+      "claim": 10,
+      "element": "window-geometry encoder",
+      "problem": "Claim element \"window-geometry encoder\" has limited description (only Para. 14)",
+      "spec_refs": [
+        "[0014]"
+      ],
+      "fix": "Consider adding more detailed description of \"window-geometry encoder\" for stronger Art. 83 support",
+      "legal_ref": "Art. 83 EPC",
+      "confidence": "MEDIUM"
+    },
+    {
+      "severity": "IMPORTANT",
+      "type": "sufficiency",
+      "claim": 11,
+      "element": "pair-geometry features",
+      "problem": "Claim element \"pair-geometry features\" has limited description (only Para. 91)",
+      "spec_refs": [
+        "[0091]"
+      ],
+      "fix": "Consider adding more detailed description of \"pair-geometry features\" for stronger Art. 83 support",
+      "legal_ref": "Art. 83 EPC",
+      "confidence": "MEDIUM"
+    },
+    {
+      "severity": "IMPORTANT",
+      "type": "sufficiency",
+      "claim": 12,
+      "element": "reader by gradient-based backpropagation",
+      "problem": "Claim element \"reader by gradient-based backpropagation\" has limited description (only Para. 92)",
+      "spec_refs": [
+        "[0092]"
+      ],
+      "fix": "Consider adding more detailed description of \"reader by gradient-based backpropagation\" for stronger Art. 83 support",
+      "legal_ref": "Art. 83 EPC",
+      "confidence": "MEDIUM"
+    },
+    {
+      "severity": "IMPORTANT",
+      "type": "sufficiency",
+      "claim": 13,
+      "element": "tabular record",
+      "problem": "Claim element \"tabular record\" has limited description (only Para. 10)",
+      "spec_refs": [
+        "[0010]"
+      ],
+      "fix": "Consider adding more detailed description of \"tabular record\" for stronger Art. 83 support",
+      "legal_ref": "Art. 83 EPC",
+      "confidence": "MEDIUM"
+    },
+    {
+      "severity": "IMPORTANT",
+      "type": "sufficiency",
+      "claim": 13,
+      "element": "point cloud of",
+      "problem": "Claim element \"point cloud of\" has limited description (only Para. 11)",
+      "spec_refs": [
+        "[0011]"
+      ],
+      "fix": "Consider adding more detailed description of \"point cloud of\" for stronger Art. 83 support",
+      "legal_ref": "Art. 83 EPC",
+      "confidence": "MEDIUM"
+    },
+    {
+      "severity": "IMPORTANT",
+      "type": "sufficiency",
+      "claim": 14,
+      "element": "interpretation engine",
+      "problem": "Claim element \"interpretation engine\" has limited description (only Para. 97)",
+      "spec_refs": [
+        "[0097]"
+      ],
+      "fix": "Consider adding more detailed description of \"interpretation engine\" for stronger Art. 83 support",
+      "legal_ref": "Art. 83 EPC",
+      "confidence": "MEDIUM"
+    },
+    {
+      "severity": "IMPORTANT",
+      "type": "sufficiency",
+      "claim": 15,
+      "element": "context encoder",
+      "problem": "Claim element \"context encoder\" has limited description (only Para. 1)",
+      "spec_refs": [
+        "[0001]"
+      ],
+      "fix": "Consider adding more detailed description of \"context encoder\" for stronger Art. 83 support",
+      "legal_ref": "Art. 83 EPC",
+      "confidence": "MEDIUM"
+    },
+    {
+      "severity": "IMPORTANT",
+      "type": "sufficiency",
+      "claim": 15,
+      "element": "tabular record",
+      "problem": "Claim element \"tabular record\" has limited description (only Para. 10)",
+      "spec_refs": [
+        "[0010]"
+      ],
+      "fix": "Consider adding more detailed description of \"tabular record\" for stronger Art. 83 support",
+      "legal_ref": "Art. 83 EPC",
+      "confidence": "MEDIUM"
+    },
+    {
+      "severity": "IMPORTANT",
+      "type": "sufficiency",
+      "claim": 15,
+      "element": "point cloud of",
+      "problem": "Claim element \"point cloud of\" has limited description (only Para. 11)",
+      "spec_refs": [
+        "[0011]"
+      ],
+      "fix": "Consider adding more detailed description of \"point cloud of\" for stronger Art. 83 support",
+      "legal_ref": "Art. 83 EPC",
+      "confidence": "MEDIUM"
+    }
+  ],
+  "epc_references": [
+    {
+      "section": "EPO Guidelines Part F - Chapter II-3",
+      "page": null,
+      "text": "[EPO Guidelines Part F - Chapter II-3] s (see T 51/87). Sufficiency of disclosure must be \nassessed on the basis of the application as a whole, including the \ndescription, claims and drawings, if any. The provisions relating to the \ncontent of the description are set out in Rule 42. The purpose of the \nprovisions of Art. 83 and Rule 42 is: \n(i) \nto ensure that the application contains sufficient technical information \nto enable a skilled person to put the invention as claimed into \npractice and ..."
+    },
+    {
+      "section": "EPO Guidelines Part F - Chapter III-1",
+      "page": null,
+      "text": "[EPO Guidelines Part F - Chapter III-1] ly apparent. Indeed, in some technical fields (e.g. computers), a \nclear description of function may be much more appropriate than an \nover-detailed description of structure. \nWhere an application is found to be sufficiently disclosed under Art. 83 only \nin respect of a part of the claimed subject-matter, a partial European or \nsupplementary European search report may be issued under Rule 63 \n(see B-VIII, 3.1 and 3.2). In such cases, in the absence of appr..."
+    },
+    {
+      "section": "EPO Guidelines Part F - Chapter III-1",
+      "page": null,
+      "text": "[EPO Guidelines Part F - Chapter III-1]  B-VIII, 3.1 and 3.2). In such cases, in the absence of appropriate \nRule 42(1)(e) \nArt. 83 \nArt. 83 \nRule 42(1)(c) and \n(e) \nRule 63 \n"
+    },
+    {
+      "section": "EPO Guidelines Part F - Chapter III-11",
+      "page": null,
+      "text": "[EPO Guidelines Part F - Chapter III-11] awn missing parts. If the division concludes that the \nrequirements of Art. 83 are not satisfied, a corresponding objection is \nraised. Ultimately, the application may be refused for lack of sufficient \ndisclosure (see F-III, 3 to 5). \n12. Sufficiency of disclosure and clarity \nAn ambiguity in the claims may lead to an insufficiency objection. However, \nambiguity also relates to the scope of the claims, i.e. Art. 84 (see F-IV, 4). \nNormally, therefore, an..."
+    },
+    {
+      "section": "EPC: Rule 42 Content of the description",
+      "page": 390,
+      "text": "[EPC: Rule 42 Content of the description] Règlement d'exécution \nVerweisungen | References | Références \n \n385 \nj) \ncomporter la désignation de l'inventeur, si \ncelui-ci est le demandeur. \n(3) \nEn cas de pluralité de demandeurs, la re-\nquête doit, de préférence, contenir la désigna-\ntion d'un demandeur ou d'un mandataire \ncomme représentant commun. \nRègle 4263  \nContenu de la description \nArt. 54, 56, 57, 78, 80, 83  \nR. 29, 30, 48, 50 \n(1) \nLa description doit : \na) \npréciser le domaine techniq..."
+    }
+  ]
+}

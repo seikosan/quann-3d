@@ -1,0 +1,198 @@
+{
+  "ok": true,
+  "result": {
+    "total_issues": 16,
+    "critical_issues": 0,
+    "important_issues": 16,
+    "minor_issues": 0,
+    "issues": [
+      {
+        "severity": "IMPORTANT",
+        "type": "two_part_form",
+        "claim": 1,
+        "location": "entire claim",
+        "term": "",
+        "problem": "Independent claim does not use two-part form (preamble + 'characterized in that' + characterizing portion)",
+        "fix": "Consider restructuring as two-part claim with preamble stating prior art features and characterizing portion stating novel features, unless two-part form is inappropriate for this type of claim",
+        "legal_ref": "Rule 43(1) EPC",
+        "confidence": "HIGH"
+      },
+      {
+        "severity": "IMPORTANT",
+        "type": "conciseness",
+        "claim": 1,
+        "location": "claim set",
+        "term": "15 independent product claims",
+        "problem": "Multiple independent claims (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15) in the same category (product). Rule 43(2) EPC generally allows only one independent claim per category.",
+        "fix": "Consider consolidating into a single independent claim per category with dependent claims for alternatives, or justify under Rule 43(2)(a)-(c) EPC.",
+        "legal_ref": "Rule 43(2) EPC",
+        "confidence": "HIGH"
+      },
+      {
+        "severity": "IMPORTANT",
+        "type": "two_part_form",
+        "claim": 2,
+        "location": "entire claim",
+        "term": "",
+        "problem": "Independent claim does not use two-part form (preamble + 'characterized in that' + characterizing portion)",
+        "fix": "Consider restructuring as two-part claim with preamble stating prior art features and characterizing portion stating novel features, unless two-part form is inappropriate for this type of claim",
+        "legal_ref": "Rule 43(1) EPC",
+        "confidence": "HIGH"
+      },
+      {
+        "severity": "IMPORTANT",
+        "type": "two_part_form",
+        "claim": 3,
+        "location": "entire claim",
+        "term": "",
+        "problem": "Independent claim does not use two-part form (preamble + 'characterized in that' + characterizing portion)",
+        "fix": "Consider restructuring as two-part claim with preamble stating prior art features and characterizing portion stating novel features, unless two-part form is inappropriate for this type of claim",
+        "legal_ref": "Rule 43(1) EPC",
+        "confidence": "HIGH"
+      },
+      {
+        "severity": "IMPORTANT",
+        "type": "two_part_form",
+        "claim": 4,
+        "location": "entire claim",
+        "term": "",
+        "problem": "Independent claim does not use two-part form (preamble + 'characterized in that' + characterizing portion)",
+        "fix": "Consider restructuring as two-part claim with preamble stating prior art features and characterizing portion stating novel features, unless two-part form is inappropriate for this type of claim",
+        "legal_ref": "Rule 43(1) EPC",
+        "confidence": "HIGH"
+      },
+      {
+        "severity": "IMPORTANT",
+        "type": "two_part_form",
+        "claim": 5,
+        "location": "entire claim",
+        "term": "",
+        "problem": "Independent claim does not use two-part form (preamble + 'characterized in that' + characterizing portion)",
+        "fix": "Consider restructuring as two-part claim with preamble stating prior art features and characterizing portion stating novel features, unless two-part form is inappropriate for this type of claim",
+        "legal_ref": "Rule 43(1) EPC",
+        "confidence": "HIGH"
+      },
+      {
+        "severity": "IMPORTANT",
+        "type": "two_part_form",
+        "claim": 6,
+        "location": "entire claim",
+        "term": "",
+        "problem": "Independent claim does not use two-part form (preamble + 'characterized in that' + characterizing portion)",
+        "fix": "Consider restructuring as two-part claim with preamble stating prior art features and characterizing portion stating novel features, unless two-part form is inappropriate for this type of claim",
+        "legal_ref": "Rule 43(1) EPC",
+        "confidence": "HIGH"
+      },
+      {
+        "severity": "IMPORTANT",
+        "type": "two_part_form",
+        "claim": 7,
+        "location": "entire claim",
+        "term": "",
+        "problem": "Independent claim does not use two-part form (preamble + 'characterized in that' + characterizing portion)",
+        "fix": "Consider restructuring as two-part claim with preamble stating prior art features and characterizing portion stating novel features, unless two-part form is inappropriate for this type of claim",
+        "legal_ref": "Rule 43(1) EPC",
+        "confidence": "HIGH"
+      },
+      {
+        "severity": "IMPORTANT",
+        "type": "two_part_form",
+        "claim": 8,
+        "location": "entire claim",
+        "term": "",
+        "problem": "Independent claim does not use two-part form (preamble + 'characterized in that' + characterizing portion)",
+        "fix": "Consider restructuring as two-part claim with preamble stating prior art features and characterizing portion stating novel features, unless two-part form is inappropriate for this type of claim",
+        "legal_ref": "Rule 43(1) EPC",
+        "confidence": "HIGH"
+      },
+      {
+        "severity": "IMPORTANT",
+        "type": "two_part_form",
+        "claim": 9,
+        "location": "entire claim",
+        "term": "",
+        "problem": "Independent claim does not use two-part form (preamble + 'characterized in that' + characterizing portion)",
+        "fix": "Consider restructuring as two-part claim with preamble stating prior art features and characterizing portion stating novel features, unless two-part form is inappropriate for this type of claim",
+        "legal_ref": "Rule 43(1) EPC",
+        "confidence": "HIGH"
+      },
+      {
+        "severity": "IMPORTANT",
+        "type": "two_part_form",
+        "claim": 10,
+        "location": "entire claim",
+        "term": "",
+        "problem": "Independent claim does not use two-part form (preamble + 'characterized in that' + characterizing portion)",
+        "fix": "Consider restructuring as two-part claim with preamble stating prior art features and characterizing portion stating novel features, unless two-part form is inappropriate for this type of claim",
+        "legal_ref": "Rule 43(1) EPC",
+        "confidence": "HIGH"
+      },
+      {
+        "severity": "IMPORTANT",
+        "type": "two_part_form",
+        "claim": 11,
+        "location": "entire claim",
+        "term": "",
+        "problem": "Independent claim does not use two-part form (preamble + 'characterized in that' + characterizing portion)",
+        "fix": "Consider restructuring as two-part claim with preamble stating prior art features and characterizing portion stating novel features, unless two-part form is inappropriate for this type of claim",
+        "legal_ref": "Rule 43(1) EPC",
+        "confidence": "HIGH"
+      },
+      {
+        "severity": "IMPORTANT",
+        "type": "two_part_form",
+        "claim": 12,
+        "location": "entire claim",
+        "term": "",
+        "problem": "Independent claim does not use two-part form (preamble + 'characterized in that' + characterizing portion)",
+        "fix": "Consider restructuring as two-part claim with preamble stating prior art features and characterizing portion stating novel features, unless two-part form is inappropriate for this type of claim",
+        "legal_ref": "Rule 43(1) EPC",
+        "confidence": "HIGH"
+      },
+      {
+        "severity": "IMPORTANT",
+        "type": "two_part_form",
+        "claim": 13,
+        "location": "entire claim",
+        "term": "",
+        "problem": "Independent claim does not use two-part form (preamble + 'characterized in that' + characterizing portion)",
+        "fix": "Consider restructuring as two-part claim with preamble stating prior art features and characterizing portion stating novel features, unless two-part form is inappropriate for this type of claim",
+        "legal_ref": "Rule 43(1) EPC",
+        "confidence": "HIGH"
+      },
+      {
+        "severity": "IMPORTANT",
+        "type": "two_part_form",
+        "claim": 14,
+        "location": "entire claim",
+        "term": "",
+        "problem": "Independent claim does not use two-part form (preamble + 'characterized in that' + characterizing portion)",
+        "fix": "Consider restructuring as two-part claim with preamble stating prior art features and characterizing portion stating novel features, unless two-part form is inappropriate for this type of claim",
+        "legal_ref": "Rule 43(1) EPC",
+        "confidence": "HIGH"
+      },
+      {
+        "severity": "IMPORTANT",
+        "type": "two_part_form",
+        "claim": 15,
+        "location": "entire claim",
+        "term": "",
+        "problem": "Independent claim does not use two-part form (preamble + 'characterized in that' + characterizing portion)",
+        "fix": "Consider restructuring as two-part claim with preamble stating prior art features and characterizing portion stating novel features, unless two-part form is inappropriate for this type of claim",
+        "legal_ref": "Rule 43(1) EPC",
+        "confidence": "HIGH"
+      }
+    ],
+    "summary": "[WARNING] Found 16 IMPORTANT issues requiring attention under Art. 84 EPC",
+    "compliance_score": 94.66666666666667,
+    "claim_count": 15,
+    "independent_count": 15,
+    "dependent_count": 0,
+    "issues_by_type": {
+      "two_part_form": 15,
+      "conciseness": 1
+    },
+    "jurisdiction": "EPO",
+    "legal_framework": "European Patent Convention (EPC)"
+  }
+}

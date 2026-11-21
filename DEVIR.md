@@ -4,18 +4,18 @@ baslik: DEVIR — quann-3d (makine üretimi durum + sıradaki iş)
 konu: [devir, handover, durum]
 durum: güncel
 sahiplik: koordinator
-guncellendi: 2026-11-19
+guncellendi: 2026-11-20
 kunye-kaynak: otomatik (devir_yaz.py)
 ---
 
 # DEVIR — quann-3d
 
 <!-- MAKINE:BASLA -->
-## Durum (makine üretti · 2026-11-19 22:23)
+## Durum (makine üretti · 2026-11-20 11:11)
 Bu blok elle düzenlenmez; `devir_yaz.py --repo /Users/serkankose/Documents/quann-3d` ile yenilenir.
 
-- HEAD: 36dab46 R8 kapandi: pair-freeze 5233.4086 vs kontrol 19770.644 (tester 6/6); varyant-kolu kuyruk betigi; docs kapisi patent-cikti/ (gitignore) istisnasi - kullanici karari
-- Değişen dosya: 4 → DEVIR.md, docs/patent/final_v3/Archive/, docs/patent/final_v3/son_draft.zip, docs/patent/pct_v2/
+- HEAD: 9af3b0f DEVIR taze: R8 kapandi + fraud deploy tamam satirlari; bayat run_r5_seed2 atifi ham TEST satirlariyla degisti; patent-cikti kapı istisnasi kaydi
+- Değişen dosya: 5 → DEVIR.md, docs/patent/final_v3/Archive/, docs/patent/final_v3/son_draft.zip, docs/patent/pct_v2/, docs/patent/pct_v3/
 - Kod kapısı: bulgu 0 · uyarı 0 · bilgi 0 · düzeltme planı: 0 (ayrıntı: python3 ~/.config/opencode/denetim/denetim_plan.py)
 - Doküman kapısı: bulgu 0 · uyarı 0 · bilgi 2 · düzeltme planı: 0 (ayrıntı: python3 ~/.config/opencode/denetim/denetim_plan.py)
 - ölçüm: === EĞİTİM DURUMU (kaynak: ham dosya) ===
@@ -29,32 +29,32 @@ Bu blok elle düzenlenmez; `devir_yaz.py --repo /Users/serkankose/Documents/quan
 
 
 
-
-
-
-
-
 ## Sıradaki iş (ajan)
 
-- **PCT v2 paketi hazır (19 Kas, commit YOK — `docs/patent/pct_v2/` untracked):** EN asıl +
-  TR eş kopya (15 istem, 70 paragraf tarifname, özet) + `filing/` 6 kopya. Defterler:
-  `docs/patent/pct_v2/UYGUNLUK_NOTU.md` (177 satır; §1 matrisi 22 satır, 6'sı `eksik`/`bekleniyor`)
-  + `OLCUM_KAYITLARI.md` (226 satır). Kapı `bash patent-cikti/pct/pct_v2-pct-inceleme/kapilar.sh`
-  → çıkış 0; 5 KARAR kapısı da 0 (üretim · atıf · rapor · tablo · ölçüm) — künyeler Patent İşleri'nde.
+- **PCT v3 paketi hazır (20 Kas, commit YOK):** `docs/patent/pct_v3/filing/` 7 dosya (EN/TR istem+
+  tarifname+özet + 8 sayfa A4 PDF 979834 B) + 8 SVG. Sayaçlar: 15 istem/3 bağımsız · 98 paragraf
+  EN=TR · özet 148/132 kelime · kapsama 56/56 (hepsi `patent-cikti/pct/pct_v3-pct-inceleme/
+  dogrulama.txt:2,3,10-12,14,17,18`). Motor: B 43→41 · C 47→17 `compliant true` coverage 100
+  (`motor_2026-11-20/*_v3.json`). Atıf kapısı 8 dosya: doğru 82 · kaynakta yok 0 · ölü adres 0.
+  **Bağımsız `reviewer` turu KOŞTU (lokal GGUF): 7 ✓ / 1 ✗ / 0 KANITSIZ** (`dogrulayici_tur_2026-11-20.txt`).
+  Tek ✗ = v2 sha1 künyesi: başka oturum v2 tabanını akşam 84 paragraflık adayla değiştirdi → kullanıcı
+  kararı (a) KABUL: yeni künye `dogrulama_v2kabul_2026-11-20.txt` + 4 defter + ölçüm defteri + DEVIR güncellendi
+  (v3 sha `4ef0d32a` değişmedi). D'nin 2 CRITICAL'ı (ABD) kullanıcı kararıyla açık; `ALTERNATIF_ISTEM_KUMESI.md` + `lint_v3.txt:14-24` vekile; >30 sayfa ücreti DOĞRULANMADI.
+- **PCT v2 motor denetimi (20 Kas):** 15 ham JSON + `INCELEME_RAPORU_2026-11-20.md` +
+  `KAPI_OUT_2026-11-20.txt` (`patent-cikti/uspto/pct_v2-uspto-inceleme/motor_2026-11-20/`);
+  doğrulayıcı tur 8 ✓. Öne çıkan: US `ready_to_file false` (başlık), 47 yazılı-tanım izi, opt-in 43 LOW.
+- **PCT v2 paketi (19 Kas, untracked):** 15 istem, 70 paragraf, `filing/` 6 kopya; defterler
+  `UYGUNLUK_NOTU.md` + `OLCUM_KAYITLARI.md`; kapı `kapilar.sh` çıkış 0.
 - **PCT v2 anomali (kaynak doğrulanmadı):** §1 matrisi 12:09'da kuruldu, 12:14 yazımında 9 satıra
-  döndü; hangi sürecin yazdığını kanıtlayamadık. Onarım üretime çevrildi: `yeniden_bolum1.py`
-  (`patent-cikti/pct/pct_v2-pct-inceleme/`) her künyeyi ham kaynakta açar, tutmazsa yazmaz.
-- **PCT açık işler (vekil + insan):** ön sanat araması YAPILMADI; fiziksel Rule 11.2–11.16, özetle
-  yayınlanacak şekil, PCT/RO/101, ücret/vekaletname, SVG çizim kalitesi DENETLENMEDİ (§5 listesi
-  `UYGUNLUK_NOTU.md`). Vekil onayı olmadan başvuru yapılmaz.
+döndü; hangi sürecin yazdığını kanıtlayamadık. Onarım üretime çevrildi: `yeniden_bolum1.py` (`patent-cikti/pct/pct_v2-pct-inceleme/`) her künyeyi ham kaynakta açar, tutmazsa yazmaz.
+- **PCT açık işler (vekil + insan):** DB taraması 3. turda yapıldı (`docs/patent/pct_v2/ON_SANAT.md:185`,
+  arşiv `patent-cikti/pct/pct_v2-pct-inceleme/db_taramasi/`); resmî CPC/Espacenet/PATENTSCOPE, atıf
+  ağları, X/Y/P, fiziksel Rule 11.2–11.16, PCT/RO/101, ücret/vekaletname DENETLENMEDİ. Vekil olmadan başvuru yok.
 - **Kapı istisnası (kullanıcı kararı):** `patent-cikti/` (`.gitignore`'da üretilmiş
   çıktı) `scripts/check_docs_lines.sh`'den tek satırlık istisnayla çıkarıldı; kapı yeşil.
-- **Patent v3 NİHAİ paket hazır (18 Kas, commit `1afc688`):** `docs/patent/final_v3/`
-  — ISTEMLER (15 istem, 3 bağımsız) + TARIFNAME (237 satır, §12 dürüstlük kayıtları)
-  + OZET + TEKNIK_ETKI + 8 SVG (Şekil 6/7 ölçümlü, gerçek JSON'dan) + build_v3.py
-  kapılarıyla; 5 DOCX + 5 PDF üretildi. Bağımsız reviewer turu: 71 sayı-atıf ✓,
-  kırmızı çizgi ihlali 0, bulunan 2 atıf hatası + 5 künye boşluğu giderildi.
-  Eski `patent-cikti/basvuru_paketi` ve `docs/patent/dil` artık yalnız referans.
+- **Patent final_v3 paketi (18 Kas, commit `1afc688`):** `docs/patent/final_v3/` — ISTEMLER (15/3) +
+  TARIFNAME (237 satır) + OZET + TEKNIK_ETKI + 8 SVG + 5 DOCX/5 PDF; reviewer 71 sayı-atıf ✓.
+  Eski `patent-cikti/basvuru_paketi` ve `docs/patent/dil` yalnız referans.
 - **Vekil kararları (v3, kullanıcı tarafı):** özet uzunluğu (265 kelime), 3 bağımsız
   istemin birliği, iki-bölümlü kalıp tercihi — `BLUS_NOTU.md` kırmızı çizgileriyle
   birlikte vekile götürülecek (vekil raporu §d).
@@ -194,7 +194,7 @@ ContextCloudLM vs CloudLM: PPL farkı 294969.40 − 285467.06 = 9502.34 → %3,2
 ### Patent İşleri
 
 - PCT v2 kapısı (9 kapı, 6 KARAR): `bash patent-cikti/pct/pct_v2-pct-inceleme/kapilar.sh`
-  (tam hat `kapilar_taze.txt:51` `SONUC: yeşil`); defter düzenlemesi sonrası taze kapı kararı
-  `patent-cikti/pct/pct_v2-pct-inceleme/KAPI_KARARI_2026-11-19.md`; bağımsız doğrulayıcı kapanışı
-  `7 ✓ / 0 ✗ / 0 KANITSIZ`. Sıradaki iş vekilde: PCT/RO/101 + ücret + vekâletname + gönderim
-  (`docs/patent/pct_v2/BASVURU_PAKETI.md` §3 ve §6); patent DB yenilik taraması YAPILMADI.
+  → `kapilar_taze.txt:51` `SONUC: yeşil` · `:52` `CIKIS=0` (koşum 2026-11-19 23:48); rapor kapısı
+  `2` = yalnız uyarı (`rapor_kapisi.txt:26`: `kaynakta yok 0 · ölü adres 0`). Doğrulayıcı turu 3
+  kapanışı `27 ✓ / 3 ✗ / 1 KANITSIZ` → üçü düzeltildi, KANITSIZ taze koşumla kapandı
+  (`patent-cikti/pct/pct_v2-pct-inceleme/KAPI_KARARI_2026-11-19.md` son bölüm). Vekilde: RO/101+ücret.

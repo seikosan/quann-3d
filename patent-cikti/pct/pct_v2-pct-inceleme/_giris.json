@@ -1,0 +1,15 @@
+{
+  "title_en": "Dual-use point-cloud representation with embedded explainability",
+  "title_en_words": 6,
+  "title_tr": "Çift kullanımlı nokta bulutu temsilinde gömülü açıklanabilirlik",
+  "title_tr_words": 7,
+  "abstract_en_words": 137,
+  "abstract_tr_words": 106,
+  "app_en_bytes": 47666,
+  "app_tr_bytes": 48995,
+  "desc_en_bytes": 36677,
+  "claims_en_bytes": 10988,
+  "drawings_present": true,
+  "drawings_note": "8 SVG: docs/patent/final_v3/fig/fig1..fig8 (kaynak; pct_v2 paylasir)",
+  "combined_text_note": "Motor Kural 6 istem taramasını 'specification' argümanı üzerinde yapar (pct_formalities_checker.py:420-438: CLAIMS başlığı ya da numara kalıbı aranır); bu yüzden A/B kosularında tarifname+istemler tek metin verildi. C kosusu tek başına tarifname verildiğinde motorun ne dediğini gösterir."
+}

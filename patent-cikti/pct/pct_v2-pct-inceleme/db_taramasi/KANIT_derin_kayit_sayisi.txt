@@ -1,0 +1,7 @@
+# KANIT — derin inceleme kayit sayisi (uretim: derin_sayi.py)
+# komut: sorted(patentlar/*.md) ve DERIN_kayit.md '## ' basliklari
+# tarih: 2026-11-19
+ham_sayfa_dosyasi | 9 | patentlar/*.md
+derin_kayit_basligi | 8 | DERIN_kayit.md '## ' (bos '## ' sayilmadi)
+yayin_nolari | CN117392424A · US12039636B2 · US12190228B2 · US12510888B2 · US12639556B2 · US20250156898A1 · US20260017347A1 · WO2026046480A1 · WO2026170161A1
+derin_kayit_nolari | CN117392424A · US12039636B2 · US12190228B2 · US12510888B2 · US20250156898A1 · US20260017347A1 · WO2026046480A1 · WO2026170161A1

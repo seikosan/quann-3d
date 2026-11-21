@@ -1,0 +1,7 @@
+A KÜNYE          : açılan 243 adres
+B SAYI           : birebir 112 · yuvarlanmış 5 · satır yok 68 · türetilmiş (hesap) 2
+C EŞİTLİK        : doğrulanan 4 satır
+D HESAP          : satır 51: 13.5166 = 13.516568 ✓ (girdi 2522200 / 34091488) · satır 52: 14.7929 = 14.792899 ✓ (girdi 2522200 / 34091488)
+UYARI            : 0
+BULGU            : 0
+-> patent-cikti/pct/pct_v2-pct-inceleme/DOGRUL_olcum.json

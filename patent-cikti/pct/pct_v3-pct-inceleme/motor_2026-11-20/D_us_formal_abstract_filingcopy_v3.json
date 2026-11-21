@@ -1,0 +1,114 @@
+{
+  "_girdi": "GET /abstract+/description (ham bayt); title=istem başlığı; drawings_present beyanı",
+  "analysis_type": "automated",
+  "checks_run": [
+    "abstract",
+    "title",
+    "sections",
+    "drawing_references",
+    "abstract_title_overlap"
+  ],
+  "checks_skipped": [
+    {
+      "check": "figure_numeral_coverage",
+      "reason": "no detailed description supplied"
+    }
+  ],
+  "verdict_scope": "Automated text and drawing-reference checks only; drawings_present is a declaration, not inspection of drawing files. This is not a filing clearance.",
+  "overall_compliant": false,
+  "ready_to_file": false,
+  "summary": "[INCOMPLETE] Checks skipped: figure_numeral_coverage (no detailed description supplied). [WARNING] Found 2 CRITICAL formality issue(s)",
+  "critical_issues": 2,
+  "warnings": 0,
+  "info": 0,
+  "abstract": {
+    "word_count": 148,
+    "line_count": 1,
+    "compliant": true,
+    "issues": []
+  },
+  "title": {
+    "character_count": 64,
+    "word_count": 6,
+    "compliant": true,
+    "issues": []
+  },
+  "drawings": {
+    "figures_referenced": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8"
+    ],
+    "figure_count": 8,
+    "drawings_provided": true,
+    "compliant": true,
+    "issues": []
+  },
+  "sections": {
+    "found_sections": {
+      "BACKGROUND": true,
+      "SUMMARY": false,
+      "BRIEF DESCRIPTION OF DRAWINGS": true,
+      "DETAILED DESCRIPTION": false
+    },
+    "missing_sections": [
+      "SUMMARY",
+      "DETAILED DESCRIPTION"
+    ],
+    "compliant": false
+  },
+  "issues": [
+    {
+      "section": "specification",
+      "severity": "CRITICAL",
+      "problem": "Missing required section: SUMMARY",
+      "current": "Not found",
+      "required": "Must include all required sections",
+      "fix": "Add \"SUMMARY\" section to specification",
+      "mpep": "37 CFR 1.77",
+      "confidence": "HIGH"
+    },
+    {
+      "section": "specification",
+      "severity": "CRITICAL",
+      "problem": "Missing required section: DETAILED DESCRIPTION",
+      "current": "Not found",
+      "required": "Must include all required sections",
+      "fix": "Add \"DETAILED DESCRIPTION\" section to specification",
+      "mpep": "37 CFR 1.77",
+      "confidence": "HIGH"
+    }
+  ],
+  "mpep_references": [
+    {
+      "section": "MPEP § 1302.01",
+      "page": 2,
+      "text": "[MPEP 1300] The claims should be renumbered as required by\n37 CFR 1.126, and particular attention should be\ngiven to claims dependent on previous claims to see\nthat the numbering is consistent. See MPEP\n§ 608.01(j) and § 608.01(n).\nThe abstract should be checked for an adequate and\nclear statement of the disclosed invention. See MPEP\n§ 608.01(b). The length of the abstract should be\nlimited to 150 words. For changes to the abstract by\nexaminer’s amendment, see MPEP § 1302.04.\nThe title should al..."
+    },
+    {
+      "section": "MPEP 600",
+      "page": 2,
+      "text": "[MPEP 600] 608.02(d) \nExaminer Determines\nCompleteness and Consistency\nof Drawings\n608.02(e) \nModifications in Drawings\n608.02(f) \nIllustration of Prior Art\n608.02(g) \nReplacement Drawings\n608.02(h) \nTransfer of Drawings From Prior\nApplications\n608.02(i) \n[Reserved]\n608.02(j)\n-608.02(o) \nCorrection of Drawings\n608.02(p) \n[Reserved]\n608.02(q)\n-608.02(s) \nCancelation of Figures\n608.02(t) \n[Reserved]\n608.02(u) \nDrawing Changes Which Require\nAnnotated Sheets\n608.02(v) \nDrawing Changes Which May Be\nM..."
+    },
+    {
+      "section": "MPEP 600",
+      "page": 1,
+      "text": "[MPEP 600] ng Fee\n607 \n[Reserved]\n607.01 \nReturnability of Fees\n607.02 \nDisclosure\n608 \nSpecification\n608.01 \nArrangement of Application\n608.01(a) \nAbstract of the Disclosure\n608.01(b) \nBackground of the Invention\n608.01(c) \nBrief Summary of Invention\n608.01(d) \n[Reserved]\n608.01(e) \nBrief Description of Drawings\n608.01(f) \nDetailed Description of Invention\n608.01(g) \nMode of Operation of Invention\n608.01(h) \nRev. 01.2024, November   2024\n600-1\n"
+    },
+    {
+      "section": "MPEP § 608.01(d)",
+      "page": 138,
+      "text": "[MPEP 600] laims. Note final\nreview of application and preparation for issue,\nMPEP § 1302.\n608.01(e)  [Reserved]\n608.01(f)  Brief Description of Drawings\n[R-01.2024]\n37 CFR 1.74  Reference to drawings.\nWhen there are drawings, there shall be a brief description of\nthe several views of the drawings and the detailed description\nof the invention shall refer to the different views by specifying\nthe numbers of the figures, and to the different parts by use of\nreference letters or numerals (preferably..."
+    },
+    {
+      "section": "MPEP § 1302.01",
+      "page": 2,
+      "text": "[MPEP 1300] changes to the abstract by\nexaminer’s amendment, see MPEP § 1302.04.\nThe title should also be checked. The title may not\nexceed 500 characters in length and must be as short\nand specific as possible. See 37 CFR 1.72. The title\nshould be descriptive of the invention claimed, even\nthough a longer title may result. If a satisfactory title\nis not supplied by the applicant, the examiner may\nrequire a change to the title on or after allowance.\nSee MPEP § 606 and § 606.01.\nAll amendments sh..."
+    }
+  ]
+}

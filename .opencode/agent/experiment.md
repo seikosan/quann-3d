@@ -1,7 +1,7 @@
 ---
 description: Deney kuyruğu: eğitim/çalıştırma başlatır, metrikleri okur, RESEARCH.md'yi günceller. Kullanım: yeni varyant eğitimi, resume, kuyruk takibi, held-out karşılaştırma.
 mode: subagent
-model: openrouter/openai/gpt-6-luna
+model: splash/unsloth/Qwen3.8-Flash-Next-GGUF:UD-Q4_K_XL
 permission:
   bash: allow
   edit: allow

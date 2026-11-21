@@ -1,0 +1,52 @@
+# 3. tur ek sorgular — isim cakismasi + bosluk (uretim: tur3_ek.py)
+
+
+## x01 — `ti:QUANN`
+- HTTP `200` · toplam `21` · `2026-11-19T19:02:55+00:00`
+- URL: `https://patents.google.com/xhr/query?url=q%3Dti%3AQUANN%26num%3D5`
+  - **US11905563B2** Leveraging the presence or absence of miRNA isoforms for recommending  · onculluk 2016-10-21 · Thomas Jefferson University
+  - **CA3180819A1** Substituted aminothiazoles as dgkzeta inhibitors for immune activation · onculluk 2020-04-24 · Bayer Aktiengesellschaft
+  - **US8410326B2** Integrated process and apparatus to produce hydrocarbons from aqueous  · onculluk 2010-01-14 · Wisconsin Alumni Research Foundation
+  - **CA2753358A1** Hplc separation and quantitation of heavy petroleum fractions · onculluk 2009-02-24 · Exxonmobil Research And Engineering Company
+  - **WO2009051742A1** Estimating compositional information from limited analytical data · onculluk 2007-10-16 · Exxonmobil Research And Engineering Company
+
+## x02 — `ti:"cloud language model" OR ti:CloudLM`
+- HTTP `200` · toplam `3` · `2026-11-19T19:03:15+00:00`
+- URL: `https://patents.google.com/xhr/query?url=q%3Dti%3A%22cloud%2Blanguage%2Bmodel%22%2BOR%2Bti%3ACloudLM%26num%3D5`
+  - **CN121714252A** Motion monitoring and emergency response device based on RTK positioni · onculluk 2025-11-11 · 南通大学
+  - **CN122470819A** Graphical creation pilot recommendation method and system · onculluk 2026-06-17 · 广州睿沃智能科技有限公司
+
+## x03 — `"context encoder" "point cloud" "reader" "next token"`
+- HTTP `200` · toplam `0` · `2026-11-19T19:03:33+00:00`
+- URL: `https://patents.google.com/xhr/query?url=q%3D%22context%2Bencoder%22%2B%22point%2Bcloud%22%2B%22reader%22%2B%22next%2Btoken%22%26num%3D5`
+
+## x04 — `"point cloud" explanation "clustering" "region" "language model"`
+- HTTP `200` · toplam `507` · `2026-11-19T19:03:52+00:00`
+- URL: `https://patents.google.com/xhr/query?url=q%3D%22point%2Bcloud%22%2Bexplanation%2B%22clustering%22%2B%22region%22%2B%22language%2Bmodel%22%26num%3D5`
+  - **CN121034123A** Multimodal interactive digital voice guidance system for parking space · onculluk 2025-10-30 · 厦门万云科技有限公司
+  - **US20240419907A1** Using large language models for similarity determinations in content g · onculluk 2023-06-16 · Nvidia Corporation
+  - **CN120952159A** A Semantic Graph-Based <b>Language Model</b> Hint Construction and Age · onculluk 2025-07-28 · 中国石油大学(华东)
+  - **CN120542438B** &hellip;  reasoning and semantic understanding method based on 3D larg · onculluk 2025-07-18 · 北京建筑大学
+  - **US20250200283A1** Using large language models to augment perception data in environment  · onculluk 2023-06-16 · Nvidia Corporation
+
+## x05 — `"tabular record" OR "tabular data" "set aggregation" "class assignment"`
+- HTTP `200` · toplam `0` · `2026-11-19T19:04:11+00:00`
+- URL: `https://patents.google.com/xhr/query?url=q%3D%22tabular%2Brecord%22%2BOR%2B%22tabular%2Bdata%22%2B%22set%2Baggregation%22%2B%22class%2Bassignment%22%26num%3D5`
+
+## x06 — `explanation "without a separate" model "point cloud" inference`
+- HTTP `200` · toplam `2370` · `2026-11-19T19:04:30+00:00`
+- URL: `https://patents.google.com/xhr/query?url=q%3Dexplanation%2B%22without%2Ba%2Bseparate%22%2Bmodel%2B%22point%2Bcloud%22%2Binference%26num%3D5`
+  - **US20240418515A1** Using a language <b>model</b> to localize and route plan for navigatio · onculluk 2023-06-16 · Nvidia Corporation
+  - **DE102024114284A1** USING LARGE LANGUAGE <b>MODELS</b> TO AUGMENT PERCEPTION DATA IN ENVIR · onculluk 2023-06-16 · Nvidia Corporation
+  - **US20240420418A1** Using language <b>models</b> in autonomous and semi-autonomous systems · onculluk 2023-06-16 · Nvidia Corporation
+  - **US12493973B2** Pose determination using one or more neural networks · onculluk 2019-10-18 · Nvidia Corporation
+  - **JP7689806B2** Sensor Fusion for Autonomous Machine Applications Using Machine Learni · onculluk 2020-06-25 · エヌビディア コーポレーション
+
+## x07 — `training "accept" "revert" candidate parameter change measured loss`
+- HTTP `200` · toplam `3252` · `2026-11-19T19:04:49+00:00`
+- URL: `https://patents.google.com/xhr/query?url=q%3Dtraining%2B%22accept%22%2B%22revert%22%2Bcandidate%2Bparameter%2Bchange%2Bmeasured%2Bloss%26num%3D5`
+  - **US20200110401A1** Systems and methods for data collection and frequency evaluation for a · onculluk 2016-05-09 · Strong Force Iot Portfolio 2016, Llc
+  - **US20130073738A1** Method and Apparatus for Browsing Using Multiple Coordinated Device Se · onculluk 2002-05-10 · Richard Reisman
+  - **US12231284B2** Network architecture, methods, and devices for a wireless communicatio · onculluk 2016-05-13 · Telefonaktiebolaget Lm Ericsson (Publ)
+  - **KR102230172B1** Systems and methods for biomechanically-based eye signals for interact · onculluk 2014-05-09 · 아이플루언스, 인크.
+  - **US9031089B2** Operational efficiency in a vehicle-to-vehicle communications system · onculluk 2012-04-24 · Zetta Research and Development, LLC, Forc Seri

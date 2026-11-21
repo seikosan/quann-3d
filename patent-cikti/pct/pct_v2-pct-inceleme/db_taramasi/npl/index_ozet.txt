@@ -1,0 +1,129 @@
+# NPL on sanat taramasi — OpenAlex + arXiv (uretim: npl_tara.py)
+
+
+## n01 [OpenAlex] — `point cloud representation language model token`
+- HTTP `200` · toplam `48` · zaman `2026-11-19T18:53:54+00:00`
+  - 2022 · atif 460 · Point-M2AE: Multi-Scale Masked Autoencoders for Hierarchical Point Cloud Pre-T · DOI 10.52202/068431-1962
+  - 2024 · atif 118 · SceneScript: Reconstructing Scenes with an Autoregressive Structured Language  · DOI 10.1007/978-3-031-73030-6_14
+  - 2024 · atif 89 · Artificial intelligence for livestock: a narrative review of the applications  · DOI 10.1093/af/vfae048
+  - 2023 · atif 34 · POS-BERT: Point cloud one-stage BERT pre-training · DOI 10.1016/j.eswa.2023.122563
+  - 2024 · atif 22 · General Point Model Pretraining with Autoencoding and Autoregressive · DOI 10.1109/cvpr52733.2024.01980
+  - 2025 · atif 20 · Leveraging two-dimensional pre-trained vision transformers for three-dimension · DOI 10.1038/s41598-025-87376-y
+
+## n02 [OpenAlex] — `deep sets permutation invariant neural network`
+- HTTP `200` · toplam `92` · zaman `2026-11-19T18:54:03+00:00`
+  - 2015 · atif 3344 · BinaryConnect: Training Deep Neural Networks with binary weights during propag · DOI 10.48550/arxiv.1511.00363
+  - 2019 · atif 2422 · PointConv: Deep Convolutional Networks on 3D Point Clouds · DOI 10.1109/cvpr.2019.00985
+  - 2018 · atif 376 · Invariant and Equivariant Graph Networks · DOI 10.48550/arxiv.1812.09902
+  - 2021 · atif 369 · Point Transformer · DOI 10.1109/access.2021.3116304
+  - 2019 · atif 171 · Robust Attentional Aggregation of Deep Feature Sets for Multi-view 3D Reconstr · DOI 10.1007/s11263-019-01217-w
+  - 2021 · atif 123 · Neural-Swarm2: Planning and Control of Heterogeneous Multirotor Swarms Using L · DOI 10.1109/tro.2021.3098436
+
+## n03 [OpenAlex] — `pointnet hierarchical feature aggregation point cloud`
+- HTTP `200` · toplam `20` · zaman `2026-11-19T18:54:12+00:00`
+  - 2022 · atif 44 · RoseSegNet: An attention-based deep learning architecture for organ segmentati · DOI 10.1016/j.biosystemseng.2022.06.016
+  - 2023 · atif 15 · Hierarchical Point Cloud Transformer: A Unified Vegetation Semantic Segmentati · DOI 10.1109/tgrs.2023.3336651
+  - 2024 · atif 11 · DFSNet: A 3D Point Cloud Segmentation Network toward Trees Detection in an Orc · DOI 10.3390/s24072244
+  - 2025 · atif 6 · PointNet++SAKS: A Point Cloud Model Based on KANs and Attention Mechanism for  · DOI 10.1109/access.2025.3541023
+  - 2023 · atif 4 · Local region-learning modules for point cloud classification · DOI 10.1007/s00138-023-01495-y
+  - 2026 · atif 3 · Improved Point Cloud Representation via a Learnable Sort–Mix–Attend Mechanism · DOI 10.3390/s26061888
+
+## n04 [OpenAlex] — `explainability hidden representation point cloud interpretation network`
+- HTTP `200` · toplam `4` · zaman `2026-11-19T18:54:21+00:00`
+  - 2020 · atif 30 · The Birth of Bio-Data Science: Trends, Expectations, and Applications · DOI 10.1016/j.gpb.2020.01.002
+  - 2022 · atif 5 · Where “the Cloud” Touches the Ground: Electronic Poetry, Digital Infrastructur · DOI 10.1093/isle/isac039
+  - 2020 · atif 1 · “The Art Itself is Nature”: Dissolution of the Human Form in Shakespeare’s Gre · DOI 10.1093/isle/isaa199
+  - 2023 · atif 0 · Igshaan Adams: A Body of Work · DOI 10.1162/afar_a_00722
+
+## n05 [OpenAlex] — `occlusion ablation input removal language model explanation`
+- HTTP `200` · toplam `0` · zaman `2026-11-19T18:54:29+00:00`
+
+## n06 [OpenAlex] — `clustering latent representations automatic labelling interpretability`
+- HTTP `200` · toplam `15` · zaman `2026-11-19T18:54:38+00:00`
+  - 2018 · atif 40 · Cardiology record multi-label classification using latent Dirichlet allocation · DOI 10.1016/j.cmpb.2018.07.002
+  - 2023 · atif 13 · Interpretable unsupervised learning enables accurate clustering with high-thro · DOI 10.1038/s41598-023-46782-w
+  - 2023 · atif 6 · CEIR: Concept-based Explainable Image Representation Learning · DOI 10.48550/arxiv.2312.10747
+  - 2025 · atif 4 · Oil-Painting Style Classification Using ResNet with Conditional Information Bo · DOI 10.3390/e27070677
+  - 2024 · atif 4 · Towards effective neural topic modeling · DOI 10.32657/10356/181934
+  - 2026 · atif 3 · Editorial: Utilizing machine learning with phenotypic and genotypic data to en · DOI 10.3389/fpls.2026.1869724
+
+## n07 [OpenAlex] — `population drift latent distribution divergence explainability`
+- HTTP `200` · toplam `3` · zaman `2026-11-19T18:54:46+00:00`
+  - 2022 · atif 1 · Author response: Balancing selection on genomic deletion polymorphisms in huma · DOI 10.7554/elife.79111.sa2
+  - 2022 · atif 0 · Editor's evaluation: Balancing selection on genomic deletion polymorphisms in  · DOI 10.7554/elife.79111.sa0
+  - 2022 · atif 0 · Decision letter: Balancing selection on genomic deletion polymorphisms in huma · DOI 10.7554/elife.79111.sa1
+
+## n08 [OpenAlex] — `zeroth-order derivative-free training neural network backpropagation alternative`
+- HTTP `200` · toplam `1` · zaman `2026-11-19T18:54:55+00:00`
+  - 2026 · atif 0 · Stochastic Dimension Zeroth-Order Estimator: Stable and Memory-Efficient Train · DOI 10.48550/arxiv.2603.24002
+
+## n09 [OpenAlex] — `tabular data deep learning embedding row as set of vectors`
+- HTTP `200` · toplam `1` · zaman `2026-11-19T18:55:04+00:00`
+  - 2022 · atif 11 · Accelerating Entity Lookups in Knowledge Graphs Through Embeddings · DOI 10.1109/icde53745.2022.00088
+
+## n10 [OpenAlex] — `INT8 post-training quantization on-device language model deployment`
+- HTTP `200` · toplam `13` · zaman `2026-11-19T18:55:12+00:00`
+  - 2025 · atif 4 · LiteRT-Optimized INT8 LLM for Raspberry Pi4 Deployment · DOI 10.1109/iccvw69036.2025.00594
+  - 2026 · atif 1 · Efficient Polish-Language Keyword Spotting on Microcontrollers: Compact Neural · DOI 10.3390/app16157844
+  - 2025 · atif 1 · Adaptive Post-Training Quantization for Device-Aware TinyML Deployment · DOI 10.1109/cins67018.2025.11412109
+  - 2025 · atif 1 · Elemental Adaptation of Low-Rank Quantisation-Aware Training for Large Languag · DOI 10.1109/csitss67709.2025.11294798
+  - 2026 · atif 0 · OTAZ-DualPath: A Proprietary Inference Engine for Sparse Quantized Neural Netw · DOI 10.5281/zenodo.23689194
+  - 2026 · atif 0 · GHOST-Q: Towards Studying Grounding Hallucinations Overlooked Under Same-score · DOI 10.48550/arxiv.2609.29999
+
+## n11 [OpenAlex] — `hybrid gradient based and gradient free parameter update training`
+- HTTP `200` · toplam `15` · zaman `2026-11-19T18:55:21+00:00`
+  - 1983 · atif 679 · Iterative depth migration by backward time propagation · DOI 10.1190/1.1893867
+  - 2023 · atif 14 · A hybrid training algorithm based on gradient descent and evolutionary computa · DOI 10.1007/s10489-023-04595-4
+  - 2021 · atif 8 · A distributed optimisation framework combining natural gradient with Hessian-f · DOI 10.1016/j.neunet.2021.05.011
+  - 2026 · atif 3 · Photonic Quantum-Enhanced Knowledge Distillation · DOI 10.21203/rs.3.rs-10706908/v1
+  - 2003 · atif 2 · A hybrid training procedure for artificial neural networks leading to parametr · DOI 10.1109/etfa.1999.815340
+  - 2026 · atif 0 · Learning to Orchestrate Evolutionary Search: Progression-Aware Deep Reinforcem · DOI 10.48550/arxiv.2610.11546
+
+## n12 [OpenAlex] — `sentence level embedding sliding window document representation aggregation`
+- HTTP `200` · toplam `0` · zaman `2026-11-19T18:55:30+00:00`
+
+## a01 [arXiv] — `all:"point cloud" AND all:"language model"`
+- HTTP `200` · toplam `353` · zaman `2026-11-19T18:55:31+00:00`
+  - 2024-08-16 · LLM-PCGC: Large Language Model-based Point Cloud Geometry Compression · http://arxiv.org/abs/2408.08682v1
+  - 2024-01-09 · Uni3D-LLM: Unifying Point Cloud Perception, Generation and Editing with Large  · http://arxiv.org/abs/2402.03327v1
+  - 2024-10-11 · nach0-pc: Multi-task Language Model with Molecular Point Cloud Encoder · http://arxiv.org/abs/2410.09240v1
+  - 2024-07-18 · SegPoint: Segment Any Point Cloud via Large Language Model · http://arxiv.org/abs/2407.13761v1
+  - 2025-04-10 · Investigating Vision-Language Model for Point Cloud-based Vehicle Classificati · http://arxiv.org/abs/2504.08154v1
+
+## a02 [arXiv] — `all:"set aggregation" AND all:"permutation invariant"`
+- HTTP `200` · toplam `2` · zaman `2026-11-19T18:55:35+00:00`
+  - 2025-05-30 · On the Lipschitz Continuity of Set Aggregation Functions and Neural Networks f · http://arxiv.org/abs/2505.24403v4
+  - 2022-12-16 · Learnable Commutative Monoids for Graph Neural Networks · http://arxiv.org/abs/2212.08541v1
+
+## a03 [arXiv] — `all:"zeroth-order" AND all:"language model" AND all:"training"`
+- HTTP `200` · toplam `77` · zaman `2026-11-19T18:55:40+00:00`
+  - 2026-10-08 · Sample-Adaptive Zeroth-Order Post-Training · http://arxiv.org/abs/2610.12566v1
+  - 2024-01-09 · Private Fine-tuning of Large Language Models with Zeroth-order Optimization · http://arxiv.org/abs/2401.04343v3
+  - 2024-06-26 · AdaZeta: Adaptive Zeroth-Order Tensor-Train Adaption for Memory-Efficient Larg · http://arxiv.org/abs/2406.18060v3
+  - 2025-06-10 · OAT-Rephrase: Optimization-Aware Training Data Rephrasing for Zeroth-Order LLM · http://arxiv.org/abs/2506.17264v1
+  - 2026-10-19 · Training with ML-labeled Data via Stochastic First- and Zeroth-Order Optimizat · http://arxiv.org/abs/2610.26790v1
+
+## a04 [arXiv] — `all:"permutation invariant" AND all:"language model"`
+- HTTP `200` · toplam `56` · zaman `2026-11-19T18:55:45+00:00`
+  - 2022-05-10 · Symphony Generation with Permutation Invariant Language Model · http://arxiv.org/abs/2205.05448v2
+  - 2026-04-13 · Towards Platonic Representation for Table Reasoning: A Foundation for Permutat · http://arxiv.org/abs/2604.12133v1
+  - 2025-05-21 · Set-LLM: A Permutation-Invariant LLM · http://arxiv.org/abs/2505.15433v1
+  - 2026-05-15 · PRISMat: Policy-Driven, Permutation-Invariant Autoregressive Material Generati · http://arxiv.org/abs/2605.16612v1
+  - 2025-02-24 · PICASO: Permutation-Invariant Context Composition with State Space Models · http://arxiv.org/abs/2502.17605v2
+
+## a05 [arXiv] — `all:"point cloud" AND all:"explainability" AND all:"transformer"`
+- HTTP `200` · toplam `22` · zaman `2026-11-19T18:55:50+00:00`
+  - 2024-12-29 · Towards Explaining Uncertainty Estimates in Point Cloud Registration · http://arxiv.org/abs/2412.20612v1
+  - 2019-07-30 · PointHop: An Explainable Machine Learning Method for Point Cloud Classificatio · http://arxiv.org/abs/1907.12766v2
+  - 2026-02-11 · Meltdown: Circuits and Bifurcations in Point-Cloud-Conditioned 3D Diffusion Tr · http://arxiv.org/abs/2602.11130v2
+  - 2019-04-22 · Linked Dynamic Graph CNN: Learning on Point Cloud via Linking Hierarchical Fea · http://arxiv.org/abs/1904.10014v2
+  - 2022-11-13 · Energy-Based Residual Latent Transport for Unsupervised Point Cloud Completion · http://arxiv.org/abs/2211.06820v1
+
+## a06 [arXiv] — `all:"tabular" AND all:"point cloud" AND all:"classification"`
+- HTTP `200` · toplam `2` · zaman `2026-11-19T18:55:54+00:00`
+  - 2024-11-19 · Tree Species Classification using Machine Learning and 3D Tomographic SAR -- a · http://arxiv.org/abs/2411.12897v1
+  - 2026-10-27 · Sparse tensor networks for individual tree diameter estimation in mixed forest · http://arxiv.org/abs/2610.37784v1
+
+## a07 [arXiv] — `all:"total variation" AND all:"cluster" AND all:"distribution shift"`
+- HTTP `200` · toplam `1` · zaman `2026-11-19T18:56:06+00:00`
+  - 2023-09-29 · Out-Of-Domain Unlabeled Data Improves Generalization · http://arxiv.org/abs/2310.00027v2

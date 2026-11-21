@@ -1,0 +1,16 @@
+Linter: 1 hata · 11 uyarı · 0 bilgi
+
+| # | Önem | Kural | Yer | Bulgu |
+|---|------|-------|-----|-------|
+| 1 | error | claim_structure | istem | Hiç istem bulunamadı |
+| 2 | warn | section_missing | tarifname | Tarifnamede 'teknik alan' bölümü yok |
+| 3 | warn | section_missing | tarifname | Tarifnamede 'önceki teknik' bölümü yok |
+| 4 | warn | section_missing | tarifname | Tarifnamede 'buluşun kısa açıklaması' bölümü yok |
+| 5 | warn | section_missing | tarifname | Tarifnamede 'şekillerin kısa açıklaması' bölümü yok |
+| 6 | warn | section_missing | tarifname | Tarifnamede 'detaylı açıklama' bölümü yok |
+| 7 | warn | section_missing | tarifname | Tarifnamede 'istemler' bölümü yok |
+| 8 | warn | section_missing | tarifname | Tarifnamede 'özet' bölümü yok |
+| 9 | warn | buzzword | satır 71 | 'en iyi' — sübjektif değer yargısı |
+| 10 | warn | buzzword | satır 83 | 'yalnızca' — kapsamı daraltır (dışlayıcı dil) |
+| 11 | warn | buzzword | satır 99 | 'yalnızca' — kapsamı daraltır (dışlayıcı dil) |
+| 12 | warn | buzzword | satır 137 | 'yalnızca' — kapsamı daraltır (dışlayıcı dil) |

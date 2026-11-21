@@ -1,0 +1,17 @@
+q01 [200] toplam=6 hit=5 :: "point cloud" "language model" "set aggregation"
+q02 [200] toplam=5 hit=5 :: "deep sets" "max-pooling" neural network
+q03 [200] toplam=102 hit=5 :: "permutation invariant" "language model" set representation
+q04 [200] toplam=15 hit=5 :: "hidden states" "point cloud" explainability
+q05 [200] toplam=160 hit=5 :: "pairwise" "relative position" "point cloud" aggregation net
+q06 [200] toplam=4 hit=4 :: "language model" explanation "input removal" output differen
+q07 [200] toplam=5 hit=5 :: clustering "latent representations" "cluster labels" interpr
+q08 [200] toplam=10 hit=5 :: "Kullback-Leibler" divergence "two groups" model outputs exp
+q09 [200] toplam=0 hit=0 :: "zeroth-order" OR "derivative-free" "without backpropagation
+q10 [200] toplam=83 hit=5 :: "tabular data" "point cloud" deep learning classification
+q11 [200] toplam=0 hit=0 :: "sliding window" "fixed stride" sentence embeddings transfor
+q12 [200] toplam=219 hit=5 :: INT8 quantization "lookup table" edge device model deploymen
+q13 [200] toplam=87 hit=5 :: "point cloud" "next token" autoregressive prediction
+q14 [200] toplam=5 hit=5 :: explanation "same representation" neural network "no separat
+q15 [200] toplam=5 hit=5 :: set encoder "order independent" pooling "next token" languag
+q16 [200] toplam=1035 hit=5 :: "ablation" "contribution" neural network "removing" feature 
+-> /Users/serkankose/Documents/quann-3d/patent-cikti/pct/pct_v2-pct-inceleme/db_taramasi/index.jsonl

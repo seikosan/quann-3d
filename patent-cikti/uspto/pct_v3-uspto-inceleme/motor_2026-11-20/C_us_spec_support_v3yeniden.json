@@ -1,0 +1,268 @@
+{
+  "analysis_type": "automated",
+  "specification_paragraphs": 98,
+  "indexed_terms": 1927,
+  "total_issues": 17,
+  "critical_issues": 0,
+  "important_issues": 17,
+  "written_description_issues": 17,
+  "enablement_issues": 0,
+  "spec_coverage": {
+    "percentage": 100,
+    "supported_claims": 15,
+    "total_claims": 15,
+    "unsupported_claims": []
+  },
+  "summary": "[WARNING] Found 17 IMPORTANT issues in specification support",
+  "compliant": true,
+  "issues": [
+    {
+      "severity": "IMPORTANT",
+      "type": "written_description",
+      "claim": 1,
+      "element": "point in a D-dimensional space",
+      "problem": "Claim element \"point in a D-dimensional space\" has limited description (only Para. 10)",
+      "spec_refs": [
+        "[0010]"
+      ],
+      "fix": "Consider adding more detailed description of \"point in a D-dimensional space\" for stronger support",
+      "mpep": "MPEP 2163",
+      "confidence": "MEDIUM"
+    },
+    {
+      "severity": "IMPORTANT",
+      "type": "written_description",
+      "claim": 1,
+      "element": "tabular record",
+      "problem": "Claim element \"tabular record\" has limited description (only Para. 10)",
+      "spec_refs": [
+        "[0010]"
+      ],
+      "fix": "Consider adding more detailed description of \"tabular record\" for stronger support",
+      "mpep": "MPEP 2163",
+      "confidence": "MEDIUM"
+    },
+    {
+      "severity": "IMPORTANT",
+      "type": "written_description",
+      "claim": 1,
+      "element": "point cloud of",
+      "problem": "Claim element \"point cloud of\" has limited description (only Para. 11)",
+      "spec_refs": [
+        "[0011]"
+      ],
+      "fix": "Consider adding more detailed description of \"point cloud of\" for stronger support",
+      "mpep": "MPEP 2163",
+      "confidence": "MEDIUM"
+    },
+    {
+      "severity": "IMPORTANT",
+      "type": "written_description",
+      "claim": 1,
+      "element": "clustering operation",
+      "problem": "Claim element \"clustering operation\" has limited description (only Para. 43)",
+      "spec_refs": [
+        "[0043]"
+      ],
+      "fix": "Consider adding more detailed description of \"clustering operation\" for stronger support",
+      "mpep": "MPEP 2163",
+      "confidence": "MEDIUM"
+    },
+    {
+      "severity": "IMPORTANT",
+      "type": "written_description",
+      "claim": 3,
+      "element": "pair-geometry features",
+      "problem": "Claim element \"pair-geometry features\" has limited description (only Para. 91)",
+      "spec_refs": [
+        "[0091]"
+      ],
+      "fix": "Consider adding more detailed description of \"pair-geometry features\" for stronger support",
+      "mpep": "MPEP 2163",
+      "confidence": "MEDIUM"
+    },
+    {
+      "severity": "IMPORTANT",
+      "type": "written_description",
+      "claim": 4,
+      "element": "pair-geometry features",
+      "problem": "Claim element \"pair-geometry features\" has limited description (only Para. 91)",
+      "spec_refs": [
+        "[0091]"
+      ],
+      "fix": "Consider adding more detailed description of \"pair-geometry features\" for stronger support",
+      "mpep": "MPEP 2163",
+      "confidence": "MEDIUM"
+    },
+    {
+      "severity": "IMPORTANT",
+      "type": "written_description",
+      "claim": 5,
+      "element": "context length of the task input",
+      "problem": "Claim element \"context length of the task input\" has limited description (only Para. 39)",
+      "spec_refs": [
+        "[0039]"
+      ],
+      "fix": "Consider adding more detailed description of \"context length of the task input\" for stronger support",
+      "mpep": "MPEP 2163",
+      "confidence": "MEDIUM"
+    },
+    {
+      "severity": "IMPORTANT",
+      "type": "written_description",
+      "claim": 10,
+      "element": "sentence cloud state",
+      "problem": "Claim element \"sentence cloud state\" has limited description (only Para. 65)",
+      "spec_refs": [
+        "[0065]"
+      ],
+      "fix": "Consider adding more detailed description of \"sentence cloud state\" for stronger support",
+      "mpep": "MPEP 2163",
+      "confidence": "MEDIUM"
+    },
+    {
+      "severity": "IMPORTANT",
+      "type": "written_description",
+      "claim": 10,
+      "element": "window-geometry encoder",
+      "problem": "Claim element \"window-geometry encoder\" has limited description (only Para. 14)",
+      "spec_refs": [
+        "[0014]"
+      ],
+      "fix": "Consider adding more detailed description of \"window-geometry encoder\" for stronger support",
+      "mpep": "MPEP 2163",
+      "confidence": "MEDIUM"
+    },
+    {
+      "severity": "IMPORTANT",
+      "type": "written_description",
+      "claim": 11,
+      "element": "pair-geometry features",
+      "problem": "Claim element \"pair-geometry features\" has limited description (only Para. 91)",
+      "spec_refs": [
+        "[0091]"
+      ],
+      "fix": "Consider adding more detailed description of \"pair-geometry features\" for stronger support",
+      "mpep": "MPEP 2163",
+      "confidence": "MEDIUM"
+    },
+    {
+      "severity": "IMPORTANT",
+      "type": "written_description",
+      "claim": 12,
+      "element": "reader by gradient-based backpropagation",
+      "problem": "Claim element \"reader by gradient-based backpropagation\" has limited description (only Para. 92)",
+      "spec_refs": [
+        "[0092]"
+      ],
+      "fix": "Consider adding more detailed description of \"reader by gradient-based backpropagation\" for stronger support",
+      "mpep": "MPEP 2163",
+      "confidence": "MEDIUM"
+    },
+    {
+      "severity": "IMPORTANT",
+      "type": "written_description",
+      "claim": 13,
+      "element": "tabular record",
+      "problem": "Claim element \"tabular record\" has limited description (only Para. 10)",
+      "spec_refs": [
+        "[0010]"
+      ],
+      "fix": "Consider adding more detailed description of \"tabular record\" for stronger support",
+      "mpep": "MPEP 2163",
+      "confidence": "MEDIUM"
+    },
+    {
+      "severity": "IMPORTANT",
+      "type": "written_description",
+      "claim": 13,
+      "element": "point cloud of",
+      "problem": "Claim element \"point cloud of\" has limited description (only Para. 11)",
+      "spec_refs": [
+        "[0011]"
+      ],
+      "fix": "Consider adding more detailed description of \"point cloud of\" for stronger support",
+      "mpep": "MPEP 2163",
+      "confidence": "MEDIUM"
+    },
+    {
+      "severity": "IMPORTANT",
+      "type": "written_description",
+      "claim": 14,
+      "element": "interpretation engine",
+      "problem": "Claim element \"interpretation engine\" has limited description (only Para. 97)",
+      "spec_refs": [
+        "[0097]"
+      ],
+      "fix": "Consider adding more detailed description of \"interpretation engine\" for stronger support",
+      "mpep": "MPEP 2163",
+      "confidence": "MEDIUM"
+    },
+    {
+      "severity": "IMPORTANT",
+      "type": "written_description",
+      "claim": 15,
+      "element": "context encoder",
+      "problem": "Claim element \"context encoder\" has limited description (only Para. 1)",
+      "spec_refs": [
+        "[0001]"
+      ],
+      "fix": "Consider adding more detailed description of \"context encoder\" for stronger support",
+      "mpep": "MPEP 2163",
+      "confidence": "MEDIUM"
+    },
+    {
+      "severity": "IMPORTANT",
+      "type": "written_description",
+      "claim": 15,
+      "element": "tabular record",
+      "problem": "Claim element \"tabular record\" has limited description (only Para. 10)",
+      "spec_refs": [
+        "[0010]"
+      ],
+      "fix": "Consider adding more detailed description of \"tabular record\" for stronger support",
+      "mpep": "MPEP 2163",
+      "confidence": "MEDIUM"
+    },
+    {
+      "severity": "IMPORTANT",
+      "type": "written_description",
+      "claim": 15,
+      "element": "point cloud of",
+      "problem": "Claim element \"point cloud of\" has limited description (only Para. 11)",
+      "spec_refs": [
+        "[0011]"
+      ],
+      "fix": "Consider adding more detailed description of \"point cloud of\" for stronger support",
+      "mpep": "MPEP 2163",
+      "confidence": "MEDIUM"
+    }
+  ],
+  "mpep_references": [
+    {
+      "section": "MPEP § 2181",
+      "page": 522,
+      "text": "[MPEP 2100] ment requirement of 35 U.S.C. 112(a) is\nseparate and distinct from the written description\nrequirement.  Ariad, 598 F.3d at 1342, 94 USPQ2d\nat 1165. The enablement requirement serves a\ndifferent purpose than the written description\nrequirement in that it ensures that the invention is\ncommunicated to the interested public in a\nmeaningful way. See MPEP § 2164. In considering\nwhether there is 35 U.S.C. 112 , para. 1 support for\nthe claim limitation, the examiner must consider not\nonly t..."
+    },
+    {
+      "section": "MPEP § 2161.01",
+      "page": 411,
+      "text": "[MPEP 2100] S.C. 112(a).\nI.  DETERMINING WHETHER THERE IS\nADEQUATE WRITTEN DESCRIPTION FOR A\nCOMPUTER-IMPLEMENTED FUNCTIONAL\nCLAIM LIMITATION\nThe 35 U.S.C. 112(a) or first paragraph of pre-AIA\n35 U.S.C. 112 contains a written description\nrequirement that is separate and distinct from the\nenablement requirement.  Ariad Pharm., Inc. v. Eli\nLilly & Co., 598 F.3d 1336, 1340, 94 USPQ2d 1161,\n1167 (Fed. Cir. 2010)  (en banc). To satisfy the\nwritten description requirement, the specification\nmust descr..."
+    },
+    {
+      "section": "MPEP § 2163",
+      "page": 417,
+      "text": "[MPEP 2100] ffice\naction that includes a rejection for lack of written\ndescription.\nI.  GENERAL PRINCIPLES GOVERNING\nCOMPLIANCE WITH THE “WRITTEN\nDESCRIPTION” REQUIREMENT FOR\nAPPLICATIONS\n35 U.S.C. 112(a) and the first paragraph of pre-AIA\n35 U.S.C. 112 require that the “specification shall\ncontain a written description of the invention ....”\nThis requirement is separate and distinct from the\nenablement requirement.  Ariad Pharm., Inc. v. Eli\nLilly & Co., 598 F.3d 1336, 1340, 94 USPQ2d 1161,\n116..."
+    },
+    {
+      "section": "MPEP § 2136.05(a)",
+      "page": 231,
+      "text": "[MPEP 2100]  the oath or declaration under pre-AIA 37 CFR\n1.63,\nand\n(2)  by establishing that the prior foreign\napplication satisfies the enablement and written\ndescription requirements of 35 U.S.C. 112(a) (for\napplications filed on or after September 16, 2012),\nor 35 U.S.C. 112, first paragraph (for applications\nfiled prior to September 16, 2012); or filing a\nRev. 01.2024, November   2024\n2100-231\n§ 2136.05(a)\nPATENTABILITY\n"
+    },
+    {
+      "section": "MPEP § 2161",
+      "page": 410,
+      "text": "[MPEP 2100] t some of its cases\nconcerning the written description requirement and\nthe enablement requirement are confusing, the\nFederal Circuit reaffirmed that under 35 U.S.C. 112,\nfirst paragraph, the written description requirement\nis separate and distinct from the enablement\nrequirement and gave an example thereof.);  In re\nBarker, 559 F.2d 588, 194 USPQ 470 (CCPA 1977),\ncert. denied, 434 U.S. 1064 (1978). See also, e.g.,\n Vasudevan Software, Inc. v. MicroStrategy, Inc.,\n782 F.3d 671, 681-68..."
+    }
+  ]
+}

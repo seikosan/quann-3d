@@ -1,0 +1,15 @@
+{
+  "kunye": 243,
+  "sayi_birebir": 112,
+  "sayi_yuvarlanan": 5,
+  "satir_sayisiz": 68,
+  "hesap_satir": 2,
+  "esitlik": 4,
+  "hesap": [
+    "satır 51: 13.5166 = 13.516568 ✓ (girdi 2522200 / 34091488)",
+    "satır 52: 14.7929 = 14.792899 ✓ (girdi 2522200 / 34091488)"
+  ],
+  "uyari": [],
+  "bulgu": [],
+  "temiz": true
+}

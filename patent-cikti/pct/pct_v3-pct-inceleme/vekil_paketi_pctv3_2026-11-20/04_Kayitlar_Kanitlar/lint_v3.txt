@@ -1,0 +1,24 @@
+$ patent_lint docs/patent/pct_v3/filing/DESCRIPTION_FILING-COPY_EN.txt (2026-11-20, yeniden kosum)
+Linter: 1 hata · 18 uyarı · 0 bilgi
+
+| # | Önem | Kural | Yer | Bulgu |
+|---|------|-------|-----|-------|
+| 1 | error | claim_structure | istem | Hiç istem bulunamadı |
+| 2 | warn | section_missing | tarifname | Tarifnamede 'technical field' bölümü yok |
+| 3 | warn | section_missing | tarifname | Tarifnamede 'background' bölümü yok |
+| 4 | warn | section_missing | tarifname | Tarifnamede 'summary of the invention' bölümü yok |
+| 5 | warn | section_missing | tarifname | Tarifnamede 'brief description of the drawings' bölümü yok |
+| 6 | warn | section_missing | tarifname | Tarifnamede 'detailed description' bölümü yok |
+| 7 | warn | section_missing | tarifname | Tarifnamede 'claims' bölümü yok |
+| 8 | warn | section_missing | tarifname | Tarifnamede 'abstract' bölümü yok |
+| 9 | warn | buzzword | satır 69 | 'best' — subjective |
+| 10 | warn | buzzword | satır 71 | 'best' — subjective |
+| 11 | warn | buzzword | satır 83 | 'only' — exclusionary wording narrows scope |
+| 12 | warn | buzzword | satır 99 | 'only' — exclusionary wording narrows scope |
+| 13 | warn | buzzword | satır 137 | 'only' — exclusionary wording narrows scope |
+| 14 | warn | buzzword | satır 139 | 'critical' — subjective |
+| 15 | warn | buzzword | satır 165 | 'only' — exclusionary wording narrows scope |
+| 16 | warn | buzzword | satır 167 | 'only' — exclusionary wording narrows scope |
+| 17 | warn | buzzword | satır 169 | 'only' — exclusionary wording narrows scope |
+| 18 | warn | buzzword | satır 201 | 'only' — exclusionary wording narrows scope |
+| 19 | warn | buzzword | satır 203 | 'never' — absolute statement |

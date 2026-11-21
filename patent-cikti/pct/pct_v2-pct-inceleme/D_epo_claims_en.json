@@ -1,0 +1,32 @@
+{
+  "ok": true,
+  "result": {
+    "total_issues": 1,
+    "critical_issues": 0,
+    "important_issues": 1,
+    "minor_issues": 0,
+    "issues": [
+      {
+        "severity": "IMPORTANT",
+        "type": "conciseness",
+        "claim": 1,
+        "location": "claim set",
+        "term": "3 independent product claims",
+        "problem": "Multiple independent claims (1, 13, 15) in the same category (product). Rule 43(2) EPC generally allows only one independent claim per category.",
+        "fix": "Consider consolidating into a single independent claim per category with dependent claims for alternatives, or justify under Rule 43(2)(a)-(c) EPC.",
+        "legal_ref": "Rule 43(2) EPC",
+        "confidence": "HIGH"
+      }
+    ],
+    "summary": "[WARNING] Found 1 IMPORTANT issue requiring attention under Art. 84 EPC",
+    "compliance_score": 99.66666666666667,
+    "claim_count": 15,
+    "independent_count": 3,
+    "dependent_count": 12,
+    "issues_by_type": {
+      "conciseness": 1
+    },
+    "jurisdiction": "EPO",
+    "legal_framework": "European Patent Convention (EPC)"
+  }
+}

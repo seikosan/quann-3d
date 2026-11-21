@@ -1,0 +1,57 @@
+# pct_v3 şekil üretim+PDF doğrulaması — 2026-11-20 10:26
+
+== generate_figures_pct3.py (exit 0) ==
+docs/patent/pct_v3/fig/fig1_system_architecture.svg 22352 bytes
+docs/patent/pct_v3/fig/fig2_pair_geometry.svg 19267 bytes
+docs/patent/pct_v3/fig/fig3_symmetric_aggregation.svg 16765 bytes
+docs/patent/pct_v3/fig/fig4_point_removal.svg 14541 bytes
+docs/patent/pct_v3/fig/fig5_region_naming.svg 19872 bytes
+docs/patent/pct_v3/fig/fig6_region_shift.svg 27368 bytes
+docs/patent/pct_v3/fig/fig7_int8_package.svg 20959 bytes
+docs/patent/pct_v3/fig/fig8_window_cloud.svg 15575 bytes
+manifest: docs/patent/pct_v3/fig/fig_manifest.json 8 sekil 2 olcumlu
+KUTU DOLULUK (yazi/kutu genisligi) en dolu 5:
+   FIG. 2  97% genislik  70% yukseklik  'concatenation of five components 214 d'
+   FIG. 8  92% genislik  80% yukseklik  'window-geometry encoder 806'
+   FIG. 3  87% genislik  70% yukseklik  'variant replacing the pair computation'
+   FIG. 3  86% genislik  62% yukseklik  'point features 300'
+   FIG. 4  85% genislik  73% yukseklik  'copy with point k set to zero value, m'
+KUTU-SIGMA: 0 tasma
+EXIT=0
+
+== numara kapsama (tablo→SVG, komut: python regex, tablo docs/patent/pct_v3/REFERANS_NUMARALARI.md) ==
+FIG.1 13/13 · FIG.2 10/10 · FIG.3 7/7 · FIG.4 8/8 · FIG.5 4/4 · FIG.6 2/2 · FIG.7 6/6 · FIG.8 6/6 — eksik listesi 8/8 şekilde boş
+
+== ölçümlü değer koruması (grep -o -E, pct_v2 fig[67] vs pct_v3 fig[67]) ==
+0\.9451 v2=1 v3=1
+0\.9365 v2=1 v3=1
+0\.9367 v2=1 v3=1
+528\.9 KB v2=1 v3=1
+138\.2 KB v2=1 v3=1
+FIG.6/7 sayı-içeren <text> diff'i: yalnız 3 panel başlığı + FIG.7 şerit satırı eklendi, ölçüm etiketlerinde fark yok
+
+== min_text_cm (fig_manifest.json, PCT K11.13 asgari 0,21 cm) ==
+pct_v2 en küçük 0,2175 (FIG.4) · pct_v3 en küçük 0,2175 (FIG.4) · FIG.7: 0,2456 -> 0,2297 (yeni şerit 7,5pt)
+
+== build_drawings_pct3.py (exit 0) ==
+  fig1_system_architecture.svg: 2400x1618 px -> 16.0 x 10.8 cm
+  fig2_pair_geometry.svg: 2400x1650 px -> 16.0 x 11.0 cm
+  fig3_symmetric_aggregation.svg: 2400x1333 px -> 16.0 x 8.9 cm
+  fig4_point_removal.svg: 2400x1107 px -> 16.0 x 7.4 cm
+  fig5_region_naming.svg: 2400x1371 px -> 16.0 x 9.1 cm
+  fig6_region_shift.svg: 2400x1247 px -> 16.0 x 8.3 cm
+  fig7_int8_package.svg: 2400x1166 px -> 16.0 x 7.8 cm
+  fig8_window_cloud.svg: 2400x1426 px -> 16.0 x 9.5 cm
+yazildi: patent/pct_v3/filing/SEKILLER_FILING-COPY.pdf  (979834 B)
+pdfinfo: {'Pages': '8', 'Page size': '595.304 x 841.89 pts (A4)'}
+  sayfa 1 murekkep: 2.14%
+  sayfa 2 murekkep: 2.25%
+  sayfa 3 murekkep: 1.42%
+  sayfa 4 murekkep: 1.06%
+  sayfa 5 murekkep: 1.14%
+  sayfa 6 murekkep: 1.51%
+  sayfa 7 murekkep: 1.49%
+  sayfa 8 murekkep: 1.98%
+  metin katmani: 0 karakter
+KABUL: 8 sayfa A4, her sayfada murekkep, metin katmani yok.
+EXIT=0

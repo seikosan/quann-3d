@@ -1,0 +1,106 @@
+{
+  "title_en": "Dual-use point-cloud representation with embedded explainability",
+  "title_en_words": 6,
+  "title_tr": "Çift kullanımlı nokta bulutu temsilinde gömülü açıklanabilirlik",
+  "title_tr_words": 7,
+  "abstract_en_words": 137,
+  "abstract_tr_words": 106,
+  "app_en_bytes": 47666,
+  "app_tr_bytes": 48995,
+  "desc_en_bytes": 36677,
+  "claims_en_bytes": 10988,
+  "drawings_present": true,
+  "drawings_note": "8 SVG: docs/patent/final_v3/fig/fig1..fig8 (kaynak; pct_v2 paylasir)",
+  "combined_text_note": "Motor Kural 6 istem taramasını 'specification' argümanı üzerinde yapar (pct_formalities_checker.py:420-438: CLAIMS başlığı ya da numara kalıbı aranır); bu yüzden A/B kosularında tarifname+istemler tek metin verildi. C kosusu tek başına tarifname verildiğinde motorun ne dediğini gösterir."
+}
+
+=== A_pct_en ===
+overall_compliant: False
+checks_run: ['abstract', 'title', 'description', 'claims', 'terminology']
+compliance_summary: {"critical_issues": 0, "warnings": 0, "info": 0, "ready_to_file": false, "summary": "[INCOMPLETE] Checks skipped: physical (physical requirements cannot be verified from text; manual inspection required); abstract figure designation (the figure to publish with the abstract is chosen on the request form (PCT Rules 3.3(a)(iii) and 8.2); check the request names one). No issues found in the automated checks that ran."}
+checks_skipped: [{"check": "physical", "reason": "physical requirements cannot be verified from text; manual inspection required"}, {"check": "abstract figure designation", "reason": "the figure to publish with the abstract is chosen on the request form (PCT Rules 3.3(a)(iii) and 8.2); check the request names one"}]
+issues: 0
+
+=== B_pct_tr ===
+overall_compliant: False
+checks_run: ['abstract', 'title', 'description', 'claims', 'terminology']
+compliance_summary: {"critical_issues": 0, "warnings": 0, "info": 0, "ready_to_file": false, "summary": "[INCOMPLETE] Checks skipped: physical (physical requirements cannot be verified from text; manual inspection required); abstract figure designation (the figure to publish with the abstract is chosen on the request form (PCT Rules 3.3(a)(iii) and 8.2); check the request names one). No issues found in the automated checks that ran."}
+checks_skipped: [{"check": "physical", "reason": "physical requirements cannot be verified from text; manual inspection required"}, {"check": "abstract figure designation", "reason": "the figure to publish with the abstract is chosen on the request form (PCT Rules 3.3(a)(iii) and 8.2); check the request names one"}]
+issues: 0
+
+=== C_pct_en_desc_only ===
+overall_compliant: False
+checks_run: ['abstract', 'title', 'description', 'claims', 'terminology']
+compliance_summary: {"critical_issues": 1, "warnings": 0, "info": 0, "ready_to_file": false, "summary": "[INCOMPLETE] Checks skipped: physical (physical requirements cannot be verified from text; manual inspection required); abstract figure designation (the figure to publish with the abstract is chosen on the request form (PCT Rules 3.3(a)(iii) and 8.2); check the request names one). [WARNING] Found 1 CRITICAL PCT formality issue(s)"}
+checks_skipped: [{"check": "physical", "reason": "physical requirements cannot be verified from text; manual inspection required"}, {"check": "abstract figure designation", "reason": "the figure to publish with the abstract is chosen on the request form (PCT Rules 3.3(a)(iii) and 8.2); check the request names one"}]
+issues: 1
+  - CRITICAL | PCT Rule 6.2(a) | No claims detected in the application
+
+=== D_epo_claims_en ===
+compliance_score: 99.66666666666667
+total_issues: 1
+critical_issues: 0
+important_issues: 1
+minor_issues: 0
+claim_count: 15
+issues: 1
+  - IMPORTANT | Rule 43(2) EPC | Multiple independent claims (1, 13, 15) in the same category (product). Rule 43(2) EPC generally allows only o
+
+=== E_epo_claims_tr ===
+compliance_score: 94.66666666666667
+total_issues: 16
+critical_issues: 0
+important_issues: 16
+minor_issues: 0
+claim_count: 15
+issues: 16
+  - IMPORTANT | Rule 43(1) EPC | Independent claim does not use two-part form (preamble + 'characterized in that' + characterizing portion)
+  - IMPORTANT | Rule 43(2) EPC | Multiple independent claims (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15) in the same category (product)
+  - IMPORTANT | Rule 43(1) EPC | Independent claim does not use two-part form (preamble + 'characterized in that' + characterizing portion)
+  - IMPORTANT | Rule 43(1) EPC | Independent claim does not use two-part form (preamble + 'characterized in that' + characterizing portion)
+  - IMPORTANT | Rule 43(1) EPC | Independent claim does not use two-part form (preamble + 'characterized in that' + characterizing portion)
+  - IMPORTANT | Rule 43(1) EPC | Independent claim does not use two-part form (preamble + 'characterized in that' + characterizing portion)
+  - IMPORTANT | Rule 43(1) EPC | Independent claim does not use two-part form (preamble + 'characterized in that' + characterizing portion)
+  - IMPORTANT | Rule 43(1) EPC | Independent claim does not use two-part form (preamble + 'characterized in that' + characterizing portion)
+  - IMPORTANT | Rule 43(1) EPC | Independent claim does not use two-part form (preamble + 'characterized in that' + characterizing portion)
+  - IMPORTANT | Rule 43(1) EPC | Independent claim does not use two-part form (preamble + 'characterized in that' + characterizing portion)
+  - IMPORTANT | Rule 43(1) EPC | Independent claim does not use two-part form (preamble + 'characterized in that' + characterizing portion)
+  - IMPORTANT | Rule 43(1) EPC | Independent claim does not use two-part form (preamble + 'characterized in that' + characterizing portion)
+
+=== G_epo_formal_en ===
+overall_compliant: True
+checks_run: ['abstract', 'title', 'sections', 'drawing_references', 'claims_fees']
+compliance_summary: {"critical_issues": 0, "warnings": 1, "info": 0, "ready_to_file": true, "summary": "[WARNING] Found 1 WARNING EPO formality issue(s)"}
+checks_skipped: []
+issues: 1
+  - IMPORTANT | Rule 47(4) EPC | Abstract does not contain reference signs in parentheses
+
+=== H_pkg_full ===
+package_integrity_score: 100.0
+total_issues: 0
+critical_issues: 0
+important_issues: 0
+minor_issues: 0
+issues: 0
+
+=== I_pkg_filing ===
+package_integrity_score: 100.0
+total_issues: 0
+critical_issues: 0
+important_issues: 0
+minor_issues: 0
+issues: 0
+
+=== J_us_claims_en ===
+compliance_score: 100.0
+total_issues: 0
+critical_issues: 0
+important_issues: 0
+minor_issues: 0
+claim_count: 15
+checks_run: ['definiteness', 'subjective_terms', 'internal_references', 'structure']
+checks_skipped: [{"check": "antecedent_basis", "reason": "opt-in: pattern-based antecedent checking has a high false-positive rate, so it is disabled by default", "enable_with": "PATENT_ENABLE_ANTECEDENT_CHECK=1"}]
+issues: 0
+
+=== F_epo_spec_support_en ===
+issues: 0

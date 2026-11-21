@@ -1,0 +1,26 @@
+
+=== docs/patent/pct_v2/UYGUNLUK_NOTU.md
+  atıflı ve DOĞRU  : 7
+  ✗ kaynakta yok   : 0   (atıf satırı sayıyı içermiyor)
+  ○ kaynaksız sayı : 4   (satırda hiç atıf yok)
+  ⚪ ölü adres      : 0
+
+=== docs/patent/pct_v2/BASVURU_PAKETI.md
+  atıflı ve DOĞRU  : 1
+  ✗ kaynakta yok   : 0   (atıf satırı sayıyı içermiyor)
+  ○ kaynaksız sayı : 12   (satırda hiç atıf yok)
+  ⚪ ölü adres      : 0
+
+=== docs/patent/pct_v2/ON_SANAT.md
+  atıflı ve DOĞRU  : 0
+  ✗ kaynakta yok   : 0   (atıf satırı sayıyı içermiyor)
+  ○ kaynaksız sayı : 27   (satırda hiç atıf yok)
+  ⚪ ölü adres      : 0
+
+=== docs/patent/pct_v2/OLCUM_KAYITLARI.md
+  atıflı ve DOĞRU  : 0
+  ✗ kaynakta yok   : 0   (atıf satırı sayıyı içermiyor)
+  ○ kaynaksız sayı : 0   (satırda hiç atıf yok)
+  ⚪ ölü adres      : 0
+
+TOPLAM: doğru 8 · kaynakta yok 0 · kaynaksız 43 · ölü adres 0

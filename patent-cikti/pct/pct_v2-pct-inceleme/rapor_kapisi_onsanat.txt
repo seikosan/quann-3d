@@ -1,0 +1,8 @@
+
+=== docs/patent/pct_v2/ON_SANAT.md
+  atıflı ve DOĞRU  : 0
+  ✗ kaynakta yok   : 0   (atıf satırı sayıyı içermiyor)
+  ○ kaynaksız sayı : 27   (satırda hiç atıf yok)
+  ⚪ ölü adres      : 0
+
+TOPLAM: doğru 0 · kaynakta yok 0 · kaynaksız 27 · ölü adres 0

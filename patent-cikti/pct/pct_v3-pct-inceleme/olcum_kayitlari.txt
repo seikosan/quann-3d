@@ -1,0 +1,71 @@
+# pct_v3 ham ölçüm günlüğü — her satır komutu ve ham çıktısını birlikte taşır (2026-11-20 10:55)
+$ wc -w docs/patent/pct_v2/filing/ABSTRACT_FILING-COPY_EN.txt
+     137 docs/patent/pct_v2/filing/ABSTRACT_FILING-COPY_EN.txt
+$ wc -w docs/patent/pct_v2/filing/OZET_FILING-COPY_TR.txt
+     106 docs/patent/pct_v2/filing/OZET_FILING-COPY_TR.txt
+$ wc -l docs/patent/pct_v2/filing/DESCRIPTION_FILING-COPY_EN.txt
+     155 docs/patent/pct_v2/filing/DESCRIPTION_FILING-COPY_EN.txt
+$ wc -l docs/patent/pct_v3/filing/DESCRIPTION_FILING-COPY_EN.txt
+     213 docs/patent/pct_v3/filing/DESCRIPTION_FILING-COPY_EN.txt
+$ wc -l docs/patent/pct_v3/filing/TARIFNAME_FILING-COPY_TR.txt
+     213 docs/patent/pct_v3/filing/TARIFNAME_FILING-COPY_TR.txt
+$ grep -c '^<' diff(DESCR v2 v3) | grep -c '^>' diff
+degisen=33 yeni=91
+$ grep -c '^\[00' pct_v2 DESCRIPTION
+70
+$ for n in 108 114 220 900 902: grep -oE '\(n\)' filing/*.txt | wc -l
+108=0
+114=0
+220=0
+900=0
+902=0
+$ grep -c '138.2 KB' DESCRIPTION_EN / TARIFNAME_TR / ABSTRACT_EN
+docs/patent/pct_v3/filing/DESCRIPTION_FILING-COPY_EN.txt:5
+docs/patent/pct_v3/filing/TARIFNAME_FILING-COPY_TR.txt:5
+docs/patent/pct_v3/filing/ABSTRACT_FILING-COPY_EN.txt:1
+$ ek-bolum token sayaci: [00NN]+ (NNN) isaretleri + 3-4 basamak cikarildi; kalan benzersiz sayisal tokenler
+benzersiz token = 59
+tokenler: 0 0.0013 0.0018965315544816688 0.015912843984551728 0.017278228622744793 0.02469135802469135 0.0341397185589417 0.0903703703703704 0.7307692307692307 0.9351451502337654 02 03 09 1 10 10000 100000 1016.30 1024 1045.03 128 13 13.5 130 138.2 14.8 159888 16 16.5 19986 2 2000 200000 202000 2025 214 221 2522200 3 3.2305 3.2318 32 34091488 42 48 5 5.4 50 500 528.9 548.4 563.45 6000 61.19 61.94 64 8 80 99
+$ wc -l docs/patent/pct_v3/REFERANS_NUMARALARI.md | grep -c tablo-satisi
+     118 docs/patent/pct_v3/REFERANS_NUMARALARI.md
+56
+$ grep -n 'difference vector 204' generate_figures_pct3.py
+389:    ax.text(1.45, 5.78, "difference vector 204", fontsize=8, ha="left", va="bottom")
+392:    comp = ["difference vector 204", "pair distance 206\n(Euclidean norm)", "cosine similarity 208",
+$ patent_lint DESCRIPTION v3
+lint: 1 hata claim_structure + 18 uyari (ayrinti DEGISIKLIK_KAYDI_TARIFNAME.md $10, vekil kontrol listesi)
+$ grep -c '138.2 KB' OZET_FILING-COPY_TR.txt
+1
+$ ek-bolum tokenlerinin OLCUM_KAYITLARI.md karsiligi: her benzersiz token sabit-katar aranir; yok says
+token=59 tam-yok=0 []
+$ ls -lT docs/patent/pct_v2/filing
+total 2040
+-rw-r--r--  1 serkankose  staff     864 Nov 19 23:45:39 2026 ABSTRACT_FILING-COPY_EN.txt
+-rw-r--r--  1 serkankose  staff   10988 Nov 19 23:45:39 2026 CLAIMS_FILING-COPY_EN.txt
+-rw-r--r--  1 serkankose  staff   36677 Nov 19 23:45:39 2026 DESCRIPTION_FILING-COPY_EN.txt
+-rw-r--r--  1 serkankose  staff   11715 Nov 19 23:45:39 2026 ISTEMLER_FILING-COPY_TR.txt
+-rw-r--r--  1 serkankose  staff     828 Nov 19 23:45:39 2026 OZET_FILING-COPY_TR.txt
+-rw-r--r--@ 1 serkankose  staff  930301 Nov 19 23:45:38 2026 SEKILLER_FILING-COPY.pdf
+-rw-r--r--  1 serkankose  staff   37279 Nov 19 23:45:39 2026 TARIFNAME_FILING-COPY_TR.txt
+$ find docs/patent/pct_v2 -type f -newermt '2026-11-20 00:00'
+docs/patent/pct_v2/DESCRIPTION_EN_ADAY.md
+docs/patent/pct_v2/ACILIM_METINLERI_EN.md
+
+== [2026-11-20 aksam] v2 taban kabul (a) — envanter/kunye yenileme ==
+$ shasum docs/patent/pct_v2/filing/* docs/patent/pct_v2/fig/fig_manifest.json  # yeni kunye
+# 7/8 sha sabahkiyle ayni; DESCRIPTION c6db3c9ef0184310a4948060ed6fbfe5aeeb672f (sabah: d339bbb2)
+$ grep -c '^\[00' docs/patent/pct_v2/filing/DESCRIPTION_FILING-COPY_EN.txt  # 84 (TR kopya 70 -> EN!=TR)
+$ wc -c docs/patent/pct_v2/filing/DESCRIPTION_FILING-COPY_EN.txt  # 49553 (sabah: 36677)
+$ wc -c docs/patent/pct_v2/DESCRIPTION_EN.md  # 55210 master; yedek .bak-20261120 39987
+$ shasum docs/patent/pct_v3/filing/DESCRIPTION_FILING-COPY_EN.txt  # 4ef0d32a... v3 dokunulmadi
+$ grep -oE '\([0-9]{3}\)' docs/patent/pct_v2/filing/DESCRIPTION_FILING-COPY_EN.txt | wc -l  # 0 ref isareti
+# ham kayit: dogrulama_v2kabul_2026-11-20.txt (35 satir)
+# atif kapisi (7 defter + MOTOR md): TOPLAM dogru 82 / kaynakta yok 0 / kaynaksiz 0 / olu adres 0
+
+== [2026-11-20 aksam] vekil paketi zip ==
+$ zip -r vekil_paketi_pctv3_2026-11-20.zip (5 klasor + kapak + manifest)
+# dosya sayisi: 27 (26 icerik + MANIFEST_sha1.txt) — unzip -Z1 sayimi
+# bütünlük: gecici dizine acildi, shasum -c MANIFEST_sha1.txt -> 26/26 OK (OK-disi 0 satir)
+# DESCRIPTION zip-ici sha: 4ef0d32a3ef836a07d3df9b5fb52e981c3bd4521 (= v3 kunye, dogrulama_v2kabul_2026-11-20.txt:31)
+# PDF zip-ici sha: ee5b82216ad993d5527746fc9ab9d2c603ea0c2d (= docs/patent/pct_v3/filing/SEKILLER_FILING-COPY.pdf)
+$ shasum vekil_paketi_pctv3_2026-11-20.zip  # 1d2258236da93e5fe2f4f6bf0d4b4627c19c799d, 1017917 B

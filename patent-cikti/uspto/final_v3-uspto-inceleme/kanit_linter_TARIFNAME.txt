@@ -1,0 +1,24 @@
+Linter: 3 hata · 16 uyarı · 1 bilgi
+
+| # | Önem | Kural | Yer | Bulgu |
+|---|------|-------|-----|-------|
+| 1 | error | claim_figure_ref | istem 1 | İstem 1 şekle atıf yapıyor (istemler çizime atıf yapamaz) |
+| 2 | error | claim_figure_ref | istem 9 | İstem 9 şekle atıf yapıyor (istemler çizime atıf yapamaz) |
+| 3 | error | buzzword | istem 220 | 'yalnızca' — kapsamı daraltır (dışlayıcı dil) |
+| 4 | warn | section_missing | tarifname | Tarifnamede 'istemler' bölümü yok |
+| 5 | warn | section_missing | tarifname | Tarifnamede 'özet' bölümü yok |
+| 6 | warn | two_part_form | istem 1 | Bağımsız istem 1 iki bölümlü kalıp kullanmıyor ('… olması ile karakterize eden') |
+| 7 | warn | two_part_form | istem 2 | Bağımsız istem 2 iki bölümlü kalıp kullanmıyor ('… olması ile karakterize eden') |
+| 8 | warn | two_part_form | istem 3 | Bağımsız istem 3 iki bölümlü kalıp kullanmıyor ('… olması ile karakterize eden') |
+| 9 | warn | two_part_form | istem 4 | Bağımsız istem 4 iki bölümlü kalıp kullanmıyor ('… olması ile karakterize eden') |
+| 10 | warn | two_part_form | istem 5 | Bağımsız istem 5 iki bölümlü kalıp kullanmıyor ('… olması ile karakterize eden') |
+| 11 | warn | two_part_form | istem 6 | Bağımsız istem 6 iki bölümlü kalıp kullanmıyor ('… olması ile karakterize eden') |
+| 12 | warn | two_part_form | istem 7 | Bağımsız istem 7 iki bölümlü kalıp kullanmıyor ('… olması ile karakterize eden') |
+| 13 | warn | two_part_form | istem 8 | Bağımsız istem 8 iki bölümlü kalıp kullanmıyor ('… olması ile karakterize eden') |
+| 14 | warn | two_part_form | istem 9 | Bağımsız istem 9 iki bölümlü kalıp kullanmıyor ('… olması ile karakterize eden') |
+| 15 | warn | buzzword | satır 74 | 'yalnızca' — kapsamı daraltır (dışlayıcı dil) |
+| 16 | warn | buzzword | satır 80 | 'yalnızca' — kapsamı daraltır (dışlayıcı dil) |
+| 17 | warn | buzzword | satır 111 | 'yalnızca' — kapsamı daraltır (dışlayıcı dil) |
+| 18 | warn | buzzword | satır 182 | 'yalnızca' — kapsamı daraltır (dışlayıcı dil) |
+| 19 | warn | buzzword | satır 193 | 'yalnızca' — kapsamı daraltır (dışlayıcı dil) |
+| 20 | info | claim_unity | istem | 9 bağımsız istem var (ek ücret / birlik itirazı riski) |

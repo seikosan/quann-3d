@@ -1,0 +1,114 @@
+{
+  "ok": true,
+  "result": {
+    "results": {
+      "abstract": {
+        "word_count": 137,
+        "compliant": true,
+        "issues": [],
+        "figure_designation": "not checked: verify the request form names a figure"
+      },
+      "title": {
+        "word_count": 6,
+        "compliant": true,
+        "issues": []
+      },
+      "description": {
+        "found_elements": {
+          "Technical field": true,
+          "Background art": true,
+          "Disclosure of the invention": true,
+          "Brief description of drawings": true,
+          "Best mode": true
+        },
+        "missing_elements": [],
+        "compliant": true
+      },
+      "claims": {
+        "total_claims": 15,
+        "claim_numbers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "compliant": true,
+        "issues": []
+      },
+      "terminology": {
+        "non_metric_units": [],
+        "non_standard_temperatures": [],
+        "compliant": true
+      },
+      "physical": {
+        "advisory": true,
+        "message": "Physical requirements per PCT Rule 11 must be verified manually",
+        "checklist": {
+          "paper_size": {
+            "requirement": "A4 (29.7 cm x 21 cm)",
+            "rule": "PCT Rule 11.2"
+          },
+          "margins": {
+            "top": ">= 2.0 cm",
+            "left": ">= 2.5 cm",
+            "right": ">= 2.0 cm",
+            "bottom": ">= 2.0 cm",
+            "rule": "PCT Rule 11.6"
+          },
+          "text_color": {
+            "requirement": "Dark, indelible color (preferably black)",
+            "rule": "PCT Rule 11.2"
+          },
+          "font_size": {
+            "requirement": "Capital letters at least 0.28 cm high",
+            "rule": "PCT Rule 11.9(d)"
+          },
+          "line_spacing": {
+            "requirement": "1.5 line spacing for description and claims",
+            "rule": "PCT Rule 11.9(c)"
+          }
+        }
+      }
+    },
+    "issues": [],
+    "compliance_summary": {
+      "critical_issues": 0,
+      "warnings": 0,
+      "info": 0,
+      "ready_to_file": false,
+      "summary": "[INCOMPLETE] Checks skipped: physical (physical requirements cannot be verified from text; manual inspection required); abstract figure designation (the figure to publish with the abstract is chosen on the request form (PCT Rules 3.3(a)(iii) and 8.2); check the request names one). No issues found in the automated checks that ran."
+    },
+    "overall_compliant": false,
+    "checks_run": [
+      "abstract",
+      "title",
+      "description",
+      "claims",
+      "terminology"
+    ],
+    "checks_skipped": [
+      {
+        "check": "physical",
+        "reason": "physical requirements cannot be verified from text; manual inspection required"
+      },
+      {
+        "check": "abstract figure designation",
+        "reason": "the figure to publish with the abstract is chosen on the request form (PCT Rules 3.3(a)(iii) and 8.2); check the request names one"
+      }
+    ],
+    "verdict_scope": "Automated text checks only; drawings_present is a declaration, not inspection of drawing files. Physical layout, forms and fee payment require manual review. This is not a filing clearance.",
+    "jurisdiction": "PCT",
+    "legal_framework": "Patent Cooperation Treaty (PCT)"
+  }
+}

@@ -1,0 +1,17 @@
+# KANIT — isim cakismasi sorgularinin kayit ici incelemesi (uretim: isim_teyit.py)
+# sayim = donen kayitlarin JSON dizesinde kucuk/harf duyarsiz alt-dizi sayimi
+# ham: x01_ad_quann.json, x02_ad_cloudlm.json (bu dizin)
+
+## x01_ad_quann.json
+- toplam_sonuc | 21 | ham: x01_ad_quann.json
+- donen_kayit | 10
+- kayit_ici_quann_gecen | 0
+- baslik_ornekleri | Leveraging the presence or absence of miRNA  ; Substituted aminothiazoles as dgkzeta inhibi ; Integrated process and apparatus to produce 
+
+## x02_ad_cloudlm.json
+- toplam_sonuc | 3 | ham: x02_ad_cloudlm.json
+- donen_kayit | 2
+- kayit_ici_cloud_language_model_gecen | 0
+- kayit_ici_cloudlm_gecen | 0
+- kayit_ici_quann_gecen | 0
+- baslik_ornekleri | Motion monitoring and emergency response dev ; Graphical creation pilot recommendation meth

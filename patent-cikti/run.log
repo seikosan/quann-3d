@@ -1,0 +1,240 @@
+hat başlıyor · girdi=patent_application_v2.5.md · çıktı=patent-cikti
+  → [önbellek] buluş dosyası yeniden kullanıldı: 5 bileşen
+  → [önbellek] önceki teknik yeniden kullanıldı: 8 sonuç, en yakın=US20260154337A1
+  → [önbellek] teknik etki çevirisi yeniden kullanıldı (risk=HIGH)
+  → [önbellek] istemler tur 1 yeniden kullanıldı (14 istem)
+  → [önbellek] denetim tur 1 yeniden kullanıldı (red)
+  → [önbellek] istemler tur 2 yeniden kullanıldı (13 istem)
+  → [önbellek] denetim tur 2 yeniden kullanıldı (red)
+  → denetçi onay vermedi; azami tur doldu — uyarı ile devam
+  → [önbellek] uygunluk kalkanı yeniden kullanıldı (risk=-)
+  → tarifname yazılıyor
+  → şekiller tasarlanıyor
+  → görsel karşılaştırma atlandı: şekil yok
+  → linter: 8 hata, 10 bulgu
+  → linter onarımı
+  → linter: 4 hata, 6 bulgu
+  → belge derleniyor
+Traceback (most recent call last):
+  File "/Users/serkankose/Documents/patent-hatti/patentline/pipeline.py", line 552, in run
+    final = self.graph.invoke(init, {"recursion_limit": 40})
+  File "/Users/serkankose/Documents/patent-hatti/.venv/lib/python3.13/site-packages/langgraph/pregel/main.py", line 4000, in invoke
+    for chunk in self.stream(
+                 ~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<11 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ):
+    ^
+  File "/Users/serkankose/Documents/patent-hatti/.venv/lib/python3.13/site-packages/langgraph/pregel/main.py", line 3060, in stream
+    for _ in runner.tick(
+             ~~~~~~~~~~~^
+        [t for t in loop.tasks.values() if not t.writes],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        schedule_task=loop.accept_push,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "/Users/serkankose/Documents/patent-hatti/.venv/lib/python3.13/site-packages/langgraph/pregel/_runner.py", line 204, in tick
+    run_with_retry(
+    ~~~~~~~~~~~~~~^
+        t,
+        ^^
+    ...<10 lines>...
+        },
+        ^^
+    )
+    ^
+  File "/Users/serkankose/Documents/patent-hatti/.venv/lib/python3.13/site-packages/langgraph/pregel/_retry.py", line 618, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/serkankose/Documents/patent-hatti/.venv/lib/python3.13/site-packages/langgraph/_internal/_runnable.py", line 794, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+  File "/Users/serkankose/Documents/patent-hatti/.venv/lib/python3.13/site-packages/langgraph/_internal/_runnable.py", line 479, in invoke
+    ret = self.func(*args, **kwargs)
+  File "/Users/serkankose/Documents/patent-hatti/patentline/pipeline.py", line 439, in n_build
+    pdf = spec_mod.to_pdf(docx)
+  File "/Users/serkankose/Documents/patent-hatti/patentline/spec.py", line 226, in to_pdf
+    r = subprocess.run([soffice, "--headless", "--convert-to", "pdf",
+                        "--outdir", str(out_dir), str(docx_path)],
+                       capture_output=True, text=True, timeout=180)
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.13/subprocess.py", line 556, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.13/subprocess.py", line 1222, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.13/subprocess.py", line 2155, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/lib/python3.13/subprocess.py", line 1269, in _check_timeout
+    raise TimeoutExpired(
+    ...<2 lines>...
+            stderr=b''.join(stderr_seq) if stderr_seq else None)
+subprocess.TimeoutExpired: Command '['/opt/homebrew/bin/soffice', '--headless', '--convert-to', 'pdf', '--outdir', '/Users/serkankose/Documents/quann-3d/patent-cikti', '/Users/serkankose/Documents/quann-3d/patent-cikti/tarifname.docx']' timed out after 180 seconds
+During task with name 'build' and id 'b42ec0ba-9a5e-a99c-0e2b-2ba34774dee1'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/serkankose/Documents/patent-hatti/patentline/__main__.py", line 6, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/Users/serkankose/Documents/patent-hatti/patentline/cli.py", line 258, in main
+    return args.func(args)
+           ~~~~~~~~~^^^^^^
+  File "/Users/serkankose/Documents/patent-hatti/patentline/cli.py", line 41, in cmd_run
+    final = pipe.run(disclosure, out, locale=args.locale, applicant=args.applicant,
+                     max_rounds=args.rounds, resume=not args.fresh,
+                     require_approval=args.onay)
+  File "/Users/serkankose/Documents/patent-hatti/patentline/pipeline.py", line 555, in run
+    raise RuntimeError(f"hat durdu: {exc}") from exc
+RuntimeError: hat durdu: Command '['/opt/homebrew/bin/soffice', '--headless', '--convert-to', 'pdf', '--outdir', '/Users/serkankose/Documents/quann-3d/patent-cikti', '/Users/serkankose/Documents/quann-3d/patent-cikti/tarifname.docx']' timed out after 180 seconds
+hat başlıyor · girdi=patent_application_v2.5.md · çıktı=patent-cikti
+  → [önbellek] buluş dosyası yeniden kullanıldı: 5 bileşen
+  → [önbellek] önceki teknik yeniden kullanıldı: 8 sonuç, en yakın=US20260154337A1
+  → [önbellek] teknik etki çevirisi yeniden kullanıldı (risk=HIGH)
+  → [önbellek] istemler tur 1 yeniden kullanıldı (14 istem)
+  → [önbellek] denetim tur 1 yeniden kullanıldı (red)
+  → [önbellek] istemler tur 2 yeniden kullanıldı (13 istem)
+  → [önbellek] denetim tur 2 yeniden kullanıldı (red)
+  → denetçi onay vermedi; azami tur doldu — uyarı ile devam
+  → [önbellek] uygunluk kalkanı yeniden kullanıldı (risk=-)
+  → [önbellek] tarifname gövdesi yeniden kullanıldı
+  → [önbellek] 1 şekil yeniden kullanıldı
+  → görsel önceki teknik: VLM çizimleri okuyor
+  → linter: 8 hata, 10 bulgu
+  → linter onarımı
+  → linter: 3 hata, 5 bulgu
+  → belge derleniyor
+
+=== BİTTİ ===
+tarifname_docx: /Users/serkankose/Documents/quann-3d/patent-cikti/tarifname.docx
+istemler_docx: /Users/serkankose/Documents/quann-3d/patent-cikti/istemler.docx
+tarifname_md: /Users/serkankose/Documents/quann-3d/patent-cikti/tarifname.md
+istemler_txt: /Users/serkankose/Documents/quann-3d/patent-cikti/istemler.txt
+sekiller: ['/Users/serkankose/Documents/quann-3d/patent-cikti/sekiller/sekil_1.png']
+tarifname_pdf: /Users/serkankose/Documents/quann-3d/patent-cikti/tarifname.pdf
+süre: 33.9 sn · model çağrısı: 2
+UYARI: linter 3 hata ile kapandı — 07_linter.md'ye bakın
+hat başlıyor · girdi=patent_application_v2.5.md · çıktı=patent-cikti
+  → [önbellek] buluş dosyası yeniden kullanıldı: 5 bileşen
+  → [önbellek] önceki teknik yeniden kullanıldı: 8 sonuç, en yakın=US20260154337A1
+  → [önbellek] teknik etki çevirisi yeniden kullanıldı (risk=HIGH)
+  → [önbellek] istemler tur 1 yeniden kullanıldı (14 istem)
+  → [önbellek] denetim tur 1 yeniden kullanıldı (red)
+  → [önbellek] istemler tur 2 yeniden kullanıldı (13 istem)
+  → [önbellek] denetim tur 2 yeniden kullanıldı (red)
+  → denetçi onay vermedi; azami tur doldu — uyarı ile devam
+  → [önbellek] uygunluk kalkanı yeniden kullanıldı (risk=-)
+  → [önbellek] tarifname gövdesi yeniden kullanıldı
+  → [önbellek] 1 şekil yeniden kullanıldı
+  → [önbellek] görsel önceki teknik yeniden kullanıldı
+  → linter: 8 hata, 10 bulgu
+  → linter onarımı
+  → linter: 3 hata, 5 bulgu
+  → belge derleniyor
+
+=== BİTTİ ===
+tarifname_docx: /Users/serkankose/Documents/quann-3d/patent-cikti/tarifname.docx
+istemler_docx: /Users/serkankose/Documents/quann-3d/patent-cikti/istemler.docx
+tarifname_md: /Users/serkankose/Documents/quann-3d/patent-cikti/tarifname.md
+istemler_txt: /Users/serkankose/Documents/quann-3d/patent-cikti/istemler.txt
+sekiller: ['/Users/serkankose/Documents/quann-3d/patent-cikti/sekiller/sekil_1.png']
+tarifname_pdf: /Users/serkankose/Documents/quann-3d/patent-cikti/tarifname.pdf
+süre: 130.4 sn · model çağrısı: 2
+UYARI: linter 3 hata ile kapandı — 07_linter.md'ye bakın
+hat başlıyor · girdi=patent_application_v2.5.md · çıktı=patent-cikti
+  → [önbellek] buluş dosyası yeniden kullanıldı: 5 bileşen
+  → [önbellek] önceki teknik yeniden kullanıldı: 8 sonuç, en yakın=US20260154337A1
+  → [önbellek] teknik etki çevirisi yeniden kullanıldı (risk=HIGH)
+  → [önbellek] istemler tur 1 yeniden kullanıldı (14 istem)
+  → [önbellek] denetim tur 1 yeniden kullanıldı (red)
+  → [önbellek] istemler tur 2 yeniden kullanıldı (13 istem)
+  → [önbellek] denetim tur 2 yeniden kullanıldı (red)
+  → denetçi onay vermedi; azami tur doldu — uyarı ile devam
+  → [önbellek] uygunluk kalkanı yeniden kullanıldı (risk=-)
+  → [önbellek] tarifname gövdesi yeniden kullanıldı
+  → [önbellek] 1 şekil yeniden kullanıldı
+  → [önbellek] görsel önceki teknik yeniden kullanıldı
+  → linter: 8 hata, 10 bulgu
+  → linter onarımı
+Traceback (most recent call last):
+  File "/Users/serkankose/Documents/patent-hatti/patentline/pipeline.py", line 552, in run
+    final = self.graph.invoke(init, {"recursion_limit": 40})
+  File "/Users/serkankose/Documents/patent-hatti/.venv/lib/python3.13/site-packages/langgraph/pregel/main.py", line 4000, in invoke
+    for chunk in self.stream(
+                 ~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<11 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ):
+    ^
+  File "/Users/serkankose/Documents/patent-hatti/.venv/lib/python3.13/site-packages/langgraph/pregel/main.py", line 3060, in stream
+    for _ in runner.tick(
+             ~~~~~~~~~~~^
+        [t for t in loop.tasks.values() if not t.writes],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        schedule_task=loop.accept_push,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "/Users/serkankose/Documents/patent-hatti/.venv/lib/python3.13/site-packages/langgraph/pregel/_runner.py", line 204, in tick
+    run_with_retry(
+    ~~~~~~~~~~~~~~^
+        t,
+        ^^
+    ...<10 lines>...
+        },
+        ^^
+    )
+    ^
+  File "/Users/serkankose/Documents/patent-hatti/.venv/lib/python3.13/site-packages/langgraph/pregel/_retry.py", line 618, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/serkankose/Documents/patent-hatti/.venv/lib/python3.13/site-packages/langgraph/_internal/_runnable.py", line 794, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+  File "/Users/serkankose/Documents/patent-hatti/.venv/lib/python3.13/site-packages/langgraph/_internal/_runnable.py", line 479, in invoke
+    ret = self.func(*args, **kwargs)
+  File "/Users/serkankose/Documents/patent-hatti/patentline/pipeline.py", line 390, in n_repair
+    fixed = agents.repair_text(self.llm, sp["description"],
+                               [f for f in errs if f.get("section") != "istem"], s["locale"])
+  File "/Users/serkankose/Documents/patent-hatti/patentline/agents.py", line 453, in repair_text
+    data = llm.json("drafter", REPAIR_SYS, payload, '{"metin": "düzeltilmiş tam metin"}', retries=1)
+           ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/serkankose/Documents/patent-hatti/patentline/llm.py", line 273, in json
+    text = self.chat(role, sys, user, retries=retries, fallback_role=fallback_role)
+  File "/Users/serkankose/Documents/patent-hatti/patentline/llm.py", line 161, in chat
+    return self._chat_once(role, system, user, retries=retries)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/serkankose/Documents/patent-hatti/patentline/llm.py", line 264, in _chat_once
+    raise LLMError(f"model çağrısı başarısız ({role}/{model}): {last_err}")
+patentline.llm.LLMError: model çağrısı başarısız (drafter//Volumes/x/models/hf-hub/models--Qwen3.5-9B/snapshots/local): [Errno 61] Connection refused
+During task with name 'repair' and id 'd6dbf997-b1bc-a287-b051-cd9ec0d51f83'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/serkankose/Documents/patent-hatti/patentline/__main__.py", line 6, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/Users/serkankose/Documents/patent-hatti/patentline/cli.py", line 258, in main
+    return args.func(args)
+           ~~~~~~~~~^^^^^^
+  File "/Users/serkankose/Documents/patent-hatti/patentline/cli.py", line 41, in cmd_run
+    final = pipe.run(disclosure, out, locale=args.locale, applicant=args.applicant,
+                     max_rounds=args.rounds, resume=not args.fresh,
+                     require_approval=args.onay)
+  File "/Users/serkankose/Documents/patent-hatti/patentline/pipeline.py", line 555, in run
+    raise RuntimeError(f"hat durdu: {exc}") from exc
+RuntimeError: hat durdu: model çağrısı başarısız (drafter//Volumes/x/models/hf-hub/models--Qwen3.5-9B/snapshots/local): [Errno 61] Connection refused

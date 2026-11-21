@@ -1,0 +1,40 @@
+{
+  "verdict": "red",
+  "issues": [
+    {
+      "claim": 1,
+      "type": "B",
+      "quote": "bellek adres uzayında sınırlı bir tamsayı aralığında tanımlanmış D-boyutlu bir fiziksel veri bloğuna projekte ederek",
+      "why": "Terim 'fiziksel veri bloğu' ve 'bellek adres uzayı' soyut bir dil modelleme işlemi için belirsizdir; veri yapısı ile donanım belleği arasındaki ilişki net değildir.",
+      "fix": "Veri yapısını 'D-boyutlu vektör' olarak tanımlayın ve bellek adresine atıfı kaldırın."
+    },
+    {
+      "claim": 1,
+      "type": "C",
+      "quote": "söz konusu aynı fiziksel veri bloğu üzerinden sistem içi hata analizi ve drift izleme verisi üretmek",
+      "why": "Tarifnamede 'fiziksel veri bloğu' üzerinden drift izleme verisi üretme mekanizması açıklanmamıştır; istemde bu adım desteklenmemektedir.",
+      "fix": "Hata analizi için kullanılan veri kaynağını tarifnamede açıkça tanımlanan bir ara çıktı veya özellik vektörü olarak değiştirin."
+    },
+    {
+      "claim": 7,
+      "type": "B",
+      "quote": "Projeksiyon modülü (10)",
+      "why": "İstem 7'de referans numaraları (10, 12, 14 vb.) verilmiş ancak bu numaraların hangi şekle ait olduğu tarifnamede belirtilmemiştir.",
+      "fix": "Şekil atıflarını kaldırın veya tarifnamede ilgili şekil numarasını açıkça belirtin."
+    },
+    {
+      "claim": 1,
+      "type": "E",
+      "quote": "permütasyon-değişmez bir küme durumu oluşturmak",
+      "why": "Sıralı dil verisi için permütasyon-değişmezlik, sıralı bağımlılıkları yok sayarak teknik bir kayıba yol açar; bu özellik teknik bir etki yaratmaktan ziyade keyfi bir kısıtlamadır.",
+      "fix": "Sıralı bağımlılığı koruyan bir birleştirme mekanizması veya bu kısıtlamanın teknik avantajını açıklayın."
+    }
+  ],
+  "scores": {
+    "aciklik": 1,
+    "destek": 2,
+    "yenilik": 4,
+    "bulus_basamagi": 3
+  },
+  "summary": "İstemler, 'fiziksel veri bloğu' gibi belirsiz terimler ve desteklenmeyen 'drift izleme' adımları nedeniyle EPC 84 ve 83 maddelerine aykırıdır. Ayrıca, sıralı dil verisi için permütasyon-değişmezlik teknik bir ilerleme sağlamamaktadır."
+}

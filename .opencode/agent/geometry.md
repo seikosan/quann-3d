@@ -1,7 +1,7 @@
 ---
 description: Bulut geometrisi analisti: 16D/32D karşılaştırma, bölge haritaları, KMeans, mesafe/açı istatistikleri. Analiz yapar, kod değiştirmez.
 mode: subagent
-model: openrouter/z-ai/glm-5.3-flash
+model: splash/unsloth/Qwen3.8-Flash-Next-GGUF:UD-Q4_K_XL
 permission:
   bash: allow
   edit: deny

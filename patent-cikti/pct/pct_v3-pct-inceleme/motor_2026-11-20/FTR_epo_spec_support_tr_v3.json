@@ -1,0 +1,48 @@
+{
+  "_girdi": "GET /tr_claims+/tr_description (ham bayt)",
+  "analysis_type": "automated",
+  "jurisdiction": "EPO",
+  "specification_paragraphs": 98,
+  "indexed_terms": 1348,
+  "total_issues": 0,
+  "critical_issues": 0,
+  "important_issues": 0,
+  "sufficiency_issues": 0,
+  "section_issues": 0,
+  "spec_coverage": {
+    "percentage": 100,
+    "supported_claims": 15,
+    "total_claims": 15,
+    "unsupported_claims": []
+  },
+  "summary": "[OK] Specification provides sufficient disclosure under Art. 83 EPC",
+  "compliant": true,
+  "issues": [],
+  "epc_references": [
+    {
+      "section": "EPO Guidelines Part F - Chapter II-3",
+      "page": null,
+      "text": "[EPO Guidelines Part F - Chapter II-3] s (see T 51/87). Sufficiency of disclosure must be \nassessed on the basis of the application as a whole, including the \ndescription, claims and drawings, if any. The provisions relating to the \ncontent of the description are set out in Rule 42. The purpose of the \nprovisions of Art. 83 and Rule 42 is: \n(i) \nto ensure that the application contains sufficient technical information \nto enable a skilled person to put the invention as claimed into \npractice and ..."
+    },
+    {
+      "section": "EPO Guidelines Part F - Chapter III-1",
+      "page": null,
+      "text": "[EPO Guidelines Part F - Chapter III-1] ly apparent. Indeed, in some technical fields (e.g. computers), a \nclear description of function may be much more appropriate than an \nover-detailed description of structure. \nWhere an application is found to be sufficiently disclosed under Art. 83 only \nin respect of a part of the claimed subject-matter, a partial European or \nsupplementary European search report may be issued under Rule 63 \n(see B-VIII, 3.1 and 3.2). In such cases, in the absence of appr..."
+    },
+    {
+      "section": "EPO Guidelines Part F - Chapter III-1",
+      "page": null,
+      "text": "[EPO Guidelines Part F - Chapter III-1]  B-VIII, 3.1 and 3.2). In such cases, in the absence of appropriate \nRule 42(1)(e) \nArt. 83 \nArt. 83 \nRule 42(1)(c) and \n(e) \nRule 63 \n"
+    },
+    {
+      "section": "EPO Guidelines Part F - Chapter III-11",
+      "page": null,
+      "text": "[EPO Guidelines Part F - Chapter III-11] awn missing parts. If the division concludes that the \nrequirements of Art. 83 are not satisfied, a corresponding objection is \nraised. Ultimately, the application may be refused for lack of sufficient \ndisclosure (see F-III, 3 to 5). \n12. Sufficiency of disclosure and clarity \nAn ambiguity in the claims may lead to an insufficiency objection. However, \nambiguity also relates to the scope of the claims, i.e. Art. 84 (see F-IV, 4). \nNormally, therefore, an..."
+    },
+    {
+      "section": "EPC: Rule 42 Content of the description",
+      "page": 390,
+      "text": "[EPC: Rule 42 Content of the description] Règlement d'exécution \nVerweisungen | References | Références \n \n385 \nj) \ncomporter la désignation de l'inventeur, si \ncelui-ci est le demandeur. \n(3) \nEn cas de pluralité de demandeurs, la re-\nquête doit, de préférence, contenir la désigna-\ntion d'un demandeur ou d'un mandataire \ncomme représentant commun. \nRègle 4263  \nContenu de la description \nArt. 54, 56, 57, 78, 80, 83  \nR. 29, 30, 48, 50 \n(1) \nLa description doit : \na) \npréciser le domaine techniq..."
+    }
+  ]
+}

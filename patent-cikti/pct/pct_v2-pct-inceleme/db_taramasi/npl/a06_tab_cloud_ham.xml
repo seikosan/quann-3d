@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/XhzjaMualqY+Gi5sKzhrttcOF+g</id>
+  <title>arXiv Query: search_query=all:"tabular" AND all:"point cloud" AND all:"classification"&amp;id_list=&amp;start=0&amp;max_results=5</title>
+  <updated>2026-11-19T18:56:02Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22tabular%22+AND+(all:%22point+cloud%22+AND+all:%22classification%22)&amp;start=0&amp;max_results=5&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>5</opensearch:itemsPerPage>
+  <opensearch:totalResults>2</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2411.12897v1</id>
+    <title>Tree Species Classification using Machine Learning and 3D Tomographic SAR -- a case study in Northern Europe</title>
+    <updated>2024-11-19T22:25:26Z</updated>
+    <link href="https://arxiv.org/abs/2411.12897v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2411.12897v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Tree species classification plays an important role in nature conservation, forest inventories, forest management, and the protection of endangered species. Over the past four decades, remote sensing technologies have been extensively utilized for tree species classification, with Synthetic Aperture Radar (SAR) emerging as a key technique. In this study, we employed TomoSense, a 3D tomographic dataset, which utilizes a stack of single-look complex (SLC) images, a byproduct of SAR, captured at different incidence angles to generate a three-dimensional representation of the terrain. Our research focuses on evaluating multiple tabular machine-learning models using the height information derived from the tomographic image intensities to classify eight distinct tree species. The SLC data and tomographic imagery were analyzed across different polarimetric configurations and geosplit configurations. We investigated the impact of these variations on classification accuracy, comparing the performance of various tabular machine-learning models and optimizing them using Bayesian optimization. Additionally, we incorporated a proxy for actual tree height using point cloud data from Light Detection and Ranging (LiDAR) to provide height statistics associated with the model's predictions. This comparison offers insights into the reliability of tomographic data in predicting tree species classification based on height.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.data-an" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-11-19T22:25:26Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <arxiv:journal_ref>Neurips 2024 - Climate Change Workshop</arxiv:journal_ref>
+    <author>
+      <name>Colverd Grace</name>
+    </author>
+    <author>
+      <name>Schade Laura</name>
+    </author>
+    <author>
+      <name>Takami Jumpei</name>
+    </author>
+    <author>
+      <name>Bot Karol</name>
+    </author>
+    <author>
+      <name>Gallego Joseph</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2610.37784v1</id>
+    <title>Sparse tensor networks for individual tree diameter estimation in mixed forests</title>
+    <updated>2026-10-27T18:05:13Z</updated>
+    <link href="https://arxiv.org/abs/2610.37784v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2610.37784v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Measurements of tree diameter at breast height (DBH) are fundamental to forest inventories, but manual surveys across entire stands or regions are impractical. UAV-borne laser scanning (ULS) enables scalable automated forest surveys, yet canopy occlusion makes accurate DBH estimation from ULS point clouds non-trivial. Limited stem-level point density of ULS data constrains approaches relying on detailed stem reconstruction, such as Quantitative Structure Models (QSMs) and circle fitting. Empirical machine learning methods based on predefined point cloud metrics are an alternative. New deep learning approaches offer an even more principled solution, allowing models to learn directly from point clouds. Sparse tensor networks have shown particular promise, transforming forestry tasks such as tree species classification. We investigate whether these strengths can be extended to estimate individual tree DBH from ULS data across four mixed-species temperate forest plots in Germany. We further advance existing sparse tensor networks by introducing TreeNext, a lightweight deep learning architecture for direct individual tree parameter estimation from voxelized LiDAR point clouds. We present a fully automated forest inventory pipeline from individual tree instance segmentation to DBH regression, and quantify the impact of segmentation errors by comparing performance on automatically segmented and ground truth instances. TreeNext achieves an $R^2$ of 0.8355 on automatically segmented trees and 0.9380 on ground truth segments, outperforming strong tabular baselines including Random Forest and XGBoost. Segmentation quality emerges as the dominant error source in the automated pipeline. TreeNext proves highly data-efficient, performing well even in small data scenarios. Our findings establish sparse tensor networks as a practical foundation for automated individual tree DBH estimation from ULS.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-10-27T18:05:13Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Clara Lößl</name>
+    </author>
+    <author>
+      <name>Fabian Ewald Fassnacht</name>
+    </author>
+    <author>
+      <name>Viacheslav Barkov</name>
+    </author>
+  </entry>
+</feed>

@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/8nUF4h/aBcvJZDPapKq17KybhQM</id>
+  <title>arXiv Query: search_query=all:"zeroth-order" AND all:"language model" AND all:"training"&amp;id_list=&amp;start=0&amp;max_results=5</title>
+  <updated>2026-11-19T18:55:41Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22zeroth-order%22+AND+(all:%22language+model%22+AND+all:%22training%22)&amp;start=0&amp;max_results=5&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>5</opensearch:itemsPerPage>
+  <opensearch:totalResults>77</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2610.12566v1</id>
+    <title>Sample-Adaptive Zeroth-Order Post-Training</title>
+    <updated>2026-10-08T18:00:37Z</updated>
+    <link href="https://arxiv.org/abs/2610.12566v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2610.12566v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Zeroth-order (ZO) optimization offers a memory-efficient alternative to backpropagation for fine-tuning large language models. However, existing ZO methods typically sample training examples uniformly, overlooking their evolving importance and leaving avoidable estimation variance. To address this limitation, we propose Sample-Adaptive Zeroth-Order Optimization (SAZO), which learns sample importance online and adaptively allocates queries to accelerate convergence. SAZO extracts gradient-norm information from existing directional differences to estimate sample importance without access to true gradients. Furthermore, to track evolving importance from sparse minibatch feedback, SAZO maintains per-example exponential moving averages that aggregate observations across updates. The method requires no additional model evaluations and only $O(N)$ additional scalar state compared with MeZO. We prove that SAZO asymptotically matches the leading convergence term of the minimum-variance sampling oracle, and achieves a strictly faster convergence rate than standard methods. Extensive experiments across four model families demonstrate improved average downstream performance and up to $6\times$ faster convergence to the same training loss in terms of query count.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-10-08T18:00:37Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Haiyuan Wan</name>
+    </author>
+    <author>
+      <name>Yanyi Li</name>
+    </author>
+    <author>
+      <name>Weicheng Lin</name>
+    </author>
+    <author>
+      <name>Cong Fang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2401.04343v3</id>
+    <title>Private Fine-tuning of Large Language Models with Zeroth-order Optimization</title>
+    <updated>2025-01-31T02:33:07Z</updated>
+    <link href="https://arxiv.org/abs/2401.04343v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2401.04343v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Differentially private stochastic gradient descent (DP-SGD) allows models to be trained in a privacy-preserving manner, but has proven difficult to scale to the era of foundation models. We introduce DP-ZO, a private fine-tuning framework for large language models by privatizing zeroth order optimization methods. A key insight into the design of our method is that the direction of the gradient in the zeroth-order optimization we use is random and the only information from training data is the step size, i.e., a scalar. Therefore, we only need to privatize the scalar step size, which is memory-efficient. DP-ZO provides a strong privacy-utility trade-off across different tasks, and model sizes that are comparable to DP-SGD in $(\varepsilon,δ)$-DP. Notably, DP-ZO possesses significant advantages over DP-SGD in memory efficiency, and obtains higher utility in $\varepsilon$-DP when using the Laplace mechanism.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-01-09T03:53:59Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Xinyu Tang</name>
+    </author>
+    <author>
+      <name>Ashwinee Panda</name>
+    </author>
+    <author>
+      <name>Milad Nasr</name>
+    </author>
+    <author>
+      <name>Saeed Mahloujifar</name>
+    </author>
+    <author>
+      <name>Prateek Mittal</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2406.18060v3</id>
+    <title>AdaZeta: Adaptive Zeroth-Order Tensor-Train Adaption for Memory-Efficient Large Language Models Fine-Tuning</title>
+    <updated>2024-12-02T19:03:47Z</updated>
+    <link href="https://arxiv.org/abs/2406.18060v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2406.18060v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Fine-tuning large language models (LLMs) has achieved remarkable performance across various natural language processing tasks, yet it demands more and more memory as model sizes keep growing. To address this issue, the recently proposed Memory-efficient Zeroth-order (MeZO) methods attempt to fine-tune LLMs using only forward passes, thereby avoiding the need for a backpropagation graph. However, significant performance drops and a high risk of divergence have limited their widespread adoption. In this paper, we propose the Adaptive Zeroth-order Tensor-Train Adaption (AdaZeta) framework, specifically designed to improve the performance and convergence of the ZO methods. To enhance dimension-dependent ZO estimation accuracy, we introduce a fast-forward, low-parameter tensorized adapter. To tackle the frequently observed divergence issue in large-scale ZO fine-tuning tasks, we propose an adaptive query number schedule that guarantees convergence. Detailed theoretical analysis and extensive experimental results on Roberta-Large and Llama-2-7B models substantiate the efficacy of our AdaZeta framework in terms of accuracy, memory efficiency, and convergence speed.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-06-26T04:33:13Z</published>
+    <arxiv:comment>Accepted for publication in EMNLP 2024</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Yifan Yang</name>
+    </author>
+    <author>
+      <name>Kai Zhen</name>
+    </author>
+    <author>
+      <name>Ershad Banijamal</name>
+    </author>
+    <author>
+      <name>Athanasios Mouchtaris</name>
+    </author>
+    <author>
+      <name>Zheng Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.17264v1</id>
+    <title>OAT-Rephrase: Optimization-Aware Training Data Rephrasing for Zeroth-Order LLM Fine-Tuning</title>
+    <updated>2025-06-10T02:53:04Z</updated>
+    <link href="https://arxiv.org/abs/2506.17264v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.17264v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Fine-tuning large language models (LLMs) using zeroth-order optimization (ZO) offers a memory-efficient alternative to gradient-based methods but suffers from slower convergence and unstable optimization due to noisy gradient estimates. This paper introduces OAT-Rephrase, an Optimization-Aware Training data rephrasing strategy that leverages an LLM to rephrase training instances based on its understanding of the ZO dynamics, specifically MeZO, derived directly from its paper. The approach incorporates a dual-stage pipeline featuring a rewriter LLM and a semantic judge, ensuring all rephrasings retain task relevance and logical consistency. Evaluations across five classification tasks and three LLM architectures demonstrate that OAT-Rephrase consistently improves MeZO fine-tuning performance, often narrowing or eliminating the gap with first-order methods. Our findings suggest that optimization-aware rephrasing serves as a reusable and low-overhead enhancement for zeroth-order tuning regimes.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-10T02:53:04Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Jikai Long</name>
+    </author>
+    <author>
+      <name>Zijian Hu</name>
+    </author>
+    <author>
+      <name>Xiaodong Yu</name>
+    </author>
+    <author>
+      <name>Jianwen Xie</name>
+    </author>
+    <author>
+      <name>Zhaozhuo Xu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2610.26790v1</id>
+    <title>Training with ML-labeled Data via Stochastic First- and Zeroth-Order Optimization</title>
+    <updated>2026-10-19T17:38:58Z</updated>
+    <link href="https://arxiv.org/abs/2610.26790v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2610.26790v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Training a machine learning (ML) model is an optimization process that typically requires a set of examples with ground-truth labels beforehand. Obtaining these ground truths usually requires laborious human effort and can be costly. The scalability of human labeling becomes a concern when there are a large number of data points that need to be labeled. To address this practical issue, we consider an optimization setting where a subset of samples has ground-truth labels, while the remaining data points were labeled by an ML predictor, which could potentially assign incorrect labels to those points. We propose both first-order and zeroth-order stochastic optimization methods for training on datasets consisting of a mix of true-labeled and ML-labeled samples. We further conduct comprehensive empirical studies from training a linear regression model to fine-tuning a large language model (LLM) to showcase the effectiveness of the proposed algorithms for training with ML-labeled data.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-10-19T17:38:58Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Maria-Eleni Sfyraki</name>
+    </author>
+    <author>
+      <name>Jun-Kun Wang</name>
+    </author>
+  </entry>
+</feed>

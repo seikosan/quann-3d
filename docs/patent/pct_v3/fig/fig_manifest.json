@@ -1,0 +1,1033 @@
+{
+ "uretic": "docs/patent/pct_v3/generate_figures_pct3.py",
+ "sayi": 8,
+ "bicimler": [
+  {
+   "sheet": "FIG. 1",
+   "svg": "fig1_system_architecture.svg",
+   "measured": false,
+   "sources": [],
+   "boxes": 10,
+   "svg_pt": [
+    416.16,
+    280.512
+   ],
+   "placed_w_cm": 16.0,
+   "min_text_cm": 0.2614,
+   "min_text": "task input 100 (token sequence / tabular",
+   "texts": [
+    {
+     "text": "FIG. 1",
+     "kind": "figure-designation",
+     "pt": 13.0,
+     "cm": 0.4998
+    },
+    {
+     "text": "Schematic; no measurement.",
+     "kind": "note",
+     "pt": 8.0,
+     "cm": 0.3076
+    },
+    {
+     "text": "task input 100 (token sequence / tabular record)",
+     "kind": "box",
+     "pt": 6.8,
+     "cm": 0.2614
+    },
+    {
+     "text": "context encoder 102",
+     "kind": "box",
+     "pt": 6.8,
+     "cm": 0.2614
+    },
+    {
+     "text": "point projection 104 (D-dimensional)",
+     "kind": "box",
+     "pt": 6.8,
+     "cm": 0.2614
+    },
+    {
+     "text": "point cloud P 106 (N points)",
+     "kind": "box",
+     "pt": 6.8,
+     "cm": 0.2614
+    },
+    {
+     "text": "pair-geometry encoder 110 (points and pairs)",
+     "kind": "box",
+     "pt": 6.8,
+     "cm": 0.2614
+    },
+    {
+     "text": "aggregation module 112 (one set representation)",
+     "kind": "box",
+     "pt": 7.5,
+     "cm": 0.2884
+    },
+    {
+     "text": "reader 116",
+     "kind": "box",
+     "pt": 10.0,
+     "cm": 0.3845
+    },
+    {
+     "text": "task output 118",
+     "kind": "box",
+     "pt": 6.8,
+     "cm": 0.2614
+    },
+    {
+     "text": "interpretation engine 120 (point-removal effect 122 · region naming 124 · region shift 126)",
+     "kind": "box",
+     "pt": 6.8,
+     "cm": 0.2614
+    },
+    {
+     "text": "output interface 128 (task output and explanation data presented jointly)",
+     "kind": "box",
+     "pt": 6.8,
+     "cm": 0.2614
+    },
+    {
+     "text": "the interpretation engine is not a separate model; it re-runs the forward pass of the reader that produces the task output, with the points of that same cloud modified (dashed path)",
+     "kind": "note",
+     "pt": 7.5,
+     "cm": 0.2884
+    }
+   ]
+  },
+  {
+   "sheet": "FIG. 2",
+   "svg": "fig2_pair_geometry.svg",
+   "measured": false,
+   "sources": [],
+   "boxes": 8,
+   "svg_pt": [
+    416.16,
+    286.056
+   ],
+   "placed_w_cm": 16.0,
+   "min_text_cm": 0.3076,
+   "min_text": "Schematic; no measurement.",
+   "texts": [
+    {
+     "text": "FIG. 2",
+     "kind": "figure-designation",
+     "pt": 13.0,
+     "cm": 0.4998
+    },
+    {
+     "text": "Schematic; no measurement.",
+     "kind": "note",
+     "pt": 8.0,
+     "cm": 0.3076
+    },
+    {
+     "text": "first point 200",
+     "kind": "label",
+     "pt": 8.0,
+     "cm": 0.3076
+    },
+    {
+     "text": "second point 202",
+     "kind": "label",
+     "pt": 8.0,
+     "cm": 0.3076
+    },
+    {
+     "text": "difference vector 204",
+     "kind": "label",
+     "pt": 8.0,
+     "cm": 0.3076
+    },
+    {
+     "text": "pair distance 206",
+     "kind": "label",
+     "pt": 8.0,
+     "cm": 0.3076
+    },
+    {
+     "text": "difference vector 204",
+     "kind": "box",
+     "pt": 8.0,
+     "cm": 0.3076
+    },
+    {
+     "text": "pair distance 206 (Euclidean norm)",
+     "kind": "box",
+     "pt": 8.0,
+     "cm": 0.3076
+    },
+    {
+     "text": "cosine similarity 208",
+     "kind": "box",
+     "pt": 8.0,
+     "cm": 0.3076
+    },
+    {
+     "text": "norm vector of a first point 210",
+     "kind": "box",
+     "pt": 8.0,
+     "cm": 0.3076
+    },
+    {
+     "text": "norm vector of a second point 212",
+     "kind": "box",
+     "pt": 8.0,
+     "cm": 0.3076
+    },
+    {
+     "text": "concatenation of five components 214 difference vector · pair distance · cosine similarity · norm vector of a first point · norm vector of a second point",
+     "kind": "box",
+     "pt": 8.0,
+     "cm": 0.3076
+    },
+    {
+     "text": "pair-feature width 216 3D + 2",
+     "kind": "box",
+     "pt": 9.0,
+     "cm": 0.346
+    },
+    {
+     "text": "average-pooling 218 over the point pairs",
+     "kind": "box",
+     "pt": 8.0,
+     "cm": 0.3076
+    },
+    {
+     "text": "3D + 2 is the pair input width defined in the implementation.",
+     "kind": "note",
+     "pt": 8.0,
+     "cm": 0.3076
+    }
+   ]
+  },
+  {
+   "sheet": "FIG. 3",
+   "svg": "fig3_symmetric_aggregation.svg",
+   "measured": false,
+   "sources": [],
+   "boxes": 8,
+   "svg_pt": [
+    465.399675,
+    258.336
+   ],
+   "placed_w_cm": 16.0,
+   "min_text_cm": 0.2338,
+   "min_text": "pair-geometry features 302",
+   "texts": [
+    {
+     "text": "FIG. 3",
+     "kind": "figure-designation",
+     "pt": 13.0,
+     "cm": 0.4469
+    },
+    {
+     "text": "Schematic; no measurement.",
+     "kind": "note",
+     "pt": 8.0,
+     "cm": 0.275
+    },
+    {
+     "text": "point features 300",
+     "kind": "box",
+     "pt": 9.0,
+     "cm": 0.3094
+    },
+    {
+     "text": "pair-geometry features 302",
+     "kind": "box",
+     "pt": 6.8,
+     "cm": 0.2338
+    },
+    {
+     "text": "max-pooling 304 over the points",
+     "kind": "box",
+     "pt": 6.8,
+     "cm": 0.2338
+    },
+    {
+     "text": "average-pooling over the point pairs 306",
+     "kind": "box",
+     "pt": 6.8,
+     "cm": 0.2338
+    },
+    {
+     "text": "concatenation layer 308",
+     "kind": "box",
+     "pt": 6.8,
+     "cm": 0.2338
+    },
+    {
+     "text": "one set representation 310",
+     "kind": "box",
+     "pt": 6.8,
+     "cm": 0.2338
+    },
+    {
+     "text": "variant replacing the pair computation 312: global set statistics — maximum · minimum · mean · standard deviation pooling, cloud centre, centre deviation",
+     "kind": "box",
+     "pt": 8.0,
+     "cm": 0.275
+    },
+    {
+     "text": "cost proportional to the number of points",
+     "kind": "box",
+     "pt": 6.8,
+     "cm": 0.2338
+    },
+    {
+     "text": "both poolings are operations over a set: the set representation is independent of the numbering order of the points",
+     "kind": "note",
+     "pt": 7.5,
+     "cm": 0.2578
+    }
+   ]
+  },
+  {
+   "sheet": "FIG. 4",
+   "svg": "fig4_point_removal.svg",
+   "measured": false,
+   "sources": [],
+   "boxes": 7,
+   "svg_pt": [
+    500.1853,
+    230.616
+   ],
+   "placed_w_cm": 16.0,
+   "min_text_cm": 0.2175,
+   "min_text": "point cloud P 400 (N points)",
+   "texts": [
+    {
+     "text": "FIG. 4",
+     "kind": "figure-designation",
+     "pt": 13.0,
+     "cm": 0.4158
+    },
+    {
+     "text": "Schematic; no measurement.",
+     "kind": "note",
+     "pt": 8.0,
+     "cm": 0.2559
+    },
+    {
+     "text": "point cloud P 400 (N points)",
+     "kind": "box",
+     "pt": 6.8,
+     "cm": 0.2175
+    },
+    {
+     "text": "reader, unmasked 402",
+     "kind": "box",
+     "pt": 6.8,
+     "cm": 0.2175
+    },
+    {
+     "text": "base output 404",
+     "kind": "box",
+     "pt": 9.0,
+     "cm": 0.2879
+    },
+    {
+     "text": "copy with point k set to zero value, mask closed 406",
+     "kind": "box",
+     "pt": 6.8,
+     "cm": 0.2175
+    },
+    {
+     "text": "reader, masked 408",
+     "kind": "box",
+     "pt": 9.0,
+     "cm": 0.2879
+    },
+    {
+     "text": "masked output 410",
+     "kind": "box",
+     "pt": 9.0,
+     "cm": 0.2879
+    },
+    {
+     "text": "contribution 412 (base output minus masked output)",
+     "kind": "box",
+     "pt": 6.8,
+     "cm": 0.2175
+    },
+    {
+     "text": "N+1 forward passes for N points; the contribution is the base logit minus the logit with the point concerned masked",
+     "kind": "note",
+     "pt": 8.0,
+     "cm": 0.2559
+    },
+    {
+     "text": "masked cloud variants are supplied jointly as one batch input 414",
+     "kind": "note",
+     "pt": 8.0,
+     "cm": 0.2559
+    }
+   ]
+  },
+  {
+   "sheet": "FIG. 5",
+   "svg": "fig5_region_naming.svg",
+   "measured": false,
+   "sources": [],
+   "boxes": 4,
+   "svg_pt": [
+    416.16,
+    237.6468
+   ],
+   "placed_w_cm": 16.0,
+   "min_text_cm": 0.2614,
+   "min_text": "point cloud states 500 (training window)",
+   "texts": [
+    {
+     "text": "FIG. 5",
+     "kind": "figure-designation",
+     "pt": 13.0,
+     "cm": 0.4998
+    },
+    {
+     "text": "Schematic; no measurement.",
+     "kind": "note",
+     "pt": 8.0,
+     "cm": 0.3076
+    },
+    {
+     "text": "point cloud states 500 (training window)",
+     "kind": "box",
+     "pt": 6.8,
+     "cm": 0.2614
+    },
+    {
+     "text": "centroid-based clustering 502",
+     "kind": "box",
+     "pt": 6.8,
+     "cm": 0.2614
+    },
+    {
+     "text": "region statistics (centre · point share) 504",
+     "kind": "box",
+     "pt": 8.0,
+     "cm": 0.3076
+    },
+    {
+     "text": "human-readable region label 506",
+     "kind": "box",
+     "pt": 8.5,
+     "cm": 0.3268
+    },
+    {
+     "text": "centre",
+     "kind": "label",
+     "pt": 7.5,
+     "cm": 0.2884
+    },
+    {
+     "text": "centre",
+     "kind": "label",
+     "pt": 7.5,
+     "cm": 0.2884
+    },
+    {
+     "text": "centre",
+     "kind": "label",
+     "pt": 7.5,
+     "cm": 0.2884
+    },
+    {
+     "text": "geometric regions of the point cloud",
+     "kind": "note",
+     "pt": 7.5,
+     "cm": 0.2884
+    },
+    {
+     "text": "two geometrically distinct regions may carry the same human-readable label",
+     "kind": "note",
+     "pt": 7.5,
+     "cm": 0.2884
+    }
+   ]
+  },
+  {
+   "sheet": "FIG. 6",
+   "svg": "fig6_region_shift.svg",
+   "measured": true,
+   "sources": [
+    "complaints/results/complaints_scale_stability.json",
+    "maintenance/results/e1_cmapss.json"
+   ],
+   "boxes": 0,
+   "svg_pt": [
+    488.486312,
+    253.766203
+   ],
+   "placed_w_cm": 16.0,
+   "min_text_cm": 0.2293,
+   "min_text": "−0.088",
+   "texts": [
+    {
+     "text": "−0.088",
+     "kind": "measured-value",
+     "pt": 7.0,
+     "raw_value": -0.0876,
+     "source": "complaints/results/complaints_scale_stability.json",
+     "cm": 0.2293
+    },
+    {
+     "text": "−0.170",
+     "kind": "measured-value",
+     "pt": 7.0,
+     "raw_value": -0.17,
+     "source": "complaints/results/complaints_scale_stability.json",
+     "cm": 0.2293
+    },
+    {
+     "text": "+0.146",
+     "kind": "measured-value",
+     "pt": 7.0,
+     "raw_value": 0.1456,
+     "source": "complaints/results/complaints_scale_stability.json",
+     "cm": 0.2293
+    },
+    {
+     "text": "+0.054",
+     "kind": "measured-value",
+     "pt": 7.0,
+     "raw_value": 0.054,
+     "source": "complaints/results/complaints_scale_stability.json",
+     "cm": 0.2293
+    },
+    {
+     "text": "−0.051",
+     "kind": "measured-value",
+     "pt": 7.0,
+     "raw_value": -0.0514,
+     "source": "complaints/results/complaints_scale_stability.json",
+     "cm": 0.2293
+    },
+    {
+     "text": "−0.030",
+     "kind": "measured-value",
+     "pt": 7.0,
+     "raw_value": -0.0297,
+     "source": "complaints/results/complaints_scale_stability.json",
+     "cm": 0.2293
+    },
+    {
+     "text": "−0.068",
+     "kind": "measured-value",
+     "pt": 7.0,
+     "raw_value": -0.0676,
+     "source": "complaints/results/complaints_scale_stability.json",
+     "cm": 0.2293
+    },
+    {
+     "text": "+0.207",
+     "kind": "measured-value",
+     "pt": 7.0,
+     "raw_value": 0.2068,
+     "source": "complaints/results/complaints_scale_stability.json",
+     "cm": 0.2293
+    },
+    {
+     "text": "FIG. 6",
+     "kind": "figure-designation",
+     "pt": 12.0,
+     "cm": 0.3931
+    },
+    {
+     "text": "0",
+     "kind": "tick",
+     "pt": 11.0,
+     "cm": 0.3603
+    },
+    {
+     "text": "1",
+     "kind": "tick",
+     "pt": 11.0,
+     "cm": 0.3603
+    },
+    {
+     "text": "2",
+     "kind": "tick",
+     "pt": 11.0,
+     "cm": 0.3603
+    },
+    {
+     "text": "3",
+     "kind": "tick",
+     "pt": 11.0,
+     "cm": 0.3603
+    },
+    {
+     "text": "4",
+     "kind": "tick",
+     "pt": 11.0,
+     "cm": 0.3603
+    },
+    {
+     "text": "5",
+     "kind": "tick",
+     "pt": 11.0,
+     "cm": 0.3603
+    },
+    {
+     "text": "6",
+     "kind": "tick",
+     "pt": 11.0,
+     "cm": 0.3603
+    },
+    {
+     "text": "7",
+     "kind": "tick",
+     "pt": 11.0,
+     "cm": 0.3603
+    },
+    {
+     "text": "−0.3",
+     "kind": "tick",
+     "pt": 11.0,
+     "cm": 0.3603
+    },
+    {
+     "text": "−0.2",
+     "kind": "tick",
+     "pt": 11.0,
+     "cm": 0.3603
+    },
+    {
+     "text": "−0.1",
+     "kind": "tick",
+     "pt": 11.0,
+     "cm": 0.3603
+    },
+    {
+     "text": "0.0",
+     "kind": "tick",
+     "pt": 11.0,
+     "cm": 0.3603
+    },
+    {
+     "text": "0.1",
+     "kind": "tick",
+     "pt": 11.0,
+     "cm": 0.3603
+    },
+    {
+     "text": "0.2",
+     "kind": "tick",
+     "pt": 11.0,
+     "cm": 0.3603
+    },
+    {
+     "text": "0.3",
+     "kind": "tick",
+     "pt": 11.0,
+     "cm": 0.3603
+    },
+    {
+     "text": "region",
+     "kind": "axis-label",
+     "pt": 11.0,
+     "cm": 0.3603
+    },
+    {
+     "text": "region point-share difference (drifted window − training window)",
+     "kind": "axis-label",
+     "pt": 9.0,
+     "cm": 0.2948
+    },
+    {
+     "text": "(a) Region point-share shift 600",
+     "kind": "panel-title",
+     "pt": 10.0,
+     "cm": 0.3275
+    },
+    {
+     "text": "0.0117",
+     "kind": "measured-value",
+     "pt": 8.0,
+     "raw_value": 0.011723329425556858,
+     "source": "maintenance/results/e1_cmapss.json",
+     "cm": 0.262
+    },
+    {
+     "text": "0.0281",
+     "kind": "measured-value",
+     "pt": 8.0,
+     "raw_value": 0.02813599062133646,
+     "source": "maintenance/results/e1_cmapss.json",
+     "cm": 0.262
+    },
+    {
+     "text": "ratio 2.4×",
+     "kind": "measured-value",
+     "pt": 8.5,
+     "raw_value": 2.4,
+     "source": "maintenance/results/e1_cmapss.json",
+     "formula": "shifted_alarm_rate / unchanged_alarm_rate",
+     "cm": 0.2784
+    },
+    {
+     "text": "before setting\nshift",
+     "kind": "tick",
+     "pt": 11.0,
+     "cm": 0.3603
+    },
+    {
+     "text": "after setting\nshift",
+     "kind": "tick",
+     "pt": 11.0,
+     "cm": 0.3603
+    },
+    {
+     "text": "0.00",
+     "kind": "tick",
+     "pt": 11.0,
+     "cm": 0.3603
+    },
+    {
+     "text": "0.01",
+     "kind": "tick",
+     "pt": 11.0,
+     "cm": 0.3603
+    },
+    {
+     "text": "0.02",
+     "kind": "tick",
+     "pt": 11.0,
+     "cm": 0.3603
+    },
+    {
+     "text": "0.03",
+     "kind": "tick",
+     "pt": 11.0,
+     "cm": 0.3603
+    },
+    {
+     "text": "0.04",
+     "kind": "tick",
+     "pt": 11.0,
+     "cm": 0.3603
+    },
+    {
+     "text": "alarm rate",
+     "kind": "axis-label",
+     "pt": 9.0,
+     "cm": 0.2948
+    },
+    {
+     "text": "(b) Setting shift → alarm rate 602",
+     "kind": "panel-title",
+     "pt": 10.0,
+     "cm": 0.3275
+    },
+    {
+     "text": "measured data",
+     "kind": "note",
+     "pt": 7.5,
+     "cm": 0.2457
+    }
+   ]
+  },
+  {
+   "sheet": "FIG. 7",
+   "svg": "fig7_int8_package.svg",
+   "measured": true,
+   "sources": [
+    "fraud/results/edge_eval_full_scale.json"
+   ],
+   "boxes": 0,
+   "svg_pt": [
+    522.432,
+    253.766203
+   ],
+   "placed_w_cm": 16.0,
+   "min_text_cm": 0.2297,
+   "min_text": "measured data",
+   "texts": [
+    {
+     "text": "0.9451",
+     "kind": "measured-value",
+     "pt": 8.5,
+     "raw_value": 0.9450745846153957,
+     "source": "fraud/results/edge_eval_full_scale.json",
+     "cm": 0.2603
+    },
+    {
+     "text": "0.9365",
+     "kind": "measured-value",
+     "pt": 8.5,
+     "raw_value": 0.9364812440872093,
+     "source": "fraud/results/edge_eval_full_scale.json",
+     "cm": 0.2603
+    },
+    {
+     "text": "0.9367",
+     "kind": "measured-value",
+     "pt": 8.5,
+     "raw_value": 0.9367113790742326,
+     "source": "fraud/results/edge_eval_full_scale.json",
+     "cm": 0.2603
+    },
+    {
+     "text": "4.7 million test rows",
+     "kind": "measured-value",
+     "pt": 8.0,
+     "raw_value": 4700000,
+     "source": "fraud/results/edge_eval_full_scale.json",
+     "formula": "n_test / 1000000, one decimal",
+     "cm": 0.245
+    },
+    {
+     "text": "32-bit\nfloating point",
+     "kind": "tick",
+     "pt": 8.5,
+     "cm": 0.2603
+    },
+    {
+     "text": "INT8\nper-tensor",
+     "kind": "tick",
+     "pt": 8.5,
+     "cm": 0.2603
+    },
+    {
+     "text": "INT8\nper-channel",
+     "kind": "tick",
+     "pt": 8.5,
+     "cm": 0.2603
+    },
+    {
+     "text": "0.90",
+     "kind": "tick",
+     "pt": 11.0,
+     "cm": 0.3369
+    },
+    {
+     "text": "0.92",
+     "kind": "tick",
+     "pt": 11.0,
+     "cm": 0.3369
+    },
+    {
+     "text": "0.94",
+     "kind": "tick",
+     "pt": 11.0,
+     "cm": 0.3369
+    },
+    {
+     "text": "0.96",
+     "kind": "tick",
+     "pt": 11.0,
+     "cm": 0.3369
+    },
+    {
+     "text": "0.98",
+     "kind": "tick",
+     "pt": 11.0,
+     "cm": 0.3369
+    },
+    {
+     "text": "area under the receiver operating characteristic curve",
+     "kind": "axis-label",
+     "pt": 8.0,
+     "cm": 0.245
+    },
+    {
+     "text": "(a) Quantization effect 700",
+     "kind": "panel-title",
+     "pt": 10.0,
+     "cm": 0.3063
+    },
+    {
+     "text": "528.9 KB",
+     "kind": "measured-value",
+     "pt": 8.5,
+     "raw_value": 528.9,
+     "source": "fraud/results/edge_eval_full_scale.json",
+     "cm": 0.2603
+    },
+    {
+     "text": "138.2 KB",
+     "kind": "measured-value",
+     "pt": 8.5,
+     "raw_value": 138.2,
+     "source": "fraud/results/edge_eval_full_scale.json",
+     "cm": 0.2603
+    },
+    {
+     "text": "FIG. 7",
+     "kind": "figure-designation",
+     "pt": 12.0,
+     "cm": 0.3675
+    },
+    {
+     "text": "32-bit floating point\npackage",
+     "kind": "tick",
+     "pt": 8.5,
+     "cm": 0.2603
+    },
+    {
+     "text": "INT8 package",
+     "kind": "tick",
+     "pt": 8.5,
+     "cm": 0.2603
+    },
+    {
+     "text": "0",
+     "kind": "tick",
+     "pt": 11.0,
+     "cm": 0.3369
+    },
+    {
+     "text": "200",
+     "kind": "tick",
+     "pt": 11.0,
+     "cm": 0.3369
+    },
+    {
+     "text": "400",
+     "kind": "tick",
+     "pt": 11.0,
+     "cm": 0.3369
+    },
+    {
+     "text": "600",
+     "kind": "tick",
+     "pt": 11.0,
+     "cm": 0.3369
+    },
+    {
+     "text": "800",
+     "kind": "tick",
+     "pt": 11.0,
+     "cm": 0.3369
+    },
+    {
+     "text": "delivered package footprint (KB)",
+     "kind": "axis-label",
+     "pt": 9.0,
+     "cm": 0.2756
+    },
+    {
+     "text": "(b) Delivered package footprint 702",
+     "kind": "panel-title",
+     "pt": 10.0,
+     "cm": 0.3063
+    },
+    {
+     "text": "measured data",
+     "kind": "note",
+     "pt": 7.5,
+     "cm": 0.2297
+    },
+    {
+     "text": "deployment package 904: INT8 quantized weights 704 · quantization table 706 · resolution table 708",
+     "kind": "label",
+     "pt": 7.5,
+     "cm": 0.2297
+    }
+   ]
+  },
+  {
+   "sheet": "FIG. 8",
+   "svg": "fig8_window_cloud.svg",
+   "measured": false,
+   "sources": [],
+   "boxes": 8,
+   "svg_pt": [
+    416.16,
+    247.248
+   ],
+   "placed_w_cm": 16.0,
+   "min_text_cm": 0.2884,
+   "min_text": "third tier; the window size and the stri",
+   "texts": [
+    {
+     "text": "FIG. 8",
+     "kind": "figure-designation",
+     "pt": 13.0,
+     "cm": 0.4998
+    },
+    {
+     "text": "Schematic; no measurement.",
+     "kind": "note",
+     "pt": 8.0,
+     "cm": 0.3076
+    },
+    {
+     "text": "the task input is a text of several sentences",
+     "kind": "note",
+     "pt": 8.0,
+     "cm": 0.3076
+    },
+    {
+     "text": "sentence 1 800",
+     "kind": "box",
+     "pt": 9.0,
+     "cm": 0.346
+    },
+    {
+     "text": "sentence 2 800",
+     "kind": "box",
+     "pt": 9.0,
+     "cm": 0.346
+    },
+    {
+     "text": "sentence 3 800",
+     "kind": "box",
+     "pt": 9.0,
+     "cm": 0.346
+    },
+    {
+     "text": "sentence cloud states 802",
+     "kind": "box",
+     "pt": 9.0,
+     "cm": 0.346
+    },
+    {
+     "text": "first tier",
+     "kind": "note",
+     "pt": 8.0,
+     "cm": 0.3076
+    },
+    {
+     "text": "neighbouring window cloud states 804 (slid by a fixed window size and stride)",
+     "kind": "box",
+     "pt": 8.5,
+     "cm": 0.3268
+    },
+    {
+     "text": "second tier",
+     "kind": "note",
+     "pt": 8.0,
+     "cm": 0.3076
+    },
+    {
+     "text": "window-geometry encoder 806",
+     "kind": "box",
+     "pt": 9.0,
+     "cm": 0.346
+    },
+    {
+     "text": "multi-sentence set representation 808",
+     "kind": "box",
+     "pt": 8.0,
+     "cm": 0.3076
+    },
+    {
+     "text": "reader → 810 task output",
+     "kind": "box",
+     "pt": 9.0,
+     "cm": 0.346
+    },
+    {
+     "text": "third tier; the window size and the stride are defined in the implementation",
+     "kind": "note",
+     "pt": 7.5,
+     "cm": 0.2884
+    }
+   ]
+  }
+ ]
+}

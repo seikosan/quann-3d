@@ -1,0 +1,40 @@
+BAĞIMSIZ DOĞRULAYICI TURU — pct_v3 (2026-11-20, lokal)
+Koşan: reviewer alt-ajani (ses_e060c91b4ffeJu9UMrqtIcQsiN), model splash/unsloth/Qwen3.8-Flash-Next-GGUF:UD-Q4_K_XL
+(122B denemesi ses_e060d78d2ffeNwlxRVYqKJWwo4 20:13:03'te "generation thread died" — 128 GB RAM, ana GGUF ile birlikte
+122B yüklenemedi; ham hata session_message kaydinda). Ciktinin ham metni asagidadir:
+
+1. İstemler ✓ — 15 istem; bağımsız 3 (1,13,15); TR "claim" 0; üç basamaklı numara EN/TR 0.
+2. Tarifname ✓ — EN 98 paragraf / 213 satır; TR 98/213; dogrulama.txt:10-14 birebir.
+3. Özet ✓ — EN 148 / TR 132 kelime; dogrulama.txt:17-18 aynı.
+4. PDF ✓ — 8 sayfa A4; 979834 B; pdftotext|tr -d '[:space:]'|wc -c → 0.
+5. pct_v2 dokunulmazlığı ✗ — 7/8 sha1 eşleşti; DESCRIPTION_FILING-COPY_EN.txt canlı c6db3c9ef0184310a4948060ed6fbfe5aeeb672f
+   ≠ künye d339bbb270bf1158d69a033f1d3b94b9419593b4 (dogrulama.txt:31). mtime Nov 20 20:09:59.
+6. Motor ✓ — B sonuc.total_issues 41; C 17 + compliant true + coverage 100; L package_integrity_score 100.
+7. Atıf kapısı ✓ — TOPLAM: doğru 78 · kaynakta yok 0 · kaynaksız 0 · ölü adres 0 (exit 0).
+8. Token ✓ — defter ":78 token: 59" ↔ olcum_kayitlari.txt:27.
+TOPLAM: 7 ✓ / 1 ✗ / 0 KANITSIZ
+
+— ✗'NIN NEDENİ (doğrulandı; uydurma değil) —
+Aynı makinedeki PARALEL OpenCode oturumu "Claude-Patent-Creator repo kurulum" (ses_e0f846cabffegIvLUl6AvetvJ1,
+build ajanı, yerel splash modeli, kullanıcı 19:56'da "devam" dedi) şu işi YAPTI:
+- 20:04:04 — docs/patent/pct_v2/DESCRIPTION_EN.md master'ı ADAY sürümle (84 paragraf) değiştirdi;
+  orijinali docs/patent/pct_v2/DESCRIPTION_EN.md.bak-20261120 olarak yedekledi (39987 B, mtime 19 Kas 11:46:05,
+  sha1 507561bebdf1d59eb90d3c76920209bc42f888c3 — shasum çıktısı, bu oturum).
+- 20:09:59 — filing copy'leri yeniden üretti: 6 txt dosyasının mtime'ı 20:09:59; DESCRIPTION 36677→49553 B,
+  70→84 paragraf; diğer 5 dosyanın boyutu değişmedi (864/10988/11715/828/37279 B — ls -lT, bu oturum).
+Kanıt komutları: ls -lT docs/patent/pct_v2/filing ; find docs patent-cikti -newermt '2026-11-20 20:00' ! -newermt '2026-11-20 20:15' ;
+sqlite3 ~/.local/share/opencode/opencode.db "select ... from session_message where session_id='ses_e0f846cabffegIvLUl6AvetvJ1'"
+(paralel oturumun kendi mesajı: "Adoption: DESCRIPTION_EN.md = candidate version (84 paragraphs), backup is DESCRIPTION_EN.md.bak-20261120").
+
+ETKİ: pct_v3 hattı sabahki v2 durumundan (sha1 d339bbb2, dogrulama.txt:31) üretildi — hat geçeri.
+Ancak v2 tabani artik 84 paragraflik adaydir; "pct_v2 dokunulmaz" onermesi 20:09:59 itibariyla gecerli degil.
+KARAR KULLANICIDA: (a) yeni v2 tabani kabul → envanter/künye yenileme; (b) sabahki durusa donus → paralel oturumun
+kabulünü geri almak gerekir (cakisma). Bu turda HICBIRI yapilmadi; dosyalar oldugu gibi birakildi.
+
+KARAR SONRASI EK (ayni oturum, 20 Kas aksam): Kullanici (a) secimini yapti — yeni v2 tabani KABUL.
+Yapilan: (1) yeni ham kunye dogrulama_v2kabul_2026-11-20.txt; (2) defter guncellemeleri
+KURULUM_PLAN.md (3. bolum girdi notu), DEGISIKLIK_KAYDI_SEKIL.md (4. bolum),
+DEGISIKLIK_KAYDI_TARIFNAME.md (1. bolum karsilastirma notu), MOTOR_KARSI_KARSTIRMA.md (son not);
+(3) olcum_kayitlari.txt ek blogu; (4) DEVIR.md pct_v3 girdisi guncellendi. Atif kapisi guncelleme
+sonrasi yesil: dogru 82 / kaynakta yok 0 / kaynaksiz 0 / olu adres 0 (exit 0). 5 no'lu madde
+artik "kabul edilmis degisiklik" olarak kapali; sabahki kunye tarihsel kanit olarak durur.

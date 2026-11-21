@@ -1,0 +1,14 @@
+{
+  "tool": "Z_durum_epo_api",
+  "kayit_zamani": "2026-11-19T23:22:21.243Z",
+  "result": {
+    "ready": false,
+    "credentials_configured": false,
+    "xmltodict_available": true,
+    "api_url": "https://ops.epo.org/3.2/rest-services",
+    "message": "EPO OPS credentials not configured",
+    "error": "Set EPO_OPS_KEY and EPO_OPS_SECRET environment variables.\nRegister at: https://developers.epo.org/",
+    "response_time_ms": null,
+    "setup_url": "https://developers.epo.org/"
+  }
+}

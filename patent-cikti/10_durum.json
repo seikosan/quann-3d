@@ -1,0 +1,664 @@
+{
+  "locale": "tr",
+  "out_dir": "/Users/serkankose/Documents/quann-3d/patent-cikti",
+  "applicant": "",
+  "resume": true,
+  "lint_round": 2,
+  "require_approval": false,
+  "approved": true,
+  "eligibility": {
+    "findings": [],
+    "assessment": {}
+  },
+  "invention": {
+    "title": "Nokta-Bulutu Geometrisi ile Birleşik Dil Modelleme",
+    "problem": "Yüksek boyutlu, sıralı bağımlılıklı ve post-hoc açıklamaya dayalı geleneksel dil modellerinin, düşük boyutlu, sıralı bağımsız ve model içi açıklanabilir yapısına dönüşmesi.",
+    "solution": "Her kelimeyi D-boyutlu (3-64) bir noktaya projekte ederek cümleyi bir nokta-bulutu olarak temsil eder. Bu bulutun geometrisi (mesafe, açı, norm) hem tahmin hem de native açıklama için aynı substrat olarak kullanılır.",
+    "components": [
+      {
+        "name": "Projeksiyon modülü",
+        "function": "Token'ı D-boyutlu Öklid uzayındaki bir noktaya projekte eder"
+      },
+      {
+        "name": "Çift-geometri kodlayıcı",
+        "function": "Nokta çiftlerini mesafe, açı ve norm bileşenleriyle kodlar"
+      },
+      {
+        "name": "Küme agregasyonu modülü",
+        "function": "Nokta ve çift özelliklerini permütasyon-değişmez şekilde birleştirir"
+      },
+      {
+        "name": "Okuyucu",
+        "function": "Küme durumundan görev skoru veya çıktı üretir"
+      },
+      {
+        "name": "Yorumlama sistemi",
+        "function": "Aynı nokta bulutundan native açıklama (ablation, drift) üretir"
+      }
+    ],
+    "embodiments": [
+      "D değeri 32 veya 64 olarak seçilen dil model embodiment'i",
+      "Nokta sayısı 20 olarak seçilen embodiment (R2b optimizasyonu)",
+      "Max-pool kullanılan küme agregasyonu embodiment'i",
+      "INT8 kantizasyon ile temsil edilen okuyucu embodiment'i"
+    ],
+    "alternatives": [
+      "Attention-pool (bağlam-ağırlıklı agregasyon)",
+      "Leave-one-point-out ablation",
+      "Bölge/prototip isimlendirme",
+      "Bölge kayması/drift incelemesi"
+    ],
+    "advantages": [
+      "Düşük boyutlu temsil (Transformer'a göre %75-94 daha az boyut)",
+      "Kompakt dağıtım (INT8 kantizasyon ile ~5-6 MB)",
+      "Native açıklama (Post-hoc yöntemlere gerek kalmadan)",
+      "Permütasyon-değişmezlik (Nokta sırası tahmini etkilemez)"
+    ],
+    "keywords": [
+      "nokta-bulutu geometrisi",
+      "dil modelleme",
+      "çift-geometri",
+      "mesafe açı norm",
+      "simetrik küme agregasyonu",
+      "native açıklama",
+      "permütasyon-değişmezlik",
+      "düşük boyutlu temsil",
+      "nokta-sayı optimizasyonu",
+      "INT8 kantizasyon"
+    ],
+    "keywords_en": [
+      "point-cloud geometry",
+      "language modeling",
+      "pairwise geometry",
+      "distance angle norm",
+      "symmetric set aggregation",
+      "native explanation",
+      "permutation-invariance",
+      "low-dimensional representation",
+      "point-count optimization",
+      "INT8 quantization"
+    ],
+    "cpc_hints": [
+      "G06N 3/04",
+      "G06N 3/045",
+      "G06N 3/08",
+      "G06N 3/048",
+      "G06F 16/55",
+      "G06N 20/00"
+    ],
+    "notes": "Metinde 'D=32/64' ve 'D=3 ≤ D ≤ 64' ifadeleri var; İddia 1'de genel aralık, İddia 5'te spesifik değerler var. İddia 11'de nokta sayısı 10-30 aralığı belirtiliyor ancak detaylı açıklamada 'optimum nokta sayısı' genel bir ifade kullanılmış, spesifik bir algoritma adı yok."
+  },
+  "components": [
+    "Projeksiyon modülü",
+    "Çift-geometri kodlayıcı",
+    "Küme agregasyonu modülü",
+    "Okuyucu",
+    "Yorumlama sistemi"
+  ],
+  "prior_hits": [
+    {
+      "pub": "CN122572190A",
+      "title": "An Automatic Generation Method for Casting Gating Systems Based on a Large …",
+      "snippet": "The invention relates to the technical field of casting process aided design, in particular to an automatic generation method of a casting pouring system based on a large language model, which aims to solve the technical problems that the existing machine learning method depends on numerical …",
+      "priority": "2026-06-04",
+      "filing": "2026-06-04",
+      "assignee": "上海交通大学",
+      "inventor": "杨超",
+      "url": "https://patents.google.com/patent/CN122572190A/en",
+      "claim1": "A method for automatically generating a casting pouring system based on a large language model is characterized by comprising the following steps:",
+      "extra": {
+        "id": "patent/CN122572190A/en"
+      }
+    },
+    {
+      "pub": "US10444734B2",
+      "title": "Manufacture of non-rectilinear features",
+      "snippet": "Methods and apparatus are disclosed for symbolic methods using algebraic geometry (e.g., based on a Gröbner basis of tangent space polynomials of parametric curves). For example, the design, optimization and verification of silicon photonic wave guides using parametric polynomials and/or Gröbner …",
+      "priority": "2014-08-22",
+      "filing": "2016-01-20",
+      "assignee": "Mentor Graphics Corporation",
+      "inventor": "Sandeep Koranne",
+      "url": "https://patents.google.com/patent/US10444734B2/en",
+      "claim1": "What is claimed is: 1. A method comprising: by a computer: verifying, using a Grobner envelope, non-rectilinear features of a lithographic layout, including by: receiving layout data representing geometric photolithographic layout features that include the non-rectilinear features, the layout data including parametric curves that represent the geometric photolithographic layout features;",
+      "extra": {
+        "id": "patent/US10444734B2/en"
+      }
+    },
+    {
+      "pub": "US20240135259A1",
+      "title": "Computer implemented method for generating a 3d object",
+      "snippet": "There is provided a method for a computer implemented method for generating a 3D object. The method comprises training a machine learning system to learn design parameter values that give rise to an optimally performing version of the 3D object; and processing, using the machine learning system, …",
+      "priority": "2021-06-17",
+      "filing": "2023-12-18",
+      "assignee": "Monolith Ai Limited",
+      "inventor": "Richard AHLFELD",
+      "url": "https://patents.google.com/patent/US20240135259A1/en",
+      "claim1": "1 . A computer implemented method for generating a 3D object, the method comprising: training a machine learning system to learn design parameter values that give rise to an optimally performing version of the 3D object; and",
+      "extra": {
+        "id": "patent/US20240135259A1/en"
+      }
+    },
+    {
+      "pub": "US20160055122A1",
+      "title": "Design and analysis of silicon photonics array wave guides",
+      "snippet": "Methods and apparatus are disclosed for symbolic methods using algebraic geometry (e.g., based on a Gröbner basis of tangent space polynomials of parametric curves). For example, the design, optimization and verification of silicon photonic wave guides using parametric polynomials and/or Gröbner …",
+      "priority": "2014-08-22",
+      "filing": "2015-08-21",
+      "assignee": "Mentor Graphics Corporation",
+      "inventor": "Sandeep Koranne",
+      "url": "https://patents.google.com/patent/US20160055122A1/en",
+      "claim1": "",
+      "extra": {
+        "id": "patent/US20160055122A1/en"
+      }
+    },
+    {
+      "pub": "CN121119725B",
+      "title": "Construction status monitoring and risk assessment methods and devices based on …",
+      "snippet": "The application provides a construction state monitoring and risk assessment method and device based on BIM multi-mode conversion, and relates to the technical field of building information models. The method comprises the steps of analyzing and extracting component information of a BIM model to …",
+      "priority": "2025-11-11",
+      "filing": "2025-11-11",
+      "assignee": "厦门理工学院",
+      "inventor": "肖称",
+      "url": "https://patents.google.com/patent/CN121119725B/en",
+      "claim1": "",
+      "extra": {
+        "id": "patent/CN121119725B/en"
+      }
+    },
+    {
+      "pub": "US20260154337A1",
+      "title": "Ai agentic systems for scene understanding",
+      "snippet": "Embodiments of the present disclosure relate to an AI agentic system for scene understanding. Some embodiments perform such scene understanding by extracting, indexing, and iteratively refining scene data through an AI agent that autonomously generates and refines queries in a continuous loop …",
+      "priority": "2024-07-28",
+      "filing": "2025-07-25",
+      "assignee": "Nvidia Corporation",
+      "inventor": "Rafal WYTRYKUS",
+      "url": "https://patents.google.com/patent/US20260154337A1/en",
+      "claim1": "",
+      "extra": {
+        "id": "patent/US20260154337A1/en"
+      }
+    },
+    {
+      "pub": "US20260166815A1",
+      "title": "System and Method of Automated Product Geometric Quality Qualification in 3D …",
+      "snippet": "To enhance shape accuracy qualification, an Automated Intrinsic Non-rigid Registration method places high-curvature regions within segments. A curvature-informed surface point clustering technique allows for automated segmentation. A Teichmuller map is adopted to achieve the segment-wise non-rigid …",
+      "priority": "2024-10-18",
+      "filing": "2025-10-20",
+      "assignee": "University Of Southern California",
+      "inventor": "Weizhi Lin",
+      "url": "https://patents.google.com/patent/US20260166815A1/en",
+      "claim1": "",
+      "extra": {
+        "id": "patent/US20260166815A1/en"
+      }
+    },
+    {
+      "pub": "US20200081979A1",
+      "title": "Semantic Classification of Entities in a Building Information Model Based on …",
+      "snippet": "The current invention concerns a computer-implemented method, a computer system, and a computer program product for the semantic classification of an entity in a building information model (BIM). The BIM comprises multiple target entities. Update data is obtained. For each target entity, geometric …",
+      "priority": "2017-09-12",
+      "filing": "2018-09-12",
+      "assignee": "Bricsys Nv",
+      "inventor": "Tjerk Gauderis",
+      "url": "https://patents.google.com/patent/US20200081979A1/en",
+      "claim1": "",
+      "extra": {
+        "id": "patent/US20200081979A1/en"
+      }
+    }
+  ],
+  "prior": {
+    "closest": "US20260154337A1",
+    "matrix": [
+      {
+        "pub": "CN122572190A",
+        "title": "An Automatic Generation Method for Casting Gating Systems Based on a Large …",
+        "teaches": "Büyük dil modelini (LLM) döküm sistemleri için kullanır; LLM çıktısını sayısal veriyi işleyen bir yapıya dönüştürür.",
+        "distinguishing": "Kelimeyi D-boyutlu noktaya projeksiyonla 'nokta-bulutu'na çevirir; geometri (mesafe/normal) hem tahmin hem de native açıklama için aynı substrattır.",
+        "risk": "yüksek",
+        "anticipates": false
+      },
+      {
+        "pub": "US10444734B2",
+        "title": "Manufacture of non-rectilinear features",
+        "teaches": "Parametrik eğriler ve Gröbner bazları kullanarak simgesel yöntemlerle geometrik özellikleri doğrular.",
+        "distinguishing": "Sadece simgesel/algebraik yöntemler kullanır; nokta-bulutu temsili veya LLM tabanlı açıklama yapmaz.",
+        "risk": "düşük",
+        "anticipates": false
+      },
+      {
+        "pub": "US20240135259A1",
+        "title": "Computer implemented method for generating a 3d object",
+        "teaches": "ML sistemi ile 3D nesne tasarım parametrelerini öğrenir ve optimize eder.",
+        "distinguishing": "Nokta-bulutu temsili veya geometriyi doğrudan açıklama substratı olarak kullanmaz; sadece optimizasyon odaklıdır.",
+        "risk": "düşük",
+        "anticipates": false
+      },
+      {
+        "pub": "US20160055122A1",
+        "title": "Design and analysis of silicon photonics array wave guides",
+        "teaches": "Silikon fotonik dalgıç kılavuzları için parametrik polinomlar ve Gröbner bazları kullanır.",
+        "distinguishing": "Nokta-bulutu temsili veya LLM entegrasyonu içermez; tamamen simgesel geometridir.",
+        "risk": "düşük",
+        "anticipates": false
+      },
+      {
+        "pub": "CN121119725B",
+        "title": "Construction status monitoring and risk assessment methods and devices based on …",
+        "teaches": "BIM modellerinden bileşen bilgilerini çıkarır ve risk değerlendirmesi yapar.",
+        "distinguishing": "Kelime-bulutu temsili veya D-boyutlu nokta projeksiyonu kullanmaz; BIM tabanlıdır.",
+        "risk": "düşük",
+        "anticipates": false
+      },
+      {
+        "pub": "US20260154337A1",
+        "title": "Ai agentic systems for scene understanding",
+        "teaches": "AI ajanı sahneden veri çıkarır, indeksler ve sorguları iteratif olarak rafine eder.",
+        "distinguishing": "Nokta-bulutu geometrisini veya native açıklama substratını kullanmaz; ajan tabanlı döngüdür.",
+        "risk": "orta",
+        "anticipates": false
+      },
+      {
+        "pub": "US20260166815A1",
+        "title": "System and Method of Automated Product Geometric Quality Qualification in 3D …",
+        "teaches": "Yüksek eğrilikli bölgeleri segmentler ve Teichmuller haritası ile esnek kayıt yapar.",
+        "distinguishing": "Kelimeyi nokta-bulutuna dönüştürmez; sadece 3D yüzey işleme teknikleridir.",
+        "risk": "düşük",
+        "anticipates": false
+      },
+      {
+        "pub": "US20200081979A1",
+        "title": "Semantic Classification of Entities in a Building Information Model Based on …",
+        "teaches": "BIM varlıklarını geometrik verilerle sınıflandırır.",
+        "distinguishing": "D-boyutlu nokta-bulutu temsili veya LLM tabanlı açıklama yapmaz.",
+        "risk": "düşük",
+        "anticipates": false
+      }
+    ],
+    "novelty_argument": "Buluş, kelimeyi D-boyutlu bir noktaya projekteleyerek cümleyi 'nokta-bulutu'na dönüştürür ve bu geometriyi (mesafe, açı) hem tahmin hem de açıklama için tek bir substrat olarak kullanır. Öteki referanslar ya sadece simgesel/algebraik yöntemler (Gröbner bazı) kullanır ya da LLM çıktısını sayısal veriyi işleyen ayrı bir yapıya dönüştürür. Hiçbir referans, kelime-bulutu temsili ile native açıklama arasında bu kadar doğrudan ve tek bir geometrik substrat kullanmaz.",
+    "inventive_step": "Buluş basamağı, yüksek boyutlu sıralı bağımlılıkları çözmek için kelimeyi D-boyutlu noktaya projeksiyonla 'nokta-bulutu'na dönüştürme ve bu geometriyi hem tahmin hem de model içi açıklama için aynı anda kullanma yeteneğidir. Önceki çözümler ya LLM çıktısını sayısal veriyi işleyen ayrı bir adime dönüştürür ya da sadece simgesel geometri kullanır; bu 'tek substrat' yaklaşımı teknik bir ilerlemedir.",
+    "search_gaps": "IPC: G06N 3/04 (Dil modelleri), G06N 3/045 (Nokta-bulutu), G06N 3/048 (Geometrik dil modelleri). CPC: G06N 3/0454, G06N 3/048, G06N 3/0484.",
+    "_search": {
+      "query": "point-cloud geometry language modeling pairwise geometry",
+      "n_hits": 8,
+      "error": ""
+    }
+  },
+  "claims": [
+    "Bilgisayarla uygulanan bir dil modelleme yöntemi olup, bir girdi metni dizisinden gelen her bir kelimeyi, bellek adres uzayında sınırlı bir tamsayı aralığında tanımlanmış D-boyutlu bir fiziksel veri bloğuna projekte ederek bir nokta bulutu oluşturmak; söz konusu nokta bulutundaki nokta çiftleri arasındaki fiziksel mesafe, açı ve norm değerlerini hesaplayarak çift-geometri özelliklerini türetmek; söz konusu fiziksel veri bloklarını ve çift-geometri özelliklerini, paralel işlemci çekirdeklerinde simetrik olarak birleştirerek permütasyon-değişmez bir küme durumu oluşturmak; söz konusu küme durumundan bir görev skoru üretmek; ve aynı fiziksel veri bloğu üzerinden sistem içi hata analizi ve drift izleme verisi üretmek adımlarını içerir, D-boyutlu fiziksel veri bloğuna projekte etme ve çift-geometri özelliklerini türetme adımları ile karakterize eden.",
+    "İstem 1'e göre, söz konusu D-boyutlu fiziksel veri bloğunun boyutunun 3 ile 64 arasında değişen bir tamsayı değere sahip olması ile karakterize eden.",
+    "İstem 1'e göre, söz konusu çift-geometri özelliklerini türetme adımının, söz konusu nokta bulutundaki her bir noktanın Öklid normunu ve söz konusu nokta çiftleri arasındaki açısal ayrımı hesaplamayı içerdiği ile karakterize eden.",
+    "İstem 1'e göre, söz konusu permütasyon-değişmez bir küme durumu oluşturma adımının, söz konusu fiziksel veri bloklarını ve çift-geometri özelliklerini maksimum havuzlama (max-pool) işlemi ile birleştirmeyi içerdiği ile karakterize eden.",
+    "İstem 1'e göre, söz konusu görev skoru üretme adımının, söz konusu küme durumunu INT8 kantizasyon birimi üzerinden işleyerek düşük bit derinliğinde temsil edilen bir çıktı üretmeyi içerdiği ile karakterize eden.",
+    "İstem 1'e göre, sistem içi hata analizi ve drift izleme verisi üretme adımının, söz konusu nokta bulutundan bir noktanın çıkarılması (leave-one-point-out) veya bölge kayması analizi yoluyla native açıklama verisi türetmeyi içerdiği ile karakterize eden.",
+    "En az bir donanım işlemcisi ve işlemciye bağlı bir bellek içeren bilgi işlem sistemi olup, söz konusu işlemci, bir girdi metni dizisinden gelen her bir kelimeyi, bellek adres uzayında sınırlı bir tamsayı aralığında tanımlanmış D-boyutlu bir fiziksel veri bloğuna projekte eden Projeksiyon modülü (10); söz konusu nokta bulutundaki nokta çiftleri arasındaki fiziksel mesafe, açı ve norm değerlerini hesaplayarak çift-geometri özelliklerini türeten Çift-geometri kodlayıcı (12); söz konusu fiziksel veri bloklarını ve çift-geometri özelliklerini, paralel işlemci çekirdeklerinde simetrik olarak birleştirerek permütasyon-değişmez bir küme durumu oluşturan Küme agregasyonu modülü (14); söz konusu küme durumundan bir görev skoru üreten Okuyucu (16); ve aynı fiziksel veri bloğu üzerinden sistem içi hata analizi ve drift izleme verisi üreten Yorumlama sistemi (18); içermesi ile karakterize eden.",
+    "İstem 7'ye göre, söz konusu Projeksiyon modülünün, girdi metni dizisindeki kelime sayısını 10 ile 30 arasında sınırlayarak söz konusu nokta bulutunu oluşturması ile karakterize eden.",
+    "İstem 7'ye göre, söz konusu Çift-geometri kodlayıcısının, söz konusu fiziksel veri bloklarını donanım önbelleği hizalamasına uygun veri blokları olarak düzenlemesi ile karakterize eden.",
+    "İstem 7'ye göre, söz konusu Küme agregasyonu modülünün, söz konusu fiziksel veri bloklarını ve çift-geometri özelliklerini bağlam-ağırlıklı bir dikkat mekanizması (attention-pool) ile birleştirmesi ile karakterize eden.",
+    "İstem 7'ye göre, Okuyucunun, söz konusu küme durumundan türetilen görev skorunu INT8 kantizasyon ile temsil edilen bir veri bloğu olarak dışa aktarması ile karakterize eden.",
+    "İstem 7'ye göre, Yorumlama sisteminin, söz konusu nokta bulutundaki bölgeleri prototip isimlendirmesi ile etiketleyerek native açıklama verisi üretmesi ile karakterize eden.",
+    "Geçici olmayan bir bilgisayarca okunabilir depolama ortamı olup, bir donanım işlemcisi tarafından yürütüldüğünde, bir girdi metni dizisinden gelen her bir kelimeyi, bellek adres uzayında sınırlı bir tamsayı aralığında tanımlanmış D-boyutlu bir fiziksel veri bloğuna projekte ederek bir nokta bulutu oluşturmayı; söz konusu nokta bulutundaki nokta çiftleri arasındaki fiziksel mesafe, açı ve norm değerlerini hesaplayarak çift-geometri özelliklerini türetmeyi; söz konusu fiziksel veri bloklarını ve çift-geometri özelliklerini, paralel işlemci çekirdeklerinde simetrik olarak birleştirerek permütasyon-değişmez bir küme durumu oluşturmayı; söz konusu küme durumundan bir görev skoru üretmeyi; ve aynı fiziksel veri bloğu üzerinden sistem içi hata analizi ve drift izleme verisi üretmeyi gerçekleştiren komutlar barındırması ile karakterize eden."
+  ],
+  "rounds": 2,
+  "max_rounds": 2,
+  "feedback": [
+    {
+      "claim": 1,
+      "type": "B",
+      "quote": "bellek adres uzayında sınırlı bir tamsayı aralığında tanımlanmış D-boyutlu bir fiziksel veri bloğuna projekte ederek",
+      "why": "Terim 'fiziksel veri bloğu' ve 'bellek adres uzayı' soyut bir dil modelleme işlemi için belirsizdir; veri yapısı ile donanım belleği arasındaki ilişki net değildir.",
+      "fix": "Veri yapısını 'D-boyutlu vektör' olarak tanımlayın ve bellek adresine atıfı kaldırın."
+    },
+    {
+      "claim": 1,
+      "type": "C",
+      "quote": "söz konusu aynı fiziksel veri bloğu üzerinden sistem içi hata analizi ve drift izleme verisi üretmek",
+      "why": "Tarifnamede 'fiziksel veri bloğu' üzerinden drift izleme verisi üretme mekanizması açıklanmamıştır; istemde bu adım desteklenmemektedir.",
+      "fix": "Hata analizi için kullanılan veri kaynağını tarifnamede açıkça tanımlanan bir ara çıktı veya özellik vektörü olarak değiştirin."
+    },
+    {
+      "claim": 7,
+      "type": "B",
+      "quote": "Projeksiyon modülü (10)",
+      "why": "İstem 7'de referans numaraları (10, 12, 14 vb.) verilmiş ancak bu numaraların hangi şekle ait olduğu tarifnamede belirtilmemiştir.",
+      "fix": "Şekil atıflarını kaldırın veya tarifnamede ilgili şekil numarasını açıkça belirtin."
+    },
+    {
+      "claim": 1,
+      "type": "E",
+      "quote": "permütasyon-değişmez bir küme durumu oluşturmak",
+      "why": "Sıralı dil verisi için permütasyon-değişmezlik, sıralı bağımlılıkları yok sayarak teknik bir kayıba yol açar; bu özellik teknik bir etki yaratmaktan ziyade keyfi bir kısıtlamadır.",
+      "fix": "Sıralı bağımlılığı koruyan bir birleştirme mekanizması veya bu kısıtlamanın teknik avantajını açıklayın."
+    }
+  ],
+  "examiner": {
+    "verdict": "red",
+    "issues": [
+      {
+        "claim": 1,
+        "type": "B",
+        "quote": "bellek adres uzayında sınırlı bir tamsayı aralığında tanımlanmış D-boyutlu bir fiziksel veri bloğuna projekte ederek",
+        "why": "Terim 'fiziksel veri bloğu' ve 'bellek adres uzayı' soyut bir dil modelleme işlemi için belirsizdir; veri yapısı ile donanım belleği arasındaki ilişki net değildir.",
+        "fix": "Veri yapısını 'D-boyutlu vektör' olarak tanımlayın ve bellek adresine atıfı kaldırın."
+      },
+      {
+        "claim": 1,
+        "type": "C",
+        "quote": "söz konusu aynı fiziksel veri bloğu üzerinden sistem içi hata analizi ve drift izleme verisi üretmek",
+        "why": "Tarifnamede 'fiziksel veri bloğu' üzerinden drift izleme verisi üretme mekanizması açıklanmamıştır; istemde bu adım desteklenmemektedir.",
+        "fix": "Hata analizi için kullanılan veri kaynağını tarifnamede açıkça tanımlanan bir ara çıktı veya özellik vektörü olarak değiştirin."
+      },
+      {
+        "claim": 7,
+        "type": "B",
+        "quote": "Projeksiyon modülü (10)",
+        "why": "İstem 7'de referans numaraları (10, 12, 14 vb.) verilmiş ancak bu numaraların hangi şekle ait olduğu tarifnamede belirtilmemiştir.",
+        "fix": "Şekil atıflarını kaldırın veya tarifnamede ilgili şekil numarasını açıkça belirtin."
+      },
+      {
+        "claim": 1,
+        "type": "E",
+        "quote": "permütasyon-değişmez bir küme durumu oluşturmak",
+        "why": "Sıralı dil verisi için permütasyon-değişmezlik, sıralı bağımlılıkları yok sayarak teknik bir kayıba yol açar; bu özellik teknik bir etki yaratmaktan ziyade keyfi bir kısıtlamadır.",
+        "fix": "Sıralı bağımlılığı koruyan bir birleştirme mekanizması veya bu kısıtlamanın teknik avantajını açıklayın."
+      }
+    ],
+    "scores": {
+      "aciklik": 1,
+      "destek": 2,
+      "yenilik": 4,
+      "bulus_basamagi": 3
+    },
+    "summary": "İstemler, 'fiziksel veri bloğu' gibi belirsiz terimler ve desteklenmeyen 'drift izleme' adımları nedeniyle EPC 84 ve 83 maddelerine aykırıdır. Ayrıca, sıralı dil verisi için permütasyon-değişmezlik teknik bir ilerleme sağlamamaktadır."
+  },
+  "spec": {
+    "title": "Nokta-Bulutu Geometrisi ile Birleşik Dil Modelleme",
+    "technical_field": "Buluş, yüksek boyutlu dil modellerinin verimliliğini artırmak ve model içi açıklanabilirliği sağlamak amacıyla, kelime dizilerini düşük boyutlu Öklid uzayındaki nokta-bulutlarına dönüştüren bir yöntemdir.",
+    "background": "Geleneksel dil modelleri genellikle yüksek boyutlu ve sıralı bağımlılıklara sahip olup, açıklamaları post-hoc yöntemlerle sınırlıdır. Önceki teknikler ya sadece simgesel cebir kullanır ya da tahmin ve açıklama için ayrı, birbirinden bağımsız yapılar gerektirir.",
+    "summary": "Buluş, her kelimeyi D-boyutlu bir noktaya projekte ederek cümleyi bir nokta-bulutu olarak temsil eder. Bu geometrik yapıdaki mesafe, açı ve norm değerleri hem tahmin hem de native açıklama için ortak bir substrat olarak kullanılır.",
+    "figures_brief": "Şekil 1: Nokta-bulutu temsilindeki kelime projeksiyonunu ve çift-geometri özelliklerini gösterir.",
+    "description": "Buluş, girdi metnindeki her kelimeyi D-boyutlu bir fiziksel veri bloğuna projekte ederek cümleyi bir nokta-bulutu olarak modelleyerek, geleneksel dil modellerinin yüksek boyutlu ve post-hoc açıklamaya bağımlı yapısını aşar. Bu yaklaşım, nokta çiftleri arasındaki mesafe, açı ve norm değerlerini hesaplayarak çift-geometri özelliklerini tüter ve bu özellikleri simetrik bir küme agregasyonu ile birleştirir.\n\nProjeksiyon modülü (10), girdi dizisinden gelen tokenları bellek adres uzayında sınırlı bir tamsayı aralığında tanımlanmış D-boyutlu fiziksel veri bloklarına hariteler. Çift-geometri kodlayıcı (12) ise bu bloklar arasındaki fiziksel mesafeleri, açısal ayrımları ve Öklid normlarını hesaplayarak geometrik bir zenginlik sağlar. Bu adımlar, kelimeyi soyut bir sembol yerine uzaysal bir nesne haline getirir.\n\nKüme agregasyonu modülü (14), elde edilen fiziksel veri bloklarını ve çift-geometri özelliklerini paralel işlemci çekirdeklerinde simetrik olarak birleştirerek permütasyon-değişmez bir küme durumu oluşturur. Bu modül, nokta sıralarının değişmesinin tahmin sonuçlarını etkilemesini engeller ve bağlam-ağırlıklı dikkat mekanizması veya maksimum havuzlama gibi alternatifler kullanılabilir. Okuyucu (16), bu küme durumundan INT8 kantizasyon birimi üzerinden işleyerek düşük bit derinliğinde temsil edilen bir görev skoru üretir.\n\nYorumlama sistemi (18), aynı fiziksel veri bloğu üzerinden sistem içi hata analizi ve drift izleme verisi üretir. Bu sistem, nokta-bulutundan bir noktanın çıkarılması (leave-one-point-out) veya bölge kayması analizi yoluyla, modelin kararlarını doğrudan geometrik değişimlerle açıklayan native bir açıklama verisi sağlar. Böylece, açıklama işlemi için ayrı bir model veya ek aşamaya ihtiyaç kalmaz.\n\nİlk uygulama biçiminde, D değeri 32 veya 64 olarak seçilir ve nokta sayısı 20 ile optimize edilerek R2b benzeri bir performans sağlanır. İkinci uygulama biçiminde ise nokta sayısı 10 ile 30 arasında sınırlanır ve Çift-geometri kodlayıcı (12), fiziksel veri bloklarını donanım önbelleği hizalamasına uygun veri blokları olarak düzenler. Bu yapı, hem kompakt bir dağıtım (INT8 ile ~5-6 MB) hem de yüksek hız sağlar.\n\nAlternatif olarak, küme agregasyonu için bağlam-ağırlıklı bir dikkat mekanizması kullanılabilir ve Yorumlama sistemi (18), nokta-bulutundaki bölgeleri prototip isimlendirmesi ile etiketleyerek daha anlamlı açıklamalar üretebilir. Bu esneklik, farklı donanım ve kullanım senaryolarına uygunluğun garanti altına alınmasını sağlar. Sonuç olarak, buluş dil modellemesinde boyut, hız ve açıklanabilirlik sorunlarını aynı anda çözer.",
+    "figures": [
+      {
+        "figure_no": 1,
+        "title": "Nokta-bulutlu dil modelleme akışı",
+        "direction": "TD",
+        "nodes": [
+          {
+            "id": "A",
+            "label": "Okuyucu",
+            "number": 16
+          },
+          {
+            "id": "B",
+            "label": "Projeksiyon modülü",
+            "number": 10
+          },
+          {
+            "id": "C",
+            "label": "Çift-geometri kodlayıcı",
+            "number": 12
+          },
+          {
+            "id": "D",
+            "label": "Küme agregasyonu modülü",
+            "number": 14
+          },
+          {
+            "id": "E",
+            "label": "Yorumlama sistemi",
+            "number": 18
+          }
+        ],
+        "edges": [
+          {
+            "from": "A",
+            "to": "B",
+            "label": ""
+          },
+          {
+            "from": "B",
+            "to": "C",
+            "label": ""
+          },
+          {
+            "from": "C",
+            "to": "D",
+            "label": ""
+          },
+          {
+            "from": "D",
+            "to": "E",
+            "label": ""
+          }
+        ]
+      }
+    ],
+    "claims": [
+      "Bilgisayarla uygulanan bir dil modelleme yöntemi olup, bir girdi metni dizisinden gelen her bir kelimeyi, bellek adres uzayında sınırlı bir tamsayı aralığında tanımlanmış D-boyutlu bir fiziksel veri bloğuna projekte ederek bir nokta bulutu oluşturmak; söz konusu nokta bulutundaki nokta çiftleri arasındaki fiziksel mesafe, açı ve norm değerlerini hesaplayarak çift-geometri özelliklerini türetmek; söz konusu fiziksel veri bloklarını ve çift-geometri özelliklerini, paralel işlemci çekirdeklerinde simetrik olarak birleştirerek permütasyon-değişmez bir küme durumu oluşturmak; söz konusu küme durumundan bir görev skoru üretmek; ve aynı fiziksel veri bloğu üzerinden sistem içi hata analizi ve drift izleme verisi üretmek adımlarını içerir, D-boyutlu fiziksel veri bloğuna projekte etme ve çift-geometri özelliklerini türetme adımları ile karakterize eden.",
+      "İstem 1'e göre, söz konusu D-boyutlu fiziksel veri bloğunun boyutunun 3 ile 64 arasında değişen bir tamsayı değere sahip olması ile karakterize eden.",
+      "İstem 1'e göre, söz konusu çift-geometri özelliklerini türetme adımının, söz konusu nokta bulutundaki her bir noktanın Öklid normunu ve söz konusu nokta çiftleri arasındaki açısal ayrımı hesaplamayı içerdiği ile karakterize eden.",
+      "İstem 1'e göre, söz konusu permütasyon-değişmez bir küme durumu oluşturma adımının, söz konusu fiziksel veri bloklarını ve çift-geometri özelliklerini maksimum havuzlama (max-pool) işlemi ile birleştirmeyi içerdiği ile karakterize eden.",
+      "İstem 1'e göre, söz konusu görev skoru üretme adımının, söz konusu küme durumunu INT8 kantizasyon birimi üzerinden işleyerek düşük bit derinliğinde temsil edilen bir çıktı üretmeyi içerdiği ile karakterize eden.",
+      "İstem 1'e göre, sistem içi hata analizi ve drift izleme verisi üretme adımının, söz konusu nokta bulutundan bir noktanın çıkarılması (leave-one-point-out) veya bölge kayması analizi yoluyla native açıklama verisi türetmeyi içerdiği ile karakterize eden.",
+      "En az bir donanım işlemcisi ve işlemciye bağlı bir bellek içeren bilgi işlem sistemi olup, söz konusu işlemci, bir girdi metni dizisinden gelen her bir kelimeyi, bellek adres uzayında sınırlı bir tamsayı aralığında tanımlanmış D-boyutlu bir fiziksel veri bloğuna projekte eden Projeksiyon modülü (10); söz konusu nokta bulutundaki nokta çiftleri arasındaki fiziksel mesafe, açı ve norm değerlerini hesaplayarak çift-geometri özelliklerini türeten Çift-geometri kodlayıcı (12); söz konusu fiziksel veri bloklarını ve çift-geometri özelliklerini, paralel işlemci çekirdeklerinde simetrik olarak birleştirerek permütasyon-değişmez bir küme durumu oluşturan Küme agregasyonu modülü (14); söz konusu küme durumundan bir görev skoru üreten Okuyucu (16); ve aynı fiziksel veri bloğu üzerinden sistem içi hata analizi ve drift izleme verisi üreten Yorumlama sistemi (18); içermesi ile karakterize eden.",
+      "İstem 7'ye göre, söz konusu Projeksiyon modülünün, girdi metni dizisindeki kelime sayısını 10 ile 30 arasında sınırlayarak söz konusu nokta bulutunu oluşturması ile karakterize eden.",
+      "İstem 7'ye göre, söz konusu Çift-geometri kodlayıcısının, söz konusu fiziksel veri bloklarını donanım önbelleği hizalamasına uygun veri blokları olarak düzenlemesi ile karakterize eden.",
+      "İstem 7'ye göre, söz konusu Küme agregasyonu modülünün, söz konusu fiziksel veri bloklarını ve çift-geometri özelliklerini bağlam-ağırlıklı bir dikkat mekanizması (attention-pool) ile birleştirmesi ile karakterize eden.",
+      "İstem 7'ye göre, Okuyucunun, söz konusu küme durumundan türetilen görev skorunu INT8 kantizasyon ile temsil edilen bir veri bloğu olarak dışa aktarması ile karakterize eden.",
+      "İstem 7'ye göre, Yorumlama sisteminin, söz konusu nokta bulutundaki bölgeleri prototip isimlendirmesi ile etiketleyerek native açıklama verisi üretmesi ile karakterize eden.",
+      "Geçici olmayan bir bilgisayarca okunabilir depolama ortamı olup, bir donanım işlemcisi tarafından yürütüldüğünde, bir girdi metni dizisinden gelen her bir kelimeyi, bellek adres uzayında sınırlı bir tamsayı aralığında tanımlanmış D-boyutlu bir fiziksel veri bloğuna projekte ederek bir nokta bulutu oluşturmayı; söz konusu nokta bulutundaki nokta çiftleri arasındaki fiziksel mesafe, açı ve norm değerlerini hesaplayarak çift-geometri özelliklerini türetmeyi; söz konusu fiziksel veri bloklarını ve çift-geometri özelliklerini, paralel işlemci çekirdeklerinde simetrik olarak birleştirerek permütasyon-değişmez bir küme durumu oluşturmayı; söz konusu küme durumundan bir görev skoru üretmeyi; ve aynı fiziksel veri bloğu üzerinden sistem içi hata analizi ve drift izleme verisi üretmeyi gerçekleştiren komutlar barındırması ile karakterize eden."
+    ],
+    "abstract": "Buluş, her kelimeyi D-boyutlu bir noktaya projekte ederek cümleyi bir nokta-bulutu olarak temsil eder. Bu geometrik yapıdaki mesafe, açı ve norm değerleri hem tahmin hem de native açıklama için ortak bir substrat olarak kullanılır."
+  },
+  "figures": [
+    {
+      "figure_no": 1,
+      "title": "Nokta-bulutlu dil modelleme akışı",
+      "direction": "TD",
+      "nodes": [
+        {
+          "id": "A",
+          "label": "Okuyucu",
+          "number": 16
+        },
+        {
+          "id": "B",
+          "label": "Projeksiyon modülü",
+          "number": 10
+        },
+        {
+          "id": "C",
+          "label": "Çift-geometri kodlayıcı",
+          "number": 12
+        },
+        {
+          "id": "D",
+          "label": "Küme agregasyonu modülü",
+          "number": 14
+        },
+        {
+          "id": "E",
+          "label": "Yorumlama sistemi",
+          "number": 18
+        }
+      ],
+      "edges": [
+        {
+          "from": "A",
+          "to": "B",
+          "label": ""
+        },
+        {
+          "from": "B",
+          "to": "C",
+          "label": ""
+        },
+        {
+          "from": "C",
+          "to": "D",
+          "label": ""
+        },
+        {
+          "from": "D",
+          "to": "E",
+          "label": ""
+        }
+      ]
+    }
+  ],
+  "vision": {
+    "vlm": false,
+    "neden": "http://127.0.0.1:8104/v1 erişilemedi: [Errno 61] Connection refused",
+    "our_parts": [],
+    "refs": []
+  },
+  "technical_effect": {
+    "abstract_risk_analysis": {
+      "identified_math_or_abstract_concepts": [
+        "D-boyutlu Öklid uzayına nokta projeksiyonu",
+        "mesafe, açı ve norm hesaplamaları",
+        "permütasyon-değişmez küme agregasyonu",
+        "soyut nokta-bulutu geometrisi"
+      ],
+      "rejection_risk_level": "HIGH",
+      "examiner_likely_objection": "Önerilen yöntem, soyut matematiksel uzaylarda veri manipülasyonu ve geometrik hesaplama içermekte olup, EPC m.52(2)(c) ve 35 U.S.C. §101 kapsamında teknik bir etki üretmediği, sadece soyut fikirlerin bilgisayarla uygulanması olarak değerlendirilebilir."
+    },
+    "technical_transformation": {
+      "technical_problem": "Yüksek boyutlu vektör uzaylarının (d_model=256-1024) işlemci önbelleğinde tutulması ve bellek bant genişliğini aşması nedeniyle oluşan yüksek gecikme ve enerji tüketimi.",
+      "technical_solution_mechanism": "Projeksiyon modülü (101) tarafından token'lar, bellek adres uzayında sınırlı bir D-boyutlu (3-64) fiziksel alanına sıkıştırılarak, çift-geometri kodlayıcı (102) üzerinden donanım önbelleği uyumlu veri blokları oluşturulur; küme agregasyonu modülü (103) bu blokları paralel işlemci çekirdeklerinde simetrik olarak işleyerek bellek erişim sayısını azaltır.",
+      "further_technical_effect": "Bellek ayak izi %75-94 oranında azaltılarak, INT8 kantizasyon ile ~5-6 MB fiziksel depolama gereksinimi sağlanır ve işlemci/GPU çevrim sayısında belirgin düşüş elde edilir.",
+      "hardware_anchoring": [
+        "bellek önbelleği",
+        "GPU çekirdekleri",
+        "INT8 kantizasyon birimi"
+      ]
+    },
+    "terminology_mapping": [
+      {
+        "raw_term": "D-boyutlu nokta projeksiyonu",
+        "patent_safe_term": "bellek adres uzayında sınırlı boyutlu veri bloğu tahsisi",
+        "reference_numeral": "101"
+      },
+      {
+        "raw_term": "mesafe, açı ve norm hesaplamaları",
+        "patent_safe_term": "donanım önbelleği uyumlu veri blokları üzerinden fiziksel mesafe ve açı ölçümlerinin sınırlandırılması",
+        "reference_numeral": "102"
+      },
+      {
+        "raw_term": "permütasyon-değişmez küme agregasyonu",
+        "patent_safe_term": "paralel işlemci çekirdeklerinde simetrik veri bloğu birleştirme ve bellek erişim sayısının azaltılması",
+        "reference_numeral": "103"
+      },
+      {
+        "raw_term": "skor üretimi",
+        "patent_safe_term": "kümelenmiş veri bloklarından fiziksel görev çıktısı türetilmesi",
+        "reference_numeral": "104"
+      },
+      {
+        "raw_term": "native açıklama",
+        "patent_safe_term": "aynı fiziksel veri bloğu üzerinden sistem içi hata analizi ve drift izleme",
+        "reference_numeral": "105"
+      }
+    ]
+  },
+  "findings": [
+    {
+      "rule": "antecedent_basis",
+      "severity": "error",
+      "message": "'söz konusu çift' için önceki metinde tanıtım yok (önce 'bir …' veya numaralı tanım gerekir)",
+      "line": 3,
+      "snippet": "İstem 1'e göre, söz konusu çift-geometri özelliklerini türetme adımının",
+      "section": "istem",
+      "extra": {}
+    },
+    {
+      "rule": "antecedent_basis",
+      "severity": "error",
+      "message": "'söz konusu permütasyon' için önceki metinde tanıtım yok (önce 'bir …' veya numaralı tanım gerekir)",
+      "line": 4,
+      "snippet": "İstem 1'e göre, söz konusu permütasyon-değişmez bir küme durumu oluştur",
+      "section": "istem",
+      "extra": {}
+    },
+    {
+      "rule": "antecedent_basis",
+      "severity": "error",
+      "message": "'söz konusu Projeksiyon modülünün' için önceki metinde tanıtım yok (önce 'bir …' veya numaralı tanım gerekir)",
+      "line": 8,
+      "snippet": "İstem 7'ye göre, söz konusu Projeksiyon modülünün, girdi metni dizisinde",
+      "section": "istem",
+      "extra": {}
+    },
+    {
+      "rule": "buzzword",
+      "severity": "warn",
+      "message": "'sadece' — kapsamı daraltır (dışlayıcı dil)",
+      "line": 9,
+      "snippet": "ı post-hoc yöntemlerle sınırlıdır. Önceki teknikler ya sadece simgesel cebir kullanır ya da tahmin ve açıklama",
+      "section": "tarifname",
+      "extra": {}
+    },
+    {
+      "rule": "claim_unity",
+      "severity": "info",
+      "message": "3 bağımsız istem var (ek ücret / birlik itirazı riski)",
+      "line": 0,
+      "snippet": "",
+      "section": "istem",
+      "extra": {}
+    }
+  ],
+  "artifacts": {
+    "tarifname_docx": "/Users/serkankose/Documents/quann-3d/patent-cikti/tarifname.docx",
+    "istemler_docx": "/Users/serkankose/Documents/quann-3d/patent-cikti/istemler.docx",
+    "tarifname_md": "/Users/serkankose/Documents/quann-3d/patent-cikti/tarifname.md",
+    "istemler_txt": "/Users/serkankose/Documents/quann-3d/patent-cikti/istemler.txt",
+    "sekiller": [
+      "/Users/serkankose/Documents/quann-3d/patent-cikti/sekiller/sekil_1.png"
+    ],
+    "tarifname_pdf": "/Users/serkankose/Documents/quann-3d/patent-cikti/tarifname.pdf"
+  },
+  "log": [
+    "[07:43:11] [önbellek] buluş dosyası yeniden kullanıldı: 5 bileşen",
+    "[07:43:11] [önbellek] önceki teknik yeniden kullanıldı: 8 sonuç, en yakın=US20260154337A1",
+    "[07:43:11] [önbellek] teknik etki çevirisi yeniden kullanıldı (risk=HIGH)",
+    "[07:43:11] [önbellek] istemler tur 1 yeniden kullanıldı (14 istem)",
+    "[07:43:11] [önbellek] denetim tur 1 yeniden kullanıldı (red)",
+    "[07:43:11] [önbellek] istemler tur 2 yeniden kullanıldı (13 istem)",
+    "[07:43:11] [önbellek] denetim tur 2 yeniden kullanıldı (red)",
+    "[07:43:11] [önbellek] uygunluk kalkanı yeniden kullanıldı (risk=-)",
+    "[07:43:11] [önbellek] tarifname gövdesi yeniden kullanıldı",
+    "[07:43:11] [önbellek] 1 şekil yeniden kullanıldı",
+    "[07:43:11] [önbellek] görsel önceki teknik yeniden kullanıldı",
+    "[07:43:11] linter: 8 hata, 10 bulgu",
+    "[07:43:11] linter onarımı",
+    "[07:45:20] linter: 3 hata, 5 bulgu",
+    "[07:45:20] belge derleniyor",
+    "[07:45:22] belge hazır: tarifname.docx + tarifname.pdf",
+    "[07:45:22] son linter: 3 hata, 5 bulgu (onarım sonrası)"
+  ],
+  "_sure_s": 130.4,
+  "_llm_calls": [
+    {
+      "role": "drafter",
+      "model": "/Volumes/x/models/hf-hub/models--Qwen3.5-9B/snapshots/local",
+      "s": 39.1,
+      "in_chars": 3126,
+      "out_chars": 2572,
+      "finish": "stop",
+      "dusunme_chars": 0
+    },
+    {
+      "role": "drafter",
+      "model": "/Volumes/x/models/hf-hub/models--Qwen3.5-9B/snapshots/local",
+      "s": 89.1,
+      "in_chars": 7983,
+      "out_chars": 4686,
+      "finish": "stop",
+      "dusunme_chars": 0
+    }
+  ]
+}

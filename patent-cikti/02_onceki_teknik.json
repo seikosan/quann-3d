@@ -1,0 +1,77 @@
+{
+  "closest": "US20260154337A1",
+  "matrix": [
+    {
+      "pub": "CN122572190A",
+      "title": "An Automatic Generation Method for Casting Gating Systems Based on a Large …",
+      "teaches": "Büyük dil modelini (LLM) döküm sistemleri için kullanır; LLM çıktısını sayısal veriyi işleyen bir yapıya dönüştürür.",
+      "distinguishing": "Kelimeyi D-boyutlu noktaya projeksiyonla 'nokta-bulutu'na çevirir; geometri (mesafe/normal) hem tahmin hem de native açıklama için aynı substrattır.",
+      "risk": "yüksek",
+      "anticipates": false
+    },
+    {
+      "pub": "US10444734B2",
+      "title": "Manufacture of non-rectilinear features",
+      "teaches": "Parametrik eğriler ve Gröbner bazları kullanarak simgesel yöntemlerle geometrik özellikleri doğrular.",
+      "distinguishing": "Sadece simgesel/algebraik yöntemler kullanır; nokta-bulutu temsili veya LLM tabanlı açıklama yapmaz.",
+      "risk": "düşük",
+      "anticipates": false
+    },
+    {
+      "pub": "US20240135259A1",
+      "title": "Computer implemented method for generating a 3d object",
+      "teaches": "ML sistemi ile 3D nesne tasarım parametrelerini öğrenir ve optimize eder.",
+      "distinguishing": "Nokta-bulutu temsili veya geometriyi doğrudan açıklama substratı olarak kullanmaz; sadece optimizasyon odaklıdır.",
+      "risk": "düşük",
+      "anticipates": false
+    },
+    {
+      "pub": "US20160055122A1",
+      "title": "Design and analysis of silicon photonics array wave guides",
+      "teaches": "Silikon fotonik dalgıç kılavuzları için parametrik polinomlar ve Gröbner bazları kullanır.",
+      "distinguishing": "Nokta-bulutu temsili veya LLM entegrasyonu içermez; tamamen simgesel geometridir.",
+      "risk": "düşük",
+      "anticipates": false
+    },
+    {
+      "pub": "CN121119725B",
+      "title": "Construction status monitoring and risk assessment methods and devices based on …",
+      "teaches": "BIM modellerinden bileşen bilgilerini çıkarır ve risk değerlendirmesi yapar.",
+      "distinguishing": "Kelime-bulutu temsili veya D-boyutlu nokta projeksiyonu kullanmaz; BIM tabanlıdır.",
+      "risk": "düşük",
+      "anticipates": false
+    },
+    {
+      "pub": "US20260154337A1",
+      "title": "Ai agentic systems for scene understanding",
+      "teaches": "AI ajanı sahneden veri çıkarır, indeksler ve sorguları iteratif olarak rafine eder.",
+      "distinguishing": "Nokta-bulutu geometrisini veya native açıklama substratını kullanmaz; ajan tabanlı döngüdür.",
+      "risk": "orta",
+      "anticipates": false
+    },
+    {
+      "pub": "US20260166815A1",
+      "title": "System and Method of Automated Product Geometric Quality Qualification in 3D …",
+      "teaches": "Yüksek eğrilikli bölgeleri segmentler ve Teichmuller haritası ile esnek kayıt yapar.",
+      "distinguishing": "Kelimeyi nokta-bulutuna dönüştürmez; sadece 3D yüzey işleme teknikleridir.",
+      "risk": "düşük",
+      "anticipates": false
+    },
+    {
+      "pub": "US20200081979A1",
+      "title": "Semantic Classification of Entities in a Building Information Model Based on …",
+      "teaches": "BIM varlıklarını geometrik verilerle sınıflandırır.",
+      "distinguishing": "D-boyutlu nokta-bulutu temsili veya LLM tabanlı açıklama yapmaz.",
+      "risk": "düşük",
+      "anticipates": false
+    }
+  ],
+  "novelty_argument": "Buluş, kelimeyi D-boyutlu bir noktaya projekteleyerek cümleyi 'nokta-bulutu'na dönüştürür ve bu geometriyi (mesafe, açı) hem tahmin hem de açıklama için tek bir substrat olarak kullanır. Öteki referanslar ya sadece simgesel/algebraik yöntemler (Gröbner bazı) kullanır ya da LLM çıktısını sayısal veriyi işleyen ayrı bir yapıya dönüştürür. Hiçbir referans, kelime-bulutu temsili ile native açıklama arasında bu kadar doğrudan ve tek bir geometrik substrat kullanmaz.",
+  "inventive_step": "Buluş basamağı, yüksek boyutlu sıralı bağımlılıkları çözmek için kelimeyi D-boyutlu noktaya projeksiyonla 'nokta-bulutu'na dönüştürme ve bu geometriyi hem tahmin hem de model içi açıklama için aynı anda kullanma yeteneğidir. Önceki çözümler ya LLM çıktısını sayısal veriyi işleyen ayrı bir adime dönüştürür ya da sadece simgesel geometri kullanır; bu 'tek substrat' yaklaşımı teknik bir ilerlemedir.",
+  "search_gaps": "IPC: G06N 3/04 (Dil modelleri), G06N 3/045 (Nokta-bulutu), G06N 3/048 (Geometrik dil modelleri). CPC: G06N 3/0454, G06N 3/048, G06N 3/0484.",
+  "_search": {
+    "query": "point-cloud geometry language modeling pairwise geometry",
+    "n_hits": 8,
+    "error": ""
+  }
+}

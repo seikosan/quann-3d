@@ -1,0 +1,58 @@
+{
+ "tarih": "2026-11-19",
+ "tur": "ON_SANAT tur-2 dogrulama (ham arac kaydi)",
+ "aciklama": "search_non_patent_literature cagrilari limit=2 ile yeniden kosuruldu; ASAGIDAKI HER 'items' ALANI ARACIN DONDURDUGU ALANLARDAN KOPYALANMISTIR, elle yazilmamistir. Amacl: ON_SANAT.md 1.1 tablosundaki konyelerin tekrarlanabilirligini ve iki DOI anomali satirini ham kayita baglamak. Bu kayit 1. turun 21 sorgusunun logu DEGILDIR (1. turun ham yanitlari diskte saklanmadi — bkz. ON_SANAT.md sira 20-23 notu).",
+ "arac": "patent-creator MCP / search_non_patent_literature (OpenAlex + arXiv + Semantic Scholar)",
+ "sorgular": [
+  {"q": "PointNet deep learning on point sets for 3D classification and segmentation",
+   "items": [
+    {"t": "PointNet: Deep Learning on Point Sets for 3D Classification and Segmentation", "y": 2016, "doi": "10.48550/arxiv.1612.00593", "arxiv": "1612.00593", "venue": "arXiv (Cornell University)"},
+    {"t": "PointNet: Deep Learning on Point Sets for 3D Classification and Segmentation", "y": 2017, "doi": "10.1109/cvpr.2017.16", "venue": "IEEE Computer Society Conference on Computer Vision and Pattern Recognition"}],
+   "eslesen_kayit": "S1"},
+  {"q": "PointNet++ deep hierarchical feature learning on point sets in a metric space",
+   "items": [
+    {"t": "PointNet++: Deep Hierarchical Feature Learning on Point Sets in a Metric Space", "y": 2017, "doi": "10.48550/arxiv.1706.02413", "arxiv": "1706.02413", "venue": "arXiv (Cornell University)"},
+    {"t": "Multimodal 3D Fire and Smoke Localization in Complex Scenes via YOLOv7 and PointNet++ Integration", "y": 2025, "doi": "10.31449/inf.v49i36.10614", "venue": "Informatica"}],
+   "eslesen_kayit": "S2"},
+  {"q": "Dynamic Graph CNN for learning on point clouds",
+   "items": [
+    {"t": "Dynamic Graph CNN for Learning on Point Clouds", "y": 2019, "doi": "10.1145/3326362", "venue": "ACM Transactions on Graphics"},
+    {"t": "Linked Dynamic Graph CNN: Learning on Point Cloud via Linking Hierarchical Features", "y": 2019, "doi": "10.48550/arxiv.1904.10014", "arxiv": "1904.10014", "venue": "arXiv (Cornell University)"}],
+   "eslesen_kayit": "S3"},
+  {"q": "Set Transformer a framework for attention-based permutation-invariant neural networks",
+   "items": [
+    {"t": "Set Transformer: A Framework for Attention-based Permutation-Invariant Neural Networks", "y": 2018, "doi": "10.48550/arxiv.1810.00825", "arxiv": "1810.00825", "venue": "Oxford University Research Archive (ORA)"},
+    {"t": "The Sensory Neuron as a Transformer: Permutation-Invariant Neural Networks for Reinforcement Learning", "y": 2021, "doi": "10.48550/arxiv.2109.02869", "arxiv": "2109.02869", "venue": "arXiv (Cornell University)"}],
+   "eslesen_kayit": "S4"},
+  {"q": "Point Transformer",
+   "items": [
+    {"t": "Point Transformer", "y": 2021, "doi": "10.1109/iccv48922.2021.01595", "venue": "IEEE/CVF International Conference on Computer Vision"},
+    {"t": "Point-BERT: Pre-training 3D Point Cloud Transformers with Masked Point Modeling", "y": 2021, "doi": null, "arxiv": "2111.14819", "venue": "arXiv (cs.CV)"}],
+   "eslesen_kayit": "S5",
+   "not": "Tur-1 kuyruyu arXiv:2012.09164 (2020) verdi; tur-2 ayni bulusun ICCV 2021 yayin kaydini verdi. Ikisi ayni makalenin baski cesitleridir."},
+  {"q": "Point Transformer V3 faster stronger larger",
+   "items": [
+    {"t": "Point Transformer V3: Simpler, Faster, Stronger", "y": 2024, "doi": "10.1109/cvpr52733.2024.00463", "venue": "IEEE Computer Society Conference on Computer Vision and Pattern Recognition"},
+    {"t": "LitePT: Lighter Yet Stronger Point Transformer", "y": 2025, "doi": "10.48550/arxiv.2512.13689", "arxiv": "2512.13689", "venue": "arXiv (Cornell University)"}],
+   "eslesen_kayit": "S19 (anoli giderildi)",
+   "not": "ON_SANAT.md tur-1 satir 86'daki DOI (10.1109/cvpr52688... 2022 serisi) ANOMALILIYDI; dogru DOI aracin bu ciktisindan alindi: 10.1109/cvpr52733.2024.00463."},
+  {"q": "PointGuard adversarial point clouds defense",
+   "items": [
+    {"t": "PointGuard: Provably Robust 3D Point Cloud Classification", "y": 2021, "doi": "10.1109/cvpr46437.2021.00612", "arxiv": "2103.03046", "venue": "IEEE Computer Society Conference on Computer Vision and Pattern Recognition"},
+    {"t": "Shape-invariant 3D Adversarial Point Clouds", "y": 2022, "doi": "10.1109/cvpr52688.2022.01490", "venue": "IEEE Computer Society Conference on Computer Vision and Pattern Recognition"}],
+   "eslesen_kayit": "S20 (anoli giderildi)",
+   "not": "ON_SANAT.md tur-1 satir 88'deki DOI (10.1109/cvpr42600.2020.01054, 2020 serisi) ANOMALILIYDI; dogru DOI + baslik + arXiv bu ciktidan alindi."},
+  {"q": "Universal approximation of functions on sets",
+   "items": [
+    {"t": "Universal Approximation of Functions on Sets", "y": 2021, "doi": "10.48550/arxiv.2107.01959", "arxiv": "2107.01959", "venue": "Oxford University Research Archive (ORA)"},
+    {"t": "Proof of the Universal Approximation of a Set of Fuzzy functions", "y": 1997, "doi": "10.1007/978-1-4471-0951-8_11", "venue": "Perspectives in neural computing"}],
+   "eslesen_kayit": "S6"}
+ ],
+ "durum_cagrilari": {
+  "check_google_patents_status": {"ready": false, "eksik": "SERPAPI_API_KEY yok (SerpApi ucretsiz anahtar gerekir)", "fallback": "search_patents_bigquery (BigQuery kurulumu gerekir)"},
+  "check_bigquery_status": {"available": false, "error_ozet": "No Google Cloud project ID found — BigQuery için GCP proje kimliği gerekir"},
+  "check_epo_api_status": {"ready": false, "credentials_configured": false, "api_url": "https://ops.epo.org/3.2/rest-services", "eksik": "EPO_OPS_KEY / EPO_OPS_SECRET"},
+  "check_uspto_api_status": {"ready": false, "api_key_configured": false, "eksik": "USPTO_API_KEY"}
+ },
+ "hukum": "Dort resmî patent veritabani araci da 2026-11-19'da hazir DEGIL — ON_SANAT.md sira 29-33 tablosu bu kayitla dogrulanmistir. Patent DB yenilik taramasi YAPILMADI iddiasi degismemistir. NPL tarafi: 8 sorgunun 8'i de ON_SANAT konyelerini yeniden üretti; iki DOI anomalisi bu kayittaki degerlerle duzeltildi."
+}

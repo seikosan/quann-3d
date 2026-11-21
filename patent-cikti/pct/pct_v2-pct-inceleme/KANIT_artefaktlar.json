@@ -1,0 +1,52 @@
+{
+  "1_kategori_kalibi": {
+    "motor_kalibi": [
+      "^a\\s+method\\b|^a\\s+process\\b|^method\\s+",
+      "^a\\s+device\\b|^a\\s+system\\b|^a\\s+apparatus\\b|^an\\s+apparatus\\b"
+    ],
+    "bulgu_kategorileri": {
+      "1": "product",
+      "13": "product",
+      "15": "product"
+    },
+    "istem_baslari": {
+      "1": "A computer-implemented machine learning method f",
+      "13": "A computer system comprising at least one proces",
+      "15": "A non-transitory computer-readable recording med"
+    },
+    "yorum": "1 = yöntem, 13 = bilgisayar sistemi, 15 = kayıt ortamı; motor kalıpları 'a computer-implemented ... method' ve 'a computer system' ifadelerine uymadığı için üçünü de 'product' sayıyor."
+  },
+  "2_two_part_TR": {
+    "motor_kaliplari": [
+      "characteri[sz]ed\\s+in\\s+that",
+      "wherein\\s+the\\s+improvement\\s+comprises"
+    ],
+    "TR_istem1_kararli_ifade": [
+      "karakterize edilir"
+    ],
+    "TR_istem1_eslesme": [
+      false,
+      false
+    ],
+    "EN_istem1_eslesme": [
+      true,
+      false
+    ]
+  },
+  "3_TR_bagimlilik": {
+    "motor_kalibi": "\\bclaims?\\s+(?=\\d)",
+    "TR_istem1_kararli_ifade": [
+      "İstem 1'e göre",
+      "İstem 1'e göre"
+    ],
+    "TR_istem1_eslesme": false,
+    "EN_bağımlı_istem_sayisi": 12,
+    "TR_bağımlı_istem_sayisi": 0
+  },
+  "4_art83_tavsiye": {
+    "terim": "point cloud",
+    "tarifnamede_gecen_yer_sayisi": 13,
+    "motorin_atif_yaptigi_paragraf_sayisi": 1,
+    "aciklama": "Motor her terimi tek bir paragrafla eşliyor; 'only Para. N' tavsiyesi bu indeks sınırından geliyor, eksik desteğin kanıtı değil."
+  }
+}

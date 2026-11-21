@@ -1,0 +1,225 @@
+{
+  "status": "fulfilled",
+  "result": {
+    "analysis_type": "automated",
+    "jurisdiction": "EPO",
+    "claim_count": 15,
+    "independent_claims": 15,
+    "dependent_claims": 0,
+    "compliance_score": 94.66666666666667,
+    "total_issues": 16,
+    "critical_issues": 0,
+    "important_issues": 16,
+    "minor_issues": 0,
+    "issues_by_type": {
+      "two_part_form": 15,
+      "conciseness": 1
+    },
+    "summary": "[WARNING] Found 16 IMPORTANT issues requiring attention under Art. 84 EPC",
+    "issues": [
+      {
+        "severity": "IMPORTANT",
+        "type": "two_part_form",
+        "claim": 1,
+        "location": "entire claim",
+        "term": "",
+        "problem": "Independent claim does not use two-part form (preamble + 'characterized in that' + characterizing portion)",
+        "fix": "Consider restructuring as two-part claim with preamble stating prior art features and characterizing portion stating novel features, unless two-part form is inappropriate for this type of claim",
+        "legal_ref": "Rule 43(1) EPC",
+        "confidence": "HIGH"
+      },
+      {
+        "severity": "IMPORTANT",
+        "type": "conciseness",
+        "claim": 1,
+        "location": "claim set",
+        "term": "15 independent product claims",
+        "problem": "Multiple independent claims (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15) in the same category (product). Rule 43(2) EPC generally allows only one independent claim per category.",
+        "fix": "Consider consolidating into a single independent claim per category with dependent claims for alternatives, or justify under Rule 43(2)(a)-(c) EPC.",
+        "legal_ref": "Rule 43(2) EPC",
+        "confidence": "HIGH"
+      },
+      {
+        "severity": "IMPORTANT",
+        "type": "two_part_form",
+        "claim": 2,
+        "location": "entire claim",
+        "term": "",
+        "problem": "Independent claim does not use two-part form (preamble + 'characterized in that' + characterizing portion)",
+        "fix": "Consider restructuring as two-part claim with preamble stating prior art features and characterizing portion stating novel features, unless two-part form is inappropriate for this type of claim",
+        "legal_ref": "Rule 43(1) EPC",
+        "confidence": "HIGH"
+      },
+      {
+        "severity": "IMPORTANT",
+        "type": "two_part_form",
+        "claim": 3,
+        "location": "entire claim",
+        "term": "",
+        "problem": "Independent claim does not use two-part form (preamble + 'characterized in that' + characterizing portion)",
+        "fix": "Consider restructuring as two-part claim with preamble stating prior art features and characterizing portion stating novel features, unless two-part form is inappropriate for this type of claim",
+        "legal_ref": "Rule 43(1) EPC",
+        "confidence": "HIGH"
+      },
+      {
+        "severity": "IMPORTANT",
+        "type": "two_part_form",
+        "claim": 4,
+        "location": "entire claim",
+        "term": "",
+        "problem": "Independent claim does not use two-part form (preamble + 'characterized in that' + characterizing portion)",
+        "fix": "Consider restructuring as two-part claim with preamble stating prior art features and characterizing portion stating novel features, unless two-part form is inappropriate for this type of claim",
+        "legal_ref": "Rule 43(1) EPC",
+        "confidence": "HIGH"
+      },
+      {
+        "severity": "IMPORTANT",
+        "type": "two_part_form",
+        "claim": 5,
+        "location": "entire claim",
+        "term": "",
+        "problem": "Independent claim does not use two-part form (preamble + 'characterized in that' + characterizing portion)",
+        "fix": "Consider restructuring as two-part claim with preamble stating prior art features and characterizing portion stating novel features, unless two-part form is inappropriate for this type of claim",
+        "legal_ref": "Rule 43(1) EPC",
+        "confidence": "HIGH"
+      },
+      {
+        "severity": "IMPORTANT",
+        "type": "two_part_form",
+        "claim": 6,
+        "location": "entire claim",
+        "term": "",
+        "problem": "Independent claim does not use two-part form (preamble + 'characterized in that' + characterizing portion)",
+        "fix": "Consider restructuring as two-part claim with preamble stating prior art features and characterizing portion stating novel features, unless two-part form is inappropriate for this type of claim",
+        "legal_ref": "Rule 43(1) EPC",
+        "confidence": "HIGH"
+      },
+      {
+        "severity": "IMPORTANT",
+        "type": "two_part_form",
+        "claim": 7,
+        "location": "entire claim",
+        "term": "",
+        "problem": "Independent claim does not use two-part form (preamble + 'characterized in that' + characterizing portion)",
+        "fix": "Consider restructuring as two-part claim with preamble stating prior art features and characterizing portion stating novel features, unless two-part form is inappropriate for this type of claim",
+        "legal_ref": "Rule 43(1) EPC",
+        "confidence": "HIGH"
+      },
+      {
+        "severity": "IMPORTANT",
+        "type": "two_part_form",
+        "claim": 8,
+        "location": "entire claim",
+        "term": "",
+        "problem": "Independent claim does not use two-part form (preamble + 'characterized in that' + characterizing portion)",
+        "fix": "Consider restructuring as two-part claim with preamble stating prior art features and characterizing portion stating novel features, unless two-part form is inappropriate for this type of claim",
+        "legal_ref": "Rule 43(1) EPC",
+        "confidence": "HIGH"
+      },
+      {
+        "severity": "IMPORTANT",
+        "type": "two_part_form",
+        "claim": 9,
+        "location": "entire claim",
+        "term": "",
+        "problem": "Independent claim does not use two-part form (preamble + 'characterized in that' + characterizing portion)",
+        "fix": "Consider restructuring as two-part claim with preamble stating prior art features and characterizing portion stating novel features, unless two-part form is inappropriate for this type of claim",
+        "legal_ref": "Rule 43(1) EPC",
+        "confidence": "HIGH"
+      },
+      {
+        "severity": "IMPORTANT",
+        "type": "two_part_form",
+        "claim": 10,
+        "location": "entire claim",
+        "term": "",
+        "problem": "Independent claim does not use two-part form (preamble + 'characterized in that' + characterizing portion)",
+        "fix": "Consider restructuring as two-part claim with preamble stating prior art features and characterizing portion stating novel features, unless two-part form is inappropriate for this type of claim",
+        "legal_ref": "Rule 43(1) EPC",
+        "confidence": "HIGH"
+      },
+      {
+        "severity": "IMPORTANT",
+        "type": "two_part_form",
+        "claim": 11,
+        "location": "entire claim",
+        "term": "",
+        "problem": "Independent claim does not use two-part form (preamble + 'characterized in that' + characterizing portion)",
+        "fix": "Consider restructuring as two-part claim with preamble stating prior art features and characterizing portion stating novel features, unless two-part form is inappropriate for this type of claim",
+        "legal_ref": "Rule 43(1) EPC",
+        "confidence": "HIGH"
+      },
+      {
+        "severity": "IMPORTANT",
+        "type": "two_part_form",
+        "claim": 12,
+        "location": "entire claim",
+        "term": "",
+        "problem": "Independent claim does not use two-part form (preamble + 'characterized in that' + characterizing portion)",
+        "fix": "Consider restructuring as two-part claim with preamble stating prior art features and characterizing portion stating novel features, unless two-part form is inappropriate for this type of claim",
+        "legal_ref": "Rule 43(1) EPC",
+        "confidence": "HIGH"
+      },
+      {
+        "severity": "IMPORTANT",
+        "type": "two_part_form",
+        "claim": 13,
+        "location": "entire claim",
+        "term": "",
+        "problem": "Independent claim does not use two-part form (preamble + 'characterized in that' + characterizing portion)",
+        "fix": "Consider restructuring as two-part claim with preamble stating prior art features and characterizing portion stating novel features, unless two-part form is inappropriate for this type of claim",
+        "legal_ref": "Rule 43(1) EPC",
+        "confidence": "HIGH"
+      },
+      {
+        "severity": "IMPORTANT",
+        "type": "two_part_form",
+        "claim": 14,
+        "location": "entire claim",
+        "term": "",
+        "problem": "Independent claim does not use two-part form (preamble + 'characterized in that' + characterizing portion)",
+        "fix": "Consider restructuring as two-part claim with preamble stating prior art features and characterizing portion stating novel features, unless two-part form is inappropriate for this type of claim",
+        "legal_ref": "Rule 43(1) EPC",
+        "confidence": "HIGH"
+      },
+      {
+        "severity": "IMPORTANT",
+        "type": "two_part_form",
+        "claim": 15,
+        "location": "entire claim",
+        "term": "",
+        "problem": "Independent claim does not use two-part form (preamble + 'characterized in that' + characterizing portion)",
+        "fix": "Consider restructuring as two-part claim with preamble stating prior art features and characterizing portion stating novel features, unless two-part form is inappropriate for this type of claim",
+        "legal_ref": "Rule 43(1) EPC",
+        "confidence": "HIGH"
+      }
+    ],
+    "epc_references": [
+      {
+        "section": "EPO Guidelines Part F - Chapter IV-1",
+        "page": null,
+        "text": "[EPO Guidelines Part F - Chapter IV-1]  \nChapter IV – Claims (Art. 84 and formal \nrequirements) \n1. \nGeneral \nThe application must contain \"one or more claims\". \nThese must: \n(i) \n\"define the matter for which protection is sought\" \n(ii) \n\"be clear and concise\" and \n(iii) \n\"be supported by the description\". \nSince the extent of the protection conferred by a European patent or \napplication is determined by the claims (interpreted with the help of the \ndescription and drawings), clarity of the clai..."
+      },
+      {
+        "section": "EPO Guidelines Part F - Chapter IV-16",
+        "page": null,
+        "text": "[EPO Guidelines Part F - Chapter IV-16]  and inventive. \n4. \nClarity and interpretation of claims \n4.1 Clarity \nArt. 84 provides that the claims must define the matter for which protection \nis sought. It further provides that the claims must be clear and concise and \nsupported by the description. \nIn view of the function of claims in defining the matter for which protection is \nsought, their clarity is of the utmost importance for reasons of legal \ncertainty. The meaning of the terms of a claim ..."
+      },
+      {
+        "section": "EPO Guidelines Part F - Chapter IV-16",
+        "page": null,
+        "text": "[EPO Guidelines Part F - Chapter IV-16] is amendment (G 1/24; \nsee also F-IV, 4.2 and F-IV, 4.3). \nWhere the claims are found to lack clarity under Art. 84, a partial European \nor supplementary European search report may be issued under Rule 63 \n(see B-VIII, 3.1 and 3.2). In such cases, in the absence of appropriate \namendment and/or convincing arguments from the applicant as to why the \ninvitation under Rule 63(1) was not justified, an objection under Rule 63(3) \nwill also be raised (see H-II, ..."
+      },
+      {
+        "section": "EPC: Article 81 Designation of the inventor; Article 82 Unity of invention; Article 83 Disclosure of the invention; Article 84 Claims",
+        "page": 149,
+        "text": "[EPC: Article 81 Designation of the inventor; Article 82 Unity of invention; Article 83 Disclosure of the invention; Article 84 Claims] g ist in der europäischen Patent-\nanmeldung so deutlich und vollständig zu of-\nfenbaren, dass ein Fachmann sie ausführen \nkann. \nThe European patent application shall disclose \nthe invention in a manner sufficiently clear and \ncomplete for it to be carried out by a person \nskilled in the art. \nArtikel 8479  \nPatentansprüche \nArticle 8479  \nClaims \nDie Patentansp..."
+      },
+      {
+        "section": "EPO Guidelines Part F - Chapter IV-36",
+        "page": null,
+        "text": "[EPO Guidelines Part F - Chapter IV-36] ures to the claim either would not define more clearly and \nconcisely the subject-matter still protectable (see G 1/03 and T 4/80) or \nwould unduly limit the scope of the claim (see T 1050/93). It has to be clear \nwhat is excluded by means of the disclaimer (see T 286/06). A claim \ncontaining one or more disclaimers must also fully comply with the clarity \nand conciseness requirements of Art. 84 (see G 1/03, Reasons 3). \nMoreover, in the interests of the p..."
+      }
+    ]
+  }
+}

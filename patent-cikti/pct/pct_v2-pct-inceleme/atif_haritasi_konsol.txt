@@ -1,0 +1,28 @@
+| baslik EN kelime | `patent-cikti/pct/pct_v2-pct-inceleme/A_pct_en.json:12` | `"word_count": 6,` |
+| ozet EN kelime | `patent-cikti/pct/pct_v2-pct-inceleme/A_pct_en.json:6` | `"word_count": 137,` |
+| istem sayisi EN | `patent-cikti/pct/pct_v2-pct-inceleme/A_pct_en.json:28` | `"total_claims": 15,` |
+| baslik TR kelime | `patent-cikti/pct/pct_v2-pct-inceleme/B_pct_tr.json:12` | `"word_count": 7,` |
+| ozet TR kelime | `patent-cikti/pct/pct_v2-pct-inceleme/B_pct_tr.json:6` | `"word_count": 106,` |
+| D bulgu | `patent-cikti/pct/pct_v2-pct-inceleme/D_epo_claims_en.json:4` | `"total_issues": 1,` |
+| D skor | `patent-cikti/pct/pct_v2-pct-inceleme/D_epo_claims_en.json:22` | `"compliance_score": 99.66666666666667,` |
+| E bulgu | `patent-cikti/pct/pct_v2-pct-inceleme/E_epo_claims_tr.json:4` | `"total_issues": 16,` |
+| F kritik | `patent-cikti/pct/pct_v2-pct-inceleme/F_epo_spec_support_en.json:10` | `"critical_issues": 0,` |
+| F onemli | `patent-cikti/pct/pct_v2-pct-inceleme/F_epo_spec_support_en.json:11` | `"important_issues": 47,` |
+| F coverage | `patent-cikti/pct/pct_v2-pct-inceleme/F_epo_spec_support_en.json:631` | `"percentage": 100,` |
+| G bulgu | `patent-cikti/pct/pct_v2-pct-inceleme/G_epo_formal_en.json:68` | `"warnings": 1,` |
+| H skor | `patent-cikti/pct/pct_v2-pct-inceleme/H_pkg_full.json:10` | `"package_integrity_score": 100.0,` |
+| I skor | `patent-cikti/pct/pct_v2-pct-inceleme/I_pkg_filing.json:10` | `"package_integrity_score": 100.0,` |
+| J bulgu | `patent-cikti/pct/pct_v2-pct-inceleme/J_us_claims_en.json:4` | `"total_issues": 0,` |
+| uretim EN paragraf | `patent-cikti/pct/pct_v2-pct-inceleme/uretim.json:6` | `"file": "DESCRIPTION_FILING-COPY_EN.txt",` |
+| KANIT kategori | `patent-cikti/pct/pct_v2-pct-inceleme/KANIT_artefaktlar.json:10` | `"15": "product"` |
+| KANIT point cloud 13 | `patent-cikti/pct/pct_v2-pct-inceleme/KANIT_artefaktlar.json:48` | `"tarifnamede_gecen_yer_sayisi": 13,` |
+| KANIT tek paragraf | `patent-cikti/pct/pct_v2-pct-inceleme/KANIT_artefaktlar.json:49` | `"motorin_atif_yaptigi_paragraf_sayisi": 1,` |
+| KANIT EN bagimli 12 | `patent-cikti/pct/pct_v2-pct-inceleme/KANIT_artefaktlar.json:43` | `"EN_bağımlı_istem_sayisi": 12,` |
+| KANIT TR bagimli 0 | `patent-cikti/pct/pct_v2-pct-inceleme/KANIT_artefaktlar.json:44` | `"TR_bağımlı_istem_sayisi": 0` |
+| KANIT_antecedent ozet | `patent-cikti/pct/pct_v2-pct-inceleme/KANIT_antecedent.json:8` | `"B_artikel-terim_arasi_3+": 8,` |
+| 4096 EN | `docs/patent/pct_v2/DESCRIPTION_EN.md:181` | `[0057] The output drift of the quantized model was also measured over 4096 ran` |
+| 4096 ham kaynak | `fraud/logs/run_full_scale_edge_eval.log:46` | `=== [2026-10-17 20:26:29] 5/6 INT8 (calibrated per-tensor) output drift on 409` |
+| TR kuyruk duzeltme ornegi | `docs/patent/pct_v2/ISTEMLER_TR.md:13` | `2. İstem 1'e göre yöntem olup, D boyutunun 3 ile 64 arasında bir tamsayı olara` |
+| EN group duzeltme | `docs/patent/pct_v2/CLAIMS_EN.md:26` | `(iii) region shift: comparing point shares in identical geometric regions for ` |
+
+EKSIK: 0 []

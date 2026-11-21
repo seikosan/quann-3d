@@ -1,0 +1,89 @@
+{
+  "verdict": "red",
+  "issues": [
+    {
+      "claim": 1,
+      "type": "B",
+      "quote": "söz konusu X",
+      "why": "İstem 1'de 'söz konusu işlemci' ve 'söz konusu bellek' ifadeleri, bağımsız istem için kabul edilebilir bağıl ifadeler değildir; önceki istemlerde tanımlanmamıştır.",
+      "fix": "İstem 1'den önce gelen bağımsız istem (örneğin İstem 1'in kendisi veya yeni bir bağımsız istem) bu terimleri açıkça tanımlamalıdır."
+    },
+    {
+      "claim": 1,
+      "type": "B",
+      "quote": "D-boyutlu bir Öklid uzayındaki nokta-bulutu",
+      "why": "'Öklid uzayı' ifadesi, teknik alanda bu terimin nasıl uygulanacağını belirlemeyen belirsiz bir şekle atıf içerir.",
+      "fix": "Terim 'D-boyutlu vektör uzayı' olarak değiştirilmeli veya uzayın özellikleri somutlaştırılmalıdır."
+    },
+    {
+      "claim": 1,
+      "type": "B",
+      "quote": "native açıklama verisi",
+      "why": "'Native' kelimesi, veri formatının ne olduğu veya nasıl üretildiği konusunda belirsizlik yaratır.",
+      "fix": "İfade 'model içi türetilen açıklama verisi' şeklinde netleştirilmelidir."
+    },
+    {
+      "claim": 1,
+      "type": "C",
+      "quote": "Projeksiyon modülü (10)",
+      "why": "Tarifnamede 'Projeksiyon modülü (10)' ifadesine karşılık gelen somut bir tanım veya açıklama bulunmamaktadır.",
+      "fix": "Tarifnameye, modülün işlevini açıklayan detaylı bir tanım eklenmelidir."
+    },
+    {
+      "claim": 1,
+      "type": "C",
+      "quote": "Çift-geometri kodlayıcı (12)",
+      "why": "İstemde belirtilen 'fiziksel G ve Ç işlemleri' tarifnamede tanımlanmamıştır; destek eksiktir.",
+      "fix": "Tarifnameye G ve Ç işlemlerinin matematiksel veya teknik tanımı eklenmelidir."
+    },
+    {
+      "claim": 1,
+      "type": "C",
+      "quote": "Okuyucu (16)",
+      "why": "İstemde 'simetrik küme agregasyonu' ile görev skoru üretimi belirtilirken, 'Okuyucu (16)' modülünün bu işlevi nasıl yerine getirdiği tarifnamede yoktur.",
+      "fix": "Okuyucu modülünün simetrik küme agregasyonu ve skor üretimi işlevleri tarifnamede açıkça tanımlanmalıdır."
+    },
+    {
+      "claim": 1,
+      "type": "C",
+      "quote": "Yorumlama sistemi (18)",
+      "why": "İstemde 'native açıklama verisi' üretimi belirtilirken, 'Yorumlama sistemi (18)' bu veriyi nasıl ürettiği tarifnamede yoktur.",
+      "fix": "Yorumlama sisteminin açıklama verisi üretim mekanizması tarifnamede eksiksiz tanımlanmalıdır."
+    },
+    {
+      "claim": 2,
+      "type": "B",
+      "quote": "bellek adres uzayında",
+      "why": "'Bellek adres uzayı' ifadesi, belleğin fiziksel yapısına atıfta bulunur; bağıl ifade kullanımı şekil bağımlılığı riski taşır.",
+      "fix": "İfade 'bellek içinde tahsis edilen vektör kümesi' şeklinde bağıl hale getirilmelidir."
+    },
+    {
+      "claim": 4,
+      "type": "E",
+      "quote": "cos(θ) açısı hesaplamasını atlayarak",
+      "why": "Önceki teknikte cos(θ) hesaplamasının varlığı bilinmemektedir; bu 'atlayarak' ifadesi teknik bir etkiyi (yenilik) kanıtlamaz, keyfi bir kısıtlamadır.",
+      "fix": "İstem, cos(θ) hesaplamasının atlanması yerine, doğrudan fiziksel G ve Ç işlemlerinin kullanılmasının teknik faydasını (örn. hız) açıklayan bir ifadeye dönüştürülmelidir."
+    },
+    {
+      "claim": 6,
+      "type": "E",
+      "quote": "bellek bant genişliği üzerindeki yükün azaltılması",
+      "why": "Nokta-bulut temsili ile bellek bant genişliği yükünün azalması arasında doğrudan teknik bir nedensellik (etki) tarifnamede kanıtlanmamıştır.",
+      "fix": "İstem, bu etkiyi sağlayan somut bir mekanizma (örn. vektör yoğunluğu) veya alternatif bir teknik sonuç (örn. hesaplama hızı) ile desteklenmelidir."
+    },
+    {
+      "claim": 7,
+      "type": "E",
+      "quote": "önbellek ıskalama oranının düşürülmesi",
+      "why": "Önbellek ıskalama oranı ile nokta-bulut temsili arasındaki teknik ilişki önceden bilinmeyen bir etkidir; buluş basamağı zayıftır.",
+      "fix": "Bu özellik, önbellek yönetimi ile ilgili somut bir teknik çözüm (örn. önbellek boyutu optimizasyonu) ile desteklenmelidir."
+    }
+  ],
+  "scores": {
+    "aciklik": 2,
+    "destek": 5,
+    "yenilik": 3,
+    "bulus_basamagi": 2
+  },
+  "summary": "İstemler, bağıl ifadeler, şekle atıflar ve destek eksikliği nedeniyle reddedilmelidir. Ayrıca, bazı özelliklerin teknik etkiyi kanıtlamaması buluş basamağını zayıflatmaktadır."
+}

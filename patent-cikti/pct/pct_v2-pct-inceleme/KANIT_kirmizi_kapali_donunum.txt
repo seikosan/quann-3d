@@ -1,0 +1,18 @@
+# kirizi-yakalama denemesi (ikinci kosum, karmasali kanitla) — 2026-11-19 17:22
+# manifest: docs/patent/pct_v2/fig/fig_manifest.json
+== 1) enjeksiyon ONECESI sha256 ==
+5955a82c9670383424143b19b28d6758ef46b47474b990cf9c09fc0b6863cb08  docs/patent/pct_v2/fig/fig_manifest.json
+== 2) enjekte edilmis halin sha256 ==
+250dc8236eea83a41c252e10695cc5644ec28ea520973cdd7913475932de87b4  docs/patent/pct_v2/fig/fig_manifest.json
+== 3) kapinin KIRMIZI koşumu ==
+CIKIS=1 (1 beklenir)
+[BULGU] A SVG == kunya  {'sekil': 8, 'kunyi_metin': 143}
+[BULGU] B terim (DESCRIPTION_EN.md hakem)  {'kontrol_edilen_kelime': 340, 'tarifname_kelime': 954}
+RED: 2 bulgu — DOGRUL_figurler.json
+== 4) yedekten geri yukleme + sonrasi sha256 ==
+5955a82c9670383424143b19b28d6758ef46b47474b990cf9c09fc0b6863cb08  docs/patent/pct_v2/fig/fig_manifest.json
+== 5) geri yuklemeden sonra kapi kosumu ==
+CIKIS=0 (0 beklenir)
+KABUL: 0 bulgu — DOGRUL_figurler.json
+== 6) KAPATMA: 1 ile 5 ayni karmasa mi ==
+BAYT-BAYT AYNI: 5955a82c9670383424143b19b28d6758ef46b47474b990cf9c09fc0b6863cb08

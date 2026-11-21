@@ -1,0 +1,20 @@
+{
+  "kunye": 243,
+  "sayi_denetlenen": 58,
+  "tanim": 77,
+  "esitlik": 4,
+  "hesap": [
+    "satır 51: 13.5168 = 13.516568 ✓ (girdi 2522200 / 34091488)",
+    "satır 52: 14.7929 = 14.792899 ✓ (girdi 2522200 / 34091488)"
+  ],
+  "uyari": [
+    "83: B sayı yalnız yuvarlanmış biçimde geçiyor ['0.35445423298515377', '0.3545'] — künye aml/results/e5_stability.json:38",
+    "87: B sayı yalnız yuvarlanmış biçimde geçiyor ['0.7402620668290183', '0.7403'] — künye aml/results/e5_stability.json:34057",
+    "223: B sayı yalnız yuvarlanmış biçimde geçiyor ['0.7403', '0.7402620668290183'] — künye aml/results/e5_stability.json:34057",
+    "224: B sayı yalnız yuvarlanmış biçimde geçiyor ['0.3545', '0.35445423298515377'] — künye aml/results/e5_stability.json:38"
+  ],
+  "bulgu": [
+    "28: B HİÇBİR SAYI GEÇMİYOR ['4096', '4096', '0057'] künye ['fraud/logs/run_full_scale_edge_eval.log:46']"
+  ],
+  "temiz": false
+}

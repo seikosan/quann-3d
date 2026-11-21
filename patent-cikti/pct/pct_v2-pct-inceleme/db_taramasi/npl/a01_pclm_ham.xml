@@ -1,0 +1,146 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/MPBg4MvDaU7uu8hAGpWxnsU/xjQ</id>
+  <title>arXiv Query: search_query=all:"point cloud" AND all:"language model"&amp;id_list=&amp;start=0&amp;max_results=5</title>
+  <updated>2026-11-19T18:55:31Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22point+cloud%22+AND+all:%22language+model%22&amp;start=0&amp;max_results=5&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>5</opensearch:itemsPerPage>
+  <opensearch:totalResults>353</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2408.08682v1</id>
+    <title>LLM-PCGC: Large Language Model-based Point Cloud Geometry Compression</title>
+    <updated>2024-08-16T11:55:44Z</updated>
+    <link href="https://arxiv.org/abs/2408.08682v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2408.08682v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The key to effective point cloud compression is to obtain a robust context model consistent with complex 3D data structures. Recently, the advancement of large language models (LLMs) has highlighted their capabilities not only as powerful generators for in-context learning and generation but also as effective compressors. These dual attributes of LLMs make them particularly well-suited to meet the demands of data compression. Therefore, this paper explores the potential of using LLM for compression tasks, focusing on lossless point cloud geometry compression (PCGC) experiments. However, applying LLM directly to PCGC tasks presents some significant challenges, i.e., LLM does not understand the structure of the point cloud well, and it is a difficult task to fill the gap between text and point cloud through text description, especially for large complicated and small shapeless point clouds. To address these problems, we introduce a novel architecture, namely the Large Language Model-based Point Cloud Geometry Compression (LLM-PCGC) method, using LLM to compress point cloud geometry information without any text description or aligning operation. By utilizing different adaptation techniques for cross-modality representation alignment and semantic consistency, including clustering, K-tree, token mapping invariance, and Low Rank Adaptation (LoRA), the proposed method can translate LLM to a compressor/generator for point cloud. To the best of our knowledge, this is the first structure to employ LLM as a compressor for point cloud data. Experiments demonstrate that the LLM-PCGC outperforms the other existing methods significantly, by achieving -40.213% bit rate reduction compared to the reference software of MPEG Geometry-based Point Cloud Compression (G-PCC) standard, and by achieving -2.267% bit rate reduction compared to the state-of-the-art learning-based method.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-08-16T11:55:44Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Yuqi Ye</name>
+    </author>
+    <author>
+      <name>Wei Gao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2402.03327v1</id>
+    <title>Uni3D-LLM: Unifying Point Cloud Perception, Generation and Editing with Large Language Models</title>
+    <updated>2024-01-09T06:20:23Z</updated>
+    <link href="https://arxiv.org/abs/2402.03327v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2402.03327v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper, we introduce Uni3D-LLM, a unified framework that leverages a Large Language Model (LLM) to integrate tasks of 3D perception, generation, and editing within point cloud scenes. This framework empowers users to effortlessly generate and modify objects at specified locations within a scene, guided by the versatility of natural language descriptions. Uni3D-LLM harnesses the expressive power of natural language to allow for precise command over the generation and editing of 3D objects, thereby significantly enhancing operational flexibility and controllability. By mapping point cloud into the unified representation space, Uni3D-LLM achieves cross-application functionality, enabling the seamless execution of a wide array of tasks, ranging from the accurate instantiation of 3D objects to the diverse requirements of interactive design. Through a comprehensive suite of rigorous experiments, the efficacy of Uni3D-LLM in the comprehension, generation, and editing of point cloud has been validated. Additionally, we have assessed the impact of integrating a point cloud perception module on the generation and editing processes, confirming the substantial potential of our approach for practical applications.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-01-09T06:20:23Z</published>
+    <arxiv:comment>10 pages, 6 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Dingning Liu</name>
+    </author>
+    <author>
+      <name>Xiaoshui Huang</name>
+    </author>
+    <author>
+      <name>Yuenan Hou</name>
+    </author>
+    <author>
+      <name>Zhihui Wang</name>
+    </author>
+    <author>
+      <name>Zhenfei Yin</name>
+    </author>
+    <author>
+      <name>Yongshun Gong</name>
+    </author>
+    <author>
+      <name>Peng Gao</name>
+    </author>
+    <author>
+      <name>Wanli Ouyang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2410.09240v1</id>
+    <title>nach0-pc: Multi-task Language Model with Molecular Point Cloud Encoder</title>
+    <updated>2024-10-11T20:30:44Z</updated>
+    <link href="https://arxiv.org/abs/2410.09240v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2410.09240v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recent advancements have integrated Language Models (LMs) into a drug discovery pipeline. However, existing models mostly work with SMILES and SELFIES chemical string representations, which lack spatial features vital for drug discovery. Additionally, attempts to translate chemical 3D structures into text format encounter issues such as excessive length and insufficient atom connectivity information. To address these issues, we introduce nach0-pc, a model combining domain-specific encoder and textual representation to handle spatial arrangement of atoms effectively. Our approach utilizes a molecular point cloud encoder for concise and order-invariant structure representation. We introduce a novel pre-training scheme for molecular point clouds to distillate the knowledge from spatial molecular structures datasets. After fine-tuning within both single-task and multi-task frameworks, nach0-pc demonstrates performance comparable with other diffusion models in terms of generated samples quality across several established spatial molecular generation tasks. Notably, our model is a multi-task approach, in contrast to diffusion models being limited to single tasks. Additionally, it is capable of processing point cloud-related data, which language models are not capable of handling due to memory limitations. These lead to our model having reduced training and inference time while maintaining on par performance.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-10-11T20:30:44Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Maksim Kuznetsov</name>
+    </author>
+    <author>
+      <name>Airat Valiev</name>
+    </author>
+    <author>
+      <name>Alex Aliper</name>
+    </author>
+    <author>
+      <name>Daniil Polykovskiy</name>
+    </author>
+    <author>
+      <name>Elena Tutubalina</name>
+    </author>
+    <author>
+      <name>Rim Shayakhmetov</name>
+    </author>
+    <author>
+      <name>Zulfat Miftahutdinov</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2407.13761v1</id>
+    <title>SegPoint: Segment Any Point Cloud via Large Language Model</title>
+    <updated>2024-07-18T17:58:03Z</updated>
+    <link href="https://arxiv.org/abs/2407.13761v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2407.13761v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Despite significant progress in 3D point cloud segmentation, existing methods primarily address specific tasks and depend on explicit instructions to identify targets, lacking the capability to infer and understand implicit user intentions in a unified framework. In this work, we propose a model, called SegPoint, that leverages the reasoning capabilities of a multi-modal Large Language Model (LLM) to produce point-wise segmentation masks across a diverse range of tasks: 1) 3D instruction segmentation, 2) 3D referring segmentation, 3) 3D semantic segmentation, and 4) 3D open-vocabulary semantic segmentation. To advance 3D instruction research, we introduce a new benchmark, Instruct3D, designed to evaluate segmentation performance from complex and implicit instructional texts, featuring 2,565 point cloud-instruction pairs. Our experimental results demonstrate that SegPoint achieves competitive performance on established benchmarks such as ScanRefer for referring segmentation and ScanNet for semantic segmentation, while delivering outstanding outcomes on the Instruct3D dataset. To our knowledge, SegPoint is the first model to address these varied segmentation tasks within a single framework, achieving satisfactory performance.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-07-18T17:58:03Z</published>
+    <arxiv:comment>ECCV 2024, Project Page: https://heshuting555.github.io/SegPoint</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Shuting He</name>
+    </author>
+    <author>
+      <name>Henghui Ding</name>
+    </author>
+    <author>
+      <name>Xudong Jiang</name>
+    </author>
+    <author>
+      <name>Bihan Wen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2504.08154v1</id>
+    <title>Investigating Vision-Language Model for Point Cloud-based Vehicle Classification</title>
+    <updated>2025-04-10T22:37:27Z</updated>
+    <link href="https://arxiv.org/abs/2504.08154v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2504.08154v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Heavy-duty trucks pose significant safety challenges due to their large size and limited maneuverability compared to passenger vehicles. A deeper understanding of truck characteristics is essential for enhancing the safety perspective of cooperative autonomous driving. Traditional LiDAR-based truck classification methods rely on extensive manual annotations, which makes them labor-intensive and costly. The rapid advancement of large language models (LLMs) trained on massive datasets presents an opportunity to leverage their few-shot learning capabilities for truck classification. However, existing vision-language models (VLMs) are primarily trained on image datasets, which makes it challenging to directly process point cloud data. This study introduces a novel framework that integrates roadside LiDAR point cloud data with VLMs to facilitate efficient and accurate truck classification, which supports cooperative and safe driving environments. This study introduces three key innovations: (1) leveraging real-world LiDAR datasets for model development, (2) designing a preprocessing pipeline to adapt point cloud data for VLM input, including point cloud registration for dense 3D rendering and mathematical morphological techniques to enhance feature representation, and (3) utilizing in-context learning with few-shot prompting to enable vehicle classification with minimally labeled training data. Experimental results demonstrate encouraging performance of this method and present its potential to reduce annotation efforts while improving classification accuracy.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-04-10T22:37:27Z</published>
+    <arxiv:comment>5 pages,3 figures, 1 table, CVPR DriveX workshop</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <arxiv:journal_ref>DriveX Workshop at IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), 2026</arxiv:journal_ref>
+    <author>
+      <name>Yiqiao Li</name>
+    </author>
+    <author>
+      <name>Jie Wei</name>
+    </author>
+    <author>
+      <name>Camille Kamga</name>
+    </author>
+  </entry>
+</feed>

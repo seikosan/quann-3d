@@ -1,0 +1,33 @@
+{
+  "verdict": "red",
+  "issues": [
+    {
+      "claim": 1,
+      "type": "B",
+      "quote": "D-boyutlu bir Öklid uzayında",
+      "why": "D boyutu istem 1'de tanımlanmamıştır; bu belirsiz bir terimdir ve kapsamı net değildir.",
+      "fix": "D boyutunu tarifnamede açıkça tanımlanan belirli bir tamsayı aralığı veya formül ile değiştirin."
+    },
+    {
+      "claim": 1,
+      "type": "C",
+      "quote": "Yorumlama sistemi (18) ile model içi açıklama üretimi",
+      "why": "Tarifnamede 'model içi açıklama' mekanizmasının nasıl çalıştığına dair teknik detay eksik; sadece sonuçtan bahsediliyor.",
+      "fix": "Yorumlama sisteminin teknik işleyişini ve veri akışını tarifnamede açıkça tanımlayın."
+    },
+    {
+      "claim": 13,
+      "type": "E",
+      "quote": "bellek ayak izini azaltarak kompakt dağıtım sağlaması",
+      "why": "Bu ifade bir sonuç beyanıdır; teknik etkiyi sağlayan somut adımlar veya mekanizma belirtilmemiştir.",
+      "fix": "Bellek ayak izini azaltan spesifik algoritma veya veri sıkıştırma tekniğini ekleyin."
+    }
+  ],
+  "scores": {
+    "aciklik": 2,
+    "destek": 3,
+    "yenilik": 7,
+    "bulus_basamagi": 6
+  },
+  "summary": "İstemler, 'D-boyutlu' gibi tanımsız terimler ve teknik açıklama eksikliği nedeniyle belirsizlik (B) ve destek (C) sorunları taşımaktadır. Ayrıca, iddia edilen teknik etkiler somut adımlarla desteklenmediği için buluş basamağı (E) itirazı da mevcuttur."
+}

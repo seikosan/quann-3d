@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="471.96pt" height="262.441125pt" viewBox="0 0 471.96 262.441125" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-11-18T13:55:26.720718</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.8, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 262.441125 
+L 471.96 262.441125 
+L 471.96 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 20.9268 93.023685 
+L 98.712 93.023685 
+Q 99.62712 93.023685 99.62712 92.247525 
+L 99.62712 61.201125 
+Q 99.62712 60.424965 98.712 60.424965 
+L 20.9268 60.424965 
+Q 20.01168 60.424965 20.01168 61.201125 
+L 20.01168 92.247525 
+Q 20.01168 93.023685 20.9268 93.023685 
+z
+" clip-path="url(#p8048365293)" style="fill: #ffffff; stroke: #000000; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 20.9268 155.116485 
+L 98.712 155.116485 
+Q 99.62712 155.116485 99.62712 154.340325 
+L 99.62712 123.293925 
+Q 99.62712 122.517765 98.712 122.517765 
+L 20.9268 122.517765 
+Q 20.01168 122.517765 20.01168 123.293925 
+L 20.01168 154.340325 
+Q 20.01168 155.116485 20.9268 155.116485 
+z
+" clip-path="url(#p8048365293)" style="fill: #ffffff; stroke: #000000; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 126.1656 93.023685 
+L 203.9508 93.023685 
+Q 204.86592 93.023685 204.86592 92.247525 
+L 204.86592 61.201125 
+Q 204.86592 60.424965 203.9508 60.424965 
+L 126.1656 60.424965 
+Q 125.25048 60.424965 125.25048 61.201125 
+L 125.25048 92.247525 
+Q 125.25048 93.023685 126.1656 93.023685 
+z
+" clip-path="url(#p8048365293)" style="fill: #ffffff; stroke: #000000; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 126.1656 155.116485 
+L 203.9508 155.116485 
+Q 204.86592 155.116485 204.86592 154.340325 
+L 204.86592 123.293925 
+Q 204.86592 122.517765 203.9508 122.517765 
+L 126.1656 122.517765 
+Q 125.25048 122.517765 125.25048 123.293925 
+L 125.25048 154.340325 
+Q 125.25048 155.116485 126.1656 155.116485 
+z
+" clip-path="url(#p8048365293)" style="fill: #ffffff; stroke: #000000; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 235.98 124.070085 
+L 304.614 124.070085 
+Q 305.52912 124.070085 305.52912 123.293925 
+L 305.52912 92.247525 
+Q 305.52912 91.471365 304.614 91.471365 
+L 235.98 91.471365 
+Q 235.06488 91.471365 235.06488 92.247525 
+L 235.06488 123.293925 
+Q 235.06488 124.070085 235.98 124.070085 
+z
+" clip-path="url(#p8048365293)" style="fill: #ffffff; stroke: #000000; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 336.6432 124.070085 
+L 409.8528 124.070085 
+Q 410.76792 124.070085 410.76792 123.293925 
+L 410.76792 92.247525 
+Q 410.76792 91.471365 409.8528 91.471365 
+L 336.6432 91.471365 
+Q 335.72808 91.471365 335.72808 92.247525 
+L 335.72808 123.293925 
+Q 335.72808 124.070085 336.6432 124.070085 
+z
+" clip-path="url(#p8048365293)" style="fill: #ebebeb; stroke: #000000; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 100.712708 76.724325 
+Q 112.44024 76.724325 122.937934 76.724325 
+" clip-path="url(#p8048365293)" style="fill: none; stroke: #000000; stroke-width: 1.1; stroke-linecap: round"/>
+    <path d="M 118.137934 74.324325 
+L 122.937934 76.724325 
+L 118.137934 79.124325 
+z
+" clip-path="url(#p8048365293)" style="stroke: #000000; stroke-width: 1.1; stroke-linecap: round"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 100.712708 138.817125 
+Q 112.44024 138.817125 122.937934 138.817125 
+" clip-path="url(#p8048365293)" style="fill: none; stroke: #000000; stroke-width: 1.1; stroke-linecap: round"/>
+    <path d="M 118.137934 136.417125 
+L 122.937934 138.817125 
+L 118.137934 141.217125 
+z
+" clip-path="url(#p8048365293)" style="stroke: #000000; stroke-width: 1.1; stroke-linecap: round"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 205.659389 81.640226 
+Q 219.962856 90.305584 233.214457 98.333698 
+" clip-path="url(#p8048365293)" style="fill: none; stroke: #000000; stroke-width: 1.1; stroke-linecap: round"/>
+    <path d="M 230.35264 93.793874 
+L 233.214457 98.333698 
+L 227.865508 97.899257 
+z
+" clip-path="url(#p8048365293)" style="stroke: #000000; stroke-width: 1.1; stroke-linecap: round"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 205.565553 137.643221 
+Q 219.965264 127.174824 233.370226 117.429596 
+" clip-path="url(#p8048365293)" style="fill: none; stroke: #000000; stroke-width: 1.1; stroke-linecap: round"/>
+    <path d="M 228.076516 118.310863 
+L 233.370226 117.429596 
+L 230.899013 122.193324 
+z
+" clip-path="url(#p8048365293)" style="stroke: #000000; stroke-width: 1.1; stroke-linecap: round"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 306.611915 107.770725 
+Q 320.628592 107.770725 333.415432 107.770725 
+" clip-path="url(#p8048365293)" style="fill: none; stroke: #000000; stroke-width: 1.1; stroke-linecap: round"/>
+    <path d="M 328.615432 105.370725 
+L 333.415432 107.770725 
+L 328.615432 110.170725 
+z
+" clip-path="url(#p8048365293)" style="stroke: #000000; stroke-width: 1.1; stroke-linecap: round"/>
+   </g>
+   <g id="patch_13">
+    <path d="M 126.1656 228.851685 
+L 322.9164 228.851685 
+Q 323.83152 228.851685 323.83152 228.075525 
+L 323.83152 193.148325 
+Q 323.83152 192.372165 322.9164 192.372165 
+L 126.1656 192.372165 
+Q 125.25048 192.372165 125.25048 193.148325 
+L 125.25048 228.075525 
+Q 125.25048 228.851685 126.1656 228.851685 
+z
+" clip-path="url(#p8048365293)" style="fill: #ffffff; stroke: #000000; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_14">
+    <path d="M 99.695598 156.078324 
+Q 112.438648 178.595057 124.575965 200.04147 
+" clip-path="url(#p8048365293)" style="fill: none; stroke-dasharray: 4.4,3.3; stroke-dashoffset: 0; stroke: #000000; stroke-width: 1.1; stroke-linecap: round"/>
+    <path d="M 124.300519 194.68198 
+L 124.575965 200.04147 
+L 120.123106 197.046133 
+z
+" clip-path="url(#p8048365293)" style="stroke-dasharray: 4.4,3.3; stroke-dashoffset: 0; stroke: #000000; stroke-width: 1.1; stroke-linecap: round"/>
+   </g>
+   <g id="patch_15">
+    <path d="M 323.605505 208.733288 
+Q 338.930762 166.953575 353.832494 126.328473 
+" clip-path="url(#p8048365293)" style="fill: none; stroke-dasharray: 4.4,3.3; stroke-dashoffset: 0; stroke: #000000; stroke-width: 1.1; stroke-linecap: round"/>
+    <path d="M 349.926301 130.008372 
+L 353.832494 126.328473 
+L 354.432697 131.661367 
+z
+" clip-path="url(#p8048365293)" style="stroke-dasharray: 4.4,3.3; stroke-dashoffset: 0; stroke: #000000; stroke-width: 1.1; stroke-linecap: round"/>
+   </g>
+   <g id="text_1">
+    <text style="font-style: italic; font-size: 8px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: start" x="11.7756" y="251.748405" transform="rotate(-0 11.7756 251.748405)">Şematik çizimdir; ölçekte değildir.</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 9px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif" transform="translate(23.082525 74.023762)">nokta özellikleri</text>
+    <!-- h_i = f(p$_i$) -->
+    <g transform="translate(37.4994 84.103481)">
+     <text>
+      <tspan x="0" y="-0.15625" style="font-size: 9px; font-family: 'DejaVu Serif'">h</tspan>
+      <tspan x="5.796387" y="-0.15625" style="font-size: 9px; font-family: 'DejaVu Serif'">_</tspan>
+      <tspan x="10.296387" y="-0.15625" style="font-size: 9px; font-family: 'DejaVu Serif'">i</tspan>
+      <tspan x="13.174805" y="-0.15625" style="font-size: 9px; font-family: 'DejaVu Serif'"> </tspan>
+      <tspan x="16.035645" y="-0.15625" style="font-size: 9px; font-family: 'DejaVu Serif'">=</tspan>
+      <tspan x="23.57666" y="-0.15625" style="font-size: 9px; font-family: 'DejaVu Serif'"> </tspan>
+      <tspan x="26.4375" y="-0.15625" style="font-size: 9px; font-family: 'DejaVu Serif'">f</tspan>
+      <tspan x="29.768555" y="-0.15625" style="font-size: 9px; font-family: 'DejaVu Serif'">(</tspan>
+      <tspan x="33.279785" y="-0.15625" style="font-size: 9px; font-family: 'DejaVu Serif'">p</tspan>
+      <tspan x="41.123584" y="-0.15625" style="font-size: 9px; font-family: 'DejaVu Serif'">)</tspan>
+      <tspan x="39.127148" y="1.320312" style="font-style: oblique; font-size: 6.3px; font-family: 'DejaVu Sans'">i</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 9px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif" transform="translate(28.474791 135.802406)">çift özellikleri</text>
+    <!-- e$_{ij}$ -->
+    <g transform="translate(55.2294 145.880437)">
+     <text>
+      <tspan x="0" y="-0.203125" style="font-size: 9px; font-family: 'DejaVu Serif'">e</tspan>
+      <tspan x="5.412305" y="1.273438" style="font-style: oblique; font-size: 6.3px; font-family: 'DejaVu Sans'">i</tspan>
+      <tspan x="7.162646" y="1.273438" style="font-style: oblique; font-size: 6.3px; font-family: 'DejaVu Sans'">j</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 10px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif" transform="translate(137.437887 73.884794)">maksimum</text>
+    <text style="font-size: 10px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif" transform="translate(137.873825 85.082606)">havuzlama</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 10px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif" transform="translate(142.36445 135.977594)">ortalama</text>
+    <text style="font-size: 10px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif" transform="translate(137.873825 147.175406)">havuzlama</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 10px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif" transform="translate(242.283719 104.931194)">birleştirme</text>
+    <text style="font-size: 10px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif" transform="translate(245.854812 116.129006)">(katenim)</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 10px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif" transform="translate(359.297219 104.8226)">küme</text>
+    <text style="font-size: 10px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif" transform="translate(344.949563 116.095413)">gösterimi z</text>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 8.5px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif" transform="translate(63.80268 207.900027)">varyant: Transformer ve tam çift hesabı olmadan O(N) küresel istatistikler</text>
+    <text style="font-size: 8.5px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif" transform="translate(121.418734 217.947027)">(merkezî değer ·varyans ·maksimum ·minimum)</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 12px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle" x="235.98" y="16.393125" transform="rotate(-0 235.98 16.393125)">Şekil 3 — Simetrik agregasyon ve O(N) küresel-istatistik varyantı</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p8048365293">
+   <rect x="7.2" y="22.393125" width="457.56" height="232.848"/>
+  </clipPath>
+ </defs>
+</svg>

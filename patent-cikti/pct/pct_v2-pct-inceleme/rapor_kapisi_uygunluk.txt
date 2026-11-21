@@ -1,0 +1,8 @@
+
+=== docs/patent/pct_v2/UYGUNLUK_NOTU.md
+  atıflı ve DOĞRU  : 5
+  ✗ kaynakta yok   : 0   (atıf satırı sayıyı içermiyor)
+  ○ kaynaksız sayı : 2   (satırda hiç atıf yok)
+  ⚪ ölü adres      : 0
+
+TOPLAM: doğru 5 · kaynakta yok 0 · kaynaksız 2 · ölü adres 0

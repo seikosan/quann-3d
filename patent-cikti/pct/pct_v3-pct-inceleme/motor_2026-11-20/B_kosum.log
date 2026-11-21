@@ -1,0 +1,46 @@
+yazildi: /Users/serkankose/Documents/quann-3d/patent-cikti/pct/pct_v3-pct-inceleme/motor_2026-11-20/B_us_claims_en_antecedentON_v3.json
+toplam: 41 | kritik: 0 | onearli: 41 | minör: 0
+kosulanlar: ["antecedent_basis", "definiteness", "subjective_terms", "internal_references", "structure"]
+atlananlar: []
+tiplere gore: {"antecedent_basis": 41}
+  - IMPORTANT | antecedent_basis   | istem 1 | the method | POSSIBLE antecedent basis issue: "the method" may lack proper introduction
+  - IMPORTANT | antecedent_basis   | istem 1 | the task input | POSSIBLE antecedent basis issue: "the task input" may lack proper introduction
+  - IMPORTANT | antecedent_basis   | istem 1 | the trained model | POSSIBLE antecedent basis issue: "the trained model" may lack proper introduction
+  - IMPORTANT | antecedent_basis   | istem 1 | the context-encoded representations and processing the derived reader input | POSSIBLE antecedent basis issue: "the context-encoded representations and processing the derived reader input"
+  - IMPORTANT | antecedent_basis   | istem 1 | the trained model | POSSIBLE antecedent basis issue: "the trained model" may lack proper introduction
+  - IMPORTANT | antecedent_basis   | istem 1 | the task input consists of one of an ordered sequence of | POSSIBLE antecedent basis issue: "the task input consists of one of an ordered sequence of" may lack proper in
+  - IMPORTANT | antecedent_basis   | istem 1 | the measured field values of | POSSIBLE antecedent basis issue: "the measured field values of" may lack proper introduction
+  - IMPORTANT | antecedent_basis   | istem 1 | the point cloud of | POSSIBLE antecedent basis issue: "the point cloud of" may lack proper introduction
+  - IMPORTANT | antecedent_basis   | istem 1 | the point features and the pair-geometry features into a single set representation as the reader input by a symmetric set aggregation | POSSIBLE antecedent basis issue: "the point features and the pair-geometry features into a single set represen
+  - IMPORTANT | antecedent_basis   | istem 1 | the task output from the set representation | POSSIBLE antecedent basis issue: "the task output from the set representation" may lack proper introduction
+  - IMPORTANT | antecedent_basis   | istem 1 | the task output | POSSIBLE antecedent basis issue: "the task output" may lack proper introduction
+  - IMPORTANT | antecedent_basis   | istem 1 | the point cloud of the trained model itself | POSSIBLE antecedent basis issue: "the point cloud of the trained model itself" may lack proper introduction
+  - IMPORTANT | antecedent_basis   | istem 1 | the task output as contribution data of | POSSIBLE antecedent basis issue: "the task output as contribution data of" may lack proper introduction
+  - IMPORTANT | antecedent_basis   | istem 1 | the records | POSSIBLE antecedent basis issue: "the records" may lack proper introduction
+  - IMPORTANT | antecedent_basis   | istem 3 | the pair-geometry features | POSSIBLE antecedent basis issue: "the pair-geometry features" may lack proper introduction
+  - IMPORTANT | antecedent_basis   | istem 4 | the symmetric set aggregation | POSSIBLE antecedent basis issue: "the symmetric set aggregation" may lack proper introduction
+  - IMPORTANT | antecedent_basis   | istem 4 | the point features and average-pooling over the point pairs | POSSIBLE antecedent basis issue: "the point features and average-pooling over the point pairs" may lack proper
+  - IMPORTANT | antecedent_basis   | istem 4 | the max-pooling and a result of the average-pooling | POSSIBLE antecedent basis issue: "the max-pooling and a result of the average-pooling" may lack proper introdu
+  - IMPORTANT | antecedent_basis   | istem 5 | the task input at which context | POSSIBLE antecedent basis issue: "the task input at which context" may lack proper introduction
+  - IMPORTANT | antecedent_basis   | istem 6 | the point-removal effect | POSSIBLE antecedent basis issue: "the point-removal effect" may lack proper introduction
+  - IMPORTANT | antecedent_basis   | istem 6 | the reader | POSSIBLE antecedent basis issue: "the reader" may lack proper introduction
+  - IMPORTANT | antecedent_basis   | istem 7 | the records assigned | POSSIBLE antecedent basis issue: "the records assigned" may lack proper introduction
+  - IMPORTANT | antecedent_basis   | istem 9 | the reader | POSSIBLE antecedent basis issue: "the reader" may lack proper introduction
+  - IMPORTANT | antecedent_basis   | istem 9 | the model input identities | POSSIBLE antecedent basis issue: "the model input identities" may lack proper introduction
+  - IMPORTANT | antecedent_basis   | istem 9 | the same package produces both the task output and a human-readable | POSSIBLE antecedent basis issue: "the same package produces both the task output and a human-readable" may lac
+  - IMPORTANT | antecedent_basis   | istem 10 | the task input | POSSIBLE antecedent basis issue: "the task input" may lack proper introduction
+  - IMPORTANT | antecedent_basis   | istem 10 | the multi-sentence set representation | POSSIBLE antecedent basis issue: "the multi-sentence set representation" may lack proper introduction
+  - IMPORTANT | antecedent_basis   | istem 11 | the set of global set statistics | POSSIBLE antecedent basis issue: "the set of global set statistics" may lack proper introduction
+  - IMPORTANT | antecedent_basis   | istem 13 | the instructions configures the system | POSSIBLE antecedent basis issue: "the instructions configures the system" may lack proper introduction
+  - IMPORTANT | antecedent_basis   | istem 13 | the instructions further configures the system | POSSIBLE antecedent basis issue: "the instructions further configures the system" may lack proper introduction
+  - IMPORTANT | antecedent_basis   | istem 13 | the context-encoded representations into d-dimensional vectors | POSSIBLE antecedent basis issue: "the context-encoded representations into d-dimensional vectors" may lack pro
+  - IMPORTANT | antecedent_basis   | istem 13 | the task input consists of one of an ordered sequence of | POSSIBLE antecedent basis issue: "the task input consists of one of an ordered sequence of" may lack proper in
+  - IMPORTANT | antecedent_basis   | istem 13 | the point cloud of | POSSIBLE antecedent basis issue: "the point cloud of" may lack proper introduction
+  - IMPORTANT | antecedent_basis   | istem 13 | the same point cloud from which the task output | POSSIBLE antecedent basis issue: "the same point cloud from which the task output" may lack proper introductio
+  - IMPORTANT | antecedent_basis   | istem 14 | the model input identities | POSSIBLE antecedent basis issue: "the model input identities" may lack proper introduction
+  - IMPORTANT | antecedent_basis   | istem 14 | the interpretation engine | POSSIBLE antecedent basis issue: "the interpretation engine" may lack proper introduction
+  - IMPORTANT | antecedent_basis   | istem 15 | the set of instructions causes the computer | POSSIBLE antecedent basis issue: "the set of instructions causes the computer" may lack proper introduction
+  - IMPORTANT | antecedent_basis   | istem 15 | the task input consists of one of an ordered sequence of | POSSIBLE antecedent basis issue: "the task input consists of one of an ordered sequence of" may lack proper in
+  - IMPORTANT | antecedent_basis   | istem 15 | the point cloud of | POSSIBLE antecedent basis issue: "the point cloud of" may lack proper introduction
+  - IMPORTANT | antecedent_basis   | istem 15 | the point cloud and | POSSIBLE antecedent basis issue: "the point cloud and" may lack proper introduction
+  - IMPORTANT | antecedent_basis   | istem 15 | the task output from the set representation | POSSIBLE antecedent basis issue: "the task output from the set representation" may lack proper introduction

@@ -1,0 +1,134 @@
+{
+  "status": "fulfilled",
+  "result": {
+    "analysis_type": "automated",
+    "jurisdiction": "PCT",
+    "overall_compliant": false,
+    "checks_run": [
+      "abstract",
+      "title",
+      "description",
+      "claims",
+      "terminology"
+    ],
+    "checks_skipped": [
+      {
+        "check": "physical",
+        "reason": "physical requirements cannot be verified from text; manual inspection required"
+      },
+      {
+        "check": "abstract figure designation",
+        "reason": "the figure to publish with the abstract is chosen on the request form (PCT Rules 3.3(a)(iii) and 8.2); check the request names one"
+      }
+    ],
+    "verdict_scope": "Automated text checks only; drawings_present is a declaration, not inspection of drawing files. Physical layout, forms and fee payment require manual review. This is not a filing clearance.",
+    "ready_to_file": false,
+    "summary": "[INCOMPLETE] Checks skipped: physical (physical requirements cannot be verified from text; manual inspection required); abstract figure designation (the figure to publish with the abstract is chosen on the request form (PCT Rules 3.3(a)(iii) and 8.2); check the request names one). [WARNING] Found 1 CRITICAL PCT formality issue(s)",
+    "critical_issues": 1,
+    "warnings": 0,
+    "info": 0,
+    "abstract": {
+      "word_count": 137,
+      "compliant": true,
+      "issues": [],
+      "figure_designation": "not checked: verify the request form names a figure"
+    },
+    "title": {
+      "word_count": 6,
+      "compliant": true,
+      "issues": []
+    },
+    "description": {
+      "found_elements": {
+        "Technical field": true,
+        "Background art": true,
+        "Disclosure of the invention": true,
+        "Brief description of drawings": true,
+        "Best mode": true
+      },
+      "missing_elements": [],
+      "compliant": true
+    },
+    "claims": {
+      "total_claims": 0,
+      "claim_numbers": [],
+      "compliant": false,
+      "issues": [
+        "No claims found"
+      ]
+    },
+    "terminology": {
+      "non_metric_units": [],
+      "non_standard_temperatures": [],
+      "compliant": true
+    },
+    "physical_requirements": {
+      "advisory": true,
+      "message": "Physical requirements per PCT Rule 11 must be verified manually",
+      "checklist": {
+        "paper_size": {
+          "requirement": "A4 (29.7 cm x 21 cm)",
+          "rule": "PCT Rule 11.2"
+        },
+        "margins": {
+          "top": ">= 2.0 cm",
+          "left": ">= 2.5 cm",
+          "right": ">= 2.0 cm",
+          "bottom": ">= 2.0 cm",
+          "rule": "PCT Rule 11.6"
+        },
+        "text_color": {
+          "requirement": "Dark, indelible color (preferably black)",
+          "rule": "PCT Rule 11.2"
+        },
+        "font_size": {
+          "requirement": "Capital letters at least 0.28 cm high",
+          "rule": "PCT Rule 11.9(d)"
+        },
+        "line_spacing": {
+          "requirement": "1.5 line spacing for description and claims",
+          "rule": "PCT Rule 11.9(c)"
+        }
+      }
+    },
+    "issues": [
+      {
+        "section": "claims",
+        "severity": "CRITICAL",
+        "problem": "No claims detected in the application",
+        "current": "0 claims",
+        "required": "At least one independent claim",
+        "fix": "Add at least one independent claim",
+        "legal_ref": "PCT Rule 6.2(a)",
+        "confidence": "HIGH"
+      }
+    ],
+    "pct_references": [
+      {
+        "section": "PCT Rule 10 - Terminology and Signs",
+        "page": 4,
+        "text": "[PCT Rule 10 - Terminology and Signs] Sequence Disclosure \n \nRule 6 \nThe Claims \n \n6.1 \nNumber and Numbering of Claims \n \n6.2 \nReferences to Other Parts of the International \nApplication \n \n6.3 \nManner of Claiming \n \n6.4 \nDependent Claims \n \n6.5 \nUtility Models \n \nRule 7 \nThe Drawings \n \n7.1 \nFlow Sheets and Diagrams \n \n7.2 \nTime Limit \n \nRule 8 \nThe Abstract \n \n8.1 \nContents and Form of the Abstract \n \n8.2 \nFigure \n \n8.3 \nGuiding Principles in Drafting \n \nRule 9 \nExpressions, Etc., Not to Be Us..."
+      },
+      {
+        "section": "MPEP 1800",
+        "page": 62,
+        "text": "[MPEP 1800] \n B.    Box 5 and Box 6 - Abstract and Figure for\nPublication\n PCT Rule 8\nThe Abstract\n8.1  Contents and Form of the Abstract\n(a)  The abstract shall consist of the following:\n(i)  a summary of the disclosure as contained in the\ndescription, the claims, and any drawings; the summary shall\nindicate the technical field to which the invention pertains and\nshall be drafted in a way which allows the clear understanding\nof the technical problem, the gist of the solution of that problem\nthr..."
+      },
+      {
+        "section": "PCT Rule 91 - 8.08 – 8.10",
+        "page": 4,
+        "text": "[PCT Rule 91 - 8.08 – 8.10] h the Claims \n5.52 – 5.53 \nRelationship of Claims to Disclosure \n5.54 – 5.58 \nAppendix to Chapter 5 \nMultiple Dependent Claims \nInterpretation of Claims \nUse Claims \nProduct by Process Claims \nConciseness \nChapter 6 \nPriority \n6.01 – 6.17 \nThe Right to Priority \n6.01 – 6.05 \nDetermining Priority Dates \n6.06 – 6.10 \nClaiming Priority \n6.11 – 6.17 \nChapter 7 \nClassification of International Applications \n7.01 – 7.08 \nDefinition \n7.01 \nDefinitive Classification of the In..."
+      },
+      {
+        "section": "PCT Rule 5.1 - 4.03",
+        "page": 32,
+        "text": "[PCT Rule 5.1 - 4.03] iii) one or more claims (see Chapter 5); \n(iv) one or more drawings (where required;  see paragraph 4.28);  and \n(v) \nan abstract (see Chapter 16). \nThis chapter discusses above items (ii) and (iv) insofar as they are the concern of the \nInternational Searching Authority and International Preliminary Examining Authority. \nDescription \nArticle 5 \n4.02 \nThe international application must “disclose the invention in a manner sufficiently \nclear and complete for the invention to..."
+      },
+      {
+        "section": "PCT Rule 5.1 - 4.03",
+        "page": 32,
+        "text": "[PCT Rule 5.1 - 4.03] PCT/GL/ISPE/14 \n \n \nPage 32 \n \nPART II  \nTHE INTERNATIONAL APPLICATION \nChapter 4   \nContent of the International Application (Other Than the Claims) \nGeneral \nArticle 3(2) \n4.01 \nThe contents of the international application are set out in Article 3(2).  The \napplication must contain: \n(i) \na request (see the PCT Receiving Office Guidelines); \n(ii) \na description (see paragraphs 4.02 to 4.27); \n(iii) one or more claims (see Chapter 5); \n(iv) one or more drawings (where req..."
+      }
+    ]
+  }
+}

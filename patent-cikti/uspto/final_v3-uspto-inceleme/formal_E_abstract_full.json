@@ -1,0 +1,161 @@
+{
+  "ok": true,
+  "result": {
+    "results": {
+      "abstract": {
+        "word_count": 243,
+        "line_count": 5,
+        "compliant": false,
+        "issues": [
+          "Too long",
+          "Multiple paragraphs"
+        ]
+      },
+      "title": {
+        "character_count": 132,
+        "word_count": 18,
+        "compliant": true,
+        "issues": [
+          "Could be shorter"
+        ]
+      },
+      "drawings": {
+        "figures_referenced": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8"
+        ],
+        "figure_count": 8,
+        "drawings_provided": true,
+        "compliant": false,
+        "issues": [
+          "Missing figure description section"
+        ]
+      },
+      "sections": {
+        "found_sections": {
+          "BACKGROUND": false,
+          "SUMMARY": false,
+          "BRIEF DESCRIPTION OF DRAWINGS": false,
+          "DETAILED DESCRIPTION": false
+        },
+        "missing_sections": [
+          "BACKGROUND",
+          "SUMMARY",
+          "BRIEF DESCRIPTION OF DRAWINGS",
+          "DETAILED DESCRIPTION"
+        ],
+        "compliant": false
+      }
+    },
+    "issues": [
+      {
+        "section": "abstract",
+        "severity": "WARNING",
+        "problem": "Abstract exceeds the 150-word limit",
+        "current": "243 words",
+        "required": "150 words or fewer",
+        "fix": "Reduce abstract to 150 words or fewer",
+        "mpep": "37 CFR 1.72(b); MPEP 608.01(b)",
+        "confidence": "HIGH"
+      },
+      {
+        "section": "abstract",
+        "severity": "INFO",
+        "problem": "Abstract should be a single paragraph",
+        "current": "Multiple paragraphs",
+        "required": "Single paragraph",
+        "fix": "Combine into single paragraph",
+        "mpep": "MPEP 608.01(b)",
+        "confidence": "HIGH"
+      },
+      {
+        "section": "title",
+        "severity": "INFO",
+        "problem": "Title is longer than recommended",
+        "current": "132 characters",
+        "required": "<= 100 characters (recommended)",
+        "fix": "Consider shortening by 32 characters",
+        "mpep": "MPEP 606",
+        "confidence": "HIGH"
+      },
+      {
+        "section": "specification",
+        "severity": "CRITICAL",
+        "problem": "Missing required section: BACKGROUND",
+        "current": "Not found",
+        "required": "Must include all required sections",
+        "fix": "Add \"BACKGROUND\" section to specification",
+        "mpep": "37 CFR 1.77",
+        "confidence": "HIGH"
+      },
+      {
+        "section": "specification",
+        "severity": "CRITICAL",
+        "problem": "Missing required section: SUMMARY",
+        "current": "Not found",
+        "required": "Must include all required sections",
+        "fix": "Add \"SUMMARY\" section to specification",
+        "mpep": "37 CFR 1.77",
+        "confidence": "HIGH"
+      },
+      {
+        "section": "specification",
+        "severity": "CRITICAL",
+        "problem": "Missing required section: BRIEF DESCRIPTION OF DRAWINGS",
+        "current": "Not found",
+        "required": "Must include all required sections",
+        "fix": "Add \"BRIEF DESCRIPTION OF DRAWINGS\" section to specification",
+        "mpep": "37 CFR 1.77",
+        "confidence": "HIGH"
+      },
+      {
+        "section": "specification",
+        "severity": "CRITICAL",
+        "problem": "Missing required section: DETAILED DESCRIPTION",
+        "current": "Not found",
+        "required": "Must include all required sections",
+        "fix": "Add \"DETAILED DESCRIPTION\" section to specification",
+        "mpep": "37 CFR 1.77",
+        "confidence": "HIGH"
+      },
+      {
+        "section": "drawings",
+        "severity": "CRITICAL",
+        "problem": "Figures referenced but \"Brief Description of Drawings\" section missing",
+        "current": "Section not found",
+        "required": "Must include \"Brief Description of Drawings\" section",
+        "fix": "Add \"Brief Description of Drawings\" section listing all figures",
+        "mpep": "37 CFR 1.77(b)(3)",
+        "confidence": "HIGH"
+      }
+    ],
+    "compliance_summary": {
+      "critical_issues": 5,
+      "warnings": 1,
+      "info": 2,
+      "ready_to_file": false,
+      "summary": "[INCOMPLETE] Checks skipped: figure_numeral_coverage (no detailed description supplied). [WARNING] Found 5 CRITICAL, 1 WARNING, 2 INFO formality issue(s)"
+    },
+    "overall_compliant": false,
+    "checks_run": [
+      "abstract",
+      "title",
+      "sections",
+      "drawing_references",
+      "abstract_title_overlap"
+    ],
+    "checks_skipped": [
+      {
+        "check": "figure_numeral_coverage",
+        "reason": "no detailed description supplied"
+      }
+    ],
+    "verdict_scope": "Automated text and drawing-reference checks only; drawings_present is a declaration, not inspection of drawing files. This is not a filing clearance."
+  }
+}

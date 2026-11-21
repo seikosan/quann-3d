@@ -1,0 +1,56 @@
+[
+  {
+    "figure_no": 1,
+    "title": "Nokta-bulutlu dil modelleme akışı",
+    "direction": "TD",
+    "nodes": [
+      {
+        "id": "A",
+        "label": "Okuyucu",
+        "number": 16
+      },
+      {
+        "id": "B",
+        "label": "Projeksiyon modülü",
+        "number": 10
+      },
+      {
+        "id": "C",
+        "label": "Çift-geometri kodlayıcı",
+        "number": 12
+      },
+      {
+        "id": "D",
+        "label": "Küme agregasyonu modülü",
+        "number": 14
+      },
+      {
+        "id": "E",
+        "label": "Yorumlama sistemi",
+        "number": 18
+      }
+    ],
+    "edges": [
+      {
+        "from": "A",
+        "to": "B",
+        "label": ""
+      },
+      {
+        "from": "B",
+        "to": "C",
+        "label": ""
+      },
+      {
+        "from": "C",
+        "to": "D",
+        "label": ""
+      },
+      {
+        "from": "D",
+        "to": "E",
+        "label": ""
+      }
+    ]
+  }
+]

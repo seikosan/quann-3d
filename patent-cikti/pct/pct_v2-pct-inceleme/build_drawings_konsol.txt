@@ -1,0 +1,22 @@
+/Users/serkankose/Documents/quann-3d/docs/patent/pct_v2/build_drawings.py:127: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  data = img.getdata()
+  fig1_system_architecture.svg: 2400x1618 px -> 16.0 x 10.8 cm
+  fig2_pair_geometry.svg: 2400x1650 px -> 16.0 x 11.0 cm
+  fig3_symmetric_aggregation.svg: 2400x1333 px -> 16.0 x 8.9 cm
+  fig4_point_removal.svg: 2400x1107 px -> 16.0 x 7.4 cm
+  fig5_region_naming.svg: 2400x1371 px -> 16.0 x 9.1 cm
+  fig6_region_shift.svg: 2400x1247 px -> 16.0 x 8.3 cm
+  fig7_int8_package.svg: 2400x1247 px -> 16.0 x 8.3 cm
+  fig8_window_cloud.svg: 2400x1426 px -> 16.0 x 9.5 cm
+yazildi: patent/pct_v2/filing/SEKILLER_FILING-COPY.pdf  (930301 B)
+pdfinfo: {'Pages': '8', 'Page size': '595.304 x 841.89 pts (A4)'}
+  sayfa 1 murekkep: 2.13%
+  sayfa 2 murekkep: 2.16%
+  sayfa 3 murekkep: 1.39%
+  sayfa 4 murekkep: 1.04%
+  sayfa 5 murekkep: 1.11%
+  sayfa 6 murekkep: 1.49%
+  sayfa 7 murekkep: 1.41%
+  sayfa 8 murekkep: 1.88%
+  metin katmani: 0 karakter
+KABUL: 8 sayfa A4, her sayfada murekkep, metin katmani yok.

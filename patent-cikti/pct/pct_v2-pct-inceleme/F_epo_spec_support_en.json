@@ -1,0 +1,640 @@
+{
+  "ok": true,
+  "result": {
+    "ok": true,
+    "parsed_claim_count": 15,
+    "result": {
+      "specification_paragraphs": 70,
+      "indexed_terms": 1269,
+      "total_issues": 47,
+      "critical_issues": 0,
+      "important_issues": 47,
+      "sufficiency_issues": 47,
+      "section_issues": 0,
+      "input_warnings": [],
+      "issues": [
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 1,
+          "element": "task input",
+          "problem": "Claim element \"task input\" has limited description (only Para. 65)",
+          "spec_refs": [
+            "[0065]"
+          ],
+          "fix": "Consider adding more detailed description of \"task input\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 1,
+          "element": "context-encoded representations",
+          "problem": "Claim element \"context-encoded representations\" has limited description (only Para. 10)",
+          "spec_refs": [
+            "[0010]"
+          ],
+          "fix": "Consider adding more detailed description of \"context-encoded representations\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 1,
+          "element": "point in a D-dimensional space",
+          "problem": "Claim element \"point in a D-dimensional space\" has limited description (only Para. 10)",
+          "spec_refs": [
+            "[0010]"
+          ],
+          "fix": "Consider adding more detailed description of \"point in a D-dimensional space\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 1,
+          "element": "ordered sequence of",
+          "problem": "Claim element \"ordered sequence of\" has limited description (only Para. 10)",
+          "spec_refs": [
+            "[0010]"
+          ],
+          "fix": "Consider adding more detailed description of \"ordered sequence of\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 1,
+          "element": "tabular record",
+          "problem": "Claim element \"tabular record\" has limited description (only Para. 10)",
+          "spec_refs": [
+            "[0010]"
+          ],
+          "fix": "Consider adding more detailed description of \"tabular record\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 1,
+          "element": "point cloud",
+          "problem": "Claim element \"point cloud\" has limited description (only Para. 20)",
+          "spec_refs": [
+            "[0020]"
+          ],
+          "fix": "Consider adding more detailed description of \"point cloud\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 1,
+          "element": "input order of the points",
+          "problem": "Claim element \"input order of the points\" has limited description (only Para. 10)",
+          "spec_refs": [
+            "[0010]"
+          ],
+          "fix": "Consider adding more detailed description of \"input order of the points\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 1,
+          "element": "reader",
+          "problem": "Claim element \"reader\" has limited description (only Para. 36)",
+          "spec_refs": [
+            "[0036]"
+          ],
+          "fix": "Consider adding more detailed description of \"reader\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 1,
+          "element": "probability distribution of a next",
+          "problem": "Claim element \"probability distribution of a next\" has limited description (only Para. 36)",
+          "spec_refs": [
+            "[0036]"
+          ],
+          "fix": "Consider adding more detailed description of \"probability distribution of a next\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 1,
+          "element": "class assignment score",
+          "problem": "Claim element \"class assignment score\" has limited description (only Para. 36)",
+          "spec_refs": [
+            "[0036]"
+          ],
+          "fix": "Consider adding more detailed description of \"class assignment score\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 1,
+          "element": "same trained model",
+          "problem": "Claim element \"same trained model\" has limited description (only Para. 11)",
+          "spec_refs": [
+            "[0011]"
+          ],
+          "fix": "Consider adding more detailed description of \"same trained model\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 3,
+          "element": "Euclidean norm of the difference vector",
+          "problem": "Claim element \"Euclidean norm of the difference vector\" has limited description (only Para. 33)",
+          "spec_refs": [
+            "[0033]"
+          ],
+          "fix": "Consider adding more detailed description of \"Euclidean norm of the difference vector\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 4,
+          "element": "result of the max-pooling",
+          "problem": "Claim element \"result of the max-pooling\" has limited description (only Para. 34)",
+          "spec_refs": [
+            "[0034]"
+          ],
+          "fix": "Consider adding more detailed description of \"result of the max-pooling\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 4,
+          "element": "result of the average-pooling",
+          "problem": "Claim element \"result of the average-pooling\" has limited description (only Para. 34)",
+          "spec_refs": [
+            "[0034]"
+          ],
+          "fix": "Consider adding more detailed description of \"result of the average-pooling\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 5,
+          "element": "context length of the task input",
+          "problem": "Claim element \"context length of the task input\" has limited description (only Para. 39)",
+          "spec_refs": [
+            "[0039]"
+          ],
+          "fix": "Consider adding more detailed description of \"context length of the task input\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 6,
+          "element": "reader",
+          "problem": "Claim element \"reader\" has limited description (only Para. 36)",
+          "spec_refs": [
+            "[0036]"
+          ],
+          "fix": "Consider adding more detailed description of \"reader\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 8,
+          "element": "emerging region",
+          "problem": "Claim element \"emerging region\" has limited description (only Para. 13)",
+          "spec_refs": [
+            "[0013]"
+          ],
+          "fix": "Consider adding more detailed description of \"emerging region\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 9,
+          "element": "reader",
+          "problem": "Claim element \"reader\" has limited description (only Para. 36)",
+          "spec_refs": [
+            "[0036]"
+          ],
+          "fix": "Consider adding more detailed description of \"reader\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 10,
+          "element": "task input",
+          "problem": "Claim element \"task input\" has limited description (only Para. 65)",
+          "spec_refs": [
+            "[0065]"
+          ],
+          "fix": "Consider adding more detailed description of \"task input\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 10,
+          "element": "plurality of sentences",
+          "problem": "Claim element \"plurality of sentences\" has limited description (only Para. 65)",
+          "spec_refs": [
+            "[0065]"
+          ],
+          "fix": "Consider adding more detailed description of \"plurality of sentences\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 10,
+          "element": "sentence cloud state",
+          "problem": "Claim element \"sentence cloud state\" has limited description (only Para. 65)",
+          "spec_refs": [
+            "[0065]"
+          ],
+          "fix": "Consider adding more detailed description of \"sentence cloud state\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 10,
+          "element": "fixed stride",
+          "problem": "Claim element \"fixed stride\" has limited description (only Para. 37)",
+          "spec_refs": [
+            "[0037]"
+          ],
+          "fix": "Consider adding more detailed description of \"fixed stride\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 10,
+          "element": "multi-sentence set representation",
+          "problem": "Claim element \"multi-sentence set representation\" has limited description (only Para. 37)",
+          "spec_refs": [
+            "[0037]"
+          ],
+          "fix": "Consider adding more detailed description of \"multi-sentence set representation\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 10,
+          "element": "reader",
+          "problem": "Claim element \"reader\" has limited description (only Para. 36)",
+          "spec_refs": [
+            "[0036]"
+          ],
+          "fix": "Consider adding more detailed description of \"reader\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 11,
+          "element": "point cloud",
+          "problem": "Claim element \"point cloud\" has limited description (only Para. 20)",
+          "spec_refs": [
+            "[0020]"
+          ],
+          "fix": "Consider adding more detailed description of \"point cloud\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 11,
+          "element": "cloud centre",
+          "problem": "Claim element \"cloud centre\" has limited description (only Para. 33)",
+          "spec_refs": [
+            "[0033]"
+          ],
+          "fix": "Consider adding more detailed description of \"cloud centre\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 12,
+          "element": "reader by gradient-based backpropagation",
+          "problem": "Claim element \"reader by gradient-based backpropagation\" has limited description (only Para. 15)",
+          "spec_refs": [
+            "[0015]"
+          ],
+          "fix": "Consider adding more detailed description of \"reader by gradient-based backpropagation\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 12,
+          "element": "point cloud",
+          "problem": "Claim element \"point cloud\" has limited description (only Para. 20)",
+          "spec_refs": [
+            "[0020]"
+          ],
+          "fix": "Consider adding more detailed description of \"point cloud\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 12,
+          "element": "candidate point position",
+          "problem": "Claim element \"candidate point position\" has limited description (only Para. 15)",
+          "spec_refs": [
+            "[0015]"
+          ],
+          "fix": "Consider adding more detailed description of \"candidate point position\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 13,
+          "element": "computer system",
+          "problem": "Claim element \"computer system\" has limited description (only Para. 16)",
+          "spec_refs": [
+            "[0016]"
+          ],
+          "fix": "Consider adding more detailed description of \"computer system\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 13,
+          "element": "at least one processor",
+          "problem": "Claim element \"at least one processor\" has limited description (only Para. 16)",
+          "spec_refs": [
+            "[0016]"
+          ],
+          "fix": "Consider adding more detailed description of \"at least one processor\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 13,
+          "element": "instructions configures the system",
+          "problem": "Claim element \"instructions configures the system\" has limited description (only Para. 16)",
+          "spec_refs": [
+            "[0016]"
+          ],
+          "fix": "Consider adding more detailed description of \"instructions configures the system\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 13,
+          "element": "task input",
+          "problem": "Claim element \"task input\" has limited description (only Para. 65)",
+          "spec_refs": [
+            "[0065]"
+          ],
+          "fix": "Consider adding more detailed description of \"task input\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 13,
+          "element": "context-encoded representations",
+          "problem": "Claim element \"context-encoded representations\" has limited description (only Para. 10)",
+          "spec_refs": [
+            "[0010]"
+          ],
+          "fix": "Consider adding more detailed description of \"context-encoded representations\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 13,
+          "element": "ordered sequence of",
+          "problem": "Claim element \"ordered sequence of\" has limited description (only Para. 10)",
+          "spec_refs": [
+            "[0010]"
+          ],
+          "fix": "Consider adding more detailed description of \"ordered sequence of\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 13,
+          "element": "tabular record",
+          "problem": "Claim element \"tabular record\" has limited description (only Para. 10)",
+          "spec_refs": [
+            "[0010]"
+          ],
+          "fix": "Consider adding more detailed description of \"tabular record\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 13,
+          "element": "point cloud",
+          "problem": "Claim element \"point cloud\" has limited description (only Para. 20)",
+          "spec_refs": [
+            "[0020]"
+          ],
+          "fix": "Consider adding more detailed description of \"point cloud\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 13,
+          "element": "input order of the points",
+          "problem": "Claim element \"input order of the points\" has limited description (only Para. 10)",
+          "spec_refs": [
+            "[0010]"
+          ],
+          "fix": "Consider adding more detailed description of \"input order of the points\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 14,
+          "element": "distribution store holding",
+          "problem": "Claim element \"distribution store holding\" has limited description (only Para. 50)",
+          "spec_refs": [
+            "[0050]"
+          ],
+          "fix": "Consider adding more detailed description of \"distribution store holding\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 14,
+          "element": "reader",
+          "problem": "Claim element \"reader\" has limited description (only Para. 36)",
+          "spec_refs": [
+            "[0036]"
+          ],
+          "fix": "Consider adding more detailed description of \"reader\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 15,
+          "element": "task input",
+          "problem": "Claim element \"task input\" has limited description (only Para. 65)",
+          "spec_refs": [
+            "[0065]"
+          ],
+          "fix": "Consider adding more detailed description of \"task input\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 15,
+          "element": "context-encoded representations",
+          "problem": "Claim element \"context-encoded representations\" has limited description (only Para. 10)",
+          "spec_refs": [
+            "[0010]"
+          ],
+          "fix": "Consider adding more detailed description of \"context-encoded representations\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 15,
+          "element": "ordered sequence of",
+          "problem": "Claim element \"ordered sequence of\" has limited description (only Para. 10)",
+          "spec_refs": [
+            "[0010]"
+          ],
+          "fix": "Consider adding more detailed description of \"ordered sequence of\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 15,
+          "element": "tabular record",
+          "problem": "Claim element \"tabular record\" has limited description (only Para. 10)",
+          "spec_refs": [
+            "[0010]"
+          ],
+          "fix": "Consider adding more detailed description of \"tabular record\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 15,
+          "element": "point cloud",
+          "problem": "Claim element \"point cloud\" has limited description (only Para. 20)",
+          "spec_refs": [
+            "[0020]"
+          ],
+          "fix": "Consider adding more detailed description of \"point cloud\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 15,
+          "element": "input order",
+          "problem": "Claim element \"input order\" has limited description (only Para. 10)",
+          "spec_refs": [
+            "[0010]"
+          ],
+          "fix": "Consider adding more detailed description of \"input order\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        },
+        {
+          "severity": "IMPORTANT",
+          "type": "sufficiency",
+          "claim": 15,
+          "element": "reader",
+          "problem": "Claim element \"reader\" has limited description (only Para. 36)",
+          "spec_refs": [
+            "[0036]"
+          ],
+          "fix": "Consider adding more detailed description of \"reader\" for stronger Art. 83 support",
+          "legal_ref": "Art. 83 EPC",
+          "confidence": "MEDIUM"
+        }
+      ],
+      "summary": "[WARNING] Found 47 IMPORTANT issues in Art. 83 EPC sufficiency analysis",
+      "compliant": true,
+      "spec_coverage": {
+        "percentage": 100,
+        "supported_claims": 15,
+        "total_claims": 15,
+        "unsupported_claims": []
+      },
+      "jurisdiction": "EPO",
+      "legal_framework": "European Patent Convention (EPC)"
+    }
+  }
+}

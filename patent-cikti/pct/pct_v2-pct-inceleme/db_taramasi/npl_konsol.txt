@@ -1,0 +1,20 @@
+n01 [200] toplam=48 hit=6 :: point cloud representation language model token
+n02 [200] toplam=92 hit=6 :: deep sets permutation invariant neural network
+n03 [200] toplam=20 hit=6 :: pointnet hierarchical feature aggregation point clou
+n04 [200] toplam=4 hit=4 :: explainability hidden representation point cloud int
+n05 [200] toplam=0 hit=0 :: occlusion ablation input removal language model expl
+n06 [200] toplam=15 hit=6 :: clustering latent representations automatic labellin
+n07 [200] toplam=3 hit=3 :: population drift latent distribution divergence expl
+n08 [200] toplam=1 hit=1 :: zeroth-order derivative-free training neural network
+n09 [200] toplam=1 hit=1 :: tabular data deep learning embedding row as set of v
+n10 [200] toplam=13 hit=6 :: INT8 post-training quantization on-device language m
+n11 [200] toplam=15 hit=6 :: hybrid gradient based and gradient free parameter up
+n12 [200] toplam=0 hit=0 :: sentence level embedding sliding window document rep
+a01 [200] toplam=353 hit=5 :: all:"point cloud" AND all:"language model"
+a02 [200] toplam=2 hit=2 :: all:"set aggregation" AND all:"permutation invariant
+a03 [200] toplam=77 hit=5 :: all:"zeroth-order" AND all:"language model" AND all:
+a04 [200] toplam=56 hit=5 :: all:"permutation invariant" AND all:"language model"
+a05 [200] toplam=22 hit=5 :: all:"point cloud" AND all:"explainability" AND all:"
+a06 [200] toplam=2 hit=2 :: all:"tabular" AND all:"point cloud" AND all:"classif
+a07 [200] toplam=1 hit=1 :: all:"total variation" AND all:"cluster" AND all:"dis
+-> /Users/serkankose/Documents/quann-3d/patent-cikti/pct/pct_v2-pct-inceleme/db_taramasi/npl/index.jsonl

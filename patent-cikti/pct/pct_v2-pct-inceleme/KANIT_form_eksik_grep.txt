@@ -1,0 +1,21 @@
+## 1) applicant / basvuru sahibi (BASVURU_PAKETI.md hariç)
+$ grep -rniE 'applicant|başvuru sahibi' docs/patent/pct_v2/*.md --exclude BASVURU_PAKETI.md
+CIKIS=1 (1 = hic karsilasmadi = eksik)
+
+## 2) mucit / inventor (BASVURU_PAKETI.md hariç)
+$ grep -rniE 'mucit|inventor' docs/patent/pct_v2/*.md --exclude BASVURU_PAKETI.md
+docs/patent/pct_v2/UYGUNLUK_NOTU.md:37:| PCT/RO/101 talep formu | Başvuru formu: mucitler, vekâletname, beyanlar, şekil atfı | **eksik** — paket metinlerden oluşuyor, form hazırlanmadı | `patent-cikti/pct/pct_v2-pct-inceleme/A_pct_en.json:110` ("forms … require manual review") · `patent-cikti/pct/pct_v2-denetmen/DENETIM_OZET.md:59` |
+CIKIS=0 (1 = hic karsilasmadi = eksik)
+
+## 3) arama otoritesi / ISA seçildi (BASVURU_PAKETI.md hariç)
+$ grep -rniE 'arama otoritesi|ISA seçildi' docs/patent/pct_v2/*.md --exclude BASVURU_PAKETI.md
+CIKIS=1 (1 = hic karsilasmadi = eksik)
+
+## 4) priority / rüçhan (BASVURU_PAKETI.md hariç)
+$ grep -rniE 'priority|rüçhan' docs/patent/pct_v2/*.md --exclude BASVURU_PAKETI.md
+CIKIS=1 (1 = hic karsilasmadi = eksik)
+
+## 5) ayni terimlerin basilabilir metin nüshalarinda karsiligi
+$ grep -rniE 'applicant|mucit|priority|rüçhan|arama otoritesi' docs/patent/pct_v2/filing/
+CIKIS=1 (1 = hic karsilasmadi = eksik)
+

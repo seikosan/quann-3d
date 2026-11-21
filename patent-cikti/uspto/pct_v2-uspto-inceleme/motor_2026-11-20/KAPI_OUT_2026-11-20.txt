@@ -1,0 +1,45 @@
+# KAPI_OUT_2026-11-20 — bu koşumun makine kapısı çıktıları (ham komut + ham çıktı)
+
+## 1) rapor sayı denetçisi (bu koşumun üç çıktısı)
+komut: python3 ~/.config/opencode/denetim/rapor_denetle.py <INCELEME_RAPORU|MOTOR_KAYITLARI|METRIKLER>_2026-11-20.md
+
+=== patent-cikti/uspto/pct_v2-uspto-inceleme/motor_2026-11-20/INCELEME_RAPORU_2026-11-20.md
+  atıflı ve DOĞRU  : 1
+  ✗ kaynakta yok   : 0   (atıf satırı sayıyı içermiyor)
+  ○ kaynaksız sayı : 140   (satırda hiç atıf yok)
+  ⚪ ölü adres      : 0
+
+=== patent-cikti/uspto/pct_v2-uspto-inceleme/motor_2026-11-20/MOTOR_KAYITLARI_2026-11-20.md
+  atıflı ve DOĞRU  : 0
+  ✗ kaynakta yok   : 0   (atıf satırı sayıyı içermiyor)
+  ○ kaynaksız sayı : 11   (satırda hiç atıf yok)
+  ⚪ ölü adres      : 0
+
+=== patent-cikti/uspto/pct_v2-uspto-inceleme/motor_2026-11-20/METRIKLER_2026-11-20.md
+  atıflı ve DOĞRU  : 0
+  ✗ kaynakta yok   : 0   (atıf satırı sayıyı içermiyor)
+  ○ kaynaksız sayı : 0   (satırda hiç atıf yok)
+  ⚪ ölü adres      : 0
+
+TOPLAM: doğru 1 · kaynakta yok 0 · kaynaksız 151 · ölü adres 0
+RAPOR_DENETMEN_CIKIS=2
+
+## 2) küresel denetim hattı (hepsi) — yalnız ÖZET satırı + kayıt yolu
+komut: python3 ~/.config/opencode/denetim/denetim_kos.py hepsi
+KURESEL_CIKIS=1
+ÖZET: bulgu 12 · uyarı 7 · bilgi 29 · düzeltme planı: 18 (ayrıntı: python3 ~/.config/opencode/denetim/denetim_plan.py)
+kayıt: /Users/serkankose/.local/share/opencode/denetim/20261120-023205-hepsi.json
+
+### Bu depoya/patent dosyalarına ait bulgu satırları (tam liste)
+(bu depoya ait BULGU satırı yok)
+
+### BULGU satırlarının depo dağılımı (tam liste)
+   2 test_docs_butce.py
+   2 /Users/serkankose/Desktop/quann/docs/RAPOR-dizin-yapisi.md
+   2 /Users/serkankose/Desktop/quann/docs/RAPOR-denemeler-tarihcesi.md
+   1 test_docs.py+test_docs_butce.py
+   1 TEST-RAPORU-2026-09-18.md
+   1 RAPOR-dizin-yapisi.md
+   1 RAPOR-denemeler-tarihcesi.md
+   1 /Users/serkankose/Documents/Bott/docs/TEST-RAPORU-2026-09-18.md
+   1 /Users/serkankose/Desktop/ego_fixed (kod 2) · py=/Users/serkankose/Desktop/ego_fixed/venv/bin/python

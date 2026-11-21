@@ -1,0 +1,142 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/kC+KHnrl57bLUFs0TmzaPkS89D8</id>
+  <title>arXiv Query: search_query=all:"permutation invariant" AND all:"language model"&amp;id_list=&amp;start=0&amp;max_results=5</title>
+  <updated>2026-11-19T18:55:45Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22permutation+invariant%22+AND+all:%22language+model%22&amp;start=0&amp;max_results=5&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>5</opensearch:itemsPerPage>
+  <opensearch:totalResults>56</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2205.05448v2</id>
+    <title>Symphony Generation with Permutation Invariant Language Model</title>
+    <updated>2022-09-16T08:05:37Z</updated>
+    <link href="https://arxiv.org/abs/2205.05448v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2205.05448v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this work, we propose a permutation invariant language model, SymphonyNet, as a solution for symbolic symphony music generation. We propose a novel Multi-track Multi-instrument Repeatable (MMR) representation for symphonic music and model the music sequence using a Transformer-based auto-regressive language model with specific 3-D positional embedding. To overcome length overflow when modeling extra-long symphony tokens, we also propose a modified Byte Pair Encoding algorithm (Music BPE) for music tokens and introduce a novel linear transformer decoder architecture as a backbone. Meanwhile, we train the decoder to learn automatic orchestration as a joint task by masking instrument information from the input. We also introduce a large-scale symbolic symphony dataset for the advance of symphony generation research. Empirical results show that the proposed approach can generate coherent, novel, complex and harmonious symphony as a pioneer solution for multi-track multi-instrument symbolic music generation.</summary>
+    <category term="cs.SD" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.AS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-05-10T13:08:49Z</published>
+    <arxiv:primary_category term="cs.SD"/>
+    <arxiv:journal_ref>International Society for Music Information Retrieval (ISMIR) 2022</arxiv:journal_ref>
+    <author>
+      <name>Jiafeng Liu</name>
+    </author>
+    <author>
+      <name>Yuanliang Dong</name>
+    </author>
+    <author>
+      <name>Zehua Cheng</name>
+    </author>
+    <author>
+      <name>Xinran Zhang</name>
+    </author>
+    <author>
+      <name>Xiaobing Li</name>
+    </author>
+    <author>
+      <name>Feng Yu</name>
+    </author>
+    <author>
+      <name>Maosong Sun</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.12133v1</id>
+    <title>Towards Platonic Representation for Table Reasoning: A Foundation for Permutation-Invariant Retrieval</title>
+    <updated>2026-04-13T23:33:43Z</updated>
+    <link href="https://arxiv.org/abs/2604.12133v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.12133v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Historical approaches to Table Representation Learning (TRL) have largely adopted the sequential paradigms of Natural Language Processing (NLP). We argue that this linearization of tables discards their essential geometric and relational structure, creating representations that are brittle to layout permutations. This paper introduces the Platonic Representation Hypothesis (PRH) for tables, positing that a semantically robust latent space for table reasoning must be intrinsically Permutation Invariant (PI). To ground this hypothesis, we first conduct a retrospective analysis of table-reasoning tasks, highlighting the pervasive serialization bias that compromises structural integrity. We then propose a formal framework to diagnose this bias, introducing two principled metrics based on Centered Kernel Alignment (CKA): (i) PI, which measures embedding drift under complete structural derangement, and (ii) rho, a Spearman-based metric that tracks the convergence of latent structures toward a canonical form as structural information is incrementally restored. Our empirical analysis quantifies an expected flaw in modern Large Language Models (LLMs): even minor layout permutations induce significant, disproportionate semantic shifts in their table embeddings. This exposes a fundamental vulnerability in RAG systems, in which table retrieval becomes fragile to layout-dependent noise rather than to semantic content. In response, we present a novel, structure-aware TRL encoder architecture that explicitly enforces the cognitive principle of cell header alignment. This model demonstrates superior geometric stability and moves towards the PI ideal. Our work provides both a foundational critique of linearized table encoders and the theoretical scaffolding for semantically stable, permutation invariant retrieval, charting a new direction for table reasoning in information systems.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-13T23:33:43Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Willy Carlos Tchuitcheu</name>
+    </author>
+    <author>
+      <name>Tan Lu</name>
+    </author>
+    <author>
+      <name>Ann Dooms</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.15433v1</id>
+    <title>Set-LLM: A Permutation-Invariant LLM</title>
+    <updated>2025-05-21T12:14:26Z</updated>
+    <link href="https://arxiv.org/abs/2505.15433v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.15433v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>While large language models (LLMs) demonstrate impressive capabilities across numerous applications, their robustness remains a critical concern. This paper is motivated by a specific vulnerability: the order sensitivity of LLMs. This vulnerability manifests itself as the order bias observed when LLMs decide between possible options (for example, a preference for the first option) and the tendency of LLMs to provide different answers when options are reordered. The use cases for this scenario extend beyond the classical case of multiple-choice question answering to the use of LLMs as automated evaluators in AI pipelines, comparing output generated by different models. We introduce Set-LLM, a novel architectural adaptation for pretrained LLMs that enables the processing of mixed set-text inputs with permutation invariance guarantees. The adaptations involve a new attention mask and new positional encodings specifically designed for sets. We provide a theoretical proof of invariance and demonstrate through experiments that Set-LLM can be trained effectively, achieving comparable or improved performance and maintaining the runtime of the original model, while eliminating order sensitivity.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-21T12:14:26Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Beni Egressy</name>
+    </author>
+    <author>
+      <name>Jan Stühmer</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.16612v1</id>
+    <title>PRISMat: Policy-Driven, Permutation-Invariant Autoregressive Material Generation</title>
+    <updated>2026-05-15T20:27:11Z</updated>
+    <link href="https://arxiv.org/abs/2605.16612v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.16612v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Rapid identification of candidate materials with target properties has become a key task in materials science. Machine learning has emerged as an alternative to physics-based simulation, offering a faster and cheaper way to filter materials based on their stability and other target properties, reducing the number of candidates that reach the costly synthesis stage. Recently, Large Language Models (LLMs) have been applied to this role, but these models are parameter-heavy and computationally expensive both during training and at inference time, making them unsuitable for high-throughput tasks. This inefficiency stems from both the large over-parameterization of language models and the difficulty of framing material generation as a sequence learning problem. In this paper, we present PRISMat, a cost-effective, permutation-invariant model, which addresses these limitations. We show that PRISMat, despite taking less time for inference, is able to outperform LLMs in generating crystal slabs conditioned on critical materials' surface properties. In targeted material discovery, we achieve mean absolute errors of 0.188 eV/A$^2$ and 2.79 eV for cleavage energy and work function tasks, respectively, reducing the error of the next best model by 4$\times$.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.mtrl-sci" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-15T20:27:11Z</published>
+    <arxiv:comment>10 pages, 8 figures, Under Review at Neurips 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Claire Schlesinger</name>
+    </author>
+    <author>
+      <name>Circe Hsu</name>
+    </author>
+    <author>
+      <name>Peter Schindler</name>
+    </author>
+    <author>
+      <name>Robin Walters</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2502.17605v2</id>
+    <title>PICASO: Permutation-Invariant Context Composition with State Space Models</title>
+    <updated>2025-03-16T06:12:20Z</updated>
+    <link href="https://arxiv.org/abs/2502.17605v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2502.17605v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Providing Large Language Models with relevant contextual knowledge at inference time has been shown to greatly improve the quality of their generations. This is often achieved by prepending informative passages of text, or 'contexts', retrieved from external knowledge bases to their input. However, processing additional contexts online incurs significant computation costs that scale with their length. State Space Models (SSMs) offer a promising solution by allowing a database of contexts to be mapped onto fixed-dimensional states from which to start the generation. A key challenge arises when attempting to leverage information present across multiple contexts, since there is no straightforward way to condition generation on multiple independent states in existing SSMs. To address this, we leverage a simple mathematical relation derived from SSM dynamics to compose multiple states into one that efficiently approximates the effect of concatenating raw context tokens. Since the temporal ordering of contexts can often be uninformative, we enforce permutation-invariance by efficiently averaging states obtained via our composition algorithm across all possible context orderings. We evaluate our resulting method on WikiText and MSMARCO in both zero-shot and fine-tuned settings, and show that we can match the strongest performing baseline while enjoying on average 5.4x speedup.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-02-24T19:48:00Z</published>
+    <arxiv:comment>Published in The Thirteenth International Conference on Learning Representations, ICLR 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Tian Yu Liu</name>
+    </author>
+    <author>
+      <name>Alessandro Achille</name>
+    </author>
+    <author>
+      <name>Matthew Trager</name>
+    </author>
+    <author>
+      <name>Aditya Golatkar</name>
+    </author>
+    <author>
+      <name>Luca Zancato</name>
+    </author>
+    <author>
+      <name>Stefano Soatto</name>
+    </author>
+  </entry>
+</feed>

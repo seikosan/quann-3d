@@ -1,7 +1,7 @@
 ---
 description: Görselleştirici: eğitilmiş checkpoint'lerden bulut/evrim/bölge-haritası/egri figürleri üretir (figures/ konvansiyonu). Kullanım: "şu checkpoint'ı görselleştir", bulut evrimi, bölge haritası, 16D vs 32D.
 mode: subagent
-model: openrouter/openai/gpt-6-luna
+model: splash/unsloth/Qwen3.8-Flash-Next-GGUF:UD-Q4_K_XL
 permission:
   bash: allow
   edit:

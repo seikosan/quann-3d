@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/sI+Qv2AODlTL4kxYwp4f2+tY43c</id>
+  <title>arXiv Query: search_query=all:"set aggregation" AND all:"permutation invariant"&amp;id_list=&amp;start=0&amp;max_results=5</title>
+  <updated>2026-11-19T18:55:36Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22set+aggregation%22+AND+all:%22permutation+invariant%22&amp;start=0&amp;max_results=5&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>5</opensearch:itemsPerPage>
+  <opensearch:totalResults>2</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2505.24403v4</id>
+    <title>On the Lipschitz Continuity of Set Aggregation Functions and Neural Networks for Sets</title>
+    <updated>2026-02-27T12:18:48Z</updated>
+    <link href="https://arxiv.org/abs/2505.24403v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.24403v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Lipschitz constant of a neural network is connected to several important properties of the network such as its robustness and generalization. It is thus useful in many settings to estimate the Lipschitz constant of a model. Prior work has focused mainly on estimating the Lipschitz constant of multi-layer perceptrons and convolutional neural networks. Here we focus on data modeled as sets or multi-sets of vectors and on neural networks that can handle such data. These models typically apply some permutation invariant aggregation function, such as the sum, mean or max operator, to the input multisets to produce a single vector for each input sample. In this paper, we investigate whether these aggregation functions, along with an attention-based aggregation function, are Lipschitz continuous with respect to three distance functions for unordered multisets, and we compute their Lipschitz constants. In the general case, we find that each aggregation function is Lipschitz continuous with respect to only one of the three distance functions, while the attention-based function is not Lipschitz continuous with respect to any of them. Then, we build on these results to derive upper bounds on the Lipschitz constant of neural networks that can process multisets of vectors, while we also study their stability to perturbations and generalization under distribution shifts. To empirically verify our theoretical analysis, we conduct a series of experiments on datasets from different domains.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-30T09:34:58Z</published>
+    <arxiv:comment>Accepted at ICLR 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Giannis Nikolentzos</name>
+    </author>
+    <author>
+      <name>Konstantinos Skianis</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2212.08541v1</id>
+    <title>Learnable Commutative Monoids for Graph Neural Networks</title>
+    <updated>2022-12-16T15:43:41Z</updated>
+    <link href="https://arxiv.org/abs/2212.08541v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2212.08541v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Graph neural networks (GNNs) have been shown to be highly sensitive to the choice of aggregation function. While summing over a node's neighbours can approximate any permutation-invariant function over discrete inputs, Cohen-Karlik et al. [2020] proved there are set-aggregation problems for which summing cannot generalise to unbounded inputs, proposing recurrent neural networks regularised towards permutation-invariance as a more expressive aggregator. We show that these results carry over to the graph domain: GNNs equipped with recurrent aggregators are competitive with state-of-the-art permutation-invariant aggregators, on both synthetic benchmarks and real-world problems. However, despite the benefits of recurrent aggregators, their $O(V)$ depth makes them both difficult to parallelise and harder to train on large graphs. Inspired by the observation that a well-behaved aggregator for a GNN is a commutative monoid over its latent space, we propose a framework for constructing learnable, commutative, associative binary operators. And with this, we construct an aggregator of $O(\log V)$ depth, yielding exponential improvements for both parallelism and dependency length while achieving performance competitive with recurrent aggregators. Based on our empirical observations, our proposed learnable commutative monoid (LCM) aggregator represents a favourable tradeoff between efficient and expressive aggregators.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-12-16T15:43:41Z</published>
+    <arxiv:comment>Accepted to the proceedings of the First Learning on Graphs Conference (LoG 2022)</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Euan Ong</name>
+    </author>
+    <author>
+      <name>Petar Veličković</name>
+    </author>
+  </entry>
+</feed>

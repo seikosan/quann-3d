@@ -1,0 +1,77 @@
+{
+  "closest": "US10444734B2",
+  "matrix": [
+    {
+      "pub": "CN122572190A",
+      "title": "An Automatic Generation Method for Casting Gating Systems Based on a Large …",
+      "teaches": "Büyük dil modeli (LLM) kullanarak döküm sistemi üretimi; sayısal bağımlılıklara dayalı mevcut yöntemleri aşma.",
+      "distinguishing": "Kelimeyi D-boyutlu noktaya projeksiyon, nokta-bulut geometrisi ve bu geometriden türetilen açıklama.",
+      "risk": "yüksek",
+      "anticipates": false
+    },
+    {
+      "pub": "US10444734B2",
+      "title": "Manufacture of non-rectilinear features",
+      "teaches": "Parametrik eğriler ve Gröbner zarfı kullanarak fotolitografi düzenlerinin doğrulanması; cebirsel geometri.",
+      "distinguishing": "Kelime-bulut temsili yok; sadece parametrik eğriler ve cebirsel doğrulama kullanılıyor.",
+      "risk": "düşük",
+      "anticipates": false
+    },
+    {
+      "pub": "EP4364025A1",
+      "title": "Computer implemented method for generating a 3d object",
+      "teaches": "Makine öğrenimi sistemi ile 3D nesne parametrelerinin öğrenilmesi ve üretilmesi; denetim dışı işleme.",
+      "distinguishing": "Nokta-bulut temsili ve geometrik açıklamalar yok; sadece parametre optimizasyonu var.",
+      "risk": "orta",
+      "anticipates": false
+    },
+    {
+      "pub": "US11520988B2",
+      "title": "Semantic classification of entities in a building information model based on …",
+      "teaches": "BIM'de varlıkların semantik sınıflandırılması; hedef varlıklar ve güncelleme verisi.",
+      "distinguishing": "D-boyutlu nokta-bulut temsili ve LLM tabanlı üretim yok; BIM sınıflandırması var.",
+      "risk": "düşük",
+      "anticipates": false
+    },
+    {
+      "pub": "US20260154337A1",
+      "title": "Ai agentic systems for scene understanding",
+      "teaches": "AI ajan sistemi ile sahne anlama; sorguların otomatik üretimi ve rafine edilmesi.",
+      "distinguishing": "Nokta-bulut geometrisi ve kelime projeksiyonu yok; sadece ajan döngüsü var.",
+      "risk": "orta",
+      "anticipates": false
+    },
+    {
+      "pub": "US20260166815A1",
+      "title": "System and Method of Automated Product Geometric Quality Qualification in 3D …",
+      "teaches": "Otomatik içsel esnek kayıt ve eğrilik-bilgili yüzey nokta kümeleme teknikleri.",
+      "distinguishing": "Kelime-bulut temsili yok; sadece 3D yüzey işleme ve kayıt var.",
+      "risk": "düşük",
+      "anticipates": false
+    },
+    {
+      "pub": "CN121733591B",
+      "title": "Industrial autonomous mobile robot control method, device, equipment and medium",
+      "teaches": "Hiyerarşik mimariye dayalı robot kontrolü; metin komutlarının ayrıştırılması.",
+      "distinguishing": "Nokta-bulut temsili yok; sadece metin komutları ve robot kontrolü var.",
+      "risk": "düşük",
+      "anticipates": false
+    },
+    {
+      "pub": "CN121562161A",
+      "title": "Text-driven CAD modeling method and system based on diffusion and visual …",
+      "teaches": "Diffüzör ve görsel dil modelleri ile metin yönlü CAD modelleme; CAD semantik özellikleri.",
+      "distinguishing": "Nokta-bulut temsili yok; diffüzör ve görsel dil modeli kullanılıyor.",
+      "risk": "orta",
+      "anticipates": false
+    }
+  ],
+  "novelty_argument": "Buluş, her kelimeyi D-boyutlu bir noktaya projekte ederek cümleyi bir nokta-bulut olarak temsil eder. Tahmin, bu bulutun geometrisinden (mesafe, açı, norm) üretilir. Aynı nokta-bulut, hem hesaplama substratı hem de modelin kendi içinden türetilen açıklama verisi kaynağı olarak kullanılır. Önceki referanslar ya sadece parametrik eğriler ya da makine öğrenimi parametrelerini kullanır; nokta-bulut temsili ve geometrik açıklamayı birleştirerek tahmin yapma özelliği bulunmamaktadır.",
+  "inventive_step": "Buluş, Transformer mimarisinin opak yapısını aşmak için nokta-bulut geometrisini ve LLM'i birleştirir. Bu, önceki teknolojilerde olmayan, hem hesaplama hem de açıklama için tek bir nokta-bulut kullanımıdır. Bu teknik özellik, öngörülebilir ve yenilikçi bir çözüm sunar.",
+  "search_gaps": "IPC: G06N 3/04 (Yapay sinir ağları), G06N 3/046 (Dil modelleri). CPC: G06N 3/045 (Nokta bulutları), G06N 3/047 (Geometrik yapılar).",
+  "_search": {
+    "query": "point-cloud language modeling pairwise geometry",
+    "n_hits": 8,
+    "error": ""
+  }
+}

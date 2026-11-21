@@ -1,0 +1,25 @@
+1. Bilgisayarla uygulanan bir dil modelleme yöntemi olup, bir girdi metni dizisinden gelen her bir kelimeyi, bellek adres uzayında sınırlı bir tamsayı aralığında tanımlanmış D-boyutlu bir fiziksel veri bloğuna projekte ederek bir nokta bulutu oluşturmak; söz konusu nokta bulutundaki nokta çiftleri arasındaki fiziksel mesafe, açı ve norm değerlerini hesaplayarak çift-geometri özelliklerini türetmek; söz konusu fiziksel veri bloklarını ve çift-geometri özelliklerini, paralel işlemci çekirdeklerinde simetrik olarak birleştirerek permütasyon-değişmez bir küme durumu oluşturmak; söz konusu küme durumundan bir görev skoru üretmek; ve aynı fiziksel veri bloğu üzerinden sistem içi hata analizi ve drift izleme verisi üretmek adımlarını içerir, D-boyutlu fiziksel veri bloğuna projekte etme ve çift-geometri özelliklerini türetme adımları ile karakterize eden.
+
+2. İstem 1'e göre, söz konusu D-boyutlu fiziksel veri bloğunun boyutunun 3 ile 64 arasında değişen bir tamsayı değere sahip olması ile karakterize eden.
+
+3. İstem 1'e göre, söz konusu çift-geometri özelliklerini türetme adımının, söz konusu nokta bulutundaki her bir noktanın Öklid normunu ve söz konusu nokta çiftleri arasındaki açısal ayrımı hesaplamayı içerdiği ile karakterize eden.
+
+4. İstem 1'e göre, söz konusu permütasyon-değişmez bir küme durumu oluşturma adımının, söz konusu fiziksel veri bloklarını ve çift-geometri özelliklerini maksimum havuzlama (max-pool) işlemi ile birleştirmeyi içerdiği ile karakterize eden.
+
+5. İstem 1'e göre, söz konusu görev skoru üretme adımının, söz konusu küme durumunu INT8 kantizasyon birimi üzerinden işleyerek düşük bit derinliğinde temsil edilen bir çıktı üretmeyi içerdiği ile karakterize eden.
+
+6. İstem 1'e göre, sistem içi hata analizi ve drift izleme verisi üretme adımının, söz konusu nokta bulutundan bir noktanın çıkarılması (leave-one-point-out) veya bölge kayması analizi yoluyla native açıklama verisi türetmeyi içerdiği ile karakterize eden.
+
+7. En az bir donanım işlemcisi ve işlemciye bağlı bir bellek içeren bilgi işlem sistemi olup, söz konusu işlemci, bir girdi metni dizisinden gelen her bir kelimeyi, bellek adres uzayında sınırlı bir tamsayı aralığında tanımlanmış D-boyutlu bir fiziksel veri bloğuna projekte eden Projeksiyon modülü (10); söz konusu nokta bulutundaki nokta çiftleri arasındaki fiziksel mesafe, açı ve norm değerlerini hesaplayarak çift-geometri özelliklerini türeten Çift-geometri kodlayıcı (12); söz konusu fiziksel veri bloklarını ve çift-geometri özelliklerini, paralel işlemci çekirdeklerinde simetrik olarak birleştirerek permütasyon-değişmez bir küme durumu oluşturan Küme agregasyonu modülü (14); söz konusu küme durumundan bir görev skoru üreten Okuyucu (16); ve aynı fiziksel veri bloğu üzerinden sistem içi hata analizi ve drift izleme verisi üreten Yorumlama sistemi (18); içermesi ile karakterize eden.
+
+8. İstem 7'ye göre, söz konusu Projeksiyon modülünün, girdi metni dizisindeki kelime sayısını 10 ile 30 arasında sınırlayarak söz konusu nokta bulutunu oluşturması ile karakterize eden.
+
+9. İstem 7'ye göre, söz konusu Çift-geometri kodlayıcısının, söz konusu fiziksel veri bloklarını donanım önbelleği hizalamasına uygun veri blokları olarak düzenlemesi ile karakterize eden.
+
+10. İstem 7'ye göre, söz konusu Küme agregasyonu modülünün, söz konusu fiziksel veri bloklarını ve çift-geometri özelliklerini bağlam-ağırlıklı bir dikkat mekanizması (attention-pool) ile birleştirmesi ile karakterize eden.
+
+11. İstem 7'ye göre, Okuyucunun, söz konusu küme durumundan türetilen görev skorunu INT8 kantizasyon ile temsil edilen bir veri bloğu olarak dışa aktarması ile karakterize eden.
+
+12. İstem 7'ye göre, Yorumlama sisteminin, söz konusu nokta bulutundaki bölgeleri prototip isimlendirmesi ile etiketleyerek native açıklama verisi üretmesi ile karakterize eden.
+
+13. Geçici olmayan bir bilgisayarca okunabilir depolama ortamı olup, bir donanım işlemcisi tarafından yürütüldüğünde, bir girdi metni dizisinden gelen her bir kelimeyi, bellek adres uzayında sınırlı bir tamsayı aralığında tanımlanmış D-boyutlu bir fiziksel veri bloğuna projekte ederek bir nokta bulutu oluşturmayı; söz konusu nokta bulutundaki nokta çiftleri arasındaki fiziksel mesafe, açı ve norm değerlerini hesaplayarak çift-geometri özelliklerini türetmeyi; söz konusu fiziksel veri bloklarını ve çift-geometri özelliklerini, paralel işlemci çekirdeklerinde simetrik olarak birleştirerek permütasyon-değişmez bir küme durumu oluşturmayı; söz konusu küme durumundan bir görev skoru üretmeyi; ve aynı fiziksel veri bloğu üzerinden sistem içi hata analizi ve drift izleme verisi üretmeyi gerçekleştiren komutlar barındırması ile karakterize eden.

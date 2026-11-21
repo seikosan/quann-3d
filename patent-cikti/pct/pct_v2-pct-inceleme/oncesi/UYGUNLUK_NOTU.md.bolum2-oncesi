@@ -1,0 +1,156 @@
+# UYGUNLUK NOTU — pct_v2 PCT paketi (iç denetim defteri, başvuru metni değildir)
+
+künye: bu dosya §1'deki kural matrisine bağlıdır · tarih 2026-11-19 · yazan ana oturum
+Denenen paket: `docs/patent/pct_v2/filing/` altındaki altı başvuru kopyası + çalışma kopyaları
+`DESCRIPTION_EN.md` / `DESCRIPTION_TR.md` / `CLAIMS_EN.md` / `ISTEMLER_TR.md` / `OZET_PCT.md`.
+Sayıların ham kaynağı: `OLCUM_KAYITLARI.md` (S0–S11). Motor ham çıktıları:
+`patent-cikti/pct/pct_v2-pct-inceleme/*.json`. Kapı komutu: `bash patent-cikti/pct/pct_v2-pct-inceleme/kapilar.sh`.
+
+Motorun kendi kapsam satırı (A_pct_en.json `verdict_scope`): *"Automated text checks only …
+This is not a filing clearance."* Bu not da bir başvuru izin belgesi değil, vekile giden iç listedir.
+
+## 1. Kural matrisi
+
+| Kural | İstenen | Paketin durumu | Kanıt (bu oturumda okundu) |
+|---|---|---|---|
+| Rule 4.3 | Başlık kısa, teknik alanla uylu | EN altı, TR yedi kelime; motor iki dilde de `compliant: true` | `patent-cikti/pct/pct_v2-pct-inceleme/A_pct_en.json:12` (`word_count: 6`) ve `:13` · `patent-cikti/pct/pct_v2-pct-inceleme/B_pct_tr.json:12` (`word_count: 7`) ve `:13` |
+| Rule 5.1(a) | Teknik alan, önceki teknik, buluşun özeti, şekillerin kısa tarifi, en iyi biçim (+ sanayiye uygulanabilirlik) | Altı başlık da sırayla; motorun denetlediği beş alanın eksik listesi boş | `docs/patent/pct_v2/DESCRIPTION_EN.md:11,21,39,67,87,217` · `patent-cikti/pct/pct_v2-pct-inceleme/A_pct_en.json:17-24` (`found_elements` beş alan, `missing_elements: []`) · `patent-cikti/pct/pct_v2-pct-inceleme/B_pct_tr.json:24` |
+| Rule 6.1(b) | İstemler ardışık numaralı | On beş istem, numaralar ardışık | `patent-cikti/pct/pct_v2-pct-inceleme/A_pct_en.json:28-29` (`total_claims: 15`) · `patent-cikti/pct/pct_v2-pct-inceleme/B_pct_tr.json:28-29` · `patent-cikti/pct/pct_v2-pct-inceleme/uretim.json:40` ve `:82` (`claim_count: 15`) |
+| Rule 6.2(a) | İstem gövdesinde tarifname/şekil atfı yok | EN gövdesinde tarama boş; TR'de tek eşleşme "hesaplayacak **şekilde**" sözcüğü — şekil atfı değil | `docs/patent/pct_v2/CLAIMS_EN.md:10-67` · `docs/patent/pct_v2/ISTEMLER_TR.md:11-39` taraması; eşleşme `docs/patent/pct_v2/ISTEMLER_TR.md:37` |
+| Rule 6.2(b) | Referans işaretleri, anlaşmayı hızlandırmıyorsa zorunlu değil | Bilinçli olarak hiç işaret yok (numara şeması uydurulmadı) | `docs/patent/pct_v2/CLAIMS_EN.md:7` tasarım notu · `patent-cikti/pct/pct_v2-pct-inceleme/G_epo_formal_en.json:62` (kural bu eksikliği uyarıya çeviriyor, §4.4) |
+| Rule 5.2(a) / 11.13(m) | Paragraf numaralandırması | Her iki tarifnede de yedi yüz paragraf, aralıksız | `patent-cikti/pct/pct_v2-pct-inceleme/uretim.json:14-15` (EN: `paragraph_count: 70`, `paragraph_gapless: true`) · `:56-57` (TR aynı) |
+| Rule 8.1(b) | Özet 50–150 kelime | EN yüz otuz yedi · TR yüz altı kelime, iki dilde `compliant: true` | `patent-cikti/pct/pct_v2-pct-inceleme/A_pct_en.json:6-7` · `patent-cikti/pct/pct_v2-pct-inceleme/B_pct_tr.json:6-7` |
+| Rule 9.1 (birlik) | Tek genel konsept | Üç bağımsız (yöntem/sistem/kayıt ortamı) + on iki bağımlı | yerel lint `claim_unity` = **info** (uyarı değil): `patent-cikti/pct/pct_v2-pct-inceleme/lint_CLAIMS_EN_md.txt:26` · `patent-cikti/pct/pct_v2-pct-inceleme/lint_ISTEMLER_TR_md.txt:11` |
+| Rule 11.13(l)–(n) | Metin temizliği: işaret/paragraf/terim tutarlılığı | Terim denetimi iki dilde de temiz: metrik dışı birim ve aykırı sıcaklık listeleri boş | `patent-cikti/pct/pct_v2-pct-inceleme/A_pct_en.json:49-52` · `patent-cikti/pct/pct_v2-pct-inceleme/B_pct_tr.json:49-52` |
+
+## 2. Motor bataryası — ham sonuç (2026-11-19, `run_pct_analizi.py`)
+
+| Koşu | Kapsam | Kritik | Önemli | Skor | Yorum |
+|---|---|---|---|---|---|
+| A_pct_en | PCT biçimi, EN | 0 | 0 | — | `issues: []`; `overall_compliant: false` **yalnız** atlanan iki kontrol yüzünden (§5) |
+| B_pct_tr | PCT biçimi, TR | 0 | 0 | — | aynı tablo |
+| C_pct_en_desc_only | Yalnız tarifname | 1 | 0 | — | "No claims detected" — beklenen; motor istemi görmek için tarifname+istem **birleşik** ister (A bunu gösterir) |
+| D_epo_claims_en | EPO istem biçimi, EN | 0 | 1 | 99,67 | kalan tek bulgu Rule 43(2) kategori → §4.1 artefaktı |
+| E_epo_claims_tr | EPO istem biçimi, TR | 0 | 16 | 94,67 | 15× Rule 43(1) + 1× Rule 43(2) → §4.2, İngilizce-only kalıp |
+| F_epo_spec_support_en | İstem–tarifname desteği | **0** | 47 | coverage **100 %** | `compliant: true`, `unsupported_claims: []`, 15/15 destekli; 47 tavsiye → §4.3 |
+| G_epo_formal_en | EPO biçimsel | **0** | 1 | — | `overall_compliant: true`; kalan: özetlerde parantezli işaret (tasarım kararı) → §4.4 |
+| H_pkg_full | 12 dokümanlık paket | 0 | 0 | 100,0 | `filing_copy_purity` CRITICAL **kalktı** |
+| I_pkg_filing | 6 dosyalık kopya | 0 | 0 | 100,0 | `stamps: []` |
+| J_us_claims_en | US istem denetimi | 0 | 0 | 100,0 | `antecedent_basis` opt-in kapalı (§5) |
+
+Yerel hat (`patentline lint`, ham çıktılar `patent-cikti/pct/pct_v2-pct-inceleme/lint_*.txt`): iki TR istem kopyası
+**0 hata** (`patent-cikti/pct/pct_v2-pct-inceleme/lint_ISTEMLER_TR_md.txt:1` ve `patent-cikti/pct/pct_v2-pct-inceleme/lint_filing_ISTEMLER_FILING-COPY_TR_txt.txt:1`).
+Tarifnelerde **1** hata (`claim_structure: Hiç istem bulunamadı`, `patent-cikti/pct/pct_v2-pct-inceleme/lint_DESCRIPTION_EN_md.txt:1`
+→ §4.6). EN istemlerde **15** hata (`antecedent_basis`, `patent-cikti/pct/pct_v2-pct-inceleme/lint_CLAIMS_EN_md.txt:1`);
+sınıflandırmada gerçek kusur **0** (§4.5 ve `patent-cikti/pct/pct_v2-pct-inceleme/KANIT_antecedent.json:10`).
+
+## 3. Bu turda yapılan düzeltmeler (hangisi hangi kapıyı yeşile çevirdi)
+
+Denetmen turunda eklenen düzeltmeler ayrıca §6'da; aşağıdaki liste şekil kuralı bulguları içindir.
+
+| Düzeltme | Metindeki karşılığı | Kapıya etkisi |
+|---|---|---|
+| EN bağımsız istem 1/13/15 iki parçalı biçime getirildi ("characterized in that"); TR karşılıklarının ön yükü önceki tekniği anlatan gövde + "karakterize edilir" olarak yeniden yazıldı | `docs/patent/pct_v2/CLAIMS_EN.md:10` · `docs/patent/pct_v2/CLAIMS_EN.md:52` · `docs/patent/pct_v2/CLAIMS_EN.md:66` | D'nin Rule 43(1) bulguları kalktı; bugün tek bulgu Rule 43(2) (kural §1, ölçüm §2) |
+| [0063]'teki saha ifadesi istem terimiyle eşleştirildi: "0.64 on 25 critical records" → "0.64 on 25 records of the critical stage" (TR: "kritik kademedeki 25 kayıtta") | `docs/patent/pct_v2/DESCRIPTION_EN.md:199` (TR aynası aynı satırda) | H/I `filing_copy_purity` CRITICAL'i kalktı; paket bütünlüğü tam not (§2 H/I) |
+| [0065] istem on'un terimini aldı: "a text consisting of a plurality of sentences" | `docs/patent/pct_v2/DESCRIPTION_EN.md:207` | F'nin CRITICAL'lerinden biri kalktı (§2 F) |
+| [0050] istem on dört'ün terimini aldı: "a distribution store holding" (TR: "bir dağıtım deposu taşır") | `docs/patent/pct_v2/DESCRIPTION_EN.md:159` | F'nin ikinci CRITICAL'i kalktı (§2 F) |
+| [0034] istem dört'ün terimleriyle genişletildi: "a result of the max-pooling" / "a result of the average-pooling" | `docs/patent/pct_v2/DESCRIPTION_EN.md:105` · `patent-cikti/pct/pct_v2-pct-inceleme/F_epo_spec_support_en.json:631-633` | F kritikleri sıfırlandı, coverage tam (§2 F) |
+| Bölüm başlığı "BEST MODE(S) FOR CARRYING OUT THE INVENTION" → "BEST MODE FOR CARRYING OUT THE INVENTION" | §1 Rule 5.1(a) satırı; G koşusu ölçümü §2'de | G'deki "Missing required description section" CRITICAL'i kalktı |
+| Öncül dayanak ve anlatım netleştirmeleri (EN + TR aynası); [0028] ve [0068]'deki "only/must", "yalnız/zorunda" ifadeleri çıkarıldı (yerel `buzzword` uyarıları) | `docs/patent/pct_v2/CLAIMS_EN.md:32-66` arası istem satırları | TR istem dosyalarında hata kalmadı (`patent-cikti/pct/pct_v2-pct-inceleme/lint_ISTEMLER_TR_md.txt:1`, §2 son satır) |
+
+## 4. Düzeltilmeyen bulgular — araç artefaktı (her biri kanıt satırıyla)
+
+Artefakt demek "metni düzeltmiyorum" demektir; o yüzden her iddia motorun kendi satırına bağlıdır.
+Kanıt üretici: `patent-cikti/pct/pct_v2-pct-inceleme/kanit_artefaktlar.py` → `patent-cikti/pct/pct_v2-pct-inceleme/KANIT_artefaktlar.json`
+(üretici betik motor kalıplarını olduğu gibi kopyalar, yorum katmaz).
+
+| No | Bulgu | Neden metinde düzeltilmedi | Kanıt satırı |
+|---|---|---|---|
+| §4.1 | **D — Rule 43(2): "Multiple independent claims (1, 13, 15) in the same category (product)"** | Motor kategoriyi yalnız İngilizce kalıplardan çıkarıyor (`^a\s+method\b`, `^a\s+system\b`, aksi hâlde `return "product"`). Oysa istem 1 = *method*, 13 = *computer system*, 15 = *recording medium*: fiilen üç kategori. | `~/patent-creator-venv/lib/python3.13/site-packages/mcp_server/epo_claims_analyzer.py:186-192` · `patent-cikti/pct/pct_v2-pct-inceleme/KANIT_artefaktlar.json:7-9` (üçünün değeri de `product`) |
+| §4.2 | **E — TR'de on beş "bağımsız" istem ve "iki parçalı biçim yok"** | Motor kalıpları İngilizce (`characteri[sz]ed\s+in\s+that`, `wherein\s+the\s+improvement\s+comprises`); bağımlılık atfını İngilizce `claims?\s+\d` ile arıyor. TR metni "karakterize edilir" ve "İstem 1'e göre" yazıyor. | `~/patent-creator-venv/lib/python3.13/site-packages/mcp_server/epo_claims_analyzer.py:194-236` · `patent-cikti/pct/pct_v2-pct-inceleme/KANIT_artefaktlar.json:24-27` (TR'de kararlı ifade var, İngilizce eşleşme `false`) · `:42-44` (TR bağımlı sayımı 0, EN bağımlı sayımı 12) |
+| §4.3 | **F — tavsiyeler: "has limited description (only Para. N)"** | Motor sayılandırılmış paragraf bulamazsa bölüm dizinine düşüyor (`_index_by_sections`) ve terimi tek paragrafla eşliyor. Örnekte "point cloud" tarifnamede on üç yerde geçiyor, motor bir paragraf sayıyor. | `~/patent-creator-venv/lib/python3.13/site-packages/mcp_server/epo_specification_analyzer.py:245-250` · `patent-cikti/pct/pct_v2-pct-inceleme/KANIT_artefaktlar.json:47-49` |
+| §4.4 | **G — Rule 47(4): "Abstract does not contain reference signs in parentheses"** | Pakette bilinçli olarak referans işareti yok (§1, Rule 6.2(b) satırı); bulgu EPO bölgesel pratiğine dair tasarım kararı. | `patent-cikti/pct/pct_v2-pct-inceleme/G_epo_formal_en.json:62` (kural) · `:68` (uyarı sayısı) · `:73` (`overall_compliant: true`) |
+| §4.5 | **Yerel hat — `antecedent_basis` hataları, 0 gerçek kusur** | Hat kabul eşiği "artikel + en fazla iki ara kelime"; sınıflandırıcı motorun `prior`/tetik hesabını birebir tekrarlıyor ve hataları sekizi **B** (artikel ile ad arasında üçten çok niteleme), beşi **A** (belirteçsiz çoğul tanım), ikisi **C** (ifadeye sıfat eklenmiş), sıfırı gerçek kusur buldu. Motorun kendisi de bu denetimi opt-in kapalı tutuyor. | `~/Documents/patent-hatti/patentline/linter.py:198-223` · `patent-cikti/pct/pct_v2-pct-inceleme/kanit_antecedent.py` (üretici betik) · `patent-cikti/pct/pct_v2-pct-inceleme/KANIT_antecedent.json:5` · `:7` A · `:8` B · `:9` C · `:10` D=0 · `patent-cikti/pct/pct_v2-pct-inceleme/J_us_claims_en.json:9` (`false-positive` gerekçesi) |
+| §4.6 | **Tarifne lint'inde "claim_structure: Hiç istem bulunamadı"; istem lint'inde `section_missing`** | Tek doküman lint edildiğinde kaçınılmaz: tarifnede istem, istem dosyasında bölüm başlıkları yok. Birleşik metin koşusu temiz. | `patent-cikti/pct/pct_v2-pct-inceleme/C_pct_en_desc_only.json:73` (CRITICAL bu yüzden) · `patent-cikti/pct/pct_v2-pct-inceleme/A_pct_en.json:86-87` (birleşik metinde sıfır) |
+| §4.7 | **`package_checker` saflık kalıbı `\b\d+\s+critical\b`** | Kalıp meşru ölçüm düz yazısını kir sayabiliyor; §3'ün [0063] satırındaki yeniden yazımla bulgu gerçek düzeltmeye dönüştü, kalıbın kendisi sezgisel kaldı. | `~/patent-creator-venv/lib/python3.13/site-packages/mcp_server/package_checker.py:55-61` · `patent-cikti/pct/pct_v2-pct-inceleme/H_pkg_full.json:10` (bütünlük tam) |
+## 5. Koşulmayan kontroller (atlananlar — "temiz" denmeyen yerler)
+
+Her satır motorun kendi kaydına bağlıdır; bu bölümde hiçbir kontrol "temiz" sayılmaz.
+
+| Koşulmayan kontrol | Neden koşulmadı | Kanıt satırı |
+|---|---|---|
+| Fiziksel biçim (PCT Rule 11.2–11.16: A4, kenar boşluğu, satır arası, yazı tipi, sayfa numarası) | Motor düz metinden fiziksel gereklilikleri denetleyemediğini kendisi bildiriyor: "physical requirements cannot be verified from text; manual inspection required". PDF dizgisi olmadığı için denetlenmedi. | `patent-cikti/pct/pct_v2-pct-inceleme/A_pct_en.json:102-103` (`"check": "physical"` + gerekçe) |
+| Özette şekil tarifi (Rule 8.1(b)) | Özetle hangi şeklin yayımlanacağı başvuru formunda seçilir; metinden bilinemez: "the figure to publish with the abstract is chosen on the request form". | `patent-cikti/pct/pct_v2-pct-inceleme/A_pct_en.json:105-107` (`"check": "abstract figure designation"`) |
+| Yenilik / ön sanat araması — **YAPILMADI** | Bu oturumda hiçbir veritabanı araması koşulmadı; arayüz aracının hazır olup olmadığını bildiren hazırlık ölçümü de çağrılmadı. Rule 33 (ISRS) anlamında bir değerlendirme yoktur. | arama aracı tanımı: `~/patent-creator-venv/lib/python3.13/site-packages/mcp_server/tools/bigquery_tools.py:96-97`; bu depoda arama kaydı yok |
+| Şekil dosyalarının içeriği (Rule 11.12–11.14 çizgi/kalite) | Motorun `drawings_present` beyanı çalıştırıldı ama kendi kapsam satırı bunu "a declaration, not inspection of drawing files" olarak işaretliyor. Çizim dosyası denetimi yapılmadı. | `patent-cikti/pct/pct_v2-pct-inceleme/A_pct_en.json:110` (`verdict_scope`) |
+| US öncül dayanak denetimi | Motor bu denetimi opt-in kapalı tutuyor; `PATENT_ENABLE_ANTECEDENT_CHECK=1` hiç koşulmadı. Yerine yerel hat koşusu ve §4.5 sınıflandırması var. | `patent-cikti/pct/pct_v2-pct-inceleme/J_us_claims_en.json:17-19` (kural + `enable_with`) |
+| İdari katman | Form PCT/RO/101, ücret ve indirim hesabı, vekaletname, RO TÜRKPATENT başvuru dili tercihi, Rule 26bis beyanı, dizim listesi (ST.26) kapsam dışı. | idari veri bu depoda üretilmiyor; §8 vekil onayı satırı |
+| Bağımsız onay | Bu notun bulguları ana oturumdan; vekil ve bağımsız doğrulayıcı turu olmadan başvuru kararı verilmez. | §8 karar satırı |
+
+## 6. Denetmen turunda düzeltilen kusurlar (ikinci tur, 2026-11-19)
+
+Bağımsız denetmenin (`patent-denetmen`) bulgu listesi ham metne karşı sınandı; gerçek olanlar
+uygulandı. Düzeltici betik `patent-cikti/pct/pct_v2-pct-inceleme/duzelt_denetmen_bulgulari.py`
+her düzeltmeyi ham metinde beklenen eşleşme sayısı kadar bulursa uygular, değilse betik hiçbir
+şeyi değiştirmeden çıkar. Koşum çıktısı aynı dizinde duruyor.
+
+| Kusur | Yapılan | Doğrulanan kaynak |
+|---|---|---|
+| TR bağımlı istemlerin sonu ikinci kez "karakterize edilir." ile bitiyordu (aynı istemde iki kez iki-parçalı kalıp) | bağımlı istemlerin kuyruğu EN karşılığı "wherein"e uygun şekilde "…tanımlıdır." ile bağlandı; bağımsız istemlerin birinde birer "karakterize edilir" kaldı | `docs/patent/pct_v2/ISTEMLER_TR.md:25` · `patent-cikti/pct/pct_v2-pct-inceleme/lint_ISTEMLER_TR_md.txt:1` |
+| TR istem 13'te ikinci bir "karakterize edilir" bloğu daha vardı | kaldırıldı | `docs/patent/pct_v2/ISTEMLER_TR.md:35` |
+| EN istem 1 (iii) "reference data set / comparison data set" diyordu; istem 8 ve tarifname "group" diyor | "for a reference data group and a comparison data group" | `docs/patent/pct_v2/CLAIMS_EN.md:13` |
+| TR istem 12'de EN karşılığı olmayan "daraltılarak" kırpısı vardı | çıkarıldı; aralık daraltması tarifnamede ayrı bir seçenek olarak duruyor | `docs/patent/pct_v2/ISTEMLER_TR.md:33` ↔ `docs/patent/pct_v2/DESCRIPTION_TR.md:169` |
+| TR [0010] ile EN [0010] arasındaki "okuyucu girdisi" bağı kopuktu | TR aynası yazıldı | `docs/patent/pct_v2/DESCRIPTION_TR.md:41` ↔ `docs/patent/pct_v2/DESCRIPTION_EN.md:41` |
+| [0057] "4096 girdi" örnekemin niteliğini söylemiyordu | ham kaynağın niteleyicisi metne taşındı: "4096 adet rasgele seçilmiş QUANN-noktası vekil (proxy) girdi" | `fraud/logs/run_full_scale_edge_eval.log:46` → `docs/patent/pct_v2/DESCRIPTION_TR.md:181` |
+| TR başlığı motorun başlık sınırını aşıyordu | başlık yeniden kuruldu | `patent-cikti/pct/pct_v2-pct-inceleme/B_pct_tr.json:12` |
+
+**Vekile bırakılanlar (metin değişikliği yapılmadı):**
+
+| Madde | Neden burada değiştirilmedi | Kanıt satırı |
+|---|---|---|
+| TR bağımsız istemin tek cümle kuralına takılan çok sıralı yapısı | EN'de de aynı uzunlukta; kapsam daraltmadan tek cümleye indirmek bağımsız istemin korunmasını riske atıyor | `docs/patent/pct_v2/ISTEMLER_TR.md:35` ↔ `docs/patent/pct_v2/CLAIMS_EN.md:52` |
+| Çizim referans numaraları şeması | Sayı uydurmamak için konmadı (§1, Rule 6.2(b) satırı); tarifname şekilleri `FIG. N` olarak anıyor | `docs/patent/pct_v2/DESCRIPTION_EN.md:105` (FIG. 3 anışı) |
+| TR [0057]'deki "vekil (proxy)" niteleyicisinin kapsam iddiasına etkisi | Niteleyici ham örnekemin kendi adlandırması; metne taşındı ama kapsam yorumu hukuki karar | `fraud/logs/run_full_scale_edge_eval.log:46` → `docs/patent/pct_v2/DESCRIPTION_TR.md:181` |
+
+## 7. Sayıların ham kaynakları (bu oturumda doğrulandı)
+
+Üretici: `patent-cikti/pct/pct_v2-pct-inceleme/atif_haritasi.py` — her satır, atfedilen satırda
+sayının gerçekten geçtiğini gösterir (rapor kapısının istediği şey).
+
+| İddia | Kaynak | Ham satır |
+|---|---|---|
+| Başlık EN kelime sayısı | `patent-cikti/pct/pct_v2-pct-inceleme/A_pct_en.json:12` | `"word_count": 6` |
+| Özet EN kelime sayısı | `patent-cikti/pct/pct_v2-pct-inceleme/A_pct_en.json:6` | `"word_count": 137` |
+| İstem sayısı EN | `patent-cikti/pct/pct_v2-pct-inceleme/A_pct_en.json:28` | `"total_claims": 15` |
+| Başlık TR kelime sayısı | `patent-cikti/pct/pct_v2-pct-inceleme/B_pct_tr.json:12` | `"word_count": 7` |
+| Özet TR kelime sayısı | `patent-cikti/pct/pct_v2-pct-inceleme/B_pct_tr.json:6` | `"word_count": 106` |
+| D bulgu sayısı / skoru | `patent-cikti/pct/pct_v2-pct-inceleme/D_epo_claims_en.json:4` · `:22` | `"total_issues": 1` · `"compliance_score": 99.66…` |
+| E bulgu sayısı | `patent-cikti/pct/pct_v2-pct-inceleme/E_epo_claims_tr.json:4` | `"total_issues": 16` |
+| F kritik / önemli sayısı | `patent-cikti/pct/pct_v2-pct-inceleme/F_epo_spec_support_en.json:10` · `:11` | `"critical_issues": 0` · `"important_issues": 47` |
+| F coverage ve desteklenen istem | `patent-cikti/pct/pct_v2-pct-inceleme/F_epo_spec_support_en.json:631` · `:632` | `"percentage": 100` · `"supported_claims": 15` |
+| G bulgusu (Rule 47(4)) | `patent-cikti/pct/pct_v2-pct-inceleme/G_epo_formal_en.json:62` · `:68` · `:73` | `"legal_ref": "Rule 47(4) EPC"` · `"warnings": 1` · `"overall_compliant": true` |
+| H ve I paket skoru | `patent-cikti/pct/pct_v2-pct-inceleme/H_pkg_full.json:10` · `patent-cikti/pct/pct_v2-pct-inceleme/I_pkg_filing.json:10` | `"package_integrity_score": 100.0` |
+| J bulgu sayısı / skoru | `patent-cikti/pct/pct_v2-pct-inceleme/J_us_claims_en.json:4` · `:10` | `"total_issues": 0` · `"compliance_score": 100.0` |
+| Filing kopyalarında paragraf sayısı | `patent-cikti/pct/pct_v2-pct-inceleme/uretim.json:14` · `:56` | `"paragraph_count": 70` |
+| Filing kopyalarında istem sayısı | `patent-cikti/pct/pct_v2-pct-inceleme/uretim.json:40` · `:82` | `"claim_count": 15` |
+| Yerel lint: EN istem / TR istem | `patent-cikti/pct/pct_v2-pct-inceleme/lint_CLAIMS_EN_md.txt:1` · `lint_ISTEMLER_TR_md.txt:1` | `Linter: 15 hata` · `Linter: 0 hata` |
+| Yerel antecedent sınıflandırması | `patent-cikti/pct/pct_v2-pct-inceleme/KANIT_antecedent.json:5` · `:7` · `:8` · `:9` · `:10` | `15 · A=5 · B=8 · C=2 · D=0` |
+| Motorun "tek paragraf" iddiası | `patent-cikti/pct/pct_v2-pct-inceleme/KANIT_artefaktlar.json:48-49` | 13 geçişe karşı `motorin_atif_yaptigi_paragraf_sayisi: 1` |
+| Ölçüm defterindeki yeni künyeler | `docs/patent/pct_v2/OLCUM_KAYITLARI.md:28` · `:116` · `:117` | `4096 girdi` · hafta etiketleri |
+
+## 8. Karar
+
+Metin kapıları bu hâliyle temiz, her ölçüm kendi künyesiyle:
+
+- PCT biçim denetimi EN'de bulgu yok: `patent-cikti/pct/pct_v2-pct-inceleme/A_pct_en.json:86-87`.
+- PCT biçim denetimi TR'de bulgu yok: `patent-cikti/pct/pct_v2-pct-inceleme/B_pct_tr.json:86-87`.
+- İstem–tarifname desteğinde karşılanmayan istem listesi boş (`"unsupported_claims": []`),
+  kapsam tam: `patent-cikti/pct/pct_v2-pct-inceleme/F_epo_spec_support_en.json:631-635`.
+- Paket bütünlüğü tam not: `patent-cikti/pct/pct_v2-pct-inceleme/H_pkg_full.json:10` ve `patent-cikti/pct/pct_v2-pct-inceleme/I_pkg_filing.json:10`.
+- US istem denetiminde bulgu yok, not tam: `patent-cikti/pct/pct_v2-pct-inceleme/J_us_claims_en.json:4` ve
+  `patent-cikti/pct/pct_v2-pct-inceleme/J_us_claims_en.json:10`.
+
+Kalan D/E/F/G bulguları ile yerel `antecedent_basis` hatalarının tamamı §4 ve §6'da
+kanıtlanmış araç sınırı ya da tasarım kararıdır. Metin dışı katman (§5) hiç denenmedi;
+**ön sanat araması yapılmadı**.
+**Başvuru kararı için vekil onayı gerekli.**

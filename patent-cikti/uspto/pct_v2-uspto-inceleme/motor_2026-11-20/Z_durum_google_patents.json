@@ -1,0 +1,9 @@
+{
+  "tool": "Z_durum_google_patents",
+  "kayit_zamani": "2026-11-19T23:22:21.210Z",
+  "result": {
+    "ready": false,
+    "message": "Google Patents search needs a free SerpApi key (250 searches a month). Sign up at https://serpapi.com/users/sign_up, copy the key from https://serpapi.com/manage-api-key, then save it by running this in a terminal: /Users/serkankose/patent-creator-venv/bin/patent-creator config set SERPAPI_API_KEY \"YOUR_KEY\" and restart Claude Code. (This is Step 3 of the README's Quick Start.)",
+    "fallback": "search_patents_bigquery, once the optional BigQuery setup is done (a Google Cloud project; see 'Setting up BigQuery' in the README). The free SerpApi key is the quicker route. Until a key is set, a web first screen is possible: WebSearch restricted to patents.google.com, then WebFetch the closest patent pages. Label it a first screen; an empty or thin result is not evidence of no prior art. Give the user the setup steps from `message` in plain words, including the links, so they can turn on full patent search."
+  }
+}

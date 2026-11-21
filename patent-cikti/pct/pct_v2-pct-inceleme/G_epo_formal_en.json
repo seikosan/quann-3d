@@ -1,0 +1,86 @@
+{
+  "ok": true,
+  "result": {
+    "results": {
+      "abstract": {
+        "word_count": 137,
+        "compliant": true,
+        "issues": [
+          "Missing reference signs"
+        ],
+        "has_reference_signs": false
+      },
+      "title": {
+        "character_count": 64,
+        "word_count": 6,
+        "compliant": true,
+        "issues": []
+      },
+      "drawings": {
+        "figures_referenced": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8"
+        ],
+        "figure_count": 8,
+        "drawings_provided": true,
+        "compliant": true,
+        "issues": []
+      },
+      "sections": {
+        "found_sections": {
+          "Technical field": true,
+          "Background art": true,
+          "Disclosure of the invention": true,
+          "Brief description of drawings": true,
+          "Detailed description": true
+        },
+        "missing_sections": [],
+        "compliant": true
+      },
+      "claims_fees": {
+        "total_claims_detected": 15,
+        "compliant": true,
+        "fee_threshold": 15,
+        "excess_claims": 0,
+        "fees_apply": false
+      }
+    },
+    "issues": [
+      {
+        "section": "abstract",
+        "severity": "IMPORTANT",
+        "problem": "Abstract does not contain reference signs in parentheses",
+        "current": "No reference signs found",
+        "required": "Reference signs corresponding to drawings, in parentheses",
+        "fix": "Add reference numerals from drawings in parentheses, e.g., 'processor (10)'",
+        "legal_ref": "Rule 47(4) EPC",
+        "confidence": "HIGH"
+      }
+    ],
+    "compliance_summary": {
+      "critical_issues": 0,
+      "warnings": 1,
+      "info": 0,
+      "ready_to_file": true,
+      "summary": "[WARNING] Found 1 WARNING EPO formality issue(s)"
+    },
+    "overall_compliant": true,
+    "checks_run": [
+      "abstract",
+      "title",
+      "sections",
+      "drawing_references",
+      "claims_fees"
+    ],
+    "checks_skipped": [],
+    "verdict_scope": "Automated text checks only; drawings_present is a declaration, not inspection of drawing files. Physical layout, forms and fee payment require manual review. This is not a filing clearance.",
+    "jurisdiction": "EPO",
+    "legal_framework": "European Patent Convention (EPC)"
+  }
+}

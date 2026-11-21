@@ -1,0 +1,36 @@
+== istem sayaçları ==
+OK   EN istem: 15
+OK   EN bağımsız: 3
+OK   TR istem: 15
+OK   TR bağımlı (İstem N'e göre): 12
+OK   TR'de İngilizce claim: 0
+OK   EN istemde 3 basamaklı işaret (K13.4): 0
+OK   TR istemde 3 basamaklı işaret: 0
+== tarifname paragraf numaraları (kesintisiz, tekil, EN=TR) ==
+OK  DESCRIPTION_FILING-COPY_EN.txt: 98 paragraf, ilk=00001 son=00098 kesintisiz=True tekil=True
+OK  TARIFNAME_FILING-COPY_TR.txt: 98 paragraf, ilk=00001 son=00098 kesintisiz=True tekil=True
+OK  EN=TR paragraf sayısı [98, 98]
+== referans işaretleri: tablonun tamamı EN tarifnamede ==
+OK  tarifname kapsama: 56/56 eksik=[]
+OK  özetde parantezli işaret var (Rule 47(4)/K8.1)
+== özet kelime sayıları (PCT K8.1: ≤150) ==
+OK   docs/patent/pct_v3/filing/ABSTRACT_FILING-COPY_EN.txt: 148 kelime
+OK   docs/patent/pct_v3/filing/OZET_FILING-COPY_TR.txt: 132 kelime
+== şekil PDF'i ==
+OK   PDF sayfa: 8
+OK   tabloda çizilmeyen numara: 0
+== eşikler/ölçümlü değer koruması ==
+OK   ölçüm 0\.9451 pct_v2=pct_v3: 1
+OK   ölçüm 0\.9365 pct_v2=pct_v3: 1
+OK   ölçüm 0\.9367 pct_v2=pct_v3: 1
+OK   ölçüm 528\.9 KB pct_v2=pct_v3: 1
+OK   ölçüm 138\.2 KB pct_v2=pct_v3: 1
+== pct_v2 dokunulmazlığı (sha1, DEGISIKLIK_KAYDI_SEKIL.md §4'teki referansla kıyaslayın) ==
+3b17a39246875f0bd31b0fcff0343323fe613c30  docs/patent/pct_v2/filing/ABSTRACT_FILING-COPY_EN.txt
+ba25baaebc19c207d03114de27d9858712c3a7a9  docs/patent/pct_v2/filing/CLAIMS_FILING-COPY_EN.txt
+d339bbb270bf1158d69a033f1d3b94b9419593b4  docs/patent/pct_v2/filing/DESCRIPTION_FILING-COPY_EN.txt
+b040c9a52ba0376ac4ea0f465d0361dfb9dcd25a  docs/patent/pct_v2/filing/ISTEMLER_FILING-COPY_TR.txt
+716e83fa2247aa60c02549005f7472c89ebc47f0  docs/patent/pct_v2/filing/OZET_FILING-COPY_TR.txt
+6b19b5f347f713da8bfe05563475ecfd8756bd85  docs/patent/pct_v2/filing/SEKILLER_FILING-COPY.pdf
+63913bb33765595d1f9a3550d63b4037545e4810  docs/patent/pct_v2/filing/TARIFNAME_FILING-COPY_TR.txt
+267026b1b70b829b77425fd1b869672fd2adfb61  docs/patent/pct_v2/fig/fig_manifest.json

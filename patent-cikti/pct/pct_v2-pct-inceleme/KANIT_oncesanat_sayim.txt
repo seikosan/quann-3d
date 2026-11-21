@@ -1,0 +1,28 @@
+# oncesanat ham sayim kaydi — kosum: 2026-11-19 17:20
+# kayit: patent-cikti/pct/pct_v2-pct-inceleme/oncesanat_ham_tur2_2026-11-19.json
+jq ".sorgular | length" ->
+8
+jq ".durum_cagrilari | keys | length" ->
+4
+jq ".durum_cagrilari | keys[]" ->
+check_bigquery_status
+check_epo_api_status
+check_google_patents_status
+check_uspto_api_status
+# 21 sorgu / 3 XHR / 1 websearch sayilari: oturum ici cagri; ham log diskte YOK -> KANITSIZ
+
+# --- 3. TUR (2026-11-19, ayni gun) — DB taramasi kaydi ---
+# kayit dizini: patent-cikti/pct/pct_v2-pct-inceleme/db_taramasi/
+# uretec: db_kanit.py (index.jsonl + npl/index.jsonl + index2.jsonl uzerinden okur)
+# sayim satirlari asagidaki komutla tazelanir:
+#   python3 patent-cikti/pct/pct_v2-pct-inceleme/db_taramasi/db_kanit.py
+54:toplam_sorgu | 42
+55:hit_kayit_toplam | 161
+56:benzersiz_hit | 160
+57:bos_donen_sorgu | 6 | q09,q11,n05,n12,x03,x05
+58:patent_sorgu | 23
+60:npl_sorgu | 19
+# derin inceleme: 9 kayit 1. istem metni -> db_taramasi/DERIN_kayit.md + db_taramasi/patentlar/
+# terim sayimi  : db_taramasi/KANIT_derin_terim.txt (9 kayit x 19 terim)
+# isim taramasi : db_taramasi/KANIT_isim_taramasi.txt (ti:QUANN / ti:CloudLM)
+# link teyidi   : db_taramasi/link_teyit/arxiv_1703_06114.xml, crossref_spall1992.json

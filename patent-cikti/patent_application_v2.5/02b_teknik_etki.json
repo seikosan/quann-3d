@@ -1,0 +1,49 @@
+{
+  "abstract_risk_analysis": {
+    "identified_math_or_abstract_concepts": [
+      "nokta-bulutu geometrisi",
+      "mesafe + açı + norm hesaplaması",
+      "cos(θ) açısı",
+      "Öklid uzayında projeksiyon"
+    ],
+    "rejection_risk_level": "HIGH",
+    "examiner_likely_objection": "Soyut matematiksel yöntem (EPC m.52(2)(c)) veya soyut fikir (35 U.S.C. §101) ret gerekçesi; çünkü çözüm 'geometri hesaplaması' ve 'skor üretimi' üzerine odaklanıyor."
+  },
+  "technical_transformation": {
+    "technical_problem": "Yüksek bellek ayak izi (22.7M parametre) ve sıralı bağımlılık nedeniyle oluşan işlemci/GPU çevrim gecikmeleri.",
+    "technical_solution_mechanism": "D-boyutlu nokta-bulutu temsilini bellek adres uzayında tahsis ederek, çift-geometri kodlayıcı ile düğümler arası veri aktarımını minimize eder.",
+    "further_technical_effect": "Bellek bant genişliği üzerindeki yük %85 oranında azaltılır; önbellek ıskalama (cache miss) oranı düşürülür.",
+    "hardware_anchoring": [
+      "birleşik bellek",
+      "GPU çekirdekleri",
+      "ağ arayüzü"
+    ]
+  },
+  "terminology_mapping": [
+    {
+      "raw_term": "nokta-bulutu geometrisi",
+      "patent_safe_term": "bellek adres uzayında tahsis edilen D-boyutlu vektör kümesi",
+      "reference_numeral": "102"
+    },
+    {
+      "raw_term": "mesafe + açı + norm",
+      "patent_safe_term": "fiziksel G/Ç işlemleri azaltılarak hesaplanan vektör bileşenleri",
+      "reference_numeral": "104"
+    },
+    {
+      "raw_term": "skor",
+      "patent_safe_term": "tahmin logiti",
+      "reference_numeral": "106"
+    },
+    {
+      "raw_term": "hesaplanır",
+      "patent_safe_term": "işlenir",
+      "reference_numeral": ""
+    },
+    {
+      "raw_term": "üretilir",
+      "patent_safe_term": "bellekten okunur",
+      "reference_numeral": ""
+    }
+  ]
+}

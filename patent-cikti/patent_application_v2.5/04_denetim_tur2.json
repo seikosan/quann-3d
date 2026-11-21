@@ -1,0 +1,40 @@
+{
+  "verdict": "red",
+  "issues": [
+    {
+      "claim": 1,
+      "type": "B",
+      "quote": "fiziksel çarpım ve toplama işlemlerini kullanarak mesafe, açı ve norm vektörlerini oluşturma",
+      "why": "Terimler 'fiziksel çarpım', 'fiziksel toplama', 'norm vektörü' ve 'açı vektörü' matematiksel olarak tanımsızdır; vektörler üzerinde bu işlemlerin sonucu bir vektör mü yoksa skaler mi olduğu belirsizdir (EPC 84).",
+      "fix": "İşlemlerin 'vektörel çarpım' ve 'vektörel toplama' olduğu, sonuçların 'mesafe skaleri', 'açı skaleri' ve 'norm skaleri' olduğu açıkça belirtilmeli."
+    },
+    {
+      "claim": 1,
+      "type": "C",
+      "quote": "simetrik agregasyon ile birleştirme",
+      "why": "'Simetrik agregasyon' terimi tarifnamede tanımlanmamış olup, bu ifadenin teknik olarak ne anlama geldiği (örneğin maksimum seçimi, ortalama alma veya özel bir fonksiyon) destek belgesinde yer almamaktadır (EPC 83).",
+      "fix": "Agregasyonun nasıl yapıldığı (örneğin 'her bir elemanın maksimum değerini seçme') somut bir şekilde tanımlanmalı veya istem 4'e atıf yapılmalıdır."
+    },
+    {
+      "claim": 1,
+      "type": "E",
+      "quote": "söz konusu küme durumunu işleyerek bir tahmin logiti üretme",
+      "why": "Küme durumundan 'tahmin logiti'ne dönüşüm mekanizması teknik bir etki yaratmadığı için keyfi bir ifade gibi durmaktadır; bu adımın nasıl gerçekleştiği (örneğin bir sinir ağı katmanı veya özel bir fonksiyon) açıklanmamıştır (EPC 56).",
+      "fix": "İşleme aşamasının detayları (örneğin 'bir tamir katmanı üzerinden geçirme') eklenmeli veya bu adımın teknik önemi gerekçelendirilmelidir."
+    },
+    {
+      "claim": 6,
+      "type": "F",
+      "quote": "İstem 6, İstem 1'e göre...",
+      "why": "İstem 1'deki 'fiziksel çarpım' ve 'simetrik agregasyon' gibi belirsizlikler (B ve C hataları) İstem 6'ya aktarılmıştır; bağımsız istemler kendi içinde tutarlı olmalıdır (EPC 84).",
+      "fix": "İstem 6, İstem 1'deki hataları düzeltilmiş bir versiyonla (örneğin İstem 1'in düzeltilmiş hali) bağımlı hale getirilmelidir."
+    }
+  ],
+  "scores": {
+    "aciklik": 1,
+    "destek": 1,
+    "yenilik": 4,
+    "bulus_basamagi": 2
+  },
+  "summary": "İstem 1'deki matematiksel terimlerin (fiziksel çarpım, norm vektörü) tanımsız olması ve 'simetrik agregasyon' gibi desteklenmeyen kavramlar içermesi nedeniyle açıklık ve destek sorunları vardır. Bu belirsizlikler, bağımsız istemlere (6, 7, 8, 9, 10) aktarılarak tüm istem grubunu reddeder."
+}

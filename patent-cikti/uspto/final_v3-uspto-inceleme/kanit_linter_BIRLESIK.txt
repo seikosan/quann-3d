@@ -1,0 +1,24 @@
+Linter: 4 hata · 14 uyarı · 2 bilgi
+
+| # | Önem | Kural | Yer | Bulgu |
+|---|------|-------|-----|-------|
+| 1 | error | claim_numbering | istem | İstem numaralandırması kopuk: 1 (beklenen 2) |
+| 2 | error | claim_figure_ref | istem 1 | İstem 1 şekle atıf yapıyor (istemler çizime atıf yapamaz) |
+| 3 | error | claim_figure_ref | istem 9 | İstem 9 şekle atıf yapıyor (istemler çizime atıf yapamaz) |
+| 4 | error | buzzword | istem 232 | 'yalnızca' — kapsamı daraltır (dışlayıcı dil) |
+| 5 | warn | two_part_form | istem 1 | Bağımsız istem 1 iki bölümlü kalıp kullanmıyor ('… olması ile karakterize eden') |
+| 6 | warn | two_part_form | istem 2 | Bağımsız istem 2 iki bölümlü kalıp kullanmıyor ('… olması ile karakterize eden') |
+| 7 | warn | two_part_form | istem 3 | Bağımsız istem 3 iki bölümlü kalıp kullanmıyor ('… olması ile karakterize eden') |
+| 8 | warn | two_part_form | istem 4 | Bağımsız istem 4 iki bölümlü kalıp kullanmıyor ('… olması ile karakterize eden') |
+| 9 | warn | two_part_form | istem 5 | Bağımsız istem 5 iki bölümlü kalıp kullanmıyor ('… olması ile karakterize eden') |
+| 10 | warn | two_part_form | istem 6 | Bağımsız istem 6 iki bölümlü kalıp kullanmıyor ('… olması ile karakterize eden') |
+| 11 | warn | two_part_form | istem 7 | Bağımsız istem 7 iki bölümlü kalıp kullanmıyor ('… olması ile karakterize eden') |
+| 12 | warn | two_part_form | istem 8 | Bağımsız istem 8 iki bölümlü kalıp kullanmıyor ('… olması ile karakterize eden') |
+| 13 | warn | two_part_form | istem 9 | Bağımsız istem 9 iki bölümlü kalıp kullanmıyor ('… olması ile karakterize eden') |
+| 14 | warn | buzzword | satır 86 | 'yalnızca' — kapsamı daraltır (dışlayıcı dil) |
+| 15 | warn | buzzword | satır 92 | 'yalnızca' — kapsamı daraltır (dışlayıcı dil) |
+| 16 | warn | buzzword | satır 123 | 'yalnızca' — kapsamı daraltır (dışlayıcı dil) |
+| 17 | warn | buzzword | satır 194 | 'yalnızca' — kapsamı daraltır (dışlayıcı dil) |
+| 18 | warn | buzzword | satır 205 | 'yalnızca' — kapsamı daraltır (dışlayıcı dil) |
+| 19 | info | claim_unity | istem | 12 bağımsız istem var (ek ücret / birlik itirazı riski) |
+| 20 | info | claim_count | istem | 24 istem: 15'i aşan her istem ek ücrete tabi |

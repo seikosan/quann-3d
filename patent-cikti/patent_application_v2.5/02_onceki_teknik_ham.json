@@ -1,0 +1,114 @@
+[
+  {
+    "pub": "CN122572190A",
+    "title": "An Automatic Generation Method for Casting Gating Systems Based on a Large …",
+    "snippet": "The invention relates to the technical field of casting process aided design, in particular to an automatic generation method of a casting pouring system based on a large language model, which aims to solve the technical problems that the existing machine learning method depends on numerical …",
+    "priority": "2026-06-04",
+    "filing": "2026-06-04",
+    "assignee": "上海交通大学",
+    "inventor": "杨超",
+    "url": "https://patents.google.com/patent/CN122572190A/en",
+    "claim1": "A method for automatically generating a casting pouring system based on a large language model is characterized by comprising the following steps:",
+    "extra": {
+      "id": "patent/CN122572190A/en"
+    }
+  },
+  {
+    "pub": "US10444734B2",
+    "title": "Manufacture of non-rectilinear features",
+    "snippet": "Methods and apparatus are disclosed for symbolic methods using algebraic geometry (e.g., based on a Gröbner basis of tangent space polynomials of parametric curves). For example, the design, optimization and verification of silicon photonic wave guides using parametric polynomials and/or Gröbner …",
+    "priority": "2014-08-22",
+    "filing": "2016-01-20",
+    "assignee": "Mentor Graphics Corporation",
+    "inventor": "Sandeep Koranne",
+    "url": "https://patents.google.com/patent/US10444734B2/en",
+    "claim1": "What is claimed is: 1. A method comprising: by a computer: verifying, using a Grobner envelope, non-rectilinear features of a lithographic layout, including by: receiving layout data representing geometric photolithographic layout features that include the non-rectilinear features, the layout data including parametric curves that represent the geometric photolithographic layout features;",
+    "extra": {
+      "id": "patent/US10444734B2/en"
+    }
+  },
+  {
+    "pub": "EP4364025A1",
+    "title": "Computer implemented method for generating a 3d object",
+    "snippet": "There is provided a method for a computer implemented method for generating a 3D object. The method comprises training a machine learning system to learn design parameter values that give rise to an optimally performing version of the 3D object; and processing, using the machine learning system, …",
+    "priority": "2021-06-17",
+    "filing": "2022-06-17",
+    "assignee": "Monolith AI Limited",
+    "inventor": "Richard AHLFELD",
+    "url": "https://patents.google.com/patent/EP4364025A1/en",
+    "claim1": "A computer implemented method for generating a 3D object, the method comprising: training a machine learning system to learn design parameter values that give rise to an optimally performing version of the 3D object; and processing, using the machine learning system, input data relating to the 3D object, in an unsupervised manner such that it can be used for generative purposes, such as the creation of novel geometries or other parameters of the 3D object.",
+    "extra": {
+      "id": "patent/EP4364025A1/en"
+    }
+  },
+  {
+    "pub": "US11520988B2",
+    "title": "Semantic classification of entities in a building information model based on …",
+    "snippet": "The current invention concerns a computer-implemented method, a computer system, and a computer program product for the semantic classification of an entity in a building information model (BIM). The BIM comprises multiple target entities. Update data is obtained. For each target entity, geometric …",
+    "priority": "2017-09-12",
+    "filing": "2018-09-12",
+    "assignee": "Bricsys Nv",
+    "inventor": "Tjerk Gauderis",
+    "url": "https://patents.google.com/patent/US11520988B2/en",
+    "claim1": "",
+    "extra": {
+      "id": "patent/US11520988B2/en"
+    }
+  },
+  {
+    "pub": "US20260154337A1",
+    "title": "Ai agentic systems for scene understanding",
+    "snippet": "Embodiments of the present disclosure relate to an AI agentic system for scene understanding. Some embodiments perform such scene understanding by extracting, indexing, and iteratively refining scene data through an AI agent that autonomously generates and refines queries in a continuous loop …",
+    "priority": "2024-07-28",
+    "filing": "2025-07-25",
+    "assignee": "Nvidia Corporation",
+    "inventor": "Rafal WYTRYKUS",
+    "url": "https://patents.google.com/patent/US20260154337A1/en",
+    "claim1": "",
+    "extra": {
+      "id": "patent/US20260154337A1/en"
+    }
+  },
+  {
+    "pub": "US20260166815A1",
+    "title": "System and Method of Automated Product Geometric Quality Qualification in 3D …",
+    "snippet": "To enhance shape accuracy qualification, an Automated Intrinsic Non-rigid Registration method places high-curvature regions within segments. A curvature-informed surface point clustering technique allows for automated segmentation. A Teichmuller map is adopted to achieve the segment-wise non-rigid …",
+    "priority": "2024-10-18",
+    "filing": "2025-10-20",
+    "assignee": "University Of Southern California",
+    "inventor": "Weizhi Lin",
+    "url": "https://patents.google.com/patent/US20260166815A1/en",
+    "claim1": "",
+    "extra": {
+      "id": "patent/US20260166815A1/en"
+    }
+  },
+  {
+    "pub": "CN121733591B",
+    "title": "Industrial autonomous mobile robot control method, device, equipment and medium",
+    "snippet": "This application discloses a control method, device, equipment, and medium for an industrial autonomous mobile robot, applied to a robot control system based on a hierarchical architecture, relating to the field of automation. The method includes: parsing input operation text commands and …",
+    "priority": "2026-02-28",
+    "filing": "2026-02-28",
+    "assignee": "重庆大学",
+    "inventor": "王超",
+    "url": "https://patents.google.com/patent/CN121733591B/en",
+    "claim1": "",
+    "extra": {
+      "id": "patent/CN121733591B/en"
+    }
+  },
+  {
+    "pub": "CN121562161A",
+    "title": "Text-driven CAD modeling method and system based on diffusion and visual …",
+    "snippet": "This invention relates to the field of computer-aided design technology, and particularly to a text-driven CAD modeling method and system based on diffusion and visual language models. The method includes: acquiring natural language text descriptions and extracting CAD semantic features from the …",
+    "priority": "2025-11-17",
+    "filing": "2025-11-17",
+    "assignee": "重庆邮电大学",
+    "inventor": "赵志强",
+    "url": "https://patents.google.com/patent/CN121562161A/en",
+    "claim1": "",
+    "extra": {
+      "id": "patent/CN121562161A/en"
+    }
+  }
+]

@@ -1,0 +1,70 @@
+[
+  {
+    "figure_no": 1,
+    "title": "Nokta-bulut temsil akışı",
+    "direction": "TD",
+    "nodes": [
+      {
+        "id": "A",
+        "label": "Projeksiyon modülü",
+        "number": 10
+      },
+      {
+        "id": "B",
+        "label": "Çift-geometri kodlayıcı",
+        "number": 12
+      },
+      {
+        "id": "C",
+        "label": "Küme durum modülü",
+        "number": 14
+      }
+    ],
+    "edges": [
+      {
+        "from": "A",
+        "to": "B",
+        "label": ""
+      },
+      {
+        "from": "B",
+        "to": "C",
+        "label": ""
+      }
+    ]
+  },
+  {
+    "figure_no": 2,
+    "title": "Tahmin ve açıklama üretimi",
+    "direction": "TD",
+    "nodes": [
+      {
+        "id": "A",
+        "label": "Küme durum modülü",
+        "number": 14
+      },
+      {
+        "id": "B",
+        "label": "Okuyucu",
+        "number": 16
+      },
+      {
+        "id": "C",
+        "label": "Yorumlama sistemi",
+        "number": 18
+      }
+    ],
+    "edges": [
+      {
+        "from": "A",
+        "to": "B",
+        "label": ""
+      },
+      {
+        "from": "B",
+        "to": "C",
+        "label": ""
+      }
+    ]
+  }
+]

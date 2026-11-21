@@ -1,0 +1,8 @@
+
+=== docs/patent/pct_v2/BASVURU_PAKETI.md
+  atıflı ve DOĞRU  : 1
+  ✗ kaynakta yok   : 0   (atıf satırı sayıyı içermiyor)
+  ○ kaynaksız sayı : 13   (satırda hiç atıf yok)
+  ⚪ ölü adres      : 0
+
+TOPLAM: doğru 1 · kaynakta yok 0 · kaynaksız 13 · ölü adres 0

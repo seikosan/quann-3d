@@ -1,0 +1,98 @@
+{
+  "_girdi": "GET /abstract+/description (ham bayt); drawings_present beyanı",
+  "analysis_type": "automated",
+  "jurisdiction": "EPO",
+  "overall_compliant": false,
+  "checks_run": [
+    "abstract",
+    "title",
+    "sections",
+    "drawing_references"
+  ],
+  "checks_skipped": [
+    {
+      "check": "claims_fees",
+      "reason": "no numbered claims in an identifiable claims section; supply a CLAIMS heading and claim text"
+    }
+  ],
+  "verdict_scope": "Automated text checks only; drawings_present is a declaration, not inspection of drawing files. Physical layout, forms and fee payment require manual review. This is not a filing clearance.",
+  "ready_to_file": false,
+  "summary": "[INCOMPLETE] Checks skipped: claims_fees (no numbered claims in an identifiable claims section; supply a CLAIMS heading and claim text). No issues found in the automated checks that ran.",
+  "critical_issues": 0,
+  "warnings": 0,
+  "info": 0,
+  "abstract": {
+    "word_count": 148,
+    "compliant": true,
+    "issues": [],
+    "has_reference_signs": true
+  },
+  "title": {
+    "character_count": 64,
+    "word_count": 6,
+    "compliant": true,
+    "issues": []
+  },
+  "drawings": {
+    "figures_referenced": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8"
+    ],
+    "figure_count": 8,
+    "drawings_provided": true,
+    "compliant": true,
+    "issues": []
+  },
+  "sections": {
+    "found_sections": {
+      "Technical field": true,
+      "Background art": true,
+      "Disclosure of the invention": true,
+      "Brief description of drawings": true,
+      "Detailed description": true
+    },
+    "missing_sections": [],
+    "compliant": true
+  },
+  "claims_fees": {
+    "total_claims_detected": 0,
+    "compliant": false,
+    "fee_threshold": 15,
+    "excess_claims": 0,
+    "fees_apply": false
+  },
+  "issues": [],
+  "epc_references": [
+    {
+      "section": "EPO Guidelines Part B - Chapter X-4",
+      "page": null,
+      "text": "[EPO Guidelines Part B - Chapter X-4] cant \nto accompany the abstract (see F-II, 2.3(vi) and 2.4) \n(iv) \nthe translation of the European patent application's title into the two \nother official languages. \nThe European Patent Bulletin is published in all three of the EPO's official \nlanguages (Art. 14(7)(a)) and contains the entries made in the European \nRule 47(1) \nRule 66 \nRule 41(2)(b) \nRule 47(4) \nArt. 14(7)(a) \n\nApril 2026 \nGuidelines for Examination in the EPO "
+    },
+    {
+      "section": "EPC: Rule 47 Form and content of the abstract",
+      "page": 403,
+      "text": "[EPC: Rule 47 Form and content of the abstract] ng des jeweiligen technischen Gebiets \ngibt. Insbesondere soll sie eine Beurteilung der \nFrage ermöglichen, ob es notwendig ist, die eu-\nropäische Patentanmeldung selbst einzusehen. \n(5) \nThe abstract shall be drafted in such a \nmanner as to constitute an efficient instrument \nfor the purpose of searching in the particular \ntechnical field. In particular, it shall make it pos-\nsible to assess whether consultation of the Eu-\nropean patent applicatio..."
+    },
+    {
+      "section": "EPO Guidelines Part A - Chapter VI-3",
+      "page": null,
+      "text": "[EPO Guidelines Part A - Chapter VI-3] Rule 39(1) for paying the designation fees is still running. Those definitively \ndesignated – through actual payment of designation fees – are announced \nlater in the European Patent Register and the European Patent Bulletin \n(see Information from the EPO, OJ EPO 1997, 479). For European \ndivisional applications, see A-IV, 1.3.4. \nThe publication also contains any new or amended claims filed by the \napplicant under Rule 137(2), together with the European se..."
+    },
+    {
+      "section": "EPC: Rule 73 Content and form of the specification; Rule 74 Certificate for a European patent",
+      "page": 459,
+      "text": "[EPC: Rule 73 Content and form of the specification; Rule 74 Certificate for a European patent] ans of \ncommunication of the certificate for a European patent \n(OJ EPO 2013, 416) and notice from the EPO of \n16.07.2013 concerning communication of the \ncertificate for a European patent (OJ EPO 2013, 418). \n \n"
+    },
+    {
+      "section": "EPC: Rule 73 Content and form of the specification; Rule 74 Certificate for a European patent",
+      "page": 459,
+      "text": "[EPC: Rule 73 Content and form of the specification; Rule 74 Certificate for a European patent] ons of the President of the EPO of \n12.07.2007 concerning the form of publication of \nEuropean patent applications, European search \nreports and European patent specifications (Special \nedition No. 3, OJ EPO 2007, D.3) and on the summary \nlisting of references cited by the applicant in European \npatent applications and European patent specifications \n(Special edition No. 3, OJ EPO 2007, D.4). \n \n97 Si..."
+    }
+  ]
+}

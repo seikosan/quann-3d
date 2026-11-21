@@ -1,0 +1,31 @@
+{
+  "ok": true,
+  "antecedent_env": null,
+  "result": {
+    "total_issues": 0,
+    "critical_issues": 0,
+    "important_issues": 0,
+    "minor_issues": 0,
+    "issues": [],
+    "summary": "[INCOMPLETE] Checks skipped: antecedent_basis (opt-in: pattern-based antecedent checking has a high false-positive rate, so it is disabled by default); enable with PATENT_ENABLE_ANTECEDENT_CHECK=1 (LOW confidence; manual review required). No issues found in the checks that ran on 15 claims; this is not a legal compliance determination.",
+    "compliance_score": 100.0,
+    "claim_count": 15,
+    "independent_count": 15,
+    "dependent_count": 0,
+    "issues_by_type": {},
+    "checks_skipped": [
+      {
+        "check": "antecedent_basis",
+        "reason": "opt-in: pattern-based antecedent checking has a high false-positive rate, so it is disabled by default",
+        "enable_with": "PATENT_ENABLE_ANTECEDENT_CHECK=1"
+      }
+    ],
+    "checks_run": [
+      "definiteness",
+      "subjective_terms",
+      "internal_references",
+      "structure"
+    ],
+    "compliance_score_scope": "checks_run_only"
+  }
+}

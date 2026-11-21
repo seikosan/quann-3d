@@ -1,0 +1,78 @@
+{
+  "title": "Nokta-Bulutu Geometrisi ile Birleşik Dil Modelleme",
+  "problem": "Yüksek boyutlu, sıralı bağımlılıklı ve post-hoc açıklamaya dayalı geleneksel dil modellerinin, düşük boyutlu, sıralı bağımsız ve model içi açıklanabilir yapısına dönüşmesi.",
+  "solution": "Her kelimeyi D-boyutlu (3-64) bir noktaya projekte ederek cümleyi bir nokta-bulutu olarak temsil eder. Bu bulutun geometrisi (mesafe, açı, norm) hem tahmin hem de native açıklama için aynı substrat olarak kullanılır.",
+  "components": [
+    {
+      "name": "Projeksiyon modülü",
+      "function": "Token'ı D-boyutlu Öklid uzayındaki bir noktaya projekte eder"
+    },
+    {
+      "name": "Çift-geometri kodlayıcı",
+      "function": "Nokta çiftlerini mesafe, açı ve norm bileşenleriyle kodlar"
+    },
+    {
+      "name": "Küme agregasyonu modülü",
+      "function": "Nokta ve çift özelliklerini permütasyon-değişmez şekilde birleştirir"
+    },
+    {
+      "name": "Okuyucu",
+      "function": "Küme durumundan görev skoru veya çıktı üretir"
+    },
+    {
+      "name": "Yorumlama sistemi",
+      "function": "Aynı nokta bulutundan native açıklama (ablation, drift) üretir"
+    }
+  ],
+  "embodiments": [
+    "D değeri 32 veya 64 olarak seçilen dil model embodiment'i",
+    "Nokta sayısı 20 olarak seçilen embodiment (R2b optimizasyonu)",
+    "Max-pool kullanılan küme agregasyonu embodiment'i",
+    "INT8 kantizasyon ile temsil edilen okuyucu embodiment'i"
+  ],
+  "alternatives": [
+    "Attention-pool (bağlam-ağırlıklı agregasyon)",
+    "Leave-one-point-out ablation",
+    "Bölge/prototip isimlendirme",
+    "Bölge kayması/drift incelemesi"
+  ],
+  "advantages": [
+    "Düşük boyutlu temsil (Transformer'a göre %75-94 daha az boyut)",
+    "Kompakt dağıtım (INT8 kantizasyon ile ~5-6 MB)",
+    "Native açıklama (Post-hoc yöntemlere gerek kalmadan)",
+    "Permütasyon-değişmezlik (Nokta sırası tahmini etkilemez)"
+  ],
+  "keywords": [
+    "nokta-bulutu geometrisi",
+    "dil modelleme",
+    "çift-geometri",
+    "mesafe açı norm",
+    "simetrik küme agregasyonu",
+    "native açıklama",
+    "permütasyon-değişmezlik",
+    "düşük boyutlu temsil",
+    "nokta-sayı optimizasyonu",
+    "INT8 kantizasyon"
+  ],
+  "keywords_en": [
+    "point-cloud geometry",
+    "language modeling",
+    "pairwise geometry",
+    "distance angle norm",
+    "symmetric set aggregation",
+    "native explanation",
+    "permutation-invariance",
+    "low-dimensional representation",
+    "point-count optimization",
+    "INT8 quantization"
+  ],
+  "cpc_hints": [
+    "G06N 3/04",
+    "G06N 3/045",
+    "G06N 3/08",
+    "G06N 3/048",
+    "G06F 16/55",
+    "G06N 20/00"
+  ],
+  "notes": "Metinde 'D=32/64' ve 'D=3 ≤ D ≤ 64' ifadeleri var; İddia 1'de genel aralık, İddia 5'te spesifik değerler var. İddia 11'de nokta sayısı 10-30 aralığı belirtiliyor ancak detaylı açıklamada 'optimum nokta sayısı' genel bir ifade kullanılmış, spesifik bir algoritma adı yok."
+}

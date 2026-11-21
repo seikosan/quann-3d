@@ -1,0 +1,135 @@
+# Google Patents tam metin taramasi — ham dizin (uretim: gp_tara.py)
+
+
+## q01 — `"point cloud" "language model" "set aggregation"`
+- HTTP `200` · toplam sonuç `6` · zaman `2026-11-19T18:53:13+00:00`
+- URL: `https://patents.google.com/xhr/query?url=q%3D%22point%2Bcloud%22%2B%22language%2Bmodel%22%2B%22set%2Baggregation%22%26num%3D5`
+  - **CN121798587A** Training for Unified Neuromotor Control in Robotic Systems and Applica · onculluk 2024-10-07 · yayim 2026-04-07 · 辉达公司
+  - **CN121798586A** Deployment of Unified Neuromotor Control in Robotic Systems and Applic · onculluk 2024-10-07 · yayim 2026-04-07 · 辉达公司
+  - **CN121706931A** Automated asset generation for robotic assembly tasks · onculluk 2024-09-18 · yayim 2026-03-20 · 辉达公司
+  - **WO2026170161A1** Symbolic multidimensional matrices with semad identifiers for recognit · onculluk 2025-02-10 · yayim 2026-08-13 · Chanin Brent
+  - **KR20260051549A** Multi-purpose QA system and its processing method for providing techno · onculluk 2024-10-10 · yayim 2026-04-17 · (주)광개토연구소
+
+## q02 — `"deep sets" "max-pooling" neural network`
+- HTTP `200` · toplam sonuç `5` · zaman `2026-11-19T18:53:32+00:00`
+- URL: `https://patents.google.com/xhr/query?url=q%3D%22deep%2Bsets%22%2B%22max-pooling%22%2Bneural%2Bnetwork%26num%3D5`
+  - **CN117392424A** Three-dimensional point cloud classification method based on multi-geo · onculluk 2022-06-29 · yayim 2024-01-12 · 上海理工大学
+  - **CN115169582A** Clustering federal learning method and device · onculluk 2022-07-11 · yayim 2022-10-11 · 河南大学
+  - **US12039636B2** Aggregation based on deep set learning in magnetic resonance reconstru · onculluk 2021-09-13 · yayim 2024-07-16 · Siemens Healthineers Ag
+  - **CN116363466A** A Point Cloud Feature Extraction Method Based on Edge Convolutional Ne · onculluk 2023-02-16 · yayim 2023-06-30 · 河南大学
+  - **CN122044213A** Unmanned aerial vehicle cluster collaborative trapping method, device  · onculluk 2026-02-12 · yayim 2026-05-15 · 清华大学
+
+## q03 — `"permutation invariant" "language model" set representation`
+- HTTP `200` · toplam sonuç `102` · zaman `2026-11-19T18:53:51+00:00`
+- URL: `https://patents.google.com/xhr/query?url=q%3D%22permutation%2Binvariant%22%2B%22language%2Bmodel%22%2Bset%2Brepresentation%26num%3D5`
+  - **JP6873333B2** Method using voice recognition system and voice recognition system · onculluk 2018-04-13 · yayim 2021-05-19 · 三菱電機株式会社
+  - **US20250022186A1** Typographically aware image generation · onculluk 2023-07-13 · yayim 2025-01-16 · Adobe Inc.
+  - **US12051422B2** Processing overlapping speech from distributed devices · onculluk 2019-04-30 · yayim 2024-07-30 · Microsoft Technology Licensing, Llc
+  - **US10460727B2** Multi-talker speech recognizer · onculluk 2017-03-03 · yayim 2019-10-29 · Microsoft Technology Licensing, Llc
+  - **CN111899727B** Training method and system for voice recognition model of multiple spe · onculluk 2020-07-15 · yayim 2022-05-06 · 思必驰科技股份有限公司
+
+## q04 — `"hidden states" "point cloud" explainability`
+- HTTP `200` · toplam sonuç `15` · zaman `2026-11-19T18:54:10+00:00`
+- URL: `https://patents.google.com/xhr/query?url=q%3D%22hidden%2Bstates%22%2B%22point%2Bcloud%22%2Bexplainability%26num%3D5`
+  - **US20250156898A1** System and method for ai based tailored advertising content generation · onculluk 2023-07-19 · yayim 2025-05-15 · Qomplx Llc
+  - **EP3863904B1** Planning for an autonomous vehicle · onculluk 2018-10-16 · yayim 2025-11-26 · Five AI Limited
+  - **KR102914883B1** Unmanned aerial vehicle system for safety inspection of infrastructure · onculluk 2023-12-28 · yayim 2026-01-21 · 주식회사 딥인스펙션
+  - **US20250094779A1** Construct scoring system and interface · onculluk 2023-09-15 · yayim 2025-03-20 · Artizan Technologies, Inc
+  - **CN118885583A** A visual question answering method based on image and text discretizat · onculluk 2024-07-03 · yayim 2024-11-01 · 南京邮电大学
+
+## q05 — `"pairwise" "relative position" "point cloud" aggregation network`
+- HTTP `200` · toplam sonuç `160` · zaman `2026-11-19T18:54:28+00:00`
+- URL: `https://patents.google.com/xhr/query?url=q%3D%22pairwise%22%2B%22relative%2Bposition%22%2B%22point%2Bcloud%22%2Baggregation%2Bnetwork%26num%3D5`
+  - **US11049267B2** Apparatus, method, and system for alignment of 3D datasets · onculluk 2017-01-27 · yayim 2021-06-29 · Ucl Business Plc
+  - **CN114667437B** Map creation and positioning for autonomous driving applications · onculluk 2019-08-31 · yayim 2025-12-19 · 辉达公司
+  - **US20250363765A1** Multi-modal sensor calibration for in-cabin monitoring systems and app · onculluk 2022-09-26 · yayim 2025-11-27 · Nvidia Corporation
+  - **CA3198690A1** Automated determination of acquisition locations of acquired building  · onculluk 2020-11-23 · yayim 2024-04-07 · MFTB Holdco, Inc.
+  - **US12017663B2** Sensor aggregation framework for autonomous driving vehicles · onculluk 2018-04-12 · yayim 2024-06-25 · Baidu Usa Llc
+
+## q06 — `"language model" explanation "input removal" output difference`
+- HTTP `200` · toplam sonuç `4` · zaman `2026-11-19T18:54:47+00:00`
+- URL: `https://patents.google.com/xhr/query?url=q%3D%22language%2Bmodel%22%2Bexplanation%2B%22input%2Bremoval%22%2Boutput%2Bdifference%26num%3D5`
+  - **US20250259069A1** Systems and methods for secure, segregated reversible machine learning · onculluk 2023-12-21 · yayim 2025-08-14 · First Draft Law, Inc.
+  - **WO2026046480A1** Method for testing a function of a technical system using an ai-assist · onculluk 2024-08-29 · yayim 2026-03-05 · Iav Gmbh Ingenieurgesellschaft Auto Und Verkehr
+  - **CN122288923A** A Big Data Model-Based Method for Evaluating Railway Route Selection a · onculluk 2026-03-31 · yayim 2026-06-26 · 中铁二院重庆勘察设计研究院有限责任公司
+  - **US12065795B1** Apparatus and method for removing waste · onculluk 2023-02-15 · yayim 2024-08-20 · Carolin Collymore
+
+## q07 — `clustering "latent representations" "cluster labels" interpretability`
+- HTTP `200` · toplam sonuç `5` · zaman `2026-11-19T18:55:06+00:00`
+- URL: `https://patents.google.com/xhr/query?url=q%3Dclustering%2B%22latent%2Brepresentations%22%2B%22cluster%2Blabels%22%2Binterpretability%26num%3D5`
+  - **US20250095091A1** An adaptive student performance evaluation system and method · onculluk 2023-09-20 · yayim 2025-03-20 · Sufian Munir Inc.
+  - **US20260017347A1** Temporal-spatial latent space fusion for dynamic routing in capsule ne · onculluk 2024-07-10 · yayim 2026-01-15 · Leptude, Inc.
+  - **CN118734254A** Safety education and training monitoring and evaluation method and sys · onculluk 2024-08-30 · yayim 2024-10-01 · 龙宇天下(北京)文化传媒有限公司
+  - **DE102024207610A1** Device and method for wafer map <b>clustering</b> method for MEMS · onculluk 2024-08-09 · yayim 2026-02-12 · Robert Bosch Gesellschaft mit beschränkter Haftung
+  - **CN121260260A** Space transcriptome data analysis method based on artificial intellige · onculluk 2025-12-05 · yayim 2026-01-02 · 齐鲁工业大学(山东省科学院)
+
+## q08 — `"Kullback-Leibler" divergence "two groups" model outputs explainability`
+- HTTP `200` · toplam sonuç `10` · zaman `2026-11-19T18:55:25+00:00`
+- URL: `https://patents.google.com/xhr/query?url=q%3D%22Kullback-Leibler%22%2Bdivergence%2B%22two%2Bgroups%22%2Bmodel%2Boutputs%2Bexplainability%26num%3D5`
+  - **US20190378210A1** Systems and methods for decomposition of non-differentiable and differ · onculluk 2018-06-08 · yayim 2019-12-12 · Zestfinance, Inc.
+  - **US9990687B1** Systems and methods for fast and repeatable embedding of high-dimensio · onculluk 2017-01-19 · yayim 2018-06-05 · Deep Learning Analytics, LLC
+  - **US20230237649A1** Systems and Methods for Quantification of Liver Fibrosis with MRI and  · onculluk 2020-04-15 · yayim 2023-07-27 · Children's Hospital Medical Center
+  - **US11385633B2** Model reduction and training efficiency in computer-based reasoning an · onculluk 2018-04-09 · yayim 2022-07-12 · Diveplane Corporation
+  - **US12510888B2** Model reduction and training efficiency in computer-based reasoning an · onculluk 2018-04-09 · yayim 2025-12-30 · Howso Incorporated
+
+## q09 — `"zeroth-order" OR "derivative-free" "without backpropagation" training neural network`
+- HTTP `200` · toplam sonuç `0` · zaman `2026-11-19T18:55:43+00:00`
+- URL: `https://patents.google.com/xhr/query?url=q%3D%22zeroth-order%22%2BOR%2B%22derivative-free%22%2B%22without%2Bbackpropagation%22%2Btraining%2Bneural%2Bnetwork%26num%3D5`
+
+## q10 — `"tabular data" "point cloud" deep learning classification`
+- HTTP `200` · toplam sonuç `83` · zaman `2026-11-19T18:56:02+00:00`
+- URL: `https://patents.google.com/xhr/query?url=q%3D%22tabular%2Bdata%22%2B%22point%2Bcloud%22%2Bdeep%2Blearning%2Bclassification%26num%3D5`
+  - **US20240135259A1** Computer implemented method for generating a 3d object · onculluk 2021-06-17 · yayim 2024-04-25 · Monolith Ai Limited
+  - **US20230106141A1** Dimensionality reduction model and method for training same · onculluk 2021-10-05 · yayim 2023-04-06 · Naver Corporation
+  - **US12450872B2** Machine learning techniques for ground classification · onculluk 2021-10-06 · yayim 2025-10-21 · Costar Realty Information, Inc.
+  - **US20220383120A1** Self-supervised contrastive learning using random feature corruption · onculluk 2021-05-28 · yayim 2022-12-01 · Google Llc
+  - **CN116524188A** Method, system, device and medium for executing semantic segmentation  · onculluk 2023-04-28 · yayim 2023-08-01 · 支付宝(杭州)信息技术有限公司
+
+## q11 — `"sliding window" "fixed stride" sentence embeddings transformer aggregation`
+- HTTP `200` · toplam sonuç `0` · zaman `2026-11-19T18:56:21+00:00`
+- URL: `https://patents.google.com/xhr/query?url=q%3D%22sliding%2Bwindow%22%2B%22fixed%2Bstride%22%2Bsentence%2Bembeddings%2Btransformer%2Baggregation%26num%3D5`
+
+## q12 — `INT8 quantization "lookup table" edge device model deployment`
+- HTTP `200` · toplam sonuç `219` · zaman `2026-11-19T18:56:40+00:00`
+- URL: `https://patents.google.com/xhr/query?url=q%3DINT8%2Bquantization%2B%22lookup%2Btable%22%2Bedge%2Bdevice%2Bmodel%2Bdeployment%26num%3D5`
+  - **EP3843013A1** Systems and methods for quantizing a neural network · onculluk 2019-12-10 · yayim 2021-06-30 · The MathWorks, Inc.
+  - **US11565166B2** Golf game implementation using ball tracking and scoring system · onculluk 2021-06-08 · yayim 2023-01-31 · Patricia Hall
+  - **US20260046317A1** AI-Optimized Memory Fabric for Large Contexts and Multimodal Workloads · onculluk 2015-10-28 · yayim 2026-02-12 · Qomplx Llc
+  - **US12190228B2** Generating and executing context-specific neural network models based  · onculluk 2019-09-13 · yayim 2025-01-07 · Latent AI, Inc.
+  - **EP4109236B1** Area and energy efficient multi-precision multiply-accumulate unit-bas · onculluk 2021-06-25 · yayim 2025-12-17 · INTEL Corporation
+
+## q13 — `"point cloud" "next token" autoregressive prediction`
+- HTTP `200` · toplam sonuç `87` · zaman `2026-11-19T18:56:59+00:00`
+- URL: `https://patents.google.com/xhr/query?url=q%3D%22point%2Bcloud%22%2B%22next%2Btoken%22%2Bautoregressive%2Bprediction%26num%3D5`
+  - **JP2026525778A** System and method for generating multimodal data using a single-tower  · onculluk 2024-04-29 · yayim 2026-08-04 · ジーディーエム・ホールディング・エルエルシー
+  - **EP4732192A1** Training generative neural networks through reinforced self-training · onculluk 2023-07-25 · yayim 2026-04-29 · GDM Holding LLC
+  - **WO2026076113A1** Efficient decoding of output sequences using early exit adaptors · onculluk 2024-10-01 · yayim 2026-04-09 · Gdm Holding Llc
+  - **DE102024114284A1** USING LARGE LANGUAGE MODELS TO AUGMENT PERCEPTION DATA IN ENVIRONMENTA · onculluk 2023-06-16 · yayim 2024-12-19 · Nvidia Corporation
+  - **US20230394823A1** Techniques to perform trajectory predictions · onculluk 2022-06-03 · yayim 2023-12-07 · Nvidia Corporation
+
+## q14 — `explanation "same representation" neural network "no separate" model`
+- HTTP `200` · toplam sonuç `5` · zaman `2026-11-19T18:57:18+00:00`
+- URL: `https://patents.google.com/xhr/query?url=q%3Dexplanation%2B%22same%2Brepresentation%22%2Bneural%2Bnetwork%2B%22no%2Bseparate%22%2Bmodel%26num%3D5`
+  - **EP4332849A1** A method performed by an information processing device, a program prod · onculluk 2022-08-30 · yayim 2024-03-06 · Zander Laboratories B.V.
+  - **WO2022036284A1** Method and system for positioning using optical sensor and motion sens · onculluk 2020-08-13 · yayim 2022-02-17 · Invensense, Inc.
+  - **DE112022000723T5** BRANCHING PROCESS FOR A CIRCUIT OF A NEURONAL PROCESSOR · onculluk 2021-01-22 · yayim 2023-11-23 · Apple Inc.
+  - **WO2021047863A1** Determining a sensor error of a sensor in an exhaust gas system of a m · onculluk 2019-09-10 · yayim 2021-03-18 · Bayerische Motoren Werke Aktiengesellschaft
+  - **EP4196747A1** Method and system for positioning using optical sensor and motion sens · onculluk 2020-08-13 · yayim 2023-06-21 · Invensense, Inc.
+
+## q15 — `set encoder "order independent" pooling "next token" language model`
+- HTTP `200` · toplam sonuç `5` · zaman `2026-11-19T18:57:37+00:00`
+- URL: `https://patents.google.com/xhr/query?url=q%3Dset%2Bencoder%2B%22order%2Bindependent%22%2Bpooling%2B%22next%2Btoken%22%2Blanguage%2Bmodel%26num%3D5`
+  - **US20240282404A1** Protein engineering workflow using a generative model of protein famil · onculluk 2023-02-17 · yayim 2024-08-22 · NE47 Bio, Inc.
+  - **US20260112447A1** Protein engineering using a multimodal and retrieval augmented generat · onculluk 2024-02-16 · yayim 2026-04-23 · NE47 Bio, Inc.
+  - **WO2026136095A1** Protein engineering using a multimodal and retrieval augmented generat · onculluk 2024-12-10 · yayim 2026-06-25 · NE47 Bio, Inc.
+  - **WO2025245276A1** Systems and methods for experiment aspect prediction · onculluk 2024-05-22 · yayim 2025-11-27 · Iambic Therapeutics, Inc.
+  - **CN121435198A** A two-stage general program signature generation method and system for · onculluk 2025-10-30 · yayim 2026-01-30 · 香港科技大学(广州)
+
+## q16 — `"ablation" "contribution" neural network "removing" feature vector inference`
+- HTTP `200` · toplam sonuç `1035` · zaman `2026-11-19T18:57:55+00:00`
+- URL: `https://patents.google.com/xhr/query?url=q%3D%22ablation%22%2B%22contribution%22%2Bneural%2Bnetwork%2B%22removing%22%2Bfeature%2Bvector%2Binference%26num%3D5`
+  - **US20230084203A1** Automatic channel pruning via graph <b>neural network</b> based hypern · onculluk 2021-09-06 · yayim 2023-03-16 · Baidu Usa Llc
+  - **CA3196713C** Critical component detection using deep learning and attention · onculluk 2020-09-23 · yayim 2023-11-14 · Proscia Inc.
+  - **US20220318459A1** Robotic tactile sensing · onculluk 2021-03-25 · yayim 2022-10-06 · Nvidia Corporation
+  - **US12354103B2** System, method, and computer program product to determine cuisine type · onculluk 2018-10-29 · yayim 2025-07-08 · Visa International Service Association
+  - **US12530744B2** Photo relighting and background replacement based on machine learning  · onculluk 2021-04-28 · yayim 2026-01-20 · Google Llc

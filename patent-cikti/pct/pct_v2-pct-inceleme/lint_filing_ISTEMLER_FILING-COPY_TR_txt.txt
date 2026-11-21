@@ -1,0 +1,12 @@
+Linter: 0 hata · 7 uyarı · 1 bilgi
+
+| # | Önem | Kural | Yer | Bulgu |
+|---|------|-------|-----|-------|
+| 1 | warn | section_missing | tarifname | Tarifnamede 'teknik alan' bölümü yok |
+| 2 | warn | section_missing | tarifname | Tarifnamede 'önceki teknik' bölümü yok |
+| 3 | warn | section_missing | tarifname | Tarifnamede 'buluşun kısa açıklaması' bölümü yok |
+| 4 | warn | section_missing | tarifname | Tarifnamede 'şekillerin kısa açıklaması' bölümü yok |
+| 5 | warn | section_missing | tarifname | Tarifnamede 'detaylı açıklama' bölümü yok |
+| 6 | warn | section_missing | tarifname | Tarifnamede 'istemler' bölümü yok |
+| 7 | warn | section_missing | tarifname | Tarifnamede 'özet' bölümü yok |
+| 8 | info | claim_unity | istem | 3 bağımsız istem var (ek ücret / birlik itirazı riski) |

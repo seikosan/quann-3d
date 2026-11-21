@@ -1,0 +1,14 @@
+Linter: 1 hata · 9 uyarı · 0 bilgi
+
+| # | Önem | Kural | Yer | Bulgu |
+|---|------|-------|-----|-------|
+| 1 | error | claim_structure | istem | Hiç istem bulunamadı |
+| 2 | warn | section_missing | tarifname | Tarifnamede 'summary of the invention' bölümü yok |
+| 3 | warn | section_missing | tarifname | Tarifnamede 'detailed description' bölümü yok |
+| 4 | warn | section_missing | tarifname | Tarifnamede 'claims' bölümü yok |
+| 5 | warn | section_missing | tarifname | Tarifnamede 'abstract' bölümü yok |
+| 6 | warn | buzzword | satır 89 | 'best' — subjective |
+| 7 | warn | buzzword | satır 107 | 'only' — exclusionary wording narrows scope |
+| 8 | warn | buzzword | satır 137 | 'only' — exclusionary wording narrows scope |
+| 9 | warn | buzzword | satır 197 | 'only' — exclusionary wording narrows scope |
+| 10 | warn | buzzword | satır 199 | 'critical' — subjective |

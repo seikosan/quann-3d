@@ -1,0 +1,56 @@
+{
+  "_girdi": "GET /claims (ham bayt)",
+  "analysis_type": "automated",
+  "claim_count": 15,
+  "independent_claims": 3,
+  "dependent_claims": 12,
+  "compliance_score": 100,
+  "total_issues": 0,
+  "critical_issues": 0,
+  "important_issues": 0,
+  "minor_issues": 0,
+  "issues_by_type": {},
+  "checks_skipped": [
+    {
+      "check": "antecedent_basis",
+      "reason": "opt-in: pattern-based antecedent checking has a high false-positive rate, so it is disabled by default",
+      "enable_with": "PATENT_ENABLE_ANTECEDENT_CHECK=1"
+    }
+  ],
+  "checks_run": [
+    "definiteness",
+    "subjective_terms",
+    "internal_references",
+    "structure"
+  ],
+  "compliance_score_scope": "checks_run_only",
+  "summary": "[INCOMPLETE] Checks skipped: antecedent_basis (opt-in: pattern-based antecedent checking has a high false-positive rate, so it is disabled by default); enable with PATENT_ENABLE_ANTECEDENT_CHECK=1 (LOW confidence; manual review required). No issues found in the checks that ran on 15 claims; this is not a legal compliance determination.",
+  "issues": [],
+  "mpep_references": [
+    {
+      "section": "MPEP § 2173.02",
+      "page": 481,
+      "text": "[MPEP 2100]  1788.\nThe focus during the examination of claims for\ncompliance with the requirement for definiteness\nunder 35 U.S.C. 112(b) or pre-AIA 35 U.S.C. 112,\nsecond paragraph, is whether the claim meets the\nthreshold requirements of clarity and precision, not\nwhether more suitable language or modes of\nexpression are available. See MPEP § 2173.02,\nsubsection II. Examiners are encouraged to suggest\nclaim language to applicants to improve the clarity\nor precision of the language used, but sho..."
+    },
+    {
+      "section": "MPEP § 2161.01",
+      "page": 411,
+      "text": "[MPEP 2100] S.C. 102, the\nnonobviousness requirement of 35 U.S.C. 103, the\ndefiniteness requirement of 35 U.S.C. 112(b) or\npre-AIA 35 U.S.C. 112, second paragraph, and the\nthree separate and distinct requirements of 35 U.S.C.\n112(a) or pre-AIA 35 U.S.C. 112, first paragraph.\nIn addition, claims with computer-implemented\nfunctional claim limitations may invoke 35 U.S.C.\n112(f) or pre-AIA 35 U.S.C. 112, sixth paragraph.\nSee MPEP § 2181, subsection II.B, and § 2181,\nsubsection IV. for information r..."
+    },
+    {
+      "section": "MPEP § 2181",
+      "page": 519,
+      "text": "[MPEP 2100] USPQ2d\n1263, 1269 (Fed. Cir. 2003). To satisfy the\ndefiniteness requirement under 35 U.S.C. 112(b) or\n35 U.S.C. 112, second paragraph, the written\ndescription must clearly link or associate the\ncorresponding structure, material, or acts to the\nclaimed function.  Telcordia Techs., Inc. v. Cisco\nSystems, Inc., 612 F.3d 1365, 1376, 95 USPQ2d\n1673, 1682 (Fed. Cir. 2010). A rejection under 35\nU.S.C. 112(b) or pre-AIA 35 U.S.C. 112, second\nparagraph is appropriate if the written descriptio..."
+    },
+    {
+      "section": "MPEP § 2173",
+      "page": 475,
+      "text": "[MPEP 2100] equirement of 35 U.S.C. 112(b) or pre-AIA 35\nU.S.C. 112, second paragraph is “indefinite.”\nThe primary purpose of this requirement of\ndefiniteness of claim language is to ensure that the\nscope of the claims is clear so the public is informed\nof the boundaries of what constitutes infringement\nof the patent. A secondary purpose is to provide a\nclear measure of what the inventor or a joint inventor\nregards as the invention so that it can be determined\nwhether the claimed invention meets..."
+    },
+    {
+      "section": "MPEP § 2173.02",
+      "page": 479,
+      "text": "[MPEP 2100] SHOLD REQUIREMENTS OF CLARITY\nAND PRECISION\nThe examiner’s focus during examination of claims\nfor compliance with the requirement for definiteness\nof 35 U.S.C. 112(b) or pre-AIA 35 U.S.C. 112,\nsecond paragraph, is whether the claim meets the\nthreshold requirements of clarity and precision set\nforth in the statute, not whether more suitable\nlanguage or modes of expression are available. When\nthe examiner is satisfied that patentable subject\nmatter is disclosed, and it is apparent to t..."
+    }
+  ]
+}

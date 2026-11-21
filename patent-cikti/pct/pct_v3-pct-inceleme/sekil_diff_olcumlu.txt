@@ -1,0 +1,15 @@
+# FIG.6/7 SVG sayi-iceren <text> diff ham ciktisi — 2026-11-20 10:59
+$ diff <(grep -oE '>[^<>]*[0-9][^<>]*</text>' docs/patent/pct_v2/fig/fig6_*.svg) <(grep -oE '... ayni ...' docs/patent/pct_v3/fig/fig6_*.svg)
+-- FIG.6 --
+22a23
+> >(a) Region point-share shift 600
+29a31
+> >(b) Setting shift → alarm rate 602
+exit=1
+-- FIG.7 --
+11a12
+> >(a) Quantization effect 700
+20a22,23
+> >(b) Delivered package footprint 702
+> >deployment package 904: INT8 quantized weights 704 · quantization table 706 · resolution table 708
+exit=1

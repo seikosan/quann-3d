@@ -1,0 +1,52 @@
+=== 0/9 sekil hatti ===
+sekil uretim cikis=0  KUTU-SIGMA: 0 tasma
+sekil build cikis=0  KABUL: 8 sayfa A4, her sayfada murekkep, metin katmani yok.
+sekil kapisi cikis=0  KABUL: 0 bulgu — DOGRUL_figurler.json
+=== 1/9 filing kopyalari ===
+uretim_ok: True
+  DESCRIPTION_FILING-COPY_EN.txt         bayt= 36677 istem= 0 paragraf=70 surekli=True sorun=[]
+  CLAIMS_FILING-COPY_EN.txt              bayt= 10988 istem=15 paragraf= 0 surekli=True sorun=[]
+  TARIFNAME_FILING-COPY_TR.txt           bayt= 37279 istem= 0 paragraf=70 surekli=True sorun=[]
+  ISTEMLER_FILING-COPY_TR.txt            bayt= 11715 istem=15 paragraf= 0 surekli=True sorun=[]
+  ABSTRACT_FILING-COPY_EN.txt            bayt=   864 istem= 0 paragraf= 0 surekli=True sorun=[]
+  OZET_FILING-COPY_TR.txt                bayt=   828 istem= 0 paragraf= 0 surekli=True sorun=[]
+=== 2/9 patentline lint ===
+DESCRIPTION_EN.md                      cikis=1  Linter: 1 hata · 9 uyarı · 0 bilgi
+CLAIMS_EN.md                           cikis=1  Linter: 15 hata · 6 uyarı · 1 bilgi
+DESCRIPTION_TR.md                      cikis=1  Linter: 1 hata · 9 uyarı · 0 bilgi
+ISTEMLER_TR.md                         cikis=0  Linter: 0 hata · 6 uyarı · 1 bilgi
+filing/DESCRIPTION_FILING-COPY_EN.txt  cikis=1  Linter: 1 hata · 13 uyarı · 0 bilgi
+filing/CLAIMS_FILING-COPY_EN.txt       cikis=1  Linter: 15 hata · 7 uyarı · 1 bilgi
+filing/TARIFNAME_FILING-COPY_TR.txt    cikis=1  Linter: 1 hata · 11 uyarı · 0 bilgi
+filing/ISTEMLER_FILING-COPY_TR.txt     cikis=0  Linter: 0 hata · 7 uyarı · 1 bilgi
+=== 3/9 motor bataryasi ===
+batarya cikis=0
+=== 4/9 siniflandirma kaniti ===
+arte fakt kanit cikis=0
+antecedent kanit cikis=0
+patent/pct_v2/filing/CLAIMS_FILING-COPY_EN.txt istem=15 bulgu=15 {'A_articleless_cogul_tanim': 5, 'B_artikel-terim_arasi_3+': 8, 'C_ifadeye_sifat_eklenmis': 2, 'D_GECEK_KUSUR': 0}
+patent/pct_v2/filing/ISTEMLER_FILING-COPY_TR.txt istem=15 bulgu= 0 {'A_articleless_cogul_tanim': 0, 'B_artikel-terim_arasi_3+': 0, 'C_ifadeye_sifat_eklenmis': 0, 'D_GECEK_KUSUR': 0}
+=== 5/9 sayi-atif haritasi ===
+atif haritasi cikis=0  EKSIK: 0 []
+=== 6/9 rapor kapisi (sayi -> ham kaynak) ===
+rapor kapisi cikis=2  TOPLAM: doğru 15 · kaynakta yok 0 · kaynaksız 47 · ölü adres 0
+=== 7/9 tablo ici kunye + motor deger denetimi ===
+KUNYE TARAMASI: acilan 171 adres · olu adres 0
+MOTOR KARŞILAŞTIRMASI: 0 uyuşmazlık
+-> patent-cikti/pct/pct_v2-pct-inceleme/DOGRUL_tablolar.json
+=== 8/9 olcum defteri kapisi (OLCUM_KAYITLARI) ===
+A KÜNYE          : açılan 243 adres
+B SAYI           : birebir 112 · yuvarlanmış 5 · satır yok 68 · türetilmiş (hesap) 2
+C EŞİTLİK        : doğrulanan 4 satır
+D HESAP          : satır 51: 13.5166 = 13.516568 ✓ (girdi 2522200 / 34091488) · satır 52: 14.7929 = 14.792899 ✓ (girdi 2522200 / 34091488)
+UYARI            : 0
+BULGU            : 0
+--- KAPI KARARLARI ---
+0 sekil hatti   : 0/0/0  (0/0/0 = uretim + A4 PDF + harici kapi)
+1 uretim        : 0    (0 = 6 kopya, paragraf/istem/iz temiz)
+5 atif haritasi : 0      (0 = her girdi kendi ham satirinda)
+6 rapor kapisi  : 2      (0 temiz / 1 bulgu / 2 yalniz uyari)
+7 tablo kapisi  : 0     (0 = her kunye acildi, motor degerleri uslesmez)
+8 olcum kapisi  : 0  (0 = her kunye + her sayi ham kaynakta)
+SONUC: yeşil — altı karar kapısı temiz (şekil + filing + atıf + rapor + tablo + ölçüm); kalan motor/lint bulguları UYGUNLUK_NOTU paragraf 4'te
+CIKIS=0

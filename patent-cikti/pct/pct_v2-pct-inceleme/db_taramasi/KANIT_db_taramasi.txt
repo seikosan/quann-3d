@@ -1,0 +1,61 @@
+# KANIT — patent/NPL veritabani taramasinin sayim kaydi
+# uretim: db_kanit.py | ham: db_taramasi/index.jsonl + db_taramasi/npl/index.jsonl
+# her satir: <id> | <kanal> | HTTP | toplam-sayisi(API alani) | ilk-hit | sorgu
+
+## patent sorgulari (16)
+q01 | r.jina.ai -> patents.google.com/xhr/query | 200 | 6 | CN121798587A | "point cloud" "language model" "set aggregation"
+q02 | r.jina.ai -> patents.google.com/xhr/query | 200 | 5 | CN117392424A | "deep sets" "max-pooling" neural network
+q03 | r.jina.ai -> patents.google.com/xhr/query | 200 | 102 | JP6873333B2 | "permutation invariant" "language model" set representation
+q04 | r.jina.ai -> patents.google.com/xhr/query | 200 | 15 | US20250156898A1 | "hidden states" "point cloud" explainability
+q05 | r.jina.ai -> patents.google.com/xhr/query | 200 | 160 | US11049267B2 | "pairwise" "relative position" "point cloud" aggregation network
+q06 | r.jina.ai -> patents.google.com/xhr/query | 200 | 4 | US20250259069A1 | "language model" explanation "input removal" output difference
+q07 | r.jina.ai -> patents.google.com/xhr/query | 200 | 5 | US20250095091A1 | clustering "latent representations" "cluster labels" interpretability
+q08 | r.jina.ai -> patents.google.com/xhr/query | 200 | 10 | US20190378210A1 | "Kullback-Leibler" divergence "two groups" model outputs explainabilit
+q09 | r.jina.ai -> patents.google.com/xhr/query | 200 | 0 | - | "zeroth-order" OR "derivative-free" "without backpropagation" training
+q10 | r.jina.ai -> patents.google.com/xhr/query | 200 | 83 | US20240135259A1 | "tabular data" "point cloud" deep learning classification
+q11 | r.jina.ai -> patents.google.com/xhr/query | 200 | 0 | - | "sliding window" "fixed stride" sentence embeddings transformer aggreg
+q12 | r.jina.ai -> patents.google.com/xhr/query | 200 | 219 | EP3843013A1 | INT8 quantization "lookup table" edge device model deployment
+q13 | r.jina.ai -> patents.google.com/xhr/query | 200 | 87 | JP2026525778A | "point cloud" "next token" autoregressive prediction
+q14 | r.jina.ai -> patents.google.com/xhr/query | 200 | 5 | EP4332849A1 | explanation "same representation" neural network "no separate" model
+q15 | r.jina.ai -> patents.google.com/xhr/query | 200 | 5 | US20240282404A1 | set encoder "order independent" pooling "next token" language model
+q16 | r.jina.ai -> patents.google.com/xhr/query | 200 | 1035 | US20230084203A1 | "ablation" "contribution" neural network "removing" feature vector inf
+
+## npl sorgulari (19)
+n01 | OpenAlex | 200 | 48 | https://openalex.org/W7133191943 | point cloud representation language model token
+n02 | OpenAlex | 200 | 92 | https://openalex.org/W1902934009 | deep sets permutation invariant neural network
+n03 | OpenAlex | 200 | 20 | https://openalex.org/W4285082196 | pointnet hierarchical feature aggregation point cloud
+n04 | OpenAlex | 200 | 4 | https://openalex.org/W3024144897 | explainability hidden representation point cloud interpretation networ
+n05 | OpenAlex | 200 | 0 | - | occlusion ablation input removal language model explanation
+n06 | OpenAlex | 200 | 15 | https://openalex.org/W2883849462 | clustering latent representations automatic labelling interpretability
+n07 | OpenAlex | 200 | 3 | https://openalex.org/W4321462040 | population drift latent distribution divergence explainability
+n08 | OpenAlex | 200 | 1 | https://openalex.org/W7140438547 | zeroth-order derivative-free training neural network backpropagation a
+n09 | OpenAlex | 200 | 1 | https://openalex.org/W4289534020 | tabular data deep learning embedding row as set of vectors
+n10 | OpenAlex | 200 | 13 | https://openalex.org/W7131095932 | INT8 post-training quantization on-device language model deployment
+n11 | OpenAlex | 200 | 15 | https://openalex.org/W1970333790 | hybrid gradient based and gradient free parameter update training
+n12 | OpenAlex | 200 | 0 | - | sentence level embedding sliding window document representation aggreg
+a01 | arXiv | 200 | 353 | http://arxiv.org/abs/2408.08682v1 | all:"point cloud" AND all:"language model"
+a02 | arXiv | 200 | 2 | http://arxiv.org/abs/2505.24403v4 | all:"set aggregation" AND all:"permutation invariant"
+a03 | arXiv | 200 | 77 | http://arxiv.org/abs/2610.12566v1 | all:"zeroth-order" AND all:"language model" AND all:"training"
+a04 | arXiv | 200 | 56 | http://arxiv.org/abs/2205.05448v2 | all:"permutation invariant" AND all:"language model"
+a05 | arXiv | 200 | 22 | http://arxiv.org/abs/2412.20612v1 | all:"point cloud" AND all:"explainability" AND all:"transformer"
+a06 | arXiv | 200 | 2 | http://arxiv.org/abs/2411.12897v1 | all:"tabular" AND all:"point cloud" AND all:"classification"
+a07 | arXiv | 200 | 1 | http://arxiv.org/abs/2310.00027v2 | all:"total variation" AND all:"cluster" AND all:"distribution shift"
+
+## ek sorgulari (7)
+x01 | r.jina.ai -> patents.google.com/xhr/query | 200 | 21 | US11905563B2 | ti:QUANN
+x02 | r.jina.ai -> patents.google.com/xhr/query | 200 | 3 | CN121714252A | ti:"cloud language model" OR ti:CloudLM
+x03 | r.jina.ai -> patents.google.com/xhr/query | 200 | 0 | - | "context encoder" "point cloud" "reader" "next token"
+x04 | r.jina.ai -> patents.google.com/xhr/query | 200 | 507 | CN121034123A | "point cloud" explanation "clustering" "region" "language model"
+x05 | r.jina.ai -> patents.google.com/xhr/query | 200 | 0 | - | "tabular record" OR "tabular data" "set aggregation" "class assignment
+x06 | r.jina.ai -> patents.google.com/xhr/query | 200 | 2370 | US20240418515A1 | explanation "without a separate" model "point cloud" inference
+x07 | r.jina.ai -> patents.google.com/xhr/query | 200 | 3252 | US20200110401A1 | training "accept" "revert" candidate parameter change measured loss
+
+## Sayim (index.jsonl uzerinden hesaplandi)
+toplam_sorgu | 42
+hit_kayit_toplam | 161
+benzersiz_hit | 160
+bos_donen_sorgu | 6 | q09,q11,n05,n12,x03,x05
+patent_sorgu | 23
+patent_hit | 91
+npl_sorgu | 19
+npl_hit | 70

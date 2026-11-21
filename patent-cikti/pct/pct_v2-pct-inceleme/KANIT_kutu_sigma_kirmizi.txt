@@ -1,0 +1,23 @@
+docs/patent/pct_v2/fig/fig1_system_architecture.svg 21682 bytes
+docs/patent/pct_v2/fig/fig2_pair_geometry.svg 17648 bytes
+docs/patent/pct_v2/fig/fig3_symmetric_aggregation.svg 16081 bytes
+docs/patent/pct_v2/fig/fig4_point_removal.svg 14206 bytes
+docs/patent/pct_v2/fig/fig5_region_naming.svg 19224 bytes
+docs/patent/pct_v2/fig/fig6_region_shift.svg 27456 bytes
+docs/patent/pct_v2/fig/fig7_int8_package.svg 20562 bytes
+docs/patent/pct_v2/fig/fig8_window_cloud.svg 14413 bytes
+manifest: docs/patent/pct_v2/fig/fig_manifest.json 8 sekil 2 olcumlu
+KUTU DOLULUK (yazi/kutu genisligi) en dolu 5:
+   FIG. 8  92% genislik  37% yukseklik  'window-geometry encoder'
+   FIG. 3  87% genislik  70% yukseklik  'variant replacing the pair computation'
+   FIG. 3  86% genislik  62% yukseklik  'point features f(p₁)'
+   FIG. 2  86% genislik  35% yukseklik  'difference vector Δp (D)'
+   FIG. 4  85% genislik  89% yukseklik  'copy with point k set to zero value, m'
+KIRMIZI — kutuya sigmayan yazi:
+   FIG. 1: kutuya sigmiyor 'task input
+(token sequence /
+tabular record)' (89x49px, 4 satir @ 6.8pt)
+   FIG. 1: kutuya sigmiyor 'aggregation module
+(one set representation)' (95x49px, 4 satir @ 6.8pt)
+   FIG. 4: kutuya sigmiyor 'copy with point k set to
+zero value, mask closed' (117x45px, 4 satir @ 6.8pt)

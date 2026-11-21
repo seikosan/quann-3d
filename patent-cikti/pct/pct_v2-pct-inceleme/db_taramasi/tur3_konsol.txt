@@ -1,0 +1,8 @@
+x01 [200] toplam=21 :: ti:QUANN
+x02 [200] toplam=3 :: ti:"cloud language model" OR ti:CloudLM
+x03 [200] toplam=0 :: "context encoder" "point cloud" "reader" "next token"
+x04 [200] toplam=507 :: "point cloud" explanation "clustering" "region" "language 
+x05 [200] toplam=0 :: "tabular record" OR "tabular data" "set aggregation" "clas
+x06 [200] toplam=2370 :: explanation "without a separate" model "point cloud" infer
+x07 [200] toplam=3252 :: training "accept" "revert" candidate parameter change meas
+-> /Users/serkankose/Documents/quann-3d/patent-cikti/pct/pct_v2-pct-inceleme/db_taramasi/index2.jsonl

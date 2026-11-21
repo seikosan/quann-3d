@@ -1,0 +1,66 @@
+# CLAIMS
+
+**Title of the invention (PCT Rule 4.3):** Dual-use point-cloud representation with embedded explainability
+
+*Working copy — attorney review required. 15 claims: 1-12 method, 13-14 system, 15 non-transitory recording medium.
+Consecutive Arabic numbering per Rule 6.1(b); no reference to the description or drawings in any claim
+(Rule 6.2(a)); reference signs omitted, which Rule 6.2(b) permits where they would not speed up
+understanding of the claim. The text to be filed is generated into `filing/` by `make_filing.py`.*
+
+1. A computer-implemented machine learning method for producing a task output of a trained model from a task input, the method comprising: processing the task input with a context encoder of the trained model to produce context-encoded representations; and deriving a reader input from the context-encoded representations and processing the derived reader input with a reader of the trained model to produce the task output, characterized in that the method further comprises the steps of:
+
+    (a) representing each context-encoded representation as a point in a D-dimensional space, thereby constructing a point cloud consisting of N points, wherein the task input consists of one of an ordered sequence of tokens and a plurality of measured field values of a tabular record, and such that for a tabular record the measured field values of that record are represented as points of the point cloud of that record;
+
+    (b) computing, for points of the point cloud, point features, and, for each point pair of the point cloud, pair-geometry features derived from geometric quantities dependent on positions of two points forming that point pair;
+
+    (c) combining the point features and the pair-geometry features into a single set representation as the reader input by a symmetric set aggregation that is independent of an input order of the points and of the point pairs;
+
+    (d) producing the task output from the set representation with the reader, wherein the task output is a probability distribution of a next token for an ordered token sequence input, and is a class assignment score for a tabular record input;
+
+    (e) producing explanation data by applying at least one of three explanation operations to the point cloud of the trained model itself that produced the task output, without using a separate explanation model, a separate explanation training or a separate explanation input:
+
+        (i) a point-removal effect: temporarily removing a selected point from the point cloud, re-running the reader, and recording a change measured in the task output as contribution data of that point;
+
+        (ii) region naming: partitioning set representations or point cloud states of a plurality of records into geometric regions by a clustering operation, and assigning to each region a human-readable region label derived from input statistics of the records forming that region;
+
+        (iii) region shift: comparing point shares in identical geometric regions for a reference data group and a comparison data group, and quantifying a difference between the point shares over the regions by a probability distribution divergence measure; and
+
+    (f) presenting, via an output interface, the task output and the explanation data jointly as outputs derived from a same set representation of the same trained model.
+
+2. The method of claim 1, wherein D is selected as an integer between 3 and 64.
+
+3. The method of claim 1, wherein the pair-geometry features for a given point pair of the point cloud comprise a difference vector between two point vectors of the given point pair, a pair distance that is a Euclidean norm of the difference vector, an angular similarity between the two point vectors of the given point pair, and norm values of the two point vectors of the given point pair.
+
+4. The method of claim 1, wherein the symmetric set aggregation is performed by applying max-pooling over the point features and average-pooling over the point pairs for the pair-geometry features, and by combining a result of the max-pooling and a result of the average-pooling with a concatenation layer.
+
+5. The method of claim 1, wherein N is determined according to a context length of the task input; positions of the task input at which context is not filled, and point pairs consisting of such positions, are excluded from the aggregation by a masking signal; and N is kept limited by the context length of the task input.
+
+6. The method of claim 1, wherein the point-removal effect is produced by re-running the reader for a masked point cloud obtained by masking the selected point in the point cloud and computing a task-output difference between an unmasked state and the masked state as a logit difference, and by providing masked point clouds jointly to the reader as a batch input, thereby producing the contribution data in N+1 forward passes for N points.
+
+7. The method of claim 1, wherein the region naming is performed by running a centroid-based clustering algorithm as the clustering operation over the set representations or the point cloud states, and by assigning to each region a human-readable label obtained by combining at least one symbol selected from a frequency ranking of input symbols of the records assigned to that region.
+
+8. The method of claim 1, wherein the region shift comprises quantifying point shares of regions in a reference data group and in a comparison data group with at least one of a total variation measure defined as a half sum of absolute differences of the region point shares and a Kullback-Leibler divergence measure, and marking, as an emerging region, a region whose share in a reference distribution is below a lower threshold and whose share in a comparison distribution exceeds an upper threshold.
+
+9. The method of claim 1, wherein at least one parametric layer of the reader is represented by INT8 integer quantization, and a deployment package that produces the task output and the explanation data carries, in a single self-contained package, (i) quantized model weights, (ii) a quantization table mapping input values to model input identities, and (iii) a resolution table mapping the model input identities to human-readable input labels, such that the same package produces both the task output and a human-readable form of the explanation data on an edge device.
+
+10. The method of claim 1, wherein the task input is a text consisting of a plurality of sentences, the context encoder encodes each sentence as a sentence cloud state, consecutive sentence cloud states are slid by a fixed window size and a fixed stride to derive a plurality of neighbouring window cloud states, geometric quantities between windows are collected by a window-geometry encoder to obtain a multi-sentence set representation, and the multi-sentence set representation is provided to the reader.
+
+11. The method of claim 1, wherein, instead of computing the pair-geometry features and average-pooling over the point pairs, the method comprises computing a set of global set statistics of the point cloud, the set of global set statistics comprising maximum, minimum, mean and standard deviation pooling over point dimensions together with a cloud centre and a centre deviation, and deriving the set representation from the set of global set statistics, thereby obtaining a computational cost proportional to a number of points in the point cloud.
+
+12. The method of claim 1, wherein a training step comprises updating parameters of the reader by gradient-based backpropagation, and updating point positions of the point cloud, without computing gradients, by zeroth-order accept and revert operations based on a measured change of a task loss caused by a candidate point position.
+
+13. A computer system comprising at least one processor and a memory storing instructions executable by the at least one processor, wherein execution of the instructions configures the system to operate as: a context encoder module processing a task input to produce context-encoded representations; and a reader producing a task output from a representation derived from the context-encoded representations, characterized in that execution of the instructions further configures the system to operate as:
+
+    a point projection module converting the context-encoded representations into D-dimensional vectors to construct a point cloud consisting of N points, wherein the task input consists of one of an ordered sequence of tokens and a plurality of measured field values of a tabular record, and such that measured field values of a tabular record are represented as points of the point cloud of that record;
+
+    a pair-geometry encoder computing point features for points of the point cloud and geometric pair-geometry features, dependent on positions of two points, for point pairs of the point cloud;
+
+    an aggregation module combining the point features and the pair-geometry features into a single set representation by a set aggregation independent of an input order of the points and of the point pairs, wherein the reader produces the task output from the set representation;
+
+    an interpretation engine producing explanation data, from the same point cloud from which the task output is produced, by applying at least one of a point-removal effect, region naming and region shift without requiring a separate explanation model; and
+
+    an output interface jointly presenting the task output and the explanation data.
+
+14. The computer system of claim 13, wherein the reader carries a distribution store holding, in a single self-contained package, INT8 quantized parametric layers of the reader, a quantization table mapping input values to model input identities, and a resolution table mapping the model input identities to human-readable input labels; and wherein the interpretation engine is configured to compute a point-removal effect over the INT8 quantized parametric layers carried in the single self-contained package.
+
+15. A non-transitory computer-readable recording medium storing a set of instructions executable by a computer comprising a processor, wherein execution of the set of instructions causes the computer to perform steps of processing a task input with a context encoder to produce context-encoded representations, and producing a task output with a reader from a representation derived from the context-encoded representations, characterized in that the steps further comprise: constructing a point cloud consisting of N points from D-dimensional representations of the context-encoded representations, wherein the task input consists of one of an ordered sequence of tokens and a plurality of measured field values of a tabular record, and such that measured field values of a tabular record are represented as points of the point cloud of that record; computing a plurality of geometry features for points of the point cloud and for point pairs of the point cloud; combining the plurality of geometry features into a set representation by a set aggregation independent of an input order; producing the task output from the set representation with the reader; producing explanation data from the same point cloud by applying at least one of a point-removal effect, region naming and region shift without using a separate explanation model; and jointly recording the task output and the explanation data.
