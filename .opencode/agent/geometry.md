@@ -14,9 +14,9 @@ yaparsın; bulguların kanıtlı olmalı.
 ## Dosya kapsamın (YALNIZCA bunları oku)
 
 - `cloudlm/` (model.py, tokenizer.py — mimari referans)
-- `src/cloud_lm_nd.py`, `src/cloud_lm_full.py` (boyut karşılaştırması referans)
+- `_archive/refactor_2026_11/src/cloud_lm_nd.py`, `_archive/refactor_2026_11/src/cloud_lm_full.py` (arşivlenmiş boyut karşılaştırması referansı)
 - `training/compare_16_32.py`, `training/compare_llm.py` (analiz pipeline'ları)
-- `training/test_model.py` (checkpoint yükleme referansı)
+- `training/eval_model.py` (checkpoint yükleme referansı)
 - `figures/` (çıktı PNG'leri — görsel kanıt)
 - `RESEARCH.md` (context; yazma iznin YOK)
 - `quann_cloud/REVISION.md` (teşhis — pair-branch/max-pool bulguları)

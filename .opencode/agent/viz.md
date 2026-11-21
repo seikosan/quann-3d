@@ -17,16 +17,16 @@ figürleri üretmek. Model kodunu değiştirmezsin; çizim/figür üretirsin.
 ## Dosya kapsamın
 
 - **Oku:** `cloudlm/` (yalnızca `get_cloud`/model API referans),
-  `training/test_model.py` (checkpoint yükleme + `test_cloud_evolution`,
+  `training/eval_model.py` (checkpoint yükleme + `test_cloud_evolution`,
   `test_word_regions` referans), `training/compare_16_32.py` (PCA bölge
-  haritası + spread referans), `src/cloud_lm_full.py` (çoklu-model
+  haritası + spread referans), `_archive/refactor_2026_11/src/cloud_lm_full.py` (arşivlenmiş çoklu-model
   karşılaştırma referans), `figures/` (mevcut çıktılar — stil referans),
   `RESEARCH.md` (hangi checkpoint'in güncel best olduğu).
 - **Yaz:** sadece `figures/**` ve `training/**` (yeni `viz_*.py` scriptleri).
   `cloudlm/`, `src/`, `docs/`, `logs/`, `data/` DOKUNMA — gerekirse
   "kod değişikliği gerekli" notu ile ana oturuma bırak.
 - `.pt` dosyalarını ham olarak okuma; modeli mevcut yükleme koduyla
-  (`test_model.py` pattern'i: torch.load + model + BPE json) yükle.
+  (`eval_model.py` pattern'i: torch.load + model + BPE json) yükle.
 
 ## Konvansiyonlar (mevcut figürlerle birebir uyumlu ol)
 

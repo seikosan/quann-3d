@@ -4,9 +4,9 @@ Quann-3D — Model Test & Etkileşim
 Eğitilmiş checkpoint'i yükleyip test et.
 
 Kullanım:
-  python3 test_model.py                    # otomatik testler
-  python3 test_model.py --interactive      # etkileşimli mod
-  python3 test_model.py --prompt "kedi bahçede"  # tek prompt
+  python3 eval_model.py                    # otomatik testler
+  python3 eval_model.py --interactive      # etkileşimli mod
+  python3 eval_model.py --prompt "kedi bahçede"  # tek prompt
 """
 
 import torch

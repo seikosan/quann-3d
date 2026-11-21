@@ -41,7 +41,7 @@ quann-3d/
 │   ├── train_bpe.py            #   BPE pipeline (tokenizers kütüphanesi)
 │   ├── compare_llm.py          #   Kapsamlı LLM karşılaştırma + edge benchmark
 │   ├── compare_16_32.py        #   16D vs 32D geometri (bölge haritaları, KMeans)
-│   ├── test_model.py           #   Checkpoint testi + etkileşimli üretim aracı
+│   ├── eval_model.py           #   Checkpoint testi + etkileşimli üretim aracı
 │   ├── download_wiki.py        #   Wikipedia corpus indirici
 │   └── shell/                  #   run_r4_*/run_r5_cc.sh (güncel kuyruklar)
 ├── data/                       # Corpus'lar
@@ -121,7 +121,7 @@ python3 training/compare_llm.py --step all \
 python3 training/compare_16_32.py
 
 # Eğitilmiş checkpoint'i test et / etkileşimli üretim
-python3 training/test_model.py --checkpoint checkpoints/cloudlm/cloud_lm_final.pt
+python3 training/eval_model.py --checkpoint checkpoints/cloudlm/cloud_lm_final.pt
 
 # QUANN-Cloud (backprop'suz) — paket içi testler
 python3 -m pytest quann_cloud/tests/ -v
@@ -131,7 +131,7 @@ python3 quann_cloud/experiments/real_data_test.py --quick
 ## 3B Çalışma Görünümü (web)
 
 Etkileşimli 3B arayüz (Mimari şeması · gerçek CloudLM bulutu 32D→3B · QUANN
-0th-order araması animasyonu) `_archive/src_legacy/visualizer/` altındadır —
+0th-order araması animasyonu) `_archive/refactor_2026_11/src/visualizer/` altındadır —
 koddan çıkarım yapılıyor ama aktif akışta değil; yeniden canlandırmak isteyen
 `export_data.py` + `index.html`yi oradan alabilir.
 

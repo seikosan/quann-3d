@@ -4,7 +4,7 @@ import torch
 
 from cloudlm import BPETokenizer
 from training import train_wiki
-from training.test_model import build_model_from_checkpoint
+from training.eval_model import build_model_from_checkpoint
 
 
 def test_resume_restores_optimizer_scheduler_rng_and_epoch(tmp_path, monkeypatch):

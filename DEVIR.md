@@ -183,7 +183,7 @@ ContextCloudLM vs CloudLM: PPL farkı 294969.40 − 285467.06 = 9502.34 → %3,2
 
 - `contextcloud/model.py` — ContextCloudLM + generate metodu
 - `contextcloud/train_simple.py` — eğitim scripti (çalışmıyor)
-- `contextcloud/compare_models.py`, `contextcloud/test_long_text.py` — kıyaslama araçları
+- `contextcloud/compare_models.py`, `contextcloud/eval_long_text.py` — kıyaslama araçları
 - `contextcloud/long_text_results.txt` — uzun metin ölçümü (yukarıdaki tablonun kaynağı)
 - `contextcloud/tests/test_model.py` — test dosyası (artık testpaths'te)
 
