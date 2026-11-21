@@ -33,3 +33,7 @@ quann_cloud/experiments/revision/
 # Archived workspaces
 _archive/
 .gstack/
+
+# kara_kutu koşum çıktıları (kanıt klasörleri repo'ya girmez; .gitkeep hariç)
+kara_kutu/runs/*
+!kara_kutu/runs/.gitkeep

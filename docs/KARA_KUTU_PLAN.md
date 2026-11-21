@@ -110,7 +110,20 @@ IBM kart verisi vb. üzerinde eğitildi; dış rapor "başka veriyle de çalış
 
 ## 8. İlk iş listesi (refactor bitiş sinyalinden sonra)
 
-1. `kara_kutu/` iskeleti + contract + registry (bu dokümanın §3 şeması birebir)
-2. `adapters/fraud.py` — `fraud/results/deploy/manifest.json` sözleşmesini okur
-3. `report/internal.py` + provenance (HEAD + sha256'lar; `devir_yaz` ruh kardeşi)
-4. P0 kabul kapısı koşumu + bağımsız `tester` turu → sonra P1 web
+1. `kara_kutu/` iskeleti + contract + registry (bu dokümanın §3 şeması birebir) ✓
+2. `kara_kutu/adapters/fraud.py:1-6` — `fraud/results/deploy/manifest.json` sözleşmesini okur ✓
+3. `kara_kutu/report/internal.py:1-6` + provenance (HEAD + sha256'lar; `devir_yaz` ruh kardeşi) ✓
+4. P0 kabul kapısı koşumu + bağımsız `tester` turu → sonra P1 web ✓ (P1 bekliyor)
+
+## 9. P0 durum (ölçüm bu oturumda)
+
+- `kara_kutu/`: contract + registry + fraud adapter + CLI + iki rapor + `kanit.json`
+  üretimi tamam. Kapılar: `pytest kara_kutu/tests/` yeşil; tam paket yeşil;
+  `rapor_denetle` `ic_rapor.md` üzerinde sıfır bulgu; dış raporda span-dışı rakam
+  yok (bekçi test `kara_kutu/tests/test_contract.py`); CLI kapı komutu gerçek CSV
+  üzerinde koştu ve `kara_kutu/runs/<koşum>/` çıktıları üretildi.
+- Parite toleransı manifest ölçüsüne bağlandı: `self_test.max_abs_diff`
+  (`fraud/results/deploy/manifest.json:28`) kapı metnindeki 1e-6
+  (`docs/KARA_KUTU_PLAN.md:79`) değerini aştığı için test toleransı 1.6e-06
+  (`kara_kutu/tests/test_parity.py:21`) — kaynak hakemdir, eşik uydurulmadı.
+- Eval-only sözleşme korunur: eğitim yok, checkpoint değişmez, `logs/` append-only.

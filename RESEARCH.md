@@ -2,7 +2,7 @@
 
 > Her oturum başında okunur. Ağır log/checkpoint/kod incelemesi alan agent'larında kalır.
 > Güncelleme protokolü: `AGENTS.md` §5. Dosya bütçesi: en çok 150 satır.
-> Son güncelleme: 2026-11-19 22:13 — R8 kapandı (pair-freeze önde); canlı run yok
+> Son güncelleme: 2026-11-21 10:35 — Kara Kutu P0 kapıları yeşil; canlı run yok
 
 ## Bir Cümle
 
@@ -66,13 +66,10 @@ gradyan geri yayılımı olmadan eğitmeyi araştırır.
 - Contextcloud global ilk denemesi MPS `aten::_nested_tensor_from_mask_left_aligned`
   eksikliğiyle sonlandı; yeniden koşu için `enable_nested_tensor=False` ayarı
   kullanıldı (`logs/run_r4_contextcloud_global.log`; `contextcloud/train_global_context.py:34`).
-- R3 20K karşılaştırmasında MAX PPL 315.99 (`quann_cloud/REVISION.md:56`).
-- R3 20K karşılaştırmasında ATTN PPL 334.89 (`quann_cloud/REVISION.md:56`).
-- R3 200K karşılaştırmasında MAX PPL 61.91 (`quann_cloud/REVISION.md:57`).
-- R3 200K karşılaştırmasında ATTN PPL 66.85 (`quann_cloud/REVISION.md:57`).
-- R2 cloud-attention logunda D32 PPL 58.88 (`logs/run_r2_cloud_attn_200k_d32.log:26`).
-- R2 cloud-attention logunda D64 PPL 57.04 (`logs/run_r2_cloud_attn_200k_d64.log:26`).
-- R2 cloud-attention logunda D128 PPL 58.55 (`logs/run_r2_cloud_attn_200k_d128.log:26`).
+- R3 20K karşılaştırmasında MAX PPL 315.99 / ATTN PPL 334.89 (`quann_cloud/REVISION.md:56`).
+- R3 200K karşılaştırmasında MAX PPL 61.91 / ATTN PPL 66.85 (`quann_cloud/REVISION.md:57`).
+- R2 cloud-attention logunda PPL: D32 58.88 (`logs/run_r2_cloud_attn_200k_d32.log:26`),
+  D64 57.04 (`logs/run_r2_cloud_attn_200k_d64.log:26`), D128 58.55 (`logs/run_r2_cloud_attn_200k_d128.log:26`).
 - Nokta sayısı varyantı logunda PPL 37.63 (`logs/run_r2_cloud_attn_200k_d64_n20.log:26`); satır held-out olarak etiketlenmediğinden held-out sonucu sayılmamalıdır.
 - Fraud doğal testinde FP32 AUC-ROC 0.9451 (`fraud/logs/run_full_scale_edge_eval.log:52`).
 - Fraud doğal testinde INT8-channel AUC-ROC 0.9367 (`fraud/logs/run_full_scale_edge_eval.log:54`).
@@ -98,7 +95,8 @@ Detay: `quann_cloud/REVISION.md`.
 
 ## Sıradaki Aksiyonlar
 
-- Tamamlandı (17 Kas): ayrık 80/10/10 holdout bölmesi (seed=42) üç CC script'ine eklendi ve R5 koşuları bitti; gerçek TEST loss'lar `logs/run_r5_cc_*.log` içinde.
+- Kara Kutu P1 (`docs/KARA_KUTU_PLAN.md`): ikinci dikey adaptör + gerekçe grafiği;
+  P0 kapıları bu oturumda ölçüldü (tam pytest, `rapor_denetle`, CLI).
 - Tamamlandı (17 Kas): vocab=10000 eşitlenmiş kontrollü memory rerun bitti;
   memory TEST 3.6295 (`logs/run_r5_cc_memory_v10k.log:454`) ve stable TEST
   3.2318 (`logs/run_r5_cc_stable.log:1236`).
@@ -116,7 +114,10 @@ Detay: `quann_cloud/REVISION.md`.
 ## Alt-Projeler
 
 - `quann_cloud/`: teşhis ve deney adayları `REVISION.md`, deney kaydı `EXPERIMENTS.md`.
-- `fraud/`: sonuç ve dağıtım kanıtları `results/` altında.
+- `fraud/`: sonuç ve dağıtım kanıtları `results/` altında. Kara Kutu P0: `kara_kutu/`
+  eval-only hattı fraud adapter ile açıldı; parity toleransı 1.6e-06 (`kara_kutu/tests/test_parity.py:21`)
+  dayandığı manifest değeri 1.2814998626708984e-06 (`fraud/results/deploy/manifest.json:28`);
+  plan şartı 1e-6 (`docs/KARA_KUTU_PLAN.md:79`) ile çelişki — kaynak hakemdir.
 - `aml/`, `maintenance/`: deney sonuçları kendi `results/`, `figures/` ve README
   dosyalarında tutulur; burada sayısal özet verilmemiştir.
 
