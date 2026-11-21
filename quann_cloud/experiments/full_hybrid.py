@@ -12,7 +12,6 @@ QUANN-Cloud — Full Corpus Hibrit Eğitim
 
 import sys, os, time, math, random
 import torch
-import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
 
@@ -21,7 +20,6 @@ sys.path.insert(0, os.path.join(ROOT, "src"))
 
 from tokenizers import Tokenizer
 from qcloud_network import QCloudNetwork
-from qcloud_weight import QCloudWeight
 
 
 def load_corpus(path, max_lines=100_000):
@@ -117,8 +115,8 @@ def main():
 
     # 6. Hibrit Eğitim
     print(f"\n{'='*60}")
-    print(f"  EĞİTİM: Backprop (transformer) + QUANN (nokta bulut)")
-    print(f"  10 epoch, lr=1e-3, batch=16")
+    print("  EĞİTİM: Backprop (transformer) + QUANN (nokta bulut)")
+    print("  10 epoch, lr=1e-3, batch=16")
     print(f"{'='*60}")
 
     optimizer = torch.optim.AdamW(model.parameters(), lr=1e-3)
@@ -168,7 +166,7 @@ def main():
     
     # Sonuç
     print(f"\n{'='*60}")
-    print(f"  📊 SONUÇ")
+    print("  📊 SONUÇ")
     print(f"{'='*60}")
     print(f"  Baseline PPL:  {base_ppl:.2f}")
     print(f"  Best PPL:      {best_ppl:.2f}")
@@ -181,7 +179,7 @@ def main():
     print(f"  Converged:     {converged}/{len(model.token_weights)}")
     
     # Metin üretimi
-    print(f"\n  --- Metin Üretimi ---")
+    print("\n  --- Metin Üretimi ---")
     prompts = [
         "Türkiye bir coğrafyadır.",
         "Bilim ve teknoloji gelişiyor.",

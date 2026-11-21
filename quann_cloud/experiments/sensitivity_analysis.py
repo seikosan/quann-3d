@@ -13,7 +13,6 @@ mimari revizyonun hedefi buradan çıkacak.
 
 import sys
 import os
-import math
 import numpy as np
 import torch
 import torch.nn.functional as F
@@ -159,9 +158,9 @@ def main():
 
     # ── 3) D boyutunun kapasite sınırı ──
     # Noktaların tutabileceği bilgi: 10 nokta × D boyut × tanh[-1,1]
-    print(f"\n=== KAPASİTE NOTU ===")
+    print("\n=== KAPASİTE NOTU ===")
     print(f"  Bulut: 10 nokta × {D}D = {10 * D} sayı (tanh sınırlı)")
-    print(f"  Transformer: 10 × 256D = 2560 sayı (sınırsız ölçek)")
+    print("  Transformer: 10 × 256D = 2560 sayı (sınırsız ölçek)")
     print(f"  Bilgi oranı: bulut/transformer ≈ {10 * D / 2560:.1%}")
 
 

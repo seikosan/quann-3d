@@ -16,7 +16,6 @@ import torch
 import torch.nn.functional as F
 from sklearn.decomposition import PCA
 from sklearn.ensemble import HistGradientBoostingClassifier
-from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KernelDensity
 

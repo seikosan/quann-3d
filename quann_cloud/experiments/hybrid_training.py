@@ -19,9 +19,8 @@ Sonuç:
     python3 experiments/hybrid_training.py
 """
 
-import sys, os, time, math, copy, random
+import sys, os, time, math, random
 import torch
-import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
 
@@ -30,8 +29,6 @@ sys.path.insert(0, os.path.join(ROOT, "src"))
 
 from tokenizers import Tokenizer
 from qcloud_network import QCloudNetwork
-from qcloud_weight import QCloudWeight
-from qcloud_quann import QUANN, QUANNConfig
 
 
 def load_corpus(path, max_lines=5000):
@@ -206,9 +203,9 @@ def main():
 
     # 4. Hibrit Eğitim
     print(f"\n{'='*60}")
-    print(f"  HİBRİT EĞİTİM (20 epoch)")
-    print(f"  - Backprop: transformer (lr=1e-3)")
-    print(f"  - QUANN: nokta bulut (50 token)")
+    print("  HİBRİT EĞİTİM (20 epoch)")
+    print("  - Backprop: transformer (lr=1e-3)")
+    print("  - QUANN: nokta bulut (50 token)")
     print(f"{'='*60}")
     
     t0 = time.time()
@@ -223,7 +220,7 @@ def main():
     
     # 5. Sonuç
     print(f"\n{'='*60}")
-    print(f"  📊 SONUÇ")
+    print("  📊 SONUÇ")
     print(f"{'='*60}")
     print(f"  Baseline PPL:  {base_ppl:.2f}")
     print(f"  Final PPL:     {final_ppl:.2f}")
@@ -236,7 +233,7 @@ def main():
     print(f"  Converged:     {converged}/{len(model.token_weights)}")
     
     # Token örnekleri
-    print(f"\n  --- Nokta Bulut Örnekleri (ilk 5) ---")
+    print("\n  --- Nokta Bulut Örnekleri (ilk 5) ---")
     for i, (tid, w) in enumerate(list(model.token_weights.items())[:5]):
         token_text = tokenizer.decode([tid % len(tokenizer.get_vocab())])
         print(f"    Token {tid:3d} ('{token_text}'): "
@@ -244,7 +241,7 @@ def main():
               f"conv={'✓' if w.is_converged() else '✗'}")
 
     # Metin üretimi
-    print(f"\n  --- Metin Üretimi ---")
+    print("\n  --- Metin Üretimi ---")
     prompt = "Bu bir test cümlesidir."
     enc = [x % VOCAB for x in tokenizer.encode(prompt).ids]
     tokens = torch.tensor([enc], device=device)

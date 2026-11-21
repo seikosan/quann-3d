@@ -26,7 +26,7 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 sys.path.insert(0, ROOT)
 sys.path.insert(0, os.path.join(ROOT, "training"))
 
-from train_wiki import BPETokenizer, CloudLM, WordToND
+from train_wiki import BPETokenizer, CloudLM
 
 
 # ─────────────────────────────────────────────
@@ -272,7 +272,7 @@ def main():
 
     # Üretim
     model.eval()
-    print(f"  ÜRETİM:")
+    print("  ÜRETİM:")
     for p in ["Türkiye'nin başkenti", "ekonomik büyüme"]:
         ids = torch.tensor([tok.encode(p)], device=device)
         out = model.generate(ids, max_new=12, temperature=0.8, eos_id=eos_id)

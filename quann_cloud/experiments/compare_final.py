@@ -147,7 +147,7 @@ def main():
         del m
 
     # Üretim (CloudLM 1.5M + hibrit)
-    print(f"\n  ÜRETİM ÖRNEKLERİ (temp=0.8):")
+    print("\n  ÜRETİM ÖRNEKLERİ (temp=0.8):")
     prompts = ["Türkiye'nin başkenti", "bilgisayar bilimlerinde", "ekonomik büyüme"]
     for name, path, cls, quann, t in [
         ("CloudLM 1.5M", os.path.join(ROOT, "checkpoints", "wiki_checkpoints_wiki1500k",
@@ -181,7 +181,7 @@ def main():
         del m
 
     print(f"\n{'='*60}")
-    print(f"  NİHAI TABLO — ortak held-out (5.5M wiki, 2K cümle)")
+    print("  NİHAI TABLO — ortak held-out (5.5M wiki, 2K cümle)")
     print(f"{'='*60}")
     print(f"  {'Model':28s} {'Held-out PPL':>14s}")
     print(f"  {'Random (20K vocab)':28s} {20000:>14,}")

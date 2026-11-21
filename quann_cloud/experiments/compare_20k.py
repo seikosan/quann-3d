@@ -127,7 +127,7 @@ def main():
               f"({len(ck.get('token_weights', []))} token ağırlığı)")
         
         # Üretim
-        print(f"\n  ÜRETİM (hibrit, temp=0.8):")
+        print("\n  ÜRETİM (hibrit, temp=0.8):")
         for p in ["Türkiye'nin başkenti", "bilgisayar bilimlerinde",
                   "sanat tarihi açısından", "ekonomik büyüme",
                   "demokrasi ve insan"]:
@@ -140,7 +140,7 @@ def main():
     
     # ── Tablo ──
     print(f"\n{'='*60}")
-    print(f"  20K CORPUS — HELD-OUT PPL KARŞILAŞTIRMASI")
+    print("  20K CORPUS — HELD-OUT PPL KARŞILAŞTIRMASI")
     print(f"{'='*60}")
     print(f"  {'Model':28s} {'Held-out PPL':>14s}")
     print(f"  {'Random (untrained)':28s} {tok.num_tokens:>14,}")

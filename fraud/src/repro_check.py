@@ -89,7 +89,6 @@ def main():
         return float(roc_auc_score(te_y, p))
 
     # 1) reproducible: reload the checkpoint (bundled quantizer) TWICE
-    import copy
     a1 = auc_with_quantizer(quantize.FeatureQuantizer.from_dict(
         torch.load(ckpt, map_location="cpu")["quantizer"]))
     a2 = auc_with_quantizer(quantize.FeatureQuantizer.from_dict(

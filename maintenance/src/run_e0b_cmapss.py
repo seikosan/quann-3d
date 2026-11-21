@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import json
-import os
 import sys
 import time
 from datetime import datetime
@@ -16,7 +15,6 @@ import torch
 from sklearn.cluster import MiniBatchKMeans
 from sklearn.ensemble import HistGradientBoostingClassifier, RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score
 from sklearn.neural_network import MLPClassifier
 
 ROOT = Path(__file__).resolve().parents[2]

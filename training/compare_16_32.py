@@ -29,7 +29,6 @@ from cloudlm import CloudLM
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
 
 
 # ─────────────────────────────────────────────
@@ -284,7 +283,7 @@ def main():
     os.makedirs(save_dir, exist_ok=True)
     
     # Model yükle
-    print(f"\n  Model yükleme...")
+    print("\n  Model yükleme...")
     
     # 16D
     ckpt16_path = os.path.join(ROOT, "checkpoints", "wiki_checkpoints", "wiki_cloud_best.pt")
@@ -338,7 +337,7 @@ def main():
     
     # ── 1. Bölge Analizi ──
     print(f"\n{'='*60}")
-    print(f"  1. BÖLGE ANALİZİ (KMeans)")
+    print("  1. BÖLGE ANALİZİ (KMeans)")
     print(f"{'='*60}")
     
     results = {}
@@ -363,7 +362,7 @@ def main():
     # ── 2. Karşılaştırma ──
     if model32 is not None:
         print(f"\n{'='*60}")
-        print(f"  2. YAN YANA KARŞILAŞTIRMA")
+        print("  2. YAN YANA KARŞILAŞTIRMA")
         print(f"{'='*60}")
         
         # 3D projeksiyon
@@ -371,12 +370,12 @@ def main():
         plot_comparison(model16, model32, tokenizer, vis_texts, save_dir, device)
         
         # Yayılım
-        print(f"\n  3. YAYILIM KARŞILAŞTIRMASI:")
+        print("\n  3. YAYILIM KARŞILAŞTIRMASI:")
         plot_spread_comparison(model16, model32, tokenizer, test_texts, save_dir, device)
     
     # ── 3. Bölge Haritaları ──
     print(f"\n{'='*60}")
-    print(f"  4. BÖLGE HARİTASI (PCA 2D)")
+    print("  4. BÖLGE HARİTASI (PCA 2D)")
     print(f"{'='*60}")
     
     plot_region_map(model16, tokenizer, test_texts, save_dir, "16D", device)
@@ -385,7 +384,7 @@ def main():
     
     # ── ÖZET ──
     print(f"\n\n{'='*60}")
-    print(f"  📊 ÖZET")
+    print("  📊 ÖZET")
     print(f"{'='*60}")
     
     if "16D" in results and "32D" in results:
@@ -396,13 +395,13 @@ def main():
         print(f"  {'Silhouette':>10s} {r16['silhouette']:>10.3f} {r32['silhouette']:>10.3f}")
         print(f"  {'Kelime':>10s} {r16['n_words']:>10d} {r32['n_words']:>10d}")
         print(f"\n  Yorum: 32D'de {r32['best_k']} bölge (16D'de {r16['best_k']})")
-        print(f"  → Boyut arttıkça daha ince ayrışma")
+        print("  → Boyut arttıkça daha ince ayrışma")
     elif "16D" in results:
         r16 = results["16D"]
         print(f"  16D: {r16['best_k']} bölge, silhouette={r16['silhouette']:.3f}")
-        print(f"  (32D henüz hazır değil)")
+        print("  (32D henüz hazır değil)")
     
-    print(f"\n  ✅ TAMAM")
+    print("\n  ✅ TAMAM")
     print(f"  Görseller: {save_dir}/")
 
 

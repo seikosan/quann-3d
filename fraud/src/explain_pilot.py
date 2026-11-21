@@ -18,7 +18,6 @@ import config
 import datasets
 import metrics
 import quantize
-import threshold_utils
 import train_quann as tq
 from qcloud_fraud import QCloudFraudClassifier
 from quantize import FeatureQuantizer

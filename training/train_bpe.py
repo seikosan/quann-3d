@@ -12,14 +12,12 @@ Kullanım:
 """
 
 import torch
-import torch.nn as nn
 import torch.nn.functional as F
 import math
 import time
 import random
 import csv
 import re
-import json
 import argparse
 import os
 import sys
@@ -27,18 +25,15 @@ import sys
 # Repozitör kökü (CWD'den bağımsız)
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
-from cloudlm import CloudLM, WordToND, CloudEncoderND, BPETokenizer
+from cloudlm import CloudLM, BPETokenizer
 # BPE run'larının checkpoint adları için geriye dönük alias
 CloudLMBPE = CloudLM  # noqa: F811
 
 import numpy as np
-from typing import List, Optional
-from collections import Counter
 
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
 
 
 # ─────────────────────────────────────────────
@@ -73,7 +68,7 @@ def load_corpus(path=None, max_texts=None):
 
 def step_train_tokenizer(args):
     print(f"\n{'='*60}")
-    print(f"  ADIM 1: BPE TOKENIZER")
+    print("  ADIM 1: BPE TOKENIZER")
     print(f"{'='*60}")
     
     os.makedirs(args.save_dir, exist_ok=True)
@@ -90,7 +85,7 @@ def step_train_tokenizer(args):
     print(f"  Vocab: {tok.num_tokens} token")
     
     # Örnekler
-    print(f"\n  Tokenizasyon örnekleri:")
+    print("\n  Tokenizasyon örnekleri:")
     test_words = ["bahçede", "bahçeler", "bahçem", "bahçesinde", 
                   "kedi", "kediler", "kedimi", "kedilerin",
                   "güzel", "güzellik", "güzelleştirmek"]
@@ -106,7 +101,7 @@ def step_train_tokenizer(args):
     all_tokens = [tok.encode(t) for t in texts[:1000]]
     avg_len = np.mean([len(t) for t in all_tokens])
     print(f"\n  Ort. token/cümle: {avg_len:.1f}")
-    print(f"  (Word-level'de ortalama ~12 kelime/cümle idi)")
+    print("  (Word-level'de ortalama ~12 kelime/cümle idi)")
     
     return tok
 
@@ -117,7 +112,7 @@ def step_train_tokenizer(args):
 
 def step_train_model(args, tok: BPETokenizer):
     print(f"\n{'='*60}")
-    print(f"  ADIM 2: MODEL EĞİTİM (BPE)")
+    print("  ADIM 2: MODEL EĞİTİM (BPE)")
     print(f"{'='*60}")
     
     device = "mps" if torch.backends.mps.is_available() else \
@@ -231,7 +226,7 @@ def step_train_model(args, tok: BPETokenizer):
 
 def step_test(args, model=None, tok=None):
     print(f"\n{'='*60}")
-    print(f"  ADIM 3: TEST")
+    print("  ADIM 3: TEST")
     print(f"{'='*60}")
     
     device = "mps" if torch.backends.mps.is_available() else "cpu"
@@ -254,14 +249,14 @@ def step_test(args, model=None, tok=None):
     eos_id = tok._tokenizer.token_to_id("<eos>") or 1
     
     # 1. Tokenizasyon testi
-    print(f"\n  🔤 Tokenizasyon:")
+    print("\n  🔤 Tokenizasyon:")
     test_words = ["bahçede", "bahçeler", "bahçem", "güzellik", "kedi", "okulda"]
     for w in test_words:
         tokens = tok.sample_tokens(w)
         print(f"    {w:15s} → {tokens}")
     
     # 2. Üretim
-    print(f"\n  🧪 ÜRETİM (temp=0.7):")
+    print("\n  🧪 ÜRETİM (temp=0.7):")
     prompts = [
         "kedi bahçede",
         "çocuk parkta",
@@ -278,7 +273,7 @@ def step_test(args, model=None, tok=None):
         print(f"    {p:25s} → {out}")
     
     # 3. Geometri
-    print(f"\n  🔬 GEOMETRİ:")
+    print("\n  🔬 GEOMETRİ:")
     test_sents = [
         "kedi bahçede uyudu",
         "çocuk parkta top oynadı",
@@ -304,7 +299,7 @@ def step_test(args, model=None, tok=None):
             print(f"    Min/Max dist: {min(all_d):.3f}/{max(all_d):.3f}")
     
     # 4. Bulut görselleştirme
-    print(f"\n  📸 GÖRSELLEŞTİRME:")
+    print("\n  📸 GÖRSELLEŞTİRME:")
     sent = "kedi bahçede uyudu"
     tokens = torch.tensor([tok.encode(sent)], device=device)
     mask = (tokens != 0) & (tokens != eos_id)
@@ -337,7 +332,7 @@ def step_test(args, model=None, tok=None):
     plt.close()
     print(f"    📸 {save_path}")
     
-    print(f"\n  ✅ TEST TAMAM")
+    print("\n  ✅ TEST TAMAM")
 
 
 # ─────────────────────────────────────────────

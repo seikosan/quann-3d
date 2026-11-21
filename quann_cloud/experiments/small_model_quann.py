@@ -10,7 +10,6 @@ Amaç: QUANN'ın GERÇEKTEN öğrendiğini göstermek.
 
 import sys, os, time, math, copy, random
 import torch
-import torch.nn as nn
 import torch.nn.functional as F
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -153,7 +152,7 @@ def main():
     print(f"\n  QUANN: width={info['mean_width']:.4f}, conv={info['pct_converged']*100:.1f}%, σ={info['sigma_mean']:.3f}")
 
     # Metin
-    print(f"\n  --- Metin Üretimi ---")
+    print("\n  --- Metin Üretimi ---")
     prompt = "Bu bir test cümlesidir."
     enc = [x % VOCAB for x in tokenizer.encode(prompt).ids]
     tokens = torch.tensor([enc], device=device)

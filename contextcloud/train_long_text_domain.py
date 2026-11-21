@@ -9,8 +9,6 @@ This addresses the domain gap issue:
 
 import logging
 import os
-import sys
-from pathlib import Path
 
 import torch
 import torch.nn as nn

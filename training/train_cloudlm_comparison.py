@@ -68,11 +68,11 @@ print(f"\nModel: {n_params:,} params ({n_params/1e6:.1f}M)")
 
 # Training config - same as PureCloudLM
 LR = 5e-6
-print(f"\nTraining config:")
+print("\nTraining config:")
 print(f"  LR: {LR}")
-print(f"  Batch: 256")
-print(f"  Epochs: 100")
-print(f"  Clip: 0.3")
+print("  Batch: 256")
+print("  Epochs: 100")
+print("  Clip: 0.3")
 
 optimizer = torch.optim.AdamW(model.parameters(), lr=LR, weight_decay=0.01)
 scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=100)
@@ -165,4 +165,4 @@ print(f"Best PPL: {best_ppl:.2f}")
 print(f"Total time: {elapsed/60:.1f} minutes ({elapsed/3600:.1f} hours)")
 print(f"Corpus: {len(all_tokens):,} sentences")
 print(f"Model: {n_params/1e6:.1f}M params")
-print(f"\nCheckpoint: cloudlm/checkpoints/cloudlm_best_100epochs.pt")
+print("\nCheckpoint: cloudlm/checkpoints/cloudlm_best_100epochs.pt")

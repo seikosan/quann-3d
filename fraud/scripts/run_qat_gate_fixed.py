@@ -27,7 +27,6 @@ from sklearn.metrics import average_precision_score, roc_auc_score
 sys.path.insert(0, os.path.abspath("fraud/src"))
 import datasets
 import edge_eval
-import metrics
 import threshold_utils
 import train_quann as tq
 from qcloud_fraud import QCloudFraudClassifier

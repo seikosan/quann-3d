@@ -248,7 +248,7 @@ class QCloudTrainer:
         (öğrenme birikir, yakınsama takip edilebilir).
         """
         print(f"\n{'='*60}")
-        print(f"  QUANN-Cloud Training — Backprop'suz Eğitim")
+        print("  QUANN-Cloud Training — Backprop'suz Eğitim")
         print(f"{'='*60}")
         if resume_path:
             self.load_checkpoint(resume_path)

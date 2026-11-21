@@ -10,7 +10,6 @@ Kullanım:
 """
 
 import torch
-import torch.nn as nn
 import torch.nn.functional as F
 import math
 import argparse
@@ -22,7 +21,6 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 from cloudlm import CloudLM, WordToND, CloudEncoderND, Tok  # noqa: F401
 
-import json
 import numpy as np
 import random
 from collections import Counter
@@ -30,7 +28,6 @@ from collections import Counter
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
 
 
 def build_model_from_checkpoint(ckpt):
@@ -93,7 +90,7 @@ def test_geometry(model, tok, device, text):
     # Mesafe matrisi
     n = len(words)
     if n <= 8:
-        print(f"  Mesafe matrisi:")
+        print("  Mesafe matrisi:")
         print(f"    {'':12s}", end="")
         for w in words:
             print(f"{w[:9]:>11s}", end="")
@@ -214,9 +211,9 @@ def test_ppl(model, tok, device, texts, seq_len=6, n_test=100):
 def interactive_mode(model, tok, device):
     """Etkileşimli mod — cümle gir, bulut + tahmin gör."""
     print(f"\n{'='*60}")
-    print(f"  🎮 ETKİLEŞİMLİ MOD")
-    print(f"  Cümle yaz → bulut + bir sonraki kelime tahmini")
-    print(f"  'q' ile çık")
+    print("  🎮 ETKİLEŞİMLİ MOD")
+    print("  Cümle yaz → bulut + bir sonraki kelime tahmini")
+    print("  'q' ile çık")
     print(f"{'='*60}")
     
     model.to(device)
@@ -249,7 +246,7 @@ def interactive_mode(model, tok, device):
         # Mesafeler
         n = len(words)
         if 2 <= n <= 8:
-            print(f"\n  🔗 Bağlar:")
+            print("\n  🔗 Bağlar:")
             dists = []
             for i in range(n):
                 for j in range(i+1, n):
@@ -265,7 +262,7 @@ def interactive_mode(model, tok, device):
             top5_idx = torch.argsort(logits[0], descending=True)[:5].tolist()
             top5 = [(tok.itos.get(i, '?'), float(logits[0, i])) for i in top5_idx]
         
-        print(f"\n  🔮 Bir sonraki kelime (top-5):")
+        print("\n  🔮 Bir sonraki kelime (top-5):")
         for w, score in top5:
             bar = "█" * int(max(0, (score - top5[-1][1]) / max(top5[0][1] - top5[-1][1], 1e-8) * 20))
             print(f"    {w:15s} {score:+.2f} {bar}")
@@ -328,7 +325,7 @@ def main():
         # Bulut
         pts = model.get_cloud(tokens, mask)
         words = args.prompt.lower().split()
-        print(f"\n  🌩️  Bulut:")
+        print("\n  🌩️  Bulut:")
         for w, p in zip(words, pts):
             coords = " ".join(f"{v:+.3f}" for v in p[:4])
             print(f"    {w:15s} ({coords}{'...' if pts.shape[1]>4 else ''})")
@@ -338,7 +335,7 @@ def main():
         with torch.no_grad():
             logits, _, _ = model(tokens, mask)
             top5 = torch.argsort(logits[0], descending=True)[:5].tolist()
-            print(f"\n  🔮 Top-5:")
+            print("\n  🔮 Top-5:")
             for i in top5:
                 print(f"    {tok.itos.get(i, '?'):15s} {logits[0, i]:+.2f}")
         
@@ -351,7 +348,7 @@ def main():
     else:
         # Otomatik testler
         print(f"\n{'='*60}")
-        print(f"  🧪 OTOMATİK TESTLER")
+        print("  🧪 OTOMATİK TESTLER")
         print(f"{'='*60}")
         
         # 1. Üretim
@@ -368,7 +365,7 @@ def main():
         
         # 2. Geometri
         print(f"\n{'='*60}")
-        print(f"  🔬 GEOMETRİ TESTİ")
+        print("  🔬 GEOMETRİ TESTİ")
         print(f"{'='*60}")
         
         test_sentences = [
@@ -383,14 +380,14 @@ def main():
         
         # 3. Bulut evrimi
         print(f"\n{'='*60}")
-        print(f"  🌩️  BULUT EVRİMİ")
+        print("  🌩️  BULUT EVRİMİ")
         print(f"{'='*60}")
         test_cloud_evolution(model, tok, device, "çocuk parkta topu kovaladı",
                            save_path="test_evolution.png")
         
         # 4. Kelime bölgeleri (küçük örnek)
         print(f"\n{'='*60}")
-        print(f"  📐 KELİME BÖLGELERİ")
+        print("  📐 KELİME BÖLGELERİ")
         print(f"{'='*60}")
         
         sample_texts = [
@@ -408,7 +405,7 @@ def main():
         test_word_regions(model, tok, device, sample_texts, n_words=15)
         
         print(f"\n\n{'='*60}")
-        print(f"  ✅ TESTLER TAMAM")
+        print("  ✅ TESTLER TAMAM")
         print(f"{'='*60}")
 
 

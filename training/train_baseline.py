@@ -27,7 +27,6 @@ Kullanım:
       --base-bpe checkpoints/wiki_checkpoints_200k/wiki_bpe.json
 """
 
-import sys
 import os
 
 # Repozitör kökü (CWD'den bağımsız)
@@ -38,7 +37,6 @@ import torch.nn.functional as F
 import math
 import time
 import random
-import json
 import argparse
 import numpy as np
 
@@ -316,7 +314,7 @@ def evaluate_ppl(model, tok, texts, device, seq_len, arch, n=2000, seed=0):
 
 def step_compare(args, tok):
     print(f"\n{'='*60}")
-    print(f"  KARŞILAŞTIRMA: CloudLM vs Baseline")
+    print("  KARŞILAŞTIRMA: CloudLM vs Baseline")
     print(f"{'='*60}")
 
     device = "mps" if torch.backends.mps.is_available() else "cpu"
@@ -359,7 +357,7 @@ def step_compare(args, tok):
         "ekonomik büyüme",
         "demokrasi ve insan",
     ]
-    print(f"\n  Üretim (aynı promptlar, temp=0.7):")
+    print("\n  Üretim (aynı promptlar, temp=0.7):")
     for p in prompts:
         c_ids = torch.tensor([cloud_tok.encode(p)], device=device)
         b_ids = torch.tensor([base_tok.encode(p)], device=device)
@@ -371,7 +369,7 @@ def step_compare(args, tok):
 
     # Sonuç tablosu
     print(f"\n{'='*60}")
-    print(f"  ÖZET")
+    print("  ÖZET")
     print(f"{'='*60}")
     print(f"  {'Model':12s} {'Params':>12s} {'Held-out PPL':>14s}")
     print(f"  {'CloudLM':12s} {count_params(cloud):>12,} {c_ppl:>14.2f}")

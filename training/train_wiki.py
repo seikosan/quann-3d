@@ -18,17 +18,12 @@ import os
 # Repozitör kökü (CWD'den bağımsız)
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import torch
-import torch.nn as nn
 import torch.nn.functional as F
 import math
 import time
 import random
-import re
-import json
 import argparse
 import numpy as np
-from typing import List, Optional
-from collections import Counter
 
 # Ortak mimari (tek kaynak): model + tokenizer'lar cloudlm paketinden
 sys.path.insert(0, ROOT)
@@ -37,7 +32,6 @@ from cloudlm import BPETokenizer, CloudLM, WordToND, CloudEncoderND  # noqa: F40
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
 
 EXAMPLE_CHUNK_SIZE = 8192
 
@@ -122,7 +116,7 @@ def load_txt(path, max_lines=None, min_len=20, max_len=300):
 
 def step_tokenizer(args):
     print(f"\n{'='*60}")
-    print(f"  ADIM 2A: BPE TOKENIZER (Wikipedia)")
+    print("  ADIM 2A: BPE TOKENIZER (Wikipedia)")
     print(f"{'='*60}")
     
     os.makedirs(args.save_dir, exist_ok=True)
@@ -134,7 +128,7 @@ def step_tokenizer(args):
     print(f"  Vocab: {tok.num_tokens} token")
     
     # Örnekler
-    print(f"\n  Tokenizasyon:")
+    print("\n  Tokenizasyon:")
     for w in ["bahçede", "güzelleştirmek", "okullarında", "demokrasi"]:
         print(f"    {w:20s} → {tok.sample_tokens(w)}")
     
@@ -156,7 +150,7 @@ def set_seeds(seed: int):
 
 def step_train(args, tok):
     print(f"\n{'='*60}")
-    print(f"  ADIM 2B+3: MODEL EĞİTİM (Wikipedia + Büyük Model)")
+    print("  ADIM 2B+3: MODEL EĞİTİM (Wikipedia + Büyük Model)")
     print(f"{'='*60}")
     
     # Set seeds for reproducibility
@@ -326,7 +320,7 @@ def evaluate_model(model, tok, texts, all_tokens, args, device, eos_id, split_na
 
 def step_test(args, model=None, tok=None):
     print(f"\n{'='*60}")
-    print(f"  ADIM 4: TEST")
+    print("  ADIM 4: TEST")
     print(f"{'='*60}")
     
     device = "mps" if torch.backends.mps.is_available() else "cpu"
@@ -365,7 +359,7 @@ def step_test(args, model=None, tok=None):
         print(f"    Gap: {eval_ppl - train_ppl:.2f}")
     
     # Üretim
-    print(f"\n  🧪 ÜRETİM:")
+    print("\n  🧪 ÜRETİM:")
     prompts = [
         "Türkiye'nin başkenti",
         "bilgisayar bilimlerinde",
@@ -380,7 +374,7 @@ def step_test(args, model=None, tok=None):
         print(f"    {p:30s} → {out[:70]}")
     
     # Geometri
-    print(f"\n  🔬 GEOMETRİ:")
+    print("\n  🔬 GEOMETRİ:")
     sents = [
         "Türkiye Avrupa ile Asya arasında bir köprüdür",
         "bilim teknolojide önemli rol oynar",
@@ -418,7 +412,7 @@ def step_test(args, model=None, tok=None):
     plt.savefig(path, dpi=150, bbox_inches='tight')
     plt.close()
     print(f"\n  📸 {path}")
-    print(f"\n  ✅ TEST TAMAM")
+    print("\n  ✅ TEST TAMAM")
 
 
 def main():

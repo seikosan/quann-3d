@@ -1,5 +1,5 @@
 """Generate sample predictions from PureCloudLM on held-out test set"""
-import sys, os, torch, math
+import sys, os, torch
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from purecloudlm import PureCloudLM
@@ -78,7 +78,7 @@ for idx, token_ids in enumerate(test_tokens):
     print(f"  Input (first 10 tokens): {input_text}")
     
     # Decode predictions
-    print(f"  Next token predictions:")
+    print("  Next token predictions:")
     for i, (val, idx) in enumerate(zip(top_values, top_indices)):
         predicted_text = tok.decode([idx.item()])
         print(f"    {i+1}. {predicted_text} (prob: {val:.4f})")
@@ -91,12 +91,12 @@ for idx, token_ids in enumerate(test_tokens):
     # Check accuracy
     if top_indices[0].item() == actual_next:
         correct_top1 += 1
-        print(f"  ✅ Top-1 CORRECT")
+        print("  ✅ Top-1 CORRECT")
     elif actual_next in top_indices[:3].tolist():
-        print(f"  ✅ Top-3 CORRECT")
+        print("  ✅ Top-3 CORRECT")
         correct_top3 += 1
     else:
-        print(f"  ❌ Incorrect")
+        print("  ❌ Incorrect")
     
     print()
 

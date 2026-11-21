@@ -26,11 +26,10 @@ from __future__ import annotations
 import math
 import os
 import sys
-import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from typing import Optional, List, Dict, Tuple
+from typing import Optional, Dict, Tuple
 
 try:
     from .qcloud_weight import QCloudWeight
@@ -522,7 +521,7 @@ if __name__ == "__main__":
     mask = (tokens != 0) & (tokens != 1)
     
     # Token weights: lazy — first forward/update oluşturur
-    print(f"Token weights: lazy (token kimliği bazlı)\n")
+    print("Token weights: lazy (token kimliği bazlı)\n")
 
     # Forward pass test
     print("--- Forward Pass Test ---")

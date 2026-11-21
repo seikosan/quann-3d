@@ -61,9 +61,9 @@ def main() -> int:
         print(f"epoch hızı    : {hiz:.0f} s/epoch ({len(kayitlar)} ölçülen epoch arası)")
         print(f"kalan tahmin  : {saat(kalan_ep * hiz)}  ({kalan_ep} epoch)")
     else:
-        print(f"kalan tahmin  : hesaplanamadı (tek epoch kaydı)")
+        print("kalan tahmin  : hesaplanamadı (tek epoch kaydı)")
 
-    print(f"\n=== EN İYİ KAYIT (aynı günlük) ===")
+    print("\n=== EN İYİ KAYIT (aynı günlük) ===")
     print(f"logs/{GUNLUK.name}:{en_iyi[0]} → epoch {en_iyi[1]} · loss={en_iyi[3]} · ppl={en_iyi[4]}")
 
     print("\n=== HEDEF KIYASI ===")

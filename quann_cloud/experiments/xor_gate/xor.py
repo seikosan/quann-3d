@@ -22,7 +22,6 @@ Metrik: 4 XOR örneğinde doğruluk (%) + MSE.
 
 import os
 import sys
-import math
 import json
 import random
 import time

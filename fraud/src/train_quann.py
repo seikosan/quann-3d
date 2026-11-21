@@ -220,7 +220,7 @@ def main():
         print("Loading bundled small dataset (User0 20K) ...")
         df = datasets.load_small()
     else:
-        label = f"full" if args.n_rows is None else f"first {args.n_rows:,} rows"
+        label = "full" if args.n_rows is None else f"first {args.n_rows:,} rows"
         print(f"Loading {label} of the IBM csv ...")
         df = datasets.load_big(args.n_rows)
     data = build_data(df, args.n_train, args.n_val, args.n_test,

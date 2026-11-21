@@ -26,7 +26,6 @@ Kullanım:
 """
 
 import torch
-import torch.nn as nn
 import torch.nn.functional as F
 import math
 import time
@@ -39,9 +38,7 @@ import os
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys
 import numpy as np
-from typing import List, Dict, Tuple, Optional
-from collections import Counter
-import timeit
+from typing import Dict
 
 # ─────────────────────────────────────────────
 # IMPORTS FROM EXISTING CODE
@@ -51,7 +48,7 @@ import timeit
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from train_wiki import BPETokenizer, CloudLM
-from train_baseline import CausalLM, BidirNoCloud, build_model, count_params
+from train_baseline import BidirNoCloud, build_model, count_params
 
 
 # ─────────────────────────────────────────────
@@ -756,14 +753,14 @@ def print_comparison_summary(quality_results: Dict[str, Dict],
                               arch_info: Dict[str, str]):
     """Print a side-by-side comparison table."""
     print(f"\n{'#'*70}")
-    print(f"  QUANN-3D — LLM KARŞILAŞTIRMA ÖZETİ")
+    print("  QUANN-3D — LLM KARŞILAŞTIRMA ÖZETİ")
     print(f"  {'#'*66}")
 
     models = list(quality_results.keys())
 
     # Quality summary table
     print(f"\n{'='*70}")
-    print(f"  KALİTE KARŞILAŞTIRMASI")
+    print("  KALİTE KARŞILAŞTIRMASI")
     print(f"{'='*70}")
     header = f"  {'Model':20s}"
     metrics_to_show = ["ppl", "exact_match", "word_jaccard", "word_f1", "valid_eos", "factual_hit_rate"]
@@ -785,7 +782,7 @@ def print_comparison_summary(quality_results: Dict[str, Dict],
 
     # Edge summary table
     print(f"\n{'='*70}")
-    print(f"  EDGE VERİMLİLİK KARŞILAŞTIRMASI")
+    print("  EDGE VERİMLİLİK KARŞILAŞTIRMASI")
     print(f"{'='*70}")
     header = f"  {'Model':20s}"
     edge_metrics = ["param_mb", "total_mb", "ms_per_token", "flops_tf", "joules", "speedup"]
@@ -807,7 +804,7 @@ def print_comparison_summary(quality_results: Dict[str, Dict],
 
     # Quality-per-parameter analysis
     print(f"\n{'='*70}")
-    print(f"  KALİTE / PARAMETRE VERİMLİLİĞİ")
+    print("  KALİTE / PARAMETRE VERİMLİLİĞİ")
     print(f"{'='*70}")
 
     for name in models:
@@ -819,7 +816,7 @@ def print_comparison_summary(quality_results: Dict[str, Dict],
 
     # Edge efficiency summary
     print(f"\n{'='*70}")
-    print(f"  EDGE KARARNAME")
+    print("  EDGE KARARNAME")
     print(f"{'='*70}")
 
     best_latency_model = None
@@ -843,7 +840,7 @@ def print_comparison_summary(quality_results: Dict[str, Dict],
         print(f"  En düşük bellek: {best_memory_model} ({best_memory:.2f} MB)")
 
     # Find best quality/performance ratio
-    print(f"\n  Öneri: Hangi model hangi senaryoda öne çıkar —")
+    print("\n  Öneri: Hangi model hangi senaryoda öne çıkar —")
     for name in models:
         ppl = quality_results[name].get("ppl", float('inf'))
         ms_pt = edge_results[name].get("ms_per_token", float('inf'))
@@ -957,7 +954,7 @@ def run_full(args):
     device = get_device()
 
     print(f"\n{'#'*70}")
-    print(f"  QUANN-3D — TAM KARŞILAŞTIRMA")
+    print("  QUANN-3D — TAM KARŞILAŞTIRMA")
     print(f"  Device: {device}")
     print(f"  {'#'*66}")
 

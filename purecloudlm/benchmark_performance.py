@@ -1,6 +1,5 @@
 """Quick PureCloudLM Performance Benchmark - 100K samples"""
 import sys, os, torch, torch.nn.functional as F, math, time
-from pathlib import Path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from purecloudlm import PureCloudLM
@@ -57,7 +56,7 @@ pure_params = sum(p.numel() for p in pure_model.parameters())
 cloud_model = CloudLM(**cloud_cfg)
 cloud_params = sum(p.numel() for p in cloud_model.parameters())
 
-print(f"\nModel sizes:")
+print("\nModel sizes:")
 print(f"  PureCloudLM:  {pure_params:,} params ({pure_params/1e6:.1f}M)")
 print(f"  CloudLM:      {cloud_params:,} params ({cloud_params/1e6:.1f}M)")
 print(f"  Ratio:        {cloud_params/pure_params:.1f}x")
@@ -140,10 +139,10 @@ print("\n" + "=" * 70)
 print("  TRAINING")
 print("=" * 70)
 
-print(f"\nTraining PureCloudLM...")
+print("\nTraining PureCloudLM...")
 pure_metrics = train_model(pure_model, "PureCloudLM", epochs=5)
 
-print(f"\nTraining CloudLM...")
+print("\nTraining CloudLM...")
 cloud_metrics = train_model(cloud_model, "CloudLM", epochs=5)
 
 # Results
@@ -159,7 +158,7 @@ print(f"{'Model Size':<25} {pure_metrics['params']/1e6:>10.1f}M  {cloud_metrics[
 print(f"\nSpeed ratio: {cloud_metrics['total_time']/pure_metrics['total_time']:.1f}x")
 print(f"Size ratio: {cloud_metrics['params']/pure_metrics['params']:.1f}x")
 
-print(f"\nConclusion:")
-print(f"  PureCloudLM: O(N) complexity, no Transformer attention")
-print(f"  CloudLM: O(N²) attention, but potentially better accuracy")
-print(f"  Trade-off: Speed vs. Performance")
+print("\nConclusion:")
+print("  PureCloudLM: O(N) complexity, no Transformer attention")
+print("  CloudLM: O(N²) attention, but potentially better accuracy")
+print("  Trade-off: Speed vs. Performance")

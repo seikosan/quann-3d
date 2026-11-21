@@ -1,6 +1,6 @@
 """Evaluate GPT-2/BERT on Turkish sentences for comparison"""
 import sys, os, torch, json, argparse
-from typing import List, Dict
+from typing import List
 
 ROOT = "/Users/serkankose/Documents/quann-3d"
 sys.path.insert(0, ROOT)

@@ -21,7 +21,6 @@ sys.path.insert(0, os.path.join(ROOT, "src"))
 
 from tokenizers import Tokenizer
 from qcloud_network import QCloudNetwork
-from qcloud_weight import QCloudWeight
 
 
 class StandardTransformerLM(nn.Module):
@@ -153,7 +152,7 @@ def main():
     device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
 
     # MODEL A
-    print(f"\n[1/2] STANDART TRANSFORMER")
+    print("\n[1/2] STANDART TRANSFORMER")
     model_a = StandardTransformerLM(VOCAB, D_MODEL, N_LAYERS, N_HEADS, D_FF).to(device)
     pa = sum(p.numel() for p in model_a.parameters())
     print(f"  Params: {pa:,}")
@@ -166,7 +165,7 @@ def main():
     print(f"  Final: {fa:.2f}, {ta:.0f}s")
 
     # MODEL B
-    print(f"\n[2/2] QLOUDNETWORK (HİBRİT)")
+    print("\n[2/2] QLOUDNETWORK (HİBRİT)")
     model_b = QCloudNetwork(VOCAB, D_MODEL, D_FF, 8, N_LAYERS).to(device)
     pb = sum(p.numel() for p in model_b.parameters())
     unique = set()
@@ -186,7 +185,7 @@ def main():
 
     # SONUÇ
     print(f"\n{'='*60}")
-    print(f"  📊 SONUÇ")
+    print("  📊 SONUÇ")
     print(f"{'='*60}")
     print(f"  {'':22s} {'Transformer':>13s} {'QCloudNet':>13s}")
     print(f"  {'-'*48}")
@@ -201,7 +200,7 @@ def main():
     print(f"\n  🏆 Kazanan: {winner} (PPL: {min(fa,fb):.2f})")
     
     # Metin
-    print(f"\n  --- Metin Üretimi ---")
+    print("\n  --- Metin Üretimi ---")
     prompts = ['Türkiye bir coğrafyadır.', 'Bilim ve teknoloji gelişiyor.']
     full_vocab = len(tokenizer.get_vocab())
     for p in prompts:

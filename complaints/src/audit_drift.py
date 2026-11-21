@@ -8,11 +8,10 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
-import pandas as pd
 from sklearn.decomposition import PCA
 from sklearn.metrics import pairwise_distances_argmin
 
-from config import FIGURES_DIR, N_REGIONS, RESULTS_DIR
+from config import FIGURES_DIR, RESULTS_DIR
 from datasets_cfpb import load_cfpb
 from explain_region import cloud_states, load_model
 

@@ -27,7 +27,7 @@ sys.path.insert(0, str(SRC))
 sys.path.insert(0, str(ROOT))
 
 from loader_cwru_exp import FEATURE_DIM, load_expanded_records
-from run_cwru_exp import SEED, _scale, recording_disjoint_split
+from run_cwru_exp import SEED, recording_disjoint_split
 from train_maintenance import MaintenanceCloud
 
 

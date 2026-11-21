@@ -19,7 +19,7 @@ import numpy as np
 import pandas as pd
 
 import config  # noqa: F401  (also sets up repo-root import path)
-from features import derive_base, _slug
+from features import derive_base
 from datasets_kaggle import derive_base_kaggle
 
 # base-derivation functions known to (de)serialization, by module-level name.

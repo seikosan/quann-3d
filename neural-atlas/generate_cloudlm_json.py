@@ -10,7 +10,6 @@ import os
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, REPO_ROOT)
 
-from cloudlm import CloudLM, BPETokenizer
 
 
 def get_model_architecture(ckpt_path):
@@ -65,7 +64,7 @@ def get_model_architecture(ckpt_path):
         # Transformer encoder layer
         nodes.append({
             "id": f"{layer_id}_norm1",
-            "label": f"Layer Norm 1",
+            "label": "Layer Norm 1",
             "type": "norm",
             "shape": [10, d_model],
             "description": f"Transformer layer {layer_idx+1} normalization"

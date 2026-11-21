@@ -25,7 +25,6 @@ hex files (save_consts); FixpointRef loads them, so the two sides cannot diverge
 from __future__ import annotations
 
 import os
-import struct
 
 import numpy as np
 import torch

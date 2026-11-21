@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import json
-import os
 import sys
 import argparse
 from pathlib import Path
@@ -18,7 +17,6 @@ import numpy as np
 import pandas as pd
 import shap
 import torch
-from matplotlib.colors import to_rgba
 from sklearn.decomposition import PCA
 from sklearn.ensemble import HistGradientBoostingClassifier
 from sklearn.model_selection import train_test_split
@@ -169,7 +167,7 @@ def _draw_region_map(ax, embeddings, labels, train_ids, prototypes, hero_embeddi
                 bbox={"boxstyle": "round,pad=0.24", "facecolor": "#FFF8E8", "alpha": 0.96, "edgecolor": "#E5C77A"}, zorder=10)
 
     variance = 100 * float(pca.explained_variance_ratio_.sum())
-    ax.set_xlabel(f"PCA 1", fontsize=9, color=MUTED, labelpad=3)
+    ax.set_xlabel("PCA 1", fontsize=9, color=MUTED, labelpad=3)
     ax.set_ylabel("PCA 2", fontsize=9, color=MUTED, labelpad=3)
     ax.tick_params(labelsize=7.5, colors=MUTED, length=2)
     ax.grid(True, color=GRID, linewidth=0.55, alpha=0.8)

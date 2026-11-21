@@ -16,7 +16,6 @@ Bu, projenin ÇEKİRDEK deneyi:
 
 import sys
 import os
-import time
 import math
 import torch
 import torch.nn as nn
@@ -114,14 +113,14 @@ def main():
         return F.cross_entropy(logits, targets).item()
 
     quann = QUANN(model, device, cfg=cfg, loss_fn=loss_fn)
-    print(f"\n[5/6] QUANN Motoru hazır")
+    print("\n[5/6] QUANN Motoru hazır")
     info = quann.info()
     print(f"  Total params: {info['total_params']:,}")
     print(f"  Param tensors: {info['n_param_tensors']}")
     print(f"  Initial sigma: {info['sigma_mean']:.3f}")
 
     # 6. Eğitim
-    print(f"\n[6/6] QUANN EĞİTİMİ (5 epoch)...")
+    print("\n[6/6] QUANN EĞİTİMİ (5 epoch)...")
     print("-" * 60)
 
     # Baseline PPL (eğitilmemiş)
@@ -151,18 +150,18 @@ def main():
         final_ppl = math.exp(final_loss / 50)
 
     print("-" * 60)
-    print(f"\n  📊 SONUÇ:")
+    print("\n  📊 SONUÇ:")
     print(f"     Baseline PPL: {base_ppl:.2f}")
     print(f"     Final PPL:    {final_ppl:.2f}")
     print(f"     İyileşme:     {base_ppl/final_ppl:.2f}x")
-    print(f"\n  QUANN Info:")
+    print("\n  QUANN Info:")
     info = quann.info()
     print(f"     Mean width:   {info['mean_width']:.6f}")
     print(f"     % Converged:  {info['pct_converged']*100:.1f}%")
     print(f"     Sigma:        {info['sigma_min']:.3f} - {info['sigma_max']:.3f} (mean {info['sigma_mean']:.3f})")
 
     # Metin üretimi
-    print(f"\n  --- Metin Üretimi ---")
+    print("\n  --- Metin Üretimi ---")
     prompt = "Türkiye bir coğrafyadır."
     enc = tokenizer.encode(prompt)
     tokens = torch.tensor([enc.ids], device=device)

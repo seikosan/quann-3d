@@ -54,7 +54,7 @@ seq_len = 10
 batch_size = 256
 
 print(f"\nTest set: {len(test_tokens)} sentences")
-print(f"Computing test perplexity...\n")
+print("Computing test perplexity...\n")
 
 total_loss = 0
 total_batches = 0
@@ -77,15 +77,15 @@ avg_loss = total_loss / max(total_batches, 1)
 test_ppl = math.exp(min(avg_loss, 20))
 
 print("=" * 60)
-print(f"  TEST RESULTS")
+print("  TEST RESULTS")
 print("=" * 60)
 print(f"  Average Loss: {avg_loss:.4f}")
 print(f"  Test PPL: {test_ppl:.2f}")
 print("=" * 60)
 
 # Compare with CloudLM
-print(f"\n  COMPARISON:")
-print(f"  CloudLM Test PPL:     21.91")
+print("\n  COMPARISON:")
+print("  CloudLM Test PPL:     21.91")
 print(f"  PureCloudLM Test PPL: {test_ppl:.2f}")
 print(f"  Difference:           {test_ppl - 21.91:+.2f}")
 print("=" * 60)

@@ -1,6 +1,5 @@
 """Set-valued complaint narratives encoded with the canonical cloud core."""
 
-import torch
 from torch import nn
 
 from cloudlm.model import CloudEncoderND, WordToND

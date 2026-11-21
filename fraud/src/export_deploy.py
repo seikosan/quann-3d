@@ -15,7 +15,6 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import config
 import datasets
 import explain_pilot
-import quantize
 from edge_eval import DeployPath
 from qcloud_fraud import QCloudFraudClassifier
 from quantize import FeatureQuantizer

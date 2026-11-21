@@ -100,13 +100,13 @@ def main():
 
     result = trainer.train(verbose=True, save_path=save_path)
 
-    print(f"\n=== SONUÇ ===")
+    print("\n=== SONUÇ ===")
     print(f"Best PPL: {result['best_ppl']:.2f} (epoch {result['best_epoch']})")
     print(f"Random baseline PPL ≈ {vocab_size} (untrained head)")
     print(f"Model: {save_path}")
 
     # Örnek üretimler
-    print(f"\n=== ÜRETİM ÖRNEKLERİ (temp=0.8) ===")
+    print("\n=== ÜRETİM ÖRNEKLERİ (temp=0.8) ===")
     for prompt in ["Türkiye'nin başkenti", "bilgisayar bilimlerinde",
                    "sanat toplumun", "ekonomik büyüme"]:
         out = trainer.generate_text(prompt, max_new=10, temperature=0.8)

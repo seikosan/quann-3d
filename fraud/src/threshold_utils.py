@@ -4,7 +4,6 @@ Per audit: thresholds MUST be selected on validation set, then applied to test.
 This prevents adaptive overfitting / circular gate problems.
 """
 import numpy as np
-from typing import Tuple, Optional
 
 
 def select_threshold_by_f2(y_true: np.ndarray, probs: np.ndarray,

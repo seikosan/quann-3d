@@ -21,7 +21,6 @@ sys.path.insert(0, os.path.join(ROOT, "src"))
 
 from tokenizers import Tokenizer
 from qcloud_network import QCloudNetwork
-from qcloud_trainer import QCloudTrainer
 
 
 def load_corpus(path: str, max_lines: int = 50_000) -> list[str]:
@@ -153,7 +152,7 @@ def main():
             best_ppl = ppl
     
     print(f"\n✅ Eğitim tamam! Best PPL: {best_ppl:.2f}")
-    print(f"   (Referans: backprop ile aynı model ~4-5 PPL beklenir)")
+    print("   (Referans: backprop ile aynı model ~4-5 PPL beklenir)")
     
     # Metin üretimi testi
     print("\n--- Metin Üretimi Testi ---")
