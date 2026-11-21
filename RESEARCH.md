@@ -91,6 +91,10 @@ Detay: `quann_cloud/REVISION.md`.
   lehine raporlar; attention-pool bu nedenle reddedilmiştir.
 - QUANN arama yönünü pair-kanalına taşıma: beklemede
   (`quann_cloud/REVISION.md`).
+- Metodoloji kararı (2026-11-21, refactor C5): `training/train_wiki.py` AGENTS §4.1
+  uyarınca bölünür — eğitim %80, best seçimi %10 validation-PPL, %10 test yalnız
+  `step_test`'te; checkpoint `ppl` = seçim metriği, `train_ppl`/`val_ppl` ayrı alanlar.
+  C5 öncesi checkpoint'lar %100 corpus ile eğitildi ve train-PPL ile seçildi.
 
 ## Sıradaki Aksiyonlar
 

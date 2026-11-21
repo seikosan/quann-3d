@@ -74,16 +74,23 @@ def test_training_batches_keep_singleton_remainder():
     assert sorted(len(batch) for batch in batches) == [1, 2]
 
 
-def test_eval_train_split_is_head_holdout():
-    texts = [str(i) for i in range(10)]
-    assert train_wiki.eval_train_split(texts, 30) == (texts[:3], texts[3:])
-    assert train_wiki.eval_train_split(texts, 0) == ([], texts)
-    assert train_wiki.eval_train_split(texts, 100) == (texts, [])
+def test_split_corpus_follows_agents_4_1():
+    texts = [str(i) for i in range(100)]
+    tr, va, te = train_wiki.split_corpus(texts, seed=42)
+    assert (len(tr), len(va), len(te)) == (80, 10, 10)
+    assert set(tr) | set(va) | set(te) == set(texts)
+    assert not set(tr) & set(va) and not set(tr) & set(te) and not set(va) & set(te)
+    # deterministik: aynı girdi+tohum aynı bölünme
+    assert train_wiki.split_corpus(texts, seed=42) == (tr, va, te)
+    assert train_wiki.split_corpus(texts, seed=7) != (tr, va, te)
+    # küçük kenar durum: çökmemeli, küme korunmalı
+    tr2, va2, te2 = train_wiki.split_corpus(texts[:3], seed=42)
+    assert sorted(tr2 + va2 + te2) == sorted(texts[:3])
 
 
 def test_step_test_eval_branch_loads_corpus_and_splits(tmp_path, monkeypatch):
-    # Regression: step_test referenced `texts` without loading it — the eval
-    # branch (since 16a4225) always crashed with NameError before running.
+    # Regression: step_test bir dönemi `texts`i yüklemeden referans alıyordu
+    # (NameError, 16a4225); C5'ten sonra §4.1 test bölümünü kullanır.
     corpus = [f"cümle {i} güzel dünya" for i in range(10)]
     monkeypatch.setattr(train_wiki, "load_txt", lambda *a, **k: list(corpus))
     tokenizer = BPETokenizer(vocab_size=32).train(corpus)
@@ -99,13 +106,42 @@ def test_step_test_eval_branch_loads_corpus_and_splits(tmp_path, monkeypatch):
 
     monkeypatch.setattr(train_wiki, "evaluate_model", fake_eval)
     args = SimpleNamespace(
-        eval_split=20, seq_len=2, save_dir=str(tmp_path),
+        eval_split=20, seq_len=2, save_dir=str(tmp_path), seed=42,
         corpus="ignored", max_texts=None,
     )
     train_wiki.step_test(args, model, tokenizer)
-    assert [name for name, _ in calls] == ["held-out", "train"]
-    assert calls[0][1] == corpus[:2]  # first 20% held out
-    assert calls[1][1] == corpus[2:]
+    expected_train, _, expected_test = train_wiki.split_corpus(corpus, 42)
+    assert [name for name, _ in calls] == ["test", "train"]
+    assert calls[0][1] == expected_test  # %10 test bölümü (eğitimde görülmemiş)
+    assert calls[1][1] == expected_train
+
+
+def test_step_train_uses_val_split_for_best_selection(tmp_path, monkeypatch):
+    # C5: eğitim yalnız %80 train üzerinde yapılır; best seçimi val-PPL ile.
+    corpus = [f"cümle {i} güzel dünya" for i in range(20)]
+    monkeypatch.setattr(train_wiki, "load_txt", lambda *a, **k: list(corpus))
+    tokenizer = BPETokenizer(vocab_size=32).train(corpus)
+    seen_splits = []
+
+    def fake_eval(model, tok, texts, all_tokens, args, device, eos_id, split_name="val"):
+        seen_splits.append((split_name, len(texts)))
+        return 12.34
+
+    monkeypatch.setattr(train_wiki, "evaluate_model", fake_eval)
+    args = SimpleNamespace(
+        corpus="ignored", max_texts=None, seq_len=2, d_model=16, d_cloud=12,
+        d_dim=4, layers=1, pool="max", cloud_attn=False, cloud_attn_heads=8,
+        batch=4, lr=1e-3, grad_clip=0.5, point_loss_weight=0.1,
+        save_dir=str(tmp_path), seed=42, epochs=1, resume=None,
+    )
+    train_wiki.step_train(args, tokenizer)
+    assert seen_splits == [("val", 2)]  # int(20*0.1)=2 cümle val
+    checkpoint = torch.load(tmp_path / "wiki_cloud_best.pt", map_location="cpu",
+                            weights_only=False)
+    assert checkpoint["val_ppl"] == 12.34
+    assert checkpoint["ppl"] == 12.34  # seçim metriği = val
+    assert checkpoint["train_ppl"] != 12.34
+    assert checkpoint["split_seed"] == 42
 
 
 def test_checkpoint_model_loader_honors_saved_pool_mode():

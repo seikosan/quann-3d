@@ -11,11 +11,11 @@ kunye-kaynak: otomatik (devir_yaz.py)
 # DEVIR — quann-3d
 
 <!-- MAKINE:BASLA -->
-## Durum (makine üretti · 2026-11-21 08:02)
+## Durum (makine üretti · 2026-11-21 08:54)
 Bu blok elle düzenlenmez; `devir_yaz.py --repo /Users/serkankose/Documents/quann-3d` ile yenilenir.
 
-- HEAD: 3aa1eb7 Refactor B1+A3: test_* adli CLI araclarinin eval_*'a yeniden adlandirilmasi (pytest/CLI karisikligi; testpaths disi, 127 passed ayni) + README/agent-doc/DEVIR pointer duzeltmeleri (olu src/ ve visualizer yollari arsiv gercek yollarina)
-- Değişen dosya: 1 → docs/REFACTOR_PLAN_2026-11-21.md
+- HEAD: 55649dc Refactor C2 (kullanici onayi 2026-11-21): neural-atlas ust duzey bayat kopyalar silindi (viewer 30 Eski, md5 json/assets ozdeş, harici referans 0); tek kaynak ice ice neural-atlas/neural-atlas (start_viewer.sh web-koku); INTEGRATION.md yolu guncellendi
+- Değişen dosya: 7 → DEVIR.md, RESEARCH.md, docs/REFACTOR_PLAN_2026-11-21.md, requirements_pretrained.txt, training/tests/test_train_wiki.py
 - Kod kapısı: bulgu 0 · uyarı 0 · bilgi 0 · düzeltme planı: 0 (ayrıntı: python3 ~/.config/opencode/denetim/denetim_plan.py)
 - Doküman kapısı: bulgu 0 · uyarı 0 · bilgi 2 · düzeltme planı: 0 (ayrıntı: python3 ~/.config/opencode/denetim/denetim_plan.py)
 - ölçüm: === EĞİTİM DURUMU (kaynak: ham dosya) ===
@@ -29,15 +29,15 @@ Bu blok elle düzenlenmez; `devir_yaz.py --repo /Users/serkankose/Documents/quan
 
 
 
-
 ## Sıradaki iş (ajan)
 
-- **Refactor 2026-11-21 (A/B uygulandı, C = KARAR BEKLİYOR):** tam plan + kanıtlar
-  `docs/REFACTOR_PLAN_2026-11-21.md`. A1 ruff F401/F541 180 düzeltme (78351b7) · A2
-  `train_wiki.step_test` NameError + `eval_train_split` + 2 regresyon (d944dbc) · B1+A3
-  `eval_*` adlandırma + ölü pointer onarımı (3aa1eb7); pytest 127 passed ✓ · denetim exit 0 ✓.
-  C1 16 referanssız script arşiv + C2 neural-atlas iç-içe kopya + C3 fraud/results kod
-  yerleşimi + C5 step_test metodoloji + C6/C7 — kullanıcı onayı olmadan uygulanmayacak.
+- **Refactor 2026-11-21 (A/B/C TAMAMLANDI):** tam plan + kanıtlar `docs/REFACTOR_PLAN_2026-11-21.md`.
+  A1 ruff 180 düzeltme (78351b7) · A2 step_test NameError (d944dbc) · B1+A3 eval_* adlandırma
+  (3aa1eb7) · C1 17 script arsiv (2c68ebb) · C2 neural-atlas tek kaynak (55649dc) · C3 fraud/results
+  kod arsiv (a531d3e) · C5 §4.1 80/10/10: eğitim %80, best=val-PPL, %10 test held-out · C6 kapsam
+  başlığı · C7 sys.path KEEP. pytest 128 passed ✓ · denetim exit 0 koşusu bkz. MAKINE bloğu.
+- **Kara kutu arayüzü tasarlandı (21 Kas):** `docs/KARA_KUTU_PLAN.md` — adapter çerçevesi + web
+  UI + dış/iç rapor; P0 = fraud adapter + CLI + parity. Refactor kapandı (21 Kas); sıradaki P0.
 - **PCT v3 paketi hazır (20 Kas, commit YOK):** `docs/patent/pct_v3/filing/` 7 dosya (EN/TR istem+
   tarifname+özet + 8 sayfa A4 PDF 979834 B) + 8 SVG. Sayaçlar: 15 istem/3 bağımsız · 98 paragraf
   EN=TR · özet 148/132 kelime · kapsama 56/56 (hepsi `patent-cikti/pct/pct_v3-pct-inceleme/

@@ -110,14 +110,22 @@ def load_txt(path, max_lines=None, min_len=20, max_len=300):
     return texts
 
 
-def eval_train_split(texts: list, eval_split: float) -> tuple:
-    """Deterministic head-holdout split used by step_test.
+def split_corpus(texts: list, seed: int = 42) -> tuple:
+    """AGENTS.md §4.1 veri bölümü: %80 train / %10 validation / %10 test.
 
-    The first ``eval_split`` percent of ``texts`` is held out for evaluation,
-    the rest is the training comparison set. Pure function of its inputs.
+    İndeks kopyası ``random.Random(seed)`` ile karıştırılır, ardından
+    ``int(n*0.8)`` / ``int(n*0.1)`` kesilir. Girdilerine göre saf
+    (deterministik) fonksiyondur; test bölümü yalnız ``step_test``'te okunur.
     """
-    n_eval = int(len(texts) * eval_split / 100)
-    return texts[:n_eval], texts[n_eval:]
+    idx = list(range(len(texts)))
+    random.Random(seed).shuffle(idx)
+    n = len(idx)
+    tr, va = int(n * 0.8), int(n * 0.1)
+    return (
+        [texts[i] for i in idx[:tr]],
+        [texts[i] for i in idx[tr:tr + va]],
+        [texts[i] for i in idx[tr + va:]],
+    )
 
 
 # ─────────────────────────────────────────────
@@ -171,13 +179,23 @@ def step_train(args, tok):
     
     texts = load_txt(args.corpus, args.max_texts)
     print(f"  {len(texts)} cümle")
-    
-    all_tokens = [tok.encode(t) for t in texts]
-    all_tokens = [t for t in all_tokens if len(t) >= args.seq_len + 1]
-    print(f"  {len(all_tokens)} cümle (≥{args.seq_len+1} token)")
-    print(f"  Ort. uzunluk: {np.mean([len(t) for t in all_tokens]):.1f}")
-    
+
+    # FIXED (2026-11-21, C5): AGENTS §4.1 gereği %80/%10/%10 bölünür. Eğitim
+    # yalnız train bölümü üzerinde yapılır; validation her epoch best seçiminde
+    # kullanılır; test bölümü eğitimde hiç görülmez (yalnız step_test okur).
+    train_texts, val_texts, _test_texts = split_corpus(texts, args.seed)
     eos_id = tok._tokenizer.token_to_id("<eos>") or 1
+
+    def _encode_valid(rows):
+        encoded = [tok.encode(t) for t in rows]
+        return [t for t in encoded if len(t) >= args.seq_len + 1]
+
+    all_tokens = _encode_valid(train_texts)
+    val_tokens = _encode_valid(val_texts)
+    print(f"  ≥{args.seq_len+1} token: train {len(all_tokens)} | val {len(val_tokens)} "
+          f"| test {len(_test_texts)} (bölüm tohumu={args.seed})")
+    if all_tokens:
+        print(f"  Ort. uzunluk (train): {np.mean([len(t) for t in all_tokens]):.1f}")
     
     model = CloudLM(
         tok.num_tokens,
@@ -229,6 +247,11 @@ def step_train(args, tok):
 
     os.makedirs(args.save_dir, exist_ok=True)
     best_ppl = ckpt.get("best_ppl", float('inf')) if ckpt else float('inf')
+    if ckpt is not None and "val_ppl" not in ckpt and val_tokens:
+        # C5: eski checkpoint'ın best_ppl'i train-PPL ile ölçülmüştü; val-PPL
+        # seçimiyle kıyaslanamaz → seçim sıfırdan başlar.
+        best_ppl = float('inf')
+        print("  Not: eski şema checkpoint — seçim metriği val-PPL, best_ppl sıfırlandı")
 
     model.train()
     t0 = time.time()
@@ -265,7 +288,20 @@ def step_train(args, tok):
         avg = epoch_loss / max(n_batches, 1)
         ppl = math.exp(min(avg, 20))
         elapsed = time.time() - t0
-        print(f"  Epoch {epoch+1:3d}/{args.epochs} | loss={avg:.4f} | ppl={ppl:.2f} | {elapsed:.0f}s", flush=True)
+        # C5: best seçimi val-PPL ile (§4.1); val boşsa (çok küçük corpus)
+        # train-loss PPL'e düşülür ve satırda işaretlenir.
+        val_ppl = None
+        if val_tokens:
+            val_ppl = evaluate_model(model, tok, val_texts, val_tokens,
+                                     args, device, eos_id, "val")
+            model.train()  # evaluate_model eval modunda bırakır
+        sel_ppl = val_ppl if val_ppl is not None else ppl
+        if val_ppl is not None:
+            print(f"  Epoch {epoch+1:3d}/{args.epochs} | loss={avg:.4f} | train_ppl={ppl:.2f} "
+                  f"| val_ppl={val_ppl:.2f} | {elapsed:.0f}s", flush=True)
+        else:
+            print(f"  Epoch {epoch+1:3d}/{args.epochs} | loss={avg:.4f} | ppl={ppl:.2f} "
+                  f"| {elapsed:.0f}s", flush=True)
         
         checkpoint = {
             "epoch": epoch + 1,
@@ -286,21 +322,26 @@ def step_train(args, tok):
                        "cloud_attn_heads": args.cloud_attn_heads,
                        "max_pos_len": model.pos_enc.pe.shape[0],
                        "attn_scale_init": 1.0},
-            "ppl": ppl,
+            # C5: "ppl" artık SEÇİM metriğidir (val-PPL; val yoksa train-PPL).
+            "ppl": sel_ppl,
+            "train_ppl": ppl,
+            **({"val_ppl": val_ppl} if val_ppl is not None else {}),
             "best_ppl": best_ppl,
             "seed": args.seed,
+            "split_seed": args.seed,
             "point_loss_weight": args.point_loss_weight,
         }
         if (epoch + 1) % 5 == 0:
             torch.save(checkpoint, os.path.join(args.save_dir, f"wiki_cloud_epoch{epoch+1}.pt"))
         
-        if ppl < best_ppl:
-            best_ppl = ppl
+        if sel_ppl < best_ppl:
+            best_ppl = sel_ppl
             checkpoint["best_ppl"] = best_ppl
             torch.save(checkpoint, os.path.join(args.save_dir, "wiki_cloud_best.pt"))
     
     total = time.time() - t0
-    print(f"\n  ✅ {total:.0f}s ({total/60:.1f}dk) | Best PPL: {best_ppl:.2f}")
+    metric = "val" if val_tokens else "train"
+    print(f"\n  ✅ {total:.0f}s ({total/60:.1f}dk) | Best PPL ({metric}): {best_ppl:.2f}")
     tok.save(os.path.join(args.save_dir, "wiki_bpe.json"))
     return model, tok
 
@@ -350,25 +391,23 @@ def step_test(args, model=None, tok=None):
     eos_id = tok._tokenizer.token_to_id("<eos>") or 1
     
     # Evaluation on held-out set
-    # FIXED: Use proper train/eval split (eval rows are NOT in training set)
     if args.eval_split > 0:
-        print(f"\n  📊 EVALUATION (held-out {args.eval_split}%):")
-        # FIXED (2026-11-21): `texts` was never loaded in this function — the
-        # eval branch (added in 16a4225) always raised NameError and had never
-        # run successfully. Load the same corpus step_train uses, then split.
+        print("\n  📊 EVALUATION (AGENTS §4.1 — %10 test bölümü, held-out):")
+        # FIXED (2026-11-21, C5): step_train artık §4.1 uyarınca %80 train /
+        # %10 val / %10 test kullanıyor. Burada AYNI tohumla aynı bölünme
+        # türetilir; test bölümü eğitimde hiç görülmemiştir. (Eski head-holdout
+        # kesim eğitim verisiyle çakışıyordu — REFACTOR_PLAN C5.)
         texts = load_txt(args.corpus, args.max_texts)
-        # FIXED: eval_texts are from the FIRST portion, train from the REST
-        # This ensures eval is truly held-out (not train subset)
-        eval_texts, train_texts = eval_train_split(texts, args.eval_split)
-        eval_tokens = [tok.encode(t) for t in eval_texts if len(t) >= args.seq_len + 1]
-        eval_ppl = evaluate_model(model, tok, eval_texts, eval_tokens, args, device, eos_id, "held-out")
-        print(f"    Held-out PPL: {eval_ppl:.2f}")
-        
-        # Also evaluate on training set for comparison
+        train_texts, _val_texts, test_texts = split_corpus(texts, args.seed)
+        test_tokens = [tok.encode(t) for t in test_texts if len(t) >= args.seq_len + 1]
+        test_ppl = evaluate_model(model, tok, test_texts, test_tokens, args, device, eos_id, "test")
+        print(f"    Test PPL (held-out): {test_ppl:.2f}")
+
+        # Train bölümü — referans kıyas (overfit gap)
         train_tokens = [tok.encode(t) for t in train_texts if len(t) >= args.seq_len + 1]
         train_ppl = evaluate_model(model, tok, train_texts, train_tokens, args, device, eos_id, "train")
         print(f"    Train PPL: {train_ppl:.2f}")
-        print(f"    Gap: {eval_ppl - train_ppl:.2f}")
+        print(f"    Gap (test − train): {test_ppl - train_ppl:.2f}")
     
     # Üretim
     print("\n  🧪 ÜRETİM:")
@@ -461,7 +500,8 @@ def main():
     parser.add_argument("--grad-clip", type=float, default=0.5,
                         help="Gradient clipping norm (varsayılan: 0.5)")
     parser.add_argument("--eval-split", type=float, default=5.0,
-                        help="Percentage of data to use for held-out evaluation (varsayılan: 5.0)")
+                        help="0 = test/rapor adımını kapat (C5 sonrası oran sabit: "
+                             "§4.1 %80/%10/%10; varsayılan: 5.0 = açık)")
     args = parser.parse_args()
 
     print("=" * 60)

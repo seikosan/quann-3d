@@ -40,7 +40,7 @@
 - Kanıt: başlıkları kullanım-komutu içeriyor (`training/test_model.py:6-9`); hiçbiri
   `pytest --collect-only` (125) içinde değil.
 
-## C — KARAR GEREKTİRİR (UYGULANMIYOR, kullanıcı onayı bekliyor)
+## C — KARAR GEREKTİRİR (onaylandı 2026-11-21 — UYGULAMA: bkz. Durum bloğu)
 
 - C1: 16 referanssız script → `_archive` adayı (`archiver` kuralı AGENTS §3.5; agent
   altyapısı şu an bozuk). Kanıt: depo içi grep 0 hit + `logs/` + `docs/` 0 hit:
@@ -83,6 +83,17 @@
 
 ## Durum (2026-11-21 uygulama sonrası)
 
-- **Uygulandı:** A1 (commit 78351b7) · A2 (d944dbc) · B1+A3 (3aa1eb7).
-- **Bekleyen karar:** C1–C7 — kullanıcı onayı olmadan uygulanmadı.
+- **Uygulandı A/B:** A1 (commit 78351b7) · A2 (d944dbc) · B1+A3 (3aa1eb7).
+- **Uygulandı C (kullanıcı onayı 2026-11-21, "c1-c7 tamamla"):** C1 17 script →
+  `_archive/refactor_2026_11_21/` (2c68ebb; `eval_trained_model.py` listeden çıkarıldı —
+  KARA_KUTU_PLAN referansı; `aml/src/e5_stability.py` kaldı — TEKNIK_ETKI atfı) ·
+  C2 bayat üst-düzey kopyalar silindi, tek kaynak `neural-atlas/neural-atlas/` (55649dc) ·
+  C3 `run_qat_gate.py` + `eval_online_int8_baseline.py` arsiv (a531d3e;
+  `run_online_cloud_separation.py` kaldı — `fraud/scripts/run_val_threshold_rerun.sh` çağırıyor) ·
+  C4 KARAR: patent üretimi, DOKUNULMADI · C5 §4.1 80/10/10 uygulandı: eğitim %80,
+  best seçimi val-PPL, %10 test yalnız `step_test` (`split_corpus`; checkpoint'a
+  `train_ppl`/`val_ppl`/`split_seed` eklendi) · C6 `requirements_pretrained.txt`
+  başlığa kapsam yazıldı (ayrı kaldı) · C7 `sys.path.insert` KEEP kararı (churn riski).
+- **Kapı:** pytest 128 passed (127 + split/val regresyonları; −1 eski head-holdout testi
+  `test_split_corpus_follows_agents_4_1` ile değişti) · ruff F,E9 `train_wiki*.py` temiz.
 

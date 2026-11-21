@@ -1,4 +1,7 @@
 # Pretrained model dependencies for comparison
+# Kapsam (C6 kararı, 2026-11-21): YALNIZ training/evaluate_pretrained.py'nin HF
+# temel-çizgi kıyası içindir (transformers/accelerate/optimum). Ana eğitim hattı
+# requirements.txt kullanır; bu dosyayı kurmak eğitim için GEREKLİ DEĞİLDİR.
 transformers>=4.30.0
 torch>=2.0.0
 accelerate>=0.20.0
