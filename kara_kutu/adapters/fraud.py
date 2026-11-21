@@ -91,6 +91,7 @@ class FraudAdapter:
         self.deploy = Path(deploy_dir) if deploy_dir else REPO_KOK / "fraud" / "results" / "deploy"
         self.top_k = top_k
         self.esik = ESIK if esik is None else float(esik)
+        self.esik_kaynak = ESIK_KAYNAK  # runner override'da metni değiştirir
         self._paket: tuple[Any, ...] | None = None
 
     # ------------------------------------------------------------------ paket
@@ -133,7 +134,7 @@ class FraudAdapter:
             adapter=self.name,
             kolonlar=IBM_KOLONLARI,
             aciklama="IBM kart işlem şeması; etiket kolonu 'Is Fraud?' (Yes/No) "
-                     "varsa held-out AUC ölçülür.",
+                     "varsa AUC-ROC ölçülür (girdi CSV'nin held-out durumu doğrulanmaz).",
         )
 
     def model_dosyasi(self) -> Path:
@@ -146,7 +147,7 @@ class FraudAdapter:
         return ModelMeta(
             ad="QUANN fraud hybrid (ONNX deploy)",
             esik=self.esik,
-            esik_kaynak=ESIK_KAYNAK,
+            esik_kaynak=self.esik_kaynak,
             olusturma=str(manifest["generated"]),
             ek_bilgi={
                 "paket_sha256_manifest": str(art["model_onnx_sha256"]),
@@ -225,7 +226,9 @@ class FraudAdapter:
 
     # -------------------------------------------------------------- metrikler
     def ek_metrikler(self, ds: VeriSeti, verdictler: list[Verdict]) -> dict[str, str]:
-        """Etiket varsa AUC-ROC ölçer; metrik adı + ölçüm kaynağı açık yazılır."""
+        """Etiket varsa girdi CSV etiketleri üzerinde AUC-ROC ölçer. Girdinin
+        held-out olduğu doğrulanmaz (kanıt: User0 paketi eğitim bölmesinde —
+        tools/auc_farki ölçümü user0_fold=5, fraud/src/train_quann.py:58)."""
         if ds.etiketler is None or len(verdictler) < 2:
             return {}
         y = list(ds.etiketler)
@@ -236,8 +239,8 @@ class FraudAdapter:
             from sklearn.metrics import roc_auc_score
             auc = float(roc_auc_score(y, p))
         except ImportError:  # pragma: no cover
-            return {"AUC-ROC (held-out)": "ölçülemedi: sklearn yok (DOĞRULANMADI)"}
-        return {"AUC-ROC (held-out, bu koşunun ölçümü)": f"{auc:.4f}"}
+            return {"AUC-ROC (girdi CSV etiketleri)": "ölçülemedi: sklearn yok (DOĞRULANMADI)"}
+        return {"AUC-ROC (girdi CSV etiketleri, bu koşunun ölçümü)": f"{auc:.4f}"}
 
 
 def _logit(np, p):

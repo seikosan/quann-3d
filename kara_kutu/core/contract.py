@@ -22,7 +22,8 @@ class Kayit:
 
 @dataclass
 class VeriSeti:
-    """Adapter'a giren ham veri. `etiketler` varsa held-out metrik hesaplanır."""
+    """Adapter'a giren ham veri. `etiketler` varsa girdi-etiketli metrik hesaplanır
+    (CSV'nin held-out olup olmadığı kutudan bakarak doğrulanamaz — bkz. plan §9)."""
 
     ad: str
     kolonlar: list[str]

@@ -65,7 +65,7 @@ def _ornek_sonuc() -> KosumSonucu:
     baseline = (Baseline("Random Forest", "AUC-ROC", 0.973, "docs/market_priorities.md:8"),)
     return KosumSonucu(adapter="fraud", esik=0.9969, satir_sayisi=4, verdictler=verdictler,
                        baseline=baseline, meta=meta, kanit=kanit,
-                       metrikler={"AUC-ROC (held-out, bu koşunun ölçümü)": "0.9451"})
+                       metrikler={"AUC-ROC (girdi CSV etiketleri, bu koşunun ölçümü)": "0.9451"})
 
 
 def test_kaynakli_dogrulanmadi_basari():

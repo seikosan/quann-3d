@@ -71,8 +71,8 @@ gradyan geri yayılımı olmadan eğitmeyi araştırır.
 - R2 cloud-attention logunda PPL: D32 58.88 (`logs/run_r2_cloud_attn_200k_d32.log:26`),
   D64 57.04 (`logs/run_r2_cloud_attn_200k_d64.log:26`), D128 58.55 (`logs/run_r2_cloud_attn_200k_d128.log:26`).
 - Nokta sayısı varyantı logunda PPL 37.63 (`logs/run_r2_cloud_attn_200k_d64_n20.log:26`); satır held-out olarak etiketlenmediğinden held-out sonucu sayılmamalıdır.
-- Fraud doğal testinde FP32 AUC-ROC 0.9451 (`fraud/logs/run_full_scale_edge_eval.log:52`).
-- Fraud doğal testinde INT8-channel AUC-ROC 0.9367 (`fraud/logs/run_full_scale_edge_eval.log:54`).
+- Fraud doğal testinde FP32 AUC-ROC 0.9451 / INT8-channel 0.9367 (`fraud/logs/run_full_scale_edge_eval.log:52,54`).
+- Deploy kutusu (18 Kas ONNX) mimari-port sürümü: aynı ckpt + aynı satırlarda 19 Eki kodu maks p 1,0 / 693 alarm sayarken kutu 0,9909 / 0 alarm veriyor; eşik 0,9969 kutuda geçersiz — karar bekliyor (`docs/KARA_KUTU_PLAN.md` §9, `kara_kutu/tools/port_kaniti.py`).
 - Stable train-loss sıçramaları: seed=43 Epoch 3 5.6595, Epoch 5 15.2557; orijinal Epoch 4 8.1102. Her iki koşuda best checkpoint Epoch 1'de seçildi; sıçramalar TEST'e yansımadı (best-ckpt TEST 3.2131/3.2318); sebebi doğrulanmadı (`logs/run_r5_seed2_cc_stable_s43.log:211,619,1027,1237`; `logs/run_r5_cc_stable.log:211,822,1236`).
 - R5 memory mekanizma farkı iki bağımsız örneğe dayanır: orijinal tohumlanmamış, seed=43 ayrı örnek olup aynı-seed tekrarı değildir (`logs/run_r5_ablate_stable_on_memorytask.log:1332`; `logs/run_r5_seed2_ablate_s43.log:982`).
 
@@ -95,8 +95,8 @@ Detay: `quann_cloud/REVISION.md`.
 
 ## Sıradaki Aksiyonlar
 
-- Kara Kutu P1 (`docs/KARA_KUTU_PLAN.md`): ikinci dikey adaptör + gerekçe grafiği;
-  P0 kapıları bu oturumda ölçüldü (tam pytest, `rapor_denetle`, CLI).
+- Kara Kutu P1: FastAPI + tek sayfa UI kuruldu (`python3 -m kara_kutu web`); browser turu +
+  kutu eşiği kararı (A/B/C, `docs/KARA_KUTU_PLAN.md` §9) bekliyor.
 - Tamamlandı (17 Kas): vocab=10000 eşitlenmiş kontrollü memory rerun bitti;
   memory TEST 3.6295 (`logs/run_r5_cc_memory_v10k.log:454`) ve stable TEST
   3.2318 (`logs/run_r5_cc_stable.log:1236`).

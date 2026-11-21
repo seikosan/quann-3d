@@ -132,3 +132,27 @@ IBM kart verisi vb. üzerinde eğitildi; dış rapor "başka veriyle de çalış
   `|` satırlarını muaf tuttuğu için iç rapor tabloları dış kapıdan kaçıyordu — artık
   depo testi (`kara_kutu/tests/test_contract.py`) atıflı tablo hücrelerini kaynak
   satırında doğruluyor.
+
+### P0 dürüst boşlukları — kapanış (2026-11-21, ölçüm)
+
+- User0 demeti held-out DEĞİL: fold=5 = eğitim fold'u (`kara_kutu/tools/auc_farki.py`,
+  `n_user=2000 user0_fold=5`). Kutunun doğal held-out örneklemdeki (400k, te fold≥8)
+  AUC'si 0,953261 CI95 [0,938952, 0,96757]; User0 AUC'si 0,8346 CI95 [0,740052, 0,929148]
+  (`kara_kutu/runs/auc_farki_20261121-231116/ozet.json`) — "AUC farkı" demet doğasından.
+- Kutu kimliği: FP32 `DeployPath` ONNX (`fraud/src/export_deploy.py:47-53`); 0,9367 INT8
+  edge_eval'in torch-simülasyon koludur (`fraud/src/edge_eval.py:12`), kutunun ölçümü değil.
+- Alarm çelişkisi ÇÖZÜLDÜ — aynı satırlar (ilk 1M CSV; te=234.686, fraud=197, seed 20261015,
+  aynı ckpt mtime 17 Eki): 19 Eki kodu (5f66aed worktree) maks p=1,0, eşik 0,9969438910484314'te
+  693 alarm, AUC 0,95971 (`kara_kutu/tools/port_kaniti.py`); mevcut kutu maks p=0,990873,
+  0 alarm, AUC 0,961135 (`kara_kutu/runs/alarm_farki_20261121-232335/ozet.json`). Quantizer
+  birebir aynı (deploy `quantizer.json` == ckpt sözlüğü, `base_fn` anahtarı hariç).
+- Mekanizma (kod satırı): paylaşılan mimari portu — pair_in `d+4`→`3d+2` (`cloudlm/model.py:64`)
+  ve eski skaler `|i|`,`|j|` ağırlıklarının D-boyutlu norm bloğuna yayılması (`cloudlm/model.py:105-106`);
+  havuzlama aynı (max: `5f66aed:cloudlm/model.py:71` ↔ `cloudlm/model.py:155`). Deploy paketi
+  (a52ddc1, 18 Kas) portlanmış fonksiyondur; parity self-test'i yalnız kutu ≡ güncel-torch kanıtlar.
+- Tüm te üzerinde kutu AUC 0,944109 (4.932.768 satır, 0 alarm; `alarm_farki_20261121-232405/ozet.json`)
+  ↔ Ekim fonksiyonu 0,9451 (log:52) — sıralama yakın, kalibrasyon değil.
+- Sonuç/karar (kullanıcı): Ekim FP32 olasılıklarıyla kalibre eşik 0,9969 kutuda geçersiz.
+  (A) kutu-yerel eşik yeniden kalibrasyonu; (B) Ekim fonksiyonuyla deploy paketini yeniden
+  export; (C) eşiksiz AUC/skor raporu.
+- Metrik dürüstlüğü: rapor anahtarı artık "AUC-ROC (girdi CSV etiketleri, bu koşunun ölçümü)".

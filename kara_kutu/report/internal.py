@@ -59,7 +59,7 @@ def uret(sonuc: KosumSonucu, *, max_kayit: int = _MAX_KAYIT) -> str:
     ]
     metrik_satirlari = [[ad, deger, "bu koşunun ölçümü"] for ad, deger in sonuc.metrikler.items()]
     if not metrik_satirlari:
-        metrik_satirlari = [["AUC-ROC (held-out)", "ölçülmedi: etiket kolonu yok", "—"]]
+        metrik_satirlari = [["AUC-ROC (girdi CSV etiketleri)", "ölçülmedi: etiket kolonu yok", "—"]]
     satirlar += _tablo(["Metrik adı", "Değer", "Tür"], metrik_satirlari)
     satirlar += [
         "",

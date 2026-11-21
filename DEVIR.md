@@ -4,19 +4,19 @@ baslik: DEVIR — quann-3d (makine üretimi durum + sıradaki iş)
 konu: [devir, handover, durum]
 durum: güncel
 sahiplik: koordinator
-guncellendi: 2026-11-21
+guncellendi: 2026-11-22
 kunye-kaynak: otomatik (devir_yaz.py)
 ---
 
 # DEVIR — quann-3d
 
 <!-- MAKINE:BASLA -->
-## Durum (makine üretti · 2026-11-21 10:35)
+## Durum (makine üretti · 2026-11-22 02:45)
 Bu blok elle düzenlenmez; `devir_yaz.py --repo /Users/serkankose/Documents/quann-3d` ile yenilenir.
 
-- HEAD: 7a7a159 kara_kutu P0: fraud adapter + CLI + iki rapor + parity/kanıt kapıları
-- Değişen dosya: 0
-- Kod kapısı: bulgu 0 · uyarı 0 · bilgi 1 · düzeltme planı: 0 (ayrıntı: python3 ~/.config/opencode/denetim/denetim_plan.py)
+- HEAD: 2284560 kara_kutu: iç rapor tablo atıfları için depo tarafı denetim testi
+- Değişen dosya: 12 → RESEARCH.md, docs/KARA_KUTU_PLAN.md, kara_kutu/__main__.py, kara_kutu/adapters/fraud.py, kara_kutu/core/contract.py
+- Kod kapısı: bulgu 0 · uyarı 0 · bilgi 0 · düzeltme planı: 0 (ayrıntı: python3 ~/.config/opencode/denetim/denetim_plan.py)
 - Doküman kapısı: bulgu 0 · uyarı 0 · bilgi 2 · düzeltme planı: 0 (ayrıntı: python3 ~/.config/opencode/denetim/denetim_plan.py)
 - ölçüm: === EĞİTİM DURUMU (kaynak: ham dosya) ===
 - ölçüm: kaynak        : logs/run_resume_r2_fixed.log:212
@@ -29,6 +29,7 @@ Bu blok elle düzenlenmez; `devir_yaz.py --repo /Users/serkankose/Documents/quan
 
 
 
+
 ## Sıradaki iş (ajan)
 
 - **Kara Kutu P0 TAMAMLANDI (künye HEAD'de):** `kara_kutu/` — contract + registry + fraud
@@ -38,6 +39,12 @@ Bu blok elle düzenlenmez; `devir_yaz.py --repo /Users/serkankose/Documents/quan
   `kara_kutu/tests/test_parity.py:21` ← `fraud/results/deploy/manifest.json:28`. Sıradaki: **P1** web.
 - **Refactor 2026-11-21 (A/B/C kapandı):** plan + durum bloğu + kanıtlar
   `docs/REFACTOR_PLAN_2026-11-21.md`; commit'ler lokal, push kullanıcı kararıyla blokeli.
+- **Kara Kutu P1 kodda (21 Kas):** `core/runner.py` ortak hat + FastAPI tek sayfa
+  (`python3 -m kara_kutu web --port 8734`); browser turu ölçüldü: CSV yükle→tablo→4 rapor
+  indir 200, console hatası 0 (`runs/20261121-234528_fraud`). **KARAR BEKLİYOR (A/B/C):**
+  eşik 0,9969 Ekim fonksiyonuyla kalibre; kutu (portlu mimari, `cloudlm/model.py:64,105-106`)
+  aynı satırlarda 0 alarm veriyor — kanıt `kara_kutu/tools/port_kaniti.py` +
+  `docs/KARA_KUTU_PLAN.md` §9. Commit'ler lokal.
 - **PCT v3 paketi hazır (20 Kas, commit YOK):** `docs/patent/pct_v3/filing/` 7 dosya (EN/TR istem+
   tarifname+özet + 8 sayfa A4 PDF 979834 B) + 8 SVG. Sayaçlar: 15 istem/3 bağımsız · 98 paragraf
   EN=TR · özet 148/132 kelime · kapsama 56/56 (hepsi `patent-cikti/pct/pct_v3-pct-inceleme/
@@ -178,14 +185,6 @@ döndü; hangi sürecin yazdığını kanıtlayamadık. Onarım üretime çevril
 | ContextCloudLM | 12.5508 | 285467.06 |
 
 ContextCloudLM vs CloudLM: PPL farkı 294969.40 − 285467.06 = 9502.34 → %3,22. Bu ölçüm eğitim korpusundan olduğu için held-out değildir; PPL ~290K mutlak değeri model/eval uyumsuzluğuna işaret edebilir (sebep doğrulanmadı).
-
-### Dosyalar
-
-- `contextcloud/model.py` — ContextCloudLM + generate metodu
-- `contextcloud/train_simple.py` — eğitim scripti (çalışmıyor)
-- `contextcloud/compare_models.py`, `contextcloud/eval_long_text.py` — kıyaslama araçları
-- `contextcloud/long_text_results.txt` — uzun metin ölçümü (yukarıdaki tablonun kaynağı)
-- `contextcloud/tests/test_model.py` — test dosyası (artık testpaths'te)
 
 ### Kod Kapısı
 

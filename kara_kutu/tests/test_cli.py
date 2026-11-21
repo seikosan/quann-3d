@@ -40,7 +40,7 @@ def test_cli_run_uretimi(tmp_path):
 
     iki_sinif = (pd.read_csv(CSV, nrows=40)["Is Fraud?"].str.strip().str.lower()
                  .nunique() > 1)
-    auc_anahtar = "AUC-ROC (held-out, bu koşunun ölçümü)"
+    auc_anahtar = "AUC-ROC (girdi CSV etiketleri, bu koşunun ölçümü)"
     assert (auc_anahtar in sonuc["metrikler"]) == iki_sinif
     assert sonuc["metrikler"]["model.onnx sha256 ↔ manifest"] == "EVET ✓"
     assert (kosum / "ic_rapor.md").read_text().startswith("# Kara Kutu İç Rapor")
