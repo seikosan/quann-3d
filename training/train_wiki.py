@@ -110,6 +110,16 @@ def load_txt(path, max_lines=None, min_len=20, max_len=300):
     return texts
 
 
+def eval_train_split(texts: list, eval_split: float) -> tuple:
+    """Deterministic head-holdout split used by step_test.
+
+    The first ``eval_split`` percent of ``texts`` is held out for evaluation,
+    the rest is the training comparison set. Pure function of its inputs.
+    """
+    n_eval = int(len(texts) * eval_split / 100)
+    return texts[:n_eval], texts[n_eval:]
+
+
 # ─────────────────────────────────────────────
 # ADIMLAR
 # ─────────────────────────────────────────────
@@ -343,11 +353,13 @@ def step_test(args, model=None, tok=None):
     # FIXED: Use proper train/eval split (eval rows are NOT in training set)
     if args.eval_split > 0:
         print(f"\n  📊 EVALUATION (held-out {args.eval_split}%):")
+        # FIXED (2026-11-21): `texts` was never loaded in this function — the
+        # eval branch (added in 16a4225) always raised NameError and had never
+        # run successfully. Load the same corpus step_train uses, then split.
+        texts = load_txt(args.corpus, args.max_texts)
         # FIXED: eval_texts are from the FIRST portion, train from the REST
         # This ensures eval is truly held-out (not train subset)
-        n_eval = int(len(texts) * args.eval_split / 100)
-        eval_texts = texts[:n_eval]  # Eval set (held-out)
-        train_texts = texts[n_eval:]  # Training set
+        eval_texts, train_texts = eval_train_split(texts, args.eval_split)
         eval_tokens = [tok.encode(t) for t in eval_texts if len(t) >= args.seq_len + 1]
         eval_ppl = evaluate_model(model, tok, eval_texts, eval_tokens, args, device, eos_id, "held-out")
         print(f"    Held-out PPL: {eval_ppl:.2f}")

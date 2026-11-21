@@ -74,6 +74,40 @@ def test_training_batches_keep_singleton_remainder():
     assert sorted(len(batch) for batch in batches) == [1, 2]
 
 
+def test_eval_train_split_is_head_holdout():
+    texts = [str(i) for i in range(10)]
+    assert train_wiki.eval_train_split(texts, 30) == (texts[:3], texts[3:])
+    assert train_wiki.eval_train_split(texts, 0) == ([], texts)
+    assert train_wiki.eval_train_split(texts, 100) == (texts, [])
+
+
+def test_step_test_eval_branch_loads_corpus_and_splits(tmp_path, monkeypatch):
+    # Regression: step_test referenced `texts` without loading it — the eval
+    # branch (since 16a4225) always crashed with NameError before running.
+    corpus = [f"cümle {i} güzel dünya" for i in range(10)]
+    monkeypatch.setattr(train_wiki, "load_txt", lambda *a, **k: list(corpus))
+    tokenizer = BPETokenizer(vocab_size=32).train(corpus)
+    model = train_wiki.CloudLM(
+        vocab_size=tokenizer.num_tokens, d_model=16, d_cloud=12,
+        d_cloud_dim=4, n_layers=1, pool="max",
+    )
+    calls = []
+
+    def fake_eval(model, tok, texts, all_tokens, args, device, eos_id, split_name="val"):
+        calls.append((split_name, list(texts)))
+        return 42.0
+
+    monkeypatch.setattr(train_wiki, "evaluate_model", fake_eval)
+    args = SimpleNamespace(
+        eval_split=20, seq_len=2, save_dir=str(tmp_path),
+        corpus="ignored", max_texts=None,
+    )
+    train_wiki.step_test(args, model, tokenizer)
+    assert [name for name, _ in calls] == ["held-out", "train"]
+    assert calls[0][1] == corpus[:2]  # first 20% held out
+    assert calls[1][1] == corpus[2:]
+
+
 def test_checkpoint_model_loader_honors_saved_pool_mode():
     source = train_wiki.CloudLM(
         vocab_size=20, d_model=16, d_cloud=12, d_cloud_dim=4,
