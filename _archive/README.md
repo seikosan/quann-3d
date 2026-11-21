@@ -84,3 +84,6 @@ docs_patent/patent_application_v2.3_EN.md — TR karşılığı patent_applicati
 - `fpga/tools/gen_golden.py` — 0 referans; fixpoint_ref.py golden üretmeden bağımsız (grep: gen_golden ge-çmiyor). NOT: fpga/tools/fixpoint_ref.py YERİNDE KALDI (referanslı).
 - `fraud/scripts/download_kaggle.py` — 0 referans; veri indirme tek-atışlıktı, corpus repoda.
 - `fraud/src/repro_check.py` — 0 referans; doğrulama rolü tester kapılarına taşındı.
+- `fraud/results/run_qat_gate.py` — eşik testi daireseldi (THRESHOLD test-set audit'ten, :29); düzeltilmiş protokol fraud/scripts/run_qat_gate_fixed.py'de; ürettiği qat_gate.json kanıt olarak yerinde.
+- `fraud/results/eval_online_int8_baseline.py` — 0 referans (sh/py/md taraması); results/ kanıt dizini, kod taşınmalıydı; online_int8 baseline'ı run_val_threshold_rerun.sh hattında yeniden üretilebilir. NOT: run_online_cloud_separation.py YERİNDE KALDI (fraud/scripts/run_val_threshold_rerun.sh çağırıyor).
+- C2 NOT (arşivlenmedi, silindi): `neural-atlas/{cloudlm_viewer.html,cloudlm_d32.json,cloudlm_d64.json,dist/**}` — bayat 30 Eki kopyaları; canlı uygulama iç-içe `neural-atlas/neural-atlas/` (17 Kas viewer, start_viewer.sh web-kökü orası). Kanıt: md5 json'lar özdeş; assets hash'leri özdeş; harici referans 0 (grep).

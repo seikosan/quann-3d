@@ -12,8 +12,12 @@ Python script to generate Neural Atlas JSON from CloudLM checkpoints.
 ```bash
 python3 neural-atlas/generate_cloudlm_json.py \
   --ckpt checkpoints/wiki_checkpoints_wiki200k_d32/wiki_cloud_best.pt \
-  --output neural-atlas/cloudlm_d32.json
+  --output neural-atlas/neural-atlas/cloudlm_d32.json
 ```
+
+> Not (2026-11-21 refactor C2): canlı uygulamanın web-kökü `neural-atlas/neural-atlas/`
+> (start_viewer.sh oradan servis eder; viewer `cloudlm_d32.json`'u kendi dizininden okur).
+> Bayat üst-düzey kopyalar (`cloudlm_viewer.html`, `cloudlm_d*.json`, `dist/`) silindi.
 
 **Features:**
 - Extracts model architecture from checkpoint
@@ -21,7 +25,7 @@ python3 neural-atlas/generate_cloudlm_json.py \
 - Calculates parameter counts
 - Validates JSON structure
 
-### 2. `neural-atlas/cloudlm_d32.json` & `cloudlm_d64.json`
+### 2. `neural-atlas/neural-atlas/cloudlm_d32.json` & `cloudlm_d64.json`
 Generated Neural Atlas JSON files for D32 and D64 models.
 
 **Structure:**
@@ -30,7 +34,7 @@ Generated Neural Atlas JSON files for D32 and D64 models.
 - D32: 17.5M parameters
 - D64: 17.5M parameters (slightly more due to higher d_cloud_dim)
 
-### 3. `neural-atlas/cloudlm_viewer.html`
+### 3. `neural-atlas/neural-atlas/cloudlm_viewer.html`
 Interactive 3D viewer for CloudLM architectures.
 
 **Features:**
