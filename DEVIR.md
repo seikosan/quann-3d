@@ -11,12 +11,12 @@ kunye-kaynak: otomatik (devir_yaz.py)
 # DEVIR — quann-3d
 
 <!-- MAKINE:BASLA -->
-## Durum (makine üretti · 2026-11-21 08:54)
+## Durum (makine üretti · 2026-11-21 10:35)
 Bu blok elle düzenlenmez; `devir_yaz.py --repo /Users/serkankose/Documents/quann-3d` ile yenilenir.
 
-- HEAD: 55649dc Refactor C2 (kullanici onayi 2026-11-21): neural-atlas ust duzey bayat kopyalar silindi (viewer 30 Eski, md5 json/assets ozdeş, harici referans 0); tek kaynak ice ice neural-atlas/neural-atlas (start_viewer.sh web-koku); INTEGRATION.md yolu guncellendi
-- Değişen dosya: 7 → DEVIR.md, RESEARCH.md, docs/REFACTOR_PLAN_2026-11-21.md, requirements_pretrained.txt, training/tests/test_train_wiki.py
-- Kod kapısı: bulgu 0 · uyarı 0 · bilgi 0 · düzeltme planı: 0 (ayrıntı: python3 ~/.config/opencode/denetim/denetim_plan.py)
+- HEAD: 7a7a159 kara_kutu P0: fraud adapter + CLI + iki rapor + parity/kanıt kapıları
+- Değişen dosya: 0
+- Kod kapısı: bulgu 0 · uyarı 0 · bilgi 1 · düzeltme planı: 0 (ayrıntı: python3 ~/.config/opencode/denetim/denetim_plan.py)
 - Doküman kapısı: bulgu 0 · uyarı 0 · bilgi 2 · düzeltme planı: 0 (ayrıntı: python3 ~/.config/opencode/denetim/denetim_plan.py)
 - ölçüm: === EĞİTİM DURUMU (kaynak: ham dosya) ===
 - ölçüm: kaynak        : logs/run_resume_r2_fixed.log:212
@@ -31,13 +31,13 @@ Bu blok elle düzenlenmez; `devir_yaz.py --repo /Users/serkankose/Documents/quan
 
 ## Sıradaki iş (ajan)
 
-- **Refactor 2026-11-21 (A/B/C TAMAMLANDI):** tam plan + kanıtlar `docs/REFACTOR_PLAN_2026-11-21.md`.
-  A1 ruff 180 düzeltme (78351b7) · A2 step_test NameError (d944dbc) · B1+A3 eval_* adlandırma
-  (3aa1eb7) · C1 17 script arsiv, 18 R (+examples/__init__) (2c68ebb) · C2 tek kaynak atlas (55649dc) · C3 fraud/results
-  kod arsiv (a531d3e) · C5 §4.1 80/10/10: eğitim %80, best=val-PPL, %10 test held-out · C6 kapsam
-  başlığı · C7 sys.path KEEP. pytest 128 passed ✓ · denetim exit 0 koşusu bkz. MAKINE bloğu.
-- **Kara kutu arayüzü tasarlandı (21 Kas):** `docs/KARA_KUTU_PLAN.md` — adapter çerçevesi + web
-  UI + dış/iç rapor; P0 = fraud adapter + CLI + parity. Refactor kapandı (21 Kas); sıradaki P0.
+- **Kara Kutu P0 TAMAMLANDI (künye HEAD'de):** `kara_kutu/` — contract + registry + fraud
+  adapter + CLI + iki rapor + `kanit.json`. Kapılar bu oturumda ölçüldü: Kara Kutu testleri
+  ve tam paket yeşil; `rapor_denetle` `ic_rapor.md` sıfır bulgu; dış raporda span-dışı rakam
+  yok (bekçi test); CLI kapı komutu gerçek CSV üzerinde koştu. Tolerans kaynağı
+  `kara_kutu/tests/test_parity.py:21` ← `fraud/results/deploy/manifest.json:28`. Sıradaki: **P1** web.
+- **Refactor 2026-11-21 (A/B/C kapandı):** plan + durum bloğu + kanıtlar
+  `docs/REFACTOR_PLAN_2026-11-21.md`; commit'ler lokal, push kullanıcı kararıyla blokeli.
 - **PCT v3 paketi hazır (20 Kas, commit YOK):** `docs/patent/pct_v3/filing/` 7 dosya (EN/TR istem+
   tarifname+özet + 8 sayfa A4 PDF 979834 B) + 8 SVG. Sayaçlar: 15 istem/3 bağımsız · 98 paragraf
   EN=TR · özet 148/132 kelime · kapsama 56/56 (hepsi `patent-cikti/pct/pct_v3-pct-inceleme/
