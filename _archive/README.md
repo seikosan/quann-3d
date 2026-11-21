@@ -66,3 +66,21 @@ docs_patent/patent_application_v2.3_EN.md — TR karşılığı patent_applicati
 - `src/visualizer/export_data.py` → `refactor_2026_11/src/visualizer/` — eski demo görselleştiricisi; kaynak kodundan import edilmediği için arşivlendi.
 - `src/visualizer/index.html` → `refactor_2026_11/src/visualizer/` — eski demo görselleştiricisinin statik arayüzü.
 - `src/visualizer/template.html` → `refactor_2026_11/src/visualizer/` — eski demo görselleştiricisinin HTML şablonu.
+
+## Refactor 2026-11-21 (C1 — kullanıcı onayıyla, REFACTOR_PLAN_2026-11-21.md)
+
+- `contextcloud/train_memory_seq.py` — depo genelinde 0 referans (py/sh/md/html/json taraması); logs/docs'ta çıktı izi yok.
+- `contextcloud/train_long_text_domain.py` — 0 dış referans; elenmiş varyant, görev tanımı train_memory_context'te yaşıyor.
+- `contextcloud/train_hierarchical.py` — 0 dış referans;logs/docs'ta koşu izi yok.
+- `contextcloud/train_long_context_baseline.py` — 0 dış referans; baseline rolünü train_stable üstlendi.
+- `contextcloud/examples/{__init__,quick_test,generate_trained,generate_example}.py` — örnekler dizisi 0 referans, aktif akış dışı.
+- `purecloudlm/eval_cpu_quick.py` — 0 referans (B1'de test_cpu_quick→eval'e dönüştü); quick-smoke rolü pytest kapsamında.
+- `purecloudlm/generate_samples.py` — 0 referans; üretim yolu training/eval_model.py'de.
+- `purecloudlm/benchmark_performance.py` — 0 referans; edge benchmark rolü training/compare_llm.py'de.
+- `training/train_cloudlm_comparison.py` — 0 referans; karşılaştırma rolü compare_llm/compare_16_32'de.
+- `training/eval_r3_duel.py` — R3'e özgü tek-atışlık duel aracı; R4 hükmü paper'a işlendi, script referanssız.
+- `scripts/create_long_texts.py` — 0 referans; uzun-metin üretimi eval_long_text.py içinde.
+- `maintenance/src/run_e1_cwru.py` — 0 referans; CWRU akışı train_maintenance/e1 içinde.
+- `fpga/tools/gen_golden.py` — 0 referans; fixpoint_ref.py golden üretmeden bağımsız (grep: gen_golden ge-çmiyor). NOT: fpga/tools/fixpoint_ref.py YERİNDE KALDI (referanslı).
+- `fraud/scripts/download_kaggle.py` — 0 referans; veri indirme tek-atışlıktı, corpus repoda.
+- `fraud/src/repro_check.py` — 0 referans; doğrulama rolü tester kapılarına taşındı.
