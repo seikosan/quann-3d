@@ -51,12 +51,21 @@ def test_kosum_veyu_rapor_indirme(istemci, tmp_path):
     assert liste and liste[0]["kosum"] == kid
 
 
-def test_kosum_esik_gecerli(istemci):
+def test_kosum_esik_gecerli(istemci, tmp_path):
     with CSV.open("rb") as fh:
         r = istemci.post("/api/kosum", files={"dosya": ("ornek.csv", fh, "text/csv")},
                          data={"limit": "12", "esik": "0.5"})
     assert r.status_code == 200, r.text
+    kid = r.json()["ozet"]["kosum"]
     assert r.json()["ozet"]["esik"] == pytest.approx(0.5)
+    # override'ın kaynağı dosya-atfı DEĞİL, "kullanıcı override" notu olmalı
+    import json
+    sonuc = json.loads((tmp_path / kid / "sonuc.json").read_text())
+    kanit = json.loads((tmp_path / kid / "kanit.json").read_text())
+    assert sonuc["esik"] == pytest.approx(0.5)
+    assert sonuc["meta"]["esik_kaynak"] == "kullanıcı override (CLI --esik / web formu)"
+    assert kanit["ek_atiflar"]["esik_kaynak"] == "kullanıcı override (CLI --esik / web formu)"
+    assert "infer.py" not in json.dumps(kanit)  # sahte dosya-atfı sızmamalı
 
 
 def test_csv_disi_red(istemci):

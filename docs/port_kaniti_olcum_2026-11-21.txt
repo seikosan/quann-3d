@@ -26,7 +26,7 @@ fark niceliklendirme/ONNX'tan değil, FONKSİYON farkından.
 
 MEKANİZMA (kod satırı): pair_in d+4 → 3d+2 (cloudlm/model.py:64) ve eski skaler
 |i|,|j| ağırlıklarının D-boyutlu bloğa yayılması (cloudlm/model.py:105-106);
-havuzlama değişmedi (max: 5f66aed:cloudlm/model.py:71 ↔ cloudlm/model.py:155).
+havuzlama değişmedi (max: 5f66aed:cloudlm/model.py:71 ↔ cloudlm/model.py:153).
 
 HÜKÜM: Deploy kutusu ≠ Ekim fonksiyonu. Eşik 0,9969 Ekim FP32 olasılıklarıyla
 kalibre; kutuda geçersiz. Karar (A kutu-yerel kalibrasyon / B Ekim fonksiyonuyla

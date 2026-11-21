@@ -78,13 +78,14 @@ def kosum(ad: str, veri: Path, *, limit: int | None = None, esik: float | None =
 
     model_yolu = Path(adapter.model_dosyasi()) if hasattr(adapter, "model_dosyasi") \
         else Path(__import__(type(adapter).__module__.rsplit(".", 1)[0], fromlist=["x"]).__file__)
+    meta = adapter.model_meta()  # eşik + kaynağı kanıt bloğuna da girer (sonuc ile aynı)
     kanit = kanit_olustur(
         komut=komut or f"kara_kutu.core.runner.kosum(adapter={ad})",
         veri_yolu=veri, model_yolu=model_yolu,
-        ek_atiflar={"adapter": adapter.name, "surum": __version__},
+        ek_atiflar={"adapter": adapter.name, "surum": __version__,
+                    "esik": f"{meta.esik:.10g}", "esik_kaynak": meta.esik_kaynak},
     )
     # manifest ↔ disk sha doğrulaması — kanıt bloğunun kendi kendini denetimi
-    meta = adapter.model_meta()
     manifest_sha = meta.ek_bilgi.get("paket_sha256_manifest", "")
     if manifest_sha:
         metrikler["model.onnx sha256 ↔ manifest"] = (

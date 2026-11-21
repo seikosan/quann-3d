@@ -148,7 +148,7 @@ IBM kart verisi vb. üzerinde eğitildi; dış rapor "başka veriyle de çalış
   birebir aynı (deploy `quantizer.json` == ckpt sözlüğü, `base_fn` anahtarı hariç).
 - Mekanizma (kod satırı): paylaşılan mimari portu — pair_in `d+4`→`3d+2` (`cloudlm/model.py:64`)
   ve eski skaler `|i|`,`|j|` ağırlıklarının D-boyutlu norm bloğuna yayılması (`cloudlm/model.py:105-106`);
-  havuzlama aynı (max: `5f66aed:cloudlm/model.py:71` ↔ `cloudlm/model.py:155`). Deploy paketi
+  havuzlama aynı (max: `5f66aed:cloudlm/model.py:71` ↔ `cloudlm/model.py:153`). Deploy paketi
   (a52ddc1, 18 Kas) portlanmış fonksiyondur; parity self-test'i yalnız kutu ≡ güncel-torch kanıtlar.
 - Tüm te üzerinde kutu AUC 0,944109 (4.932.768 satır, 0 alarm; `alarm_farki_20261121-232405/ozet.json`)
   ↔ Ekim fonksiyonu 0,9451 (log:52) — sıralama yakın, kalibrasyon değil.
