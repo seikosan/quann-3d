@@ -127,3 +127,8 @@ IBM kart verisi vb. üzerinde eğitildi; dış rapor "başka veriyle de çalış
   (`docs/KARA_KUTU_PLAN.md:79`) değerini aştığı için test toleransı 1.6e-06
   (`kara_kutu/tests/test_parity.py:21`) — kaynak hakemdir, eşik uydurulmadı.
 - Eval-only sözleşme korunur: eğitim yok, checkpoint değişmez, `logs/` append-only.
+- Bağımsız `tester` turu tüm iddiaları ham kaynakta karşıladı (kayıt:
+  `docs/dogrulayici_tur_2026-11-21.txt`); tek zayıf nokta kapatıldı: `rapor_denetle`
+  `|` satırlarını muaf tuttuğu için iç rapor tabloları dış kapıdan kaçıyordu — artık
+  depo testi (`kara_kutu/tests/test_contract.py`) atıflı tablo hücrelerini kaynak
+  satırında doğruluyor.

@@ -1,0 +1,34 @@
+Bağımsız tester turu — Kara Kutu P0 kapanışı (2026-11-21, ses_e02f5f54fffep6FOMy7JWmbVTD)
+Doğrulanan commit'ler: 7a7a159 (kara_kutu P0) + 49e7e75 (DEVIR). Çalışan ağaç temiz, HEAD 49e7e75.
+Özet: 10 ✓ / 0 ✗ / 0 KANITSIZ. (Bu dosya tur çıktısının depo kaydıdır; komutlar tester tarafından koşuldu.)
+
+1. pytest kara_kutu/tests/ -q → "5 passed in 7.38s", EXIT=0; -v çıktısında SKIPPED yok
+   (onnxruntime fiilen koşmuş). ✓
+2. python3 -m pytest -q → "133 passed, 25 warnings in 44.13s", EXIT=0
+   (warnings yalnız enable_nested_tensor, quann_cloud/src/qcloud_network.py:99). ✓
+3. Kapı komutu `python3 -m kara_kutu run --adapter fraud --veri
+   fraud/data/User0_credit_card_transactions.csv --rapor html,md` → EXIT=0;
+   özet satırı "19963 kayıt, 0 FRAUD (eşik 0.9969)"; taze koşum
+   kara_kutu/runs/20261121-074050_fraud/ tam 4 dosya: dis_rapor.html 14179 B,
+   ic_rapor.md 6123 B, kanit.json 538 B, sonuc.json 3151249 B. ✓
+4. rapor_denetle ic_rapor.md → "kaynakta yok 0 / kaynaksız 0 / ölü adres 0", EXIT=0 — iddia doğru
+   ANCAK "atıflı ve DOĞRU: 0": denetçi | ile başlayan satırları atlıyor (rapor_denetle.py:29 BASLIK,
+   :73 continue) ve ic_rapor.md'nin 39 sayılı satırı tablo/alıntı ⇒ kapı boşta dönüyor.
+   Kapanış: depo testleri eklendi — kara_kutu/tests/test_contract.py
+   ::test_ic_rapor_tablo_atiflari_kaynagiyla_usuruluyor + ::test_kosmus_raporlarin_tablo_atiflari_dogru
+   (atıflı tablo hücreleri kaynak satırında doğrulanıyor; gerçek iki koşumda 5'er hücre denetleniyor). ✓
+5. dis_rapor.html: data-kaynak span / svg / style / title / script dışında rakam içeren metin yok
+   ("ihlal: 0"). ✓
+6. Parite üçlüsü yerinde: manifest:28 "max_abs_diff": 1.2814998626708984e-06 ·
+   test_parity.py:21 TOL = 1.6e-06 · plan:79 "≤1e-6" (çelişki test docstring'inde dürüstçe yazılı). ✓
+7. kanit.json sha256'ları shasum ile birebir (model.onnx f0251f…, csv 61c4ed…);
+   git_head iki koşumda da geçerli commit (commit-öncesi koşum 3ca05987… != HEAD — beklenen). ✓
+8. 7a7a159 (20 dosya) + 49e7e75 (1 dosya): logs/, checkpoints/, cloudlm/, fraud/src/,
+   docs/patent/, patent-cikti/ altında 0 dosya; izin listesi dışı dosya yok. ✓
+9. check_docs_lines.sh OK; RESEARCH.md 149 ≤150; DEVIR.md 200 ≤200;
+   denetim_kos.py hepsi --repo . → bulgu 0 · uyarı 0, EXIT=0. ✓
+10. manifest self_test: n_rows 19963, case rows [9762, 9291, 9761];
+    test_parity.py:44-48 by_id + abs(v.skor - case["p_fraud"]) <= TOL gerçekten koşuluyor (PASSED). ✓
+
+HÜKÜM (tester): 10 ✓ / 0 ✗ / 0 KANITSIZ. Tek zayıf nokta 4. maddedeki kapı boşluğu;
+aynı oturumda depo testiyle kapatıldı (bkz. madde 4 kapanış notu).
