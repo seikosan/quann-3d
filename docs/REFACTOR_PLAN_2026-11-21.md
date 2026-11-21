@@ -68,10 +68,21 @@
 
 ## Doğrulama kapısı (uygulama sonrası, sırayla)
 
-1. `python3 -m pytest -q` → 126 passed (125 + regresyon) — hedef, sapma = geri al.
-2. `ruff check --select F,E9` aktif kodda → F401/F541 = 0, F821 yalnız sahte-pozitifler.
-3. Import smoke: 12 paket `python3 -c import ...` hatasız.
-4. `scripts/check_docs_lines.sh` + `denetim_kos.py hepsi --repo .` exit 0.
+1. `python3 -m pytest -q` → **127 passed** ✓ (125 baseline + 2 regresyon; A2 commit d944dbc)
+2. `ruff check --select F,E9` aktif kodda → F401/F541/F541 = 0 ✓; kalan 33 = 28 F841
+   (bilerek bırakıldı: analiz scriptlerinde niyetli olabilir, tek tek bilim kararı) +
+   5 F821 sahte-pozitif ✓ (yukarıda kanıtlandı)
+3. Import smoke: 12/13 ✓ — tek başarısız `maintenance.src.train_maintenance`, sebebi
+   refactor değil: `import generator` bare-kalıbı `fraud/src/generator.py`'ye çarpıyor
+   (pytest conftest shimi bunu paket-bazlı çözüyor; 127 passed buna dahil). Kalıbın
+   kendisi C7 kapsamı.
+4. `scripts/check_docs_lines.sh` OK ✓ · `denetim_kos.py hepsi --repo .` → bkz. DEVIR notu
 5. Bağımsız `tester`/`reviewer` doğrulama turu (agent altyapısı çalışıyorsa; değilse
    raporda "kapı koşamadım" diye açıkça yazılır).
 6. DEVIR.md `devir_yaz.py` ile tazelenir; commit'ler lokal (push yok — kullanıcı kararı).
+
+## Durum (2026-11-21 uygulama sonrası)
+
+- **Uygulandı:** A1 (commit 78351b7) · A2 (d944dbc) · B1+A3 (3aa1eb7).
+- **Bekleyen karar:** C1–C7 — kullanıcı onayı olmadan uygulanmadı.
+

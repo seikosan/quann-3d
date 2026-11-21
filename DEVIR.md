@@ -4,18 +4,18 @@ baslik: DEVIR — quann-3d (makine üretimi durum + sıradaki iş)
 konu: [devir, handover, durum]
 durum: güncel
 sahiplik: koordinator
-guncellendi: 2026-11-20
+guncellendi: 2026-11-21
 kunye-kaynak: otomatik (devir_yaz.py)
 ---
 
 # DEVIR — quann-3d
 
 <!-- MAKINE:BASLA -->
-## Durum (makine üretti · 2026-11-20 11:11)
+## Durum (makine üretti · 2026-11-21 08:02)
 Bu blok elle düzenlenmez; `devir_yaz.py --repo /Users/serkankose/Documents/quann-3d` ile yenilenir.
 
-- HEAD: 9af3b0f DEVIR taze: R8 kapandi + fraud deploy tamam satirlari; bayat run_r5_seed2 atifi ham TEST satirlariyla degisti; patent-cikti kapı istisnasi kaydi
-- Değişen dosya: 5 → DEVIR.md, docs/patent/final_v3/Archive/, docs/patent/final_v3/son_draft.zip, docs/patent/pct_v2/, docs/patent/pct_v3/
+- HEAD: 3aa1eb7 Refactor B1+A3: test_* adli CLI araclarinin eval_*'a yeniden adlandirilmasi (pytest/CLI karisikligi; testpaths disi, 127 passed ayni) + README/agent-doc/DEVIR pointer duzeltmeleri (olu src/ ve visualizer yollari arsiv gercek yollarina)
+- Değişen dosya: 1 → docs/REFACTOR_PLAN_2026-11-21.md
 - Kod kapısı: bulgu 0 · uyarı 0 · bilgi 0 · düzeltme planı: 0 (ayrıntı: python3 ~/.config/opencode/denetim/denetim_plan.py)
 - Doküman kapısı: bulgu 0 · uyarı 0 · bilgi 2 · düzeltme planı: 0 (ayrıntı: python3 ~/.config/opencode/denetim/denetim_plan.py)
 - ölçüm: === EĞİTİM DURUMU (kaynak: ham dosya) ===
@@ -29,8 +29,15 @@ Bu blok elle düzenlenmez; `devir_yaz.py --repo /Users/serkankose/Documents/quan
 
 
 
+
 ## Sıradaki iş (ajan)
 
+- **Refactor 2026-11-21 (A/B uygulandı, C = KARAR BEKLİYOR):** tam plan + kanıtlar
+  `docs/REFACTOR_PLAN_2026-11-21.md`. A1 ruff F401/F541 180 düzeltme (78351b7) · A2
+  `train_wiki.step_test` NameError + `eval_train_split` + 2 regresyon (d944dbc) · B1+A3
+  `eval_*` adlandırma + ölü pointer onarımı (3aa1eb7); pytest 127 passed ✓ · denetim exit 0 ✓.
+  C1 16 referanssız script arşiv + C2 neural-atlas iç-içe kopya + C3 fraud/results kod
+  yerleşimi + C5 step_test metodoloji + C6/C7 — kullanıcı onayı olmadan uygulanmayacak.
 - **PCT v3 paketi hazır (20 Kas, commit YOK):** `docs/patent/pct_v3/filing/` 7 dosya (EN/TR istem+
   tarifname+özet + 8 sayfa A4 PDF 979834 B) + 8 SVG. Sayaçlar: 15 istem/3 bağımsız · 98 paragraf
   EN=TR · özet 148/132 kelime · kapsama 56/56 (hepsi `patent-cikti/pct/pct_v3-pct-inceleme/
@@ -58,27 +65,20 @@ döndü; hangi sürecin yazdığını kanıtlayamadık. Onarım üretime çevril
 - **Vekil kararları (v3, kullanıcı tarafı):** özet uzunluğu (265 kelime), 3 bağımsız
   istemin birliği, iki-bölümlü kalıp tercihi — `BLUS_NOTU.md` kırmızı çizgileriyle
   birlikte vekile götürülecek (vekil raporu §d).
-- **Push BLOCKED — kullanıcı kararı "şimdilik push yok" (18 Kas):** refactor
-  commit'leri (`1f21cec`…`64555cc`) + v3 paket commit'leri `deneme_context_cloud`
-  dalında yerel. Push denemesi GitHub'ın 100 MB tek-dosya sınırına takıldı: geçmişte
-  `quann-3d-backup-20261028.tar.gz` = 1.891.553.280 B ≈ 1,76 GiB (ekleyen commit
-  `e33deb7`; `git rev-list --objects origin/main..HEAD` taraması — gönderilecek
-  1238 nesne, 10 MB üstü TEK dosya bu). Kalan ~10 MB. İki seçenek: (a) geçmişi
-  yeniden yaz (dal hiç push edilmediği için güvenli; diskteki dosyaya dokunulmaz,
-  `.gitignore`'a eklenir) → push saniyeler; (b) Git LFS. Kullanıcı (a)'yı reddetti,
-  push ertelendi.
-- **Tamamlandı (17-18 Kas):** CC ayrık holdout (80/10/10, seed=42) üç script'e eklendi, R5 koşuları
-  bitti; seed=43 kuyruğu tekrarladı (Kanıt).
-- **Tamamlandı (17 Kas):** Model-boyutu kontrollü memory koşusu bitti (Δ0.0024 → boyut önemsiz);
-  görev-sabit ablation bitti (görev 0.31 + mekanizma 0.08). Memory üstünlüğü kanıtlanamadı (Kanıt).
-- **Tamamlandı (18 Kas):** seed=43 kuyruğu bitti (ablation→memory-stablesz→stable; commit `51fa24a`);
-  ham TEST satırları: 3.6336 (`logs/run_r5_seed2_memory_stablesz_s43.log:631`) ↔ 3.5581 (`logs/run_r5_seed2_ablate_s43.log:982`) (Kanıt).
+- **Push BLOCKED — kullanıcı kararı "şimdilik push yok" (18 Kas):** refactor (`1f21cec`…`64555cc`) +
+  v3 paket commit'leri `deneme_context_cloud` dalında yerel. Push GitHub 100 MB tek-dosya sınırına
+  takıldı: geçmişte `quann-3d-backup-20261028.tar.gz` = 1.891.553.280 B ≈ 1,76 GiB (commit `e33deb7`;
+  `git rev-list --objects origin/main..HEAD` — 1238 nesne, 10 MB üstü TEK dosya bu; kalan ~10 MB).
+  (a) geçmiş yeniden yazma (güvenli, diskteki dosyaya dokunmaz) kullanıcıca REDDEDİLDİ; (b) Git LFS.
+- **Tamamlandı (17-18 Kas):** CC ayrık holdout (80/10/10, seed=42) üç script'e eklendi; model-boyutu
+  kontrollü memory (Δ0.0024 → boyut önemsiz) + görev-sabit ablation (görev 0.31 + mekanizma 0.08) bitti —
+  memory üstünlüğü kanıtlanamadı. seed=43 kuyruğu tekrarladı (commit `51fa24a`); ham TEST: 3.6336
+  (`logs/run_r5_seed2_memory_stablesz_s43.log:631`) ↔ 3.5581 (`logs/run_r5_seed2_ablate_s43.log:982`) (Kanıt).
 - **Patent paket düzeltmesi (vekil sorusuyla bulundu, 17 Kas):** (1)
-  `docs/patent/dil/TURKPATENT_basvuru_v2.3.md:2` başlığı fiilen v2.5 diyor — gerçek v2.3
-  docx/`_archive`'te; vekil paket listesiyle senkronla. (2) Üç aralık kuralı var: QUANN
-  `quann_cloud/src/qcloud_quann.py:212-228` sabit+sigma×0.82 · classic `quann_cloud/src/qcloud_weight.py:115-133`
-  genişlet · hybrid `quann_cloud/src/qcloud_weight.py:172-191` segmente daralt — hangisinin yazılacağı
-  net; "hata azalınca aralık daralıyor" cümlesinin kaynağı v2.3 metninde bulunamadı
+  `docs/patent/dil/TURKPATENT_basvuru_v2.3.md:2` başlığı fiilen v2.5 diyor — gerçek v2.3 docx/`_archive`'te;
+  vekil paket listesiyle senkronla. (2) Üç aralık kuralı: QUANN `quann_cloud/src/qcloud_quann.py:212-228`
+  sabit+sigma×0.82 · classic `quann_cloud/src/qcloud_weight.py:115-133` genişlet · hybrid `:172-191` daralt —
+  hangisinin yazılacağı net; "hata azalınca aralık daralıyor" cümlesinin kaynağı v2.3'te bulunamadı
 - **R4 duel hükmü paper'a işlendi** (0.76, 61.94/61.19 — Kanıt); patent dokümanlarında duel sayısı
   geçen yer kontrol edilmeli. **Fraud deploy tamam (kullanıcı onayı, commit `a52ddc1`):** paket + parity doğrulandı, tester 5/5 ✓. **R8 tamam (19 Kas):** pair-freeze 5233.4086 (`logs/run_r8_pair_freeze_only.log:12`) vs kontrol 19770.644 (`logs/run_r8_quann_pair.log:30`), tester 6/6 ✓; tekrar adayı kullanıcı kararı.
 
