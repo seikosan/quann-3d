@@ -36,7 +36,7 @@ REPO = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO))
 sys.path.insert(0, str(REPO / "fraud" / "src"))  # fraud/src kendi-kök import kalıbı
 
-from kara_kutu.adapters.fraud import ESIK, IBM_KOLONLARI, FraudAdapter  # noqa: E402
+from kara_kutu.adapters.fraud import ESIK_EKIM, IBM_KOLONLARI, FraudAdapter  # noqa: E402
 from kara_kutu.tools.auc_farki import CHUNK, _ornekle  # noqa: E402  (örneklem sadakati)
 
 BOLGE = 4_000_000  # CSV satır bölgesi genişliği (raporlama)
@@ -113,8 +113,8 @@ def _ab_ayni_satir(df, y, ckpt: Path) -> dict:
         "parity_fark_esik_cevresi": float(diff[p32 >= 0.9].max()) if (p32 >= 0.9).any() else 0.0,
         "auc_fp32": round(float(roc_auc_score(y, p32)), 6),
         "auc_kutu": round(float(roc_auc_score(y, pbox)), 6),
-        "fp32_esikte": _esik_istat(p32, y, ESIK),
-        "kutu_esikte": _esik_istat(pbox, y, ESIK),
+        "fp32_esikte": _esik_istat(p32, y, ESIK_EKIM),
+        "kutu_esikte": _esik_istat(pbox, y, ESIK_EKIM),
     }
 
 
@@ -158,8 +158,8 @@ def _tam_tarama(big_csv: Path, fold_of: dict[int, int], satir_siniri: int | None
                 s = bolgeset(bolgeler, int(bi * BOLGE))
                 s["te"] += int(al.sum())
                 s["fraud"] += int(yy[al].sum())
-                s["alarm"] += int((p[al] >= ESIK).sum())
-                s["tp"] += int(((p[al] >= ESIK) & (yy[al] == 1)).sum())
+                s["alarm"] += int((p[al] >= ESIK_EKIM).sum())
+                s["tp"] += int(((p[al] >= ESIK_EKIM) & (yy[al] == 1)).sum())
                 s["maks_p"] = max(s["maks_p"], float(p[al].max()))
             tum_p.append(p.astype(np.float32))
             tum_y.append(yy)
@@ -172,7 +172,7 @@ def _tam_tarama(big_csv: Path, fold_of: dict[int, int], satir_siniri: int | None
 
     p_all = np.concatenate(tum_p)
     y_all = np.concatenate(tum_y)
-    toplam = _esik_istat(p_all.astype(np.float64), y_all, ESIK)
+    toplam = _esik_istat(p_all.astype(np.float64), y_all, ESIK_EKIM)
     toplam["te_skorlanan"] = int(len(y_all))
     toplam["auc_kutu_tum_te"] = round(float(roc_auc_score(y_all, p_all.astype(np.float64))), 6)
     return {"bolgeler": [bolgeset(bolgeler, k) | {"bolge": k} for k in sorted(bolgeler)],

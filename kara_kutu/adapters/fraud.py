@@ -34,9 +34,28 @@ IBM_KOLONLARI: tuple[str, ...] = (
     "Errors?",
 )
 
-# Karar eşiği — kaynak: fraud/pilot/infer.py:40 (varsayılan 0.9969).
-ESIK = 0.9969
-ESIK_KAYNAK = "fraud/pilot/infer.py:40"
+# Karar eşiği — KARAR A (kullanıcı, 2026-11-22, KARA_KUTU_PLAN §9): Ekim eşiği
+# 0,9969 (`fraud/pilot/infer.py:40`) port-öncesi FP32 olasılıklarıyla kalibre
+# edildi; kutu tam te'de maks p=0,993219 verdiğinden o eşik kutuda anlamsız
+# (`kara_kutu/runs/alarm_farki_20261121-232405/ozet.json`). Kutu artık kendi
+# best-F2 kalibrasyonunu `kara_kutu/artifacts/esik_fraud.json`'dan okur
+# (üretici: `kara_kutu/tools/esik_kalibre.py`). Ekim sayısı yalnız referans:
+ESIK_EKIM = 0.9969
+ESIK_ARTEFACT = REPO_KOK / "kara_kutu" / "artifacts" / "esik_fraud.json"
+
+
+def _esik_artefakttan() -> tuple[float, str]:
+    """Artefakt yoksa patlar — sessiz Ekim eşiğine düşmek YASAK (Karar A)."""
+    if not ESIK_ARTEFACT.is_file():
+        raise RuntimeError(
+            f"Kutu-yerel eşik artefaktı yok: {ESIK_ARTEFACT}. Üret: "
+            "python3 -m kara_kutu.tools.esik_kalibre"
+        )
+    with ESIK_ARTEFACT.open(encoding="utf-8") as f:
+        art = json.load(f)
+    kaynak = (f"kara_kutu/artifacts/esik_fraud.json ({art['kural']}, "
+              f"tohum {art['us']}; kanıt: {art['kanit_kosum']})")
+    return float(art["esik"]), kaynak
 
 # Baseline tavanları — kaynak: docs/market_priorities.md:8 ("RF .973 / GBT .981").
 # Model referansı (kıyas için, baseline değil): FP32 AUC 0.9451 ve INT8 0.9367,
@@ -90,9 +109,38 @@ class FraudAdapter:
                  esik: float | None = None) -> None:
         self.deploy = Path(deploy_dir) if deploy_dir else REPO_KOK / "fraud" / "results" / "deploy"
         self.top_k = top_k
-        self.esik = ESIK if esik is None else float(esik)
-        self.esik_kaynak = ESIK_KAYNAK  # runner override'da metni değiştirir
+        # Eşik tembel okunur: ADAPTER import'u artefakt yokken de kurulabilsin;
+        # ilk erişimde artefakt yoksa RuntimeError (sessiz Ekim eşiğine düşülmez).
+        self._esik_ov = float(esik) if esik is not None else None
+        self._esik_kaynak_ov: str | None = None
+        self._esik_cache: tuple[float, str] | None = None
         self._paket: tuple[Any, ...] | None = None
+
+    # ------------------------------------------------------------------- eşik
+    def _esik_artefakt(self) -> tuple[float, str]:
+        if self._esik_cache is None:
+            self._esik_cache = _esik_artefakttan()
+        return self._esik_cache
+
+    @property
+    def esik(self) -> float:
+        if self._esik_ov is not None:
+            return self._esik_ov
+        return self._esik_artefakt()[0]
+
+    @esik.setter
+    def esik(self, v: float) -> None:
+        self._esik_ov = float(v)
+
+    @property
+    def esik_kaynak(self) -> str:
+        if self._esik_kaynak_ov is not None:
+            return self._esik_kaynak_ov
+        return self._esik_artefakt()[1]
+
+    @esik_kaynak.setter
+    def esik_kaynak(self, v: str) -> None:
+        self._esik_kaynak_ov = v
 
     # ------------------------------------------------------------------ paket
     def _yukle(self) -> tuple[Any, ...]:

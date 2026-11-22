@@ -1,0 +1,40 @@
+{
+  "esik": 0.8566042184829712,
+  "kural": "alarm-budgeti-esitleme",
+  "kural_kaynak": "fraud/results/false_alarm_audit.json:population (11784/4700000) — A1 kararı 2026-11-22",
+  "olusturma": "2026-11-22T08:48:08+00:00",
+  "us": 42,
+  "model_sha256": "f0251f9d9176c23bcfa384ae32e4413b3cb046320606ba348c9eae6bcf52b34d",
+  "kanit_kosum": "kara_kutu/runs/esik_kalibre_20261122-084720/ozet.json",
+  "te_dogrulama": {
+    "alarm": 12368,
+    "tp": 1265,
+    "fp": 11103,
+    "precision": 0.10228,
+    "recall": 0.204659,
+    "f2": 0.170522,
+    "n": 4932768,
+    "fraud": 6181,
+    "esik": 0.8566042184829712,
+    "k_butce": 12368,
+    "sure_sn": 159.2,
+    "maks_p": 0.993219,
+    "kosum": "kara_kutu/runs/esik_te_20261122-193451/ozet.json"
+  },
+  "kalibrasyon_tani": {
+    "tanım": "kutu ONNX olasılıkları, user_fold<8, doğal oran, tohum 42",
+    "n": 1000000,
+    "fraud": 1182,
+    "esikte": {
+      "alarm": 10424,
+      "tp": 562,
+      "fp": 9862,
+      "precision": 0.053914,
+      "recall": 0.475465,
+      "f2": 0.185454
+    },
+    "ekim_esigi_alarm": 0,
+    "maks_p": 0.992136,
+    "durum": "REDDEDİLDİ — iç-örnek bölme (eğitim-fold); eğitim-fold best-F2 eşik adayı 0.7919164896011353, tanım gerekçesi §9"
+  }
+}
