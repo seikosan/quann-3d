@@ -11,11 +11,11 @@ kunye-kaynak: otomatik (devir_yaz.py)
 # DEVIR — quann-3d
 
 <!-- MAKINE:BASLA -->
-## Durum (makine üretti · 2026-11-22 02:45)
+## Durum (makine üretti · 2026-11-22 22:44)
 Bu blok elle düzenlenmez; `devir_yaz.py --repo /Users/serkankose/Documents/quann-3d` ile yenilenir.
 
-- HEAD: 2284560 kara_kutu: iç rapor tablo atıfları için depo tarafı denetim testi
-- Değişen dosya: 12 → RESEARCH.md, docs/KARA_KUTU_PLAN.md, kara_kutu/__main__.py, kara_kutu/adapters/fraud.py, kara_kutu/core/contract.py
+- HEAD: 49848a3 kara_kutu: doğrulayıcı bulguları 4+6 kapandı
+- Değişen dosya: 12 → DEVIR.md, docs/KARA_KUTU_PLAN.md, kara_kutu/adapters/fraud.py, kara_kutu/report/internal.py, kara_kutu/tests/test_contract.py
 - Kod kapısı: bulgu 0 · uyarı 0 · bilgi 0 · düzeltme planı: 0 (ayrıntı: python3 ~/.config/opencode/denetim/denetim_plan.py)
 - Doküman kapısı: bulgu 0 · uyarı 0 · bilgi 2 · düzeltme planı: 0 (ayrıntı: python3 ~/.config/opencode/denetim/denetim_plan.py)
 - ölçüm: === EĞİTİM DURUMU (kaynak: ham dosya) ===
@@ -30,21 +30,22 @@ Bu blok elle düzenlenmez; `devir_yaz.py --repo /Users/serkankose/Documents/quan
 
 
 
+
 ## Sıradaki iş (ajan)
 
-- **Kara Kutu P0 TAMAMLANDI (künye HEAD'de):** `kara_kutu/` — contract + registry + fraud
-  adapter + CLI + iki rapor + `kanit.json`. Kapılar bu oturumda ölçüldü: Kara Kutu testleri
-  ve tam paket yeşil; `rapor_denetle` `ic_rapor.md` sıfır bulgu; dış raporda span-dışı rakam
-  yok (bekçi test); CLI kapı komutu gerçek CSV üzerinde koştu. Tolerans kaynağı
-  `kara_kutu/tests/test_parity.py:21` ← `fraud/results/deploy/manifest.json:28`. Sıradaki: **P1** web.
-- **Refactor 2026-11-21 (A/B/C kapandı):** plan + durum bloğu + kanıtlar
-  `docs/REFACTOR_PLAN_2026-11-21.md`; commit'ler lokal, push kullanıcı kararıyla blokeli.
-- **Kara Kutu P1 kodda (21 Kas):** `core/runner.py` ortak hat + FastAPI tek sayfa
-  (`python3 -m kara_kutu web --port 8734`); browser turu ölçüldü: CSV yükle→tablo→4 rapor
-  indir 200, console hatası 0 (`runs/20261121-234528_fraud`). **KARAR BEKLİYOR (A/B/C):**
-  eşik 0,9969 Ekim fonksiyonuyla kalibre; kutu (portlu mimari, `cloudlm/model.py:64,105-106`)
-  aynı satırlarda 0 alarm veriyor — kanıt `kara_kutu/tools/port_kaniti.py` +
-  `docs/KARA_KUTU_PLAN.md` §9. Commit'ler lokal.
+- **Kara Kutu P0+P1 commit'te; Karar A1 KAPANDI (22 Kas, ölçüm):** kutu-yerel eşik = Ekim alarm
+  bütçesinin quantili 0,8566042184829712 (`kara_kutu/artifacts/esik_fraud.json`; üretici
+  `kara_kutu/tools/esik_kalibre.py`). TEK te geçişi (4.932.768 satır): alarm 12.368=bütçe,
+  TP 1.265, P 0,10228, R 0,204659 (`kara_kutu/runs/esik_te_20261122-193451/ozet.json`) ↔ Ekim
+  FP32 TP 1.842/FP 9.942 @11.784 (`fraud/results/false_alarm_audit.json:population`) — TP
+  farkının mekanizması DOĞRULANMADI; ayrıntı `docs/KARA_KUTU_PLAN.md` §10. Web: `python3 -m
+  kara_kutu web --port 8734`; browser turu `runs/20261121-234528_fraud`.
+- **P2 complaints adaptörü depoda (22 Kas, teslim + kapılar):** `kara_kutu/adapters/complaints.py`
+  + `test_complaints.py`; issue top-1 0,3900 ↔ çoğunluk tavanı 0,3200, dengeli 0,0701 (200 CFPB,
+  `kara_kutu/runs/20261122-091904_complaints/ic_rapor.md`) — niş eval, SOTA iddiası yok. Geçici
+  önlem: iç rapor fraud-string'leri adaptör-koşullu (`kara_kutu/report/internal.py`); genelleştirme
+  kartı beklemede: `contract.Gerekce.yon`, `runner` ETIKET_KOLON/fraud_sayisi, external HTML
+  "FRAUD", `__main__` özet satırı. Sıradaki: maintenance (normalizasyon artefaktı) → aml (ONNX export).
 - **PCT v3 paketi hazır (20 Kas, commit YOK):** `docs/patent/pct_v3/filing/` 7 dosya (EN/TR istem+
   tarifname+özet + 8 sayfa A4 PDF 979834 B) + 8 SVG. Sayaçlar: 15 istem/3 bağımsız · 98 paragraf
   EN=TR · özet 148/132 kelime · kapsama 56/56 (hepsi `patent-cikti/pct/pct_v3-pct-inceleme/

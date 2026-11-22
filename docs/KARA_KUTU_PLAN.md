@@ -156,3 +156,31 @@ IBM kart verisi vb. üzerinde eğitildi; dış rapor "başka veriyle de çalış
   (A) kutu-yerel eşik yeniden kalibrasyonu; (B) Ekim fonksiyonuyla deploy paketini yeniden
   export; (C) eşiksiz AUC/skor raporu.
 - Metrik dürüstlüğü: rapor anahtarı artık "AUC-ROC (girdi CSV etiketleri, bu koşunun ölçümü)".
+
+## 10. Karar A1 kapanışı — kutu-yerel eşik (2026-11-22, ölçüm)
+
+- Karar (kullanıcı, 2026-11-22): (A) kutu-yerel eşik; alt-karar A1 — eşik = Ekim ALARM
+  BÜTÇESİNİN kutu skorlarındaki quantili; te TEK geçişte okunur, eşik + işletim sayıları
+  aynı geçişte ölçülür (AGENTS §4.1). Üretici: `kara_kutu/tools/esik_kalibre.py`;
+  sözleşme: `kara_kutu/artifacts/esik_fraud.json` (adapter artefaktı okur; yoksa
+  RuntimeError — sessiz Ekim eşiğine düşüş yok).
+- Kalibrasyon tanısı (eğitim-fold <8, 1M satır, tohum 42): kutu AUC-ROC 0,941453;
+  best-F2 aday 0,7919164896011353 iç-örnek precision 0,053914 → EŞİK OLARAK REDDEDİLDİ
+  (Ekim 0,156 ↔ 0,054 bölme farkının mekanizması DOĞRULANMADI); aday artefakta
+  `kalibrasyon_tani` olarak işlendi (`kara_kutu/runs/esik_kalibre_20261122-084720/ozet.json`).
+- Tek te geçişi (fold≥8; 4.932.768 satır, 6.181 fraud; eşik 0,8566042184829712 = oran
+  0,002507234 × n, oran kaynağı `fraud/results/false_alarm_audit.json` population
+  11784/4700000): alarm 12.368 (= bütçe), TP 1.265, FP 11.103, precision 0,10228,
+  recall 0,204659, F2 0,170522 (`kara_kutu/runs/esik_te_20261122-193451/ozet.json`).
+- Dürüst karşılaştırma: Ekim FP32 best-F2 noktası TP 1.842 / FP 9.942 @ 11.784 alarm,
+  P 0,156 / R 0,301 (`fraud/results/false_alarm_audit.json:population`) — kutu aynı
+  bütçede daha az TP yakalıyor (1.265 ↔ 1.842); üstelik audit evreni (4.700.000/6.110)
+  ile bizim te'miz (4.932.768/6.181) birebir aynı alt-küme değil. Sıralama yakınlığı
+  (§9: AUC 0,944109 ↔ 0,9451) sürüyor; TP farkının mekanizması DOĞRULANMADI.
+- P2 complaints adaptörü: issue top-1 doğruluk 0,3900 ↔ çoğunluk-etiket tavanı 0,3200
+  (200 CFPB örneği), dengeli doğruluk 0,0701 — niş eval kabiliyeti, SOTA iddiası değil
+  (`kara_kutu/runs/20261122-091904_complaints/ic_rapor.md`).
+- Geçici önlem (kıya, 2026-11-22): iç raporun fraud-string'leri adaptör-koşullu
+  (`kara_kutu/report/internal.py`): P(fraud) başlığı, Ekim AUC tablosu, yön etiketi
+  fraud dışı dikeyde basılmaz; beklemedeki genelleştirme kartı: `contract.Gerekce.yon`,
+  `runner` ETIKET_KOLON/fraud_sayisi, external HTML "FRAUD" metni, `__main__` özet satırı.
