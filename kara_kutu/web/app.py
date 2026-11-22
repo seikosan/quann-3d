@@ -117,7 +117,8 @@ def create_app(runs_dir: Path = RUNS_DIR) -> FastAPI:
                     break
                 toplam += len(parc)
                 if toplam > MAX_YUKLE_BAYT:
-                    fh.close(); hedef.unlink(missing_ok=True)
+                    fh.close()
+                    hedef.unlink(missing_ok=True)
                     raise HTTPException(413, f"dosya {MAX_YUKLE_BAYT // 2**20} MiB üzerinde")
                 fh.write(parc)
         try:

@@ -126,6 +126,29 @@ def test_ic_rapor_tablo_atiflari_kaynagiyla_usuruluyor():
     assert denetlenen >= 3, f"denetlenen atıflı sayı beklenenden az: {denetlenen}"
 
 
+def test_ic_rapor_fraud_izleri_diger_dikeye_sizmiyor():
+    """Geçici önlem (2026-11-22, KARA_KUTU_PLAN §9): P(fraud) başlığı ve Ekim
+    fraud AUC referansları fraud dışı adaptör raporunda basılmaz."""
+    from kara_kutu.core.contract import Gerekce, Verdict as V
+    from kara_kutu.report.internal import uret as uret_ic
+
+    ham = _ornek_sonuc()
+    kopya = KosumSonucu(
+        adapter="complaints", esik=0.0, satir_sayisi=ham.satir_sayisi,
+        verdictler=[V(kimlik=v.kimlik, skor=v.skor, karar="Managing an account",
+                      gerekceler=list(v.gerekceler) + [Gerekce("mcc", 0.4 if i % 2 else -0.4)])
+                    for i, v in enumerate(ham.verdictler)],
+        baseline=ham.baseline, meta=ham.meta, kanit=ham.kanit, metrikler={})
+    md = uret_ic(kopya)
+    assert "P(fraud)" not in md
+    assert "0.9451" not in md and "0.9367" not in md  # Ekim fraud AUC'leri sızmez
+    assert "Karar eşiği" in md and "uygulanmıyor" in md
+    assert "fraud-destekliyor" not in md and "fraud-karşıtı" not in md
+    # fraud koşumu aynı çıktıyı vermeye devam eder (gerileme koruması)
+    fraud_md = uret_ic(ham)
+    assert "P(fraud)" in fraud_md and "0.9451" in fraud_md
+
+
 def test_kosmus_raporlarin_tablo_atiflari_dogru():
     """kara_kutu/runs/ altındaki gerçek koşum raporları da aynı denetimden
     geçer (klasör gitignore'dadır; taze klonada atlanır, yerelde kalkan)."""

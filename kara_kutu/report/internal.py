@@ -24,10 +24,15 @@ def _tablo(basliklar: list[str], satirlar: list[list[str]]) -> list[str]:
 def uret(sonuc: KosumSonucu, *, max_kayit: int = _MAX_KAYIT) -> str:
     k = sonuc.kanit
     m = sonuc.meta
+    # Geçici önlem (2026-11-22, KARA_KUTU_PLAN §9): fraud-dikeyine özgü metinler
+    # (P(fraud) başlığı, Ekim FP32/INT8 AUC referansları) yalnız fraud koşumunda
+    # basılır. Tam dikey-geneli etiket sözleşmesi ayrı iş kartı (contract.yon,
+    # runner ozet, external HTML).
+    fraud_mu = sonuc.adapter == "fraud"
     satirlar: list[str] = [
         f"# Kara Kutu İç Rapor — {sonuc.adapter}",
         "",
-        f"> Bu rapor `kara_kutu` hattıyla koşumdan üretildi; elle yazılmış sayı içermez.",
+        "> Bu rapor `kara_kutu` hattıyla koşumdan üretildi; elle yazılmış sayı içermez.",
         f"> Üretim (UTC): {k.tarih} · git HEAD: `{k.git_head}`",
         f"> Komut: `{k.komut}`",
         f"> model sha256: `{k.model_sha256}`",
@@ -43,7 +48,9 @@ def uret(sonuc: KosumSonucu, *, max_kayit: int = _MAX_KAYIT) -> str:
             ["Model boyutları", m.ek_bilgi.get("model_boyut", "-"),
              f"`{m.ek_bilgi.get('manifest', '-')}`"],
             ["Paket oluşturma damgası", m.olusturma, f"`{m.ek_bilgi.get('manifest', '-')}`"],
-            ["Karar eşiği P(fraud) ≥", f"{sonuc.esik:.4f}", f"`{m.esik_kaynak}`"],
+            ["Karar eşiği P(fraud) ≥" if fraud_mu else "Karar eşiği",
+             f"{sonuc.esik:.4f}" if (fraud_mu or sonuc.esik > 0)
+             else "uygulanmıyor — bkz. kaynak", f"`{m.esik_kaynak}`"],
             ["Kayıt sayısı", str(sonuc.satir_sayisi), "bu koşunun ölçümü"],
             ["model.onnx sha256 (disk, bu koşu)", k.model_sha256, "bu koşunun ölçümü"],
             ["model.onnx sha256 (manifest)", m.ek_bilgi.get("paket_sha256_manifest", "-"),
@@ -72,13 +79,19 @@ def uret(sonuc: KosumSonucu, *, max_kayit: int = _MAX_KAYIT) -> str:
         "",
         "Model referansı (aynı dikey, geçmiş tam-ölçek koşu — baseline değil):",
         "",
+    ] if fraud_mu else [
+        "",
+        "> Model referansı tablosu yalnız fraud dikeyinin tam-ölçek ölçümlerini",
+        "> taşır; bu dikeyde basılmaz (geçici önlem 2026-11-22, KARA_KUTU_PLAN §9).",
+        "",
     ]
-    satirlar += _tablo(["Koşu", "Metrik", "Değer", "Kaynak"], [
-        ["FP32 tam doğal test", "AUC-ROC", "0.9451",
-         "`fraud/logs/run_full_scale_edge_eval.log:52`"],
-        ["INT8-channel tam doğal test", "AUC-ROC", "0.9367",
-         "`fraud/logs/run_full_scale_edge_eval.log:54`"],
-    ])
+    if fraud_mu:
+        satirlar += _tablo(["Koşu", "Metrik", "Değer", "Kaynak"], [
+            ["FP32 tam doğal test", "AUC-ROC", "0.9451",
+             "`fraud/logs/run_full_scale_edge_eval.log:52`"],
+            ["INT8-channel tam doğal test", "AUC-ROC", "0.9367",
+             "`fraud/logs/run_full_scale_edge_eval.log:54`"],
+        ])
     satirlar += [
         "",
         f"## Kayıt kararları (ilk {min(max_kayit, len(sonuc.verdictler))})",
@@ -87,10 +100,13 @@ def uret(sonuc: KosumSonucu, *, max_kayit: int = _MAX_KAYIT) -> str:
     kayit_satirlari = []
     for i, v in enumerate(sonuc.verdictler[:max_kayit], 1):
         gerekce = "; ".join(
-            f"{g.etiket} ({g.delta_logit:+.2f} logit, {g.yon})" for g in v.gerekceler[:3]
+            f"{g.etiket} ({g.delta_logit:+.2f} logit, "
+            f"{g.yon if fraud_mu else ('seçileni destekliyor' if g.delta_logit > 0 else 'seçilenin karşıtı')})"
+            for g in v.gerekceler[:3]
         ) or "tek-puan etkisi ölçülemedi"
         kayit_satirlari.append([str(i), str(v.kimlik), f"{v.skor:.8f}", v.karar, gerekce])
-    satirlar += _tablo(["#", "Kimlik", "P(fraud)", "Karar", "Gerekçe (ablasyon, logit)"],
+    satirlar += _tablo(["#", "Kimlik", "P(fraud)" if fraud_mu else "Skor (P)",
+                        "Karar", "Gerekçe (ablasyon, logit)"],
                        kayit_satirlari or [["—", "—", "—", "—", "boş girdi"]])
     if len(sonuc.verdictler) > max_kayit:
         satirlar += ["", "> Tam liste `sonuc.json` içinde; bu tablo ilk satırları gösterir."]
