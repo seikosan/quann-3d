@@ -1,0 +1,3 @@
+Çoğunluk-etiket tavanı — complaints örneklem 200 (ölçüm 2026-11-22, doğrulayıcı turundan bağımsız yeniden koşum)
+Komut: python3 - <<'EOF'  # csv.DictReader("kara_kutu/runs/_girdi/complaints_ornek200.csv"), Counter(satir["issue"])
+Çıktı: n=200 en_yaygin='Incorrect information on your report' adet=64 oran=0.3200

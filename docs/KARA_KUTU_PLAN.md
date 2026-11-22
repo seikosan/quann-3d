@@ -135,23 +135,26 @@ IBM kart verisi vb. üzerinde eğitildi; dış rapor "başka veriyle de çalış
 
 ### P0 dürüst boşlukları — kapanış (2026-11-21, ölçüm)
 
-- User0 demeti held-out DEĞİL: fold=5 = eğitim fold'u (`kara_kutu/tools/auc_farki.py`,
-  `n_user=2000 user0_fold=5`). Kutunun doğal held-out örneklemdeki (400k, te fold≥8)
-  AUC'si 0,953261 CI95 [0,938952, 0,96757]; User0 AUC'si 0,8346 CI95 [0,740052, 0,929148]
-  (`kara_kutu/runs/auc_farki_20261121-231116/ozet.json`) — "AUC farkı" demet doğasından.
-- Kutu kimliği: FP32 `DeployPath` ONNX (`fraud/src/export_deploy.py:47-53`); 0,9367 INT8
-  edge_eval'in torch-simülasyon koludur (`fraud/src/edge_eval.py:12`), kutunun ölçümü değil.
-- Alarm çelişkisi ÇÖZÜLDÜ — aynı satırlar (ilk 1M CSV; te=234.686, fraud=197, seed 20261015,
-  aynı ckpt mtime 17 Eki): 19 Eki kodu (5f66aed worktree) maks p=1,0, eşik 0,9969438910484314'te
-  693 alarm, AUC 0,95971 (`kara_kutu/tools/port_kaniti.py`); mevcut kutu maks p=0,990873,
-  0 alarm, AUC 0,961135 (`kara_kutu/runs/alarm_farki_20261121-232335/ozet.json`). Quantizer
-  birebir aynı (deploy `quantizer.json` == ckpt sözlüğü, `base_fn` anahtarı hariç).
-- Mekanizma (kod satırı): paylaşılan mimari portu — pair_in `d+4`→`3d+2` (`cloudlm/model.py:64`)
-  ve eski skaler `|i|`,`|j|` ağırlıklarının D-boyutlu norm bloğuna yayılması (`cloudlm/model.py:105-106`);
-  havuzlama aynı (max: `5f66aed:cloudlm/model.py:71` ↔ `cloudlm/model.py:153`). Deploy paketi
-  (a52ddc1, 18 Kas) portlanmış fonksiyondur; parity self-test'i yalnız kutu ≡ güncel-torch kanıtlar.
-- Tüm te üzerinde kutu AUC 0,944109 (4.932.768 satır, 0 alarm; `alarm_farki_20261121-232405/ozet.json`)
-  ↔ Ekim fonksiyonu 0,9451 (log:52) — sıralama yakın, kalibrasyon değil.
+- User0 demeti held-out DEĞİL — fold 5 eğitim, n 400000, fraud 408, kutu AUC 0,953261, CI95 [0,938952, 0,96757] (`kara_kutu/runs/auc_farki_20261121-231116/ozet.json:1-27`); doğal held-out (te fold≥8) yerine eğitim-fold demeti kullanılmış — "AUC farkı" demet doğasından.
+- UYDURMA AVI (doğrulayıcı turu 2026-11-22): eski "User0 AUC" nokta değeri 0,8346
+  yanlıştı; ozet yalnız CI95 [0,740052, 0,929148] taşır (`kara_kutu/runs/auc_farki_20261121-231116/ozet.json:20-22`).
+  0,8346 bu sınırların aritmetik ortasıydı; nokta AUC hiç ölçülmemiş — DOĞRULANMADI.
+- Kutu FP32 `DeployPath` ONNX'tur, pakette int8 yolu yoktur (`fraud/src/export_deploy.py:47-53`).
+  Ekim referansı 0,9367 int8-channel AUC'su edge_eval'in torch-simülasyon koludur (`fraud/logs/run_full_scale_edge_eval.log:54`), kutunun ölçümü değildir; kolun kodu `fraud/src/edge_eval.py:12`.
+- Alarm çelişkisi ÇÖZÜLDÜ — aynı ilk 1M CSV satırları, aynı ckpt mtime 17 Eki (`docs/port_kaniti_olcum_2026-11-21.txt:9`), quantizer
+  birebir aynı (deploy `quantizer.json` == ckpt sözlüğü, `base_fn` hariç). Kesit-evreni te
+  234686, fraud 197 (`docs/port_kaniti_olcum_2026-11-21.txt:15-16`); Ekim işletim
+  eşiği 0,9969438910484314 (`fraud/results/false_alarm_audit.json:9`).
+  19 Eki kodu (5f66aed worktree, `docs/port_kaniti_olcum_2026-11-21.txt:15`) thr-üstü
+  alarmı 693, AUC 0,95971 verdi (`docs/port_kaniti_olcum_2026-11-21.txt:16`); sayaç
+  `(p >= THR).sum()` ile sayılır (`kara_kutu/tools/port_kaniti.py:89`).
+  Mevcut kutu aynı evrende maks p 0,990873, 0 alarm, AUC 0,961135
+  (`kara_kutu/runs/alarm_farki_20261121-232335/ozet.json:35-48`) — fark eşik değil port.
+- Mekanizma (kod satırı): paylaşılan mimari portu — `pair_input_dim = 3 * d + 2` (`cloudlm/model.py:64`);
+  skaler |i|,|j| ağırlıkları D-boyutlu norm bloklarına yayıldı (`cloudlm/model.py:105-106`);
+  havuzlama aynı (`cloudlm/model.py:153`, max). Deploy paketi (a52ddc1) portlanmış
+  fonksiyondur; parity self-test'i yalnız kutu ≡ güncel-torch'u kanıtlar.
+- Tüm te üzerinde kutu AUC 0,944109, 0 alarm (`kara_kutu/runs/alarm_farki_20261121-232405/ozet.json:95-96`) ↔ Ekim FP32 0,9451 (`fraud/logs/run_full_scale_edge_eval.log:52`) — sıralama yakın, kalibrasyon değil.
 - Sonuç/karar (kullanıcı): Ekim FP32 olasılıklarıyla kalibre eşik 0,9969 kutuda geçersiz.
   (A) kutu-yerel eşik yeniden kalibrasyonu; (B) Ekim fonksiyonuyla deploy paketini yeniden
   export; (C) eşiksiz AUC/skor raporu.
@@ -160,27 +163,18 @@ IBM kart verisi vb. üzerinde eğitildi; dış rapor "başka veriyle de çalış
 ## 10. Karar A1 kapanışı — kutu-yerel eşik (2026-11-22, ölçüm)
 
 - Karar (kullanıcı, 2026-11-22): (A) kutu-yerel eşik; alt-karar A1 — eşik = Ekim ALARM
-  BÜTÇESİNİN kutu skorlarındaki quantili; te TEK geçişte okunur, eşik + işletim sayıları
-  aynı geçişte ölçülür (AGENTS §4.1). Üretici: `kara_kutu/tools/esik_kalibre.py`;
+  BÜTÇESİNİN kutu skorlarındaki quantili; eşik + işletim sayıları TEK FİNAL te
+  geçişinde ölçülür (AGENTS §4.1). Üretici: `kara_kutu/tools/esik_kalibre.py`;
   sözleşme: `kara_kutu/artifacts/esik_fraud.json` (adapter artefaktı okur; yoksa
   RuntimeError — sessiz Ekim eşiğine düşüş yok).
-- Kalibrasyon tanısı (eğitim-fold <8, 1M satır, tohum 42): kutu AUC-ROC 0,941453;
-  best-F2 aday 0,7919164896011353 iç-örnek precision 0,053914 → EŞİK OLARAK REDDEDİLDİ
-  (Ekim 0,156 ↔ 0,054 bölme farkının mekanizması DOĞRULANMADI); aday artefakta
-  `kalibrasyon_tani` olarak işlendi (`kara_kutu/runs/esik_kalibre_20261122-084720/ozet.json`).
-- Tek te geçişi (fold≥8; 4.932.768 satır, 6.181 fraud; eşik 0,8566042184829712 = oran
-  0,002507234 × n, oran kaynağı `fraud/results/false_alarm_audit.json` population
-  11784/4700000): alarm 12.368 (= bütçe), TP 1.265, FP 11.103, precision 0,10228,
-  recall 0,204659, F2 0,170522 (`kara_kutu/runs/esik_te_20261122-193451/ozet.json`).
-- Dürüst karşılaştırma: Ekim FP32 best-F2 noktası TP 1.842 / FP 9.942 @ 11.784 alarm,
-  P 0,156 / R 0,301 (`fraud/results/false_alarm_audit.json:population`) — kutu aynı
-  bütçede daha az TP yakalıyor (1.265 ↔ 1.842); üstelik audit evreni (4.700.000/6.110)
-  ile bizim te'miz (4.932.768/6.181) birebir aynı alt-küme değil. Sıralama yakınlığı
-  (§9: AUC 0,944109 ↔ 0,9451) sürüyor; TP farkının mekanizması DOĞRULANMADI.
-- P2 complaints adaptörü: issue top-1 doğruluk 0,3900 ↔ çoğunluk-etiket tavanı 0,3200
-  (200 CFPB örneği), dengeli doğruluk 0,0701 — niş eval kabiliyeti, SOTA iddiası değil
-  (`kara_kutu/runs/20261122-091904_complaints/ic_rapor.md`).
-- Geçici önlem (kıya, 2026-11-22): iç raporun fraud-string'leri adaptör-koşullu
-  (`kara_kutu/report/internal.py`): P(fraud) başlığı, Ekim AUC tablosu, yön etiketi
-  fraud dışı dikeyde basılmaz; beklemedeki genelleştirme kartı: `contract.Gerekce.yon`,
-  `runner` ETIKET_KOLON/fraud_sayisi, external HTML "FRAUD" metni, `__main__` özet satırı.
+- Kalibrasyon tanısı (eğitim-fold tek okuma: n 1.000.000, tohum 42, bölme `user_fold < 8`): `kara_kutu/runs/esik_kalibre_20261122-084720/ozet.json:2-7`.
+- Best-F2 aday eşik 0,7919164896011353, iç-örnek precision 0,053914 → EŞİK OLARAK REDDEDİLDİ (`kara_kutu/runs/esik_kalibre_20261122-084720/ozet.json:8-13`); aday artefakta `kalibrasyon_tani` olarak işlendi (`kara_kutu/artifacts/esik_fraud.json:24-27`).
+- Tanı AUC notu 0,941453 yalnız üretici docstring'indedir (`kara_kutu/tools/esik_kalibre.py:22`); ozet.json'a yazılmamış — bağımsız ölçüm DOĞRULANMADI.
+- Final te geçişi (A1; tek final okuma): n 4.932.768, fraud 6.181, eşik 0,8566042184829712, oran 0,002507234 = 11784/4700000 (`kara_kutu/runs/esik_te_20261122-193451/ozet.json:2-21`).
+- Sonuç (final te): alarm 12.368 = k_butce = round(oran × n) (`kara_kutu/tools/esik_kalibre.py:273`); TP 1.265, FP 11.103, precision 0,10228, recall 0,204659, F2 0,170522 (`kara_kutu/runs/esik_te_20261122-193451/ozet.json:4-13`).
+- Dürüst kayıt: te satırları fiilen iki kez tarandı — smoke `kara_kutu/runs/esik_te_20261122-193423/ozet.json:2-10` (`--hizli`: n 451.018, eşik adayı 0,8569020628929138 ≠ final; cap `kara_kutu/tools/esik_kalibre.py:317`) geçici kopya artefaktla koştu, final artefaktını ÜRETMEDİ.
+- A1 hükmü FINAL işletim noktası için sağlandı: artefakt ve raporlar yalnız final koşumu taşır (`kara_kutu/artifacts/esik_fraud.json:22`); tekrar-deneme guard reddetti: exit 3, sha256 değişmedi (doğrulayıcı turu).
+- Dürüst karşılaştırma: Ekim FP32 best-F2 noktası 11.784 alarmda TP 1.842, FP 9.942, P 0,156, R 0,301 (`fraud/results/false_alarm_audit.json:11-16`); kutu aynı oran-bütçesinde TP 1.265 ile daha az yakalıyor (`kara_kutu/runs/esik_te_20261122-193451/ozet.json:5`); sıralama yakınlığı sürüyor (§9), TP farkının mekanizması DOĞRULANMADI.
+- Evren uyarısı: audit n 4.700.000, fraud 6.110 (`fraud/results/false_alarm_audit.json:6-7`) ile final te n 4.932.768, fraud 6.181 (`kara_kutu/runs/esik_te_20261122-193451/ozet.json:10-11`) birebir aynı alt-küme değil.
+- P2 complaints adaptörü: issue top-1 doğruluk 0,3900, dengeli doğruluk 0,0701 (`kara_kutu/runs/20261122-091904_complaints/ic_rapor.md:26-27`); çoğunluk-etiket tavanı 0,32 = 64/200 (`docs/complaints_tavan_olcum_2026-11-22.txt:1-3`) — niş eval kabiliyeti, SOTA iddiası değil.
+- Geçici önlem (kıya): iç raporun fraud-string'leri adaptör-koşullu (`kara_kutu/report/internal.py`): P(fraud) başlığı, Ekim AUC tablosu, yön etiketi fraud dışı dikeyde basılmaz; beklemedeki genelleştirme kartı: `contract.Gerekce.yon`, `runner` ETIKET_KOLON/fraud_sayisi, external HTML "FRAUD" metni, `__main__` özet satırı.
