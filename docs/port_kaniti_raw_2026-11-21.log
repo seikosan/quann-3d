@@ -1,0 +1,12 @@
+[fold] n_user=2000 user0_fold=5
+[veri] te=234,686 fraud=197 (1s)
+{'kaynak': '19 EKİM kodu (5f66aed) + ckpt bundled quantizer', 'n_te': 234686, 'fraud': 197, 'maks_p': 1.0, 'alarm_thr': 693, 'p_0_99_ustu': 1843, 'auc': 0.95971}
+=== git show 5f66aed:cloudlm/model.py (grep) ===
+55:            nn.Linear(d_cloud_dim + 4, hidden), nn.GELU(),
+71:        point_pooled = pf.max(dim=1).values
+=== git show 5f66aed:fraud/src/quantize.py (grep base_fn/fillna) ===
+(yok)
+=== 5f66aed audit_false_alarms.py thr ===
+30:def select_fp(probs: np.ndarray, labels: np.ndarray, thr: float,
+32:    """False-alarm population: normals at/above the operational threshold.
+35:    threshold flags no normal (small dev samples).

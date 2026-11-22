@@ -1,36 +1,42 @@
-Karar deneyi — ham çıktı kaydı (2026-11-21, bu oturumda koşuldu)
+Karar deneyi — alarm çelişkisi kapanışı
+=====================================
 
-AMAÇ: Alarm çelişkisi: Ekim denetimi (fraud/results/false_alarm_audit.json) eşik
-0.9969438910484314'te 11.784 alarm derken mevcut deploy kutusu tüm te üzerinde 0
-alarm veriyor (kara_kutu/runs/alarm_farki_20261121-232405/ozet.json).
+Amaç: Ekim denetimi (fraud/results/false_alarm_audit.json:9 → eşik 0.9969438910484314,
+fraud/results/false_alarm_audit.json:11 → flagged 11.784) ↔ mevcut kutu tüm te
+üzerinde 0 alarm (kara_kutu/runs/alarm_farki_20261121-232405/ozet.json:88).
+Aynı checkpoint fraud/results/quann_full_hybrid.pt.
 
-YÖNTEM: git worktree 5f66aed (19 Eki kodu) + kara_kutu/tools/port_kaniti.py
-(score_oct.py); ilk 1M CSV satırı, user_folds(seed=20261015) ile te=fold>=8;
-checkpoint fraud/results/quann_full_hybrid.pt (mtime 17 Eki, sha256 2bb6fcd…,
-deploy manifest ile aynı); quantizer = checkpoint sözlüğü.
+YÖNTEM: git worktree <tmp> 5f66aed + kara_kutu/tools/port_kaniti.py
+; ilk 1.000.000 satır (kara_kutu/tools/port_kaniti.py:48),
+user_folds seed 20261015 (fraud/src/config.py:55), te=fold>=8 (kara_kutu/tools/port_kaniti.py:70).
 
-1) 19 EKİM KODU (5f66aed) — ham çıktı (shell sh_2007b1ab5001AFXBqHYBMMelet):
-[fold] n_user=2000 user0_fold=5
-[veri] te=234,686 fraud=197 (1s)
-{'kaynak': '19 EKİM kodu (5f66aed) + ckpt bundled quantizer', 'n_te': 234686,
- 'fraud': 197, 'maks_p': 1.0, 'alarm_thr': 693, 'p_0_99_ustu': 1843, 'auc': 0.95971}
+Ham çıktı — docs/port_kaniti_raw_2026-11-21.log:
+  fold n_user=2000 user0_fold=5 → docs/port_kaniti_raw_2026-11-21.log:1
+  te=234,686 fraud=197 → docs/port_kaniti_raw_2026-11-21.log:2
+  n_te=234686 maks_p=1.0 alarm@eşik=693 AUC=0.95971 p_0_99_ustu=1843 → docs/port_kaniti_raw_2026-11-21.log:3
 
-2) AYNI SATIR KÜMESİNDE KUTU (bugünkü FP32 ONNX) — aynı faz, duman taraması:
-kara_kutu/runs/alarm_farki_20261121-232335/ozet.json faz2.bolgeler[0]:
-satir=1.000.000 te=234.686 fraud=197 maks_p=0.9908732175827026 alarm=0
-(bolgeler[0]); AUC (bu kesitte) 0,961135 (aynı dosya faz2_tarama.genel.auc_kutu_tum_te)
+Kutu, aynı kesit — kara_kutu/runs/alarm_farki_20261121-232335/ozet.json:
+  te=234,686 fraud=197 → kara_kutu/runs/alarm_farki_20261121-232335/ozet.json:31-32
+  alarm=0 maks_p=0.9908732175827026 → kara_kutu/runs/alarm_farki_20261121-232335/ozet.json:33-35
+  AUC=0.961135 → kara_kutu/runs/alarm_farki_20261121-232335/ozet.json:48
 
-3) PARITE: FP32-torch ↔ kutu aynı token'larda 1,4305e-06 fark
-(alarm_farki_20261121-232405/ozet.json faz1_ab.parity_max_mutlak_fark, n=400.000) —
-fark niceliklendirme/ONNX'tan değil, FONKSİYON farkından.
+Kutu, tüm te — kara_kutu/runs/alarm_farki_20261121-232405/ozet.json:
+  te=4.932.768 → kara_kutu/runs/alarm_farki_20261121-232405/ozet.json:95
+  alarm=0 → kara_kutu/runs/alarm_farki_20261121-232405/ozet.json:88
+  maks_p=0.993219 → kara_kutu/runs/alarm_farki_20261121-232405/ozet.json:93
+  p_0_99_ustu=11 → kara_kutu/runs/alarm_farki_20261121-232405/ozet.json:94
+  AUC=0.944109 → kara_kutu/runs/alarm_farki_20261121-232405/ozet.json:96
+  parity: n=400.000 → kara_kutu/runs/alarm_farki_20261121-232405/ozet.json:3
+  parity_max_mutlak_fark=1.4305e-06 → kara_kutu/runs/alarm_farki_20261121-232405/ozet.json:5
 
-MEKANİZMA (kod satırı): pair_in d+4 → 3d+2 (cloudlm/model.py:64) ve eski skaler
-|i|,|j| ağırlıklarının D-boyutlu bloğa yayılması (cloudlm/model.py:105-106);
-havuzlama değişmedi (max: 5f66aed:cloudlm/model.py:71 ↔ cloudlm/model.py:153).
+Mekanizma (kod satırı): eski (5f66aed) pair_mlp `d_cloud_dim + 4` (docs/port_kaniti_raw_2026-11-21.log:5)
+  → yeni pair_in 3D+2: cloudlm/model.py:64; skaler ağırlıklar D bloğuna yayılıyor: cloudlm/model.py:105-106.
+Havuzlama aynı: eski max-pool (docs/port_kaniti_raw_2026-11-21.log:6) ↔ yeni (cloudlm/model.py:153).
+Parity self-test yalnız kutu ≡ güncel torch kanıtlar (fraud/src/export_deploy.py:67).
 
-HÜKÜM: Deploy kutusu ≠ Ekim fonksiyonu. Eşik 0,9969 Ekim FP32 olasılıklarıyla
-kalibre; kutuda geçersiz. Karar (A kutu-yerel kalibrasyon / B Ekim fonksiyonuyla
-re-export / C eşiksiz rapor) kullanıcıda — docs/KARA_KUTU_PLAN.md §9.
+Hüküm: deploy kutusu ≠ Ekim fonksiyonu. Eşik 0.9969438910484314 kutuda geçersiz.
+A) kutu-yerel eşik yeniden kalibrasyonu · B) Ekim fonksiyonuyla deploy paketini yeniden export ·
+C) eşiksiz AUC/skor raporu — karar kullanıcıda (docs/KARA_KUTU_PLAN.md, §9).
 
-TEKRAR: git worktree add <tmp> 5f66aed; port_kaniti.py'yı worktree köküne kopyala
-(CKPT/BIG mutlak yol), python3 -u score_oct.py.
+Tekrar: git worktree add <tmp> 5f66aed; kara_kutu/tools/port_kaniti.py'yi worktree kökü score_oct adında kopyala ve `python3 -u score_oct` koş (checkpoint ana depoda:
+fraud/results/quann_full_hybrid.pt).

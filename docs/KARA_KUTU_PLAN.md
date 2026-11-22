@@ -141,12 +141,12 @@ IBM kart verisi vb. üzerinde eğitildi; dış rapor "başka veriyle de çalış
   0,8346 bu sınırların aritmetik ortasıydı; nokta AUC hiç ölçülmemiş — DOĞRULANMADI.
 - Kutu FP32 `DeployPath` ONNX'tur, pakette int8 yolu yoktur (`fraud/src/export_deploy.py:47-53`).
   Ekim referansı 0,9367 int8-channel AUC'su edge_eval'in torch-simülasyon koludur (`fraud/logs/run_full_scale_edge_eval.log:54`), kutunun ölçümü değildir; kolun kodu `fraud/src/edge_eval.py:12`.
-- Alarm çelişkisi ÇÖZÜLDÜ — aynı ilk 1M CSV satırları, aynı ckpt mtime 17 Eki (`docs/port_kaniti_olcum_2026-11-21.txt:9`), quantizer
+- Alarm çelişkisi ÇÖZÜLDÜ — aynı ilk 1M CSV satırları, aynı ckpt (`docs/port_kaniti_olcum_2026-11-21.txt:7`), kesit 1.000.000 satır (`docs/port_kaniti_olcum_2026-11-21.txt:10`), quantizer
   birebir aynı (deploy `quantizer.json` == ckpt sözlüğü, `base_fn` hariç). Kesit-evreni te
   234686, fraud 197 (`docs/port_kaniti_olcum_2026-11-21.txt:15-16`); Ekim işletim
   eşiği 0,9969438910484314 (`fraud/results/false_alarm_audit.json:9`).
-  19 Eki kodu (5f66aed worktree, `docs/port_kaniti_olcum_2026-11-21.txt:15`) thr-üstü
-  alarmı 693, AUC 0,95971 verdi (`docs/port_kaniti_olcum_2026-11-21.txt:16`); sayaç
+  19 Ekim kodu (5f66aed worktree) thr-üstü alarmı 693, AUC 0,95971 verdi
+  (`docs/port_kaniti_raw_2026-11-21.log:3`); sayaç
   `(p >= THR).sum()` ile sayılır (`kara_kutu/tools/port_kaniti.py:89`).
   Mevcut kutu aynı evrende maks p 0,990873, 0 alarm, AUC 0,961135
   (`kara_kutu/runs/alarm_farki_20261121-232335/ozet.json:35-48`) — fark eşik değil port.
