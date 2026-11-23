@@ -197,4 +197,4 @@ IBM kart verisi vb. üzerinde eğitildi; dış rapor "başka veriyle de çalış
   Adaptör: eşik `kara_kutu/adapters/maintenance.py` 0.23788578033447244 (:217); baseline atıfları
   rerun dosyasına (test @229; lr @47; gbt @105). Smoke `kara_kutu/runs/20261123-131952_maintenance/`
   iç raporu denetinden 0 bulgu.
-- BELİRSİZLİK: eski `e0b_cmapss.json` stale kalır; bağımsız reviewer turu infra hatasıyla düştü — nihai rapor öncesi yeniden koşacak.
+- BELİRSİZLİK: eski `e0b_cmapss.json` stale kalır; BAĞIMSIZ tester turu KOŞTU (2026-11-23): 1–4 & 6 ✓, 5 vacuous — atıflar elle ✓.
