@@ -178,3 +178,23 @@ IBM kart verisi vb. üzerinde eğitildi; dış rapor "başka veriyle de çalış
 - Evren uyarısı: audit n 4.700.000, fraud 6.110 (`fraud/results/false_alarm_audit.json:6-7`) ile final te n 4.932.768, fraud 6.181 (`kara_kutu/runs/esik_te_20261122-193451/ozet.json:10-11`) birebir aynı alt-küme değil.
 - P2 complaints adaptörü: issue top-1 doğruluk 0,3900, dengeli doğruluk 0,0701 (`kara_kutu/runs/20261122-091904_complaints/ic_rapor.md:26-27`); çoğunluk-etiket tavanı 0,32 = 64/200 (`docs/complaints_tavan_olcum_2026-11-22.txt:1-3`) — niş eval kabiliyeti, SOTA iddiası değil.
 - Geçici önlem (kıya): iç raporun fraud-string'leri adaptör-koşullu (`kara_kutu/report/internal.py`): P(fraud) başlığı, Ekim AUC tablosu, yön etiketi fraud dışı dikeyde basılmaz; beklemedeki genelleştirme kartı: `contract.Gerekce.yon`, `runner` ETIKET_KOLON/fraud_sayisi, external HTML "FRAUD" metni, `__main__` özet satırı.
+
+## 11. Maintenance gerçek veri retrain (2026-11-23, ölçüm)
+
+- Bulgu: edge paketi eski synthetic-trained E0 checkpoint'inden export ediliyordu
+  (`run_e0_smoke.log`: "C-MAPSS retrieval unavailable; synthetic fallback"; disk ONNX vs checkpoint
+  sapma 0.397→0.559; manifestin 5.066e-07 iddiası reproducible değildi); `e0b_cmapss.json` cloud
+  regime sayıları güncel kodla yeniden üretilmez — stale.
+- Karar (kullanıcı, 2026-11-23): gerçek veriyle yeniden eğit → yeni checkpoint:
+  `maintenance/results/quann_binary_backprop.pt` (synthetic yedek: /tmp/quann_binary_backprop_synthetic.pt.bak).
+  Üretici: `maintenance/src/train_binary_real.py` (E0b akışı birebir; seed 20261016, engine-disjoint
+  80/20, 1386/305/1064 pencere).
+- Rerun kaydı: `maintenance/results/e0b_cmapss_rerun_2026-11-23.json`: val AUC 0.9896470588235293 (:218),
+  val threshold 0.23788578033447244 (:217), test AUC 0.9908477842003854 (:229); standart baseline'ları
+  sabit: lr 0.9950348302949459 (:47), gbt 0.99629464947384 (:105). A1 (stale) tarihi kayıt
+  `e0b_cmapss.json` ayrı kalır.
+- Edge paketi yeniden export (parity 1.19e-07, passed=true; fp32 median 0.0481/0.3316/1.174 ms).
+  Adaptör: eşik `kara_kutu/adapters/maintenance.py` 0.23788578033447244 (:217); baseline atıfları
+  rerun dosyasına (test @229; lr @47; gbt @105). Smoke `kara_kutu/runs/20261123-131952_maintenance/`
+  iç raporu denetinden 0 bulgu.
+- BELİRSİZLİK: eski `e0b_cmapss.json` stale kalır; bağımsız reviewer turu infra hatasıyla düştü — nihai rapor öncesi yeniden koşacak.

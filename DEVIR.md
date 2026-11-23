@@ -38,11 +38,12 @@ Bu blok elle düzenlenmez; `devir_yaz.py --repo /Users/serkankose/Documents/quan
   `tools/esik_kalibre.py`). Final te geçişi (4.932.768 satır; --hizli smoke 193423 PLAN §10'da):
   alarm 12.368=bütçe, TP 1.265, P 0,10228, R 0,204659 (`kara_kutu/runs/esik_te_20261122-193451/ozet.json:4-10`) ↔ Ekim FP32 TP 1.842, FP 9.942, alarm 11.784 (`fraud/results/false_alarm_audit.json:11-13`) — TP farkının mekanizması DOĞRULANMADI; ayrıntı `docs/KARA_KUTU_PLAN.md` §10.
   Web: `python3 -m kara_kutu web --port 8734`; browser turu `runs/20261121-234528_fraud`.
+- **Maintenance retrain (23 Kas, cbe6609):** gerçek checkpoint + edge paketi (test AUC 0.9908 @ rerun_2026-11-23.json:229; val 0.9896 @218; eşik 0.2379 @217; synthetic /tmp yedek); reviewer infra hatasıyla düştü — nihai rapordan önce yeniden koşacak.
 - **P2 complaints adaptörü depoda (22 Kas, teslim + kapılar):** `kara_kutu/adapters/complaints.py`
   + `kara_kutu/tests/test_complaints.py`; issue top-1 0,3900 ↔ çoğunluk tavanı 0,32 = 64/200 (`docs/complaints_tavan_olcum_2026-11-22.txt:1-3`), dengeli 0,0701 (`kara_kutu/runs/20261122-091904_complaints/ic_rapor.md:26-27`) — niş eval; SOTA iddiası yok.
   Geçici önlem: iç rapor fraud-string'leri adaptör-koşullu (`kara_kutu/report/internal.py`);
   genelleştirme kartı beklemede: `contract.Gerekce.yon`, `runner` ETIKET_KOLON/fraud_sayisi,
-  external HTML "FRAUD", `__main__` özet. Sıradaki: maintenance → aml; ayrıntı PLAN §10.
+  external HTML "FRAUD", `__main__` özet. Sıradaki: aml; ayrıntı PLAN §10-§11.
 - Borç kartı: DEVIR §Kanıt eski PCT satırlarında çıplak-dosya atıfları kalıyor (rapor_denetle
   ölü adres üretiyor) — gerçek yollar `patent-cikti/pct/pct_v3-pct-inceleme/` ve `docs/patent/pct_v2/` altında; düzelt: tam yol verme.
 - **PCT v3 paketi hazır (20 Kas, commit YOK):** `docs/patent/pct_v3/filing/` 7 dosya (EN/TR istem+
