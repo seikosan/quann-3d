@@ -23,16 +23,17 @@ değildir.
 ## Edge deploy kanıtı — kriter #3
 
 `results/edge/MANIFEST.md` ölçüm raporu; ONNX/INT8 dosyaları ve SHA-256
-manifesti `results/edge/` altında. Binary C-MAPSS görevindeki kayıtlı
-checkpoint'ler içinde PR-AUC/F2 en yüksek `quann_binary_backprop.pt` seçildi.
+manifesti `results/edge/` altında. Binary C-MAPSS görevindeki `quann_binary_backprop.pt`
+gerçek C-MAPSS FD001 ile yeniden eğitildi (2026-11-23; eski synthetic-trained E0
+checkpoint'i yerini aldı — yedek konumu `maintenance/results/edge/MANIFEST.md`).
 ONNX girişi `[batch, 10, 36]` boyutlu, önceden ölçeklenmiş nokta bulutudur.
 Checkpoint eğitim ölçekleyicisini içermediğinden ham sensörden ONNX'e tam
 ön-işleme paketi değildir.
 
-FP32 ONNX Torch ile **5.1e-7** maksimum mutlak farka sahip; batch=1/16/64
-CPU median gecikmesi **0.0408/0.2868/1.0405 ms**. INT8 dosyası FP32'den küçük
-(**78,924 B** vs **120,930 B**) ama bu ARM CPU'da daha yavaş ve Torch'a göre
-batch=64'te **0.0207** fark üretiyor. Bu nedenle INT8 artefaktı oluşmuştur;
+FP32 ONNX Torch ile **1.19e-7** maksimum mutlak farka sahip; batch=1/16/64
+CPU median gecikmesi **0.0481/0.3316/1.174 ms**. INT8 dosyası FP32'den küçük
+(**83,986 B** vs **131,894 B**) ama bu ARM CPU'da daha yavaş ve Torch'a göre
+batch=64'te **0.00170** fark üretiyor. Bu nedenle INT8 artefaktı oluşmuştur;
 alarm eşiği/kalite eşdeğerliği kanıtlanmış sayılmaz. Ayrıntı:
 `results/edge/MANIFEST.md`.
 

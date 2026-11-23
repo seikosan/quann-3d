@@ -4,7 +4,7 @@ Girdi: pencere CSV — bir satır = bir pencere; kolon `engine_id`, `rul` (int, 
 ve 360 özellik kolonu `f{k}_{j}` (k = 0..9 pencere adımı, j = 0..35 özellik). Skor hattı:
 mu/sd (`maintenance/results/e0b_artifacts/e0b_preprocessing.json`, train-fold-only) →
 edge ONNX `maintenance/results/edge/model.onnx` → P(critical). Eşik: E0b val fold'u
-(`maintenance/results/e0b_cmapss.json` cloud.backprop.val.threshold).
+(`maintenance/results/e0b_cmapss_rerun_2026-11-23.json` cloud.backprop.val.threshold).
 
 Gerekçe = pencere adım ablasyonu: adım k sıfırlanır (mu/sd standartlaştırmasında 0 =
 standartlaştırılmış medyan, mu/sd zaten train-fold'tan fit edildi), P değişimi ölçülür;
@@ -13,7 +13,15 @@ standartlaştırılmış medyan, mu/sd zaten train-fold'tan fit edildi), P deği
 NOT — bu adaptör, edge manifest'in söylediği gibi scaler'sızdır (manifest
 `preprocessing_note` "scaler not included"); bu sebeple mu/sd artefaktı ayrıca üretilir
 (`python3 -m kara_kutu.tools.maintenance_artefakt`). Multi-class/hybrid/stage edge ONNX
-YOK (plan §7) — bu kusuru yutturmaz.
+YOK — bu kusuru yutturmaz.
+
+Gerçek veri retrain (2026-11-23): maintenance/results/quann_binary_backprop.pt synthetic
+E0 bakiyesi yerine gerçek C-MAPSS FD001 ile yeniden eğitildi
+(maintenance/src/train_binary_real.py; checkpoint maintenance/results/quann_binary_backprop.pt
+— eski synthetic checkpoint /tmp/quann_binary_backprop_synthetic.pt.bak altında yedekli);
+edge paketi yeniden export edildi. Rerun ölçümleri maintenance/results/e0b_cmapss_rerun_2026-11-23.json;
+E0b tarihi kaydı (e0b_cmapss.json, 2026-10-16) ayrı kalır — tarihi kaydının cloud regime
+sayıları güncel kanonun gerisinde kalmıştır (e0b_cmapss_rerun_2026-11-23.json provenance notu).
 """
 from __future__ import annotations
 
@@ -34,16 +42,16 @@ from kara_kutu.core.contract import (
 REPO_KOK = Path(__file__).resolve().parents[2]
 EDGE_DIR = REPO_KOK / "maintenance" / "results" / "edge"
 ARTIFACT = REPO_KOK / "maintenance" / "results" / "e0b_artifacts" / "e0b_preprocessing.json"
-E0B_JSON = "maintenance/results/e0b_cmapss.json"
+E0B_JSON = "maintenance/results/e0b_cmapss_rerun_2026-11-23.json"
 
 _TOPK = 5
 WINDOW = 10
 FEATURE_DIM = 36
-# E0b binary cloud/backprop val-fold eşiği — maintenance/results/e0b_cmapss.json:217
+# E0b binary cloud/backprop val-fold eşiği — maintenance/results/e0b_cmapss_rerun_2026-11-23.json:217
 # (cloud.backprop.val.threshold; val 305 pencere, engine-disjoint 80/20 train-fold; seed 20261016).
-# Adaptör bunu OKUYARAK varsayılan eşik yapar; elle yazılmaz/icat edilmez.
-ESIK_VARSAYILAN = 0.019337554449836418
-ESIK_KAYNAK = ("maintenance/results/e0b_cmapss.json tasks.binary.cloud.backprop.val.threshold "
+# Adaptör bunu UYDIRMAZ; bu sayı rerun dosyasındaki kayıt hattı.
+ESIK_VARSAYILAN = 0.23788578033447244
+ESIK_KAYNAK = ("maintenance/results/e0b_cmapss_rerun_2026-11-23.json tasks.binary.cloud.backprop.val.threshold "
                "(:217, val 305 pencere, engine-disjoint 80/20; seed 20261016)")
 
 
@@ -160,10 +168,10 @@ class MaintenanceAdapter:
         )
 
     def baseline(self, ds: VeriSeti) -> tuple[Baseline, ...]:
-        """Kıyas referansları — maintenance/results/e0b_cmapss.json'a atıflıdır (AGENTS §13)."""
+        """Kıyas referansları — maintenance/results/e0b_cmapss_rerun_2026-11-23.json'a atıflıdır (AGENTS §13)."""
         return (
             Baseline("Edge paketi cloud/backprop — E0b test AUC-ROC (rul≤30)", "AUC-ROC",
-                     0.885319401215355, f"{E0B_JSON}:229"),
+                     0.9908477842003854, f"{E0B_JSON}:229"),
             Baseline("E0b standart LR (baseline) — test AUC-ROC", "AUC-ROC",
                      0.9950348302949459, f"{E0B_JSON}:47"),
             Baseline("E0b standart GBT (baseline) — test AUC-ROC", "AUC-ROC",

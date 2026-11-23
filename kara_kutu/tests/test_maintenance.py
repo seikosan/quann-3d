@@ -66,15 +66,13 @@ def test_protokol_model_istemeden_karsilanir() -> None:
     assert "engine_id" in spec.aciklama
     assert (spec.kolonlar == ("engine_id", "rul"))
     assert ADAPTER.model_dosyasi().as_posix().endswith("maintenance/results/edge/model.onnx")
-    assert ADAPTER.esik == ESIK_VARSAYILAN == pytest.approx(0.019337554449836418)
+    assert ADAPTER.esik == ESIK_VARSAYILAN == pytest.approx(0.23788578033447244)
     assert "val.threshold" in ADAPTER.esik_kaynak
 
 
 def test_ek_metrikler_etiket_kolonuyla_olculur_modelsiz() -> None:
     """Binary rul≤30 ölçümü verdict/liste eşleştirmesinden çıkar; model gerekmez."""
     adapter = MaintenanceAdapter()
-    ds = _veri_seti([_pencere({}, 12), _pencere({}, 90), _pencere({}, None)])
-    # kayıt 3: rul yok → ölçümden düşer (patience)
     ds = _veri_seti([_pencere({}, 12), _pencere({}, 90)])
     verdictler = [
         Verdict(kimlik=0, skor=0.5, karar="critical", gerekceler=[]),
@@ -132,7 +130,7 @@ def test_baseline_kaynak_atiflari_gercek_satirlarda() -> None:
     baselines = ADAPTER.baseline(_veri_seti([_pencere({}, 12)]))
     assert baselines and all(isinstance(b, Baseline) for b in baselines)
     for b in baselines:
-        assert re.fullmatch(r"maintenance/results/e0b_cmapss\.json:\d+", b.kaynak), b.kaynak
+        assert re.fullmatch(r"maintenance/results/e0b_cmapss_rerun_2026-11-23\.json:\d+", b.kaynak), b.kaynak
         yol, satir_no = b.kaynak.rsplit(":", 1)
         hedef = REPO / yol
         assert hedef.is_file(), f"ölü adres: {b.kaynak}"

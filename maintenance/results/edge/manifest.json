@@ -1,9 +1,9 @@
 {
-  "generated_utc": "2026-10-22T15:13:40Z",
+  "generated_utc": "2026-11-23T13:16:37Z",
   "checkpoint": {
     "path": "maintenance/results/quann_binary_backprop.pt",
-    "size_bytes": 102633,
-    "sha256": "507ee3bb2914988ee75dd3dfdca0b62b728496635533bd509622b5f890545b2c",
+    "size_bytes": 112383,
+    "sha256": "f7bbe7191f38bf1de81592a6d3fdf4fc8178b0fd271a27c1be54d1a5c90aab18",
     "selection": "best saved binary C-MAPSS checkpoint by held-out PR-AUC/F2",
     "selected": "quann_binary_backprop.pt"
   },
@@ -40,62 +40,62 @@
   "artifacts": {
     "model_onnx": {
       "path": "model.onnx",
-      "size_bytes": 120930,
-      "sha256": "6c1bdc6e777e624c3d93d0669a681f45c6338e4f8b5340284ce6e667ebfee320"
+      "size_bytes": 131894,
+      "sha256": "d6bf934c627905800890fba6bbc8733d58661dfe3885341277ad78ec80f5dd12"
     },
     "model_int8_onnx": {
       "path": "model.int8.onnx",
-      "size_bytes": 78924,
-      "sha256": "eb6f5da655c44d69c8d21427a2ded698c6649d54b6fe85050e6e061f3f042638"
+      "size_bytes": 83986,
+      "sha256": "05d2b418c2b57d63127ddd567428c5d3b209fc6330ac77494adcca31d9640871"
     }
   },
   "parity": {
     "torch_vs_onnx_max_abs_by_batch": {
-      "1": 1.1920928955078125e-07,
-      "16": 1.7881393432617188e-07,
-      "64": 5.066394805908203e-07
+      "1": 1.30385160446167e-08,
+      "16": 1.1920928955078125e-07,
+      "64": 1.1920928955078125e-07
     },
-    "torch_vs_onnx_max_abs": 5.066394805908203e-07,
+    "torch_vs_onnx_max_abs": 1.1920928955078125e-07,
     "tolerance": 1e-05,
     "passed": true,
     "torch_vs_int8_onnx_max_abs_by_batch": {
-      "1": 0.0025326013565063477,
-      "16": 0.008672118186950684,
-      "64": 0.020676791667938232
+      "1": 0.0006199032068252563,
+      "16": 0.0008205771446228027,
+      "64": 0.0016977973282337189
     }
   },
   "latency_cpu_onnxruntime_ms": {
     "fp32": {
       "1": {
-        "median_ms": 0.0408,
-        "p95_ms": 0.0443,
+        "median_ms": 0.0481,
+        "p95_ms": 0.0492,
         "repeats": 80
       },
       "16": {
-        "median_ms": 0.2868,
-        "p95_ms": 0.3281,
+        "median_ms": 0.3316,
+        "p95_ms": 0.3393,
         "repeats": 80
       },
       "64": {
-        "median_ms": 1.0405,
-        "p95_ms": 1.1195,
+        "median_ms": 1.174,
+        "p95_ms": 1.2046,
         "repeats": 80
       }
     },
     "int8": {
       "1": {
-        "median_ms": 0.0496,
-        "p95_ms": 0.0581,
+        "median_ms": 0.0558,
+        "p95_ms": 0.0575,
         "repeats": 80
       },
       "16": {
-        "median_ms": 0.3855,
-        "p95_ms": 0.4222,
+        "median_ms": 0.4419,
+        "p95_ms": 0.4627,
         "repeats": 80
       },
       "64": {
-        "median_ms": 1.4725,
-        "p95_ms": 1.5911,
+        "median_ms": 1.6294,
+        "p95_ms": 1.6852,
         "repeats": 80
       }
     }
@@ -104,7 +104,7 @@
     "provider": "CPUExecutionProvider",
     "ort_version": "1.31.0",
     "torch_version": "2.11.0",
-    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "platform": "macOS-27.3-arm64-arm-64bit-Mach-O",
     "warmup": 10,
     "repeats": 80,
     "latency_statistic": "median and p95 per session.run call"
