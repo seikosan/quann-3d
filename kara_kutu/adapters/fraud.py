@@ -105,6 +105,11 @@ class FraudAdapter:
     """Deploy paketini belleğe bir kez yükler; kayıt başına Verdict üretir."""
 
     name = "fraud"
+    pozitif_etiket = "FRAUD"
+    negatif_etiket = "NORMAL"
+    skor_etiket = "P(fraud)"
+    etiket_kolon = "Is Fraud?"
+    etiket_parse = staticmethod(lambda v: 1 if str(v).strip().lower() == "yes" else 0)
 
     def __init__(self, deploy_dir: Path | None = None, top_k: int = _TOPK_VARSAYILAN,
                  esik: float | None = None) -> None:

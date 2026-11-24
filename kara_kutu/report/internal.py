@@ -5,10 +5,16 @@ satır ya tablo satırıdır (`|`), ya alıntı bloğudur (`>` — künye), ya d
 `dosya:satır` atfı taşır. Ölçülmüş değerler "bu koşunun ölçümü" etiketiyle,
 atıflı değerler kaynak imiyle basılır; kaynak yoksa `kaynakli()` mekanik
 `DOĞRULANMADI` yazar.
+
+Dikey-geneli etiket sözleşmesi (kapanış kartı 2026-11-24): pozitif sınıf adı
+ve skor başlığı runner tarafından adapter'dan mühürlenir — bu şablon hangi
+dikeyin pozitif sınıfının adını bilmez; yön kelimeleri `yonu_metni` ile
+pozitif etikete göre üretilir. Fraud'ın dış referans tablosu (0.9451/0.9367)
+fraud'ın kendine özgü model referansıdır — yalnız fraud koşumunda basılır.
 """
 from __future__ import annotations
 
-from kara_kutu.core.contract import KosumSonucu
+from kara_kutu.core.contract import KosumSonucu, yonu_metni
 
 _MAX_KAYIT = 20  # kayıt tablosunda gösterilecek en fazla satır (tamamı sonuc.json'da)
 
@@ -24,11 +30,12 @@ def _tablo(basliklar: list[str], satirlar: list[list[str]]) -> list[str]:
 def uret(sonuc: KosumSonucu, *, max_kayit: int = _MAX_KAYIT) -> str:
     k = sonuc.kanit
     m = sonuc.meta
-    # Geçici önlem (2026-11-22, KARA_KUTU_PLAN §9): fraud-dikeyine özgü metinler
-    # (P(fraud) başlığı, Ekim FP32/INT8 AUC referansları) yalnız fraud koşumunda
-    # basılır. Tam dikey-geneli etiket sözleşmesi ayrı iş kartı (contract.yon,
-    # runner ozet, external HTML).
+    # Fraud'ın dış referansı (FP32 0.9451 / INT8-channel 0.9367, edge_eval tam
+    # doğal test) yalnız fraud koşumunda basılır — bu dikeyin model referansıdır
+    # (KARA_KUTU_PLAN §9); diğer dikeylerde sızmaz.
     fraud_mu = sonuc.adapter == "fraud"
+    pozitif = sonuc.pozitif_etiket
+    skor_etiket = sonuc.skor_etiket
     satirlar: list[str] = [
         f"# Kara Kutu İç Rapor — {sonuc.adapter}",
         "",
@@ -48,8 +55,8 @@ def uret(sonuc: KosumSonucu, *, max_kayit: int = _MAX_KAYIT) -> str:
             ["Model boyutları", m.ek_bilgi.get("model_boyut", "-"),
              f"`{m.ek_bilgi.get('manifest', '-')}`"],
             ["Paket oluşturma damgası", m.olusturma, f"`{m.ek_bilgi.get('manifest', '-')}`"],
-            ["Karar eşiği P(fraud) ≥" if fraud_mu else "Karar eşiği",
-             f"{sonuc.esik:.4f}" if (fraud_mu or sonuc.esik > 0)
+            [f"Karar eşiği {skor_etiket} ≥",
+             f"{sonuc.esik:.4f}" if sonuc.esik > 0
              else "uygulanmıyor — bkz. kaynak", f"`{m.esik_kaynak}`"],
             ["Kayıt sayısı", str(sonuc.satir_sayisi), "bu koşunun ölçümü"],
             ["model.onnx sha256 (disk, bu koşu)", k.model_sha256, "bu koşunun ölçümü"],
@@ -75,17 +82,12 @@ def uret(sonuc: KosumSonucu, *, max_kayit: int = _MAX_KAYIT) -> str:
     ]
     satirlar += _tablo(["Referans", "Metrik", "Değer", "Kaynak"],
                        [[b.ad, b.metrik, f"{b.deger:.3f}", f"`{b.kaynak}`"] for b in sonuc.baseline])
-    satirlar += [
-        "",
-        "Model referansı (aynı dikey, geçmiş tam-ölçek koşu — baseline değil):",
-        "",
-    ] if fraud_mu else [
-        "",
-        "> Model referansı tablosu yalnız fraud dikeyinin tam-ölçek ölçümlerini",
-        "> taşır; bu dikeyde basılmaz (geçici önlem 2026-11-22, KARA_KUTU_PLAN §9).",
-        "",
-    ]
     if fraud_mu:
+        satirlar += [
+            "",
+            "Model referansı (aynı dikey, geçmiş tam-ölçek koşu — baseline değil):",
+            "",
+        ]
         satirlar += _tablo(["Koşu", "Metrik", "Değer", "Kaynak"], [
             ["FP32 tam doğal test", "AUC-ROC", "0.9451",
              "`fraud/logs/run_full_scale_edge_eval.log:52`"],
@@ -101,11 +103,11 @@ def uret(sonuc: KosumSonucu, *, max_kayit: int = _MAX_KAYIT) -> str:
     for i, v in enumerate(sonuc.verdictler[:max_kayit], 1):
         gerekce = "; ".join(
             f"{g.etiket} ({g.delta_logit:+.2f} logit, "
-            f"{g.yon if fraud_mu else ('seçileni destekliyor' if g.delta_logit > 0 else 'seçilenin karşıtı')})"
+            f"{yonu_metni(g.delta_logit, pozitif)})"
             for g in v.gerekceler[:3]
         ) or "tek-puan etkisi ölçülemedi"
         kayit_satirlari.append([str(i), str(v.kimlik), f"{v.skor:.8f}", v.karar, gerekce])
-    satirlar += _tablo(["#", "Kimlik", "P(fraud)" if fraud_mu else "Skor (P)",
+    satirlar += _tablo(["#", "Kimlik", skor_etiket,
                         "Karar", "Gerekçe (ablasyon, logit)"],
                        kayit_satirlari or [["—", "—", "—", "—", "boş girdi"]])
     if len(sonuc.verdictler) > max_kayit:

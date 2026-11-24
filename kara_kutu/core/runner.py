@@ -22,21 +22,26 @@ from kara_kutu.report.provenance import kanit_olustur
 
 REPO_KOK = Path(__file__).resolve().parents[2]
 RUNS_DIR = REPO_KOK / "kara_kutu" / "runs"
-ETIKET_KOLON = "Is Fraud?"  # IBM şeması; Yes/No → 1/0 (semantik: fraud/src/datasets.py:30-32)
 
 
-def veri_seti(yol: Path, limit: int | None, etiket_kolon: str) -> VeriSeti:
+def veri_seti(yol: Path, limit: int | None,
+              etiket_kolon: str | None = None,
+              etiket_parse=None) -> VeriSeti:
+    """Koşum hattı veri okuması; etiket ayrıştırma adaptör-sahiplidir.
+
+    `etiket_kolon` verilirse ve `etiket_parse` sağlanırsa girdi CSV'sindeki
+    kolon ayrıştırılır (ör. fraud: Yes/No → 1/0 — fraud/src/datasets.py:30-32).
+    Adapter tarafından parse edilmeyen kolon → etiketler=None; adaptör kendi
+    ek_metrikler'i ham kolonlar üzerinde çalışır (complaints/maintenance).
+    """
     import pandas as pd  # yerel import: `liste` alt-komutu pandas istemez
 
     frame = pd.read_csv(yol, nrows=limit)
     kolonlar = [str(c) for c in frame.columns]
     kayitlar = [Kayit(i, rec) for i, rec in enumerate(frame.to_dict("records"))]
     etiketler: list[int] | None = None
-    if etiket_kolon in kolonlar:
-        etiketler = [
-            1 if str(v).strip().lower() == "yes" else 0
-            for v in frame[etiket_kolon]
-        ]
+    if etiket_kolon is not None and etiket_kolon in kolonlar and etiket_parse is not None:
+        etiketler = [int(etiket_parse(v)) for v in frame[etiket_kolon]]
     from kara_kutu.report.provenance import sha256_dosya
 
     return VeriSeti(ad=yol.name, kolonlar=kolonlar, kayitlar=kayitlar,
@@ -59,7 +64,7 @@ def adapter_kur(ad: str, esik: float | None, top_k: int | None):
 
 
 def kosum(ad: str, veri: Path, *, limit: int | None = None, esik: float | None = None,
-          top_k: int | None = None, etiket_kolon: str = ETIKET_KOLON,
+          top_k: int | None = None, etiket_kolon: str | None = None,
           raporlar: set[str] | None = None, runs_dir: Path = RUNS_DIR,
           komut: str | None = None) -> dict:
     """Tek koşum; `{dizin, sonuc, ozet}` döner. Rapor metinleri diske yazılır.
@@ -69,7 +74,10 @@ def kosum(ad: str, veri: Path, *, limit: int | None = None, esik: float | None =
     """
     raporlar = {"md", "html"} if raporlar is None else {r.lower() for r in raporlar}
     adapter = adapter_kur(ad, esik, top_k)
-    ds = veri_seti(veri, limit, etiket_kolon)
+    # etiket kolonu ve parse'ı adapter'ın sahibindedir; CLI/web varsayılan boş,
+    # override mümkündür (--etiket-kolon) ancak parse adapter'dan gelir.
+    etiket_kolon = etiket_kolon or getattr(adapter, "etiket_kolon", None)
+    ds = veri_seti(veri, limit, etiket_kolon, getattr(adapter, "etiket_parse", None))
 
     verdictler = adapter.predict(ds)
     metrikler: dict[str, str] = {}
@@ -99,6 +107,9 @@ def kosum(ad: str, veri: Path, *, limit: int | None = None, esik: float | None =
         satir_sayisi=len(verdictler), verdictler=verdictler,
         baseline=tuple(adapter.baseline(ds)), meta=meta, kanit=kanit,
         metrikler=metrikler,
+        pozitif_etiket=getattr(adapter, "pozitif_etiket", None),
+        negatif_etiket=getattr(adapter, "negatif_etiket", None),
+        skor_etiket=getattr(adapter, "skor_etiket", "skor"),
     )
 
     taban = datetime.now(timezone.utc).strftime("%Y%m%d-%H%M%S") + "_" + adapter.name
@@ -124,9 +135,11 @@ def kosum(ad: str, veri: Path, *, limit: int | None = None, esik: float | None =
         yol.write_text(uret_dis(sonuc), encoding="utf-8")
         uretilen["html"] = str(yol)
 
-    fraud_n = sum(1 for v in verdictler if v.karar == "FRAUD")
+    pozitif_n = sum(1 for v in verdictler
+                    if sonuc.pozitif_etiket and v.karar == sonuc.pozitif_etiket)
     return {"dizin": dizin, "sonuc": sonuc, "rapor_dosyalari": uretilen,
             "ozet": {"kosum": dizin.name, "adapter": adapter.name,
-                     "satir_sayisi": len(verdictler), "fraud_sayisi": fraud_n,
+                     "satir_sayisi": len(verdictler), "pozitif_sayisi": pozitif_n,
+                     "pozitif_etiket": sonuc.pozitif_etiket,
                      "esik": sonuc.esik, "metrikler": metrikler,
                      "raporlar": uretilen}}

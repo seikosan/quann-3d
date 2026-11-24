@@ -40,9 +40,9 @@ placeholder="5"></label><button type="submit">Koş</button></form>
 <div id="ozet"></div><div id="tablo"></div>
 <script>
 const $=q=>document.querySelector(q);
-function tabloHTML(v){let h='<table><tr><th>#</th><th>skor</th><th>karar</th>'+
+function tabloHTML(v,pozitif){let h='<table><tr><th>#</th><th>skor</th><th>karar</th>'+
  '<th>gerekçeler (Δlogit)</th></tr>';for(const r of v){h+=`<tr><td>${r.kimlik}</td>`+
- `<td>${r.skor.toFixed(6)}</td><td class="${r.karar==='FRAUD'?'fraud':''}">${r.karar}</td>`+
+ `<td>${r.skor.toFixed(6)}</td><td class="${pozitif && r.karar===pozitif?'fraud':''}">${r.karar}</td>`+
  `<td>${r.gerekceler.join('; ')||'—'}</td></tr>`}return h+'</table>'}
 $('#f').addEventListener('submit',async e=>{e.preventDefault();
 const fd=new FormData(e.target);$('#durum').textContent='Koşuyor… (ONNX CPU)';
@@ -51,15 +51,17 @@ const j=await r.json();if(!r.ok){$('#durum').textContent='Hata: '+(j.detail||r.s
 $('#durum').textContent=`Koşum ${j.ozet.kosum} bitti — ${j.verdictler.length}/${
  j.ozet.satir_sayisi} kayıt gösteriliyor (tam liste sonuc.json).`;
 const m=Object.entries(j.ozet.metrikler||{}).map(([k,v])=>`<tr><td>${k}</td><td>${v}</td></tr>`).join('');
-$('#ozet').innerHTML=`<p><b>${j.ozet.satir_sayisi}</b> kayıt · <b>${j.ozet.fraud_sayisi
-}</b> FRAUD · eşik <b>${j.ozet.esik.toFixed(4)}</b></p><table><tr><th>Metrik</th>
+const pozitif=j.ozet.pozitif_etiket;
+$('#ozet').innerHTML=`<p><b>${j.ozet.satir_sayisi}</b> kayıt`
++(pozitif?` · <b>${j.ozet.pozitif_sayisi}</b> ${pozitif}`:'')
++` · eşik <b>${j.ozet.esik.toFixed(4)}</b></p><table><tr><th>Metrik</th>
 <th>Değer</th></tr>${m}</table><p>${Object.keys(j.ozet.raporlar).includes('md')
 ?`<a href="/kosumlar/${j.ozet.kosum}/ic_rapor.md">iç rapor ↓</a> · `:''}${
 Object.keys(j.ozet.raporlar).includes('html')
 ?`<a href="/kosumlar/${j.ozet.kosum}/dis_rapor.html">dış rapor ↓</a> · `:''}
 <a href="/kosumlar/${j.ozet.kosum}/kanit.json">kanıt ↓</a> ·
 <a href="/kosumlar/${j.ozet.kosum}/sonuc.json">sonuç ↓</a></p>`;
-$('#tablo').innerHTML=tabloHTML(j.verdictler);});
+$('#tablo').innerHTML=tabloHTML(j.verdictler,pozitif);});
 </script></body></html>"""
 
 

@@ -162,22 +162,22 @@ IBM kart verisi vb. üzerinde eğitildi; dış rapor "başka veriyle de çalış
 
 ## 10. Karar A1 kapanışı — kutu-yerel eşik (2026-11-22, ölçüm)
 
-- Karar (kullanıcı, 2026-11-22): (A) kutu-yerel eşik; alt-karar A1 — eşik = Ekim ALARM
-  BÜTÇESİNİN kutu skorlarındaki quantili; eşik + işletim sayıları TEK FİNAL te
-  geçişinde ölçülür (AGENTS §4.1). Üretici: `kara_kutu/tools/esik_kalibre.py`;
-  sözleşme: `kara_kutu/artifacts/esik_fraud.json` (adapter artefaktı okur; yoksa
-  RuntimeError — sessiz Ekim eşiğine düşüş yok).
+- Karar (kullanıcı, 2026-11-22): (A) kutu-yerel eşik; alt-karar A1 — eşik = Ekim alarm
+  bütçesinin kutu skorlarındaki quantili; eşik + işletim sayıları TEK FİNAL te geçişinde ölçülür
+  (AGENTS §4.1). Üretici: `kara_kutu/tools/esik_kalibre.py`; sözleşme: `kara_kutu/artifacts/esik_fraud.json`
+  (adapter okur; yoksa RuntimeError — sessiz Ekim eşiğine düşüş yok).
 - Kalibrasyon tanısı (eğitim-fold tek okuma: n 1.000.000, tohum 42, bölme `user_fold < 8`): `kara_kutu/runs/esik_kalibre_20261124-063247/ozet.json:2-7`.
-- Best-F2 aday eşik 0,7919164896011353, iç-örnek precision 0,053914 → EŞİK OLARAK REDDEDİLDİ (`kara_kutu/runs/esik_kalibre_20261124-063247/ozet.json:8-13`); aday artefakta `kalibrasyon_tani` olarak işlendi (`kara_kutu/artifacts/esik_fraud.json:25-29`).
-- Tanı AUC notu 0,941453 yalnız üretici docstring'indedir (`kara_kutu/tools/esik_kalibre.py:22`); ozet.json'a yazılmamış — bağımsız ölçüm DOĞRULANMADI.
-- Final te geçişi (A1; tek final okuma): n 4.932.768, fraud 6.181, eşik 0,8566042184829712, oran 0,002507234 = 11784/4700000 (doğrulama kaynağı: `kara_kutu/artifacts/esik_fraud.json` — runs/esik_te_20261122-193451/ozet.json 2026-11-23 kazara silindi; DOĞRULANMADI).
-- Sonuç (final te): alarm 12.368 = k_butce = round(oran × n) (`kara_kutu/tools/esik_kalibre.py:273`); TP 1.265, FP 11.103, precision 0,10228, recall 0,204659, F2 0,170522 (doğrulama kaynağı: `kara_kutu/artifacts/esik_fraud.json` — runs/esik_te_20261122-193451/ozet.json 2026-11-23 kazara silindi; DOĞRULANMADI).
+- Best-F2 aday eşik 0,7919164896011353, iç-örnek precision 0,053914 → EŞİK OLARAK REDDEDİLDİ (`kara_kutu/runs/esik_kalibre_20261124-063247/ozet.json:8-13`); aday artefakta `kalibrasyon_tani` olarak işlendi (`kara_kutu/artifacts/esik_fraud.json:25-29`). Tanı AUC notu 0,941453 yalnız üretici docstring'indedir (`kara_kutu/tools/esik_kalibre.py:22`); ozet.json'a yazılmamış — bağımsız ölçüm DOĞRULANMADI.
+- Final te geçişi (A1; tek final okuma): n 4.932.768, fraud 6.181, eşik 0,8566042184829712, oran 0,002507234 = 11784/4700000; alarm 12.368 = k_butce = round(oran × n) (`kara_kutu/tools/esik_kalibre.py:273`); TP 1.265, FP 11.103, precision 0,10228, recall 0,204659, F2 0,170522 (DOĞRULANMADI: runs/esik_te_20261122-193451/ozet.json 2026-11-23 kazara silindi — değerler artefakta kalıntı; `kara_kutu/artifacts/esik_fraud.json`).
 - Dürüst kayıt: te satırları fiilen iki kez tarandı — smoke `kara_kutu/runs/esik_te_20261122-193423/ozet.json:2-10` [DOĞRULANMADI: runs/ 2026-11-23 silindi; değer kalıntı] (`--hizli`: n 451.018, eşik adayı 0,8569020628929138 ≠ final; cap `kara_kutu/tools/esik_kalibre.py:317`) geçici kopya artefaktla koştu, final artefaktını ÜRETMEDİ.
 - A1 hükmü FINAL işletim noktası için sağlandı: artefakt ve raporlar yalnız final koşumu taşır (`kara_kutu/artifacts/esik_fraud.json:9-24`); tekrar-deneme guard reddetti: exit 3, sha256 değişmedi (doğrulayıcı turu).
-- Dürüst karşılaştırma: Ekim FP32 best-F2 noktası 11.784 alarmda TP 1.842, FP 9.942, P 0,156, R 0,301 (`fraud/results/false_alarm_audit.json:11-16`); kutu aynı oran-bütçesinde TP 1.265 ile daha az yakalıyor (doğrulama kaynağı: `kara_kutu/artifacts/esik_fraud.json` — `te_dogrulama` bloğu; runs/esik_te_20261122-193451/ozet.json 2026-11-23 silindi; DOĞRULANMADI); sıralama yakınlığı sürüyor (§9), TP farkının mekanizması DOĞRULANMADI.
-- Evren uyarısı: audit n 4.700.000, fraud 6.110 (`fraud/results/false_alarm_audit.json:6-7`) ile final te n 4.932.768, fraud 6.181 (doğrulama kaynağı: `kara_kutu/artifacts/esik_fraud.json` — `te_dogrulama` n/fraud değerleri; runs/esik_te_20261122-193451/ozet.json 2026-11-23 silindi; DOĞRULANMADI) birebir aynı alt-küme değil.
+- Dürüst karşılaştırma + evren uyarısı: Ekim FP32 best-F2 noktası 11.784 alarmda TP 1.842, FP 9.942, P 0,156, R 0,301 (`fraud/results/false_alarm_audit.json:11-16`); kutu aynı oran-bütçesinde TP 1.265 ile daha az yakalıyor (doğrulama kaynağı: `kara_kutu/artifacts/esik_fraud.json` — `te_dogrulama` bloğu; runs/esik_te_20261122-193451/ozet.json 2026-11-23 silindi; DOĞRULANMADI); audit n 4.700.000, fraud 6.110 (`fraud/results/false_alarm_audit.json:6-7`) ile final te n 4.932.768, fraud 6.181 birebir aynı alt-küme değil; sıralama yakınlığı sürüyor (§9), TP farkının mekanizması DOĞRULANMADI.
 - P2 complaints adaptörü: issue top-1 doğruluk 0,3900, dengeli doğruluk 0,0701 (runs/20261122-091904_complaints/ic_rapor.md 2026-11-23 kazara silindi; DOĞRULANMADI — değer kalıntı, artefakt yok); çoğunluk-etiket tavanı 0,32 = 64/200 (`docs/complaints_tavan_olcum_2026-11-22.txt:1-3`) — niş eval kabiliyeti, SOTA iddiası değil.
-- Geçici önlem (kıya): iç raporun fraud-string'leri adaptör-koşullu (`kara_kutu/report/internal.py`): P(fraud) başlığı, Ekim AUC tablosu, yön etiketi fraud dışı dikeyde basılmaz; beklemedeki genelleştirme kartı: `contract.Gerekce.yon`, `runner` ETIKET_KOLON/fraud_sayisi, external HTML "FRAUD" metni, `__main__` özet satırı.
+- Genelleştirme kartı KAPANDI (23/24 Kas): presentasyon sözleşmesi adapter'dan mühürlenir —
+  `KosumSonucu.pozitif_etiket/negatif_etiket/skor_etiket` (stamp `runner.py`); `Gerekce.yon` → `yonu_metni(δ, pozitif)`;
+  `ETIKET_KOLON`/`fraud_sayisi` → `pozitif_sayisi`; external HTML dichotomy-kartları + fraud-only referans paragrafı;
+  `__main__` özet pozitif etiketiyle; test `kara_kutu/tests/test_presentation.py` (5) + `test_contract.py`. Kalan: fraud
+  dış referans tablosu (yalnız fraud) + `--etiket-kolon` override-over-fraud semantics (dürüst, açık).
 
 ## 11. Maintenance gerçek veri retrain (2026-11-23, ölçüm)
 

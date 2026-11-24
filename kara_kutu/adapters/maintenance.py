@@ -59,6 +59,12 @@ class MaintenanceAdapter:
     """Edge paketi + mu/sd artefaktını bir kez yükler; kayıt başına Verdict üretir."""
 
     name = "maintenance"
+    pozitif_etiket = "critical"
+    negatif_etiket = "ok"
+    skor_etiket = "P(critical)"
+    etiket_kolon = "rul"  # binary rul≤30 eşiğinden etiketler: ham kolon hamdan okunur;
+    # parse runner'da DEĞİL (rul sayılı kolon — yes/no ayrıştırıcı uydurulmaz;
+    # adaptör kendi metin etiketlerini ham hamlen üzerinde okur).
 
     def __init__(self, edge_dir: Path | None = None, artefakt: Path | None = None,
                  top_k: int = _TOPK, esik: float | None = None) -> None:

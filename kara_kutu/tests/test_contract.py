@@ -65,7 +65,9 @@ def _ornek_sonuc() -> KosumSonucu:
     baseline = (Baseline("Random Forest", "AUC-ROC", 0.973, "docs/market_priorities.md:8"),)
     return KosumSonucu(adapter="fraud", esik=0.9969, satir_sayisi=4, verdictler=verdictler,
                        baseline=baseline, meta=meta, kanit=kanit,
-                       metrikler={"AUC-ROC (girdi CSV etiketleri, bu koşunun ölçümü)": "0.9451"})
+                       metrikler={"AUC-ROC (girdi CSV etiketleri, bu koşunun ölçümü)": "0.9451"},
+                       pozitif_etiket="FRAUD", negatif_etiket="NORMAL",
+                       skor_etiket="P(fraud)")
 
 
 def test_kaynakli_dogrulanmadi_basari():
@@ -138,7 +140,8 @@ def test_ic_rapor_fraud_izleri_diger_dikeye_sizmiyor():
         verdictler=[V(kimlik=v.kimlik, skor=v.skor, karar="Managing an account",
                       gerekceler=list(v.gerekceler) + [Gerekce("mcc", 0.4 if i % 2 else -0.4)])
                     for i, v in enumerate(ham.verdictler)],
-        baseline=ham.baseline, meta=ham.meta, kanit=ham.kanit, metrikler={})
+        baseline=ham.baseline, meta=ham.meta, kanit=ham.kanit, metrikler={},
+        pozitif_etiket=None, negatif_etiket=None, skor_etiket="P(issue)")
     md = uret_ic(kopya)
     assert "P(fraud)" not in md
     assert "0.9451" not in md and "0.9367" not in md  # Ekim fraud AUC'leri sızmez

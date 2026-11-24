@@ -11,7 +11,7 @@ import argparse
 import sys
 from pathlib import Path
 
-from kara_kutu.core.runner import ETIKET_KOLON, RUNS_DIR, kosum
+from kara_kutu.core.runner import RUNS_DIR, kosum
 
 
 def run_komutu(args: argparse.Namespace) -> int:
@@ -34,7 +34,10 @@ def run_komutu(args: argparse.Namespace) -> int:
         print(f"{'iç rapor ' if ad == 'md' else 'dış rapor'}: {yol}")
     o = cikti["ozet"]
     print(f"koşum    : {cikti['dizin']}")
-    print(f"özet     : {o['satir_sayisi']} kayıt, {o['fraud_sayisi']} FRAUD "
+    label = o.get("pozitif_etiket")
+    pozitif_sayisi = o.get("pozitif_sayisi", 0)
+    birim = f", {pozitif_sayisi} {label}" if label else ""
+    print(f"özet     : {o['satir_sayisi']} kayıt{birim} "
           f"(eşik {o['esik']:.4f}); kanıt {cikti['dizin'] / 'kanit.json'}")
     return 0
 
@@ -64,11 +67,13 @@ def _parser() -> argparse.ArgumentParser:
     run.add_argument("--veri", required=True, help="girdi CSV dosyası")
     run.add_argument("--rapor", default="html,md", help="virgülle: html,md")
     run.add_argument("--esik", type=float, default=None,
-                     help="karar eşiği (adapter varsayılanı; fraud: 0.9969)")
+                     help="karar eşiği (adapter varsayılanı)")
     run.add_argument("--top-k", type=int, default=None, dest="top_k",
                      help="kayıt başına gösterilen gerekçe sayısı")
     run.add_argument("--limit", type=int, default=None, help="en fazla N satır oku")
-    run.add_argument("--etiket-kolon", default=ETIKET_KOLON, dest="etiket_kolon")
+    run.add_argument("--etiket-kolon", default=None, dest="etiket_kolon",
+                     help="etiket kolon adı (varsayılan: adapterin kendi kolonu); "
+                          "yalnız fraud yes/no ayrıştırma ile etiket üretir")
     run.add_argument("--runs-dir", default=str(RUNS_DIR), dest="runs_dir")
     run.set_defaults(f=run_komutu)
     alt.add_parser("liste", help="kayıtlı adapterları listele").set_defaults(

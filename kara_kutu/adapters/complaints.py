@@ -61,6 +61,12 @@ class ComplaintsAdapter:
     """Edge paketini (ONNX + BPE + issue head) bir kez yükler; kayıt başına Verdict üretir."""
 
     name = "complaints"
+    # Çok sınıflı dikey: binary sınıflandırma söz konusu değildir —
+    # karar = issue adı (argmax), eşik uygulanmaz; pozitif/negatif etiketi YOKtur.
+    pozitif_etiket = None
+    negatif_etiket = None
+    skor_etiket = "P(issue)"
+    etiket_kolon = ETIKET_KOLON  # "issue"; runner parse ETTİ — adaptör ham hamlende okur
 
     def __init__(self, edge_dir: Path | None = None, top_k: int = _TOPK,
                  esik: float | None = None) -> None:

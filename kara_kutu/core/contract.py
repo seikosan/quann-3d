@@ -38,14 +38,28 @@ class VeriSeti:
 
 @dataclass(frozen=True)
 class Gerekce:
-    """Kayıt başına tek gerekçe girdisi: nokta-ablasyon etkisi (logit)."""
+    """Kayıt başına tek gerekçe girdisi: nokta-ablasyon etkisi (logit).
+
+    Yön kelimesi ("destekliyor/karşıtı") dikey-geneli sözleşmede pozitif
+    etiketi kullanılarak `yonu_metni` ile üretilir — gerekçe kendisi hangi
+    pozitif sınıfın adına yön duyuracağını bilmez.
+    """
 
     etiket: str
     delta_logit: float
 
-    @property
-    def yon(self) -> str:
-        return "fraud-destekliyor" if self.delta_logit > 0 else "fraud-karşıtı"
+
+def yonu_metni(delta_logit: float, pozitif_etiketi: str | None) -> str:
+    """Gerekçenin pozitif yön kelimesini pozitif etiketi kullanarak üretir.
+
+    pozitif_etiketi yoksa (çok sınıflı/dichotomy yok) nötr kelime basılır;
+    pozitif-sınıf kelimesi UYDURULMAZ (AGENTS §13).
+    """
+    if delta_logit > 0:
+        return (f"{pozitif_etiketi.lower()}-destekliyor"
+                if pozitif_etiketi else "seçileni destekliyor")
+    return (f"{pozitif_etiketi.lower()}-karşıtı"
+            if pozitif_etiketi else "seçilenin karşıtı")
 
 
 @dataclass
@@ -102,7 +116,13 @@ class KanitBlogu:
 
 @dataclass
 class KosumSonucu:
-    """Bir koşumun tam çıktısı — rapor üreticileri yalnız bunu okur."""
+    """Bir koşumun tam çıktısı — rapor üreticileri yalnız bunu okur.
+
+    `pozitif_etiket`/`negatif_etiket`/`skor_etiket` runner tarafından adapter'dan
+    stamped edilir; rapor metinlerinde hangi sınıfa odaklanıldığı bu alanlarla
+    taşınır. `pozitif_etiket` None ise dichotomy yoktur (çok sınıflı dikey,
+    ör. complaints).
+    """
 
     adapter: str
     esik: float
@@ -112,6 +132,9 @@ class KosumSonucu:
     meta: ModelMeta
     kanit: KanitBlogu
     metrikler: dict[str, str] = field(default_factory=dict)
+    pozitif_etiket: str | None = None
+    negatif_etiket: str | None = None
+    skor_etiket: str = "skor"
 
 
 def kaynakli(deger: Any, kaynak: str | None) -> str:
