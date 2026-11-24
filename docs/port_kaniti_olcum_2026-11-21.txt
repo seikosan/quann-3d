@@ -1,3 +1,5 @@
+NOT (2026-11-23): bu ölçümlerin runs/ alarm_farki_20261121-232335 ve alarm_farki_20261121-232405/ozet.json kaynakları 2026-11-23 kazara silindi (gitignore'da; giriş yok) — yukarıdaki sayılar DOĞRULANMADI, kalıntı olarak okunur.
+
 Karar deneyi — alarm çelişkisi kapanışı
 =====================================
 

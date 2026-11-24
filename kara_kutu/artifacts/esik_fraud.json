@@ -5,7 +5,7 @@
   "olusturma": "2026-11-22T08:48:08+00:00",
   "us": 42,
   "model_sha256": "f0251f9d9176c23bcfa384ae32e4413b3cb046320606ba348c9eae6bcf52b34d",
-  "kanit_kosum": "kara_kutu/runs/esik_kalibre_20261122-084720/ozet.json",
+  "kanit_kosum": "kara_kutu/runs/esik_kalibre_20261124-063247/ozet.json",
   "te_dogrulama": {
     "alarm": 12368,
     "tp": 1265,
@@ -19,7 +19,8 @@
     "k_butce": 12368,
     "sure_sn": 159.2,
     "maks_p": 0.993219,
-    "kosum": "kara_kutu/runs/esik_te_20261122-193451/ozet.json"
+    "kosum": "kara_kutu/runs/esik_te_20261122-193451/ozet.json",
+    "kosum_kaybi": "DOĞRULANMADI — runs/esik_te_20261122-193451/ozet.json 2026-11-23 kazara silindi (gitignore'da; kayıt yok). Final te ölçümü (test tek-geçiş, AGENTS §4.1) tekrar koşturulamaz; değerler artefakta commit'lidir (25b40a4) — runs/ dosyası yerine artefaktı tek kaynak olarak oku."
   },
   "kalibrasyon_tani": {
     "tanım": "kutu ONNX olasılıkları, user_fold<8, doğal oran, tohum 42",
@@ -36,5 +37,6 @@
     "ekim_esigi_alarm": 0,
     "maks_p": 0.992136,
     "durum": "REDDEDİLDİ — iç-örnek bölme (eğitim-fold); eğitim-fold best-F2 eşik adayı 0.7919164896011353, tanım gerekçesi §9"
-  }
+  },
+  "kanit_guncelleme": "2026-11-24: eğitim-fold kalibrasyonu (tohum 42, n 1.000.000, user_fold<8) yeniden koşuldu; ozet değeri 2026-11-22 kaydıyla birebir aynı (eşik 0,7919164896011353, alarm 10424, TP 562, FP 9862, P 0,053914, R 0,475465, F2 0,185454, maks_p 0,992136). A1 eşiği/final ölçüm artefaktı elden değiştirilmedi."
 }

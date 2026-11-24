@@ -4,12 +4,12 @@ Koşturma: `git worktree add <tmp> 5f66aed` sonrası dosyayı worktree köküne
 kopyala ve `python3 -u score_oct.py` koş (CKPT/BIG mutlak yolları kendi
 makinen göre ayarla). Beklenen (2026-11-21 ölçümü): te=234,686 fraud=197
 maks_p=1.0 alarm@0.99694=693 AUC=0.95971 — kutu aynı satırlarda
-maks_p=0.990873 alarm=0 verir (kara_kutu/runs/alarm_farki_20261121-232335).
+maks_p=0.990873 alarm=0 verir (kara_kutu/runs/alarm_farki_20261121-232335/ozet.json:33-48 — 2026-11-23 kazara silindi; DOĞRULANMADI, kalıntı).
 Kutu ≠ Ekim fonksiyonu: mimari portu cloudlm/model.py:64,103-106.
 
 Kutu duman taraması (kara_kutu, 2026-11-21) ilk 1M CSV satırında
 te=234,686 fraud=197 maks_p=0.9908732175827026 alarm=0 vermişti
-(kara_kutu/runs/alarm_farki_20261121-232335/ozet.json faz2.bolgeler[0]).
+(kara_kutu/runs/alarm_farki_20261121-232335/ozet.json faz2.bolgeler[0] — 2026-11-23 kazara silindi; DOĞRULANMADI, kalıntı).
 Bu script AYNI satır kümesini 19 Ekim'in QCloudFraudClassifier + checkpoint
 bundled quantizer'ıyla skorlar; fark çıkarsa mimari-port kaynaklıdır.
 """

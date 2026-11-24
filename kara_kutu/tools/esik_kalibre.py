@@ -2,7 +2,7 @@
 
 Soru (KARA_KUTU_PLAN §9): Ekim eşiği 0,9969 FP32 (port-öncesi) olasılıklarıyla
 kalibre edildi; portlanmış kutu tam te'de maks p=0,993219 veriyor
-(`kara_kutu/runs/alarm_farki_20261121-232405/ozet.json` genel.maks_p) → Ekim
+(`kara_kutu/artifacts/esik_fraud.json` → `te_dogrulama.maks_p` — runs/alarm_farki_20261121-232405/ozet.json 2026-11-23 kazara silindi; DOĞRULANMADI) → Ekim
 eşiği kutuda 0 alarm üretiyor.
 
 Yöntem (uydurma yok — Ekim'in KURALI kutu ölçeğinde yeniden koşulur):

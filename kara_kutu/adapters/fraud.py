@@ -37,7 +37,8 @@ IBM_KOLONLARI: tuple[str, ...] = (
 # Karar eşiği — KARAR A (kullanıcı, 2026-11-22, KARA_KUTU_PLAN §9): Ekim eşiği
 # 0,9969 (`fraud/pilot/infer.py:40`) port-öncesi FP32 olasılıklarıyla kalibre
 # edildi; kutu tam te'de maks p=0,993219 verdiğinden o eşik kutuda anlamsız
-# (`kara_kutu/runs/alarm_farki_20261121-232405/ozet.json`). Kutu artık kendi
+# (maks p değeri artefakta commit'li: `kara_kutu/artifacts/esik_fraud.json` — `te_dogrulama.maks_p`;
+# runs/alarm_farki_20261121-232405/ozet.json 2026-11-23 kazara silindi; DOĞRULANMADI). Kutu artık kendi
 # best-F2 kalibrasyonunu `kara_kutu/artifacts/esik_fraud.json`'dan okur
 # (üretici: `kara_kutu/tools/esik_kalibre.py`). Ekim sayısı yalnız referans:
 ESIK_EKIM = 0.9969
